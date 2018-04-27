@@ -13,7 +13,7 @@ Omni is designed to be usable in many simple ways across many [different platfor
 A simple example building the framework as a whole, from the command line with the single `library.cpp` source file, and a source file called `main.cpp`. This example assumes the source was extracted to `C:\source\omni` on a Windows platform and uses the Microsoft Visual Studio `cl.exe` C++ compiler, where as for the other platforms (Apple/*nix), the source is assumed extracted to `/source/omni` and the `g++` compiler is used, though `clang` or any other C++ compliant compiler will suffice:
 ```
 Windows:
-cl main.cpp C:\source\omni\library.cpp /IC:\source\omni\ /EHa2 /Feprogram.exe
+cl main.cpp C:\source\omni\library.cpp /IC:\source\omni\ /EHa /Feprogram.exe
 
 Apple/Unix/Linux/POSIX:
 g++ main.cpp /source/omni/library.cpp -I/source/omni -pthread -o program.bin
