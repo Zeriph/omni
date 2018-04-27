@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -48,9 +44,9 @@ namespace omni {
             ~stopwatch();
             // TODO: omni::timespan elapsed();
             
-            std::size_t elapsed_us() const;
-            std::size_t elapsed_ms() const;
-            std::size_t elapsed_s() const;
+            uint64_t elapsed_us() const;
+            uint64_t elapsed_ms() const;
+            uint64_t elapsed_s() const;
             bool is_running() const;
             omni::stopwatch& reset();
             omni::stopwatch& restart();
@@ -80,20 +76,14 @@ namespace omni {
             bool operator==(const omni::stopwatch &o) const;
             bool operator!=(const omni::stopwatch &o) const;
             
-            friend std::ostream& operator<<(std::ostream& os, const omni::stopwatch& sw)
-            { os << sw.elapsed_ms() << " ms"; return os; }
-            friend std::wostream& operator<<(std::wostream& os, const omni::stopwatch& sw)
-            { os << sw.elapsed_ms() << " ms"; return os; }
-            
             OMNI_MEMBERS_FW(omni::stopwatch) // disposing,name,type(),hash()
+
+            OMNI_OSTREAM_RAW_FW(omni::stopwatch, value.elapsed_ms() << " ms")
             
         private:
             /** zero's the clocks */
             void _zero();
             
-            #if defined(OMNI_TYPE_INFO)
-                omni::type<omni::stopwatch> m_type;
-            #endif
             /** The internal end clock */
             omni::chrono::tick_t m_end;
             /** The internal start clock */

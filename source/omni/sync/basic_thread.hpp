@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -46,19 +42,19 @@ namespace omni {
                 basic_thread(const omni::sync::thread_t& tid,
                              const omni::sync::thread_handle_t& h);
                 basic_thread(const omni::sync::thread_start& mthd,
-                             omni::sync::thread_start_type_t st);
+                             omni::sync::thread_start_type::enum_t st);
                 basic_thread(const omni::sync::thread_start& mthd,
                              std::size_t max_stack_sz);
                 basic_thread(const omni::sync::thread_start& mthd,
                              std::size_t max_stack_sz,
-                             omni::sync::thread_start_type_t st);
+                             omni::sync::thread_start_type::enum_t st);
                 basic_thread(const omni::sync::thread_start& mthd,
-                             omni::sync::thread_option_t op,
+                             omni::sync::thread_option::enum_t op,
                              omni::sync::thread_union_t val);
                 basic_thread(const omni::sync::parameterized_thread_start& mthd,
                              omni::sync::thread_arg_t args);
                 basic_thread(const omni::sync::parameterized_thread_start& mthd,
-                             omni::sync::thread_start_type_t st);
+                             omni::sync::thread_start_type::enum_t st);
                 basic_thread(const omni::sync::parameterized_thread_start& mthd,
                              std::size_t max_stack_sz);
                 basic_thread(const omni::sync::parameterized_thread_start& mthd,
@@ -66,13 +62,13 @@ namespace omni {
                              omni::sync::thread_arg_t args);
                 basic_thread(const omni::sync::parameterized_thread_start& mthd,
                              std::size_t max_stack_sz,
-                             omni::sync::thread_start_type_t st);
+                             omni::sync::thread_start_type::enum_t st);
                 basic_thread(const omni::sync::parameterized_thread_start& mthd,
-                             omni::sync::thread_option_t op,
+                             omni::sync::thread_option::enum_t op,
                              omni::sync::thread_union_t val);
                 basic_thread(const omni::sync::parameterized_thread_start& mthd,
                              omni::sync::thread_arg_t args,
-                             omni::sync::thread_option_t op,
+                             omni::sync::thread_option::enum_t op,
                              omni::sync::thread_union_t val);
                 ~basic_thread();
                 
@@ -80,7 +76,7 @@ namespace omni {
                 void bind(const omni::sync::thread_start& mthd);
                 void detach();
                 void detach(bool allow_rejoin);
-                const omni::sync::thread_union_t get_option(omni::sync::thread_option_t op) const;
+                const omni::sync::thread_union_t get_option(omni::sync::thread_option::enum_t op) const;
                 omni::sync::thread_flags options() const;
                 const omni::sync::thread_handle_t handle() const;
                 const omni::sync::thread_t id() const;
@@ -93,10 +89,10 @@ namespace omni {
                 bool join(unsigned long timeout);
                 //TODO: add bool join(const omni::timespan& t); when omni::timespan complete
                 bool kill(); // Terminate 'immediately'
-                omni::sync::thread_state_t status() const;
+                omni::sync::thread_state status() const;
                 omni::sync::thread_t start();
                 omni::sync::thread_t start(omni::sync::thread_arg_t args);
-                void set_option(omni::sync::thread_option_t op, omni::sync::thread_union_t val);
+                void set_option(omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val);
                 void set_options(unsigned char op, bool val);
                 void set_options(const omni::sync::thread_flags& ops);
                 void swap(omni::sync::basic_thread& other);
@@ -106,8 +102,8 @@ namespace omni {
                 bool operator!=(const omni::sync::basic_thread& other) const;
                 
                 #if defined(OMNI_NON_PORTABLE)
-                    omni::sync::thread_priority_t priority() const;
-                    void set_priority(omni::sync::thread_priority_t p);
+                    omni::sync::thread_priority priority() const;
+                    void set_priority(omni::sync::thread_priority::enum_t p);
                 #endif
                 
                 OMNI_MEMBERS_FW(omni::sync::basic_thread) // disposing,name,type(),hash()
@@ -137,9 +133,6 @@ namespace omni {
                 #endif
                 
                 // Members
-                #if defined(OMNI_TYPE_INFO)
-                    omni::type<omni::sync::basic_thread> m_type;
-                #endif
                 #if defined(OMNI_SAFE_BASIC_THREAD)
                     mutable omni::sync::basic_lock m_mtx;
                 #endif
@@ -154,10 +147,10 @@ namespace omni {
                 /** The underlying thread options */
                 omni::sync::thread_flags m_ops;
                 /** The current state of the thread */
-                omni::sync::thread_state_t m_state;
+                omni::sync::thread_state m_state;
                 #if defined(OMNI_NON_PORTABLE)
                     /** The threads priority */
-                    omni::sync::thread_priority_t m_priority;
+                    omni::sync::thread_priority m_priority;
                 #endif
                 /** If join has been called, don't detach */
                 volatile bool m_isjoined;

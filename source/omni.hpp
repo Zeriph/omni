@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -31,6 +27,8 @@
 | #include <omni/framework>
 | or
 | #include <omni.hpp>
+| or
+| #include <omnilib>
 | 
 | This file is also here to make some general developer notes about style and function
 | within the Omni framework. Notes regarding how to use certain classes or specifics on
@@ -126,8 +124,8 @@ omni::sync::user_thread_exception(const omni::exception&)
 | omni::sync::runnable_thread inherits from the omni::sync::runnable (to be able to be
 | used in other contexts).
 |
-| So while we try to keep the code slim, some areas need some extra care to achieve this
-| while still keeping the code easy to read and maintain. 
+| So while we try to keep the code slim (e.g. the DRY principle), some areas need some extra
+| care to achieve this while still keeping the code easy to read and maintain.
 */
 
 /* Code Documentation:

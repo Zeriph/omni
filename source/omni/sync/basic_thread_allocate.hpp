@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -35,7 +31,7 @@ namespace omni {
             return omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj));
         }
         template < class T, void (T::*fnptr)() >
-        static omni::sync::basic_thread create_basic_thread(T& obj, omni::sync::thread_start_type_t st)
+        static omni::sync::basic_thread create_basic_thread(T& obj, omni::sync::thread_start_type::enum_t st)
         {
             return omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj), st);
         }
@@ -45,12 +41,12 @@ namespace omni {
             return omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj), max_stack_sz);
         }
         template < class T, void (T::*fnptr)() >
-        static omni::sync::basic_thread create_basic_thread(T& obj, std::size_t max_stack_sz, omni::sync::thread_start_type_t st)
+        static omni::sync::basic_thread create_basic_thread(T& obj, std::size_t max_stack_sz, omni::sync::thread_start_type::enum_t st)
         {
             return omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj), max_stack_sz, st);
         }
         template < class T, void (T::*fnptr)() >
-        static omni::sync::basic_thread create_basic_thread(T& obj, omni::sync::thread_option_t op, omni::sync::thread_union_t val)
+        static omni::sync::basic_thread create_basic_thread(T& obj, omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val)
         {
             return omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj), op, val);
         }
@@ -61,7 +57,7 @@ namespace omni {
             return omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj));
         }
         template < class T, void (T::*fnptr)() >
-        static omni::sync::basic_thread create_basic_thread(const T& obj, omni::sync::thread_start_type_t st)
+        static omni::sync::basic_thread create_basic_thread(const T& obj, omni::sync::thread_start_type::enum_t st)
         {
             return omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj), st);
         }
@@ -71,12 +67,12 @@ namespace omni {
             return omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj), max_stack_sz);
         }
         template < class T, void (T::*fnptr)() >
-        static omni::sync::basic_thread create_basic_thread(const T& obj, std::size_t max_stack_sz, omni::sync::thread_start_type_t st)
+        static omni::sync::basic_thread create_basic_thread(const T& obj, std::size_t max_stack_sz, omni::sync::thread_start_type::enum_t st)
         {
             return omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj), max_stack_sz, st);
         }
         template < class T, void (T::*fnptr)() >
-        static omni::sync::basic_thread create_basic_thread(const T& obj, omni::sync::thread_option_t op, omni::sync::thread_union_t val)
+        static omni::sync::basic_thread create_basic_thread(const T& obj, omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val)
         {
             return omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj), op, val);
         }
@@ -87,7 +83,7 @@ namespace omni {
             return omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj));
         }
         template < class T, void (T::*fnptr)() >
-        static omni::sync::basic_thread create_basic_thread(const T *const obj, omni::sync::thread_start_type_t st)
+        static omni::sync::basic_thread create_basic_thread(const T *const obj, omni::sync::thread_start_type::enum_t st)
         {
             return omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj), st);
         }
@@ -97,12 +93,12 @@ namespace omni {
             return omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj), max_stack_sz);
         }
         template < class T, void (T::*fnptr)() >
-        static omni::sync::basic_thread create_basic_thread(const T *const obj, std::size_t max_stack_sz, omni::sync::thread_start_type_t st)
+        static omni::sync::basic_thread create_basic_thread(const T *const obj, std::size_t max_stack_sz, omni::sync::thread_start_type::enum_t st)
         {
             return omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj), max_stack_sz, st);
         }
         template < class T, void (T::*fnptr)() >
-        static omni::sync::basic_thread create_basic_thread(const T *const obj, omni::sync::thread_option_t op, omni::sync::thread_union_t val)
+        static omni::sync::basic_thread create_basic_thread(const T *const obj, omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val)
         {
             return omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj), op, val);
         }
@@ -113,7 +109,7 @@ namespace omni {
             return omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj));
         }
         template < class T, void (T::*fnptr)() const >
-        static omni::sync::basic_thread create_basic_thread_const(const T& obj, omni::sync::thread_start_type_t st)
+        static omni::sync::basic_thread create_basic_thread_const(const T& obj, omni::sync::thread_start_type::enum_t st)
         {
             return omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj), st);
         }
@@ -123,12 +119,12 @@ namespace omni {
             return omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj), max_stack_sz);
         }
         template < class T, void (T::*fnptr)() const >
-        static omni::sync::basic_thread create_basic_thread_const(const T& obj, std::size_t max_stack_sz, omni::sync::thread_start_type_t st)
+        static omni::sync::basic_thread create_basic_thread_const(const T& obj, std::size_t max_stack_sz, omni::sync::thread_start_type::enum_t st)
         {
             return omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj), max_stack_sz, st);
         }
         template < class T, void (T::*fnptr)() const >
-        static omni::sync::basic_thread create_basic_thread_const(const T& obj, omni::sync::thread_option_t op, omni::sync::thread_union_t val)
+        static omni::sync::basic_thread create_basic_thread_const(const T& obj, omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val)
         {
             return omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj), op, val);
         }
@@ -139,7 +135,7 @@ namespace omni {
             return omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj));
         }
         template < class T, void (T::*fnptr)() const >
-        static omni::sync::basic_thread create_basic_thread_const(const T *const obj, omni::sync::thread_start_type_t st)
+        static omni::sync::basic_thread create_basic_thread_const(const T *const obj, omni::sync::thread_start_type::enum_t st)
         {
             return omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj), st);
         }
@@ -149,12 +145,12 @@ namespace omni {
             return omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj), max_stack_sz);
         }
         template < class T, void (T::*fnptr)() const >
-        static omni::sync::basic_thread create_basic_thread_const(const T *const obj, std::size_t max_stack_sz, omni::sync::thread_start_type_t st)
+        static omni::sync::basic_thread create_basic_thread_const(const T *const obj, std::size_t max_stack_sz, omni::sync::thread_start_type::enum_t st)
         {
             return omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj), max_stack_sz, st);
         }
         template < class T, void (T::*fnptr)() const >
-        static omni::sync::basic_thread create_basic_thread_const(const T *const obj, omni::sync::thread_option_t op, omni::sync::thread_union_t val)
+        static omni::sync::basic_thread create_basic_thread_const(const T *const obj, omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val)
         {
             return omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj), op, val);
         }
@@ -172,7 +168,7 @@ namespace omni {
             return omni::sync::basic_thread(omni::sync::parameterized_thread_start::bind<T, fnptr>(obj), max_stack_sz);
         }
         template < class T, void (T::*fnptr)(omni::sync::thread_arg_t) >
-        static omni::sync::basic_thread create_basic_thread_parameterized(T& obj, omni::sync::thread_option_t op, omni::sync::thread_union_t val)
+        static omni::sync::basic_thread create_basic_thread_parameterized(T& obj, omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val)
         {
             return omni::sync::basic_thread(omni::sync::parameterized_thread_start::bind<T, fnptr>(obj), op, val);
         }
@@ -187,7 +183,7 @@ namespace omni {
             return omni::sync::basic_thread(omni::sync::parameterized_thread_start::bind<T, fnptr>(obj), max_stack_sz, args);
         }
         template < class T, void (T::*fnptr)(omni::sync::thread_arg_t) >
-        static omni::sync::basic_thread create_basic_thread_parameterized(T& obj, omni::sync::thread_arg_t args, omni::sync::thread_option_t op, omni::sync::thread_union_t val)
+        static omni::sync::basic_thread create_basic_thread_parameterized(T& obj, omni::sync::thread_arg_t args, omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val)
         {
             return omni::sync::basic_thread(omni::sync::parameterized_thread_start::bind<T, fnptr>(obj), args, op, val);
         }
@@ -203,7 +199,7 @@ namespace omni {
             return omni::sync::basic_thread(omni::sync::parameterized_thread_start::bind<T, fnptr>(obj), max_stack_sz);
         }
         template < class T, void (T::*fnptr)(omni::sync::thread_arg_t) >
-        static omni::sync::basic_thread create_basic_thread_parameterized(const T& obj, omni::sync::thread_option_t op, omni::sync::thread_union_t val)
+        static omni::sync::basic_thread create_basic_thread_parameterized(const T& obj, omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val)
         {
             return omni::sync::basic_thread(omni::sync::parameterized_thread_start::bind<T, fnptr>(obj), op, val);
         }
@@ -218,7 +214,7 @@ namespace omni {
             return omni::sync::basic_thread(omni::sync::parameterized_thread_start::bind<T, fnptr>(obj), max_stack_sz, args);
         }
         template < class T, void (T::*fnptr)(omni::sync::thread_arg_t) >
-        static omni::sync::basic_thread create_basic_thread_parameterized(const T& obj, omni::sync::thread_arg_t args, omni::sync::thread_option_t op, omni::sync::thread_union_t val)
+        static omni::sync::basic_thread create_basic_thread_parameterized(const T& obj, omni::sync::thread_arg_t args, omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val)
         {
             return omni::sync::basic_thread(omni::sync::parameterized_thread_start::bind<T, fnptr>(obj), args, op, val);
         }
@@ -234,7 +230,7 @@ namespace omni {
             return omni::sync::basic_thread(omni::sync::parameterized_thread_start::bind<T, fnptr>(obj), max_stack_sz);
         }
         template < class T, void (T::*fnptr)(omni::sync::thread_arg_t) >
-        static omni::sync::basic_thread create_basic_thread_parameterized(const T *const obj, omni::sync::thread_option_t op, omni::sync::thread_union_t val)
+        static omni::sync::basic_thread create_basic_thread_parameterized(const T *const obj, omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val)
         {
             return omni::sync::basic_thread(omni::sync::parameterized_thread_start::bind<T, fnptr>(obj), op, val);
         }
@@ -249,7 +245,7 @@ namespace omni {
             return omni::sync::basic_thread(omni::sync::parameterized_thread_start::bind<T, fnptr>(obj), max_stack_sz, args);
         }
         template < class T, void (T::*fnptr)(omni::sync::thread_arg_t) >
-        static omni::sync::basic_thread create_basic_thread_parameterized(const T *const obj, omni::sync::thread_arg_t args, omni::sync::thread_option_t op, omni::sync::thread_union_t val)
+        static omni::sync::basic_thread create_basic_thread_parameterized(const T *const obj, omni::sync::thread_arg_t args, omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val)
         {
             return omni::sync::basic_thread(omni::sync::parameterized_thread_start::bind<T, fnptr>(obj), args, op, val);
         }
@@ -265,7 +261,7 @@ namespace omni {
             return omni::sync::basic_thread(omni::sync::parameterized_thread_start::bind<T, fnptr>(obj), max_stack_sz);
         }
         template < class T, void (T::*fnptr)(omni::sync::thread_arg_t) const >
-        static omni::sync::basic_thread create_basic_thread_parameterized_const(const T& obj, omni::sync::thread_option_t op, omni::sync::thread_union_t val)
+        static omni::sync::basic_thread create_basic_thread_parameterized_const(const T& obj, omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val)
         {
             return omni::sync::basic_thread(omni::sync::parameterized_thread_start::bind<T, fnptr>(obj), op, val);
         }
@@ -280,7 +276,7 @@ namespace omni {
             return omni::sync::basic_thread(omni::sync::parameterized_thread_start::bind<T, fnptr>(obj), max_stack_sz, args);
         }
         template < class T, void (T::*fnptr)(omni::sync::thread_arg_t) >
-        static omni::sync::basic_thread create_basic_thread_parameterized_const(const T& obj, omni::sync::thread_arg_t args, omni::sync::thread_option_t op, omni::sync::thread_union_t val)
+        static omni::sync::basic_thread create_basic_thread_parameterized_const(const T& obj, omni::sync::thread_arg_t args, omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val)
         {
             return omni::sync::basic_thread(omni::sync::parameterized_thread_start::bind<T, fnptr>(obj), args, op, val);
         }
@@ -296,7 +292,7 @@ namespace omni {
             return omni::sync::basic_thread(omni::sync::parameterized_thread_start::bind<T, fnptr>(obj), max_stack_sz);
         }
         template < class T, void (T::*fnptr)(omni::sync::thread_arg_t) const >
-        static omni::sync::basic_thread create_basic_thread_parameterized_const(const T *const obj, omni::sync::thread_option_t op, omni::sync::thread_union_t val)
+        static omni::sync::basic_thread create_basic_thread_parameterized_const(const T *const obj, omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val)
         {
             return omni::sync::basic_thread(omni::sync::parameterized_thread_start::bind<T, fnptr>(obj), op, val);
         }
@@ -311,7 +307,7 @@ namespace omni {
             return omni::sync::basic_thread(omni::sync::parameterized_thread_start::bind<T, fnptr>(obj), max_stack_sz, args);
         }
         template < class T, void (T::*fnptr)(omni::sync::thread_arg_t) >
-        static omni::sync::basic_thread create_basic_thread_parameterized_const(const T *const obj, omni::sync::thread_arg_t args, omni::sync::thread_option_t op, omni::sync::thread_union_t val)
+        static omni::sync::basic_thread create_basic_thread_parameterized_const(const T *const obj, omni::sync::thread_arg_t args, omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val)
         {
             return omni::sync::basic_thread(omni::sync::parameterized_thread_start::bind<T, fnptr>(obj), args, op, val);
         }
@@ -326,7 +322,7 @@ namespace omni {
             return new omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj));
         }
         template < class T, void (T::*fnptr)() >
-        static omni::sync::basic_thread* allocate_basic_thread(T& obj, omni::sync::thread_start_type_t st)
+        static omni::sync::basic_thread* allocate_basic_thread(T& obj, omni::sync::thread_start_type::enum_t st)
         {
             return new omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj), st);
         }
@@ -336,12 +332,12 @@ namespace omni {
             return new omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj), max_stack_sz);
         }
         template < class T, void (T::*fnptr)() >
-        static omni::sync::basic_thread* allocate_basic_thread(T& obj, std::size_t max_stack_sz, omni::sync::thread_start_type_t st)
+        static omni::sync::basic_thread* allocate_basic_thread(T& obj, std::size_t max_stack_sz, omni::sync::thread_start_type::enum_t st)
         {
             return new omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj), max_stack_sz, st);
         }
         template < class T, void (T::*fnptr)() >
-        static omni::sync::basic_thread* allocate_basic_thread(T& obj, omni::sync::thread_option_t op, omni::sync::thread_union_t val)
+        static omni::sync::basic_thread* allocate_basic_thread(T& obj, omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val)
         {
             return new omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj), op, val);
         }
@@ -352,7 +348,7 @@ namespace omni {
             return new omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj));
         }
         template < class T, void (T::*fnptr)() >
-        static omni::sync::basic_thread* allocate_basic_thread(const T& obj, omni::sync::thread_start_type_t st)
+        static omni::sync::basic_thread* allocate_basic_thread(const T& obj, omni::sync::thread_start_type::enum_t st)
         {
             return new omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj), st);
         }
@@ -362,12 +358,12 @@ namespace omni {
             return new omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj), max_stack_sz);
         }
         template < class T, void (T::*fnptr)() >
-        static omni::sync::basic_thread* allocate_basic_thread(const T& obj, std::size_t max_stack_sz, omni::sync::thread_start_type_t st)
+        static omni::sync::basic_thread* allocate_basic_thread(const T& obj, std::size_t max_stack_sz, omni::sync::thread_start_type::enum_t st)
         {
             return new omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj), max_stack_sz, st);
         }
         template < class T, void (T::*fnptr)() >
-        static omni::sync::basic_thread* allocate_basic_thread(const T& obj, omni::sync::thread_option_t op, omni::sync::thread_union_t val)
+        static omni::sync::basic_thread* allocate_basic_thread(const T& obj, omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val)
         {
             return new omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj), op, val);
         }
@@ -378,7 +374,7 @@ namespace omni {
             return new omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj));
         }
         template < class T, void (T::*fnptr)() >
-        static omni::sync::basic_thread* allocate_basic_thread(const T *const obj, omni::sync::thread_start_type_t st)
+        static omni::sync::basic_thread* allocate_basic_thread(const T *const obj, omni::sync::thread_start_type::enum_t st)
         {
             return new omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj), st);
         }
@@ -388,12 +384,12 @@ namespace omni {
             return new omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj), max_stack_sz);
         }
         template < class T, void (T::*fnptr)() >
-        static omni::sync::basic_thread* allocate_basic_thread(const T *const obj, std::size_t max_stack_sz, omni::sync::thread_start_type_t st)
+        static omni::sync::basic_thread* allocate_basic_thread(const T *const obj, std::size_t max_stack_sz, omni::sync::thread_start_type::enum_t st)
         {
             return new omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj), max_stack_sz, st);
         }
         template < class T, void (T::*fnptr)() >
-        static omni::sync::basic_thread* allocate_basic_thread(const T *const obj, omni::sync::thread_option_t op, omni::sync::thread_union_t val)
+        static omni::sync::basic_thread* allocate_basic_thread(const T *const obj, omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val)
         {
             return new omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj), op, val);
         }
@@ -404,7 +400,7 @@ namespace omni {
             return new omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj));
         }
         template < class T, void (T::*fnptr)() const >
-        static omni::sync::basic_thread* allocate_basic_thread_const(const T& obj, omni::sync::thread_start_type_t st)
+        static omni::sync::basic_thread* allocate_basic_thread_const(const T& obj, omni::sync::thread_start_type::enum_t st)
         {
             return new omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj), st);
         }
@@ -414,12 +410,12 @@ namespace omni {
             return new omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj), max_stack_sz);
         }
         template < class T, void (T::*fnptr)() const >
-        static omni::sync::basic_thread* allocate_basic_thread_const(const T& obj, std::size_t max_stack_sz, omni::sync::thread_start_type_t st)
+        static omni::sync::basic_thread* allocate_basic_thread_const(const T& obj, std::size_t max_stack_sz, omni::sync::thread_start_type::enum_t st)
         {
             return new omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj), max_stack_sz, st);
         }
         template < class T, void (T::*fnptr)() const >
-        static omni::sync::basic_thread* allocate_basic_thread_const(const T& obj, omni::sync::thread_option_t op, omni::sync::thread_union_t val)
+        static omni::sync::basic_thread* allocate_basic_thread_const(const T& obj, omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val)
         {
             return new omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj), op, val);
         }
@@ -430,7 +426,7 @@ namespace omni {
             return new omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj));
         }
         template < class T, void (T::*fnptr)() const >
-        static omni::sync::basic_thread* allocate_basic_thread_const(const T *const obj, omni::sync::thread_start_type_t st)
+        static omni::sync::basic_thread* allocate_basic_thread_const(const T *const obj, omni::sync::thread_start_type::enum_t st)
         {
             return new omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj), st);
         }
@@ -440,12 +436,12 @@ namespace omni {
             return new omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj), max_stack_sz);
         }
         template < class T, void (T::*fnptr)() const >
-        static omni::sync::basic_thread* allocate_basic_thread_const(const T *const obj, std::size_t max_stack_sz, omni::sync::thread_start_type_t st)
+        static omni::sync::basic_thread* allocate_basic_thread_const(const T *const obj, std::size_t max_stack_sz, omni::sync::thread_start_type::enum_t st)
         {
             return new omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj), max_stack_sz, st);
         }
         template < class T, void (T::*fnptr)() const >
-        static omni::sync::basic_thread* allocate_basic_thread_const(const T *const obj, omni::sync::thread_option_t op, omni::sync::thread_union_t val)
+        static omni::sync::basic_thread* allocate_basic_thread_const(const T *const obj, omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val)
         {
             return new omni::sync::basic_thread(omni::sync::thread_start::bind<T, fnptr>(obj), op, val);
         }
@@ -463,7 +459,7 @@ namespace omni {
             return new omni::sync::basic_thread(omni::sync::parameterized_thread_start::bind<T, fnptr>(obj), max_stack_sz);
         }
         template < class T, void (T::*fnptr)(omni::sync::thread_arg_t) >
-        static omni::sync::basic_thread* allocate_basic_thread_parameterized(T& obj, omni::sync::thread_option_t op, omni::sync::thread_union_t val)
+        static omni::sync::basic_thread* allocate_basic_thread_parameterized(T& obj, omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val)
         {
             return new omni::sync::basic_thread(omni::sync::parameterized_thread_start::bind<T, fnptr>(obj), op, val);
         }        
@@ -478,7 +474,7 @@ namespace omni {
             return new omni::sync::basic_thread(omni::sync::parameterized_thread_start::bind<T, fnptr>(obj), max_stack_sz, args);
         }
         template < class T, void (T::*fnptr)(omni::sync::thread_arg_t) >
-        static omni::sync::basic_thread* allocate_basic_thread_parameterized(T& obj, omni::sync::thread_arg_t args, omni::sync::thread_option_t op, omni::sync::thread_union_t val)
+        static omni::sync::basic_thread* allocate_basic_thread_parameterized(T& obj, omni::sync::thread_arg_t args, omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val)
         {
             return new omni::sync::basic_thread(omni::sync::parameterized_thread_start::bind<T, fnptr>(obj), args, op, val);
         }
@@ -494,7 +490,7 @@ namespace omni {
             return new omni::sync::basic_thread(omni::sync::parameterized_thread_start::bind<T, fnptr>(obj), max_stack_sz);
         }
         template < class T, void (T::*fnptr)(omni::sync::thread_arg_t) >
-        static omni::sync::basic_thread* allocate_basic_thread_parameterized(const T& obj, omni::sync::thread_option_t op, omni::sync::thread_union_t val)
+        static omni::sync::basic_thread* allocate_basic_thread_parameterized(const T& obj, omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val)
         {
             return new omni::sync::basic_thread(omni::sync::parameterized_thread_start::bind<T, fnptr>(obj), op, val);
         }
@@ -509,7 +505,7 @@ namespace omni {
             return new omni::sync::basic_thread(omni::sync::parameterized_thread_start::bind<T, fnptr>(obj), max_stack_sz, args);
         }
         template < class T, void (T::*fnptr)(omni::sync::thread_arg_t) >
-        static omni::sync::basic_thread* allocate_basic_thread_parameterized(const T& obj, omni::sync::thread_arg_t args, omni::sync::thread_option_t op, omni::sync::thread_union_t val)
+        static omni::sync::basic_thread* allocate_basic_thread_parameterized(const T& obj, omni::sync::thread_arg_t args, omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val)
         {
             return new omni::sync::basic_thread(omni::sync::parameterized_thread_start::bind<T, fnptr>(obj), args, op, val);
         }
@@ -525,7 +521,7 @@ namespace omni {
             return new omni::sync::basic_thread(omni::sync::parameterized_thread_start::bind<T, fnptr>(obj), max_stack_sz);
         }
         template < class T, void (T::*fnptr)(omni::sync::thread_arg_t) >
-        static omni::sync::basic_thread* allocate_basic_thread_parameterized(const T *const obj, omni::sync::thread_option_t op, omni::sync::thread_union_t val)
+        static omni::sync::basic_thread* allocate_basic_thread_parameterized(const T *const obj, omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val)
         {
             return new omni::sync::basic_thread(omni::sync::parameterized_thread_start::bind<T, fnptr>(obj), op, val);
         }
@@ -540,7 +536,7 @@ namespace omni {
             return new omni::sync::basic_thread(omni::sync::parameterized_thread_start::bind<T, fnptr>(obj), max_stack_sz, args);
         }
         template < class T, void (T::*fnptr)(omni::sync::thread_arg_t) >
-        static omni::sync::basic_thread* allocate_basic_thread_parameterized(const T *const obj, omni::sync::thread_arg_t args, omni::sync::thread_option_t op, omni::sync::thread_union_t val)
+        static omni::sync::basic_thread* allocate_basic_thread_parameterized(const T *const obj, omni::sync::thread_arg_t args, omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val)
         {
             return new omni::sync::basic_thread(omni::sync::parameterized_thread_start::bind<T, fnptr>(obj), args, op, val);
         }
@@ -556,7 +552,7 @@ namespace omni {
             return new omni::sync::basic_thread(omni::sync::parameterized_thread_start::bind<T, fnptr>(obj), max_stack_sz);
         }
         template < class T, void (T::*fnptr)(omni::sync::thread_arg_t) const >
-        static omni::sync::basic_thread* allocate_basic_thread_parameterized_const(const T& obj, omni::sync::thread_option_t op, omni::sync::thread_union_t val)
+        static omni::sync::basic_thread* allocate_basic_thread_parameterized_const(const T& obj, omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val)
         {
             return new omni::sync::basic_thread(omni::sync::parameterized_thread_start::bind<T, fnptr>(obj), op, val);
         }
@@ -571,7 +567,7 @@ namespace omni {
             return new omni::sync::basic_thread(omni::sync::parameterized_thread_start::bind<T, fnptr>(obj), max_stack_sz, args);
         }
         template < class T, void (T::*fnptr)(omni::sync::thread_arg_t) const >
-        static omni::sync::basic_thread* allocate_basic_thread_parameterized_const(const T& obj, omni::sync::thread_arg_t args, omni::sync::thread_option_t op, omni::sync::thread_union_t val)
+        static omni::sync::basic_thread* allocate_basic_thread_parameterized_const(const T& obj, omni::sync::thread_arg_t args, omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val)
         {
             return new omni::sync::basic_thread(omni::sync::parameterized_thread_start::bind<T, fnptr>(obj), args, op, val);
         }
@@ -587,7 +583,7 @@ namespace omni {
             return new omni::sync::basic_thread(omni::sync::parameterized_thread_start::bind<T, fnptr>(obj), max_stack_sz);
         }
         template < class T, void (T::*fnptr)(omni::sync::thread_arg_t) const >
-        static omni::sync::basic_thread* allocate_basic_thread_parameterized_const(const T *const obj, omni::sync::thread_option_t op, omni::sync::thread_union_t val)
+        static omni::sync::basic_thread* allocate_basic_thread_parameterized_const(const T *const obj, omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val)
         {
             return new omni::sync::basic_thread(omni::sync::parameterized_thread_start::bind<T, fnptr>(obj), op, val);
         }
@@ -602,7 +598,7 @@ namespace omni {
             return new omni::sync::basic_thread(omni::sync::parameterized_thread_start::bind<T, fnptr>(obj), max_stack_sz, args);
         }
         template < class T, void (T::*fnptr)(omni::sync::thread_arg_t) const >
-        static omni::sync::basic_thread* allocate_basic_thread_parameterized_const(const T *const obj, omni::sync::thread_arg_t args, omni::sync::thread_option_t op, omni::sync::thread_union_t val)
+        static omni::sync::basic_thread* allocate_basic_thread_parameterized_const(const T *const obj, omni::sync::thread_arg_t args, omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val)
         {
             return new omni::sync::basic_thread(omni::sync::parameterized_thread_start::bind<T, fnptr>(obj), args, op, val);
         }

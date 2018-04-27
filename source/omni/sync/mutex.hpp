@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -35,12 +31,12 @@ namespace omni {
         {
             public:
                 mutex();
-                explicit mutex(bool initialy_owned);
+                explicit mutex(bool initially_owned);
                 ~mutex(); // shouldn't inherit
                 const omni::sync::mutex_t handle() const;
                 bool locked() const;
                 void lock();
-                bool lock(std::size_t timeout_ms);
+                bool lock(uint32_t timeout_ms);
                 void unlock();
                 bool trylock();
                 bool operator==(const omni::sync::mutex& o) const;
@@ -53,10 +49,7 @@ namespace omni {
                 mutex(const omni::sync::mutex &cp);
                 omni::sync::mutex& operator=(const omni::sync::mutex& other);
                 
-                #if defined(OMNI_TYPE_INFO)
-                    omni::type<omni::sync::mutex> m_type;
-                #endif
-                volatile std::size_t m_lokd;
+                volatile uint32_t m_lokd;
                 omni::sync::mutex_t m_mtx;
                 #if defined(OMNI_SAFE_MUTEX)
                     mutable omni::sync::mutex_t m_imtx; // internal mutex

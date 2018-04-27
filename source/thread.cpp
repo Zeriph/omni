@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -236,6 +232,9 @@ omni::sync::thread::thread() :
     m_isjoined(false),
     m_ispmthd(false)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::AUTO_JOIN, true);
     OMNI_D5_FW("thread created");
 }
@@ -255,6 +254,9 @@ omni::sync::thread::thread(const omni::sync::thread &cp) :
     m_isjoined(cp.m_isjoined),
     m_ispmthd(cp.m_ispmthd)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::AUTO_JOIN, true);
     if (cp.m_mthd != OMNI_NULL) {
         if (cp.m_ispmthd) {
@@ -281,6 +283,9 @@ omni::sync::thread::thread(const omni::sync::thread_flags &ops) :
     m_isjoined(false),
     m_ispmthd(false)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     OMNI_D5_FW("thread const copied");
 }
 
@@ -299,6 +304,9 @@ omni::sync::thread::thread(std::size_t max_stack_sz) :
     m_isjoined(false),
     m_ispmthd(false)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::AUTO_JOIN, true);
     OMNI_DV5_FW("thread created with stack size of ", this->m_ops.stack_size());
 }
@@ -318,6 +326,9 @@ omni::sync::thread::thread(const omni::sync::thread_start &mthd) :
     m_isjoined(false),
     m_ispmthd(false)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::AUTO_JOIN, true);
     OMNI_D5_FW("thread created with delegate method");
 }
@@ -337,6 +348,9 @@ omni::sync::thread::thread(const omni::sync::thread_start &mthd, const omni::syn
     m_isjoined(false),
     m_ispmthd(false)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::AUTO_JOIN, true);
     OMNI_D5_FW("thread created with delegate method");
 }
@@ -356,11 +370,14 @@ omni::sync::thread::thread(const omni::sync::thread_start &mthd, const omni::syn
     m_isjoined(false),
     m_ispmthd(false)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::AUTO_JOIN, true);
     OMNI_D5_FW("thread created with delegate method");
 }
 
-omni::sync::thread::thread(const omni::sync::thread_start& mthd, omni::sync::thread_start_type_t st) :
+omni::sync::thread::thread(const omni::sync::thread_start& mthd, omni::sync::thread_start_type::enum_t st) :
     aborted(),
     completed(),
     OMNI_CTOR_FW(omni::sync::thread)
@@ -375,6 +392,9 @@ omni::sync::thread::thread(const omni::sync::thread_start& mthd, omni::sync::thr
     m_isjoined(false),
     m_ispmthd(false)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::AUTO_JOIN, true);
     OMNI_D5_FW("thread created with delegate method");
     if (st == omni::sync::thread_start_type::NOW) {
@@ -382,7 +402,7 @@ omni::sync::thread::thread(const omni::sync::thread_start& mthd, omni::sync::thr
     }
 }
 
-omni::sync::thread::thread(const omni::sync::thread_start& mthd, const omni::sync::thread::delegate& abort_req, omni::sync::thread_start_type_t st) :
+omni::sync::thread::thread(const omni::sync::thread_start& mthd, const omni::sync::thread::delegate& abort_req, omni::sync::thread_start_type::enum_t st) :
     aborted(abort_req),
     completed(),
     OMNI_CTOR_FW(omni::sync::thread)
@@ -397,6 +417,9 @@ omni::sync::thread::thread(const omni::sync::thread_start& mthd, const omni::syn
     m_isjoined(false),
     m_ispmthd(false)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::AUTO_JOIN, true);
     OMNI_D5_FW("thread created with delegate method");
     if (st == omni::sync::thread_start_type::NOW) {
@@ -404,7 +427,7 @@ omni::sync::thread::thread(const omni::sync::thread_start& mthd, const omni::syn
     }
 }
 
-omni::sync::thread::thread(const omni::sync::thread_start& mthd, const omni::sync::thread::delegate& abort_req, const omni::sync::thread::delegate& comp, omni::sync::thread_start_type_t st) :
+omni::sync::thread::thread(const omni::sync::thread_start& mthd, const omni::sync::thread::delegate& abort_req, const omni::sync::thread::delegate& comp, omni::sync::thread_start_type::enum_t st) :
     aborted(abort_req),
     completed(comp),
     OMNI_CTOR_FW(omni::sync::thread)
@@ -419,6 +442,9 @@ omni::sync::thread::thread(const omni::sync::thread_start& mthd, const omni::syn
     m_isjoined(false),
     m_ispmthd(false)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::AUTO_JOIN, true);
     OMNI_D5_FW("thread created with delegate method");
     if (st == omni::sync::thread_start_type::NOW) {
@@ -441,6 +467,9 @@ omni::sync::thread::thread(const omni::sync::thread_start &mthd, std::size_t max
     m_isjoined(false),
     m_ispmthd(false)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::AUTO_JOIN, true);
     OMNI_DV5_FW("thread created with stack size of ", this->m_ops.stack_size());
 }
@@ -460,6 +489,9 @@ omni::sync::thread::thread(const omni::sync::thread_start &mthd, const omni::syn
     m_isjoined(false),
     m_ispmthd(false)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::AUTO_JOIN, true);
     OMNI_DV5_FW("thread created with stack size of ", this->m_ops.stack_size());
 }
@@ -479,11 +511,14 @@ omni::sync::thread::thread(const omni::sync::thread_start &mthd, const omni::syn
     m_isjoined(false),
     m_ispmthd(false)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::AUTO_JOIN, true);
     OMNI_DV5_FW("thread created with stack size of ", this->m_ops.stack_size());
 }
 
-omni::sync::thread::thread(const omni::sync::thread_start &mthd, std::size_t max_stack_sz, omni::sync::thread_start_type_t st) :
+omni::sync::thread::thread(const omni::sync::thread_start &mthd, std::size_t max_stack_sz, omni::sync::thread_start_type::enum_t st) :
     aborted(),
     completed(),
     OMNI_CTOR_FW(omni::sync::thread)
@@ -498,6 +533,9 @@ omni::sync::thread::thread(const omni::sync::thread_start &mthd, std::size_t max
     m_isjoined(false),
     m_ispmthd(false)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::AUTO_JOIN, true);
     OMNI_DV5_FW("thread created with stack size of ", this->m_ops.stack_size());
     if (st == omni::sync::thread_start_type::NOW) {
@@ -505,7 +543,7 @@ omni::sync::thread::thread(const omni::sync::thread_start &mthd, std::size_t max
     }
 }
 
-omni::sync::thread::thread(const omni::sync::thread_start &mthd, const omni::sync::thread::delegate& abort_req, std::size_t max_stack_sz, omni::sync::thread_start_type_t st) :
+omni::sync::thread::thread(const omni::sync::thread_start &mthd, const omni::sync::thread::delegate& abort_req, std::size_t max_stack_sz, omni::sync::thread_start_type::enum_t st) :
     aborted(abort_req),
     completed(),
     OMNI_CTOR_FW(omni::sync::thread)
@@ -520,6 +558,9 @@ omni::sync::thread::thread(const omni::sync::thread_start &mthd, const omni::syn
     m_isjoined(false),
     m_ispmthd(false)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::AUTO_JOIN, true);
     OMNI_DV5_FW("thread created with stack size of ", this->m_ops.stack_size());
     if (st == omni::sync::thread_start_type::NOW) {
@@ -527,7 +568,7 @@ omni::sync::thread::thread(const omni::sync::thread_start &mthd, const omni::syn
     }
 }
 
-omni::sync::thread::thread(const omni::sync::thread_start &mthd, const omni::sync::thread::delegate& abort_req, const omni::sync::thread::delegate& comp, std::size_t max_stack_sz, omni::sync::thread_start_type_t st) :
+omni::sync::thread::thread(const omni::sync::thread_start &mthd, const omni::sync::thread::delegate& abort_req, const omni::sync::thread::delegate& comp, std::size_t max_stack_sz, omni::sync::thread_start_type::enum_t st) :
     aborted(abort_req),
     completed(comp),
     OMNI_CTOR_FW(omni::sync::thread)
@@ -542,6 +583,9 @@ omni::sync::thread::thread(const omni::sync::thread_start &mthd, const omni::syn
     m_isjoined(false),
     m_ispmthd(false)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::AUTO_JOIN, true);
     OMNI_DV5_FW("thread created with stack size of ", this->m_ops.stack_size());
     if (st == omni::sync::thread_start_type::NOW) {
@@ -549,7 +593,7 @@ omni::sync::thread::thread(const omni::sync::thread_start &mthd, const omni::syn
     }
 }
 
-omni::sync::thread::thread(const omni::sync::thread_start& mthd, omni::sync::thread_option_t op, omni::sync::thread_union_t val) : 
+omni::sync::thread::thread(const omni::sync::thread_start& mthd, omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val) : 
     aborted(),
     completed(),
     OMNI_CTOR_FW(omni::sync::thread)
@@ -564,6 +608,9 @@ omni::sync::thread::thread(const omni::sync::thread_start& mthd, omni::sync::thr
     m_isjoined(false),
     m_ispmthd(false)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::AUTO_JOIN, true);
     OMNI_D5_FW("thread created with specific options");
     this->set_option(op, val);
@@ -586,6 +633,9 @@ omni::sync::thread::thread(const omni::sync::parameterized_thread_start &mthd) :
     m_isjoined(false),
     m_ispmthd(true)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::AUTO_JOIN, true);
     OMNI_D5_FW("thread created with delegate method");
 }
@@ -605,6 +655,9 @@ omni::sync::thread::thread(const omni::sync::parameterized_thread_start &mthd, c
     m_isjoined(false),
     m_ispmthd(true)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::AUTO_JOIN, true);
     OMNI_D5_FW("thread created with delegate method");
 }
@@ -624,6 +677,9 @@ omni::sync::thread::thread(const omni::sync::parameterized_thread_start &mthd, c
     m_isjoined(false),
     m_ispmthd(true)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::AUTO_JOIN, true);
     OMNI_D5_FW("thread created with delegate method");
 }
@@ -643,6 +699,9 @@ omni::sync::thread::thread(const omni::sync::parameterized_thread_start &mthd, s
     m_isjoined(false),
     m_ispmthd(true)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::AUTO_JOIN, true);
     OMNI_DV5_FW("thread created with stack size of ", this->m_ops.stack_size());
 }
@@ -662,6 +721,9 @@ omni::sync::thread::thread(const omni::sync::parameterized_thread_start &mthd, c
     m_isjoined(false),
     m_ispmthd(true)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::AUTO_JOIN, true);
     OMNI_DV5_FW("thread created with stack size of ", this->m_ops.stack_size());
 }
@@ -681,11 +743,14 @@ omni::sync::thread::thread(const omni::sync::parameterized_thread_start &mthd, c
     m_isjoined(false),
     m_ispmthd(true)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::AUTO_JOIN, true);
     OMNI_DV5_FW("thread created with stack size of ", this->m_ops.stack_size());
 }
 
-omni::sync::thread::thread(const omni::sync::parameterized_thread_start& mthd, omni::sync::thread_option_t op, omni::sync::thread_union_t val) :
+omni::sync::thread::thread(const omni::sync::parameterized_thread_start& mthd, omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val) :
     aborted(),
     completed(),
     OMNI_CTOR_FW(omni::sync::thread)
@@ -700,6 +765,9 @@ omni::sync::thread::thread(const omni::sync::parameterized_thread_start& mthd, o
     m_isjoined(false),
     m_ispmthd(true)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::AUTO_JOIN, true);
     OMNI_D5_FW("thread created with specific options");
     this->set_option(op, val);
@@ -813,7 +881,7 @@ void omni::sync::thread::detach(bool allow_rejoin)
     this->_hreset(true, allow_rejoin);
 }
 
-const omni::sync::thread_union_t omni::sync::thread::get_option(omni::sync::thread_option_t op) const
+const omni::sync::thread_union_t omni::sync::thread::get_option(omni::sync::thread_option::enum_t op) const
 {
     OMNI_SAFE_THREAD_ALOCK_FW
     switch (op) {
@@ -1072,13 +1140,13 @@ bool omni::sync::thread::restart(const omni::sync::parameterized_thread_start& m
     return this->restart(args);
 }
 
-omni::sync::thread_state_t omni::sync::thread::status() const
+omni::sync::thread_state omni::sync::thread::status() const
 {
     OMNI_SAFE_THREAD_ALOCK_FW
     return this->m_state;
 }
 
-void omni::sync::thread::set_option(omni::sync::thread_option_t op, omni::sync::thread_union_t val)
+void omni::sync::thread::set_option(omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val)
 {
     OMNI_SAFE_THREAD_ALOCK_FW
     switch (op) {
@@ -1468,7 +1536,7 @@ bool omni::sync::thread::_state_running() const
             this->m_state == omni::sync::thread_state::UNKNOWN);
 }
 
-void omni::sync::thread::_state_changed(omni::sync::thread_state_t nstate)
+void omni::sync::thread::_state_changed(omni::sync::thread_state::enum_t nstate)
 {
     OMNI_SAFE_THREAD_LOCK_FW
     omni::sync::thread_t tid = this->m_tid;
@@ -1498,7 +1566,7 @@ void omni::sync::thread::_state_machine()
     // We can't check for a stop request since that is a user killing
     // this thread, and if that succeeded then we wouldn't get here
     OMNI_SAFE_THREAD_LOCK_FW
-    omni::sync::thread_state_t st = this->m_state;
+    omni::sync::thread_state::enum_t st = this->m_state.value();
     OMNI_SAFE_THREAD_UNLOCK_FW
     switch (st) {
         case omni::sync::thread_state::RUNNING:
@@ -1604,13 +1672,13 @@ void omni::sync::thread::_set_prio()
     #endif
 }
 
-omni::sync::thread_priority_t omni::sync::thread::priority() const
+omni::sync::thread_priority omni::sync::thread::priority() const
 {
     OMNI_SAFE_THREAD_ALOCK_FW
     return this->m_priority;
 }
 
-void omni::sync::thread::set_priority(omni::sync::thread_priority_t p)
+void omni::sync::thread::set_priority(omni::sync::thread_priority::enum_t p)
 {
     /*
         DEV_NOTE: Thread scheduling is system dependent, this means that even
@@ -1643,7 +1711,7 @@ void omni::sync::thread::set_priority(omni::sync::thread_priority_t p)
     }
     OMNI_SAFE_THREAD_LOCK_FW
     // if we're not running, just set the priority til next time
-    this->m_priority = static_cast<omni::sync::thread_priority_t>(pri);
+    this->m_priority = pri;
     OMNI_SAFE_THREAD_UNLOCK_FW
     if (this->is_alive()) {
         OMNI_SAFE_THREAD_ALOCK_FW

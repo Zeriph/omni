@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -25,12 +21,20 @@
 #include <omni/defs/global.hpp>
 #include <omni/types/ostream_t.hpp>
 
+
+// DEV_NOTE: within the framework, if these are implemented, for consistency, try to keep the definition on one line
 #define OMNI_OSTREAM_FW(cls) OMNI_OSTREAM_OPERATOR(cls, to_string()) \
                              OMNI_WOSTREAM_OPERATOR(cls, to_wstring())
 
+#define OMNI_OSTREAM_FN_FW(cls) OMNI_OSTREAM_FN_OPERATOR(cls, to_string) \
+                                OMNI_WOSTREAM_FN_OPERATOR(cls, to_wstring)
+
+#define OMNI_OSTREAM_RAW_FW(cls, val) OMNI_OSTREAM_RAW_OPERATOR(cls, val) \
+                                      OMNI_WOSTREAM_RAW_OPERATOR(cls, val)
+
 #define OMNI_OSTREAM_STR_FW(cls) OMNI_FOSTREAM_OPC2T_FW(cls, to_string_t()) \
                                  OMNI_FOSTREAM_OPW2T_FW(cls, to_string_t())
-                                 
+
 #if defined(OMNI_OBJ_CTV1_FW)
     #undef OMNI_OBJ_CTV1_FW
 #endif
@@ -105,11 +109,11 @@
 
 #if defined(OMNI_TYPE_INFO)
     #include <omni/type.hpp>
-    #define OMNI_MTI_MBRT_FW(cls) const omni::type<cls>& type() const { return this->m_type; } \
-            std::size_t hash() const { return this->m_type.hash(); }
-    #define OMNI_MTI_CTOR_FW   m_type()
-    #define OMNI_MTI_SETCP_FW(val)  //this->m_type = val.m_type;
-    #define OMNI_MTI_EQU_FW(val)    (this->m_type == val.m_type)
+    #define OMNI_MTI_MBRT_FW(cls) uint64_t type() const { return omni::type_id<cls>(); } \
+                                  uint64_t hash() const { return reinterpret_cast<uint64_t>(this); }
+    #define OMNI_MTI_CTOR_FW 
+    #define OMNI_MTI_SETCP_FW(val) 
+    #define OMNI_MTI_EQU_FW(val) 
     
     #if !defined(OMNI_OBJ_CTV1_FW)
         #define OMNI_OBJ_CTV1_FW
@@ -117,9 +121,9 @@
         #define OMNI_OBJ_CCTV4_FW OMNI_MTI_CTOR_FW
         #define OMNI_OBJ_ETV4_FW(val) OMNI_MTI_EQU_FW(val)
     #else
-        #define OMNI_OBJ_CTV4_FW , OMNI_MTI_CTOR_FW
-        #define OMNI_OBJ_CCTV4_FW , OMNI_MTI_CTOR_FW
-        #define OMNI_OBJ_ETV4_FW(val) && OMNI_MTI_EQU_FW(val)
+        #define OMNI_OBJ_CTV4_FW //, OMNI_MTI_CTOR_FW
+        #define OMNI_OBJ_CCTV4_FW //, OMNI_MTI_CTOR_FW
+        #define OMNI_OBJ_ETV4_FW(val) //&& OMNI_MTI_EQU_FW(val)
     #endif
 #else
     #define OMNI_MTI_MBRT_FW(cls)
@@ -162,8 +166,8 @@
 #define OMNI_ASSIGN_FW(T) OMNI_MTI_SETCP_FW(T) OMNI_MDE_SETCP_FW(T) OMNI_MNM_SETCP_FW(T)
 
 /*
-DEV_NOTE: we can't undef these since these def's are referenced in other def's that get called
-after this header; since we're wrapping def's instead of types, we need these def's to be
+DEV_NOTE: we can't undef these since these defs are referenced in other defs that get called
+after this header; since we're wrapping defs instead of types, we need these defs to be
 left alone, otherwise we'll get errors (or logic errors).
 #undef OMNI_OBJ_CTV1_FW
 #undef OMNI_OBJ_CTV2_FW

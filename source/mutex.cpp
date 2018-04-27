@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -70,6 +66,9 @@ omni::sync::mutex::mutex() :
     OMNI_SAFE_XMTX_FW
     OMNI_MOLIST_FW
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     OMNI_SAFE_XINIT_FW
     omni::sync::mutex_init(this->m_mtx);
     OMNI_D5_FW("created");
@@ -81,6 +80,9 @@ omni::sync::mutex::mutex(bool initialy_owned) :
     OMNI_SAFE_XMTX_FW
     OMNI_MOLIST_FW
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     OMNI_SAFE_XINIT_FW
     omni::sync::mutex_init(this->m_mtx);
     OMNI_D5_FW("created");
@@ -126,7 +128,7 @@ void omni::sync::mutex::lock()
     OMNI_D4_FW("lock acquired");
 }
 
-bool omni::sync::mutex::lock(std::size_t timeout_ms)
+bool omni::sync::mutex::lock(uint32_t timeout_ms)
 {
     if (timeout_ms == 0) { return this->trylock(); }
     omni::chrono::tick_t start = omni::chrono::monotonic_tick();

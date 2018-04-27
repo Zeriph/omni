@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -24,6 +20,7 @@
 #define OMNI_THREAD_T_HPP 1
 #include <omni/defs/global.hpp>
 #include <omni/defs/thread_def.hpp>
+#include <omni/string/util.hpp>
 #include <omni/types/string_t.hpp>
 #include <omni/util/bits.hpp>
 #include <omni/generic_ptr.hpp>
@@ -33,294 +30,906 @@
 #include <omni/delegate/2.hpp>
 #include <omni/defs/consts.hpp>
 
+
 namespace omni {
     namespace sync {
         /** The priority structure defines enum values for the scheduling priority of a process or thread. */
-        typedef struct thread_priority {
-            /** The underlying enum type exposed via the parent priority structure */
-            typedef enum enum_t {
-                /** Defines an idle thread priority */
-                IDLE = -15,
-                /** Defines a low thread priority */
-                LOWEST = -2,
-                /** Defines a below normal thread priority */
-                BELOW_NORMAL = -1,
-                /** Defines a normal thread priority */
-                NORMAL = 0,
-                /** Defines an above normal thread priority */
-                ABOVE_NORMAL = 1,
-                /** Defines a highest thread priority */
-                HIGHEST = 2,
-                /** Defines a real time thread priority */
-                REAL_TIME = 15
-            } enum_t;
-            /** Defines the number of elements in the priority enum */
-            static const unsigned short COUNT = 7;
+        class thread_priority {
+            public:
+                /** The underlying enum type exposed via the parent priority structure */
+                typedef enum enum_t {
+                    /** Defines an idle thread priority */
+                    IDLE = -15,
+                    /** Defines a low thread priority */
+                    LOWEST = -2,
+                    /** Defines a below normal thread priority */
+                    BELOW_NORMAL = -1,
+                    /** Defines a normal thread priority */
+                    NORMAL = 0,
+                    /** Defines an above normal thread priority */
+                    ABOVE_NORMAL = 1,
+                    /** Defines a highest thread priority */
+                    HIGHEST = 2,
+                    /** Defines a real time thread priority */
+                    REAL_TIME = 15
+                } enum_t;
+
+                /** Defines the number of elements in the enum */
+                static const unsigned short COUNT = 7;
+
+                /** The default value for this enum instance */
+                static const enum_t DEFAULT_VALUE = omni::sync::thread_priority::NORMAL;
             
-            /** Converts the enum to its string representation */
-            static const std::string to_string(const enum_t& v)
-            {
-                switch (v) {
-                    OMNI_E2S_FW(IDLE);
-                    OMNI_E2S_FW(LOWEST);
-                    OMNI_E2S_FW(BELOW_NORMAL);
-                    OMNI_E2S_FW(NORMAL);
-                    OMNI_E2S_FW(ABOVE_NORMAL);
-                    OMNI_E2S_FW(HIGHEST);
-                    OMNI_E2S_FW(REAL_TIME);
-                    default: break;
+                /** Converts the enum to its string representation */
+                static std::string to_string(enum_t v)
+                {
+                    switch (v) {
+                        OMNI_E2S_FW(IDLE);
+                        OMNI_E2S_FW(LOWEST);
+                        OMNI_E2S_FW(BELOW_NORMAL);
+                        OMNI_E2S_FW(NORMAL);
+                        OMNI_E2S_FW(ABOVE_NORMAL);
+                        OMNI_E2S_FW(HIGHEST);
+                        OMNI_E2S_FW(REAL_TIME);
+                        default: break;
+                    }
+                    return "UNKNOWN";
                 }
-                return "UNKNOWN";
-            }
             
-            /** Converts the enum to its wide string representation */
-            static const std::wstring to_wstring(const enum_t& v)
-            {
-                switch (v) {
-                    OMNI_E2WS_FW(IDLE);
-                    OMNI_E2WS_FW(LOWEST);
-                    OMNI_E2WS_FW(BELOW_NORMAL);
-                    OMNI_E2WS_FW(NORMAL);
-                    OMNI_E2WS_FW(ABOVE_NORMAL);
-                    OMNI_E2WS_FW(HIGHEST);
-                    OMNI_E2WS_FW(REAL_TIME);
-                    default: break;
+                /** Converts the enum to its wide string representation */
+                static std::wstring to_wstring(enum_t v)
+                {
+                    switch (v) {
+                        OMNI_E2WS_FW(IDLE);
+                        OMNI_E2WS_FW(LOWEST);
+                        OMNI_E2WS_FW(BELOW_NORMAL);
+                        OMNI_E2WS_FW(NORMAL);
+                        OMNI_E2WS_FW(ABOVE_NORMAL);
+                        OMNI_E2WS_FW(HIGHEST);
+                        OMNI_E2WS_FW(REAL_TIME);
+                        default: break;
+                    }
+                    return OMNI_WSTR("UNKNOWN");
                 }
-                return OMNI_WSTR("UNKNOWN");
-            }
-            
-            friend std::ostream& operator<<(std::ostream& s, const enum_t& c)
-            { s << to_string(c); return s; }
-            friend std::wostream& operator<<(std::wostream& s, const enum_t& c)
-            { s << to_wstring(c); return s; }
-        } thread_priority;
+
+                /** Returns true if the integer value specified is a valid enum value */
+                static bool is_valid(int val)
+                {
+                    switch (val) {
+                        case IDLE:
+                        case LOWEST:
+                        case BELOW_NORMAL:
+                        case NORMAL:
+                        case ABOVE_NORMAL:
+                        case HIGHEST:
+                        case REAL_TIME:
+                            return true;
+                        default: break;
+                    }
+                    return false;
+                }
+                
+                thread_priority() :
+                    OMNI_CTOR_FW(omni::sync::thread_priority)
+                    m_val(omni::sync::thread_priority::DEFAULT_VALUE)
+                { }
+
+                thread_priority(const thread_priority& cp) :
+                    OMNI_CPCTOR_FW(cp)
+                    m_val(cp.m_val)
+                { }
+
+                thread_priority(enum_t val) : 
+                    OMNI_CTOR_FW(omni::sync::thread_priority)
+                    m_val(val)
+                { }
+
+                ~thread_priority()
+                {
+                    OMNI_TRY_FW
+                    OMNI_DTOR_FW
+                    OMNI_CATCH_FW
+                    OMNI_D5_FW("destroyed");
+                }
+
+                enum_t value() const
+                {
+                    return this->m_val;
+                }
+
+                const std::string to_string() const
+                {
+                    return to_string(this->m_val);
+                }
+
+                const std::wstring to_wstring() const
+                {
+                    return to_wstring(this->m_val);
+                }
+
+                bool operator!=(const thread_priority& val) const
+                {
+                    return !(*this == val);
+                }
+                
+                bool operator!=(enum_t val) const
+                {
+                    return (this->m_val != val);
+                }
+                
+                thread_priority& operator=(const thread_priority& val)
+                {
+                    if (this != &val) {
+                        OMNI_ASSIGN_FW(val)
+                        this->m_val = val.m_val;
+                    }
+                    return *this;
+                }
+
+                thread_priority& operator=(enum_t val)
+                {
+                    this->m_val = val;
+                    return *this;
+                }
+
+                thread_priority& operator=(int val)
+                {
+                    if (!thread_priority::is_valid(val)) {
+                        OMNI_ERR_RET_FW("Invalid enumeration value specified.", omni::exceptions::invalid_enum(val));
+                    } else {
+                        this->m_val = static_cast<enum_t>(val);
+                    }
+                    return *this;
+                }
+
+                bool operator<(const thread_priority& val) const
+                {
+                    return this->m_val < val.m_val;
+                }
+
+                bool operator<(enum_t val) const
+                {
+                    return this->m_val < val;
+                }
+
+                bool operator<(int val) const
+                {
+                    return this->m_val < static_cast<enum_t>(val);
+                }
+
+                bool operator>(const thread_priority& val) const
+                {
+                    return this->m_val > val.m_val;
+                }
+
+                bool operator>(enum_t val) const
+                {
+                    return this->m_val > val;
+                }
+
+                bool operator>(int val) const
+                {
+                    return this->m_val > val;
+                }
+
+                bool operator==(const thread_priority& val) const
+                {
+                    if (this == &val) { return true; }
+                    return this->m_val == val.m_val
+                            OMNI_EQUAL_FW(val);
+                }
+
+                bool operator==(enum_t val) const
+                {
+                    return this->m_val == val;
+                }
+
+                bool operator==(int val) const
+                {
+                    return this->m_val == val;
+                }
+
+                operator enum_t() const
+                {
+                    return this->m_val;
+                }
+
+                operator int() const
+                {
+                    return static_cast<int>(this->m_val);
+                }
+
+                operator std::string() const
+                {
+                    return this->to_string();
+                }
+
+                operator std::wstring() const
+                {
+                    return this->to_wstring();
+                }
+
+                OMNI_MEMBERS_FW(omni::sync::thread_priority) // disposing,name,type(),hash()
+
+                OMNI_OSTREAM_FW(omni::sync::thread_priority)
+                OMNI_OSTREAM_FN_FW(enum_t)
+
+            private:
+                enum_t m_val;
+        };
         
         /** The thread start type (immediate or user) */
-        typedef struct thread_start_type {
-            /** The underlying enum type expected */
-            typedef enum enum_t {
-                /** Defines the thread will start when the user calls the start method */
-                USER = 0,
-                /** Defines the thread will start after construction is complete */
-                NOW = 1
-            } enum_t;
-            /** Defines the number of elements in the start_type enum */
-            static const unsigned short COUNT = 2;
-            
-            /** Converts the enum to its string representation */
-            static const std::string to_string(const enum_t& v)
-            {
-                switch (v) {
-                    OMNI_E2S_FW(USER);
-                    OMNI_E2S_FW(NOW);
-                    default: break;
+        class thread_start_type {
+            public:
+                /** The underlying enum type expected */
+                typedef enum enum_t {
+                    /** Defines the thread will start when the user calls the start method */
+                    USER = 0,
+                    /** Defines the thread will start after construction is complete */
+                    NOW = 1
+                } enum_t;
+
+                /** Defines the number of elements in the enum */
+                static const unsigned short COUNT = 2;
+
+                /** The default value for this enum instance */
+                static const enum_t DEFAULT_VALUE = omni::sync::thread_start_type::USER;
+                
+                /** Converts the enum to its string representation */
+                static std::string to_string(enum_t v)
+                {
+                    switch (v) {
+                        OMNI_E2S_FW(USER);
+                        OMNI_E2S_FW(NOW);
+                        default: break;
+                    }
+                    return "UNKNOWN";
                 }
-                return "UNKNOWN";
-            }
-            
-            /** Converts the enum to its wide string representation */
-            static const std::wstring to_wstring(const enum_t& v)
-            {
-                switch (v) {
-                    OMNI_E2WS_FW(USER);
-                    OMNI_E2WS_FW(NOW);
-                    default: break;
+                
+                /** Converts the enum to its wide string representation */
+                static std::wstring to_wstring(enum_t v)
+                {
+                    switch (v) {
+                        OMNI_E2WS_FW(USER);
+                        OMNI_E2WS_FW(NOW);
+                        default: break;
+                    }
+                    return OMNI_WSTR("UNKNOWN");
                 }
-                return OMNI_WSTR("UNKNOWN");
-            }
-            
-            friend std::ostream& operator<<(std::ostream& s, const enum_t& c)
-            { s << to_string(c); return s; }
-            friend std::wostream& operator<<(std::wostream& s, const enum_t& c)
-            { s << to_wstring(c); return s; }
-        } thread_start_type;
+                
+                /** Returns true if the integer value specified is a valid enum value */
+                static bool is_valid(int val)
+                {
+                    switch (val) {
+                        case USER:
+                        case NOW:
+                            return true;
+                        default: break;
+                    }
+                    return false;
+                }
+                
+                thread_start_type() :
+                    OMNI_CTOR_FW(omni::sync::thread_start_type)
+                    m_val(omni::sync::thread_start_type::DEFAULT_VALUE)
+                { }
+
+                thread_start_type(const thread_start_type& cp) :
+                    OMNI_CPCTOR_FW(cp)
+                    m_val(cp.m_val)
+                { }
+
+                thread_start_type(enum_t val) : 
+                    OMNI_CTOR_FW(omni::sync::thread_start_type)
+                    m_val(val)
+                { }
+
+                ~thread_start_type()
+                {
+                    OMNI_TRY_FW
+                    OMNI_DTOR_FW
+                    OMNI_CATCH_FW
+                    OMNI_D5_FW("destroyed");
+                }
+
+                enum_t value() const
+                {
+                    return this->m_val;
+                }
+
+                const std::string to_string() const
+                {
+                    return to_string(this->m_val);
+                }
+
+                const std::wstring to_wstring() const
+                {
+                    return to_wstring(this->m_val);
+                }
+
+                bool operator!=(const thread_start_type& val) const
+                {
+                    return !(*this == val);
+                }
+                
+                bool operator!=(enum_t val) const
+                {
+                    return (this->m_val != val);
+                }
+                
+                thread_start_type& operator=(const thread_start_type& val)
+                {
+                    if (this != &val) {
+                        OMNI_ASSIGN_FW(val)
+                        this->m_val = val.m_val;
+                    }
+                    return *this;
+                }
+
+                thread_start_type& operator=(enum_t val)
+                {
+                    this->m_val = val;
+                    return *this;
+                }
+
+                thread_start_type& operator=(int val)
+                {
+                    if (!thread_start_type::is_valid(val)) {
+                        OMNI_ERR_RET_FW("Invalid enumeration value specified.", omni::exceptions::invalid_enum(val));
+                    } else {
+                        this->m_val = static_cast<enum_t>(val);
+                    }
+                    return *this;
+                }
+
+                bool operator<(const thread_start_type& val) const
+                {
+                    return this->m_val < val.m_val;
+                }
+
+                bool operator<(enum_t val) const
+                {
+                    return this->m_val < val;
+                }
+
+                bool operator<(int val) const
+                {
+                    return this->m_val < static_cast<enum_t>(val);
+                }
+
+                bool operator>(const thread_start_type& val) const
+                {
+                    return this->m_val > val.m_val;
+                }
+
+                bool operator>(enum_t val) const
+                {
+                    return this->m_val > val;
+                }
+
+                bool operator>(int val) const
+                {
+                    return this->m_val > val;
+                }
+
+                bool operator==(const thread_start_type& val) const
+                {
+                    if (this == &val) { return true; }
+                    return this->m_val == val.m_val
+                            OMNI_EQUAL_FW(val);
+                }
+
+                bool operator==(enum_t val) const
+                {
+                    return this->m_val == val;
+                }
+
+                bool operator==(int val) const
+                {
+                    return this->m_val == val;
+                }
+
+                operator enum_t() const
+                {
+                    return this->m_val;
+                }
+
+                operator int() const
+                {
+                    return static_cast<int>(this->m_val);
+                }
+
+                operator std::string() const
+                {
+                    return this->to_string();
+                }
+
+                operator std::wstring() const
+                {
+                    return this->to_wstring();
+                }
+
+                OMNI_MEMBERS_FW(omni::sync::thread_start_type) // disposing,name,type(),hash()
+
+                OMNI_OSTREAM_FW(omni::sync::thread_start_type)
+                OMNI_OSTREAM_FN_FW(enum_t)
+
+            private:
+                enum_t m_val;
+        };
         
         /** The state structure defines enum values for the execution status of thread types */
-        typedef struct thread_state {
-            /** The underlying enum type exposed via the parent state structure */
-            typedef enum enum_t {
-                /** Defines a thread as unstarted (default when created) */
-                UNSTARTED = 0,
-                /** Defines a thread is attempting to spawn */
-                START_REQUESTED = 1,
-                /** Defines a thread is running (method has been called) */
-                RUNNING = 2,
-                /** Defines a thread has completed its function (method complete) */
-                COMPLETED = 4,
-                /** Defines a thread has a stop request (kill request) */
-                STOP_REQUESTED = 8,
-                /** Defines a thread is stopped (killed) */
-                STOPPED = 16,
-                /** Defines a thread has an abort request */
-                ABORT_REQUESTED = 32,
-                /** Defines a thread has been aborted */
-                ABORTED = 64,
-                /** Defines a thread has a state that can not be determined (when creating threads from handles for instance) */
-                UNKNOWN = 255
-            } enum_t;
-            
-            /** Defines the number of elements in the state enum */
-            static const unsigned short COUNT = 9;
-            
-            /** Converts the enum to its string representation */
-            static const std::string to_string(const enum_t& v)
-            {
-                switch (v) {
-                    OMNI_E2S_FW(UNSTARTED);
-                    OMNI_E2S_FW(START_REQUESTED);
-                    OMNI_E2S_FW(RUNNING);
-                    OMNI_E2S_FW(COMPLETED);
-                    OMNI_E2S_FW(STOP_REQUESTED);
-                    OMNI_E2S_FW(STOPPED);
-                    OMNI_E2S_FW(ABORT_REQUESTED);
-                    OMNI_E2S_FW(ABORTED);
-                    OMNI_E2S_FW(UNKNOWN); // pedant
-                    default: break;
+        class thread_state {
+            public:
+                /** The underlying enum type exposed via the parent state structure */
+                typedef enum enum_t {
+                    /** Defines a thread as unstarted (default when created) */
+                    UNSTARTED = 0,
+                    /** Defines a thread is attempting to spawn */
+                    START_REQUESTED = 1,
+                    /** Defines a thread is running (method has been called) */
+                    RUNNING = 2,
+                    /** Defines a thread has completed its function (method complete) */
+                    COMPLETED = 4,
+                    /** Defines a thread has a stop request (kill request) */
+                    STOP_REQUESTED = 8,
+                    /** Defines a thread is stopped (killed) */
+                    STOPPED = 16,
+                    /** Defines a thread has an abort request */
+                    ABORT_REQUESTED = 32,
+                    /** Defines a thread has been aborted */
+                    ABORTED = 64,
+                    /** Defines a thread has a state that can not be determined (when creating threads from handles for instance) */
+                    UNKNOWN = 255
+                } enum_t;
+
+                /** Defines the number of elements in the enum */
+                static const unsigned short COUNT = 9;
+
+                /** The default value for this enum instance */
+                static const enum_t DEFAULT_VALUE = omni::sync::thread_state::UNSTARTED;
+                
+                /** Converts the enum to its string representation */
+                static std::string to_string(enum_t v)
+                {
+                    switch (v) {
+                        OMNI_E2S_FW(UNSTARTED);
+                        OMNI_E2S_FW(START_REQUESTED);
+                        OMNI_E2S_FW(RUNNING);
+                        OMNI_E2S_FW(COMPLETED);
+                        OMNI_E2S_FW(STOP_REQUESTED);
+                        OMNI_E2S_FW(STOPPED);
+                        OMNI_E2S_FW(ABORT_REQUESTED);
+                        OMNI_E2S_FW(ABORTED);
+                        OMNI_E2S_FW(UNKNOWN); // pedant
+                        default: break;
+                    }
+                    return "UNKNOWN";
                 }
-                return "UNKNOWN";
-            }
-            
-            /** Converts the enum to its wide string representation */
-            static const std::wstring to_wstring(const enum_t& v)
-            {
-                switch (v) {
-                    OMNI_E2WS_FW(UNSTARTED);
-                    OMNI_E2WS_FW(START_REQUESTED);
-                    OMNI_E2WS_FW(RUNNING);
-                    OMNI_E2WS_FW(COMPLETED);
-                    OMNI_E2WS_FW(STOP_REQUESTED);
-                    OMNI_E2WS_FW(STOPPED);
-                    OMNI_E2WS_FW(ABORT_REQUESTED);
-                    OMNI_E2WS_FW(ABORTED);
-                    OMNI_E2WS_FW(UNKNOWN); // pedant
-                    default: break;
+                
+                /** Converts the enum to its wide string representation */
+                static std::wstring to_wstring(enum_t v)
+                {
+                    switch (v) {
+                        OMNI_E2WS_FW(UNSTARTED);
+                        OMNI_E2WS_FW(START_REQUESTED);
+                        OMNI_E2WS_FW(RUNNING);
+                        OMNI_E2WS_FW(COMPLETED);
+                        OMNI_E2WS_FW(STOP_REQUESTED);
+                        OMNI_E2WS_FW(STOPPED);
+                        OMNI_E2WS_FW(ABORT_REQUESTED);
+                        OMNI_E2WS_FW(ABORTED);
+                        OMNI_E2WS_FW(UNKNOWN); // pedant
+                        default: break;
+                    }
+                    return OMNI_WSTR("UNKNOWN");
                 }
-                return OMNI_WSTR("UNKNOWN");
-            }
-            
-            friend std::ostream& operator<<(std::ostream& s, const enum_t& c)
-            { s << to_string(c); return s; }
-            friend std::wostream& operator<<(std::wostream& s, const enum_t& c)
-            { s << to_wstring(c); return s; }
-        } thread_state;
+                
+                /** Returns true if the integer value specified is a valid enum value */
+                static bool is_valid(int val)
+                {
+                    switch (val) {
+                        case UNSTARTED:
+                        case START_REQUESTED:
+                        case RUNNING:
+                        case COMPLETED:
+                        case STOP_REQUESTED:
+                        case STOPPED:
+                        case ABORT_REQUESTED:
+                        case ABORTED:
+                        case UNKNOWN:
+                            return true;
+                        default: break;
+                    }
+                    return false;
+                }
+                
+                thread_state() :
+                    OMNI_CTOR_FW(omni::sync::thread_state)
+                    m_val(omni::sync::thread_state::DEFAULT_VALUE)
+                { }
+
+                thread_state(const thread_state& cp) :
+                    OMNI_CPCTOR_FW(cp)
+                    m_val(cp.m_val)
+                { }
+
+                thread_state(enum_t val) : 
+                    OMNI_CTOR_FW(omni::sync::thread_state)
+                    m_val(val)
+                { }
+
+                ~thread_state()
+                {
+                    OMNI_TRY_FW
+                    OMNI_DTOR_FW
+                    OMNI_CATCH_FW
+                    OMNI_D5_FW("destroyed");
+                }
+
+                enum_t value() const
+                {
+                    return this->m_val;
+                }
+
+                const std::string to_string() const
+                {
+                    return to_string(this->m_val);
+                }
+
+                const std::wstring to_wstring() const
+                {
+                    return to_wstring(this->m_val);
+                }
+
+                bool operator!=(const thread_state& val) const
+                {
+                    return !(*this == val);
+                }
+                
+                bool operator!=(enum_t val) const
+                {
+                    return (this->m_val != val);
+                }
+                
+                thread_state& operator=(const thread_state& val)
+                {
+                    if (this != &val) {
+                        OMNI_ASSIGN_FW(val)
+                        this->m_val = val.m_val;
+                    }
+                    return *this;
+                }
+
+                thread_state& operator=(enum_t val)
+                {
+                    this->m_val = val;
+                    return *this;
+                }
+
+                thread_state& operator=(int val)
+                {
+                    if (!thread_state::is_valid(val)) {
+                        OMNI_ERR_RET_FW("Invalid enumeration value specified.", omni::exceptions::invalid_enum(val));
+                    } else {
+                        this->m_val = static_cast<enum_t>(val);
+                    }
+                    return *this;
+                }
+
+                bool operator<(const thread_state& val) const
+                {
+                    return this->m_val < val.m_val;
+                }
+
+                bool operator<(enum_t val) const
+                {
+                    return this->m_val < val;
+                }
+
+                bool operator<(int val) const
+                {
+                    return this->m_val < static_cast<enum_t>(val);
+                }
+
+                bool operator>(const thread_state& val) const
+                {
+                    return this->m_val > val.m_val;
+                }
+
+                bool operator>(enum_t val) const
+                {
+                    return this->m_val > val;
+                }
+
+                bool operator>(int val) const
+                {
+                    return this->m_val > val;
+                }
+
+                bool operator==(const thread_state& val) const
+                {
+                    if (this == &val) { return true; }
+                    return this->m_val == val.m_val
+                            OMNI_EQUAL_FW(val);
+                }
+
+                bool operator==(enum_t val) const
+                {
+                    return this->m_val == val;
+                }
+
+                bool operator==(int val) const
+                {
+                    return this->m_val == val;
+                }
+
+                operator enum_t() const
+                {
+                    return this->m_val;
+                }
+
+                operator int() const
+                {
+                    return static_cast<int>(this->m_val);
+                }
+
+                operator std::string() const
+                {
+                    return this->to_string();
+                }
+
+                operator std::wstring() const
+                {
+                    return this->to_wstring();
+                }
+
+                OMNI_MEMBERS_FW(omni::sync::thread_state) // disposing,name,type(),hash()
+
+                OMNI_OSTREAM_FW(omni::sync::thread_state)
+                OMNI_OSTREAM_FN_FW(enum_t)
+
+            private:
+                enum_t m_val;
+        };
         
         /** Defines the thread options structure allowing finer control of a thread object */
-        typedef struct thread_option {
-            /** The underlying enum type exposed via the parent thread_option structure */
-            typedef enum enum_t {
-                /** Defines the option to set if the thread shall allow reuse of the thread */
-                ALLOW_THREAD_REUSE = 1,
-                /** Defines the option to auto join a thread on destruction */
-                AUTO_JOIN = 2,
-                DETACH_ON_DESTROY = 4, // default
-                ABORT_ON_DESTROY = 8,
-                KILL_ON_DESTROY = 16,
-                DETACH_ON_ASSIGN = 32, // default
-                ABORT_ON_ASSIGN = 64,
-                KILL_ON_ASSIGN = 128,
-                /** Defines the option to set if the thread shall have a specified stack size */
-                STACK_SIZE = 256,
-                /** Defines the option to set if the thread timeout for join operation on kill_on_eop */
-                AUTO_JOIN_TIMEOUT = 512
-            } enum_t;
-            
-            /** Defines the number of elements in the thread_option enum */
-            static const unsigned short COUNT = 10;
-            
-            /** Converts the enum to its string representation */
-            static const std::string to_string(const enum_t& v)
-            {
-                switch (v) {
-                    OMNI_E2S_FW(ALLOW_THREAD_REUSE);
-                    OMNI_E2S_FW(AUTO_JOIN);
-                    OMNI_E2S_FW(DETACH_ON_DESTROY);
-                    OMNI_E2S_FW(ABORT_ON_DESTROY);
-                    OMNI_E2S_FW(KILL_ON_DESTROY);
-                    OMNI_E2S_FW(DETACH_ON_ASSIGN);
-                    OMNI_E2S_FW(ABORT_ON_ASSIGN);
-                    OMNI_E2S_FW(KILL_ON_ASSIGN);
-                    OMNI_E2S_FW(STACK_SIZE);
-                    OMNI_E2S_FW(AUTO_JOIN_TIMEOUT);
-                    default: break;
+        class thread_option {
+            public:
+                /** The underlying enum type exposed via the parent thread_option structure */
+                typedef enum enum_t {
+                    NONE = 0,
+                    /** Defines the option to set if the thread shall allow reuse of the thread */
+                    ALLOW_THREAD_REUSE = 1,
+                    /** Defines the option to auto join a thread on destruction */
+                    AUTO_JOIN = 2,
+                    DETACH_ON_DESTROY = 4, // default
+                    ABORT_ON_DESTROY = 8,
+                    KILL_ON_DESTROY = 16,
+                    DETACH_ON_ASSIGN = 32, // default
+                    ABORT_ON_ASSIGN = 64,
+                    KILL_ON_ASSIGN = 128,
+                    /** Defines the option to set if the thread shall have a specified stack size */
+                    STACK_SIZE = 256,
+                    /** Defines the option to set if the thread timeout for join operation on kill_on_eop */
+                    AUTO_JOIN_TIMEOUT = 512
+                } enum_t;
+
+                /** Defines the number of elements in the enum */
+                static const unsigned short COUNT = 11;
+
+                /** The default value for this enum instance */
+                static const enum_t DEFAULT_VALUE = omni::sync::thread_option::NONE;
+                
+                /** Converts the enum to its string representation */
+                static std::string to_string(enum_t v)
+                {
+                    switch (v) {
+                        OMNI_E2S_FW(ALLOW_THREAD_REUSE);
+                        OMNI_E2S_FW(AUTO_JOIN);
+                        OMNI_E2S_FW(DETACH_ON_DESTROY);
+                        OMNI_E2S_FW(ABORT_ON_DESTROY);
+                        OMNI_E2S_FW(KILL_ON_DESTROY);
+                        OMNI_E2S_FW(DETACH_ON_ASSIGN);
+                        OMNI_E2S_FW(ABORT_ON_ASSIGN);
+                        OMNI_E2S_FW(KILL_ON_ASSIGN);
+                        OMNI_E2S_FW(STACK_SIZE);
+                        OMNI_E2S_FW(AUTO_JOIN_TIMEOUT);
+                        default: break;
+                    }
+                    return "UNKNOWN";
                 }
-                return "UNKNOWN";
-            }
-            
-            /** Converts the enum to its wide string representation */
-            static const std::wstring to_wstring(const enum_t& v)
-            {
-                switch (v) {
-                    OMNI_E2WS_FW(ALLOW_THREAD_REUSE);
-                    OMNI_E2WS_FW(AUTO_JOIN);
-                    OMNI_E2WS_FW(DETACH_ON_DESTROY);
-                    OMNI_E2WS_FW(ABORT_ON_DESTROY);
-                    OMNI_E2WS_FW(KILL_ON_DESTROY);
-                    OMNI_E2WS_FW(DETACH_ON_ASSIGN);
-                    OMNI_E2WS_FW(ABORT_ON_ASSIGN);
-                    OMNI_E2WS_FW(KILL_ON_ASSIGN);
-                    OMNI_E2WS_FW(STACK_SIZE);
-                    OMNI_E2WS_FW(AUTO_JOIN_TIMEOUT);
-                    default: break;
+                
+                /** Converts the enum to its wide string representation */
+                static std::wstring to_wstring(enum_t v)
+                {
+                    switch (v) {
+                        OMNI_E2WS_FW(ALLOW_THREAD_REUSE);
+                        OMNI_E2WS_FW(AUTO_JOIN);
+                        OMNI_E2WS_FW(DETACH_ON_DESTROY);
+                        OMNI_E2WS_FW(ABORT_ON_DESTROY);
+                        OMNI_E2WS_FW(KILL_ON_DESTROY);
+                        OMNI_E2WS_FW(DETACH_ON_ASSIGN);
+                        OMNI_E2WS_FW(ABORT_ON_ASSIGN);
+                        OMNI_E2WS_FW(KILL_ON_ASSIGN);
+                        OMNI_E2WS_FW(STACK_SIZE);
+                        OMNI_E2WS_FW(AUTO_JOIN_TIMEOUT);
+                        default: break;
+                    }
+                    return OMNI_WSTR("UNKNOWN");
                 }
-                return OMNI_WSTR("UNKNOWN");
-            }
-            
-            friend std::ostream& operator<<(std::ostream& s, const enum_t& c)
-            { s << to_string(c); return s; }
-            friend std::wostream& operator<<(std::wostream& s, const enum_t& c)
-            { s << to_wstring(c); return s; }
-        } thread_option;
-        
-        /** Defines the union type used to set specific thread options. */
-        typedef union thread_option_union {
-            /** Defines the std::size_t value of this union */
-            std::size_t s_val;
-            /** Defines the boolean value of this union */
-            bool b_val;
-            
-            /**
-             * This constructor is templated to avoid ambiguous name resolution errors
-             * with the more specialized bool/std::size_t constructors. A compile error 
-             * will be generated if this template constructor is utilized since it's
-             * an error to initialize both members of a union in a constructor.
-             * 
-             * @param val   Not used
-             * @tparam T    Not used
-             */
-            // TODO: this generates an error in clang, regardless of the fact that it's not utilized
-            // template < typename T > thread_option_union(T val) : s_val(0), b_val(false) {}
-            
-            /**
-             * Create a new union based on the specified numeric value.
-             * 
-             * @param val   The value to set to this union
-             */
-            thread_option_union(int val) : s_val(static_cast<std::size_t>(val)) {}
-            
-            /**
-             * Create a new union based on the specified numeric value.
-             * 
-             * @param val   The value to set to this union
-             */
-            thread_option_union(long val) : s_val(static_cast<std::size_t>(val)) {}
-            
-            /**
-             * Create a new union based on the specified numeric value.
-             * 
-             * @param val   The value to set to this union
-             */
-            thread_option_union(std::size_t val) : s_val(val) {}
-            
-            /**
-             * Create a new union based on the specified boolean value.
-             * 
-             * @param val   The value to set to this union
-             */
-            thread_option_union(bool val) : b_val(val) {}
-        } thread_option_union;
+                
+                /** Returns true if the integer value specified is a valid enum value */
+                static bool is_valid(int val)
+                {
+                    switch (val) {
+                        case ALLOW_THREAD_REUSE:
+                        case AUTO_JOIN:
+                        case DETACH_ON_DESTROY:
+                        case ABORT_ON_DESTROY:
+                        case KILL_ON_DESTROY:
+                        case DETACH_ON_ASSIGN:
+                        case ABORT_ON_ASSIGN:
+                        case KILL_ON_ASSIGN:
+                        case STACK_SIZE:
+                        case AUTO_JOIN_TIMEOUT:
+                            return true;
+                        default: break;
+                    }
+                    return false;
+                }
+
+                thread_option() :
+                    OMNI_CTOR_FW(omni::sync::thread_option)
+                    m_val(omni::sync::thread_option::DEFAULT_VALUE)
+                { }
+
+                thread_option(const thread_option& cp) :
+                    OMNI_CPCTOR_FW(cp)
+                    m_val(cp.m_val)
+                { }
+
+                thread_option(enum_t val) : 
+                    OMNI_CTOR_FW(omni::sync::thread_option)
+                    m_val(val)
+                { }
+
+                ~thread_option()
+                {
+                    OMNI_TRY_FW
+                    OMNI_DTOR_FW
+                    OMNI_CATCH_FW
+                    OMNI_D5_FW("destroyed");
+                }
+
+                enum_t value() const
+                {
+                    return this->m_val;
+                }
+
+                const std::string to_string() const
+                {
+                    return to_string(this->m_val);
+                }
+
+                const std::wstring to_wstring() const
+                {
+                    return to_wstring(this->m_val);
+                }
+
+                bool operator!=(const thread_option& val) const
+                {
+                    return !(*this == val);
+                }
+                
+                bool operator!=(enum_t val) const
+                {
+                    return (this->m_val != val);
+                }
+                
+                thread_option& operator=(const thread_option& val)
+                {
+                    if (this != &val) {
+                        OMNI_ASSIGN_FW(val)
+                        this->m_val = val.m_val;
+                    }
+                    return *this;
+                }
+
+                thread_option& operator=(enum_t val)
+                {
+                    this->m_val = val;
+                    return *this;
+                }
+
+                thread_option& operator=(int val)
+                {
+                    if (!thread_option::is_valid(val)) {
+                        OMNI_ERR_RET_FW("Invalid enumeration value specified.", omni::exceptions::invalid_enum(val));
+                    } else {
+                        this->m_val = static_cast<enum_t>(val);
+                    }
+                    return *this;
+                }
+
+                bool operator<(const thread_option& val) const
+                {
+                    return this->m_val < val.m_val;
+                }
+
+                bool operator<(enum_t val) const
+                {
+                    return this->m_val < val;
+                }
+
+                bool operator<(int val) const
+                {
+                    return this->m_val < static_cast<enum_t>(val);
+                }
+
+                bool operator>(const thread_option& val) const
+                {
+                    return this->m_val > val.m_val;
+                }
+
+                bool operator>(enum_t val) const
+                {
+                    return this->m_val > val;
+                }
+
+                bool operator>(int val) const
+                {
+                    return this->m_val > val;
+                }
+
+                bool operator==(const thread_option& val) const
+                {
+                    if (this == &val) { return true; }
+                    return this->m_val == val.m_val
+                            OMNI_EQUAL_FW(val);
+                }
+
+                bool operator==(enum_t val) const
+                {
+                    return this->m_val == val;
+                }
+
+                bool operator==(int val) const
+                {
+                    return this->m_val == val;
+                }
+
+                operator enum_t() const
+                {
+                    return this->m_val;
+                }
+
+                operator int() const
+                {
+                    return static_cast<int>(this->m_val);
+                }
+
+                operator std::string() const
+                {
+                    return this->to_string();
+                }
+
+                operator std::wstring() const
+                {
+                    return this->to_wstring();
+                }
+
+                OMNI_MEMBERS_FW(omni::sync::thread_option) // disposing,name,type(),hash()
+
+                OMNI_OSTREAM_FW(omni::sync::thread_option)
+                OMNI_OSTREAM_FN_FW(enum_t)
+
+            private:
+                enum_t m_val;
+        };
         
         /** Defines the thread option flag structure allowing finer control of a thread object */
-        typedef struct thread_flags {
+        class thread_flags {
             public:
                 /** The default constructor */
                 thread_flags() : m_stack(0), m_timeout(0), m_flags(0) { }
@@ -388,47 +997,47 @@ namespace omni {
                     this->set_flag(flag, true);
                 }
                 
-                inline bool allow_reuse() const
+                bool allow_reuse() const
                 {
                     return OMNI_VAL_HAS_FLAG_BIT(this->m_flags, omni::sync::thread_option::ALLOW_THREAD_REUSE);
                 }
                 
-                inline bool auto_join() const
+                bool auto_join() const
                 {
                     return OMNI_VAL_HAS_FLAG_BIT(this->m_flags, omni::sync::thread_option::AUTO_JOIN);
                 }
                 
-                inline std::size_t auto_join_timeout() const
+                std::size_t auto_join_timeout() const
                 {
                     return this->m_timeout;
                 }
                 
-                inline bool abort_on_assign() const
+                bool abort_on_assign() const
                 {
                     return OMNI_VAL_HAS_FLAG_BIT(this->m_flags, omni::sync::thread_option::ABORT_ON_ASSIGN);
                 }
                 
-                inline bool abort_on_destroy() const
+                bool abort_on_destroy() const
                 {
                     return OMNI_VAL_HAS_FLAG_BIT(this->m_flags, omni::sync::thread_option::ABORT_ON_DESTROY);
                 }
                 
-                inline bool detach_on_destroy() const
+                bool detach_on_destroy() const
                 {
                     return OMNI_VAL_HAS_FLAG_BIT(this->m_flags, omni::sync::thread_option::DETACH_ON_DESTROY);
                 }
                 
-                inline bool detach_on_assign() const
+                bool detach_on_assign() const
                 {
                     return OMNI_VAL_HAS_FLAG_BIT(this->m_flags, omni::sync::thread_option::DETACH_ON_ASSIGN);
                 }
                 
-                inline bool kill_on_destroy() const
+                bool kill_on_destroy() const
                 {
                     return OMNI_VAL_HAS_FLAG_BIT(this->m_flags, omni::sync::thread_option::KILL_ON_DESTROY);
                 }
                 
-                inline bool kill_on_assign() const
+                bool kill_on_assign() const
                 {
                     return OMNI_VAL_HAS_FLAG_BIT(this->m_flags, omni::sync::thread_option::KILL_ON_ASSIGN);
                 }
@@ -468,17 +1077,17 @@ namespace omni {
                     }
                 }
                 
-                inline std::size_t stack_size() const
+                std::size_t stack_size() const
                 {
                     return this->m_stack;
                 }
                 
-                inline void set_auto_join_timeout(std::size_t timeout)
+                void set_auto_join_timeout(std::size_t timeout)
                 {
                     this->m_timeout = timeout;
                 }
                 
-                inline void set_stack_size(std::size_t stack)
+                void set_stack_size(std::size_t stack)
                 {
                     this->m_stack = stack;
                 }
@@ -512,6 +1121,8 @@ namespace omni {
                 }
                 
             private:
+                // DEV_NOTE: since the thread union has a std::size_t type, the flags are also size_t
+
                 /**
                  * The threads stack size. If the thread is in running state,
                  * the new stack size will not take effect until the next run.
@@ -530,7 +1141,43 @@ namespace omni {
                  * for the various flags should not be called in any sort of loop.
                  */
                 std::size_t m_flags;
-        } thread_flags;
+        };
+
+        /** Defines the union type used to set specific thread options. */
+        typedef union thread_option_union {
+            /** Defines the std::size_t value of this union */
+            std::size_t s_val;
+            /** Defines the boolean value of this union */
+            bool b_val;
+            
+            /**
+             * Create a new union based on the specified numeric value.
+             * 
+             * @param val   The value to set to this union
+             */
+            thread_option_union(int val) : s_val(static_cast<std::size_t>(val)) {}
+            
+            /**
+             * Create a new union based on the specified numeric value.
+             * 
+             * @param val   The value to set to this union
+             */
+            thread_option_union(long val) : s_val(static_cast<std::size_t>(val)) {}
+            
+            /**
+             * Create a new union based on the specified numeric value.
+             * 
+             * @param val   The value to set to this union
+             */
+            thread_option_union(std::size_t val) : s_val(val) {}
+            
+            /**
+             * Create a new union based on the specified boolean value.
+             * 
+             * @param val   The value to set to this union
+             */
+            thread_option_union(bool val) : b_val(val) {}
+        } thread_option_union;
         
         // Types
         /** Defines the platform infinite time out value */
@@ -545,14 +1192,6 @@ namespace omni {
         typedef OMNI_THREAD_FNPTR_T thread_fnptr_t;
         /** Defines the platform thread function return type */
         typedef OMNI_THREAD_RET_T thread_ret_t;
-        /** Defines an alias to the priority enum type */
-        typedef omni::sync::thread_priority::enum_t thread_priority_t;
-        /** Defines an alias to the start_type enum type */
-        typedef omni::sync::thread_start_type::enum_t thread_start_type_t;
-        /** Defines an alias to the state enum type */
-        typedef omni::sync::thread_state::enum_t thread_state_t;
-        /** Defines an alias to the thread_option enum type */
-        typedef omni::sync::thread_option::enum_t thread_option_t;
         /** An alias type to the omni::thread_option_union */
         typedef omni::sync::thread_option_union thread_union_t;
         /** Defines the signature for a thread start delegate taking no arguments */
@@ -587,6 +1226,9 @@ namespace omni {
                 implementing a timed_wait condition variable. We don't want the user to have to implement
                 a seperate variable based on system, so we implement a 'timeout' loop*/
                 if (timeout != omni::sync::INFINITE_TIMEOUT) {
+                    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+                        omni::chrono::monotonic::initialize();
+                    #endif
                     omni::chrono::tick_t ts = omni::chrono::monotonic_tick();
                     OMNI_SLEEP_INIT();
                     volatile bool iav = true;

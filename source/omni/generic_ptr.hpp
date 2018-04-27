@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -71,6 +67,10 @@ namespace omni {
                 this->m_ptr = OMNI_NULL;
                 this->m_id = 0;
             }
+
+            template < typename T >
+            bool is_type() const
+            { return this->m_id == omni::type_id<T>(); }
             
             bool valid() const { return (this->m_ptr != OMNI_NULL); }
             
@@ -138,11 +138,8 @@ namespace omni {
             OMNI_MEMBERS_FW(omni::generic_ptr) // disposing,name,type(),hash()
                 
         private:
-            #if defined(OMNI_TYPE_INFO)
-                omni::type<omni::generic_ptr> m_type;
-            #endif
             const void* m_ptr;
-            std::size_t m_id;
+            uint64_t m_id;
     };
     
     class generic_ptr_safe
@@ -195,6 +192,13 @@ namespace omni {
                 this->m_id = 0;
             }
             
+            template < typename T >
+            bool is_type() const
+            {
+                omni::sync::scoped_lock<omni::sync::mutex_t> alock(&this->m_mtx);
+                return this->m_id == omni::type_id<T>();
+            }
+
             bool valid() const
             {
                 omni::sync::scoped_lock<omni::sync::mutex_t> alock(&this->m_mtx);
@@ -279,11 +283,8 @@ namespace omni {
             OMNI_MEMBERS_FW(omni::generic_ptr_safe) // disposing,name,type(),hash()
                 
         private:
-            #if defined(OMNI_TYPE_INFO)
-                omni::type<omni::generic_ptr_safe> m_type;
-            #endif
             const void* m_ptr;
-            std::size_t m_id;
+            uint64_t m_id;
             mutable omni::sync::mutex_t m_mtx;
     };
 }

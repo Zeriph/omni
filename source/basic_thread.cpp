@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -166,6 +162,9 @@ omni::sync::basic_thread::basic_thread() :
     m_ispmthd(false),
     m_istpool(false)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::DETACH_ON_DESTROY, true);
     OMNI_D5_FW("thread created");
 }
@@ -208,6 +207,9 @@ omni::sync::basic_thread::basic_thread(const omni::sync::thread_flags &ops) :
     m_ispmthd(false),
     m_istpool(false)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     //this->m_ops.set_flag(omni::sync::thread_option::DETACH_ON_DESTROY, true);
     OMNI_D5_FW("thread const copied");
 }
@@ -226,6 +228,9 @@ omni::sync::basic_thread::basic_thread(std::size_t max_stack_sz) :
     m_ispmthd(false),
     m_istpool(false)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::DETACH_ON_DESTROY, true);
     OMNI_DV5_FW("thread created with stack size of ", this->m_ops.stack_size());
 }
@@ -244,6 +249,9 @@ omni::sync::basic_thread::basic_thread(const omni::sync::thread_t &tid, const om
     m_ispmthd(false),
     m_istpool(false)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::DETACH_ON_DESTROY, true);
     #if defined(OMNI_NON_PORTABLE)
         int p = 0; // omni::sync::thread_priority::NORMAL
@@ -274,7 +282,7 @@ omni::sync::basic_thread::basic_thread(const omni::sync::thread_t &tid, const om
         #endif
         if (p < omni::sync::thread_priority::LOWEST) { p = omni::sync::thread_priority::IDLE; }
         if (p > omni::sync::thread_priority::HIGHEST) { p = omni::sync::thread_priority::REAL_TIME; }
-        this->m_priority = static_cast<omni::sync::thread_priority_t>(p);
+        this->m_priority = p;
     #endif // OMNI_NON_PORTABLE
     //this->m_ops default (0'd) constructor
     // Get the current thread stack size
@@ -316,13 +324,16 @@ omni::sync::basic_thread::basic_thread(const omni::sync::thread_start &mthd) :
     m_ispmthd(false),
     m_istpool(false)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::DETACH_ON_DESTROY, true);
     OMNI_D5_FW("thread created with delegate method, starting");
     // default start-type of 'now'
     this->start();
 }
 
-omni::sync::basic_thread::basic_thread(const omni::sync::thread_start& mthd, omni::sync::thread_start_type_t st) : 
+omni::sync::basic_thread::basic_thread(const omni::sync::thread_start& mthd, omni::sync::thread_start_type::enum_t st) : 
     OMNI_CTOR_FW(omni::sync::basic_thread)
     OMNI_SAFE_TMTX_FW
     m_args(),
@@ -336,6 +347,9 @@ omni::sync::basic_thread::basic_thread(const omni::sync::thread_start& mthd, omn
     m_ispmthd(false),
     m_istpool(false)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::DETACH_ON_DESTROY, true);
     OMNI_D5_FW("thread created with delegate method");
     if (st == omni::sync::thread_start_type::NOW) {
@@ -357,13 +371,16 @@ omni::sync::basic_thread::basic_thread(const omni::sync::thread_start &mthd, std
     m_ispmthd(false),
     m_istpool(false)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::DETACH_ON_DESTROY, true);
     OMNI_DV5_FW("thread created with stack size of ", this->m_ops.stack_size());
     // default start-type of 'now'
     this->start();
 }
 
-omni::sync::basic_thread::basic_thread(const omni::sync::thread_start &mthd, std::size_t max_stack_sz, omni::sync::thread_start_type_t st) :
+omni::sync::basic_thread::basic_thread(const omni::sync::thread_start &mthd, std::size_t max_stack_sz, omni::sync::thread_start_type::enum_t st) :
     OMNI_CTOR_FW(omni::sync::basic_thread)
     OMNI_SAFE_TMTX_FW
     m_args(),
@@ -377,6 +394,9 @@ omni::sync::basic_thread::basic_thread(const omni::sync::thread_start &mthd, std
     m_ispmthd(false),
     m_istpool(false)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::DETACH_ON_DESTROY, true);
     OMNI_DV5_FW("thread created with stack size of ", this->m_ops.stack_size());
     if (st == omni::sync::thread_start_type::NOW) {
@@ -384,7 +404,7 @@ omni::sync::basic_thread::basic_thread(const omni::sync::thread_start &mthd, std
     }
 }
 
-omni::sync::basic_thread::basic_thread(const omni::sync::thread_start& mthd, omni::sync::thread_option_t op, omni::sync::thread_union_t val) : 
+omni::sync::basic_thread::basic_thread(const omni::sync::thread_start& mthd, omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val) : 
     OMNI_CTOR_FW(omni::sync::basic_thread)
     OMNI_SAFE_TMTX_FW
     m_args(),
@@ -398,6 +418,9 @@ omni::sync::basic_thread::basic_thread(const omni::sync::thread_start& mthd, omn
     m_ispmthd(false),
     m_istpool(false)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::DETACH_ON_DESTROY, true);
     OMNI_D5_FW("thread created with specific options");
     this->set_option(op, val);
@@ -419,6 +442,9 @@ omni::sync::basic_thread::basic_thread(const omni::sync::parameterized_thread_st
     m_ispmthd(true),
     m_istpool(false)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::DETACH_ON_DESTROY, true);
     OMNI_D5_FW("thread created with parameterized delegate method, starting");
     // default start-type of 'now'
@@ -439,6 +465,9 @@ omni::sync::basic_thread::basic_thread(const omni::sync::parameterized_thread_st
     m_ispmthd(true),
     m_istpool(false)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::DETACH_ON_DESTROY, true);
     OMNI_D5_FW("thread created with parameterized delegate method and args, starting");
     // default start-type of 'now'
@@ -459,13 +488,16 @@ omni::sync::basic_thread::basic_thread(const omni::sync::parameterized_thread_st
     m_ispmthd(true),
     m_istpool(false)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::DETACH_ON_DESTROY, true);
     OMNI_D5_FW("thread created with parameterized delegate method, starting");
     // default start-type of 'now'
     this->start(this->m_args);
 }
 
-omni::sync::basic_thread::basic_thread(const omni::sync::parameterized_thread_start& mthd, omni::sync::thread_arg_t args, omni::sync::thread_option_t op, omni::sync::thread_union_t val) : 
+omni::sync::basic_thread::basic_thread(const omni::sync::parameterized_thread_start& mthd, omni::sync::thread_arg_t args, omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val) : 
     OMNI_CTOR_FW(omni::sync::basic_thread)
     OMNI_SAFE_TMTX_FW
     m_args(args),
@@ -479,6 +511,9 @@ omni::sync::basic_thread::basic_thread(const omni::sync::parameterized_thread_st
     m_ispmthd(true),
     m_istpool(false)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::DETACH_ON_DESTROY, true);
     OMNI_D5_FW("thread created with parameterized delegate method, starting");
     this->set_option(op, val);
@@ -486,7 +521,7 @@ omni::sync::basic_thread::basic_thread(const omni::sync::parameterized_thread_st
     this->start(this->m_args);
 }
 
-omni::sync::basic_thread::basic_thread(const omni::sync::parameterized_thread_start& mthd, omni::sync::thread_start_type_t st) :
+omni::sync::basic_thread::basic_thread(const omni::sync::parameterized_thread_start& mthd, omni::sync::thread_start_type::enum_t st) :
     OMNI_CTOR_FW(omni::sync::basic_thread)
     OMNI_SAFE_TMTX_FW
     m_args(),
@@ -500,6 +535,9 @@ omni::sync::basic_thread::basic_thread(const omni::sync::parameterized_thread_st
     m_ispmthd(true),
     m_istpool(false)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::DETACH_ON_DESTROY, true);
     OMNI_D5_FW("thread created with parameterized delegate method");
     if (st == omni::sync::thread_start_type::NOW) {
@@ -521,12 +559,15 @@ omni::sync::basic_thread::basic_thread(const omni::sync::parameterized_thread_st
     m_ispmthd(true),
     m_istpool(false)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::DETACH_ON_DESTROY, true);
     OMNI_DV5_FW("thread created with stack size of ", this->m_ops.stack_size());
     this->start(OMNI_THREAD_ARG_NULL_T);
 }
 
-omni::sync::basic_thread::basic_thread(const omni::sync::parameterized_thread_start &mthd, std::size_t max_stack_sz, omni::sync::thread_start_type_t st) :
+omni::sync::basic_thread::basic_thread(const omni::sync::parameterized_thread_start &mthd, std::size_t max_stack_sz, omni::sync::thread_start_type::enum_t st) :
     OMNI_CTOR_FW(omni::sync::basic_thread)
     OMNI_SAFE_TMTX_FW
     m_args(),
@@ -540,6 +581,9 @@ omni::sync::basic_thread::basic_thread(const omni::sync::parameterized_thread_st
     m_ispmthd(true),
     m_istpool(false)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::DETACH_ON_DESTROY, true);
     OMNI_DV5_FW("thread created with stack size of ", this->m_ops.stack_size());
     if (st == omni::sync::thread_start_type::NOW) {
@@ -547,7 +591,7 @@ omni::sync::basic_thread::basic_thread(const omni::sync::parameterized_thread_st
     }
 }
 
-omni::sync::basic_thread::basic_thread(const omni::sync::parameterized_thread_start& mthd, omni::sync::thread_option_t op, omni::sync::thread_union_t val) : 
+omni::sync::basic_thread::basic_thread(const omni::sync::parameterized_thread_start& mthd, omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val) : 
     OMNI_CTOR_FW(omni::sync::basic_thread)
     OMNI_SAFE_TMTX_FW
     m_args(),
@@ -561,6 +605,9 @@ omni::sync::basic_thread::basic_thread(const omni::sync::parameterized_thread_st
     m_ispmthd(true),
     m_istpool(false)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::DETACH_ON_DESTROY, true);
     OMNI_D5_FW("thread created with specific options");
     this->set_option(op, val);
@@ -582,6 +629,9 @@ omni::sync::basic_thread::basic_thread(const omni::sync::thread_start &mthd, boo
     m_ispmthd(false),
     m_istpool(true)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::DETACH_ON_DESTROY, true);
     this->m_ops.set_flag(omni::sync::thread_option::ALLOW_THREAD_REUSE, true);
     OMNI_D5_FW("thread pool thread created");
@@ -660,7 +710,7 @@ void omni::sync::basic_thread::detach(bool allow_rejoin)
     this->_hreset(true, allow_rejoin);
 }
 
-const omni::sync::thread_union_t omni::sync::basic_thread::get_option(omni::sync::thread_option_t op) const
+const omni::sync::thread_union_t omni::sync::basic_thread::get_option(omni::sync::thread_option::enum_t op) const
 {
     OMNI_SAFE_TALOCK_FW
     switch (op) {
@@ -883,13 +933,13 @@ bool omni::sync::basic_thread::kill()
     return false;
 }
 
-omni::sync::thread_state_t omni::sync::basic_thread::status() const
+omni::sync::thread_state omni::sync::basic_thread::status() const
 {
     OMNI_SAFE_TALOCK_FW
     return this->m_state;
 }
 
-void omni::sync::basic_thread::set_option(omni::sync::thread_option_t op, omni::sync::thread_union_t val)
+void omni::sync::basic_thread::set_option(omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val)
 {
     OMNI_SAFE_TALOCK_FW
     switch (op) {
@@ -1256,7 +1306,7 @@ void omni::sync::basic_thread::_state_machine(const omni::sync::thread_t tid)
 {
    OMNI_SAFE_TLOCK_FW
     if (this->m_tid == tid) {
-        switch (this->m_state) {
+        switch (this->m_state.value()) {
             case omni::sync::thread_state::RUNNING:
                 this->m_state = omni::sync::thread_state::COMPLETED;
                 break;
@@ -1354,13 +1404,13 @@ void omni::sync::basic_thread::_set_prio()
     #endif
 }
 
-omni::sync::thread_priority_t omni::sync::basic_thread::priority() const
+omni::sync::thread_priority omni::sync::basic_thread::priority() const
 {
     OMNI_SAFE_TALOCK_FW
     return this->m_priority;
 }
 
-void omni::sync::basic_thread::set_priority(omni::sync::thread_priority_t p)
+void omni::sync::basic_thread::set_priority(omni::sync::thread_priority::enum_t p)
 {
     /*
         DEV_NOTE: Thread scheduling is system dependent, this means that even
@@ -1393,7 +1443,7 @@ void omni::sync::basic_thread::set_priority(omni::sync::thread_priority_t p)
     }
     OMNI_SAFE_TLOCK_FW
     // if we're not running, just set the priority til next time
-    this->m_priority = static_cast<omni::sync::thread_priority_t>(pri);
+    this->m_priority = pri;
     OMNI_SAFE_TUNLOCK_FW
     if (this->is_alive()) {
         OMNI_SAFE_TALOCK_FW

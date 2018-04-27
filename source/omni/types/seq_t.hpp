@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -36,29 +32,31 @@
     
     DEV_NOTE: We didn't typedef because we are dealing with templated types, we merely
     want to allow the user to choose the underlying container type without having to
-    reimplement a lot of extra code (i.e. typedef'ing and wrapping in another template).
+    re-implement a lot of extra code (i.e. typedef-ing and wrapping in another template).
     Hence the names with _T postfix, to indicate that it is renamed
     type, NOT a typedef'd type (which would indicate specific implementation)
 */
 
-#if defined(OMNI_SEQCONT_TYPE)
-    #if OMNI_SEQCONT_TYPE == "list"
-        #define OMNI_SEQ_H <list>
-        #define OMNI_SEQ_T std::list
-    #elif OMNI_SEQCONT_TYPE == "vector"
-        #define OMNI_SEQ_H <vector>
-        #define OMNI_SEQ_T std::vector
-    #endif
-#endif // OMNI_SEQCONT_TYPE
+#if defined(OMNI_SEQUENCE_CONTAINER_TYPE)
+    #define OMNI_SEQ_H_FW <OMNI_SEQUENCE_CONTAINER_TYPE>
+    #define OMNI_SEQ_T_FW std::OMNI_SEQUENCE_CONTAINER_TYPE
+#endif
+
 // default type of std::deque
-#if !defined(OMNI_SEQ_H)
-    #define OMNI_SEQ_H <deque>
+#if !defined(OMNI_SEQ_H_FW)
+    #define OMNI_SEQ_H_FW <deque>
 #endif
-#if !defined(OMNI_SEQ_T)
-    #define OMNI_SEQ_T std::deque
+#if !defined(OMNI_SEQ_T_FW)
+    #define OMNI_SEQ_T_FW std::deque
 #endif
-#include OMNI_SEQ_H
+
+#include OMNI_SEQ_H_FW
 #include <algorithm>
-#include <iterator> 
+#include <iterator>
+
+#define OMNI_SEQUENCE_T OMNI_SEQ_T_FW
+#define OMNI_SEQ_T OMNI_SEQ_T_FW
+#define omni_sequence_t OMNI_SEQ_T_FW
+#define omni_seq_t OMNI_SEQ_T_FW
 
 #endif // OMNI_SEQ_T_HPP

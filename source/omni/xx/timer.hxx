@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -25,17 +21,6 @@
 
  i.e. don't #include <omni/xxx_impl.hxx> and don't compile this source directly.
  this file is #include'd directly in other source. 
- 
- The logic is that omni::cstring and omni::wstring namespaces segregate the types
- for explicit calling; i.e. you can call omni::cstring::X to check on a std:string
- and similarly can call omni::wstring::X to check a std::wstring, while still having access
- to the omni::string_t and omn::string::X functions (which are aliases for the other namespaces).
- 
- Since omni::wstring and omni::cstring are merely wrappers for the omni::string::util functions
- (which are templated) that then pass in the appropriate types (std::string/wstring char/wchar_t)
- putting the relevant code in a header with a few #defs for types makes keeping the files
- in sync (for functions) less messy. It does introduce slight confusion to anyone who might
- want to read this specific code or documentation though, hence this note.
 */
 
 // so as not to accidentally build this file with the source
@@ -71,7 +56,7 @@ bool omni::chrono::OMNI_TIMER_T_FW::auto_reset() const
     return this->m_auto;
 }
 
-std::size_t omni::chrono::OMNI_TIMER_T_FW::interval() const
+uint32_t omni::chrono::OMNI_TIMER_T_FW::interval() const
 {
     OMNI_TMR_ALOCK_FW 
     return this->m_int;
@@ -95,7 +80,7 @@ void omni::chrono::OMNI_TIMER_T_FW::set_auto_reset(bool autoreset)
     this->m_auto = autoreset;
 }
 
-void omni::chrono::OMNI_TIMER_T_FW::set_interval(std::size_t ival)
+void omni::chrono::OMNI_TIMER_T_FW::set_interval(uint32_t ival)
 {
     OMNI_TMR_ALOCK_FW 
     this->m_int = ival;
@@ -106,7 +91,7 @@ void omni::chrono::OMNI_TIMER_T_FW::start()
     this->start(0);
 }
 
-void omni::chrono::OMNI_TIMER_T_FW::start(std::size_t delay)
+void omni::chrono::OMNI_TIMER_T_FW::start(uint32_t delay)
 {
     if (!this->is_running()) {
         { // error check scope (for auto mutex)
@@ -130,8 +115,8 @@ void omni::chrono::OMNI_TIMER_T_FW::start(std::size_t delay)
                     &omni::chrono::OMNI_TIMER_T_FW::_run_delayed>
                     (*this, &delay);
         }
-        // TODO: does it make sense to do a thread yield or to do a thread sleep??
-        while (!this->is_running()) { OMNI_THREAD_YIELD(); }
+        OMNI_SLEEP_INIT();
+        while (!this->is_running()) { OMNI_SLEEP1(); }
     }
     #if defined(OMNI_DBG_L2)
     else { OMNI_D2_FW("The timer is already running"); }
@@ -143,12 +128,12 @@ void omni::chrono::OMNI_TIMER_T_FW::stop()
     this->stop(0, true);
 }
 
-void omni::chrono::OMNI_TIMER_T_FW::stop(std::size_t join_timeout)
+void omni::chrono::OMNI_TIMER_T_FW::stop(uint32_t join_timeout)
 {
     this->stop(join_timeout, true);
 }
 
-void omni::chrono::OMNI_TIMER_T_FW::stop(std::size_t join_timeout, bool kill_on_timeout)
+void omni::chrono::OMNI_TIMER_T_FW::stop(uint32_t join_timeout, bool kill_on_timeout)
 {
     if (this->is_running()) {
         OMNI_TMR_MLOCK_FW
@@ -174,7 +159,7 @@ void omni::chrono::OMNI_TIMER_T_FW::stop(std::size_t join_timeout, bool kill_on_
 
 void omni::chrono::OMNI_TIMER_T_FW::_run_delayed(omni::sync::thread_arg_t dly)  // only called if delay > 0
 {
-    std::size_t delay = *(static_cast<std::size_t*>(dly));
+    uint32_t delay = *(static_cast<uint32_t*>(dly));
     OMNI_DV1_FW("timer thread: ", omni::sync::thread_id());
     OMNI_D2_FW("waiting to start, delay " << delay << "ms");
     OMNI_TMR_MLOCK_FW
@@ -203,6 +188,7 @@ void omni::chrono::OMNI_TIMER_T_FW::_do_run()
     OMNI_TIMER_EX_RUN_BEG_FW
     omni::chrono::tick_t tickt;
     OMNI_SLEEP_INIT();
+    omni::chrono::monotonic::initialize();
     do {
         if (this->_stopreq()) { break; }
         tickt = omni::chrono::monotonic_tick();

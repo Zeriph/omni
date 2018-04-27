@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -23,7 +19,7 @@
 #if !defined(OMNI_STRING_UTIL_HPP)
 #define OMNI_STRING_UTIL_HPP 1
 #include <omni/types/string_t.hpp>
-#include <omni/types/seq_t.hpp>
+#include <omni/sequence.hpp>
 #include <omni/type.hpp>
 #include <omni/defs/consts.hpp>
 #include <omni/util/bits.hpp>
@@ -33,7 +29,7 @@ namespace omni {
     namespace string {
         namespace util {
             template < typename std_string_t >
-            bool is_numeric(const std_string_t& str, bool ignorePeriod)
+            bool is_numeric(const std_string_t& str, bool ignore_period)
             {
                 if (str.empty()) { return false; }
                 typename std_string_t::const_iterator itr = str.begin();
@@ -50,7 +46,7 @@ namespace omni {
                             how a specific number might be formatted, but that we can assume
                             that if it is indeed a number, chances are good that it 'might'
                             contain a period or comma, so ignore those. */
-                            if (ignorePeriod) { ++itr; continue; }
+                            if (ignore_period) { ++itr; continue; }
                             // more than 1 period means non numeric (i.e. not decimal/whole)
                             if (++pcnt > 1) { return false; }
                         }
@@ -62,7 +58,7 @@ namespace omni {
             }
             
             template < typename std_string_t >
-            bool is_numeric(const std_string_t& str, typename std_string_t::value_type periodType, bool ignorePeriod)
+            bool is_numeric(const std_string_t& str, typename std_string_t::value_type period_type, bool ignore_period)
             {
                 if (str.empty()) { return false; }
                 typename std_string_t::const_iterator itr = str.begin();
@@ -73,13 +69,13 @@ namespace omni {
                 std::size_t pcnt = 0;
                 while (itr != str.end()) {
                     if (!omni::char_util::is_digit(*itr)) {
-                        if (*itr == periodType) {
+                        if (*itr == period_type) {
                             /* if it's a period or comma and the flag is set then ignore it.
                             The logic here is that we don't want this function to 'guess'
                             how a specific number might be formatted, but that we can assume
                             that if it is indeed a number, chances are good that it 'might'
                             contain a period or comma, so ignore those. */
-                            if (ignorePeriod) { ++itr; continue; }
+                            if (ignore_period) { ++itr; continue; }
                             // more than 1 period means non numeric (i.e. not decimal/whole)
                             if (++pcnt > 1) { return false; }
                         }
@@ -95,9 +91,9 @@ namespace omni {
                 return omni::string::util::is_numeric(str, false);
             }
             
-            inline bool is_numeric(const std::wstring& str, wchar_t periodType)
+            inline bool is_numeric(const std::wstring& str, wchar_t period_type)
             {
-                return omni::string::util::is_numeric(str, periodType, false);
+                return omni::string::util::is_numeric(str, period_type, false);
             }
             
             inline bool is_numeric(const wchar_t* str)
@@ -112,40 +108,40 @@ namespace omni {
                 return omni::string::util::is_numeric(std::wstring(str));
             }
             
-            inline bool is_numeric(const wchar_t* str, bool ignorePeriod)
+            inline bool is_numeric(const wchar_t* str, bool ignore_period)
             {
-                if (str) { return omni::string::util::is_numeric(std::wstring(str), ignorePeriod); }
+                if (str) { return omni::string::util::is_numeric(std::wstring(str), ignore_period); }
                 OMNI_ERR_RETV_FW("Null pointer specified", omni::exceptions::null_pointer_exception(), false)
             }
             
             template < std::size_t X >
-            inline bool is_numeric(const wchar_t (&str)[X], bool ignorePeriod)
+            inline bool is_numeric(const wchar_t (&str)[X], bool ignore_period)
             {
-                return omni::string::util::is_numeric(std::wstring(str), ignorePeriod);
+                return omni::string::util::is_numeric(std::wstring(str), ignore_period);
             }
             
-            inline bool is_numeric(const wchar_t* str, wchar_t periodType)
+            inline bool is_numeric(const wchar_t* str, wchar_t period_type)
             {
-                if (str) { return omni::string::util::is_numeric(std::wstring(str), periodType, false); }
+                if (str) { return omni::string::util::is_numeric(std::wstring(str), period_type, false); }
                 OMNI_ERR_RETV_FW("Null pointer specified", omni::exceptions::null_pointer_exception(), false)
             }
             
             template < std::size_t X >
-            inline bool is_numeric(const wchar_t (&str)[X], wchar_t periodType)
+            inline bool is_numeric(const wchar_t (&str)[X], wchar_t period_type)
             {
-                return omni::string::util::is_numeric(std::wstring(str), periodType, false);
+                return omni::string::util::is_numeric(std::wstring(str), period_type, false);
             }
             
-            inline bool is_numeric(const wchar_t* str, wchar_t periodType, bool ignorePeriod)
+            inline bool is_numeric(const wchar_t* str, wchar_t period_type, bool ignore_period)
             {
-                if (str) { return omni::string::util::is_numeric(std::wstring(str), periodType, ignorePeriod); }
+                if (str) { return omni::string::util::is_numeric(std::wstring(str), period_type, ignore_period); }
                 OMNI_ERR_RETV_FW("Null pointer specified", omni::exceptions::null_pointer_exception(), false)
             }
             
             template < std::size_t X >
-            inline bool is_numeric(const wchar_t (&str)[X], wchar_t periodType, bool ignorePeriod)
+            inline bool is_numeric(const wchar_t (&str)[X], wchar_t period_type, bool ignore_period)
             {
-                return omni::string::util::is_numeric(std::wstring(str), periodType, ignorePeriod);
+                return omni::string::util::is_numeric(std::wstring(str), period_type, ignore_period);
             }
             
             inline bool is_numeric(const std::string& str)
@@ -153,9 +149,9 @@ namespace omni {
                 return omni::string::util::is_numeric(str, false);
             }
             
-            inline bool is_numeric(const std::string& str, char periodType)
+            inline bool is_numeric(const std::string& str, char period_type)
             {
-                return omni::string::util::is_numeric(str, periodType, false);
+                return omni::string::util::is_numeric(str, period_type, false);
             }
             
             inline bool is_numeric(const char* str)
@@ -170,40 +166,40 @@ namespace omni {
                 return omni::string::util::is_numeric(std::string(str));
             }
             
-            inline bool is_numeric(const char* str, bool ignorePeriod)
+            inline bool is_numeric(const char* str, bool ignore_period)
             {
-                if (str) { return omni::string::util::is_numeric(std::string(str), ignorePeriod); }
+                if (str) { return omni::string::util::is_numeric(std::string(str), ignore_period); }
                 OMNI_ERR_RETV_FW("Null pointer specified", omni::exceptions::null_pointer_exception(), false)
             }
             
             template < std::size_t X >
-            inline bool is_numeric(const char (&str)[X], bool ignorePeriod)
+            inline bool is_numeric(const char (&str)[X], bool ignore_period)
             {
-                return omni::string::util::is_numeric(std::string(str), ignorePeriod);
+                return omni::string::util::is_numeric(std::string(str), ignore_period);
             }
             
-            inline bool is_numeric(const char* str, char periodType)
+            inline bool is_numeric(const char* str, char period_type)
             {
-                if (str) { return omni::string::util::is_numeric(std::string(str), periodType, false); }
+                if (str) { return omni::string::util::is_numeric(std::string(str), period_type, false); }
                 OMNI_ERR_RETV_FW("Null pointer specified", omni::exceptions::null_pointer_exception(), false)
             }
             
             template < std::size_t X >
-            inline bool is_numeric(const char (&str)[X], char periodType)
+            inline bool is_numeric(const char (&str)[X], char period_type)
             {
-                return omni::string::util::is_numeric(std::string(str), periodType, false);
+                return omni::string::util::is_numeric(std::string(str), period_type, false);
             }
             
-            inline bool is_numeric(const char* str, char periodType, bool ignorePeriod)
+            inline bool is_numeric(const char* str, char period_type, bool ignore_period)
             {
-                if (str) { return omni::string::util::is_numeric(std::string(str), periodType, ignorePeriod); }
+                if (str) { return omni::string::util::is_numeric(std::string(str), period_type, ignore_period); }
                 OMNI_ERR_RETV_FW("Null pointer specified", omni::exceptions::null_pointer_exception(), false)
             }
             
             template < std::size_t X >
-            inline bool is_numeric(const char (&str)[X], char periodType, bool ignorePeriod)
+            inline bool is_numeric(const char (&str)[X], char period_type, bool ignore_period)
             {
-                return omni::string::util::is_numeric(std::string(str), periodType, ignorePeriod);
+                return omni::string::util::is_numeric(std::string(str), period_type, ignore_period);
             }
             
             template < typename std_string_t >
@@ -253,10 +249,10 @@ namespace omni {
             }
             
             template < typename std_string_t >
-            bool contains(const std_string_t& haystack, const std_string_t& needle, bool ignoreCase)
+            bool contains(const std_string_t& haystack, const std_string_t& needle, bool ignore_case)
             {   
                 if (haystack.empty() || needle.empty()) { return false; }
-                if (ignoreCase) {
+                if (ignore_case) {
                     std_string_t tmp = omni::string::util::to_lower(haystack);
                     std_string_t tf = omni::string::util::to_lower(needle);
                     return (tmp.find(tf) != std_string_t::npos);
@@ -265,9 +261,9 @@ namespace omni {
             }
             
             template < typename std_string_t, std::size_t X >
-            bool contains(const std_string_t& haystack, const typename std_string_t::value_type (&needle)[X], bool ignoreCase)
+            bool contains(const std_string_t& haystack, const typename std_string_t::value_type (&needle)[X], bool ignore_case)
             {
-                return omni::string::util::contains(haystack, std_string_t(needle), ignoreCase);
+                return omni::string::util::contains(haystack, std_string_t(needle), ignore_case);
             }
             
             template < typename std_string_t >
@@ -338,10 +334,10 @@ namespace omni {
             }
 
             template < typename std_string_t >
-            std_string_t replace(std_string_t str, const std_string_t& fnd, const std_string_t& newstr, std::size_t pos, bool ignoreCase)
+            std_string_t replace(std_string_t str, const std_string_t& fnd, const std_string_t& newstr, std::size_t pos, bool ignore_case)
             {
                 std::size_t spos = std_string_t::npos;
-                if (ignoreCase) {
+                if (ignore_case) {
                     spos = (omni::string::util::to_lower(str)).find(omni::string::util::to_lower(fnd), pos);
                 } else {
                     spos = str.find(fnd, pos);
@@ -353,17 +349,17 @@ namespace omni {
             }
             
             template < typename std_string_t, std::size_t X, std::size_t Y >
-            std_string_t replace(std_string_t str, const typename std_string_t::value_type (&fnd)[X], const typename std_string_t::value_type (&newstr)[Y], std::size_t pos, bool ignoreCase)
+            std_string_t replace(std_string_t str, const typename std_string_t::value_type (&fnd)[X], const typename std_string_t::value_type (&newstr)[Y], std::size_t pos, bool ignore_case)
             {
-                return omni::string::util::replace(str, std_string_t(fnd), std_string_t(newstr), pos, ignoreCase);
+                return omni::string::util::replace(str, std_string_t(fnd), std_string_t(newstr), pos, ignore_case);
             }
 
             template < typename std_string_t >
-            std_string_t replace_all(std_string_t str, const std_string_t& fnd, const std_string_t& newstr, std::size_t pos, bool ignoreCase)
+            std_string_t replace_all(std_string_t str, const std_string_t& fnd, const std_string_t& newstr, std::size_t pos, bool ignore_case)
             {
                 std::size_t spos = std_string_t::npos;
                 std::size_t fsz = fnd.length();
-                if (ignoreCase) {
+                if (ignore_case) {
                     std_string_t ret = omni::string::util::to_lower(str);
                     std_string_t f = omni::string::util::to_lower(fnd);
                     spos = ret.find(f, pos);
@@ -383,9 +379,9 @@ namespace omni {
             }
             
             template < typename std_string_t, std::size_t X, std::size_t Y >
-            std_string_t replace_all(std_string_t str, const typename std_string_t::value_type (&fnd)[X], const typename std_string_t::value_type (&newstr)[Y], std::size_t pos, bool ignoreCase)
+            std_string_t replace_all(std_string_t str, const typename std_string_t::value_type (&fnd)[X], const typename std_string_t::value_type (&newstr)[Y], std::size_t pos, bool ignore_case)
             {
-                return omni::string::util::replace_all(str, std_string_t(fnd), std_string_t(newstr), pos, ignoreCase);
+                return omni::string::util::replace_all(str, std_string_t(fnd), std_string_t(newstr), pos, ignore_case);
             }
 
             template < typename std_string_t >
@@ -450,59 +446,59 @@ namespace omni {
             }
             
             template < typename std_string_t >
-            inline OMNI_SEQ_T<std_string_t> split(const std_string_t& str, const std_string_t& delimeter, std::size_t max_val)
+            inline omni_sequence_t<std_string_t> split(const std_string_t& str, const std_string_t& delimeter, std::size_t max_val)
             {
-                return omni::string::util::split< OMNI_SEQ_T, std_string_t >(str, delimeter, max_val);
+                return omni::string::util::split< omni_sequence_t, std_string_t >(str, delimeter, max_val);
             }
             
             template < typename std_string_t >
-            inline OMNI_SEQ_T<std_string_t> split(const std_string_t& str, const std_string_t& delimeter)
+            inline omni_sequence_t<std_string_t> split(const std_string_t& str, const std_string_t& delimeter)
             {
                 return omni::string::util::split(str, delimeter, 0); 
             }
             
             template < std::size_t X, std::size_t Y >
-            inline OMNI_SEQ_T<std::string> split(const char (&str)[X], const char (&delimeter)[Y], std::size_t max_val)
+            inline omni_sequence_t<std::string> split(const char (&str)[X], const char (&delimeter)[Y], std::size_t max_val)
             {
                 return omni::string::util::split(std::string(str), std::string(delimeter), max_val); 
             }
             
             template < std::size_t X, std::size_t Y >
-            inline OMNI_SEQ_T<std::string> split(const char (&str)[X], const char (&delimeter)[Y])
+            inline omni_sequence_t<std::string> split(const char (&str)[X], const char (&delimeter)[Y])
             {
                 return omni::string::util::split(std::string(str), std::string(delimeter), 0); 
             }
             
             template < std::size_t X, std::size_t Y >
-            inline OMNI_SEQ_T<std::wstring> split(const wchar_t (&str)[X], const wchar_t (&delimeter)[Y], std::size_t max_val)
+            inline omni_sequence_t<std::wstring> split(const wchar_t (&str)[X], const wchar_t (&delimeter)[Y], std::size_t max_val)
             {
                 return omni::string::util::split(std::wstring(str), std::wstring(delimeter), max_val);
             }
             
             template < std::size_t X, std::size_t Y >
-            inline OMNI_SEQ_T<std::wstring> split(const wchar_t (&str)[X], const wchar_t (&delimeter)[Y])
+            inline omni_sequence_t<std::wstring> split(const wchar_t (&str)[X], const wchar_t (&delimeter)[Y])
             {
                 return omni::string::util::split(std::wstring(str), std::wstring(delimeter), 0); 
             }
             
-            inline OMNI_SEQ_T<std::string> split(const char* str, const char* delimeter, std::size_t max_val)
+            inline omni_sequence_t<std::string> split(const char* str, const char* delimeter, std::size_t max_val)
             {
-                return omni::string::util::split< OMNI_SEQ_T >(std::string(str), std::string(delimeter), max_val); 
+                return omni::string::util::split< omni_sequence_t >(std::string(str), std::string(delimeter), max_val); 
             }
             
-            inline OMNI_SEQ_T<std::string> split(const char* str, const char* delimeter)
+            inline omni_sequence_t<std::string> split(const char* str, const char* delimeter)
             {
-                return omni::string::util::split< OMNI_SEQ_T >(std::string(str), std::string(delimeter), 0); 
+                return omni::string::util::split< omni_sequence_t >(std::string(str), std::string(delimeter), 0); 
             }
             
-            inline OMNI_SEQ_T<std::wstring> split(const wchar_t* str, const wchar_t* delimeter, std::size_t max_val)
+            inline omni_sequence_t<std::wstring> split(const wchar_t* str, const wchar_t* delimeter, std::size_t max_val)
             {
-                return omni::string::util::split< OMNI_SEQ_T >(std::wstring(str), std::wstring(delimeter), max_val);
+                return omni::string::util::split< omni_sequence_t >(std::wstring(str), std::wstring(delimeter), max_val);
             }
             
-            inline OMNI_SEQ_T<std::wstring> split(const wchar_t* str, const wchar_t* delimeter)
+            inline omni_sequence_t<std::wstring> split(const wchar_t* str, const wchar_t* delimeter)
             {
-                return omni::string::util::split< OMNI_SEQ_T >(std::wstring(str), std::wstring(delimeter), 0); 
+                return omni::string::util::split< omni_sequence_t >(std::wstring(str), std::wstring(delimeter), 0); 
             }
             
             template < typename T >

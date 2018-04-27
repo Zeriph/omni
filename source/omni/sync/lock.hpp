@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -87,9 +83,12 @@ namespace omni {
             #endif
         }
         
-        inline bool mutex_lock(omni::sync::mutex_t& mtx, std::size_t timeout_ms)
+        inline bool mutex_lock(omni::sync::mutex_t& mtx, uint32_t timeout_ms)
         {
             if (timeout_ms == 0) { return omni::sync::mutex_trylock(mtx); }
+            #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+                omni::chrono::monotonic::initialize();
+            #endif
             omni::chrono::tick_t start = omni::chrono::monotonic_tick();
             while (omni::chrono::elapsed_ms(start) <= timeout_ms) {
                 if (omni::sync::mutex_trylock(mtx)) { return true; }

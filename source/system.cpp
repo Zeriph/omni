@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -99,7 +95,7 @@ std::string omni::system::error_str(int code)
             NULL
         );
         if (err != NULL) {
-            OMNI_STRING_T werr(err); // make copy
+            omni::string_t werr(err); // make copy
             ::LocalFree(err); // release memory from FormatMessage
             err = NULL;
             return omni::string::to_string(werr);
@@ -128,7 +124,7 @@ std::string omni::system::last_error_str()
 
 std::string omni::system::signal_str(int sig)
 {
-    /* DEV_NOTE: we don't "redifine" any of the signal names in the
+    /* DEV_NOTE: we don't "redefine" any of the signal names in the
     omni namespace as it would be redundant and unnecessarily verbose */
     #if defined(OMNI_WIN_API)
     switch (sig) {
@@ -161,7 +157,7 @@ std::string omni::system::signal_str(int sig)
             return "SIGTERM: terminate";
         default: break; // other/unknown signal
     }
-    return std::string("Other/Unknown: ").append(omni::string_util::to_string(sig));
+    return std::string("Other/Unknown: ").append(omni::string::util::to_string(sig));
 }
 
 #if defined(OMNI_NON_PORTABLE)
@@ -193,7 +189,7 @@ omni::string_t omni::system::path()
                     char* e = std::getenv("_");
                     ret = (e ? (std::strncpy(tp, e, FILENAME_MAX) != 0) : false);
                 }
-            #else // copy/pasta but easier to read here
+            #else
                 std::memset(tp, 0, FILENAME_MAX);
                 char* e = std::getenv("_");
                 bool ret = (e ? (std::strncpy(tp, e, FILENAME_MAX) != 0) : false);
@@ -207,7 +203,7 @@ omni::string_t omni::system::path()
                 char* e = std::getenv("_");
                 ret = (e ? (std::strncpy(tp, e, FILENAME_MAX) != 0) : false);
             }
-        #else // copy/pasta but easier to read here
+        #else
             std::memset(tp, 0, FILENAME_MAX);
             char* e = std::getenv("_");
             bool ret = (e ? (std::strncpy(tp, e, FILENAME_MAX) != 0) : false);

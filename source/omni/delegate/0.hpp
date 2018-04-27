@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -702,11 +698,11 @@ namespace omni {
             /** Defines the delegate signature this event represents */
             typedef omni::delegate< Ret > delegate_t;
             /** Defines the container type used by this event */
-            typedef typename std::deque< omni::delegate< Ret > > container_t;
+            typedef typename omni_sequence_t< omni::delegate< Ret > > container_t;
             /** Defines an iterator type to the underlying types */
-            typedef typename std::deque< omni::delegate< Ret > >::iterator iterator_t;
+            typedef typename omni_sequence_t< omni::delegate< Ret > >::iterator iterator_t;
             /** Defines a const iterator type to the underlying types */
-            typedef typename std::deque< omni::delegate< Ret > >::const_iterator const_iterator_t;
+            typedef typename omni_sequence_t< omni::delegate< Ret > >::const_iterator const_iterator_t;
             /** Defines a reverse iterator type to the underlying types */
             typedef typename std::reverse_iterator< iterator_t > reverse_iterator_t;
             /** Defines a const reverse iterator type to the underlying types */
@@ -1006,7 +1002,7 @@ namespace omni {
             void detach(const omni::delegate< Ret >& d)
             {
                 OMNI_SAFE_EVENT_ALOCK_FW
-                this->_remove(d, false);
+                this->_rem(d, false);
             }
             
             /**
@@ -1022,7 +1018,7 @@ namespace omni {
                 OMNI_D5_FW("detaching iterators");
                 iterator_t found = this->m_list.end();
                 while (begin != end) {
-                    this->_remove(*begin, false);
+                    this->_rem(*begin, false);
                     ++begin;
                 }
             }
@@ -1051,7 +1047,7 @@ namespace omni {
             void detach_all(const omni::delegate< Ret >& d)
             {
                 OMNI_SAFE_EVENT_ALOCK_FW
-                this->_remove(d, true);
+                this->_rem(d, true);
             }
             
             /**
@@ -1068,7 +1064,7 @@ namespace omni {
                     #endif
                     OMNI_D5_FW("detaching event list");
                     for (iterator_t it = e.m_list.begin(); it != e.m_list.end(); ++it) {
-                        this->_remove(*it, true);
+                        this->_rem(*it, true);
                     }
                 }
             }
@@ -1086,7 +1082,7 @@ namespace omni {
                 OMNI_D5_FW("detaching iterators");
                 iterator_t found = this->m_list.end();
                 while (begin != end) {
-                    this->_remove(*begin, false);
+                    this->_rem(*begin, false);
                     ++begin;
                 }
             }
@@ -1460,7 +1456,7 @@ namespace omni {
                 return this->m_list.end();
             }
             
-            void _remove(const delegate< Ret >& d, bool all)
+            void _rem(const delegate< Ret >& d, bool all)
             {
                 if (!this->m_list.empty()) {
                     iterator_t itr = this->m_list.end();
@@ -1479,8 +1475,8 @@ namespace omni {
     typedef omni::event<void> action;
 } // namespace omni
 
-#define OMNI_BIND(Ret, Class, Function, Obj) omni::delegate<Ret>::bind<Class, &Class::Function>(Obj)
-#define OMNI_BIND_CONST(Ret, Class, Function, Obj) omni::delegate<Ret>::bind_const<Class, &Class::Function>(Obj)
+#define OMNI_BIND0(Ret, Class, Function, Obj) omni::delegate<Ret>::bind<Class, &Class::Function>(Obj)
+#define OMNI_BIND0_CONST(Ret, Class, Function, Obj) omni::delegate<Ret>::bind_const<Class, &Class::Function>(Obj)
 
 namespace std {
     template < typename Ret >

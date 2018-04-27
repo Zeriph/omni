@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -42,17 +38,11 @@ the class is built, as well it doesn't have to do extra padding) */
     #define OMNI_VERSION_NAME_FW 
     #define OMNI_VERSION_NAMECP_FW
 #endif
-#if defined(OMNI_TYPE_INFO)
-    #define OMNI_VERSION_TI_FW m_type(),
-#else
-    #define OMNI_VERSION_TI_FW
-#endif 
 #define OMNI_VERSION_CTOR_FW OMNI_VERSION_DIS_FW OMNI_VERSION_NAME_FW
 #define OMNI_VERSION_CPCTOR_FW OMNI_VERSION_DISCP_FW OMNI_VERSION_NAMECP_FW
 
 omni::util::version::version() :
     OMNI_VERSION_CTOR_FW
-    OMNI_VERSION_TI_FW
     m_maj(0), m_min(0), m_bld(0), m_rev(0)
 {
     OMNI_DV5_FW("created version ", this->to_string_t());
@@ -60,7 +50,6 @@ omni::util::version::version() :
 
 omni::util::version::version(unsigned int mj) :
     OMNI_VERSION_CTOR_FW
-    OMNI_VERSION_TI_FW
     m_maj(mj), m_min(0), m_bld(0), m_rev(0)
 {
     OMNI_DV5_FW("created version ", this->to_string_t());
@@ -68,7 +57,6 @@ omni::util::version::version(unsigned int mj) :
 
 omni::util::version::version(unsigned int mj, unsigned int mn) :
     OMNI_VERSION_CTOR_FW
-    OMNI_VERSION_TI_FW
     m_maj(mj), m_min(mn), m_bld(0), m_rev(0)
 {
     OMNI_DV5_FW("created version ", this->to_string_t());
@@ -76,7 +64,6 @@ omni::util::version::version(unsigned int mj, unsigned int mn) :
 
 omni::util::version::version(unsigned int mj, unsigned int mn, unsigned int bld) :
     OMNI_VERSION_CTOR_FW
-    OMNI_VERSION_TI_FW
     m_maj(mj), m_min(mn), m_bld(bld), m_rev(0)
 {
     OMNI_DV5_FW("created version ", this->to_string_t());
@@ -84,7 +71,6 @@ omni::util::version::version(unsigned int mj, unsigned int mn, unsigned int bld)
 
 omni::util::version::version(unsigned int mj, unsigned int mn, unsigned int bld, unsigned int rev) :
     OMNI_VERSION_CTOR_FW
-    OMNI_VERSION_TI_FW
     m_maj(mj), m_min(mn), m_bld(bld), m_rev(rev)
 {
     OMNI_DV5_FW("created version ", this->to_string_t());
@@ -92,7 +78,6 @@ omni::util::version::version(unsigned int mj, unsigned int mn, unsigned int bld,
 
 omni::util::version::version(const std::string& str) :
     OMNI_VERSION_CTOR_FW
-    OMNI_VERSION_TI_FW
     m_maj(0), m_min(0), m_bld(0), m_rev(0)
 {
     this->_copy(omni::util::version::_parse(str));
@@ -101,7 +86,6 @@ omni::util::version::version(const std::string& str) :
 
 omni::util::version::version(const std::wstring& str) :
     OMNI_VERSION_CTOR_FW
-    OMNI_VERSION_TI_FW
     m_maj(0), m_min(0), m_bld(0), m_rev(0)
 {
     this->_copy(omni::util::version::_parse(str));
@@ -110,7 +94,6 @@ omni::util::version::version(const std::wstring& str) :
 
 omni::util::version::version(const omni::util::version& cp) :
     OMNI_VERSION_CPCTOR_FW
-    OMNI_VERSION_TI_FW
     m_maj(cp.m_maj), m_min(cp.m_min), m_bld(cp.m_bld), m_rev(cp.m_rev)
 {
     OMNI_DV5_FW("created version ", this->to_string_t());
@@ -136,11 +119,11 @@ omni::util::version omni::util::version::_parse(const std::wstring& v)
 
 bool omni::util::version::_tryparse(const std::string& v, omni::util::version& out)
 {
-    OMNI_SEQ_T<std::string> s = omni::cstring::split(v, ".");
+    omni::seq::std_string_t s = omni::cstring::split(v, ".");
     if (s.size() > 4) {
         return false;
     }
-    OMNI_SEQ_T<std::string>::const_iterator it = s.begin();
+    omni::seq::std_string_t::const_iterator it = s.begin();
     while (it != s.end()) {
         if (it->empty() || !omni::cstring::is_numeric(*it)) {
             return false;
@@ -157,11 +140,11 @@ bool omni::util::version::_tryparse(const std::string& v, omni::util::version& o
 
 bool omni::util::version::_tryparse(const std::wstring& v, omni::util::version& out)
 {
-    OMNI_SEQ_T<std::wstring> s = omni::wstring::split(v, L".");
+    omni::seq::std_wstring_t s = omni::wstring::split(v, L".");
     if (s.size() > 4) {
         return false;
     }
-    OMNI_SEQ_T<std::wstring>::const_iterator it = s.begin();
+    omni::seq::std_wstring_t::const_iterator it = s.begin();
     while (it != s.end()) {
         if (it->empty() || !omni::wstring::is_numeric(*it)) {
             return false;

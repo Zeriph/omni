@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -63,6 +59,29 @@
 #define OMNI_BIND_CONST_EX(DelegateType, Class, Function, Obj) DelegateType::bind_const<Class, &Class::Function>(obj)
 
 #define OMNI_E2S_FW(v) case v: return OMNI_DEF2STR(v)
-#define OMNI_E2WS_FW(v) case v: return omni::string_util::to_wstring(OMNI_DEF2STR(v))
+#define OMNI_E2WS_FW(v) case v: return omni::string::util::to_wstring(OMNI_DEF2STR(v))
+
+#define OMNI_MAX_PATH_FW 32767 // 32,767 - 1 for '\0'
+
+// TODO: can this be brought into the framework anywhere that won't sacrifice comprehension?
+/*
+#define SW1(a) swtich (v) { OMNI_E2S_FW(a); default: break; }
+#define SW2(a,b) swtich (v) { OMNI_E2S_FW(a); default: break; }
+#define SW3(a,b,c) swtich (v) { OMNI_E2S_FW(a); default: break; }
+#define SW4(a,b,c,d) swtich (v) { OMNI_E2S_FW(a); default: break; }
+#define SW5(a,b,c,d,e) swtich (v) { OMNI_E2S_FW(a); default: break; }
+#define SW6(a,b,c,d,e,f) swtich (v) { OMNI_E2S_FW(a); default: break; }
+#define GET_MACRO(_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,NAME,...) NAME
+#define SW_DEF(...) GET_MACRO(__VA_ARGS__, SW11, SW10, SW9, SW8, SW7, SW6, SW5, SW4, SW3, SW2, SW1)(__VA_ARGS__)
+#define ENUM_DEF(NM, ...) typedef struct NM { \
+                            typedef enum enum_t { __VA_ARGS__ } enum_t; \
+                            static const std::string to_string(const enum_t& v) { \
+                                SW_DEF(__VA_ARGS__) \
+                                return "UNKNOWN"; \
+                            } \
+                            friend std::ostream& operator<<(std::ostream& s, const enum_t& c) \
+                            { s << to_string(c); return s; } \
+                          } NM
+*/
 
 #endif // OMNI_HELPER_HPP

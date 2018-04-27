@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -221,6 +217,27 @@ namespace omni {
             public:
                 invalid_environment_variable() : omni::exception(OMNI_ERR_NAME_STR) {}
         };
+
+        /** An invalid enumeration value was specified */
+        class invalid_enum : virtual public omni::exception
+        {
+            public:
+                invalid_enum() : omni::exception(OMNI_INVALID_ENUM) {}
+                explicit invalid_enum(const char* name) : omni::exception(OMNI_INVALID_ENUM) {
+                    if (name) {
+                        this->m_what.append(": ");
+                        this->m_what.append(name);
+                    } else {
+                        OMNI_DBGE(OMNI_NULL_PTR_STR);
+                        OMNI_EXCEPTION_TERMINATE
+                    }
+                }
+                explicit invalid_enum(const std::string& name) : omni::exception(OMNI_INVALID_ENUM) {
+                    this->m_what.append(": ");
+                    this->m_what.append(name);
+                }
+                explicit invalid_enum(int val) : omni::exception(OMNI_INVALID_ENUM, ": ", val) { }
+        };        
         
         /** The system mutex was left in an undefined state (as in calling mutex_destroy on a mutex that is still locked) */
         class invalid_mutex_state : virtual public omni::exceptions::mutex_system_exception
@@ -334,6 +351,46 @@ namespace omni {
                 }
         };
         
+        /** A general path exception occurred */
+        class path_exception : virtual public omni::exception
+        {
+            public:
+                path_exception() : omni::exception(OMNI_PATH_ERROR) {}
+                explicit path_exception(const char* path) : omni::exception(OMNI_PATH_ERROR) {
+                    if (path) {
+                        this->m_what.append(" on ");
+                        this->m_what.append(path);
+                    } else {
+                        OMNI_DBGE(OMNI_NULL_PTR_STR);
+                        OMNI_EXCEPTION_TERMINATE
+                    }
+                }
+                explicit path_exception(const std::string& path) : omni::exception(OMNI_PATH_ERROR) {
+                    this->m_what.append(" on ");
+                    this->m_what.append(path);
+                }
+        };
+
+        /** A general path exception occurred */
+        class file_not_found : virtual public omni::exception
+        {
+            public:
+                file_not_found() : omni::exception(OMNI_FILE_NOT_FOUND_STR) {}
+                explicit file_not_found(const char* path) : omni::exception(OMNI_FILE_NOT_FOUND_STR) {
+                    if (path) {
+                        this->m_what.append(": ");
+                        this->m_what.append(path);
+                    } else {
+                        OMNI_DBGE(OMNI_NULL_PTR_STR);
+                        OMNI_EXCEPTION_TERMINATE
+                    }
+                }
+                explicit file_not_found(const std::string& path) : omni::exception(OMNI_FILE_NOT_FOUND_STR) {
+                    this->m_what.append(": ");
+                    this->m_what.append(path);
+                }
+        };
+
         /** An error occurred on the system pipe */
         class pipe_exception : virtual public omni::exceptions::environment_exception
         {
@@ -364,12 +421,8 @@ namespace omni {
                 stopwatch_exception(const char* msg, int er) : omni::exception(msg, er) {}
                 stopwatch_exception(const char* msg, long er) : omni::exception(msg ,er) {}
                 explicit stopwatch_exception(const char* msg) : omni::exception(msg) {}
-                explicit stopwatch_exception(int er) : omni::exception(OMNI_ERR_STOPWATCH_STR, ": ", er) {
-                    
-                }
-                explicit stopwatch_exception(long er) : omni::exception(OMNI_ERR_STOPWATCH_STR, ": ", er) {
-                    
-                }
+                explicit stopwatch_exception(int er) : omni::exception(OMNI_ERR_STOPWATCH_STR, ": ", er) {}
+                explicit stopwatch_exception(long er) : omni::exception(OMNI_ERR_STOPWATCH_STR, ": ", er) {}
         };
         
         /** An operation was made on a thread in an already started state and cannot be called once running */

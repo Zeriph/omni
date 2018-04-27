@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -271,9 +267,6 @@ namespace omni {
             
             void _set(value_t value) { this->m_val = value; }
             
-            #if defined(OMNI_TYPE_INFO)
-                omni::type< omni::property<T> > m_type;
-            #endif
             OMNI_SAFE_PROP_MTX_FW
             /** The 'get' functor. Used to attach to a user defined or default 'get' function */
             get m_get;
@@ -282,6 +275,49 @@ namespace omni {
             /** The underlying m_val */
             value_t m_val;
     };
+
+    // TODO: getter/setter?
+    /* example:
+    
+    class test {
+        public:
+            omni::property_get<int> x;
+            omni::property_set<int> p;
+
+            test(int _x) : 
+                x(), p(), m_x(_x)
+            {
+                this->x.bind(omni::property_get<int>::delegate::bond<test, &test::_get_x>(*this));
+                this->p.bind(omni::property_set<int>::delegate::bond<test, &test::_set_x>(*this));
+                or
+                this->x.bind<test, &test::_get_x>(*this);
+                this->p.bind<test, &test::_set_x>(*this);
+            }
+
+        private:
+            int m_x;
+
+            int _get_x()
+            {
+                return this->m_x;
+            }
+
+            void _set_x(int _x)
+            {
+                this->m_x = _x;
+            }
+    };
+
+    then using:
+
+    test t(10);
+    int x = t.x; // OK, x = t.x causes a 'get'
+    t.p = 42;    // OK, t.p = x causes a 'set'
+    t.x = 42;    // compiler fail, causes a 'set' and there are no 'set' functions
+    int p = t.p; // compiler fail, causes a 'get' and there are no 'get' functions
+    
+    
+    */
 }
 
 #endif // OMNI_PROPERTY_HPP

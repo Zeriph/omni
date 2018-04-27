@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -88,14 +84,12 @@ namespace misc {
     OMNI_CONSTEXT_FW OMNI_CHAR_T_FW PLUS OMNI_EXT_ASSN_FW(= OMNI_STRW_FW(OMNI_PLUS_CHAR));
 }
 
-// TODO: change these up
-
 /** Facilitates size constants */
-namespace sz {
+namespace size {
     /** Facilitates binary size constants (1KB == 1024B) */
-    namespace bin {
+    namespace binary {
         /** Facilitates binary size abbreviated string constants (B, KiB, MiB, etc.) */
-        namespace str {
+        namespace string {
             /** Facilitates binary size unabbreviated string constants (Byte, Kibibyte, etc.) */
             namespace full {
                 OMNI_CONSTEXT_FW OMNI_CHAR_T_FW B[] OMNI_EXT_ASSN_FW(= OMNI_STRW_FW(OMNI_BYTE_STR));
@@ -120,9 +114,9 @@ namespace sz {
         }
     }
     /** Facilitates decimal size constants (1KB == 1000B) */
-    namespace dec {
+    namespace decimal {
         /** Facilitates decimal size abbreviated string constants (B, KB, MB, etc.) */
-        namespace str {
+        namespace string {
             /** Facilitates decimal size unabbreviated string constants (Byte, Kilobyte, etc.) */
             namespace full {
                 OMNI_CONSTEXT_FW OMNI_CHAR_T_FW B[] OMNI_EXT_ASSN_FW(= OMNI_STRW_FW(OMNI_BYTE_STR));

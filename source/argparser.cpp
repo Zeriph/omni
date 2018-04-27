@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -56,13 +52,13 @@ omni::application::argparser::argparser(const unsigned int& ac, const wchar_t** 
     this->set(ac, av);
 }
 
-omni::application::argparser::argparser(const OMNI_SEQ_T<std::string>& av) :
+omni::application::argparser::argparser(const omni::seq::std_string_t& av) :
     OMNI_CTOR_FW(omni::application::argparser)
     m_args(),
     m_argc(0)
 {
     this->m_argc = av.size();
-    OMNI_SEQ_T<std::string>::const_iterator it = av.begin();
+    omni::seq::std_string_t::const_iterator it = av.begin();
     while (it != av.end()) {
         omni::string_t tmp = omni::string::util::to_string_t(*it);
         this->m_args.push_back(tmp);
@@ -71,13 +67,13 @@ omni::application::argparser::argparser(const OMNI_SEQ_T<std::string>& av) :
     OMNI_D5_FW("created");
 }
 
-omni::application::argparser::argparser(const OMNI_SEQ_T<std::wstring>& av) :
+omni::application::argparser::argparser(const omni::seq::std_wstring_t& av) :
     OMNI_CTOR_FW(omni::application::argparser)
     m_args(),
     m_argc(0)
 {
     this->m_argc = av.size();
-    OMNI_SEQ_T<std::wstring>::const_iterator it = av.begin();
+    omni::seq::std_wstring_t::const_iterator it = av.begin();
     while (it != av.end()) {
         omni::string_t tmp = omni::string::util::to_string_t(*it);
         this->m_args.push_back(tmp);
@@ -94,9 +90,9 @@ omni::application::argparser::~argparser()
     OMNI_CATCH_FW
 }
 
-OMNI_SEQ_T<omni::string_t> omni::application::argparser::argv() const
+omni::seq::string_t omni::application::argparser::argv() const
 {
-    OMNI_SEQ_T<omni::string_t> ret;
+    omni::seq::string_t ret;
     std::copy(this->m_args.begin(), this->m_args.end(), std::back_inserter(ret));
     return ret;
 }
@@ -138,7 +134,7 @@ omni::string_t omni::application::argparser::get_switch(const std::string& sw) c
         return omni::string_t();
     }
     omni::string_t tmp = omni::string::util::to_string_t(sw);
-    std::deque<omni::string_t>::const_iterator it = this->_find(this->m_args.begin(), tmp);
+    omni::seq::string_t::const_iterator it = this->_find(this->m_args.begin(), tmp);
     if (it != this->m_args.end()) {
         if ((++it) != this->m_args.end()) {
             return omni::string_t(*it);
@@ -154,7 +150,7 @@ omni::string_t omni::application::argparser::get_switch(const std::wstring& sw) 
         return omni::string_t();
     }
     omni::string_t tmp = omni::string::util::to_string_t(sw);
-    std::deque<omni::string_t>::const_iterator it = this->_find(this->m_args.begin(), tmp);
+    omni::seq::string_t::const_iterator it = this->_find(this->m_args.begin(), tmp);
     if (it != this->m_args.end()) {
         if ((++it) != this->m_args.end()) {
             return omni::string_t(*it);
@@ -163,14 +159,14 @@ omni::string_t omni::application::argparser::get_switch(const std::wstring& sw) 
     return omni::string_t();
 }
 
-OMNI_SEQ_T<omni::string_t> omni::application::argparser::get_switches(const omni::string_t& sw) const
+omni::seq::string_t omni::application::argparser::get_switches(const omni::string_t& sw) const
 {
     if (sw.empty()) {
         OMNI_D1_FW("invalid switch specified");
-        return OMNI_SEQ_T<omni::string_t>();
+        return omni::seq::string_t();
     }
-    OMNI_SEQ_T<omni::string_t> ret;
-    std::deque<omni::string_t>::const_iterator f = this->_find(this->m_args.begin(), sw);
+    omni::seq::string_t ret;
+    omni::seq::string_t::const_iterator f = this->_find(this->m_args.begin(), sw);
     while (f != this->m_args.end()) {
         if ((++f) != this->m_args.end()) {
             ret.push_back(*f);
@@ -180,19 +176,19 @@ OMNI_SEQ_T<omni::string_t> omni::application::argparser::get_switches(const omni
     return ret;
 }
 
-OMNI_SEQ_T<omni::string_t> omni::application::argparser::get_range(std::size_t start, std::size_t end) const
+omni::seq::string_t omni::application::argparser::get_range(std::size_t start, std::size_t end) const
 {
     if (start > this->m_argc) {
-        OMNI_ERR_RETV_FW("index out of range: start > argc", omni::exceptions::index_out_of_range(), OMNI_SEQ_T<omni::string_t>())
+        OMNI_ERR_RETV_FW("index out of range: start > argc", omni::exceptions::index_out_of_range(), omni::seq::string_t())
     }
     if (end > this->m_argc) {
-        OMNI_ERR_RETV_FW("index out of range: end > argc", omni::exceptions::index_out_of_range(), OMNI_SEQ_T<omni::string_t>())
+        OMNI_ERR_RETV_FW("index out of range: end > argc", omni::exceptions::index_out_of_range(), omni::seq::string_t())
     }
     if (start > end) {
-        OMNI_ERR_RETV_FW("start > end", omni::exceptions::index_out_of_range(), OMNI_SEQ_T<omni::string_t>())
+        OMNI_ERR_RETV_FW("start > end", omni::exceptions::index_out_of_range(), omni::seq::string_t())
     };
-    OMNI_SEQ_T<omni::string_t> rng;
-    std::deque<omni::string_t>::const_iterator it = this->m_args.begin();
+    omni::seq::string_t rng;
+    omni::seq::string_t::const_iterator it = this->m_args.begin();
     for (std::size_t t = start; t > 0; --t) { ++it; }
     while (it != this->m_args.end() && start<=end) {
         rng.push_back(*it);
@@ -207,8 +203,7 @@ void omni::application::argparser::set(const unsigned int& ac, const char** av)
     this->m_argc = ac;
     this->m_args.clear();
     for (unsigned int i = 0; i < ac; ++i) {
-        omni::string_t tmp = omni::string::util::to_string_t(av[i]);
-        this->m_args.push_back(tmp);
+        this->m_args.push_back(omni::string::util::to_string_t(av[i]));
     }
 }
 
@@ -222,11 +217,11 @@ void omni::application::argparser::set(const unsigned int& ac, const wchar_t** a
     }
 }
 
-void omni::application::argparser::set(const OMNI_SEQ_T<omni::string_t>& av)
+void omni::application::argparser::set(const omni::seq::string_t& av)
 {
     this->m_argc = av.size();
     this->m_args.clear();
-    OMNI_SEQ_T<omni::string_t>::const_iterator it = av.begin();
+    omni::seq::string_t::const_iterator it = av.begin();
     while (it != av.end()) {
         this->m_args.push_back(*it);
         ++it;
@@ -256,7 +251,7 @@ const std::string omni::application::argparser::to_string(bool includeArg1) cons
 {
     std::string ret, tmp;
     std::string q("\"");
-    std::deque<omni::string_t>::const_iterator it = this->m_args.begin();
+    omni::seq::string_t::const_iterator it = this->m_args.begin();
     if (!includeArg1) { ++it; }
     while (it != this->m_args.end()) {
         tmp = omni::string::util::to_string(*it);
@@ -279,7 +274,7 @@ const std::wstring omni::application::argparser::to_wstring(bool includeArg1) co
 {
     std::wstring ret, tmp;
     std::wstring q(L"\"");
-    std::deque<omni::string_t>::const_iterator it = this->m_args.begin();
+    omni::seq::string_t::const_iterator it = this->m_args.begin();
     if (!includeArg1) { ++it; }
     while (it != this->m_args.end()) {
         tmp = omni::string::util::to_wstring(*it);
@@ -336,7 +331,7 @@ bool omni::application::argparser::operator!=(const omni::application::argparser
 
 ///////// start private methods /////////
 
-std::deque<omni::string_t>::const_iterator omni::application::argparser::_find(std::deque<omni::string_t>::const_iterator it, const omni::string_t& f) const
+omni::seq::string_t::const_iterator omni::application::argparser::_find(omni::seq::string_t::const_iterator it, const omni::string_t& f) const
 {
     if (this->m_args.empty()) { return this->m_args.end(); }
     for (; it != this->m_args.end(); ++it) { if (f == (*it)) { break; } }

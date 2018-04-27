@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -80,42 +76,42 @@ OMNI_CHAR_T_FW OMNI_EXT_NS_FW::misc::NCHAR = OMNI_STRW_FW(OMNI_NCHAR_CHAR);
 OMNI_CHAR_T_FW OMNI_EXT_NS_FW::misc::PERIOD = OMNI_STRW_FW(OMNI_PERIOD_CHAR);
 OMNI_CHAR_T_FW OMNI_EXT_NS_FW::misc::PLUS = OMNI_STRW_FW(OMNI_PLUS_CHAR);
 
-OMNI_CHAR_T_FW OMNI_EXT_NS_FW::sz::bin::str::full::B[]= OMNI_STRW_FW(OMNI_BYTE_STR);
-OMNI_CHAR_T_FW OMNI_EXT_NS_FW::sz::bin::str::full::KB[]= OMNI_STRW_FW(OMNI_KIBI_STR);
-OMNI_CHAR_T_FW OMNI_EXT_NS_FW::sz::bin::str::full::MB[]= OMNI_STRW_FW(OMNI_MIBI_STR);
-OMNI_CHAR_T_FW OMNI_EXT_NS_FW::sz::bin::str::full::GB[]= OMNI_STRW_FW(OMNI_GIBI_STR);
-OMNI_CHAR_T_FW OMNI_EXT_NS_FW::sz::bin::str::full::TB[]= OMNI_STRW_FW(OMNI_TIBI_STR);
-OMNI_CHAR_T_FW OMNI_EXT_NS_FW::sz::bin::str::full::PB[]= OMNI_STRW_FW(OMNI_PIBI_STR);
-OMNI_CHAR_T_FW OMNI_EXT_NS_FW::sz::bin::str::full::EB[]= OMNI_STRW_FW(OMNI_EIBI_STR);
-OMNI_CHAR_T_FW OMNI_EXT_NS_FW::sz::bin::str::full::ZB[]= OMNI_STRW_FW(OMNI_ZIBI_STR);
-OMNI_CHAR_T_FW OMNI_EXT_NS_FW::sz::bin::str::full::YB[]= OMNI_STRW_FW(OMNI_YIBI_STR);
+OMNI_CHAR_T_FW OMNI_EXT_NS_FW::size::binary::string::full::B[]= OMNI_STRW_FW(OMNI_BYTE_STR);
+OMNI_CHAR_T_FW OMNI_EXT_NS_FW::size::binary::string::full::KB[]= OMNI_STRW_FW(OMNI_KIBI_STR);
+OMNI_CHAR_T_FW OMNI_EXT_NS_FW::size::binary::string::full::MB[]= OMNI_STRW_FW(OMNI_MIBI_STR);
+OMNI_CHAR_T_FW OMNI_EXT_NS_FW::size::binary::string::full::GB[]= OMNI_STRW_FW(OMNI_GIBI_STR);
+OMNI_CHAR_T_FW OMNI_EXT_NS_FW::size::binary::string::full::TB[]= OMNI_STRW_FW(OMNI_TIBI_STR);
+OMNI_CHAR_T_FW OMNI_EXT_NS_FW::size::binary::string::full::PB[]= OMNI_STRW_FW(OMNI_PIBI_STR);
+OMNI_CHAR_T_FW OMNI_EXT_NS_FW::size::binary::string::full::EB[]= OMNI_STRW_FW(OMNI_EIBI_STR);
+OMNI_CHAR_T_FW OMNI_EXT_NS_FW::size::binary::string::full::ZB[]= OMNI_STRW_FW(OMNI_ZIBI_STR);
+OMNI_CHAR_T_FW OMNI_EXT_NS_FW::size::binary::string::full::YB[]= OMNI_STRW_FW(OMNI_YIBI_STR);
 
-OMNI_CHAR_T_FW OMNI_EXT_NS_FW::sz::bin::str::B[]= OMNI_STRW_FW(OMNI_B_STR);
-OMNI_CHAR_T_FW OMNI_EXT_NS_FW::sz::bin::str::KB[]= OMNI_STRW_FW(OMNI_KIB_STR);
-OMNI_CHAR_T_FW OMNI_EXT_NS_FW::sz::bin::str::MB[]= OMNI_STRW_FW(OMNI_MIB_STR);
-OMNI_CHAR_T_FW OMNI_EXT_NS_FW::sz::bin::str::GB[]= OMNI_STRW_FW(OMNI_GIB_STR);
-OMNI_CHAR_T_FW OMNI_EXT_NS_FW::sz::bin::str::TB[]= OMNI_STRW_FW(OMNI_TIB_STR);
-OMNI_CHAR_T_FW OMNI_EXT_NS_FW::sz::bin::str::PB[]= OMNI_STRW_FW(OMNI_PIB_STR);
-OMNI_CHAR_T_FW OMNI_EXT_NS_FW::sz::bin::str::EB[]= OMNI_STRW_FW(OMNI_EIB_STR);
-OMNI_CHAR_T_FW OMNI_EXT_NS_FW::sz::bin::str::ZB[]= OMNI_STRW_FW(OMNI_ZIB_STR);
-OMNI_CHAR_T_FW OMNI_EXT_NS_FW::sz::bin::str::YB[]= OMNI_STRW_FW(OMNI_YIB_STR);
+OMNI_CHAR_T_FW OMNI_EXT_NS_FW::size::binary::string::B[]= OMNI_STRW_FW(OMNI_B_STR);
+OMNI_CHAR_T_FW OMNI_EXT_NS_FW::size::binary::string::KB[]= OMNI_STRW_FW(OMNI_KIB_STR);
+OMNI_CHAR_T_FW OMNI_EXT_NS_FW::size::binary::string::MB[]= OMNI_STRW_FW(OMNI_MIB_STR);
+OMNI_CHAR_T_FW OMNI_EXT_NS_FW::size::binary::string::GB[]= OMNI_STRW_FW(OMNI_GIB_STR);
+OMNI_CHAR_T_FW OMNI_EXT_NS_FW::size::binary::string::TB[]= OMNI_STRW_FW(OMNI_TIB_STR);
+OMNI_CHAR_T_FW OMNI_EXT_NS_FW::size::binary::string::PB[]= OMNI_STRW_FW(OMNI_PIB_STR);
+OMNI_CHAR_T_FW OMNI_EXT_NS_FW::size::binary::string::EB[]= OMNI_STRW_FW(OMNI_EIB_STR);
+OMNI_CHAR_T_FW OMNI_EXT_NS_FW::size::binary::string::ZB[]= OMNI_STRW_FW(OMNI_ZIB_STR);
+OMNI_CHAR_T_FW OMNI_EXT_NS_FW::size::binary::string::YB[]= OMNI_STRW_FW(OMNI_YIB_STR);
 
-OMNI_CHAR_T_FW OMNI_EXT_NS_FW::sz::dec::str::full::B[]= OMNI_STRW_FW(OMNI_BYTE_STR);
-OMNI_CHAR_T_FW OMNI_EXT_NS_FW::sz::dec::str::full::KB[]= OMNI_STRW_FW(OMNI_KILO_STR);
-OMNI_CHAR_T_FW OMNI_EXT_NS_FW::sz::dec::str::full::MB[]= OMNI_STRW_FW(OMNI_MEGA_STR);
-OMNI_CHAR_T_FW OMNI_EXT_NS_FW::sz::dec::str::full::GB[]= OMNI_STRW_FW(OMNI_GIGA_STR);
-OMNI_CHAR_T_FW OMNI_EXT_NS_FW::sz::dec::str::full::TB[]= OMNI_STRW_FW(OMNI_TERA_STR);
-OMNI_CHAR_T_FW OMNI_EXT_NS_FW::sz::dec::str::full::PB[]= OMNI_STRW_FW(OMNI_PETA_STR);
-OMNI_CHAR_T_FW OMNI_EXT_NS_FW::sz::dec::str::full::EB[]= OMNI_STRW_FW(OMNI_EXA_STR);
-OMNI_CHAR_T_FW OMNI_EXT_NS_FW::sz::dec::str::full::ZB[]= OMNI_STRW_FW(OMNI_ZETTA_STR);
-OMNI_CHAR_T_FW OMNI_EXT_NS_FW::sz::dec::str::full::YB[]= OMNI_STRW_FW(OMNI_YOTTA_STR);
+OMNI_CHAR_T_FW OMNI_EXT_NS_FW::size::decimal::string::full::B[]= OMNI_STRW_FW(OMNI_BYTE_STR);
+OMNI_CHAR_T_FW OMNI_EXT_NS_FW::size::decimal::string::full::KB[]= OMNI_STRW_FW(OMNI_KILO_STR);
+OMNI_CHAR_T_FW OMNI_EXT_NS_FW::size::decimal::string::full::MB[]= OMNI_STRW_FW(OMNI_MEGA_STR);
+OMNI_CHAR_T_FW OMNI_EXT_NS_FW::size::decimal::string::full::GB[]= OMNI_STRW_FW(OMNI_GIGA_STR);
+OMNI_CHAR_T_FW OMNI_EXT_NS_FW::size::decimal::string::full::TB[]= OMNI_STRW_FW(OMNI_TERA_STR);
+OMNI_CHAR_T_FW OMNI_EXT_NS_FW::size::decimal::string::full::PB[]= OMNI_STRW_FW(OMNI_PETA_STR);
+OMNI_CHAR_T_FW OMNI_EXT_NS_FW::size::decimal::string::full::EB[]= OMNI_STRW_FW(OMNI_EXA_STR);
+OMNI_CHAR_T_FW OMNI_EXT_NS_FW::size::decimal::string::full::ZB[]= OMNI_STRW_FW(OMNI_ZETTA_STR);
+OMNI_CHAR_T_FW OMNI_EXT_NS_FW::size::decimal::string::full::YB[]= OMNI_STRW_FW(OMNI_YOTTA_STR);
 
-OMNI_CHAR_T_FW OMNI_EXT_NS_FW::sz::dec::str::B[]= OMNI_STRW_FW(OMNI_B_STR);
-OMNI_CHAR_T_FW OMNI_EXT_NS_FW::sz::dec::str::KB[]= OMNI_STRW_FW(OMNI_KOB_STR);
-OMNI_CHAR_T_FW OMNI_EXT_NS_FW::sz::dec::str::MB[]= OMNI_STRW_FW(OMNI_MOB_STR);
-OMNI_CHAR_T_FW OMNI_EXT_NS_FW::sz::dec::str::GB[]= OMNI_STRW_FW(OMNI_GOB_STR);
-OMNI_CHAR_T_FW OMNI_EXT_NS_FW::sz::dec::str::TB[]= OMNI_STRW_FW(OMNI_TOB_STR);
-OMNI_CHAR_T_FW OMNI_EXT_NS_FW::sz::dec::str::PB[]= OMNI_STRW_FW(OMNI_POB_STR);
-OMNI_CHAR_T_FW OMNI_EXT_NS_FW::sz::dec::str::EB[]= OMNI_STRW_FW(OMNI_EOB_STR);
-OMNI_CHAR_T_FW OMNI_EXT_NS_FW::sz::dec::str::ZB[]= OMNI_STRW_FW(OMNI_ZOB_STR);
-OMNI_CHAR_T_FW OMNI_EXT_NS_FW::sz::dec::str::YB[]= OMNI_STRW_FW(OMNI_YOB_STR);
+OMNI_CHAR_T_FW OMNI_EXT_NS_FW::size::decimal::string::B[]= OMNI_STRW_FW(OMNI_B_STR);
+OMNI_CHAR_T_FW OMNI_EXT_NS_FW::size::decimal::string::KB[]= OMNI_STRW_FW(OMNI_KOB_STR);
+OMNI_CHAR_T_FW OMNI_EXT_NS_FW::size::decimal::string::MB[]= OMNI_STRW_FW(OMNI_MOB_STR);
+OMNI_CHAR_T_FW OMNI_EXT_NS_FW::size::decimal::string::GB[]= OMNI_STRW_FW(OMNI_GOB_STR);
+OMNI_CHAR_T_FW OMNI_EXT_NS_FW::size::decimal::string::TB[]= OMNI_STRW_FW(OMNI_TOB_STR);
+OMNI_CHAR_T_FW OMNI_EXT_NS_FW::size::decimal::string::PB[]= OMNI_STRW_FW(OMNI_POB_STR);
+OMNI_CHAR_T_FW OMNI_EXT_NS_FW::size::decimal::string::EB[]= OMNI_STRW_FW(OMNI_EOB_STR);
+OMNI_CHAR_T_FW OMNI_EXT_NS_FW::size::decimal::string::ZB[]= OMNI_STRW_FW(OMNI_ZOB_STR);
+OMNI_CHAR_T_FW OMNI_EXT_NS_FW::size::decimal::string::YB[]= OMNI_STRW_FW(OMNI_YOB_STR);

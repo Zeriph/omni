@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -23,83 +19,243 @@
 #if !defined(OMNI_TIMER_T_HPP)
 #define OMNI_TIMER_T_HPP 1
 #include <omni/defs/global.hpp>
-// TODO: why was this included here?
-// #include <omni/chrono/stopwatch.hpp>
 #include <omni/generic_ptr.hpp>
 #include <omni/sync/basic_thread.hpp>
 #include <omni/delegate/2.hpp>
+#include <omni/sequence.hpp>
 
 namespace omni {
     namespace chrono {
-        typedef struct timer_sync_type {
-            typedef enum enum_t {
-                /**
-                 * When the timer interval passes, the interval counter is reset and a separate thread is
-                 * spawned and detached in which the tick event will be fired. Care should be taken for any
-                 * attached delegates since the event fires in a separate thread, if a function takes longer
-                 * than the interval, a tick can happen and thus the function can be called while still
-                 * executing; as such, any functions should be re-entrant or thread safe.
-                 */
-                ASYNCHRONOUS,
-                /**
-                 * When the timer interval passes the tick event will block and execute any delegates
-                 * in the order they were attached. The timer interval counter will not be reset until
-                 * the last attached delegate returns, thus adding additional time between official ticks.
-                 */
-                SYNCHRONOUS,
-                /**
-                 * When the timer interval passes, the interval counter is reset and any attached delegates
-                 * are called in the order they were attached. If any functions should take longer than the
-                 * timer interval and an interval lapse happens, any subsequent ticks will be dropped while
-                 * the attached delegates are still executing. It is possible to have an events fire immediately
-                 * after each other if the timing works out such that the delegate call finishes as the tick
-                 * event is about to occur.
-                 */
-                DROP,
-                /**
-                 * When the timer interval passes, the interval counter is reset and any attached delegates
-                 * are pushed to a queue that are executed on a separate thread that monitors said queue. If
-                 * an attached delegates take longer than the tick interval, any subsequent tick events are
-                 * queued up and called in succession without regards to the tick event or interval on the
-                 * queue monitor thread.
-                 */
-                QUEUED
-            } enum_t;
-            
-            /** Defines the number of elements in the enum */
-            static const unsigned short COUNT = 4;
-            
-            /** Converts the enum to its string representation */
-            static const std::string to_string(const enum_t& v)
-            {
-                switch (v) {
-                    OMNI_E2S_FW(ASYNCHRONOUS);
-                    OMNI_E2S_FW(SYNCHRONOUS);
-                    OMNI_E2S_FW(DROP);
-                    OMNI_E2S_FW(QUEUED);
-                    default: break;
+        class timer_sync_type {
+            public:
+                typedef enum enum_t {
+                    /**
+                     * When the timer interval passes, the interval counter is reset and a separate thread is
+                     * spawned and detached in which the tick event will be fired. Care should be taken for any
+                     * attached delegates since the event fires in a separate thread, if a function takes longer
+                     * than the interval, a tick can happen and thus the function can be called while still
+                     * executing; as such, any functions should be re-entrant or thread safe.
+                     */
+                    ASYNCHRONOUS,
+                    /**
+                     * When the timer interval passes the tick event will block and execute any delegates
+                     * in the order they were attached. The timer interval counter will not be reset until
+                     * the last attached delegate returns, thus adding additional time between official ticks.
+                     */
+                    SYNCHRONOUS,
+                    /**
+                     * When the timer interval passes, the interval counter is reset and any attached delegates
+                     * are called in the order they were attached. If any functions should take longer than the
+                     * timer interval and an interval lapse happens, any subsequent ticks will be dropped while
+                     * the attached delegates are still executing. It is possible to have an events fire immediately
+                     * after each other if the timing works out such that the delegate call finishes as the tick
+                     * event is about to occur.
+                     */
+                    DROP,
+                    /**
+                     * When the timer interval passes, the interval counter is reset and any attached delegates
+                     * are pushed to a queue that are executed on a separate thread that monitors said queue. If
+                     * an attached delegates take longer than the tick interval, any subsequent tick events are
+                     * queued up and called in succession without regards to the tick event or interval on the
+                     * queue monitor thread.
+                     */
+                    QUEUED
+                } enum_t;
+                
+                /** Defines the number of elements in the enum */
+                static const unsigned short COUNT = 4;
+
+                /** The default value for this enum instance */
+                static const enum_t DEFAULT_VALUE = omni::chrono::timer_sync_type::ASYNCHRONOUS;
+
+                /** Converts the enum to its string representation */
+                static std::string to_string(enum_t v)
+                {
+                    switch (v) {
+                        OMNI_E2S_FW(ASYNCHRONOUS);
+                        OMNI_E2S_FW(SYNCHRONOUS);
+                        OMNI_E2S_FW(DROP);
+                        OMNI_E2S_FW(QUEUED);
+                        default: break;
+                    }
+                    return "UNKNOWN";
                 }
-                return "UNKNOWN";
-            }
             
-            /** Converts the enum to its wide string representation */
-            static const std::wstring to_wstring(const enum_t& v)
-            {
-                switch (v) {
-                    OMNI_E2WS_FW(ASYNCHRONOUS);
-                    OMNI_E2WS_FW(SYNCHRONOUS);
-                    OMNI_E2WS_FW(DROP);
-                    OMNI_E2WS_FW(QUEUED);
-                    default: break;
+                /** Converts the enum to its wide string representation */
+                static std::wstring to_wstring(enum_t v)
+                {
+                    switch (v) {
+                        OMNI_E2WS_FW(ASYNCHRONOUS);
+                        OMNI_E2WS_FW(SYNCHRONOUS);
+                        OMNI_E2WS_FW(DROP);
+                        OMNI_E2WS_FW(QUEUED);
+                        default: break;
+                    }
+                    return OMNI_WSTR("UNKNOWN");
                 }
-                return OMNI_WSTR("UNKNOWN");
-            }
-            
-            friend std::ostream& operator<<(std::ostream& s, const enum_t& c)
-            { s << to_string(c); return s; }
-            friend std::wostream& operator<<(std::wostream& s, const enum_t& c)
-            { s << to_wstring(c); return s; }
-        } timer_sync_type;
+
+                /** Returns true if the integer value specified is a valid enum value */
+                static bool is_valid(int val)
+                {
+                    switch (val) {
+                        case ASYNCHRONOUS:
+                        case SYNCHRONOUS:
+                        case DROP:
+                        case QUEUED:
+                            return true;
+                        default: break;
+                    }
+                    return false;
+                }
+                
+                timer_sync_type() :
+                    OMNI_CTOR_FW(omni::chrono::timer_sync_type)
+                    m_val(omni::chrono::timer_sync_type::DEFAULT_VALUE)
+                { }
+
+                timer_sync_type(const timer_sync_type& cp) :
+                    OMNI_CPCTOR_FW(cp)
+                    m_val(cp.m_val)
+                { }
+
+                timer_sync_type(enum_t val) : 
+                    OMNI_CTOR_FW(omni::chrono::timer_sync_type)
+                    m_val(val)
+                { }
+
+                ~timer_sync_type()
+                {
+                    OMNI_TRY_FW
+                    OMNI_DTOR_FW
+                    OMNI_CATCH_FW
+                    OMNI_D5_FW("destroyed");
+                }
+
+                enum_t value() const
+                {
+                    return this->m_val;
+                }
+
+                const std::string to_string() const
+                {
+                    return to_string(this->m_val);
+                }
+
+                const std::wstring to_wstring() const
+                {
+                    return to_wstring(this->m_val);
+                }
+
+                bool operator!=(const timer_sync_type& val) const
+                {
+                    return !(*this == val);
+                }
+                
+                bool operator!=(enum_t val) const
+                {
+                    return (this->m_val != val);
+                }
+                
+                timer_sync_type& operator=(const timer_sync_type& val)
+                {
+                    if (this != &val) {
+                        OMNI_ASSIGN_FW(val)
+                        this->m_val = val.m_val;
+                    }
+                    return *this;
+                }
+
+                timer_sync_type& operator=(enum_t val)
+                {
+                    this->m_val = val;
+                    return *this;
+                }
+
+                timer_sync_type& operator=(int val)
+                {
+                    if (!timer_sync_type::is_valid(val)) {
+                        OMNI_ERR_RET_FW("Invalid enumeration value specified.", omni::exceptions::invalid_enum(val));
+                    } else {
+                        this->m_val = static_cast<enum_t>(val);
+                    }
+                    return *this;
+                }
+
+                bool operator<(const timer_sync_type& val) const
+                {
+                    return this->m_val < val.m_val;
+                }
+
+                bool operator<(enum_t val) const
+                {
+                    return this->m_val < val;
+                }
+
+                bool operator<(int val) const
+                {
+                    return this->m_val < static_cast<enum_t>(val);
+                }
+
+                bool operator>(const timer_sync_type& val) const
+                {
+                    return this->m_val > val.m_val;
+                }
+
+                bool operator>(enum_t val) const
+                {
+                    return this->m_val > val;
+                }
+
+                bool operator>(int val) const
+                {
+                    return this->m_val > val;
+                }
+
+                bool operator==(const timer_sync_type& val) const
+                {
+                    if (this == &val) { return true; }
+                    return this->m_val == val.m_val
+                            OMNI_EQUAL_FW(val);
+                }
+
+                bool operator==(enum_t val) const
+                {
+                    return this->m_val == val;
+                }
+
+                bool operator==(int val) const
+                {
+                    return this->m_val == val;
+                }
+
+                operator enum_t() const
+                {
+                    return this->m_val;
+                }
+
+                operator int() const
+                {
+                    return static_cast<int>(this->m_val);
+                }
+
+                operator std::string() const
+                {
+                    return this->to_string();
+                }
+
+                operator std::wstring() const
+                {
+                    return this->to_wstring();
+                }
+
+                OMNI_MEMBERS_FW(omni::chrono::timer_sync_type) // disposing,name,type(),hash()
+
+                OMNI_OSTREAM_FW(omni::chrono::timer_sync_type)
+                OMNI_OSTREAM_FN_FW(enum_t)
+
+            private:
+                enum_t m_val;
+        };
         
         typedef struct timer_args {
             timer_args() :
@@ -142,7 +298,6 @@ namespace omni {
         
         typedef omni::event2<void, omni::chrono::tick_t, const omni::generic_ptr&> timer_event;
         typedef omni::chrono::timer_event::delegate_t timer_delegate;
-        typedef omni::chrono::timer_sync_type::enum_t timer_sync_t;
     }
 }
 

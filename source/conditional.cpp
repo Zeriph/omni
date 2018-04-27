@@ -1,22 +1,20 @@
 /*
- * This file is part of the Omni C++ framework
- *
- * Copyright 2015, Zeriph Enterprises, LLC
+ * Copyright (c), Zeriph Enterprises
+ * All rights reserved.
  * 
- * PERMISSION TO USE, COPY, MODIFY, AND/OR DISTRIBUTE THIS SOFTWARE FOR ANY
- * PURPOSE WITH OR WITHOUT FEE IS HEREBY GRANTED, PROVIDED THAT THE ABOVE
- * COPYRIGHT NOTICE AND THIS PERMISSION NOTICE APPEAR IN ALL COPIES.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
- * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
- * REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
- * FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
- * INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
- * LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
- * OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
- * PERFORMANCE OF THIS SOFTWARE.
- * 
- * ZERIPH DOES NOT MAKE ANY ASSURANCES WITH REGARD TO THE ACCURACY OF THE RESULTS
- * OR OUTPUT THAT DERIVES FROM SUCH USE OF ANY SOFTWARE.
+ * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL ZERIPH AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include <omni/sync/conditional.hpp>
 #include <omni/sync/scoped_lock.hpp>
@@ -33,7 +31,7 @@ omni::sync::conditional::conditional() :
     this->_init();
 }
 
-omni::sync::conditional::conditional(bool initialy_signaled) :
+omni::sync::conditional::conditional(bool initially_signaled) :
     OMNI_CTOR_FW(omni::sync::conditional)
     m_signal(),
     m_wait(),
@@ -41,7 +39,7 @@ omni::sync::conditional::conditional(bool initialy_signaled) :
     m_signaled(false)
 {
     this->_init();
-    if (initialy_signaled) { this->signal(); }
+    if (initially_signaled) { this->signal(); }
 }
 
 omni::sync::conditional::~conditional()
@@ -74,7 +72,7 @@ void omni::sync::conditional::broadcast()
     #if defined(OMNI_OS_WIN)
         #if defined(OMNI_WIN_USE_EVENT_CONDITIONAL)
             omni::sync::mutex_lock(this->m_wait);
-            std::size_t wreq = this->m_waitreq+1;
+            uint32_t wreq = this->m_waitreq+1;
             this->m_signaled = true;
             while (--wreq > 0) {
                 if (::SetEvent(this->m_signal) == 0) {

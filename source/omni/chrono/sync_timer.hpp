@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -35,33 +31,33 @@ namespace omni {
             public:
                 sync_timer();
                 sync_timer(const omni::chrono::sync_timer& cp);
-                explicit sync_timer(std::size_t interval_ms);
-                sync_timer(std::size_t interval_ms,
+                explicit sync_timer(uint32_t interval_ms);
+                sync_timer(uint32_t interval_ms,
                            const omni::chrono::timer_delegate& fn);
-                sync_timer(std::size_t interval_ms,
+                sync_timer(uint32_t interval_ms,
                            const omni::chrono::timer_delegate& fn,
                            bool autoreset);
-                sync_timer(std::size_t interval_ms,
+                sync_timer(uint32_t interval_ms,
                            const omni::chrono::timer_delegate& fn,
                            bool autoreset,
-                           std::size_t delay);
+                           uint32_t delay);
                 ~sync_timer();
                 
                 omni::generic_ptr state_object; // state object used when tick event passes
                 omni::chrono::timer_event tick; // Occurs when the interval has passed
                 
                 bool auto_reset() const; 
-                std::size_t interval() const; 
+                uint32_t interval() const; 
                 bool is_running() const;
                 void reset();
                 void set_auto_reset(bool autoreset);
-                void set_interval(std::size_t interval_ms);
+                void set_interval(uint32_t interval_ms);
                 void start();
-                void start(std::size_t delay);
+                void start(uint32_t delay);
                 void stop();
-                void stop(std::size_t join_timeout);
-                void stop(std::size_t join_timeout, bool kill_on_timeout);
-                omni::chrono::timer_sync_t tick_type() const { return omni::chrono::timer_sync_type::SYNCHRONOUS; }
+                void stop(uint32_t join_timeout);
+                void stop(uint32_t join_timeout, bool kill_on_timeout);
+                omni::chrono::timer_sync_type::enum_t tick_type() const { return omni::chrono::timer_sync_type::SYNCHRONOUS; }
                 omni::chrono::sync_timer& operator=(const omni::chrono::sync_timer& other);
                 bool operator==(const omni::chrono::sync_timer& o) const;
                 inline bool operator!=(const omni::chrono::sync_timer& o) const { return !(*this == o); }
@@ -76,14 +72,11 @@ namespace omni {
                 void _run_noblock();
                 bool _stopreq() const;
                 
-                #if defined(OMNI_TYPE_INFO)
-                    omni::type<omni::chrono::sync_timer> m_type;
-                #endif
                 #if defined(OMNI_SAFE_SYNC_TIMER)
                     mutable omni::sync::basic_lock m_mtx;
                 #endif
                 omni::sync::basic_thread *m_thread; // the main timer thread to _run on
-                std::size_t m_int; // "elapsed" interval in ms between ticks
+                uint32_t m_int; // "elapsed" interval in ms between ticks
                 volatile bool m_auto; // true by default, false for tick once then stop
                 volatile bool m_isrun; // is running
                 volatile bool m_stopreq; // stop requested

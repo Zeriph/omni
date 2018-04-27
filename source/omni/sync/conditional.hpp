@@ -1,22 +1,20 @@
 /*
- * This file is part of the Omni C++ framework
- *
- * Copyright 2015, Zeriph Enterprises, LLC
+ * Copyright (c), Zeriph Enterprises
+ * All rights reserved.
  * 
- * PERMISSION TO USE, COPY, MODIFY, AND/OR DISTRIBUTE THIS SOFTWARE FOR ANY
- * PURPOSE WITH OR WITHOUT FEE IS HEREBY GRANTED, PROVIDED THAT THE ABOVE
- * COPYRIGHT NOTICE AND THIS PERMISSION NOTICE APPEAR IN ALL COPIES.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
- * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
- * REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
- * FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
- * INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
- * LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
- * OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
- * PERFORMANCE OF THIS SOFTWARE.
- * 
- * ZERIPH DOES NOT MAKE ANY ASSURANCES WITH REGARD TO THE ACCURACY OF THE RESULTS
- * OR OUTPUT THAT DERIVES FROM SUCH USE OF ANY SOFTWARE.
+ * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL ZERIPH AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #if !defined(OMNI_CONDITIONAL_HPP)
 #define OMNI_CONDITIONAL_HPP 1
@@ -37,7 +35,7 @@ namespace omni {
         {
             public:
                 conditional();
-                explicit conditional(bool initialy_signaled);
+                explicit conditional(bool initially_signaled);
                 ~conditional();
                 void broadcast();
                 void reset();
@@ -62,10 +60,6 @@ namespace omni {
                 omni::sync::conditional& operator=(const omni::sync::conditional& other);
                 
                 void _init();
-                
-                #if defined(OMNI_TYPE_INFO)
-                    omni::type<omni::sync::conditional> m_type;
-                #endif
                 
                 omni::sync::cond_t m_signal;
                 mutable omni::sync::mutex_t m_wait;

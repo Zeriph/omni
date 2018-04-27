@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -31,10 +27,12 @@ namespace omni {
             public:
                 inline static omni::chrono::tick_t tick()
                 {
+                    #if !defined(OMNI_NO_CHRONO_AUTO_INIT_TICK)
+                        omni::chrono::monotonic::initialize();
+                    #endif
                     #if defined(OMNI_OS_WIN)
                         #if defined(OMNI_WIN_MONO_TICK_QPC)
                             omni::chrono::tick_t tmp;
-                            if (m_freq.LowPart == 0) { ::QueryPerformanceFrequency(&m_freq); }
                             if (::QueryPerformanceCounter(&tmp) == 0) {
                                 std::memset(&tmp, 0, sizeof(omni::chrono::tick_t));
                                 OMNI_ERR_FW("An error occurred getting the clock time", omni::exceptions::clock_exception())
@@ -45,7 +43,7 @@ namespace omni {
                             #if defined(OMNI_WIN_API)
                                 #if defined(OMNI_WIN_MONO_TICK_COUNT)
                                     ::GetTickCount()
-                                #elif defined(OMNI_WIN_MONO_TICK_COUNT64)
+                                #else
                                     ::GetTickCount64()
                                 #endif
                             #else
@@ -54,34 +52,9 @@ namespace omni {
                             ;
                         #endif
                     #elif defined(OMNI_OS_APPLE)
-                        if (m_freq.denom == 0) { ::mach_timebase_info(&m_freq); }
                         return ::mach_absolute_time();
                     #else
                         omni::chrono::tick_t tmp;
-                        if (m_freq.tv_nsec == 0) {
-                            // CLOCK_MONOTONIC by default but can be configured for CLOCK_REALTIME where applicable (like QNX)
-                            if (::clock_getres(OMNI_CLOCK_GETRES_CID_FW, &m_freq) != 0) {
-                                /* DEV_NOTE: this code (and the similar clock error check just below) is laid out this way because
-                                stating simply "std::memset...; OMNI_ERRV_FW...;" caused the g++ compiler to throw-up on the RPi
-                                (g++ (Raspbian 4.9.2-10) 4.9.2) .. likely due to the fact that the std::memset is an irrelevant call
-                                when throwing an error or calling std::terminate (though why it would crash doesn't make much sense).
-                                To that, since the memset is only relevant when there's not throw/terminate, we only memset when
-                                that's actually the case ... note that it's only with the RPi GCC compiler; this code has been built
-                                and tested on over 20 different *nix variations with various builds and defaults of clang++, g++, and
-                                other compilers, none of which have thrown an error on the lines below. */
-                                #if defined(OMNI_GCC_CRASH)
-                                    std::memset(&tmp, 0, sizeof(omni::chrono::tick_t));
-                                    OMNI_ERRV_FW("An error occurred getting the clock resolution: ", std::strerror(errno), omni::exceptions::clock_exception())
-                                #else
-                                    #if defined(OMNI_THROW) || defined(OMNI_TERMINATE)
-                                        OMNI_ERRV_FW("An error occurred getting the clock resolution: ", std::strerror(errno), omni::exceptions::clock_exception())
-                                    #else
-                                        OMNI_DBGEV("An error occurred getting the clock resolution: ", std::strerror(errno)
-                                        std::memset(&tmp, 0, sizeof(omni::chrono::tick_t));
-                                    #endif
-                                #endif
-                            }
-                        }
                         if (::clock_gettime(CLOCK_MONOTONIC, &tmp) != 0) {
                             #if defined(OMNI_THROW) || defined(OMNI_TERMINATE)
                                 OMNI_ERRV_FW("An error occurred getting the clock time: ", std::strerror(errno), omni::exceptions::clock_exception())
@@ -97,16 +70,19 @@ namespace omni {
                 inline static double elapsed_us(omni::chrono::tick_t init, omni::chrono::tick_t end)
                 {
                     #if defined(OMNI_OS_APPLE)
-                        return (static_cast<double>((end - init)) * static_cast<double>(m_freq.numer)) / static_cast<double>(m_freq.denom * 1000);
+                        return (static_cast<double>((end - init)) * static_cast<double>(m_freq.numer)) /
+                                static_cast<double>(m_freq.denom * 1000);
                     #else
                         #if defined(OMNI_OS_WIN)
                             #if defined(OMNI_WIN_MONO_TICK_QPC)
-                                return (static_cast<double>(((end.QuadPart - init.QuadPart) * 1000000)) / static_cast<double>(m_freq.QuadPart));
+                                return (static_cast<double>(((end.QuadPart - init.QuadPart) * 1000000)) / 
+                                        static_cast<double>(m_freq.QuadPart));
                             #else
                                 return static_cast<double>(end - init);
                             #endif
                         #else
-                            return ((end.tv_sec - init.tv_sec) * 1000000) + (static_cast<double>((end.tv_nsec - init.tv_nsec)) / 1000);
+                            return (static_cast<double>(end.tv_nsec - init.tv_nsec) / 1000) + 
+                                    static_cast<double>((end.tv_sec - init.tv_sec) * 1000000);
                         #endif
                     #endif
                 }
@@ -136,13 +112,59 @@ namespace omni {
                     return omni::chrono::monotonic::elapsed_s(init, omni::chrono::monotonic::tick());
                 }
                 
+                inline static bool initialize()
+                {
+                    #if defined(OMNI_OS_WIN)
+                        #if defined(OMNI_WIN_MONO_TICK_QPC)
+                            if (m_freq.LowPart == 0) {
+                                ::QueryPerformanceFrequency(&m_freq);
+                            }
+                        #endif
+                    #elif defined(OMNI_OS_APPLE)
+                        if (m_freq.denom == 0) {
+                            if (::mach_timebase_info(&m_freq) != KERN_SUCCESS) {
+                                #if defined(OMNI_THROW) || defined(OMNI_TERMINATE)
+                                    OMNI_ERRV_FW("An error occurred getting the clock resolution: ", std::strerror(errno), omni::exceptions::clock_exception())
+                                #else
+                                    OMNI_DBGEV("An error occurred getting the clock resolution: ", std::strerror(errno))
+                                #endif
+                                return false;
+                            }
+                        }
+                    #else
+                        if (m_freq.tv_nsec == 0) {
+                            // CLOCK_MONOTONIC by default but can be configured for CLOCK_REALTIME where applicable (like QNX)
+                            if (::clock_getres(OMNI_CLOCK_GETRES_CID_FW, &m_freq) != 0) {
+                                #if defined(OMNI_THROW) || defined(OMNI_TERMINATE)
+                                    OMNI_ERRV_FW("An error occurred getting the clock resolution: ", std::strerror(errno), omni::exceptions::clock_exception())
+                                #else
+                                    OMNI_DBGEV("An error occurred getting the clock resolution: ", std::strerror(errno))
+                                #endif
+                                return false;
+                            }
+                        }
+                    #endif
+                    return true;
+                }
+
+                inline static bool initialized()
+                {
+                    #if defined(OMNI_OS_WIN)
+                        #if defined(OMNI_WIN_MONO_TICK_QPC)
+                            return (m_freq.LowPart != 0);
+                        #else
+                            return true;
+                        #endif
+                    #elif defined(OMNI_OS_APPLE)
+                        return (m_freq.denom != 0);
+                    #else
+                        return (m_freq.tv_nsec != 0);
+                    #endif
+                }
+
                 inline static omni::chrono::freq_t frequency()
                 {
-                    #if defined(OMNI_OS_WIN) && !defined(OMNI_WIN_MONO_TICK_QPC)
-                        return 0;
-                    #else
-                        return m_freq;
-                    #endif
+                    return m_freq;
                 }
                 
             private:
@@ -179,39 +201,39 @@ namespace omni {
         }
         
         // for double precision use omni::chrono::monotonic::elapsed_us
-        inline std::size_t elapsed_us(omni::chrono::tick_t init, omni::chrono::tick_t end)
+        inline uint64_t elapsed_us(omni::chrono::tick_t init, omni::chrono::tick_t end)
         {
-            return static_cast<std::size_t>(omni::chrono::monotonic::elapsed_us(init, end));
+            return static_cast<uint64_t>(omni::chrono::monotonic::elapsed_us(init, end));
         }
         
         // for double precision use omni::chrono::monotonic::elapsed_us
-        inline std::size_t elapsed_us(omni::chrono::tick_t init)
+        inline uint64_t elapsed_us(omni::chrono::tick_t init)
         {
-            return static_cast<std::size_t>(omni::chrono::monotonic::elapsed_us(init));
+            return static_cast<uint64_t>(omni::chrono::monotonic::elapsed_us(init));
         }
         
         // for double precision use omni::chrono::monotonic::elapsed_ms
-        inline std::size_t elapsed_ms(omni::chrono::tick_t init, omni::chrono::tick_t end)
+        inline uint64_t elapsed_ms(omni::chrono::tick_t init, omni::chrono::tick_t end)
         {
-            return static_cast<std::size_t>(omni::chrono::monotonic::elapsed_ms(init, end));
+            return static_cast<uint64_t>(omni::chrono::monotonic::elapsed_ms(init, end));
         }
         
         // for double precision use omni::chrono::monotonic::elapsed_ms
-        inline std::size_t elapsed_ms(omni::chrono::tick_t init)
+        inline uint64_t elapsed_ms(omni::chrono::tick_t init)
         {
-            return static_cast<std::size_t>(omni::chrono::monotonic::elapsed_ms(init));
+            return static_cast<uint64_t>(omni::chrono::monotonic::elapsed_ms(init));
         }
         
         // for double precision use omni::chrono::monotonic::elapsed_s
-        inline std::size_t elapsed_s(omni::chrono::tick_t init, omni::chrono::tick_t end)
+        inline uint64_t elapsed_s(omni::chrono::tick_t init, omni::chrono::tick_t end)
         {
-            return static_cast<std::size_t>(omni::chrono::monotonic::elapsed_s(init, end));
+            return static_cast<uint64_t>(omni::chrono::monotonic::elapsed_s(init, end));
         }
         
         // for double precision use omni::chrono::monotonic::elapsed_s
-        inline std::size_t elapsed_s(omni::chrono::tick_t init)
+        inline uint64_t elapsed_s(omni::chrono::tick_t init)
         {
-            return static_cast<std::size_t>(omni::chrono::monotonic::elapsed_s(init));
+            return static_cast<uint64_t>(omni::chrono::monotonic::elapsed_s(init));
         }
     }
 }

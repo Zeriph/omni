@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -103,7 +99,7 @@ OMNI_THREAD_FNPTR_T OMNI_THREAD_CALL_T omni::sync::runnable_thread::_start(void*
         t->m_state = omni::sync::thread_state::STOP_REQUESTED;
     }
     // A stop request would mean a user killing this thread, and if that succeeded then we wouldn't get here
-    switch (t->m_state) {
+    switch (t->m_state.value()) {
         case omni::sync::thread_state::RUNNING:
             t->_state_changed(omni::sync::thread_state::COMPLETED);
             break;
@@ -138,6 +134,9 @@ omni::sync::runnable_thread::runnable_thread() :
     OMNI_RPRIO_FW
     m_isjoined(false)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::DETACH_ON_DESTROY, true);
     this->m_iface = this;
     OMNI_D5_FW("thread created");
@@ -173,6 +172,9 @@ omni::sync::runnable_thread::runnable_thread(const omni::sync::thread_flags &ops
     OMNI_RPRIO_FW
     m_isjoined(false)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::DETACH_ON_DESTROY, true);
     this->m_iface = this;
     OMNI_D5_FW("thread const copied");
@@ -191,6 +193,9 @@ omni::sync::runnable_thread::runnable_thread(std::size_t max_stack_sz) :
     OMNI_RPRIO_FW
     m_isjoined(false)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::DETACH_ON_DESTROY, true);
     this->m_iface = this;
     //OMNI_DV5_FW("thread created with stack size of ", this->m_ops.stack_size);
@@ -209,6 +214,9 @@ omni::sync::runnable_thread::runnable_thread(const omni::sync::runnable& obj) :
     OMNI_RPRIO_FW
     m_isjoined(false)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::DETACH_ON_DESTROY, true);
     OMNI_D5_FW("thread created with delegate method");
 }
@@ -226,11 +234,14 @@ omni::sync::runnable_thread::runnable_thread(const omni::sync::runnable& obj, st
     OMNI_RPRIO_FW
     m_isjoined(false)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::DETACH_ON_DESTROY, true);
     OMNI_D5_FW("thread created with delegate method");
 }
 
-omni::sync::runnable_thread::runnable_thread(omni::sync::thread_option_t op, omni::sync::thread_union_t val) : 
+omni::sync::runnable_thread::runnable_thread(omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val) : 
     state_changed(),
     OMNI_CTOR_FW(omni::sync::runnable_thread)
     OMNI_SAFE_RMTX_FW
@@ -243,6 +254,9 @@ omni::sync::runnable_thread::runnable_thread(omni::sync::thread_option_t op, omn
     OMNI_RPRIO_FW
     m_isjoined(false)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     this->m_ops.set_flag(omni::sync::thread_option::DETACH_ON_DESTROY, true);
     this->m_iface = this;
     OMNI_D5_FW("thread created with specific options");
@@ -320,7 +334,7 @@ bool omni::sync::runnable_thread::abort_join(unsigned long timeout)
     return this->join(timeout);
 }
 
-const omni::sync::thread_union_t omni::sync::runnable_thread::get_option(omni::sync::thread_option_t op) const
+const omni::sync::thread_union_t omni::sync::runnable_thread::get_option(omni::sync::thread_option::enum_t op) const
 {
     OMNI_SAFE_RALOCK_FW
     switch (op) {
@@ -515,13 +529,13 @@ bool omni::sync::runnable_thread::restart(omni::sync::thread_arg_t args)
     return true;
 }
 
-omni::sync::thread_state_t omni::sync::runnable_thread::status() const
+omni::sync::thread_state omni::sync::runnable_thread::status() const
 {
     OMNI_SAFE_RALOCK_FW
     return this->m_state;
 }
 
-void omni::sync::runnable_thread::set_option(omni::sync::thread_option_t op, omni::sync::thread_union_t val)
+void omni::sync::runnable_thread::set_option(omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val)
 {
     OMNI_SAFE_RALOCK_FW
     switch (op) {
@@ -669,7 +683,7 @@ omni::sync::thread_t omni::sync::runnable_thread::start(omni::sync::thread_arg_t
     }
     int perr = 0;
     omni::sync::runnable_thread_args bargs;
-    omni::sync::thread_state_t ostate = this->m_state;
+    omni::sync::thread_state::enum_t ostate = this->m_state.value();
     std::size_t stack_size = this->m_ops.stack_size();
     this->m_args = args;
     this->m_thread = 0;
@@ -888,10 +902,10 @@ bool omni::sync::runnable_thread::_state_running() const
             this->m_state == omni::sync::thread_state::UNKNOWN);
 }
 
-void omni::sync::runnable_thread::_state_changed(omni::sync::thread_state_t nstate)
+void omni::sync::runnable_thread::_state_changed(omni::sync::thread_state::enum_t nstate)
 {
     OMNI_SAFE_RLOCK_FW
-    omni::sync::thread_state_t ostate = this->m_state;
+    omni::sync::thread_state::enum_t ostate = this->m_state.value();
     this->m_state = nstate;
     OMNI_SAFE_RUNLOCK_FW
     this->state_update(ostate);
@@ -967,13 +981,13 @@ void omni::sync::runnable_thread::_set_prio()
     #endif
 }
 
-omni::sync::thread_priority_t omni::sync::runnable_thread::priority() const
+omni::sync::thread_priority omni::sync::runnable_thread::priority() const
 {
     OMNI_SAFE_RALOCK_FW
     return this->m_priority;
 }
 
-void omni::sync::runnable_thread::set_priority(omni::sync::thread_priority_t p)
+void omni::sync::runnable_thread::set_priority(omni::sync::thread_priority::enum_t p)
 {
     /*
         DEV_NOTE: Thread scheduling is system dependent, this means that even
@@ -1006,7 +1020,7 @@ void omni::sync::runnable_thread::set_priority(omni::sync::thread_priority_t p)
     }
     OMNI_SAFE_RLOCK_FW
     // if we're not running, just set the priority til next time
-    this->m_priority = static_cast<omni::sync::thread_priority_t>(pri);
+    this->m_priority = pri;
     OMNI_SAFE_RUNLOCK_FW
     if (this->is_alive()) {
         OMNI_SAFE_RALOCK_FW

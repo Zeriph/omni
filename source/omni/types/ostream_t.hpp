@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -44,6 +40,12 @@
 #define OMNI_FOSTREAM_OPC_FW(cls, v) friend std::ostream& operator<<(std::ostream& s, const cls& c) { s << c.v; return s; }
 #define OMNI_FOSTREAM_OPW_FW(cls, v) friend std::wostream& operator<<(std::wostream& s, const cls& c) { s << c.v; return s; }
 
+#define OMNI_FOSTREAM_OPC_FN_FW(val, fn) friend std::ostream& operator<<(std::ostream& s, const val& c) { s << fn(c); return s; }
+#define OMNI_FOSTREAM_OPW_FN_FW(val, fn) friend std::wostream& operator<<(std::wostream& s, const val& c) { s << fn(c); return s; }
+
+#define OMNI_FOSTREAM_OPC_RAW_FW(cls, fn) friend std::ostream& operator<<(std::ostream& s, const cls& value) { s << fn; return s; }
+#define OMNI_FOSTREAM_OPW_RAW_FW(cls, fn) friend std::wostream& operator<<(std::wostream& s, const cls& value) { s << fn; return s; }
+
 #define OMNI_FOSTREAM_OPC2T_FW(cls, v) friend std::ostream& operator<<(std::ostream& s, const cls& c) { s << omni::string::util::to_string(c.v); return s; }
 #define OMNI_FOSTREAM_OPW2T_FW(cls, v) friend std::wostream& operator<<(std::wostream& s, const cls& c) { s << omni::string::util::to_wstring(c.v); return s; }
 
@@ -59,7 +61,16 @@
 
 #define OMNI_OSTREAM_OPERATOR(cls, v) OMNI_FOSTREAM_OPC_FW(cls, v)
 #define OMNI_WOSTREAM_OPERATOR(cls, v) OMNI_FOSTREAM_OPW_FW(cls, v)
+
+#define OMNI_OSTREAM_FN_OPERATOR(val, fn) OMNI_FOSTREAM_OPC_FN_FW(val, fn)
+#define OMNI_WOSTREAM_FN_OPERATOR(val, fn) OMNI_FOSTREAM_OPW_FN_FW(val, fn)
+
+#define OMNI_OSTREAM_RAW_OPERATOR(cls, fn) OMNI_FOSTREAM_OPC_RAW_FW(cls, fn)
+#define OMNI_WOSTREAM_RAW_OPERATOR(cls, fn) OMNI_FOSTREAM_OPW_RAW_FW(cls, fn)
+
 #define OMNI_STREAM_OPERATORS(cls, v) OMNI_OSTREAM_OPERATOR(cls, v) OMNI_WOSTREAM_OPERATOR(cls, v)
+#define OMNI_STREAM_FN_OPERATORS(cls, v) OMNI_OSTREAM_FN_OPERATOR(cls, v) OMNI_WOSTREAM_FN_OPERATOR(cls, v)
+#define OMNI_STREAM_RAW_OPERATORS(cls, v) OMNI_OSTREAM_RAW_OPERATOR(cls, v) OMNI_WOSTREAM_RAW_OPERATOR(cls, v)
 
 namespace omni {
     /**

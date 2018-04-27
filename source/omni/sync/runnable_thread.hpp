@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -37,9 +33,9 @@ namespace omni {
         {
             public:
                 /** Defines the thread changed event delegate signature */
-                typedef omni::delegate2<void, const omni::sync::runnable_thread&, omni::sync::thread_state_t> state_delegate;
+                typedef omni::delegate2<void, const omni::sync::runnable_thread&, omni::sync::thread_state::enum_t> state_delegate;
                 /** Defines the thread changed event delegate signature */
-                typedef omni::event2<void, const omni::sync::runnable_thread&, omni::sync::thread_state_t> state_event;
+                typedef omni::event2<void, const omni::sync::runnable_thread&, omni::sync::thread_state::enum_t> state_event;
                 
                 // Methods
                 runnable_thread();
@@ -48,12 +44,12 @@ namespace omni {
                 explicit runnable_thread(const omni::sync::thread_flags& ops);
                 explicit runnable_thread(std::size_t max_stack_sz);
                 runnable_thread(const omni::sync::runnable& obj, std::size_t max_stack_sz);
-                runnable_thread(omni::sync::thread_option_t op, omni::sync::thread_union_t val);
+                runnable_thread(omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val);
                 virtual ~runnable_thread();
                 void abort(); // request end nicely
                 bool abort_join();
                 bool abort_join(unsigned long timeout);
-                const omni::sync::thread_union_t get_option(omni::sync::thread_option_t op) const;
+                const omni::sync::thread_union_t get_option(omni::sync::thread_option::enum_t op) const;
                 omni::sync::thread_flags get_options() const;
                 const omni::sync::thread_handle_t handle() const;
                 const omni::sync::thread_t id() const;
@@ -66,10 +62,10 @@ namespace omni {
                 bool reset();
                 bool restart();
                 bool restart(omni::sync::thread_arg_t args);
-                omni::sync::thread_state_t status() const;
+                omni::sync::thread_state status() const;
                 omni::sync::thread_t start();
                 omni::sync::thread_t start(omni::sync::thread_arg_t args);
-                void set_option(omni::sync::thread_option_t op, omni::sync::thread_union_t val);
+                void set_option(omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val);
                 void set_options(unsigned char op, bool val);
                 void set_options(const omni::sync::thread_flags& ops);
                 void swap(omni::sync::runnable_thread& other);
@@ -81,8 +77,8 @@ namespace omni {
                 bool operator!=(const omni::sync::runnable_thread& other) const;
                 
                 #if defined(OMNI_NON_PORTABLE)
-                    omni::sync::thread_priority_t priority() const;
-                    void set_priority(omni::sync::thread_priority_t p);
+                    omni::sync::thread_priority priority() const;
+                    void set_priority(omni::sync::thread_priority::enum_t p);
                 #endif
                 
                 /** Raised when the thread has changed state (running, stopped, etc) */
@@ -92,7 +88,7 @@ namespace omni {
                 OMNI_MEMBERS_FW(omni::sync::runnable_thread)
                 
             protected:
-                virtual void state_update(omni::sync::thread_state_t old_state) { OMNI_UNUSED(old_state); }
+                virtual void state_update(omni::sync::thread_state::enum_t old_state) { OMNI_UNUSED(old_state); }
                 
             private:
                 // Methods
@@ -100,7 +96,7 @@ namespace omni {
                 void _hreset(bool force = false);
                 bool _hvalid() const;
                 bool _state_running() const;
-                void _state_changed(omni::sync::thread_state_t nstate);
+                void _state_changed(omni::sync::thread_state::enum_t nstate);
                 void _set_context(const omni::sync::runnable_thread& t2);
                 #if defined(OMNI_NON_PORTABLE)
                     void _set_prio();
@@ -108,9 +104,6 @@ namespace omni {
                 static OMNI_THREAD_FNPTR_T OMNI_THREAD_CALL_T _start(void* param);
 
                 // Members
-                #if defined(OMNI_TYPE_INFO)
-                    omni::type<omni::sync::runnable_thread> m_type;
-                #endif
                 #if defined(OMNI_SAFE_RUNNABLE_THREAD)
                     mutable omni::sync::basic_lock m_mtx;
                 #endif
@@ -125,10 +118,10 @@ namespace omni {
                 /** The underlying thread options */
                 omni::sync::thread_flags m_ops;
                 /** The current state of the thread */
-                omni::sync::thread_state_t m_state;
+                omni::sync::thread_state m_state;
                 #if defined(OMNI_NON_PORTABLE)
                     /** The threads priority */
-                    omni::sync::thread_priority_t m_priority;
+                    omni::sync::thread_priority m_priority;
                 #endif
                 /** If join has been called, don't detach */
                 volatile bool m_isjoined;

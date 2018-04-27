@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -28,15 +24,14 @@ bool omni::environment::create_var(const std::string& name)
         OMNI_ERR_RETV_FW("Error creating environment variable: name cannot be empty", omni::exceptions::invalid_environment_variable(), false)
     }
     #if defined(OMNI_OS_WIN)
-        #if defined(OMNI_NO_WIN_API)
+        #if !defined(OMNI_WIN_API)
             // sending an empty string to this function deletes the variable
-            return (::_putenv_s(name.c_str(), name.c_str()) == 0);
+            return (::_putenv_s(name.c_str(), "") == 0);
         #else
-            const omni::char_t* n = omni::string::util::to_string_t(name).c_str();
-            return (::SetEnvironmentVariable(n, n) != 0);
+            return (::SetEnvironmentVariableA(name.c_str(), "") != 0);
         #endif
     #else
-        return (::setenv(name.c_str(), name.c_str(), 1) == 0);
+        return (::setenv(name.c_str(), "", 1) == 0);
     #endif
 }
 
@@ -46,16 +41,14 @@ bool omni::environment::create_var(const std::wstring& name)
         OMNI_ERR_RETV_FW("Error creating environment variable: name cannot be empty", omni::exceptions::invalid_environment_variable(), false)
     }
     #if defined(OMNI_OS_WIN)
-        #if defined(OMNI_NO_WIN_API)
+        #if !defined(OMNI_WIN_API)
             // sending an empty string to this function deletes the variable
-            return (::_wputenv_s(name.c_str(), name.c_str()) == 0);
+            return (::_wputenv_s(name.c_str(), L"") == 0);
         #else
-            const omni::char_t* n = omni::string::util::to_string_t(name).c_str();
-            return (::SetEnvironmentVariable(n, n) != 0);
+            return (::SetEnvironmentVariableW(name.c_str(), L"") != 0);
         #endif
     #else
-        const char* n = omni::string::util::to_string(name).c_str();
-        return (::setenv(n, n, 1) == 0);
+        return (::setenv(omni::string::util::to_string(name).c_str(), "", 1) == 0);
     #endif
 }
 
@@ -65,12 +58,11 @@ bool omni::environment::delete_var(const std::string& name)
         OMNI_ERR_RETV_FW("Error deleting environment variable: name cannot be empty", omni::exceptions::invalid_environment_variable(), false)
     }
     #if defined(OMNI_OS_WIN)
-        #if defined(OMNI_NO_WIN_API)
+        #if !defined(OMNI_WIN_API)
             // sending an empty string to this function deletes the variable
             return (::_putenv_s(name.c_str(), "") == 0);
         #else
-            omni::string_t n = omni::string::util::to_string_t(name);
-            return (::SetEnvironmentVariable(&n[0], NULL) != 0);
+            return (::SetEnvironmentVariableA(name.c_str(), NULL) != 0);
         #endif
     #else
         return (::unsetenv(name.c_str()) == 0);
@@ -83,12 +75,11 @@ bool omni::environment::delete_var(const std::wstring& name)
         OMNI_ERR_RETV_FW("Error deleting environment variable: name cannot be empty", omni::exceptions::invalid_environment_variable(), false)
     }
     #if defined(OMNI_OS_WIN)
-        #if defined(OMNI_NO_WIN_API)
+        #if !defined(OMNI_WIN_API)
             // sending an empty string to this function deletes the variable
             return (::_wputenv_s(name.c_str(), L"") == 0);
         #else
-            omni::string_t n = omni::string::util::to_string_t(name);
-            return (::SetEnvironmentVariable(&n[0], NULL) != 0);
+            return (::SetEnvironmentVariableW(name.c_str(), NULL) != 0);
         #endif
     #else
         std::string n = omni::string::util::to_string(name);
@@ -96,19 +87,17 @@ bool omni::environment::delete_var(const std::wstring& name)
     #endif
 }
 
-omni::string_t omni::environment::expand_vars(const std::string& vars)
+std::string omni::environment::expand_vars(const std::string& vars)
 {
     if (vars.empty()) {
         OMNI_ERR_RETV_FW("Error expanding environment variable: name cannot be empty", omni::exceptions::invalid_environment_variable(), false)
     }
     #if defined(OMNI_OS_WIN)
         // #if defined(OMNI_WIN_API) // not applicable here
-        // The size of the lpSrc and lpDst buffers is limited to 32767.
-        const unsigned int MAXSZ = 32767;
-        omni::string_t v = omni::string::util::to_string_t(vars);
-        omni::char_t* cval = new omni::char_t[MAXSZ]();
-        if (::ExpandEnvironmentStrings(&v[0], cval, MAXSZ) != 0) {
-            omni::string_t ret(cval);
+        // The size of the lpSrc and lpDst buffers is limited to 32k.
+        char* cval = new char[OMNI_MAX_PATH_FW+1]();
+        if (::ExpandEnvironmentStringsA(vars.c_str(), cval, OMNI_MAX_PATH_FW) != 0) {
+            std::string ret(cval);
             delete[] cval;
             return ret;
         }
@@ -128,7 +117,7 @@ omni::string_t omni::environment::expand_vars(const std::string& vars)
             while (std::fgets(cval, FILENAME_MAX-1, fp) != NULL) { ret.append(cval); }
             ::pclose(fp);
             delete[] cval;
-            return omni::string::util::to_string_t(ret);
+            return ret;
         #else
             wordexp_t env;
             if (::wordexp(vars.c_str(), &env, 0) == 0) {
@@ -136,7 +125,7 @@ omni::string_t omni::environment::expand_vars(const std::string& vars)
                 char **w = env.we_wordv;
                 for (unsigned int i = 0; i < env.we_wordc; ++i) { ret.append(w[i]); }
                 ::wordfree(&env);
-                return omni::string::util::to_string_t(ret);
+                return ret;
             }
             ::wordfree(&env);
         #endif
@@ -144,19 +133,17 @@ omni::string_t omni::environment::expand_vars(const std::string& vars)
     OMNI_ERRV_RETV_FW("Error expanding environment variable: ", OMNI_GLE_PRNT, omni::exceptions::environment_exception(OMNI_GLE), omni::string_t())
 }
 
-omni::string_t omni::environment::expand_vars(const std::wstring& vars)
+std::wstring omni::environment::expand_vars(const std::wstring& vars)
 {
     if (vars.empty()) {
         OMNI_ERR_RETV_FW("Error expanding environment variable: name cannot be empty", omni::exceptions::invalid_environment_variable(), omni::string_t())
     }
     #if defined(OMNI_OS_WIN)
         // #if defined(OMNI_WIN_API) // not applicable here
-        // The size of the lpSrc and lpDst buffers is limited to 32767.
-        const unsigned int MAXSZ = 32767;
-        omni::string_t v = omni::string::util::to_string_t(vars);
-        omni::char_t* cval = new omni::char_t[MAXSZ]();
-        if (::ExpandEnvironmentStrings(&v[0], cval, MAXSZ) != 0) {
-            omni::string_t ret(cval);
+        // The size of the lpSrc and lpDst buffers is limited to 32k.
+        wchar_t* cval = new wchar_t[OMNI_MAX_PATH_FW+1]();
+        if (::ExpandEnvironmentStringsW(vars.c_str(), cval, OMNI_MAX_PATH_FW) != 0) {
+            std::wstring ret(cval);
             delete[] cval;
             return ret;
         }
@@ -176,7 +163,7 @@ omni::string_t omni::environment::expand_vars(const std::wstring& vars)
             while (std::fgets(cval, FILENAME_MAX-1, fp) != NULL) { ret.append(cval); }
             ::pclose(fp);
             delete[] cval;
-            return omni::string::util::to_string_t(ret);
+            return omni::string::util::to_wstring(ret);
         #else
             std::string v = omni::string::util::to_string(vars);
             ::wordexp_t env;
@@ -185,7 +172,7 @@ omni::string_t omni::environment::expand_vars(const std::wstring& vars)
                 char **w = env.we_wordv;
                 for (unsigned int i = 0; i < env.we_wordc; ++i) { ret.append(w[i]); }
                 ::wordfree(&env);
-                return omni::string::util::to_string_t(ret);
+                return omni::string::util::to_wstring(ret);
             }
             ::wordfree(&env);
         #endif
@@ -193,19 +180,17 @@ omni::string_t omni::environment::expand_vars(const std::wstring& vars)
     OMNI_ERRV_RETV_FW("Error expanding environment variable: ", OMNI_GLE_PRNT, omni::exceptions::environment_exception(OMNI_GLE), omni::string_t())
 }
 
-omni::string_t omni::environment::get_var(const std::string& name)
+std::string omni::environment::get_var(const std::string& name)
 {
     if (name.empty()) {
         OMNI_ERR_RETV_FW("Error getting environment variable: name cannot be empty", omni::exceptions::invalid_environment_variable(), omni::string_t())
     }
     #if defined(OMNI_OS_WIN)
         #if defined(OMNI_WIN_API)
-            // The size of the lpSrc and lpDst buffers is limited to 32767.
-            const unsigned int MAXSZ = 32767;
-            omni::string_t v = omni::string::util::to_string_t(name);
-            omni::char_t* cval = new omni::char_t[MAXSZ]();
-            if (::GetEnvironmentVariable(&v[0], cval, MAXSZ) != 0) {
-                omni::string_t ret(cval);
+            // The size of the lpSrc and lpDst buffers is limited to 32k.
+            char* cval = new char[OMNI_MAX_PATH_FW+1]();
+            if (::GetEnvironmentVariableA(name.c_str(), cval, OMNI_MAX_PATH_FW) != 0) {
+                std::string ret(cval);
                 delete[] cval;
                 return ret;
             }
@@ -220,30 +205,28 @@ omni::string_t omni::environment::get_var(const std::string& name)
                         ret = std::string(rval);
                     }
                     delete[] rval;
-                    return omni::string::util::to_string_t(ret);
+                    return ret;
                 }
             }
         #endif
     #else
         char* r = std::getenv(name.c_str());
-        if (r != NULL) { return omni::string::util::to_string_t(r); }
+        if (r != NULL) { return std::string(r); }
     #endif
     OMNI_ERRV_RETV_FW("Error retrieving environment variable: ", OMNI_GLE_PRNT, omni::exceptions::environment_exception(OMNI_GLE), omni::string_t())
 }
 
-omni::string_t omni::environment::get_var(const std::wstring& name)
+std::wstring omni::environment::get_var(const std::wstring& name)
 {
     if (name.empty()) {
         OMNI_ERR_RETV_FW("Error getting environment variable: name cannot be empty", omni::exceptions::invalid_environment_variable(), omni::string_t())
     }
     #if defined(OMNI_OS_WIN)
         #if defined(OMNI_WIN_API)
-            // The size of the lpSrc and lpDst buffers is limited to 32767.
-            const unsigned int MAXSZ = 32767;
-            omni::string_t v = omni::string::util::to_string_t(name);
-            omni::char_t* cval = new omni::char_t[MAXSZ]();
-            if (::GetEnvironmentVariable(&v[0], cval, MAXSZ) != 0) {
-                omni::string_t ret(cval);
+            // The size of the lpSrc and lpDst buffers is limited to 32k.
+            wchar_t* cval = new wchar_t[OMNI_MAX_PATH_FW+1]();
+            if (::GetEnvironmentVariableW(name.c_str(), cval, OMNI_MAX_PATH_FW) != 0) {
+                std::wstring ret(cval);
                 delete[] cval;
                 return ret;
             }
@@ -258,7 +241,7 @@ omni::string_t omni::environment::get_var(const std::wstring& name)
                         ret = std::wstring(rval);
                     }
                     delete[] rval;
-                    return omni::string::util::to_string_t(ret);
+                    return ret;
                 }
             }
         #endif
@@ -278,14 +261,15 @@ bool omni::environment::set_var(const std::string& name, const std::string& val)
     if (val.empty()) {
         OMNI_ERR_RETV_FW("Error setting environment variable: value cannot be empty", omni::exceptions::invalid_environment_variable(), false)
     }
+    if (val.size() > OMNI_MAX_PATH_FW) {
+        OMNI_ERR_RETV_FW("Error setting environment variable: value cannot be greater than 32,767 characters", omni::exceptions::invalid_environment_variable(), false)
+    }
     #if defined(OMNI_OS_WIN)
-        #if defined(OMNI_NO_WIN_API)
+        #if !defined(OMNI_WIN_API)
             // sending an empty string to this function deletes the variable
             return (::_putenv_s(name.c_str(), val.c_str()) == 0);
         #else
-            omni::string_t n = omni::string::util::to_string_t(name);
-            omni::string_t v = omni::string::util::to_string_t(val);
-            return (::SetEnvironmentVariable(&n[0], &v[0]) != 0);
+            return (::SetEnvironmentVariableA(name.c_str(), val.c_str()) != 0);
         #endif
     #else
         // always overwrite
@@ -301,14 +285,15 @@ bool omni::environment::set_var(const std::wstring& name, const std::wstring& va
     if (val.empty()) {
         OMNI_ERR_RETV_FW("Error setting environment variable: value cannot be empty", omni::exceptions::invalid_environment_variable(), false)
     }
+    if (val.size() > OMNI_MAX_PATH_FW) {
+        OMNI_ERR_RETV_FW("Error setting environment variable: value cannot be greater than 32,767 characters", omni::exceptions::invalid_environment_variable(), false)
+    }
     #if defined(OMNI_OS_WIN)
-        #if defined(OMNI_NO_WIN_API)
+        #if !defined(OMNI_WIN_API)
             // sending an empty string to this function deletes the variable
             return (::_wputenv_s(name.c_str(), val.c_str()) == 0);
         #else
-            omni::string_t n = omni::string::util::to_string_t(name);
-            omni::string_t v = omni::string::util::to_string_t(val);
-            return (::SetEnvironmentVariable(&n[0], &v[0]) != 0);
+            return (::SetEnvironmentVariableW(name.c_str(), val.c_str()) != 0);
         #endif
     #else
         std::string n = omni::string::util::to_string(name);
@@ -326,11 +311,9 @@ bool omni::environment::var_exists(const std::string& name)
     bool ret = false;
     #if defined(OMNI_OS_WIN)
         #if defined(OMNI_WIN_API)
-            // The size of the lpSrc and lpDst buffers is limited to 32767.
-            const unsigned int MAXSZ = 32767;
-            omni::string_t v = omni::string::util::to_string_t(name);
-            omni::char_t* cval = new omni::char_t[MAXSZ]();
-            if (::GetEnvironmentVariable(&v[0], cval, MAXSZ) != 0) { ret = true; }
+            // The size of the lpSrc and lpDst buffers is limited to 32k.
+            char* cval = new char[OMNI_MAX_PATH_FW+1]();
+            if (::GetEnvironmentVariableA(name.c_str(), cval, OMNI_MAX_PATH_FW) != 0) { ret = true; }
             delete[] cval;
         #else
             std::size_t sz;
@@ -353,11 +336,9 @@ bool omni::environment::var_exists(const std::wstring& name)
     bool ret = false;
     #if defined(OMNI_OS_WIN)
         #if defined(OMNI_WIN_API)
-            // The size of the lpSrc and lpDst buffers is limited to 32767.
-            const unsigned int MAXSZ = 32767;
-            omni::string_t v = omni::string::util::to_string_t(name);
-            omni::char_t* cval = new omni::char_t[MAXSZ]();
-            if (::GetEnvironmentVariable(&v[0], cval, MAXSZ) != 0) { ret = true; }
+            // The size of the lpSrc and lpDst buffers is limited to 32k.
+            wchar_t* cval = new wchar_t[OMNI_MAX_PATH_FW+1]();
+            if (::GetEnvironmentVariableW(name.c_str(), cval, OMNI_MAX_PATH_FW) != 0) { ret = true; }
             delete[] cval;
         #else
             std::size_t sz;

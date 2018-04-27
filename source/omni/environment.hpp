@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -82,10 +78,10 @@ namespace omni {
             return omni::environment::delete_var(std::wstring(name));
         }
         
-        omni::string_t expand_vars(const std::string& vars);
-        omni::string_t expand_vars(const std::wstring& vars);
+        std::string expand_vars(const std::string& vars);
+        std::wstring expand_vars(const std::wstring& vars);
         
-        inline omni::string_t expand_vars(const char* vars)
+        inline std::string expand_vars(const char* vars)
         {
             if (!vars) {
                 OMNI_ERR_RETV_FW("Null pointer specified", omni::exceptions::null_pointer_exception(), omni::string_t())
@@ -93,7 +89,7 @@ namespace omni {
             return omni::environment::expand_vars(std::string(vars));
         }
         
-        inline omni::string_t expand_vars(const wchar_t* vars)
+        inline std::wstring expand_vars(const wchar_t* vars)
         {
             if (!vars) {
                 OMNI_ERR_RETV_FW("Null pointer specified", omni::exceptions::null_pointer_exception(), omni::string_t())
@@ -101,10 +97,10 @@ namespace omni {
             return omni::environment::expand_vars(std::wstring(vars));
         }
         
-        omni::string_t get_var(const std::string& name);
-        omni::string_t get_var(const std::wstring& name);
+        std::string get_var(const std::string& name);
+        std::wstring get_var(const std::wstring& name);
         
-        inline omni::string_t get_var(const char* name)
+        inline std::string get_var(const char* name)
         {
             if (!name) {
                 OMNI_ERR_RETV_FW("Null pointer specified", omni::exceptions::null_pointer_exception(), omni::string_t())
@@ -112,7 +108,7 @@ namespace omni {
             return omni::environment::get_var(std::string(name));
         }
         
-        inline omni::string_t get_var(const wchar_t* name)
+        inline std::wstring get_var(const wchar_t* name)
         {
             if (!name) {
                 OMNI_ERR_RETV_FW("Null pointer specified", omni::exceptions::null_pointer_exception(), omni::string_t())

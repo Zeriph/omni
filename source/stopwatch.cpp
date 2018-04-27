@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -29,6 +25,9 @@ omni::stopwatch::stopwatch() :
     m_isrun(false),
     m_isstrt(false)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     std::memset(&this->m_init, 0, sizeof(omni::chrono::tick_t));
     std::memset(&this->m_end, 0, sizeof(omni::chrono::tick_t));
     this->m_isrun = false;
@@ -66,21 +65,21 @@ omni::stopwatch::~stopwatch()
 
 // TODO: omni::timespan elapsed();
 
-std::size_t omni::stopwatch::elapsed_us() const
+uint64_t omni::stopwatch::elapsed_us() const
 {
     return omni::chrono::elapsed_us(this->m_init,
         (this->m_isrun ? omni::chrono::monotonic_tick() : this->m_end)
     );
 }
 
-std::size_t omni::stopwatch::elapsed_ms() const
+uint64_t omni::stopwatch::elapsed_ms() const
 {
     return omni::chrono::elapsed_ms(this->m_init,
         (this->m_isrun ? omni::chrono::monotonic_tick() : this->m_end)
     );
 }
 
-std::size_t omni::stopwatch::elapsed_s() const
+uint64_t omni::stopwatch::elapsed_s() const
 {
     return omni::chrono::elapsed_s(this->m_init,
         (this->m_isrun ? omni::chrono::monotonic_tick() : this->m_end)

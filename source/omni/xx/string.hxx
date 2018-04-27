@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -237,12 +233,12 @@ inline std_seq_t<OMNI_STRING_T_FW, std::allocator<OMNI_STRING_T_FW> > split(cons
     return omni::string::util::split< std_seq_t, OMNI_STRING_T_FW, std::allocator<OMNI_STRING_T_FW> >(str, delimeter, max_val);
 }
 
-inline OMNI_SEQ_T<OMNI_STRING_T_FW> split(const OMNI_STRING_T_FW& str, const OMNI_STRING_T_FW& delimeter, std::size_t max)
+inline omni_sequence_t<OMNI_STRING_T_FW> split(const OMNI_STRING_T_FW& str, const OMNI_STRING_T_FW& delimeter, std::size_t max)
 {
     return omni::string::util::split(str, delimeter, max);
 }
 
-inline OMNI_SEQ_T<OMNI_STRING_T_FW> split(const OMNI_STRING_T_FW& str, const OMNI_STRING_T_FW& delimeter)
+inline omni_sequence_t<OMNI_STRING_T_FW> split(const OMNI_STRING_T_FW& str, const OMNI_STRING_T_FW& delimeter)
 {
     return omni::string::util::split(str, delimeter, 0);
 }
@@ -327,7 +323,7 @@ inline OMNI_STRING_T_FW trim(OMNI_STRING_T_FW str, OMNI_STRING_T_FW params)
     return omni::string::util::trim(str, params);
 }
 
-inline OMNI_STRING_T_FW trim(OMNI_STRING_T_FW str, OMNI_SEQ_T<OMNI_CHAR_T_FW>& params)
+inline OMNI_STRING_T_FW trim(OMNI_STRING_T_FW str, omni_sequence_t<OMNI_CHAR_T_FW>& params)
 {
     return omni::string::util::trim(str, params.begin(), params.end());
 }
@@ -353,7 +349,7 @@ inline OMNI_STRING_T_FW trim_end(OMNI_STRING_T_FW str, OMNI_STRING_T_FW params)
     return omni::string::util::trim_end(str, params);
 }
 
-inline OMNI_STRING_T_FW trim_end(OMNI_STRING_T_FW str, OMNI_SEQ_T<OMNI_CHAR_T_FW>& params)
+inline OMNI_STRING_T_FW trim_end(OMNI_STRING_T_FW str, omni_sequence_t<OMNI_CHAR_T_FW>& params)
 {
     return omni::string::util::trim_end(str, params.begin(), params.end());
 }
@@ -379,7 +375,7 @@ inline OMNI_STRING_T_FW trim_front(OMNI_STRING_T_FW str, OMNI_STRING_T_FW params
     return omni::string::util::trim_front(str, params);
 }
 
-inline OMNI_STRING_T_FW trim_front(OMNI_STRING_T_FW str, OMNI_SEQ_T<OMNI_CHAR_T_FW>& params)
+inline OMNI_STRING_T_FW trim_front(OMNI_STRING_T_FW str, omni_sequence_t<OMNI_CHAR_T_FW>& params)
 {
     return omni::string::util::trim_front(str, params.begin(), params.end());
 }

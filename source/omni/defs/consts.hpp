@@ -1,22 +1,11 @@
 /*
- * This file is part of the Omni C++ framework
- * 
- * Copyright (c) 2016, Zeriph Enterprises, LLC
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
- * - Redistributions of source code must retain the above copyright
- *   notice, this list of conditions and the following disclaimer.
- * - Redistributions in binary form must reproduce the above copyright
- *   notice, this list of conditions and the following disclaimer in the
- *   documentation and/or other materials provided with the distribution.
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
- * 
- * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS"AND ANY
+ * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
  * DISCLAIMED. IN NO EVENT SHALL ZERIPH AND CONTRIBUTORS BE LIABLE FOR ANY
@@ -147,6 +136,9 @@
 #if !defined(OMNI_INVALID_OPTION_STR)
     #define OMNI_INVALID_OPTION_STR "An invalid thread option was specified"
 #endif
+#if !defined(OMNI_INVALID_ENUM)
+    #define OMNI_INVALID_ENUM "An invalid enumeration was specified"
+#endif
 #if !defined(OMNI_INVALID_SETTING_STR)
     #define OMNI_INVALID_SETTING_STR "An invalid setting was specified"
 #endif
@@ -182,6 +174,12 @@
 #endif
 #if !defined(OMNI_PATH_NOT_ACCESSIBLE_STR)
     #define OMNI_PATH_NOT_ACCESSIBLE_STR "Path not accessible"
+#endif
+#if !defined(OMNI_PATH_EMPTY)
+    #define OMNI_PATH_EMPTY "Path is empty"
+#endif
+#if !defined(OMNI_PATH_ERROR)
+    #define OMNI_PATH_ERROR "An error occurred with the specified path"
 #endif
 #if !defined(OMNI_SET_PRI_UNSUPPORTED_STR)
     #define OMNI_SET_PRI_UNSUPPORTED_STR "Setting thread priority is not supported on this system"

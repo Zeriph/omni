@@ -1,22 +1,11 @@
 /*
- * This file is part of the Omni C++ framework
- * 
- * Copyright (c) 2016, Zeriph Enterprises, LLC
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
- * - Redistributions of source code must retain the above copyright
- *   notice, this list of conditions and the following disclaimer.
- * - Redistributions in binary form must reproduce the above copyright
- *   notice, this list of conditions and the following disclaimer in the
- *   documentation and/or other materials provided with the distribution.
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
- * 
- * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS"AND ANY
+ * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
  * DISCLAIMED. IN NO EVENT SHALL ZERIPH AND CONTRIBUTORS BE LIABLE FOR ANY
@@ -87,11 +76,14 @@
 
 #if defined(OMNI_THROW)
     #define OMNI_THROW_FW(ex) throw ex;
+    #define OMNI_EX_RET_FW(ret)
 #else
     #if defined(OMNI_TERMINATE)
         #define OMNI_THROW_FW(ex) OMNI_TERMINATE;
+        #define OMNI_EX_RET_FW(ret)
     #else
         #define OMNI_THROW_FW(ex)
+        #define OMNI_EX_RET_FW(ret) return ret;
     #endif
 #endif
 
@@ -127,10 +119,10 @@
 #define OMNI_ERR_RET_FW(str, ex) OMNI_DBGE(str) OMNI_THROW_FW(ex)
 #define OMNI_ERRV_RET_FW(str, val, ex) OMNI_DBGEV(str, val) OMNI_THROW_FW(ex)
 
-// OMNI_ERR_RETV_FW("debug error string", omni::execption(), ret)
-// OMNI_ERRV_RETV_FW("debug error string: ", err, omni::execption(), ret)
-#define OMNI_ERR_RETV_FW(str, ex, ret) OMNI_DBGE(str) OMNI_THROW_FW(ex)
-#define OMNI_ERRV_RETV_FW(str, val, ex, ret) OMNI_DBGEV(str, val) OMNI_THROW_FW(ex)
+// OMNI_ERR_RETV_FW("debug error string", omni::execption(), default_return)
+// OMNI_ERRV_RETV_FW("debug error string: ", err, omni::execption(), default_return)
+#define OMNI_ERR_RETV_FW(str, ex, ret) OMNI_DBGE(str) OMNI_THROW_FW(ex) OMNI_EX_RET_FW(ret)
+#define OMNI_ERRV_RETV_FW(str, val, ex, ret) OMNI_DBGEV(str, val) OMNI_THROW_FW(ex) OMNI_EX_RET_FW(ret)
 
 #if defined(OMNI_THROW)
     #define OMNI_TRY_FW try {

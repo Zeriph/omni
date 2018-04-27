@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -127,15 +123,9 @@
 #else
     OMNI_CST_FW(OMNI_SEM_T_VALUE, "")
 #endif
-// OMNI_SEQ_H
-#if defined(OMNI_SEQ_H)
-    OMNI_CST_FW(OMNI_SEQ_H_VALUE, OMNI_DEF2STR(OMNI_SEQ_H))
-#else
-    OMNI_CST_FW(OMNI_SEQ_H_VALUE, "")
-#endif
 // OMNI_SEQ_T
-#if defined(OMNI_SEQ_T)
-    OMNI_CST_FW(OMNI_SEQ_T_VALUE, OMNI_DEF2STR(OMNI_SEQ_T))
+#if defined(OMNI_SEQ_T_FW)
+    OMNI_CST_FW(OMNI_SEQ_T_VALUE, OMNI_DEF2STR(OMNI_SEQ_T_FW))
 #else
     OMNI_CST_FW(OMNI_SEQ_T_VALUE, "")
 #endif
@@ -308,12 +298,6 @@
 #else
     OMNI_CFF_FW(OMNI_NO_CLINK_VALUE)
 #endif
-// OMNI_NO_CSTRING_IMPL
-#if defined(OMNI_NO_CSTRING_IMPL)
-    OMNI_CFT_FW(OMNI_NO_CSTRING_IMPL_VALUE)
-#else
-    OMNI_CFF_FW(OMNI_NO_CSTRING_IMPL_VALUE)
-#endif
 // OMNI_NO_DISPOSE_EVENT
 #if defined(OMNI_NO_DISPOSE_EVENT)
     OMNI_CFT_FW(OMNI_NO_DISPOSE_EVENT_VALUE)
@@ -475,12 +459,6 @@
     OMNI_CFT_FW(OMNI_NO_WIN_LEAN_VALUE)
 #else
     OMNI_CFF_FW(OMNI_NO_WIN_LEAN_VALUE)
-#endif
-// OMNI_NO_WSTRING_IMPL
-#if defined(OMNI_NO_WSTRING_IMPL)
-    OMNI_CFT_FW(OMNI_NO_WSTRING_IMPL_VALUE)
-#else
-    OMNI_CFF_FW(OMNI_NO_WSTRING_IMPL_VALUE)
 #endif
 // OMNI_NON_PORTABLE
 #if defined(OMNI_NON_PORTABLE)

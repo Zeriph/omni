@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -28,7 +24,7 @@
 
 #define OMNI_FW_VER_MAJ 0 // Major revision
 #define OMNI_FW_VER_MIN 7 // Minor revision
-#define OMNI_FW_VER_SUB 1 // Sub revision
+#define OMNI_FW_VER_SUB 5 // Sub revision
 
 #if defined(OMNI_FW_VER_USE_TIME)
     #define OMNI_FW_TS_FW OMNI_DATE" "OMNI_TIME
@@ -36,7 +32,6 @@
 #else
     #define OMNI_FW_VER_STR OMNI_DEF2STR(OMNI_FW_VER_MAJ)"."OMNI_DEF2STR(OMNI_FW_VER_MIN)"."OMNI_DEF2STR(OMNI_FW_VER_SUB)
 #endif
-
     
 #endif // !OMNI_NO_FW_VER
 #endif // OMNI_VER_HPP

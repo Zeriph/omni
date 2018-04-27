@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -26,6 +22,14 @@
 #include <omni/defs/helper.hpp>
 #include <omni/defs/omni_ver.hpp>
 #include <cstddef>
+
+#if defined(OMNI_ENABLE_CXX)
+    // DEV_NOTE: this causes compiler errors on some compilers complaining of 
+    // C++11 support, so use uint_t types instead of std::uint_t types
+    #include <cstdint>
+#else
+    #include <stdint.h>
+#endif
 
 #if defined(OMNI_LITE)
     // TODO: update with any other 'lite' flags
@@ -61,7 +65,8 @@
     #define OMNI_SAFE_PROP
     #define OMNI_SAFE_LOCKS
     #define OMNI_SAFE_TIMERS
-    #define OMNI_SAFE_THREADS    
+    #define OMNI_SAFE_THREADS
+    #define OMNI_SAFE_GEOMETRY
     // TODO: add any other "safe" framework entities here
 #endif
 
@@ -85,6 +90,13 @@
     #define OMNI_SAFE_THREAD
     #define OMNI_SAFE_BASIC_THREAD
     #define OMNI_SAFE_RUNNABLE_THREAD
+#endif
+
+#if defined(OMNI_SAFE_GEOMETRY)
+    #define OMNI_SAFE_POINT2D
+    #define OMNI_SAFE_GEO_SIZE
+    #define OMNI_SAFE_POINT3D
+    #define OMNI_SAFE_RECTANGLE
 #endif
 
 #if defined(OMNI_OBJECT_NAME) && defined(OMNI_NO_OBJECT_NAME)
@@ -129,7 +141,45 @@
     #undef OMNI_SAFE_DROP_TIMER
     #undef OMNI_SAFE_QUEUE_TIMER
 #endif
+#if defined(OMNI_SAFE_GEOMETRY) && defined(OMNI_NO_SAFE_GEOMETRY)
+    #undef OMNI_SAFE_POINT2D
+    #undef OMNI_SAFE_GEO_SIZE
+    #undef OMNI_SAFE_POINT3D
+    #undef OMNI_SAFE_RECTANGLE
+#endif
 
+#if defined(OMNI_SAFE_ASYNC_TIMER) && defined(OMNI_NO_SAFE_ASYNC_TIMER)
+    #undef OMNI_SAFE_ASYNC_TIMER
+#endif
+#if defined(OMNI_SAFE_SYNC_TIMER) && defined(OMNI_NO_SAFE_SYNC_TIMER)
+    #undef OMNI_SAFE_SYNC_TIMER
+#endif
+#if defined(OMNI_SAFE_DROP_TIMER) && defined(OMNI_NO_SAFE_DROP_TIMER)
+    #undef OMNI_SAFE_DROP_TIMER
+#endif
+#if defined(OMNI_SAFE_QUEUE_TIMER) && defined(OMNI_NO_SAFE_QUEUE_TIMER)
+    #undef OMNI_SAFE_QUEUE_TIMER
+#endif
+#if defined(OMNI_SAFE_POINT2D) && defined(OMNI_NO_SAFE_POINT2D)
+    #undef OMNI_SAFE_POINT2D
+#endif
+#if defined(OMNI_SAFE_GEO_SIZE) && defined(OMNI_NO_SAFE_GEO_SIZE)
+    #undef OMNI_SAFE_GEO_SIZE
+#endif
+#if defined(OMNI_SAFE_POINT3D) && defined(OMNI_NO_SAFE_POINT3D)
+    #undef OMNI_SAFE_POINT3D
+#endif
+#if defined(OMNI_SAFE_RECTANGLE) && defined(OMNI_NO_SAFE_RECTANGLE)
+    #undef OMNI_SAFE_RECTANGLE
+#endif
+
+#if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+    #define OMNI_CHRONO_AUTO_INIT_TICK
+#endif
+
+#if defined(OMNI_NO_CHRONO_AUTO_INIT_TICK) && defined(OMNI_CHRONO_AUTO_INIT_TICK)
+    #undef OMNI_CHRONO_AUTO_INIT_TICK
+#endif
 
 #if defined(__UNICODE__) || defined(UNICODE) || defined(_UNICODE) || defined(__UNICODE)
     #define OMNI_UNICODE
@@ -238,12 +288,6 @@ OMNI_NULL is more verbose than 0/NULL/nullptr, it does express the intent better
 #endif
 
 // macro error checks
-#if defined(OMNI_NO_CSTRING_IMPL) && !defined(OMNI_UNICODE)
-    #error "OMNI_NO_CSTRING_IMPL defined with non unicode build; omni::cstring namespace used for non unicode builds"
-#endif
-#if defined(OMNI_NO_WSTRING_IMPL) && defined(OMNI_UNICODE)
-    #error "OMNI_NO_WSTRING_IMPL defined with unicode build; omni::wstring namespace used for unicode builds"
-#endif
 #if defined(OMNI_WIN_API) && defined(OMNI_NO_WIN_API)
     #error "Cannot define OMNI_WIN_API and OMNI_NO_WIN_API"
 #endif
@@ -281,10 +325,25 @@ OMNI_NULL is more verbose than 0/NULL/nullptr, it does express the intent better
     // #define OMNI_CXX_MUTEX_FW
 #endif
 
-// if debug isn't define, this won't get included
+// if debug isn't defined, this won't get included
 #include <omni/defs/debug.hpp>
 // if OMNI_NO_THROW is defined (or OMNI_THROW is not defined) this won't get included
 #include <omni/exception.hpp>
+
+#if !defined(OMNI_NEW_LINE)
+    #if defined(OMNI_OS_WIN)
+        #define OMNI_NEW_LINE "\r\n"
+        #define OMNI_PATH_SEPARATOR "\\"
+    #else
+        #if defined(OMNI_APLNL)
+            #define OMNI_NEW_LINE "\r"
+            #define OMNI_PATH_SEPARATOR "/"
+        #else
+            #define OMNI_NEW_LINE "\n"
+            #define OMNI_PATH_SEPARATOR "/"
+        #endif
+    #endif
+#endif
 
 /* DEV_NOTE: something that came across was a 'virtual thunk' error, this happened when compiling the
 framework as a library using certain features (like omni::type_info or omni::object) and then compiling

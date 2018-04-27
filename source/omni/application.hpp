@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -517,7 +513,7 @@ namespace omni {
          * different signals. For example, @c SIGINT on Windows has the value of 0
          * while on some *nix systems, the value is 2, which might lead to confusion
          * expecting a 0 value to mean a @c SUCCESS value. To this, if you are checking
-         * the signal value for a specific value, be sure to check against the sepcific
+         * the signal value for a specific value, be sure to check against the specific
          * signal itself, i.e. <code>if (omni::application::last_signal() == SIGINT)</code>
          * 
          * @return The integer value of the last signal received.

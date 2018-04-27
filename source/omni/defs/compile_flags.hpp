@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -65,8 +61,6 @@ namespace omni {
         extern const char OMNI_NULL_VALUE[];
         // OMNI_SEM_T
         extern const char OMNI_SEM_T_VALUE[];
-        // OMNI_SEQ_H
-        extern const char OMNI_SEQ_H_VALUE[];
         // OMNI_SEQ_T
         extern const char OMNI_SEQ_T_VALUE[];
         // OMNI_SEQCONT_TYPE
@@ -126,8 +120,6 @@ namespace omni {
         extern const bool OMNI_NO_BASE_SETLOCALE_VALUE;
         // OMNI_NO_CLINK
         extern const bool OMNI_NO_CLINK_VALUE;
-        // OMNI_NO_CSTRING_IMPL
-        extern const bool OMNI_NO_CSTRING_IMPL_VALUE;
         // OMNI_NO_DISPOSE_EVENT
         extern const bool OMNI_NO_DISPOSE_EVENT_VALUE;
         // OMNI_NO_EXCEPT
@@ -182,8 +174,6 @@ namespace omni {
         extern const bool OMNI_NO_WIN_API_VALUE;
         // OMNI_NO_WIN_LEAN
         extern const bool OMNI_NO_WIN_LEAN_VALUE;
-        // OMNI_NO_WSTRING_IMPL
-        extern const bool OMNI_NO_WSTRING_IMPL_VALUE;
         // OMNI_NON_PORTABLE
         extern const bool OMNI_NON_PORTABLE_VALUE;
         // OMNI_NULL_MACRO

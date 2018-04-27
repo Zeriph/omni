@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -95,19 +91,19 @@ namespace omni {
                 return this->m_ptr;
             }
             
-            bool operator==(const smart_ptr< T > &val) const
+            bool operator==(const smart_ptr< T >& val) const
             {
                 if (this == &val) { return true; }
                 return (this->m_ptr == val.m_ptr && this->m_cnt == val.m_cnt)
                 OMNI_EQUAL_FW(val);
             }
             
-            bool operator!=(const smart_ptr< T > &val) const
+            bool operator!=(const smart_ptr< T >& val) const
             {
                 return !(*this == val);
             }
             
-            smart_ptr<T>& operator=(const smart_ptr<T> &val)
+            smart_ptr<T>& operator=(const smart_ptr<T>& val)
             {
                 if (this != &val) {
                     this->_decrement();
@@ -120,7 +116,7 @@ namespace omni {
             }
             
             template < typename T1 >
-            smart_ptr& operator=(const smart_ptr<T1> &val)
+            smart_ptr& operator=(const smart_ptr<T1>& val)
             {
                 if (this != &val) {
                     this->_decrement();
@@ -132,13 +128,10 @@ namespace omni {
                 return *this;
             }
             
-            smart_ptr<T>& operator=(pointer_t *val)
+            smart_ptr<T>& operator=(pointer_t* val)
             {
                 if (this->m_ptr != val) {
                     this->_decrement();
-                    #if defined(OMNI_TYPE_INFO)
-                        this->m_type = omni::type_id< omni::smart_ptr<T> >();
-                    #endif
                     this->m_ptr = val;
                     this->_increment();
                 }
@@ -165,9 +158,6 @@ namespace omni {
                 ++*this->m_cnt;
             }
             
-            #if defined(OMNI_TYPE_INFO)
-                omni::type< omni::smart_ptr<T> > m_type;
-            #endif
             T* m_ptr;
             unsigned long long* m_cnt;
     };
@@ -179,7 +169,7 @@ namespace omni {
             /** Defines the underlying type of this instance */
             typedef T pointer_t;
             
-            explicit smart_ptr_safe(pointer_t *val = 0) :
+            explicit smart_ptr_safe(pointer_t* val = 0) :
                 OMNI_CTOR_FW(omni::smart_ptr_safe<T>)
                 m_ptr(val),
                 m_cnt(new unsigned long long(1)),
@@ -189,7 +179,7 @@ namespace omni {
                 OMNI_D5_FW("created by ptr");
             }
 
-            smart_ptr_safe(const smart_ptr_safe<T> &cp) :
+            smart_ptr_safe(const smart_ptr_safe<T>& cp) :
                 OMNI_CPCTOR_FW(cp)
                 m_ptr(cp.m_ptr), 
                 m_cnt(cp.m_cnt),
@@ -201,7 +191,7 @@ namespace omni {
             }
 
             template < typename T1 >
-            smart_ptr_safe(smart_ptr_safe<T1> &cp) :
+            smart_ptr_safe(smart_ptr_safe<T1>& cp) :
                 OMNI_CPCTOR_FW(cp)
                 m_ptr(cp.m_ptr), 
                 m_cnt(cp.m_cnt),
@@ -302,9 +292,6 @@ namespace omni {
                 if (this->m_ptr != val) {
                     this->_decrement();
                     omni::sync::mutex_lock(this->m_mtx);
-                    #if defined(OMNI_TYPE_INFO)
-                        this->m_type = omni::type_id< omni::smart_ptr_safe<T> >();
-                    #endif
                     this->m_ptr = val;
                     omni::sync::mutex_unlock(this->m_mtx);
                     this->_increment();
@@ -334,9 +321,6 @@ namespace omni {
                 ++*this->m_cnt;
             }
             
-            #if defined(OMNI_TYPE_INFO)
-                omni::type< omni::smart_ptr_safe<T> > m_type;
-            #endif
             T* m_ptr;
             unsigned long long* m_cnt;
             mutable omni::sync::mutex_t m_mtx;

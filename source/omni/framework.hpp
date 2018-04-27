@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -67,9 +63,14 @@ int main(int argc, char *argv[]) {
 #include <omni/strings.hpp> // cstring.hpp, wstring.hpp
 #include <omni/constants.hpp> // cconsts.hpp, wconsts.hpp
 
+// drawing/geometry
+#include <omni/drawing/color.hpp>
+#include <omni/types/point_t.hpp>
+
 // system/environment
 #include <omni/environment.hpp>
 #include <omni/system.hpp>
+#include <omni/io.hpp>
 #include <omni/application.hpp>
 #include <omni/argparser.hpp>
 #include <omni/util/bits.hpp>

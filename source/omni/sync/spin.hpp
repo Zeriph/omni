@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -155,10 +151,6 @@ namespace omni {
                     #endif
                 }
                 
-                #if defined(OMNI_TYPE_INFO)
-                    omni::type<omni::sync::spin_lock> m_type;
-                #endif
-                
                 omni::sync::spin_lock_t m_lock;
                 volatile mutable bool m_lokd;
         };
@@ -212,6 +204,7 @@ namespace omni {
 
                 bool busy_wait(unsigned long timeout_ms) const
                 {
+                    omni::chrono::monotonic::initialize();
                     omni::chrono::tick_t start = omni::chrono::monotonic_tick();
                     while (!this->m_sig && (omni::chrono::elapsed_ms(start) <= timeout_ms)) {
                         OMNI_THREAD_YIELD();
@@ -231,6 +224,9 @@ namespace omni {
                 bool sleep_wait(unsigned long timeout_ms) const
                 {
                     OMNI_SLEEP_INIT();
+                    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+                        omni::chrono::monotonic::initialize();
+                    #endif
                     omni::chrono::tick_t start = omni::chrono::monotonic_tick();
                     while (!this->m_sig && (omni::chrono::elapsed_ms(start) <= timeout_ms)) {
                         OMNI_SLEEP1();
@@ -258,9 +254,6 @@ namespace omni {
                 spin_wait(const omni::sync::spin_wait &cp); // C++1X delete 
                 omni::sync::spin_wait& operator=(const omni::sync::spin_wait &other); // C++1X delete
                 
-                #if defined(OMNI_TYPE_INFO)
-                    omni::type<omni::sync::spin_wait> m_type;
-                #endif
                 volatile mutable bool m_sig;
         };
         
@@ -413,9 +406,6 @@ namespace omni {
                 safe_spin_wait(const omni::sync::safe_spin_wait &cp); // C++1X delete 
                 omni::sync::safe_spin_wait& operator=(const omni::sync::safe_spin_wait &other); // C++1X delete
                 
-                #if defined(OMNI_TYPE_INFO)
-                    omni::type<omni::sync::safe_spin_wait> m_type;
-                #endif
                 mutable omni::sync::mutex_t m_mtx;
                 volatile mutable bool m_sig;
         };

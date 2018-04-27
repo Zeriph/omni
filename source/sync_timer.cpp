@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -50,6 +46,9 @@ omni::chrono::sync_timer::sync_timer() :
     m_isrun(false),
     m_stopreq(false)
 {
+    #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
+        omni::chrono::monotonic::initialize();
+    #endif
     OMNI_DV5_FW("created with interval of ", this->m_int);
 }
 
@@ -78,7 +77,7 @@ omni::chrono::sync_timer::sync_timer(const omni::chrono::sync_timer& cp) :
     OMNI_D5_FW("copied");
 }
 
-omni::chrono::sync_timer::sync_timer(std::size_t interval_ms) : 
+omni::chrono::sync_timer::sync_timer(uint32_t interval_ms) : 
     state_object(),
     tick(),
     OMNI_CTOR_FW(omni::chrono::sync_timer)
@@ -92,7 +91,7 @@ omni::chrono::sync_timer::sync_timer(std::size_t interval_ms) :
     OMNI_DV5_FW("created with interval of ", this->m_int);
 }
 
-omni::chrono::sync_timer::sync_timer(std::size_t interval_ms, const omni::chrono::timer_delegate& fn) : 
+omni::chrono::sync_timer::sync_timer(uint32_t interval_ms, const omni::chrono::timer_delegate& fn) : 
     state_object(),
     tick(fn),
     OMNI_CTOR_FW(omni::chrono::sync_timer)
@@ -106,7 +105,7 @@ omni::chrono::sync_timer::sync_timer(std::size_t interval_ms, const omni::chrono
     OMNI_DV5_FW("created with interval of ", this->m_int);
 }
 
-omni::chrono::sync_timer::sync_timer(std::size_t interval_ms,
+omni::chrono::sync_timer::sync_timer(uint32_t interval_ms,
                            const omni::chrono::timer_delegate& fn,
                            bool autoreset) : 
     state_object(),
@@ -122,10 +121,10 @@ omni::chrono::sync_timer::sync_timer(std::size_t interval_ms,
     OMNI_DV5_FW("created with interval of ", this->m_int);
 }
 
-omni::chrono::sync_timer::sync_timer(std::size_t interval_ms,
+omni::chrono::sync_timer::sync_timer(uint32_t interval_ms,
                            const omni::chrono::timer_delegate& fn,
                            bool autoreset,
-                           std::size_t delay) : 
+                           uint32_t delay) : 
     state_object(),
     tick(fn),
     OMNI_CTOR_FW(omni::chrono::sync_timer)

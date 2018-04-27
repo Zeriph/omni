@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2017, Zeriph Enterprises
+ * Copyright (c), Zeriph Enterprises
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * - Neither the name of Zeriph, Zeriph Enterprises, LLC, nor the names
- *   of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * Contributor(s):
+ * Zechariah Perez, omni (at) zeriph (dot) com
  * 
  * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -66,15 +62,25 @@ namespace omni {
                 void _thread_fn();
                 
                 // Members
-                #if defined(OMNI_TYPE_INFO)
-                    omni::type<omni::sync::threadpool> m_type;
-                #endif
                 std::size_t m_act; // current active
                 std::size_t m_min; // minimum thread count
                 std::size_t m_max; // maximum thread count
                 mutable omni::sync::basic_lock m_mtx; // threadpool lock
-                std::list<omni::sync::basic_thread> m_threads;
-                std::list<omni::sync::threadpool_task> m_tasks;
+
+                /*
+                DEV_NOTE: threadpool uses a list for efficient removal of threads in the pool
+                if you define the following, it will use the sequence container used through
+                out the framework, but if it's not a list, the deletion from the container
+                could have a performance impact if the element is not at the end or beginning
+                */
+                #if defined(OMNI_THREADPOOL_USE_SEQ_T)
+                    omni_sequence_t<omni::sync::basic_thread> m_threads;
+                    omni_sequence_t<omni::sync::threadpool_task> m_tasks;
+                #else
+                    std::list<omni::sync::basic_thread> m_threads;
+                    std::list<omni::sync::threadpool_task> m_tasks;
+                #endif
+                
                 volatile bool m_isdestroy;
         };
     }
