@@ -102,7 +102,7 @@ Omni is designed with both static and dynamic linking in mind and can be deploye
 
 ## Authors
 
-* **Zechariah Perez** - *Architect/Developer* - [Zeriph](https://github.com/Zeriph)
+* **Zechariah Perez** - *Architect/Developer* - [Zeriph](https://zeriph.com)
 
 ## License
 
