@@ -6,18 +6,28 @@ OMNI_DIR=/code/Zeriph/omni
 OMNI_SDIR=$(OMNI_DIR)/source
 OMNI_ODIR=$(OMNI_DIR)/build/obj
 # Omni framework source files
-OMNI_SRC=application.cpp\
-	argparser.cpp\
-	basic_thread.cpp\
-	binary_semaphore.cpp\
-	conditional.cpp\
-	framework.cpp\
-	mutex.cpp\
-	runnable.cpp\
-	semaphore.cpp\
-	thread.cpp\
-	threadpool.cpp\
-	timer.cpp
+OMNI_SRC=application.cpp
+	argparser.cpp
+	async_timer.cpp
+	basic_thread.cpp
+	binary_semaphore.cpp
+	conditional.cpp
+	drop_timer.cpp
+	environment.cpp
+	externs.cpp
+	io.cpp
+	library.cpp
+	mutex.cpp
+	omnilib
+	queue_timer.cpp
+	runnable.cpp
+	semaphore.cpp
+	stopwatch.cpp
+	sync_timer.cpp
+	system.cpp
+	thread.cpp
+	threadpool.cpp
+	version.cpp
 # translate the source to obj files
 OMNI_O=$(OMNI_SRC:%.cpp=$(OMNI_ODIR)/%.o)
 OMNI_LIB=$(OMNI_DIR)/build/bin/libomni.a
