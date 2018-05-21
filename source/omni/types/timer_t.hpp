@@ -63,54 +63,74 @@ namespace omni {
                 } enum_t;
                 
                 /** Defines the number of elements in the enum */
-                static const unsigned short COUNT = 4;
+                static inline unsigned short COUNT()
+                {
+                    return 4;
+                }
 
                 /** The default value for this enum instance */
-                static const enum_t DEFAULT_VALUE = omni::chrono::timer_sync_type::ASYNCHRONOUS;
+                static inline enum_t DEFAULT_VALUE()
+                {
+                    return ASYNCHRONOUS;
+                }
 
                 /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
-                    switch (v) {
-                        OMNI_E2S_FW(ASYNCHRONOUS);
-                        OMNI_E2S_FW(SYNCHRONOUS);
-                        OMNI_E2S_FW(DROP);
-                        OMNI_E2S_FW(QUEUED);
-                        default: break;
-                    }
-                    return "UNKNOWN";
+                    return _to_val<std::stringstream>(v);
                 }
             
                 /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
-                    switch (v) {
-                        OMNI_E2WS_FW(ASYNCHRONOUS);
-                        OMNI_E2WS_FW(SYNCHRONOUS);
-                        OMNI_E2WS_FW(DROP);
-                        OMNI_E2WS_FW(QUEUED);
-                        default: break;
-                    }
-                    return OMNI_WSTR("UNKNOWN");
+                    return _to_val<std::wstringstream>(v);
+                }
+
+                /** Parsing a string value into its enum representation */
+                static enum_t parse(const std::string& val)
+                {
+                    return _parse(val);
+                }
+
+                /** Parsing a wide string value into its enum representation */
+                static enum_t parse(const std::wstring& val)
+                {
+                    return _parse(val);
+                }
+
+                /** Tries parsing a string value into its enum representation */
+                static bool try_parse(const std::string& val, enum_t& out)
+                {
+                    return _try_parse(val, out);
+                }
+
+                /** Tries parsing a wide string value into its enum representation */
+                static bool try_parse(const std::wstring& val, enum_t& out)
+                {
+                    return _try_parse(val, out);
+                }
+
+                /** Tries parsing a string value into its enum representation */
+                static bool try_parse(const std::string& val, timer_sync_type& out)
+                {
+                    return _try_parse(val, out);
+                }
+
+                /** Tries parsing a wide string value into its enum representation */
+                static bool try_parse(const std::wstring& val, timer_sync_type& out)
+                {
+                    return _try_parse(val, out);
                 }
 
                 /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int val)
                 {
-                    switch (val) {
-                        case ASYNCHRONOUS:
-                        case SYNCHRONOUS:
-                        case DROP:
-                        case QUEUED:
-                            return true;
-                        default: break;
-                    }
-                    return false;
+                    return _valid(val);
                 }
                 
                 timer_sync_type() :
                     OMNI_CTOR_FW(omni::chrono::timer_sync_type)
-                    m_val(omni::chrono::timer_sync_type::DEFAULT_VALUE)
+                    m_val(DEFAULT_VALUE())
                 { }
 
                 timer_sync_type(const timer_sync_type& cp) :
@@ -255,6 +275,72 @@ namespace omni {
 
             private:
                 enum_t m_val;
+
+                template < typename S >
+                static enum_t _parse(const S& val)
+                {
+                    enum_t ret;
+                    if (_try_parse(val, ret)) { return ret; }
+                    OMNI_ERRV_FW("invalid enum parse: ", val, omni::exceptions::invalid_enum())
+                    return DEFAULT_VALUE();
+                }
+
+                template < typename S >
+                static bool _try_parse(const S& str, enum_t& out)
+                {
+                    return _try_parse(omni::string::util::to_upper(str), out);
+                }
+
+                template < typename S >
+                static bool _try_parse(const S& val, timer_sync_type& out)
+                {
+                    enum_t tmp;
+                    if (_try_parse(val, tmp)) {
+                        out.m_val = tmp;
+                        return true;
+                    }
+                    return false;
+                }
+
+                static bool _try_parse(const std::wstring& val, enum_t& out)
+                {
+                    return _try_parse(omni::string::util::to_string(val), out);
+                }
+
+                static bool _try_parse(const std::string& val, enum_t& out)
+                {
+                    if (!val.empty()) {
+                        OMNI_S2E_FW(ASYNCHRONOUS)
+                        OMNI_S2E_FW(SYNCHRONOUS)
+                        OMNI_S2E_FW(DROP)
+                        OMNI_S2E_FW(QUEUED)
+                    }
+                    return false;
+                }
+
+                template < typename S >
+                static typename S::string_type _to_val(enum_t v)
+                {
+                    S ss;
+                    switch (v) {
+                        OMNI_E2SS_FW(ASYNCHRONOUS);
+                        OMNI_E2SS_FW(SYNCHRONOUS);
+                        OMNI_E2SS_FW(DROP);
+                        OMNI_E2SS_FW(QUEUED);
+                        default: ss << "UNKNOWN"; break;
+                    }
+                    return ss.str();
+                }
+
+                static bool _valid(int val)
+                {
+                    return (val == 
+                        ASYNCHRONOUS ||
+                        SYNCHRONOUS || 
+                        DROP || 
+                        QUEUED
+                    );
+                }
         };
         
         typedef struct timer_args {

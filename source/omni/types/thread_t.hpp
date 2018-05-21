@@ -55,63 +55,74 @@ namespace omni {
                 } enum_t;
 
                 /** Defines the number of elements in the enum */
-                static const unsigned short COUNT = 7;
+                static inline unsigned short COUNT()
+                {
+                    return 7;
+                }
 
                 /** The default value for this enum instance */
-                static const enum_t DEFAULT_VALUE = omni::sync::thread_priority::NORMAL;
+                static inline enum_t DEFAULT_VALUE()
+                {
+                    return NORMAL;
+                }
             
                 /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
-                    switch (v) {
-                        OMNI_E2S_FW(IDLE);
-                        OMNI_E2S_FW(LOWEST);
-                        OMNI_E2S_FW(BELOW_NORMAL);
-                        OMNI_E2S_FW(NORMAL);
-                        OMNI_E2S_FW(ABOVE_NORMAL);
-                        OMNI_E2S_FW(HIGHEST);
-                        OMNI_E2S_FW(REAL_TIME);
-                        default: break;
-                    }
-                    return "UNKNOWN";
+                    return _to_val<std::stringstream>(v);
                 }
             
                 /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
-                    switch (v) {
-                        OMNI_E2WS_FW(IDLE);
-                        OMNI_E2WS_FW(LOWEST);
-                        OMNI_E2WS_FW(BELOW_NORMAL);
-                        OMNI_E2WS_FW(NORMAL);
-                        OMNI_E2WS_FW(ABOVE_NORMAL);
-                        OMNI_E2WS_FW(HIGHEST);
-                        OMNI_E2WS_FW(REAL_TIME);
-                        default: break;
-                    }
-                    return OMNI_WSTR("UNKNOWN");
+                    return _to_val<std::wstringstream>(v);
+                }
+
+                /** Parsing a string value into its enum representation */
+                static enum_t parse(const std::string& val)
+                {
+                    return _parse(val);
+                }
+
+                /** Parsing a wide string value into its enum representation */
+                static enum_t parse(const std::wstring& val)
+                {
+                    return _parse(val);
+                }
+
+                /** Tries parsing a string value into its enum representation */
+                static bool try_parse(const std::string& val, enum_t& out)
+                {
+                    return _try_parse(val, out);
+                }
+
+                /** Tries parsing a wide string value into its enum representation */
+                static bool try_parse(const std::wstring& val, enum_t& out)
+                {
+                    return _try_parse(val, out);
+                }
+
+                /** Tries parsing a string value into its enum representation */
+                static bool try_parse(const std::string& val, thread_priority& out)
+                {
+                    return _try_parse(val, out);
+                }
+
+                /** Tries parsing a wide string value into its enum representation */
+                static bool try_parse(const std::wstring& val, thread_priority& out)
+                {
+                    return _try_parse(val, out);
                 }
 
                 /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int val)
                 {
-                    switch (val) {
-                        case IDLE:
-                        case LOWEST:
-                        case BELOW_NORMAL:
-                        case NORMAL:
-                        case ABOVE_NORMAL:
-                        case HIGHEST:
-                        case REAL_TIME:
-                            return true;
-                        default: break;
-                    }
-                    return false;
+                    return _valid(val);
                 }
                 
                 thread_priority() :
                     OMNI_CTOR_FW(omni::sync::thread_priority)
-                    m_val(omni::sync::thread_priority::DEFAULT_VALUE)
+                    m_val(DEFAULT_VALUE())
                 { }
 
                 thread_priority(const thread_priority& cp) :
@@ -256,6 +267,81 @@ namespace omni {
 
             private:
                 enum_t m_val;
+
+                template < typename S >
+                static enum_t _parse(const S& val)
+                {
+                    enum_t ret;
+                    if (_try_parse(val, ret)) { return ret; }
+                    OMNI_ERRV_FW("invalid enum parse: ", val, omni::exceptions::invalid_enum())
+                    return DEFAULT_VALUE();
+                }
+
+                template < typename S >
+                static bool _try_parse(const S& str, enum_t& out)
+                {
+                    return _try_parse(omni::string::util::to_upper(str), out);
+                }
+
+                template < typename S >
+                static bool _try_parse(const S& val, thread_priority& out)
+                {
+                    enum_t tmp;
+                    if (_try_parse(val, tmp)) {
+                        out.m_val = tmp;
+                        return true;
+                    }
+                    return false;
+                }
+
+                static bool _try_parse(const std::wstring& val, enum_t& out)
+                {
+                    return _try_parse(omni::string::util::to_string(val), out);
+                }
+
+                static bool _try_parse(const std::string& val, enum_t& out)
+                {
+                    if (!val.empty()) {
+                        OMNI_S2E_FW(IDLE)
+                        OMNI_S2E_FW(LOWEST)
+                        OMNI_S2E_FW(BELOW_NORMAL)
+                        OMNI_S2E_FW(NORMAL)
+                        OMNI_S2E_FW(ABOVE_NORMAL)
+                        OMNI_S2E_FW(HIGHEST)
+                        OMNI_S2E_FW(REAL_TIME)
+                    }
+                    return false;
+                }
+
+                template < typename S >
+                static typename S::string_type _to_val(enum_t v)
+                {
+                    S ss;
+                    switch (v) {
+                        OMNI_E2SS_FW(IDLE);
+                        OMNI_E2SS_FW(LOWEST);
+                        OMNI_E2SS_FW(BELOW_NORMAL);
+                        OMNI_E2SS_FW(NORMAL);
+                        OMNI_E2SS_FW(ABOVE_NORMAL);
+                        OMNI_E2SS_FW(HIGHEST);
+                        OMNI_E2SS_FW(REAL_TIME);
+                        default: ss << "UNKNOWN"; break;
+                    }
+                    return ss.str();
+                }
+
+                static bool _valid(int val)
+                {
+                    return (val == 
+                        IDLE ||
+                        LOWEST ||
+                        BELOW_NORMAL ||
+                        NORMAL ||
+                        ABOVE_NORMAL ||
+                        HIGHEST ||
+                        REAL_TIME
+                    );
+                }
         };
         
         /** The thread start type (immediate or user) */
@@ -270,48 +356,74 @@ namespace omni {
                 } enum_t;
 
                 /** Defines the number of elements in the enum */
-                static const unsigned short COUNT = 2;
+                static inline unsigned short COUNT()
+                {
+                    return 2;
+                }
 
                 /** The default value for this enum instance */
-                static const enum_t DEFAULT_VALUE = omni::sync::thread_start_type::USER;
+                static inline enum_t DEFAULT_VALUE()
+                {
+                    return USER;
+                }
                 
                 /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
-                    switch (v) {
-                        OMNI_E2S_FW(USER);
-                        OMNI_E2S_FW(NOW);
-                        default: break;
-                    }
-                    return "UNKNOWN";
+                    return _to_val<std::stringstream>(v);
                 }
-                
+            
                 /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
-                    switch (v) {
-                        OMNI_E2WS_FW(USER);
-                        OMNI_E2WS_FW(NOW);
-                        default: break;
-                    }
-                    return OMNI_WSTR("UNKNOWN");
+                    return _to_val<std::wstringstream>(v);
                 }
-                
+
+                /** Parsing a string value into its enum representation */
+                static enum_t parse(const std::string& val)
+                {
+                    return _parse(val);
+                }
+
+                /** Parsing a wide string value into its enum representation */
+                static enum_t parse(const std::wstring& val)
+                {
+                    return _parse(val);
+                }
+
+                /** Tries parsing a string value into its enum representation */
+                static bool try_parse(const std::string& val, enum_t& out)
+                {
+                    return _try_parse(val, out);
+                }
+
+                /** Tries parsing a wide string value into its enum representation */
+                static bool try_parse(const std::wstring& val, enum_t& out)
+                {
+                    return _try_parse(val, out);
+                }
+
+                /** Tries parsing a string value into its enum representation */
+                static bool try_parse(const std::string& val, thread_start_type& out)
+                {
+                    return _try_parse(val, out);
+                }
+
+                /** Tries parsing a wide string value into its enum representation */
+                static bool try_parse(const std::wstring& val, thread_start_type& out)
+                {
+                    return _try_parse(val, out);
+                }
+
                 /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int val)
                 {
-                    switch (val) {
-                        case USER:
-                        case NOW:
-                            return true;
-                        default: break;
-                    }
-                    return false;
+                    return _valid(val);
                 }
                 
                 thread_start_type() :
                     OMNI_CTOR_FW(omni::sync::thread_start_type)
-                    m_val(omni::sync::thread_start_type::DEFAULT_VALUE)
+                    m_val(DEFAULT_VALUE())
                 { }
 
                 thread_start_type(const thread_start_type& cp) :
@@ -456,6 +568,66 @@ namespace omni {
 
             private:
                 enum_t m_val;
+
+                template < typename S >
+                static enum_t _parse(const S& val)
+                {
+                    enum_t ret;
+                    if (_try_parse(val, ret)) { return ret; }
+                    OMNI_ERRV_FW("invalid enum parse: ", val, omni::exceptions::invalid_enum())
+                    return DEFAULT_VALUE();
+                }
+
+                template < typename S >
+                static bool _try_parse(const S& str, enum_t& out)
+                {
+                    return _try_parse(omni::string::util::to_upper(str), out);
+                }
+
+                template < typename S >
+                static bool _try_parse(const S& val, thread_start_type& out)
+                {
+                    enum_t tmp;
+                    if (_try_parse(val, tmp)) {
+                        out.m_val = tmp;
+                        return true;
+                    }
+                    return false;
+                }
+
+                static bool _try_parse(const std::wstring& val, enum_t& out)
+                {
+                    return _try_parse(omni::string::util::to_string(val), out);
+                }
+
+                static bool _try_parse(const std::string& val, enum_t& out)
+                {
+                    if (!val.empty()) {
+                        OMNI_S2E_FW(USER)
+                        OMNI_S2E_FW(NOW)
+                    }
+                    return false;
+                }
+
+                template < typename S >
+                static typename S::string_type _to_val(enum_t v)
+                {
+                    S ss;
+                    switch (v) {
+                        OMNI_E2SS_FW(USER);
+                        OMNI_E2SS_FW(NOW);
+                        default: ss << "UNKNOWN"; break;
+                    }
+                    return ss.str();
+                }
+
+                static bool _valid(int val)
+                {
+                    return (val == 
+                        USER ||
+                        NOW
+                    );
+                }
         };
         
         /** The state structure defines enum values for the execution status of thread types */
@@ -484,69 +656,74 @@ namespace omni {
                 } enum_t;
 
                 /** Defines the number of elements in the enum */
-                static const unsigned short COUNT = 9;
+                static inline unsigned short COUNT()
+                {
+                    return 9;
+                }
 
                 /** The default value for this enum instance */
-                static const enum_t DEFAULT_VALUE = omni::sync::thread_state::UNSTARTED;
+                static inline enum_t DEFAULT_VALUE()
+                {
+                    return UNSTARTED;
+                }
                 
                 /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
-                    switch (v) {
-                        OMNI_E2S_FW(UNSTARTED);
-                        OMNI_E2S_FW(START_REQUESTED);
-                        OMNI_E2S_FW(RUNNING);
-                        OMNI_E2S_FW(COMPLETED);
-                        OMNI_E2S_FW(STOP_REQUESTED);
-                        OMNI_E2S_FW(STOPPED);
-                        OMNI_E2S_FW(ABORT_REQUESTED);
-                        OMNI_E2S_FW(ABORTED);
-                        OMNI_E2S_FW(UNKNOWN); // pedant
-                        default: break;
-                    }
-                    return "UNKNOWN";
+                    return _to_val<std::stringstream>(v);
                 }
-                
+            
                 /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
-                    switch (v) {
-                        OMNI_E2WS_FW(UNSTARTED);
-                        OMNI_E2WS_FW(START_REQUESTED);
-                        OMNI_E2WS_FW(RUNNING);
-                        OMNI_E2WS_FW(COMPLETED);
-                        OMNI_E2WS_FW(STOP_REQUESTED);
-                        OMNI_E2WS_FW(STOPPED);
-                        OMNI_E2WS_FW(ABORT_REQUESTED);
-                        OMNI_E2WS_FW(ABORTED);
-                        OMNI_E2WS_FW(UNKNOWN); // pedant
-                        default: break;
-                    }
-                    return OMNI_WSTR("UNKNOWN");
+                    return _to_val<std::wstringstream>(v);
                 }
-                
+
+                /** Parsing a string value into its enum representation */
+                static enum_t parse(const std::string& val)
+                {
+                    return _parse(val);
+                }
+
+                /** Parsing a wide string value into its enum representation */
+                static enum_t parse(const std::wstring& val)
+                {
+                    return _parse(val);
+                }
+
+                /** Tries parsing a string value into its enum representation */
+                static bool try_parse(const std::string& val, enum_t& out)
+                {
+                    return _try_parse(val, out);
+                }
+
+                /** Tries parsing a wide string value into its enum representation */
+                static bool try_parse(const std::wstring& val, enum_t& out)
+                {
+                    return _try_parse(val, out);
+                }
+
+                /** Tries parsing a string value into its enum representation */
+                static bool try_parse(const std::string& val, thread_state& out)
+                {
+                    return _try_parse(val, out);
+                }
+
+                /** Tries parsing a wide string value into its enum representation */
+                static bool try_parse(const std::wstring& val, thread_state& out)
+                {
+                    return _try_parse(val, out);
+                }
+
                 /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int val)
                 {
-                    switch (val) {
-                        case UNSTARTED:
-                        case START_REQUESTED:
-                        case RUNNING:
-                        case COMPLETED:
-                        case STOP_REQUESTED:
-                        case STOPPED:
-                        case ABORT_REQUESTED:
-                        case ABORTED:
-                        case UNKNOWN:
-                            return true;
-                        default: break;
-                    }
-                    return false;
+                    return _valid(val);
                 }
                 
                 thread_state() :
                     OMNI_CTOR_FW(omni::sync::thread_state)
-                    m_val(omni::sync::thread_state::DEFAULT_VALUE)
+                    m_val(DEFAULT_VALUE())
                 { }
 
                 thread_state(const thread_state& cp) :
@@ -691,6 +868,87 @@ namespace omni {
 
             private:
                 enum_t m_val;
+
+                template < typename S >
+                static enum_t _parse(const S& val)
+                {
+                    enum_t ret;
+                    if (_try_parse(val, ret)) { return ret; }
+                    OMNI_ERRV_FW("invalid enum parse: ", val, omni::exceptions::invalid_enum())
+                    return DEFAULT_VALUE();
+                }
+
+                template < typename S >
+                static bool _try_parse(const S& str, enum_t& out)
+                {
+                    return _try_parse(omni::string::util::to_upper(str), out);
+                }
+
+                template < typename S >
+                static bool _try_parse(const S& val, thread_state& out)
+                {
+                    enum_t tmp;
+                    if (_try_parse(val, tmp)) {
+                        out.m_val = tmp;
+                        return true;
+                    }
+                    return false;
+                }
+
+                static bool _try_parse(const std::wstring& val, enum_t& out)
+                {
+                    return _try_parse(omni::string::util::to_string(val), out);
+                }
+
+                static bool _try_parse(const std::string& val, enum_t& out)
+                {
+                    if (!val.empty()) {
+                        OMNI_S2E_FW(UNSTARTED)
+                        OMNI_S2E_FW(START_REQUESTED)
+                        OMNI_S2E_FW(RUNNING)
+                        OMNI_S2E_FW(COMPLETED)
+                        OMNI_S2E_FW(STOP_REQUESTED)
+                        OMNI_S2E_FW(STOPPED)
+                        OMNI_S2E_FW(ABORT_REQUESTED)
+                        OMNI_S2E_FW(ABORTED)
+                        OMNI_S2E_FW(UNKNOWN)
+                    }
+                    return false;
+                }
+
+                template < typename S >
+                static typename S::string_type _to_val(enum_t v)
+                {
+                    S ss;
+                    switch (v) {
+                        OMNI_E2SS_FW(UNSTARTED);
+                        OMNI_E2SS_FW(START_REQUESTED);
+                        OMNI_E2SS_FW(RUNNING);
+                        OMNI_E2SS_FW(COMPLETED);
+                        OMNI_E2SS_FW(STOP_REQUESTED);
+                        OMNI_E2SS_FW(STOPPED);
+                        OMNI_E2SS_FW(ABORT_REQUESTED);
+                        OMNI_E2SS_FW(ABORTED);
+                        OMNI_E2SS_FW(UNKNOWN);
+                        default: ss << "UNKNOWN"; break;
+                    }
+                    return ss.str();
+                }
+
+                static bool _valid(int val)
+                {
+                    return (val == 
+                        UNSTARTED ||
+                        START_REQUESTED ||
+                        RUNNING ||
+                        COMPLETED ||
+                        STOP_REQUESTED ||
+                        STOPPED ||
+                        ABORT_REQUESTED ||
+                        ABORTED ||
+                        UNKNOWN
+                    );
+                }
         };
         
         /** Defines the thread options structure allowing finer control of a thread object */
@@ -716,72 +974,74 @@ namespace omni {
                 } enum_t;
 
                 /** Defines the number of elements in the enum */
-                static const unsigned short COUNT = 11;
+                static inline unsigned short COUNT()
+                {
+                    return 11;
+                }
 
                 /** The default value for this enum instance */
-                static const enum_t DEFAULT_VALUE = omni::sync::thread_option::NONE;
+                static inline enum_t DEFAULT_VALUE()
+                {
+                    return NONE;
+                }
                 
                 /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
-                    switch (v) {
-                        OMNI_E2S_FW(ALLOW_THREAD_REUSE);
-                        OMNI_E2S_FW(AUTO_JOIN);
-                        OMNI_E2S_FW(DETACH_ON_DESTROY);
-                        OMNI_E2S_FW(ABORT_ON_DESTROY);
-                        OMNI_E2S_FW(KILL_ON_DESTROY);
-                        OMNI_E2S_FW(DETACH_ON_ASSIGN);
-                        OMNI_E2S_FW(ABORT_ON_ASSIGN);
-                        OMNI_E2S_FW(KILL_ON_ASSIGN);
-                        OMNI_E2S_FW(STACK_SIZE);
-                        OMNI_E2S_FW(AUTO_JOIN_TIMEOUT);
-                        default: break;
-                    }
-                    return "UNKNOWN";
+                    return _to_val<std::stringstream>(v);
                 }
-                
+            
                 /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
-                    switch (v) {
-                        OMNI_E2WS_FW(ALLOW_THREAD_REUSE);
-                        OMNI_E2WS_FW(AUTO_JOIN);
-                        OMNI_E2WS_FW(DETACH_ON_DESTROY);
-                        OMNI_E2WS_FW(ABORT_ON_DESTROY);
-                        OMNI_E2WS_FW(KILL_ON_DESTROY);
-                        OMNI_E2WS_FW(DETACH_ON_ASSIGN);
-                        OMNI_E2WS_FW(ABORT_ON_ASSIGN);
-                        OMNI_E2WS_FW(KILL_ON_ASSIGN);
-                        OMNI_E2WS_FW(STACK_SIZE);
-                        OMNI_E2WS_FW(AUTO_JOIN_TIMEOUT);
-                        default: break;
-                    }
-                    return OMNI_WSTR("UNKNOWN");
+                    return _to_val<std::wstringstream>(v);
                 }
-                
+
+                /** Parsing a string value into its enum representation */
+                static enum_t parse(const std::string& val)
+                {
+                    return _parse(val);
+                }
+
+                /** Parsing a wide string value into its enum representation */
+                static enum_t parse(const std::wstring& val)
+                {
+                    return _parse(val);
+                }
+
+                /** Tries parsing a string value into its enum representation */
+                static bool try_parse(const std::string& val, enum_t& out)
+                {
+                    return _try_parse(val, out);
+                }
+
+                /** Tries parsing a wide string value into its enum representation */
+                static bool try_parse(const std::wstring& val, enum_t& out)
+                {
+                    return _try_parse(val, out);
+                }
+
+                /** Tries parsing a string value into its enum representation */
+                static bool try_parse(const std::string& val, thread_option& out)
+                {
+                    return _try_parse(val, out);
+                }
+
+                /** Tries parsing a wide string value into its enum representation */
+                static bool try_parse(const std::wstring& val, thread_option& out)
+                {
+                    return _try_parse(val, out);
+                }
+
                 /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int val)
                 {
-                    switch (val) {
-                        case ALLOW_THREAD_REUSE:
-                        case AUTO_JOIN:
-                        case DETACH_ON_DESTROY:
-                        case ABORT_ON_DESTROY:
-                        case KILL_ON_DESTROY:
-                        case DETACH_ON_ASSIGN:
-                        case ABORT_ON_ASSIGN:
-                        case KILL_ON_ASSIGN:
-                        case STACK_SIZE:
-                        case AUTO_JOIN_TIMEOUT:
-                            return true;
-                        default: break;
-                    }
-                    return false;
+                    return _valid(val);
                 }
 
                 thread_option() :
                     OMNI_CTOR_FW(omni::sync::thread_option)
-                    m_val(omni::sync::thread_option::DEFAULT_VALUE)
+                    m_val(DEFAULT_VALUE())
                 { }
 
                 thread_option(const thread_option& cp) :
@@ -926,6 +1186,90 @@ namespace omni {
 
             private:
                 enum_t m_val;
+
+                template < typename S >
+                static enum_t _parse(const S& val)
+                {
+                    enum_t ret;
+                    if (_try_parse(val, ret)) { return ret; }
+                    OMNI_ERRV_FW("invalid enum parse: ", val, omni::exceptions::invalid_enum())
+                    return DEFAULT_VALUE();
+                }
+
+                template < typename S >
+                static bool _try_parse(const S& str, enum_t& out)
+                {
+                    return _try_parse(omni::string::util::to_upper(str), out);
+                }
+
+                template < typename S >
+                static bool _try_parse(const S& val, thread_option& out)
+                {
+                    enum_t tmp;
+                    if (_try_parse(val, tmp)) {
+                        out.m_val = tmp;
+                        return true;
+                    }
+                    return false;
+                }
+
+                static bool _try_parse(const std::wstring& val, enum_t& out)
+                {
+                    return _try_parse(omni::string::util::to_string(val), out);
+                }
+
+                static bool _try_parse(const std::string& val, enum_t& out)
+                {
+                    if (!val.empty()) {
+                        OMNI_S2E_FW(ALLOW_THREAD_REUSE)
+                        OMNI_S2E_FW(AUTO_JOIN)
+                        OMNI_S2E_FW(DETACH_ON_DESTROY)
+                        OMNI_S2E_FW(ABORT_ON_DESTROY)
+                        OMNI_S2E_FW(KILL_ON_DESTROY)
+                        OMNI_S2E_FW(DETACH_ON_ASSIGN)
+                        OMNI_S2E_FW(ABORT_ON_ASSIGN)
+                        OMNI_S2E_FW(KILL_ON_ASSIGN)
+                        OMNI_S2E_FW(STACK_SIZE)
+                        OMNI_S2E_FW(AUTO_JOIN_TIMEOUT)
+                    }
+                    return false;
+                }
+
+                template < typename S >
+                static typename S::string_type _to_val(enum_t v)
+                {
+                    S ss;
+                    switch (v) {
+                        OMNI_E2SS_FW(ALLOW_THREAD_REUSE);
+                        OMNI_E2SS_FW(AUTO_JOIN);
+                        OMNI_E2SS_FW(DETACH_ON_DESTROY);
+                        OMNI_E2SS_FW(ABORT_ON_DESTROY);
+                        OMNI_E2SS_FW(KILL_ON_DESTROY);
+                        OMNI_E2SS_FW(DETACH_ON_ASSIGN);
+                        OMNI_E2SS_FW(ABORT_ON_ASSIGN);
+                        OMNI_E2SS_FW(KILL_ON_ASSIGN);
+                        OMNI_E2SS_FW(STACK_SIZE);
+                        OMNI_E2SS_FW(AUTO_JOIN_TIMEOUT);
+                        default: ss << "UNKNOWN"; break;
+                    }
+                    return ss.str();
+                }
+
+                static bool _valid(int val)
+                {
+                    return (val == 
+                        ALLOW_THREAD_REUSE ||
+                        AUTO_JOIN ||
+                        DETACH_ON_DESTROY ||
+                        ABORT_ON_DESTROY ||
+                        KILL_ON_DESTROY ||
+                        DETACH_ON_ASSIGN ||
+                        ABORT_ON_ASSIGN ||
+                        KILL_ON_ASSIGN ||
+                        STACK_SIZE ||
+                        AUTO_JOIN_TIMEOUT
+                    );
+                }
         };
         
         /** Defines the thread option flag structure allowing finer control of a thread object */

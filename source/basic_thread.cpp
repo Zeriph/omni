@@ -267,7 +267,7 @@ omni::sync::basic_thread::basic_thread(const omni::sync::thread_t &tid, const om
                 p = param.sched_priority;
                 int min = ::sched_get_priority_min(sched);
                 int max = ::sched_get_priority_max(sched);
-                int skip = (max - min) / omni::sync::thread_priority::COUNT;
+                int skip = (max - min) / omni::sync::thread_priority::COUNT();
                 int rmin = 0, rmax = 0;
                 for (int i = omni::sync::thread_priority::IDLE; i <= omni::sync::thread_priority::REAL_TIME; i++) {
                     // 'normalize' the priority value for this->m_prio
@@ -1386,7 +1386,7 @@ void omni::sync::basic_thread::_set_prio()
             thus, the OS will decide the scheduling priority for the thread
             regardless if we set the thread priority. */
             if (max > min) {
-                int skip = (max - min) / omni::sync::thread_priority::COUNT;
+                int skip = (max - min) / omni::sync::thread_priority::COUNT();
                 /* getting a 'normalized' value that's representative of
                 this->m_priority according to the system scheduling policy */
                 param.sched_priority = (min + ((pri+2) * (skip+1))) + (skip / 2);

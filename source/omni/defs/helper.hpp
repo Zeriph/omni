@@ -24,6 +24,9 @@
 #define OMNI_DEF2STR_FW(x) #x
 #define OMNI_DEF2STR(x) OMNI_DEF2STR_FW(x)
 
+#define OMNI_DEF2WSTR_FW(x) L""#x""
+#define OMNI_DEF2WSTR(x) OMNI_DEF2WSTR_FW(x)
+
 #define OMNI_DEFCONCAT_FW(A, B) A ## B
 #define OMNI_DEFCONCAT(A, B) OMNI_DEFCONCAT_FW(A, B)
 
@@ -58,11 +61,13 @@
 #define OMNI_BIND_EX(DelegateType, Class, Function, Obj) DelegateType::bind<Class, &Class::Function>(obj)
 #define OMNI_BIND_CONST_EX(DelegateType, Class, Function, Obj) DelegateType::bind_const<Class, &Class::Function>(obj)
 
-#define OMNI_E2S_FW(v) case v: return OMNI_DEF2STR(v)
-#define OMNI_E2WS_FW(v) case v: return omni::string::util::to_wstring(OMNI_DEF2STR(v))
+#define OMNI_S2E_FW(v) if (val == OMNI_DEF2STR(v)) { out = v; return true; }
+#define OMNI_E2SS_FW(v) case v: ss << OMNI_DEF2STR(v); break
 
 #define OMNI_MAX_PATH_FW 32767 // 32,767 - 1 for '\0'
 
+// #define OMNI_E2S_FW(v) case v: return OMNI_DEF2STR(v)
+// #define OMNI_E2WS_FW(v) case v: return OMNI_DEF2WSTR(v)
 // TODO: can this be brought into the framework anywhere that won't sacrifice comprehension?
 /*
 #define SW1(a) swtich (v) { OMNI_E2S_FW(a); default: break; }

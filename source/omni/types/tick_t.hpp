@@ -67,6 +67,8 @@
     #define OMNI_CLOCK_FREQ_T OMNI_CLOCK_TICK_T
 #endif
 
+// TODO: https://stackoverflow.com/questions/50245373/how-to-check-if-the-system-supports-monotonic-clock
+
 namespace omni {
     namespace chrono {    
         typedef OMNI_CLOCK_TICK_T tick_t;

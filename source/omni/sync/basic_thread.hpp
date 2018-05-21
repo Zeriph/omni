@@ -108,12 +108,12 @@ namespace omni {
                 
                 OMNI_MEMBERS_FW(omni::sync::basic_thread) // disposing,name,type(),hash()
                 
-                inline static const omni::sync::basic_thread current()
+                static inline const omni::sync::basic_thread current()
                 {
                     return omni::sync::basic_thread(omni::sync::thread_id(), omni::sync::thread_handle());
                 }
                 
-                inline static omni::sync::basic_thread create_threadpool_thread(const omni::sync::thread_start& tpoolfn)
+                static inline omni::sync::basic_thread create_threadpool_thread(const omni::sync::thread_start& tpoolfn)
                 {
                     return omni::sync::basic_thread(tpoolfn, true);
                 }

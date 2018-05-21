@@ -28,6 +28,7 @@
 #include <omni/types/tick_t.hpp>
 #include <omni/types/timer_t.hpp>
 #include <omni/types/point_t.hpp>
+#include <omni/types/net_t.hpp>
 #include <omni/types/ptr_t.hpp> // #include <omni/generic_ptr.hpp>
 
 #include <omni/type.hpp>

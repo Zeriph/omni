@@ -520,40 +520,370 @@ namespace omni {
          */
         int last_signal();
         
+        /**
+         * @brief          Brief description.
+         * 
+         * @details        A more detailed description of the function.
+         * 
+         * @return         [optional] A return value if any.
+         * 
+         * @param [name]   [optional] Each parameter should be marked with this.
+         * @tparam [name]  [optional] Each template parameter should be marked with this.
+         * 
+         * @exception      [optional] Any errors (or error conditions) specific to this context.
+         * 
+         * @warning        [optional] Any extra considerations to be aware of.
+         * 
+         * @attention      [optional] Any platform specific notes.
+         * 
+         * @note           [optional] Any notes to be aware of (like system calls, order of operations, etc.).
+         * 
+         * @invariant      [optional] This is the complexity of this function (e.g. O(1) for X conditions, etc.)
+         */
         int run();
         
+        /**
+         * @brief          Brief description.
+         * 
+         * @details        A more detailed description of the function.
+         * 
+         * @return         [optional] A return value if any.
+         * 
+         * @param [name]   [optional] Each parameter should be marked with this.
+         * @tparam [name]  [optional] Each template parameter should be marked with this.
+         * 
+         * @exception      [optional] Any errors (or error conditions) specific to this context.
+         * 
+         * @warning        [optional] Any extra considerations to be aware of.
+         * 
+         * @attention      [optional] Any platform specific notes.
+         * 
+         * @note           [optional] Any notes to be aware of (like system calls, order of operations, etc.).
+         * 
+         * @invariant      [optional] This is the complexity of this function (e.g. O(1) for X conditions, etc.)
+         */
         int run(const omni::sync::parameterized_thread_start& start_func);
         
+        /**
+         * @brief          Brief description.
+         * 
+         * @details        A more detailed description of the function.
+         * 
+         * @return         [optional] A return value if any.
+         * 
+         * @param [name]   [optional] Each parameter should be marked with this.
+         * @tparam [name]  [optional] Each template parameter should be marked with this.
+         * 
+         * @exception      [optional] Any errors (or error conditions) specific to this context.
+         * 
+         * @warning        [optional] Any extra considerations to be aware of.
+         * 
+         * @attention      [optional] Any platform specific notes.
+         * 
+         * @note           [optional] Any notes to be aware of (like system calls, order of operations, etc.).
+         * 
+         * @invariant      [optional] This is the complexity of this function (e.g. O(1) for X conditions, etc.)
+         */
         int run(const omni::sync::parameterized_thread_start& start_func, omni::generic_ptr targs);
         
+        /**
+         * @brief          Brief description.
+         * 
+         * @details        A more detailed description of the function.
+         * 
+         * @return         [optional] A return value if any.
+         * 
+         * @exception      [optional] Any exceptions that are thrown.
+         * 
+         * @warning        [optional] Any warnings to be aware of (like framework options, etc.).
+         * 
+         * @attention      [optional] Any platform specific notes.
+         * 
+         * @note           [optional] Any notes to be aware of (like system calls, order of operations, etc.).
+         * 
+         * @param [name]   [optional] Each parameter should be marked with this.
+         * @tparam [name]  [optional] Each template parameter should be marked with this.
+         */
         int run(const omni::sync::parameterized_thread_start& start_func, omni::generic_ptr targs, bool exit_with_work_thread);
         
+        /**
+         * @brief          Brief description.
+         * 
+         * @details        A more detailed description of the function.
+         * 
+         * @return         [optional] A return value if any.
+         * 
+         * @exception      [optional] Any exceptions that are thrown.
+         * 
+         * @warning        [optional] Any warnings to be aware of (like framework options, etc.).
+         * 
+         * @attention      [optional] Any platform specific notes.
+         * 
+         * @note           [optional] Any notes to be aware of (like system calls, order of operations, etc.).
+         * 
+         * @param [name]   [optional] Each parameter should be marked with this.
+         * @tparam [name]  [optional] Each template parameter should be marked with this.
+         */
         int run(const omni::sync::parameterized_thread_start& start_func, omni::generic_ptr targs, bool exit_with_work_thread, bool kill_worker_on_signal);
         
+        /**
+         * @brief          Brief description.
+         * 
+         * @details        A more detailed description of the function.
+         * 
+         * @return         [optional] A return value if any.
+         * 
+         * @exception      [optional] Any exceptions that are thrown.
+         * 
+         * @warning        [optional] Any warnings to be aware of (like framework options, etc.).
+         * 
+         * @attention      [optional] Any platform specific notes.
+         * 
+         * @note           [optional] Any notes to be aware of (like system calls, order of operations, etc.).
+         * 
+         * @param [name]   [optional] Each parameter should be marked with this.
+         * @tparam [name]  [optional] Each template parameter should be marked with this.
+         */
         int run(const int& argc, const char** argv);
         
+        /**
+         * @brief          Brief description.
+         * 
+         * @details        A more detailed description of the function.
+         * 
+         * @return         [optional] A return value if any.
+         * 
+         * @exception      [optional] Any exceptions that are thrown.
+         * 
+         * @warning        [optional] Any warnings to be aware of (like framework options, etc.).
+         * 
+         * @attention      [optional] Any platform specific notes.
+         * 
+         * @note           [optional] Any notes to be aware of (like system calls, order of operations, etc.).
+         * 
+         * @param [name]   [optional] Each parameter should be marked with this.
+         * @tparam [name]  [optional] Each template parameter should be marked with this.
+         */
         int run(const int& argc, const char** argv, const omni::sync::parameterized_thread_start& start_func, omni::generic_ptr targs, bool exit_with_work_thread);
         
+        /**
+         * @brief          Brief description.
+         * 
+         * @details        A more detailed description of the function.
+         * 
+         * @return         [optional] A return value if any.
+         * 
+         * @exception      [optional] Any exceptions that are thrown.
+         * 
+         * @warning        [optional] Any warnings to be aware of (like framework options, etc.).
+         * 
+         * @attention      [optional] Any platform specific notes.
+         * 
+         * @note           [optional] Any notes to be aware of (like system calls, order of operations, etc.).
+         * 
+         * @param [name]   [optional] Each parameter should be marked with this.
+         * @tparam [name]  [optional] Each template parameter should be marked with this.
+         */
         int run(const int& argc, const char** argv, const omni::sync::parameterized_thread_start& start_func, omni::generic_ptr targs, bool exit_with_work_thread, bool kill_worker_on_signal);
         
+        /**
+         * @brief          Brief description.
+         * 
+         * @details        A more detailed description of the function.
+         * 
+         * @return         [optional] A return value if any.
+         * 
+         * @exception      [optional] Any exceptions that are thrown.
+         * 
+         * @warning        [optional] Any warnings to be aware of (like framework options, etc.).
+         * 
+         * @attention      [optional] Any platform specific notes.
+         * 
+         * @note           [optional] Any notes to be aware of (like system calls, order of operations, etc.).
+         * 
+         * @param [name]   [optional] Each parameter should be marked with this.
+         * @tparam [name]  [optional] Each template parameter should be marked with this.
+         */
         int run(const int& argc, const wchar_t** argv);
         
+        /**
+         * @brief          Brief description.
+         * 
+         * @details        A more detailed description of the function.
+         * 
+         * @return         [optional] A return value if any.
+         * 
+         * @exception      [optional] Any exceptions that are thrown.
+         * 
+         * @warning        [optional] Any warnings to be aware of (like framework options, etc.).
+         * 
+         * @attention      [optional] Any platform specific notes.
+         * 
+         * @note           [optional] Any notes to be aware of (like system calls, order of operations, etc.).
+         * 
+         * @param [name]   [optional] Each parameter should be marked with this.
+         * @tparam [name]  [optional] Each template parameter should be marked with this.
+         */
         int run(const int& argc, const wchar_t** argv, const omni::sync::parameterized_thread_start& start_func, omni::generic_ptr targs, bool exit_with_work_thread);
         
+        /**
+         * @brief          Brief description.
+         * 
+         * @details        A more detailed description of the function.
+         * 
+         * @return         [optional] A return value if any.
+         * 
+         * @exception      [optional] Any exceptions that are thrown.
+         * 
+         * @warning        [optional] Any warnings to be aware of (like framework options, etc.).
+         * 
+         * @attention      [optional] Any platform specific notes.
+         * 
+         * @note           [optional] Any notes to be aware of (like system calls, order of operations, etc.).
+         * 
+         * @param [name]   [optional] Each parameter should be marked with this.
+         * @tparam [name]  [optional] Each template parameter should be marked with this.
+         */
         int run(const int& argc, const wchar_t** argv, const omni::sync::parameterized_thread_start& start_func, omni::generic_ptr targs, bool exit_with_work_thread, bool kill_worker_on_signal);
         
+        /**
+         * @brief          Brief description.
+         * 
+         * @details        A more detailed description of the function.
+         * 
+         * @return         [optional] A return value if any.
+         * 
+         * @exception      [optional] Any exceptions that are thrown.
+         * 
+         * @warning        [optional] Any warnings to be aware of (like framework options, etc.).
+         * 
+         * @attention      [optional] Any platform specific notes.
+         * 
+         * @note           [optional] Any notes to be aware of (like system calls, order of operations, etc.).
+         * 
+         * @param [name]   [optional] Each parameter should be marked with this.
+         * @tparam [name]  [optional] Each template parameter should be marked with this.
+         */
         int run(const int& argc, const char** argv, const omni::sync::thread_start& start_func, bool exit_with_work_thread);
         
+        /**
+         * @brief          Brief description.
+         * 
+         * @details        A more detailed description of the function.
+         * 
+         * @return         [optional] A return value if any.
+         * 
+         * @exception      [optional] Any exceptions that are thrown.
+         * 
+         * @warning        [optional] Any warnings to be aware of (like framework options, etc.).
+         * 
+         * @attention      [optional] Any platform specific notes.
+         * 
+         * @note           [optional] Any notes to be aware of (like system calls, order of operations, etc.).
+         * 
+         * @param [name]   [optional] Each parameter should be marked with this.
+         * @tparam [name]  [optional] Each template parameter should be marked with this.
+         */
         int run(const int& argc, const char** argv, const omni::sync::thread_start& start_func, bool exit_with_work_thread, bool kill_worker_on_signal);
         
+        /**
+         * @brief          Brief description.
+         * 
+         * @details        A more detailed description of the function.
+         * 
+         * @return         [optional] A return value if any.
+         * 
+         * @exception      [optional] Any exceptions that are thrown.
+         * 
+         * @warning        [optional] Any warnings to be aware of (like framework options, etc.).
+         * 
+         * @attention      [optional] Any platform specific notes.
+         * 
+         * @note           [optional] Any notes to be aware of (like system calls, order of operations, etc.).
+         * 
+         * @param [name]   [optional] Each parameter should be marked with this.
+         * @tparam [name]  [optional] Each template parameter should be marked with this.
+         */
         int run(const int& argc, const wchar_t** argv, const omni::sync::thread_start& start_func, bool exit_with_work_thread);
         
+        /**
+         * @brief          Brief description.
+         * 
+         * @details        A more detailed description of the function.
+         * 
+         * @return         [optional] A return value if any.
+         * 
+         * @exception      [optional] Any exceptions that are thrown.
+         * 
+         * @warning        [optional] Any warnings to be aware of (like framework options, etc.).
+         * 
+         * @attention      [optional] Any platform specific notes.
+         * 
+         * @note           [optional] Any notes to be aware of (like system calls, order of operations, etc.).
+         * 
+         * @param [name]   [optional] Each parameter should be marked with this.
+         * @tparam [name]  [optional] Each template parameter should be marked with this.
+         */
         int run(const int& argc, const wchar_t** argv, const omni::sync::thread_start& start_func, bool exit_with_work_thread, bool kill_worker_on_signal);
         
+        /**
+         * @brief          Brief description.
+         * 
+         * @details        A more detailed description of the function.
+         * 
+         * @return         [optional] A return value if any.
+         * 
+         * @exception      [optional] Any exceptions that are thrown.
+         * 
+         * @warning        [optional] Any warnings to be aware of (like framework options, etc.).
+         * 
+         * @attention      [optional] Any platform specific notes.
+         * 
+         * @note           [optional] Any notes to be aware of (like system calls, order of operations, etc.).
+         * 
+         * @param [name]   [optional] Each parameter should be marked with this.
+         * @tparam [name]  [optional] Each template parameter should be marked with this.
+         */
         int run(const omni::sync::thread_start& start_func, bool exit_with_work_thread);
         
+        /**
+         * @brief          Brief description.
+         * 
+         * @details        A more detailed description of the function.
+         * 
+         * @return         [optional] A return value if any.
+         * 
+         * @exception      [optional] Any exceptions that are thrown.
+         * 
+         * @warning        [optional] Any warnings to be aware of (like framework options, etc.).
+         * 
+         * @attention      [optional] Any platform specific notes.
+         * 
+         * @note           [optional] Any notes to be aware of (like system calls, order of operations, etc.).
+         * 
+         * @param [name]   [optional] Each parameter should be marked with this.
+         * @tparam [name]  [optional] Each template parameter should be marked with this.
+         */
         int run(const omni::sync::thread_start& start_func, bool exit_with_work_thread, bool kill_worker_on_signal);
         
+        /**
+         * @brief          Brief description.
+         * 
+         * @details        A more detailed description of the function.
+         * 
+         * @return         [optional] A return value if any.
+         * 
+         * @exception      [optional] Any exceptions that are thrown.
+         * 
+         * @warning        [optional] Any warnings to be aware of (like framework options, etc.).
+         * 
+         * @attention      [optional] Any platform specific notes.
+         * 
+         * @note           [optional] Any notes to be aware of (like system calls, order of operations, etc.).
+         * 
+         * @param [name]   [optional] Each parameter should be marked with this.
+         * @tparam [name]  [optional] Each template parameter should be marked with this.
+         */
         int run(const omni::sync::thread_start& start_func);
         
         /**

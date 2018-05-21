@@ -51,21 +51,24 @@ namespace omni {
             omni::stopwatch& reset();
             omni::stopwatch& restart();
             /**
-             * @brief Brief
+             * @brief          Brief description.
              * 
-             * @details Details
+             * @details        A more detailed description of the function.
              * 
-             * @exception Errors
+             * @return         [optional] A return value if any.
              * 
-             * @warning Consideration
+             * @param [name]   [optional] Each parameter should be marked with this.
+             * @tparam [name]  [optional] Each template parameter should be marked with this.
              * 
-             * @attention Platform
+             * @exception      [optional] Any errors (or error conditions) specific to this context.
              * 
-             * @note Notes
+             * @warning        [optional] Any extra considerations to be aware of.
              * 
-             * @param offset_ms Parameter_Description
+             * @attention      [optional] Any platform specific notes.
              * 
-             * @return Return_Description
+             * @note           [optional] Any notes to be aware of (like system calls, order of operations, etc.).
+             * 
+             * @invariant      [optional] This is the complexity of this function (e.g. O(1) for X conditions, etc.)
              */
             omni::stopwatch& restart(unsigned long offset_ms);
             omni::stopwatch& start();
