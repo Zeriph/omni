@@ -432,35 +432,45 @@ bool omni::sync::runnable_thread::join(unsigned long timeout)
         OMNI_ERR_RETV_FW(OMNI_INVALID_THREAD_HANDLE_STR, omni::exceptions::invalid_thread_handle(), false)
     }
     omni::sync::thread_handle_t hndl = this->m_thread;
-    #if defined(OMNI_OS_WIN)
+    if (hndl == omni::sync::thread_handle()) {
         OMNI_SAFE_RUNLOCK_FW
-        int ret = ::WaitForSingleObject(OMNI_WIN_TOHNDL_FW(hndl), timeout);
-        #if defined(OMNI_DBG_L1)
-            if (ret != 0) { OMNI_DBGEV("error while waiting for thread handle: ", OMNI_GLE_PRNT) }
-        #endif
-        return (ret == 0); // Returns 0 on success
+        OMNI_ERR_RETV_FW(OMNI_INVALID_THREAD_OWNER, omni::exceptions::invalid_thread_owner(), false)
+    }
+    #if defined(OMNI_OS_WIN)
+        this->m_isjoined = true;
+        OMNI_SAFE_RUNLOCK_FW
+        return (
+            (::WaitForSingleObject(OMNI_WIN_TOHNDL_FW(hndl), timeout) == 0) ? true :
+            #if !defined(OMNI_DBG_L1)
+                false
+            #else
+                !(OMNI_DBGEV_FW("error while waiting for thread handle: ", OMNI_GLE_PRNT))
+            #endif
+        );
     #else
         /* There is not a portable mechanism with pthreads to wait on a specific thread without
         implementing a timed_wait condition variable. We don't want the user to have to implement
         a seperate variable based on system, so we implement a 'timeout' loop*/
+        this->m_isjoined = true;
+        OMNI_SAFE_RUNLOCK_FW
         if (timeout != omni::sync::INFINITE_TIMEOUT) {
-            OMNI_SAFE_RUNLOCK_FW
-            omni::chrono::tick_t ts = omni::chrono::monotonic_tick();
             OMNI_SLEEP_INIT();
             volatile bool iav = true;
-            // iav = (::pthread_kill(this->m_thread, 0) != ESRCH); // == "alive"
+            omni::chrono::tick_t ts = omni::chrono::monotonic_tick();
+            // iav = (::pthread_kill(hndl, 0) != ESRCH); // == "alive"
             while ((iav = (::pthread_kill(hndl, 0) != ESRCH)) && (omni::chrono::elapsed_ms(ts) < timeout)) {
                 OMNI_SLEEP1();
             }
             return (::pthread_kill(hndl, 0) == ESRCH); // == "dead"
         }
-        this->m_isjoined = true;
-        OMNI_SAFE_RUNLOCK_FW
-        int ret = ::pthread_join(hndl, NULL);
-        #if defined(OMNI_DBG_L1)
-            if (ret != 0) { OMNI_DBGEV("error while waiting for thread handle: ", OMNI_GLE_PRNT) }
-        #endif
-        return (ret == 0); // Returns 0 on success
+        return (
+            (::pthread_join(hndl, NULL) == 0) ? true :
+            #if !defined(OMNI_DBG_L1)
+                false
+            #else
+                !(OMNI_DBGEV_FW("error while waiting for thread handle: ", OMNI_GLE_PRNT))
+            #endif
+        );
     #endif
 }
 
@@ -477,11 +487,13 @@ bool omni::sync::runnable_thread::kill()
         OMNI_ERR_RETV_FW(OMNI_INVALID_THREAD_HANDLE_STR, omni::exceptions::invalid_thread_handle(), false)
     }
     int perr = 0;
+    omni::sync::thread_handle_t hndl = this->m_thread;
+    if (hndl == omni::sync::thread_handle()) {
+        OMNI_SAFE_RUNLOCK_FW
+        OMNI_ERR_RETV_FW(OMNI_INVALID_THREAD_OWNER, omni::exceptions::invalid_thread_owner(), false)
+    }
     OMNI_SAFE_RUNLOCK_FW
     this->_state_changed(omni::sync::thread_state::STOP_REQUESTED);
-    OMNI_SAFE_RLOCK_FW
-    omni::sync::thread_handle_t hndl = this->m_thread;
-    OMNI_SAFE_RUNLOCK_FW
     // attempt to kill it
     #if defined(OMNI_OS_WIN)
         if (::TerminateThread(OMNI_WIN_TOHNDL_FW(hndl), 0) == 0) {

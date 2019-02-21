@@ -309,8 +309,8 @@ OMNI_CLINKC_FW // end extern "C"
 namespace omni {
     namespace application {
         namespace base {
-            
-            void set_handlers()
+
+            void set_signal_handlers()
             {
                 OMNI_D5_FW("attaching signal handlers");
                 // We attach the signal handlers but don't die or throw an error because we want
@@ -336,7 +336,11 @@ namespace omni {
                 if (std::signal(SIGINT, &omni_application_base_msg_pump) == SIG_ERR) {
                     OMNI_DBGE("error attaching SIGINT");
                 }
-                
+            }
+            
+            void set_handlers()
+            {
+                omni::application::base::set_signal_handlers();
                 #if defined(OMNI_WIN_API)
                     if (::SetConsoleCtrlHandler(omni_application_base_win_ctrl_handler, TRUE) != 0) {
                         OMNI_DBGEV("Could not set the console control handler: ", OMNI_GLE)
@@ -411,7 +415,7 @@ namespace omni {
                         /* std::signal specifies that the signal handlers can be reset back to the default handler
                         so we must 're-install' the signal handlers to be able to continue to catch; note that we
                         don't need to 're-install' the WinAPI omni_application_base_win_ctrl_handler. */
-                        omni::application::base::set_handlers();
+                        omni::application::base::set_signal_handlers();
                     }
                 } while (omni::application::m_igsig);
                 OMNI_SAFE_APP_UNLOCK_FW

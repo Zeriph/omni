@@ -85,6 +85,9 @@
 #if !defined(OMNI_ERR_ENVEX_STR)
     #define OMNI_ERR_ENVEX_STR "An error occurred within the system environment"
 #endif
+#if !defined(OMNI_ERR_PARSE_STR)
+    #define OMNI_ERR_PARSE_STR "An error occurred parsing a string"
+#endif
 #if !defined(OMNI_ERR_NAME_STR)
     #define OMNI_ERR_NAME_STR "Name cannot be empty"
 #endif
@@ -148,6 +151,9 @@
 #if !defined(OMNI_INVALID_THREAD_HANDLE_STR)
     #define OMNI_INVALID_THREAD_HANDLE_STR "Invalid thread handle"
 #endif
+#if !defined(OMNI_INVALID_THREAD_OWNER)
+    #define OMNI_INVALID_THREAD_OWNER "Current thread invoking non-owning operation"
+#endif
 #if !defined(OMNI_INVALID_THREAD_PRIORITY_STR)
     #define OMNI_INVALID_THREAD_PRIORITY_STR "Invalid thread priority"
 #endif
@@ -171,6 +177,12 @@
 #endif
 #if !defined(OMNI_NULL_REF_STR)
     #define OMNI_NULL_REF_STR "A null pointer reference exception occurred"
+#endif
+#if !defined(OMNI_NAN_ERR_STR)
+    #define OMNI_NAN_ERR_STR "A not-a-number error has occurred"
+#endif
+#if !defined(OMNI_OVERFLOW_STR)
+    #define OMNI_OVERFLOW_STR "A general overflow exception has occurred"
 #endif
 #if !defined(OMNI_PATH_NOT_ACCESSIBLE_STR)
     #define OMNI_PATH_NOT_ACCESSIBLE_STR "Path not accessible"

@@ -32,13 +32,13 @@ namespace omni {
         /** The socket class is used to facilitate network communications */
         class socket
         {
-            socket(const omni::net::socket &cp);
+            socket(const omni::net::socket &cp); // = delete
             
             public:
                 socket();
-                socket(omni::net::address_family::enum_t family,
-                       omni::net::socket_type::enum_t type, 
-                       omni::net::protocol_type::enum_t protocol);
+                socket(omni::net::address_family family,
+                       omni::net::socket_type type, 
+                       omni::net::protocol_type protocol);
                 virtual ~socket();
                 
                 bool blocking;
@@ -55,7 +55,7 @@ namespace omni {
                 short ttl;
                 bool useOnlyOverlappedIO;
                 
-                omni::net::address_family::enum_t address_family() const;
+                omni::net::address_family address_family() const;
                 int available() const;
                 omni::net::socket& accept();
                 omni::net::socket& bind(std::string ip);
@@ -64,7 +64,7 @@ namespace omni {
                 bool close(int timeout);
                 bool connect(std::string host, int port);
                 bool disconnect(bool reuse);
-                unsigned int handle() const;
+                unsigned int native_handle() const;
                 bool is_bound() const;
                 bool is_shut() const;
                 omni::net::socket& listen(int backlog);
@@ -101,8 +101,8 @@ namespace omni {
                 
                 // Operators
                 omni::net::socket& operator= (const omni::net::socket &other);
-                omni::net::socket& operator<< (const char *data); // writes data to socket
-                omni::net::socket& operator>> (const char *read); // reads data from socket
+                omni::net::socket& operator<< (const char* data); // writes data to socket
+                omni::net::socket& operator>> (const char* read); // reads data from socket
                 
                 /* examples for operator overload:
                 omni::net::socket s("192.168.1.1", 80);
@@ -123,18 +123,6 @@ namespace omni {
                         printf("data rcvd: %s\n", rcvd);
                     }
                 }
-                */
-                
-                /*
-                static std::string getBroadcastFromIpAndSubnet(const std::string &ip, const std::string &subnet);
-                static omni_sequence_t<networkinterface> getInterfaces();
-                static unsigned int ipToNum(const std::string &ip);
-                static bool isValidIp(const std::string &ip, bool includeBroadcast = false);
-                static bool isValidPort(int port);
-                static std::string numToIp(unsigned int num);
-                static bool osSupportsIPv4();
-                static bool osSupportsIPv6();
-                static omni::net::pingreply ping(const std::string &ip);
                 */
                 
             private:

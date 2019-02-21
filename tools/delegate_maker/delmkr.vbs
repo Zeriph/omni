@@ -213,6 +213,7 @@ function makehpp()
         otxt = otxt & "#include <omni/delegate/" & tnum & ".hpp>" & vblf
     next
     otxt = otxt & vblf _
+    ' TODO: insert stuff from delmkr.sh updating to include the #defines
     otxt = otxt & "#endif // OMNI_DELEGATES_HPP" & vblf
     
     set otfile = objFSO.CreateTextFile(ofile, 2, True)

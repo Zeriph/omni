@@ -867,7 +867,7 @@ namespace omni {
         int run(const omni::sync::thread_start& start_func, bool exit_with_work_thread, bool kill_worker_on_signal);
         
         /**
-         * @brief          Brief description.
+         * @brief Spawn a background thread and does not return until it was completed.
          * 
          * @details        A more detailed description of the function.
          * 

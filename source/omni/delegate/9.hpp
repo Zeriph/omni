@@ -779,7 +779,7 @@ namespace omni {
              *
              * @param d     The signature compatible delegate to add to the invocation list
              */
-            explicit event9(const omni::delegate9< Ret, PT1, PT2, PT3, PT4, PT5, PT6, PT7, PT8, PT9 >& d) : 
+            event9(const omni::delegate9< Ret, PT1, PT2, PT3, PT4, PT5, PT6, PT7, PT8, PT9 >& d) : 
                 OMNI_SAFE_EVENT_MILST_FW
                 m_list()
             {
@@ -1517,6 +1517,8 @@ namespace omni {
     typedef omni::event9<void, void*, void*, void*, void*, void*, void*, void*, void*, void*> action9;
 } // namespace omni
 
+#define OMNI_DEL9_FW(Ret, PT1, PT2, PT3, PT4, PT5, PT6, PT7, PT8, PT9) omni::delegate9<Ret, PT1, PT2, PT3, PT4, PT5, PT6, PT7, PT8, PT9>
+#define OMNI_EVT9_FW(Ret, PT1, PT2, PT3, PT4, PT5, PT6, PT7, PT8, PT9) omni::event9<Ret, PT1, PT2, PT3, PT4, PT5, PT6, PT7, PT8, PT9>
 #define OMNI_BIND9(Ret, PT1, PT2, PT3, PT4, PT5, PT6, PT7, PT8, PT9, Class, Function, Obj) omni::delegate9<Ret, PT1, PT2, PT3, PT4, PT5, PT6, PT7, PT8, PT9>::bind<Class, &Class::Function>(Obj)
 #define OMNI_BIND9_CONST(Ret, PT1, PT2, PT3, PT4, PT5, PT6, PT7, PT8, PT9, Class, Function, Obj) omni::delegate9<Ret, PT1, PT2, PT3, PT4, PT5, PT6, PT7, PT8, PT9>::bind_const<Class, &Class::Function>(Obj)
 

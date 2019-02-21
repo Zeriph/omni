@@ -22,6 +22,7 @@
 #include <omni/defs/helper.hpp>
 #include <omni/defs/omni_ver.hpp>
 #include <cstddef>
+#include <cmath>
 
 #if defined(OMNI_ENABLE_CXX)
     // DEV_NOTE: this causes compiler errors on some compilers complaining of 
@@ -37,21 +38,10 @@
     #define OMNI_NO_DISPOSE_EVENT
     #define OMNI_NO_MUTEX_OWNER
     #define OMNI_NO_TYPE_INFO
-    #define OMNI_NO_SAFE_APPLICATION
-    #define OMNI_NO_SAFE_DELEGATES
-    #define OMNI_NO_SAFE_EVENTS
-    #define OMNI_NO_SAFE_PROP
-    #define OMNI_NO_SAFE_SEMAPHORE
-    #define OMNI_NO_SAFE_CONDITIONAL
-    #define OMNI_NO_SAFE_TIMERS
-    #define OMNI_NO_SAFE_THREAD
-    #define OMNI_NO_SAFE_RUNNABLE_THREAD
     #define OMNI_NO_SAFE_FRAMEWORK
     #define OMNI_NO_FW_VER
-    #define OMNI_NO_SAFE_BASIC_THREAD
-    #define OMNI_NO_SAFE_MUTEX
     #define OMNI_NO_THROW
-    #define OMNI_THREAD_ARGS_RAW_PTR    
+    #define OMNI_THREAD_ARGS_RAW_PTR
 #endif
 
 #if defined(OMNI_SAFE_FRAMEWORK) && defined(OMNI_NO_SAFE_FRAMEWORK)
@@ -60,14 +50,47 @@
 
 #if defined(OMNI_SAFE_FRAMEWORK)
     #define OMNI_SAFE_APPLICATION
+    #define OMNI_SAFE_COLOR
     #define OMNI_SAFE_DELEGATES
     #define OMNI_SAFE_EVENTS
     #define OMNI_SAFE_PROP
+    #define OMNI_SAFE_CHRONO
     #define OMNI_SAFE_LOCKS
     #define OMNI_SAFE_TIMERS
     #define OMNI_SAFE_THREADS
     #define OMNI_SAFE_GEOMETRY
     // TODO: add any other "safe" framework entities here
+#elif defined(OMNI_NO_SAFE_FRAMEWORK)
+    #define OMNI_NO_OBJECT_NAME
+    #define OMNI_NO_DISPOSE_EVENT
+    #define OMNI_NO_TYPE_INFO
+    #define OMNI_NO_SAFE_APPLICATION
+    #define OMNI_NO_SAFE_COLOR
+    #define OMNI_NO_SAFE_DELEGATES
+    #define OMNI_NO_SAFE_EVENTS
+    #define OMNI_NO_SAFE_PROP
+    #define OMNI_NO_SAFE_MUTEX
+    #define OMNI_NO_SAFE_SEMAPHORE
+    #define OMNI_NO_SAFE_THREAD
+    #define OMNI_NO_SAFE_BASIC_THREAD
+    #define OMNI_NO_SAFE_RUNNABLE_THREAD
+    #define OMNI_NO_SAFE_TIMERS
+    #define OMNI_NO_SAFE_GEOMETRY
+    #define OMNI_NO_SAFE_ASYNC_TIMER
+    #define OMNI_NO_SAFE_SYNC_TIMER
+    #define OMNI_NO_SAFE_DROP_TIMER
+    #define OMNI_NO_SAFE_QUEUE_TIMER
+    #define OMNI_NO_SAFE_POINT2D
+    #define OMNI_NO_SAFE_GEO_SIZE
+    #define OMNI_NO_SAFE_POINT3D
+    #define OMNI_NO_SAFE_RECTANGLE
+    #define OMNI_NO_SAFE_STOPWATCH
+    #define OMNI_NO_SAFE_SPAN
+#endif
+
+#if defined(OMNI_SAFE_CHRONO)
+    #define OMNI_SAFE_SPAN
+    #define OMNI_SAFE_STOPWATCH
 #endif
 
 #if defined(OMNI_SAFE_LOCKS)
@@ -75,7 +98,7 @@
     #define OMNI_SAFE_SEMAPHORE
 #endif
 
-#if defined(OMNI_SAFE_MUTEX)
+#if defined(OMNI_SAFE_MUTEX) && !defined(OMNI_MUTEX_OWNER)
     #define OMNI_MUTEX_OWNER
 #endif
 
@@ -111,6 +134,9 @@
 #if defined(OMNI_SAFE_APPLICATION) && defined(OMNI_NO_SAFE_APPLICATION)
     #undef OMNI_SAFE_APPLICATION
 #endif
+#if defined(OMNI_SAFE_COLOR) && defined(OMNI_NO_SAFE_COLOR)
+    #undef OMNI_SAFE_COLOR
+#endif
 #if defined(OMNI_SAFE_DELEGATES) && defined(OMNI_NO_SAFE_DELEGATES)
     #undef OMNI_SAFE_DELEGATES
 #endif
@@ -130,7 +156,7 @@
     #undef OMNI_SAFE_THREAD
 #endif
 #if defined(OMNI_SAFE_BASIC_THREAD) && defined(OMNI_NO_SAFE_BASIC_THREAD)
-    #under OMNI_SAFE_BASIC_THREAD
+    #undef OMNI_SAFE_BASIC_THREAD
 #endif
 #if defined(OMNI_SAFE_RUNNABLE_THREAD) && defined(OMNI_NO_SAFE_RUNNABLE_THREAD)
     #undef OMNI_SAFE_RUNNABLE_THREAD
@@ -147,7 +173,6 @@
     #undef OMNI_SAFE_POINT3D
     #undef OMNI_SAFE_RECTANGLE
 #endif
-
 #if defined(OMNI_SAFE_ASYNC_TIMER) && defined(OMNI_NO_SAFE_ASYNC_TIMER)
     #undef OMNI_SAFE_ASYNC_TIMER
 #endif
@@ -171,6 +196,12 @@
 #endif
 #if defined(OMNI_SAFE_RECTANGLE) && defined(OMNI_NO_SAFE_RECTANGLE)
     #undef OMNI_SAFE_RECTANGLE
+#endif
+#if defined(OMNI_SAFE_STOPWATCH) && defined(OMNI_NO_SAFE_STOPWATCH)
+    #undef OMNI_SAFE_STOPWATCH
+#endif
+#if defined(OMNI_SAFE_SPAN) && defined(OMNI_NO_SAFE_SPAN)
+    #undef OMNI_SAFE_SPAN
 #endif
 
 #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)

@@ -60,7 +60,7 @@ makehpp()
     cat ${lfile} > "${outdir}/delegates.hpp"
     
     tnum=0
-    echo "#if !defined(OMNI_DELEGATES_HPP)" >> "${outdir}/delegates.hpp"
+    printf "\n%s\n" "#if !defined(OMNI_DELEGATES_HPP)" >> "${outdir}/delegates.hpp"
     echo "#define OMNI_DELEGATES_HPP 1" >> "${outdir}/delegates.hpp"
     echo "" >> "${outdir}/delegates.hpp"
     while [ $tnum -lt $cnt ]; do
@@ -68,8 +68,72 @@ makehpp()
         tnum=$((tnum+1))
     done
     echo "" >> "${outdir}/delegates.hpp"
-    echo "#endif // OMNI_DELEGATES_HPP" >> "${outdir}/delegates.hpp"
+    echo "// DEV_NOTE: this is here for MS compilers and how they expand macro variables and the __VA_ARGS__" >> "${outdir}/delegates.hpp"
+    echo "#define OMNI_EXPAND_FW(x) x" >> "${outdir}/delegates.hpp"
+    
     echo "" >> "${outdir}/delegates.hpp"
+    tnum=0
+    printf "%s" "#define OMNI_DELEGATE_GET_MACRO_FW(" >> "${outdir}/delegates.hpp"
+    while [ $tnum -lt $cnt ]; do
+        printf "_%d," ${tnum} >> "${outdir}/delegates.hpp"
+        tnum=$((tnum+1))
+    done
+    echo "NAME,...) OMNI_EXPAND_FW( NAME )" >> "${outdir}/delegates.hpp"
+    
+    echo "" >> "${outdir}/delegates.hpp"
+    tnum=$((cnt-1))
+    printf "%s" "#define OMNI_EVENT_DEF_FW(...) OMNI_EXPAND_FW( OMNI_DELEGATE_GET_MACRO_FW(__VA_ARGS__" >> "${outdir}/delegates.hpp"
+    while [ $tnum -gt 0 ]; do
+        printf ", OMNI_EVT%d_FW" ${tnum} >> "${outdir}/delegates.hpp"
+        tnum=$((tnum-1))
+    done
+    echo ", OMNI_EVT0_FW) )OMNI_EXPAND_FW( (__VA_ARGS__) )" >> "${outdir}/delegates.hpp"
+    tnum=$((cnt-1))
+    printf "%s" "#define OMNI_DELEGATE_DEF_FW(...) OMNI_EXPAND_FW( OMNI_DELEGATE_GET_MACRO_FW(__VA_ARGS__" >> "${outdir}/delegates.hpp"
+    while [ $tnum -gt 0 ]; do
+        printf ", OMNI_DEL%d_FW" ${tnum} >> "${outdir}/delegates.hpp"
+        tnum=$((tnum-1))
+    done
+    echo ", OMNI_DEL0_FW) )OMNI_EXPAND_FW( (__VA_ARGS__) )" >> "${outdir}/delegates.hpp"
+    
+    echo "" >> "${outdir}/delegates.hpp"
+    tnum=0
+    printf "#define OMNI_DELEGATE_GET_BIND_MACRO_FW(" >> "${outdir}/delegates.hpp"
+    while [ $tnum -lt $cnt ]; do
+        printf "_%d," ${tnum} >> "${outdir}/delegates.hpp"
+        tnum=$((tnum+1))
+    done
+    echo "Class,Function,Obj,NAME,...) OMNI_EXPAND_FW( NAME )" >> "${outdir}/delegates.hpp"
+    tnum=$((cnt-1))
+    printf "%s" "#define OMNI_DELEGATE_BIND_DEF_FW(...) OMNI_EXPAND_FW( OMNI_DELEGATE_GET_BIND_MACRO_FW(__VA_ARGS__" >> "${outdir}/delegates.hpp"
+    while [ $tnum -gt 0 ]; do
+        printf ", OMNI_BIND%d" ${tnum} >> "${outdir}/delegates.hpp"
+        tnum=$((tnum-1))
+    done
+    echo ", OMNI_BIND0) )OMNI_EXPAND_FW( (__VA_ARGS__) )" >> "${outdir}/delegates.hpp"
+    tnum=$((cnt-1))
+    printf "%s" "#define OMNI_DELEGATE_BIND_CONST_DEF_FW(...) OMNI_EXPAND_FW( OMNI_DELEGATE_GET_BIND_MACRO_FW(__VA_ARGS__" >> "${outdir}/delegates.hpp"
+    while [ $tnum -gt 0 ]; do
+        printf ", OMNI_BIND%d_CONST" ${tnum} >> "${outdir}/delegates.hpp"
+        tnum=$((tnum-1))
+    done
+    echo ", OMNI_BIND0_CONST) )OMNI_EXPAND_FW( (__VA_ARGS__) )" >> "${outdir}/delegates.hpp"
+
+    echo "" >> "${outdir}/delegates.hpp"
+    echo "#define OMNI_EVENT(...) OMNI_EXPAND_FW( OMNI_EVENT_DEF_FW(__VA_ARGS__) )" >> "${outdir}/delegates.hpp"
+    echo "#define omni_event(...) OMNI_EXPAND_FW( OMNI_EVENT_DEF_FW(__VA_ARGS__) )" >> "${outdir}/delegates.hpp"
+    echo "" >> "${outdir}/delegates.hpp"
+    echo "#define OMNI_DELEGATE(...) OMNI_EXPAND_FW( OMNI_DELEGATE_DEF_FW(__VA_ARGS__) )" >> "${outdir}/delegates.hpp"
+    echo "#define omni_delegate(...) OMNI_EXPAND_FW( OMNI_DELEGATE_DEF_FW(__VA_ARGS__) )" >> "${outdir}/delegates.hpp"
+    echo "" >> "${outdir}/delegates.hpp"
+    echo "#define OMNI_BIND(...) OMNI_EXPAND_FW( OMNI_DELEGATE_BIND_DEF_FW(__VA_ARGS__) )" >> "${outdir}/delegates.hpp"
+    echo "#define omni_bind(...) OMNI_EXPAND_FW( OMNI_DELEGATE_BIND_DEF_FW(__VA_ARGS__) )" >> "${outdir}/delegates.hpp"
+    echo "" >> "${outdir}/delegates.hpp"
+    echo "#define OMNI_BIND_CONST(...) OMNI_EXPAND_FW( OMNI_DELEGATE_BIND_CONST_DEF_FW(__VA_ARGS__) )" >> "${outdir}/delegates.hpp"
+    echo "#define omni_bind_const(...) OMNI_EXPAND_FW( OMNI_DELEGATE_BIND_CONST_DEF_FW(__VA_ARGS__) )" >> "${outdir}/delegates.hpp"
+    echo "" >> "${outdir}/delegates.hpp"
+    echo "#endif // OMNI_DELEGATES_HPP" >> "${outdir}/delegates.hpp"
+    #echo "" >> "${outdir}/delegates.hpp"
 }
 
 while [ "$*" != "" ]; do

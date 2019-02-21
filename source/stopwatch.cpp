@@ -63,7 +63,10 @@ omni::stopwatch::~stopwatch()
     OMNI_D5_FW("destroyed");
 }
 
-// TODO: omni::timespan elapsed();
+omni::chrono::timespan omni::stopwatch::elapsed() const
+{
+    return omni::chrono::timespan::from_milliseconds(this->elapsed_ms());
+}
 
 uint64_t omni::stopwatch::elapsed_us() const
 {

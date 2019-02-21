@@ -73,6 +73,58 @@ namespace omni {
     namespace chrono {    
         typedef OMNI_CLOCK_TICK_T tick_t;
         typedef OMNI_CLOCK_FREQ_T freq_t;
+
+        const double  TICKS_PER_NANOSECOND = 0.01;
+        const int64_t TICKS_PER_MICROSECOND = 10;
+        const int64_t TICKS_PER_MILLISECOND = 10000;
+        const int64_t TICKS_PER_TENTH_SECOND = 1000000; // TICKS_PER_MILLISECOND * 100;
+        const int64_t TICKS_PER_SECOND = 10000000;
+        const int64_t TICKS_PER_MINUTE = 600000000;
+        const int64_t TICKS_PER_HOUR = 36000000000;
+        const int64_t TICKS_PER_DAY = 864000000000;
+
+        const int64_t NANOSECONDS_PER_MICROSECOND = 1000;
+        const int64_t NANOSECONDS_PER_MILLISECOND = 1000000;
+        const int64_t NANOSECONDS_PER_SECOND = 1000000000;
+        const int64_t NANOSECONDS_PER_MINUTE = 60000000000;
+        const int64_t NANOSECONDS_PER_HOUR = 3600000000000;
+        const int64_t NANOSECONDS_PER_DAY = 86400000000000;
+        
+        const double  MICROSECONDS_PER_NANOSECOND = 0.001;
+        const int64_t MICROSECONDS_PER_MILLISECOND = 1000;
+        const int64_t MICROSECONDS_PER_SECOND = 1000000;
+        const int64_t MICROSECONDS_PER_MINUTE = 60000000;
+        const int64_t MICROSECONDS_PER_HOUR = 3600000000;
+        const int64_t MICROSECONDS_PER_DAY = 86400000000;
+
+        const double  MILLISECONDS_PER_NANOSECOND = 0.0001;
+        const double  MILLISECONDS_PER_MICROSECOND = 0.001;
+        const int64_t MILLISECONDS_PER_SECOND = 1000;
+        const int64_t MILLISECONDS_PER_MINUTE = 60000;
+        const int64_t MILLISECONDS_PER_HOUR = 3600000;
+        const int64_t MILLISECONDS_PER_DAY = 86400000;
+
+        const double  SECONDS_PER_NANOSECOND = 0.000000001;
+        const double  SECONDS_PER_MICROSECOND = 0.000001;
+        const double  SECONDS_PER_MILLISECOND = 0.001;
+        const int64_t SECONDS_PER_MINUTE = 60;
+        const int64_t SECONDS_PER_HOUR = 3600;
+        const int64_t SECONDS_PER_DAY = 86400;
+
+        const double  MINUTES_PER_NANOSECOND = 0.000000000016667;
+        const double  MINUTES_PER_MICROSECOND = 0.000000016667;
+        const double  MINUTES_PER_MILLISECOND = 0.000016667;
+        const double  MINUTES_PER_SECOND = 0.016667;
+        const int64_t MINUTES_PER_HOUR = 60;
+        const int64_t MINUTES_PER_DAY = 1440;
+
+        const int64_t NANOSECONDS_PER_TICK = 100;
+        const double  MICROSECONDS_PER_TICK = 0.1;
+        const double  MILLISECONDS_PER_TICK = 0.0001;
+        const double  SECONDS_PER_TICK = 0.0000001;
+        const double  MINUTES_PER_TICK = 0.000000001666666666667;
+        const double  HOURS_PER_TICK = 0.000000000027777777778;
+        const double  DAYS_PER_TICK = 0.000000000001157407407;
     }
 }
 

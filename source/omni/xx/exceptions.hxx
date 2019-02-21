@@ -42,31 +42,28 @@ namespace omni {
         // start base exception
         
         /** An application exception happened within the omni::application namespace */
-        class application_exception : virtual public omni::exception
+        class application_exception : public omni::exception
         {
             public:
                 application_exception() : omni::exception(OMNI_ERR_APPEX_STR) {}
                 application_exception(const char* msg, int er) : omni::exception(msg, er) {}
                 application_exception(const char* msg, long er) : omni::exception(msg, er) {}
                 explicit application_exception(const char* msg) : omni::exception(msg) {}
-                explicit application_exception(int er) : omni::exception(OMNI_ERR_APPEX_STR, ": ", er) {
-                    
-                }
-                explicit application_exception(long er) : omni::exception(OMNI_ERR_APPEX_STR, ": ", er) {
-                    
-                }
+                explicit application_exception(int er) : omni::exception(OMNI_ERR_APPEX_STR, ": ", er) {}
+                explicit application_exception(long er) : omni::exception(OMNI_ERR_APPEX_STR, ": ", er) {}
         };
         
         /** A general environment exception occurred */
-        class environment_exception : virtual public omni::exception
+        class environment_exception : public omni::exception
         {
             public:
                 environment_exception() : omni::exception(OMNI_ERR_ENVEX_STR) {}
                 explicit environment_exception(std::size_t err) : omni::exception(OMNI_ERR_ENVEX_STR, ": ", err) {}
+                explicit environment_exception(const char* msg) : omni::exception(msg) {}
         };
         
         /** A system exception occurred on the mutex object */
-        class mutex_system_exception : virtual public omni::exception
+        class mutex_system_exception : public omni::exception
         {
             public:
                 mutex_system_exception() : omni::exception(OMNI_ERR_MUTEX_STR) {}
@@ -78,7 +75,7 @@ namespace omni {
         };
         
         /** A system error occurred on the semaphore */
-        class semaphore_system_exception : virtual public omni::exception
+        class semaphore_system_exception : public omni::exception
         {
             public:
                 semaphore_system_exception() : omni::exception(OMNI_ERR_SEMAPHORE_STR) {}
@@ -90,7 +87,7 @@ namespace omni {
         };
         
         /** A system error occurred on the string */
-        class string_exception : virtual public omni::exception
+        class string_exception : public omni::exception
         {
             public:
                 string_exception() : omni::exception(OMNI_ERR_STROBJ_STR) {}
@@ -98,7 +95,7 @@ namespace omni {
         };
         
         /** An error occurred on a thread object */
-        class thread_exception : virtual public omni::exception
+        class thread_exception : public omni::exception
         {
             public:
                 thread_exception() : omni::exception(OMNI_ERR_THREAD_STR) {}
@@ -106,18 +103,15 @@ namespace omni {
                 thread_exception(std::string msg, std::size_t perr) : omni::exception(msg, perr) {}
                 thread_exception(const char* msg, int perr) : omni::exception(msg, perr) {}
                 thread_exception(const char* msg, std::size_t perr) : omni::exception(msg, perr) {}
+                thread_exception(const char* msg, const char* extra, int perr) : omni::exception(msg, extra, perr) {}
                 explicit thread_exception(const std::string& msg) : omni::exception(msg) {}
                 explicit thread_exception(const char* msg) : omni::exception(msg) {}
-                explicit thread_exception(int perr) : omni::exception(OMNI_ERR_THREAD_STR, ": ", perr) {
-                    
-                }
-                explicit thread_exception(std::size_t perr) : omni::exception(OMNI_ERR_THREAD_STR, ": ", perr) {
-                    
-                }
+                explicit thread_exception(int perr) : omni::exception(OMNI_ERR_THREAD_STR, ": ", perr) {}
+                explicit thread_exception(std::size_t perr) : omni::exception(OMNI_ERR_THREAD_STR, ": ", perr) {}
         };
         
         /** An error occurred on a threadpool object */
-        class threadpool_exception : virtual public omni::exception
+        class threadpool_exception : public omni::exception
         {
             public:
                 threadpool_exception() : omni::exception(OMNI_ERR_THREADPOOL_STR) {}
@@ -128,14 +122,14 @@ namespace omni {
         // end base exception
         
         /** An active wait was pending on a call to semaphore destruction */
-        class active_wait_exception : virtual public omni::exception
+        class active_wait_exception : public omni::exception
         {
             public:
                 active_wait_exception() : omni::exception(OMNI_ERR_WAIT_STR) {}
         };
         
         /** A system clock error occurred */
-        class clock_exception : virtual public omni::exception
+        class clock_exception : public omni::exception
         {
             public:
                 clock_exception() : omni::exception(OMNI_ERR_GET_TIME_STR) {}
@@ -143,15 +137,55 @@ namespace omni {
         };
         
         /** A system error occurred on the conditional object */
-        class conditional_exception : virtual public omni::exception
+        class conditional_exception : public omni::exception
         {
             public:
                 conditional_exception() : omni::exception(OMNI_ERR_COND_OBJ_STR) {}
                 conditional_exception(int err) : omni::exception(OMNI_ERR_COND_OBJ_STR, ": ", err) {}
         };
+
+        /** A NaN error has occurred. */
+        class nan_error : public omni::exception
+        {
+            public:
+                nan_error() : omni::exception(OMNI_NAN_ERR_STR) {}
+                explicit nan_error(const char* var) : omni::exception(OMNI_NAN_ERR_STR) {
+                    if (var) {
+                        this->m_what.append(": ");
+                        this->m_what.append(var);
+                    } else {
+                        OMNI_DBGE(OMNI_NULL_PTR_STR);
+                        OMNI_EXCEPTION_TERMINATE
+                    }
+                }
+                explicit nan_error(const std::string& var) : omni::exception(OMNI_NAN_ERR_STR) {
+                    this->m_what.append(": ");
+                    this->m_what.append(var);
+                }
+        };
+
+        /** This exception is specific to the Omni Framework, it is here so as not to be confused with the std::overflow_error exception. */
+        class overflow_error : public omni::exception
+        {
+            public:
+                overflow_error() : omni::exception(OMNI_OVERFLOW_STR) {}
+                explicit overflow_error(const char* var) : omni::exception(OMNI_OVERFLOW_STR) {
+                    if (var) {
+                        this->m_what.append(": ");
+                        this->m_what.append(var);
+                    } else {
+                        OMNI_DBGE(OMNI_NULL_PTR_STR);
+                        OMNI_EXCEPTION_TERMINATE
+                    }
+                }
+                explicit overflow_error(const std::string& var) : omni::exception(OMNI_OVERFLOW_STR) {
+                    this->m_what.append(": ");
+                    this->m_what.append(var);
+                }
+        };
         
         /** This exception is specific to the Omni Framework, it is here so as not to be confused with the std::out_of_range exception. */
-        class index_out_of_range : virtual public omni::exception
+        class index_out_of_range : public omni::exception
         {
             public:
                 index_out_of_range() : omni::exception(OMNI_INDEX_OOR_STR) {}
@@ -177,49 +211,49 @@ namespace omni {
         };
         
         /** An omni::application context is already running (i.e. omni::application::run was called twice) */
-        class invalid_application_state : virtual public omni::exceptions::application_exception
+        class invalid_application_state : public omni::exceptions::application_exception
         {
             public:
                 invalid_application_state() : omni::exceptions::application_exception(OMNI_APP_RUNNING_STR) {}
         };
         
         /** The specified string does not contain a valid binary number */
-        class invalid_binary_format : virtual public omni::exceptions::string_exception
+        class invalid_binary_format : public omni::exceptions::string_exception
         {
             public:
                 invalid_binary_format() : omni::exceptions::string_exception(OMNI_STRING_INVALID_FORMAT_STR) {}
         };
         
         /** The binary string length is greater than sizeof conversion unit */
-        class invalid_binary_size : virtual public omni::exceptions::string_exception
+        class invalid_binary_size : public omni::exceptions::string_exception
         {
             public:
                 invalid_binary_size() : omni::exceptions::string_exception(OMNI_STRING_INVALID_SIZE_STR) {}
         };
         
         /** An invalid delegate function pointer was specified and called */
-        class invalid_delegate : virtual public omni::exception
+        class invalid_delegate : public omni::exception
         {
             public:
                 invalid_delegate() : omni::exception(OMNI_INVALID_DELEGATE_FUNC_STR) {}
         };
         
         /** An invalid return value for delegate function pointer was specified */
-        class invalid_delegate_invoke : virtual public omni::exception
+        class invalid_delegate_invoke : public omni::exception
         {
             public:
                 invalid_delegate_invoke() : omni::exception(OMNI_INVALID_DELEGATE_INVOKE_STR) {}
         };
         
         /** An empty environment variable name was specified */
-        class invalid_environment_variable : virtual public omni::exceptions::environment_exception
+        class invalid_environment_variable : public omni::exceptions::environment_exception
         {
             public:
-                invalid_environment_variable() : omni::exception(OMNI_ERR_NAME_STR) {}
+                invalid_environment_variable() : omni::exceptions::environment_exception(OMNI_ERR_NAME_STR) {}
         };
 
         /** An invalid enumeration value was specified */
-        class invalid_enum : virtual public omni::exception
+        class invalid_enum : public omni::exception
         {
             public:
                 invalid_enum() : omni::exception(OMNI_INVALID_ENUM) {}
@@ -237,102 +271,110 @@ namespace omni {
                     this->m_what.append(name);
                 }
                 explicit invalid_enum(int val) : omni::exception(OMNI_INVALID_ENUM, ": ", val) { }
-        };        
+        };
+
+        /** A parse error occurred */
+        class invalid_parse : public omni::exception
+        {
+            public:
+                invalid_parse() : omni::exception(OMNI_ERR_PARSE_STR) {}
+                explicit invalid_parse(const char* msg) : omni::exception(msg) {}
+        };
         
         /** The system mutex was left in an undefined state (as in calling mutex_destroy on a mutex that is still locked) */
-        class invalid_mutex_state : virtual public omni::exceptions::mutex_system_exception
+        class invalid_mutex_state : public omni::exceptions::mutex_system_exception
         {
             public:
                 invalid_mutex_state() : omni::exceptions::mutex_system_exception(OMNI_ERR_MTX_STATE_STR) {}
         };
         
         /** An invalid release count was specified on the semaphore */
-        class invalid_release_count : virtual public omni::exceptions::semaphore_system_exception
+        class invalid_release_count : public omni::exceptions::semaphore_system_exception
         {
             public:
                 invalid_release_count() : omni::exceptions::semaphore_system_exception(OMNI_ERR_RELEASE_STR) {}
         };
         
         /** Invalid size */
-        class invalid_size : virtual public omni::exception
+        class invalid_size : public omni::exception
         {
             public:
                 invalid_size() : omni::exception(OMNI_ERR_SIZE_STR) {}
         };
         
         /** An invalid type was detected on a template parameter that only takes certain types */
-        class invalid_template_type : virtual public omni::exception
+        class invalid_template_type : public omni::exception
         {
             public:
                 invalid_template_type() : omni::exception(OMNI_INVALID_TEMPLATE_STR) {}
         };
         
         /** An invalid state was specified for the thread object */
-        class invalid_thread_state : virtual public omni::exceptions::thread_exception
+        class invalid_thread_state : public omni::exceptions::thread_exception
         {
             public:
                invalid_thread_state() : omni::exceptions::thread_exception(OMNI_INVALID_THREAD_STATE_STR) {}
         };
         
         /** An invalid thread handle was specified */
-        class invalid_thread_handle : virtual public omni::exceptions::thread_exception
+        class invalid_thread_handle : public omni::exceptions::thread_exception
         {
             public:
                 invalid_thread_handle() : omni::exceptions::thread_exception(OMNI_INVALID_THREAD_HANDLE_STR) {}
         };
         
         /** An invalid thread option was specified */
-        class invalid_thread_option : virtual public omni::exceptions::thread_exception
+        class invalid_thread_option : public omni::exceptions::thread_exception
         {
             public:
                 invalid_thread_option() : omni::exceptions::thread_exception(OMNI_INVALID_OPTION_STR) {}
-                explicit invalid_thread_option(std::size_t var) : omni::exception(OMNI_INVALID_OPTION_STR, ": ", var) {}
+                explicit invalid_thread_option(std::size_t var) : omni::exceptions::thread_exception(OMNI_INVALID_OPTION_STR, ": ", var) {}
         };
         
-        /** Unlock was called from non-owning thread */
-        class invalid_thread_owner : virtual public omni::exceptions::mutex_system_exception
+        /** Unlock was called from non-owning thread or join/kill was called from owning thread */
+        class invalid_thread_owner : public omni::exceptions::thread_exception
         {
             public:
-                invalid_thread_owner() : omni::exceptions::mutex_system_exception(OMNI_ERR_MTX_OWNER_STR) {}
+                invalid_thread_owner() : omni::exceptions::thread_exception(OMNI_INVALID_THREAD_OWNER) {}
         };
         
         /** An invalid thread start type was specified */
-        class invalid_thread_start_type : virtual public omni::exceptions::thread_exception
+        class invalid_thread_start_type : public omni::exceptions::thread_exception
         {
             public:
                 invalid_thread_start_type() : omni::exceptions::thread_exception(OMNI_INVALID_THREAD_START_TYPE_STR) {}
         };
         
         /** An invalid size was specified for the threadpool object */
-        class invalid_threadpool_size : virtual public omni::exceptions::threadpool_exception
+        class invalid_threadpool_size : public omni::exceptions::threadpool_exception
         {
             public:
                 invalid_threadpool_size() : omni::exceptions::threadpool_exception(OMNI_INVALID_SIZE_STR) {}
         };
         
         /** An invalid type cast was detected on an Omni Framework object */
-        class invalid_type_cast : virtual public omni::exception
+        class invalid_type_cast : public omni::exception
         {
             public:
                 invalid_type_cast() : omni::exception(OMNI_INVALID_CAST_STR) {}
         };
         
         /** An exception occurred on the version object */
-        class invalid_version : virtual public omni::exception
+        class invalid_version : public omni::exception
         {
             public:
                 invalid_version() : omni::exception(OMNI_INVALID_VERSION_STR) {}
         };
         
         /** An attempt was made to unlock a non locked mutex */
-        class mutex_unlock_exception : virtual public omni::exceptions::mutex_system_exception
+        class mutex_unlock_exception : public omni::exceptions::mutex_system_exception
         {
             public:
                 mutex_unlock_exception() : omni::exceptions::mutex_system_exception(OMNI_ERR_MTX_UNLOCKED_STR) {}
         };
         
         /** A null pointer was specified to be used which would cause undefined behaviour */
-        class null_pointer_exception : virtual public omni::exception
+        class null_pointer_exception : public omni::exception
         {
             public:
                 null_pointer_exception() : omni::exception(OMNI_NULL_REF_STR) {}
@@ -352,7 +394,7 @@ namespace omni {
         };
         
         /** A general path exception occurred */
-        class path_exception : virtual public omni::exception
+        class path_exception : public omni::exception
         {
             public:
                 path_exception() : omni::exception(OMNI_PATH_ERROR) {}
@@ -372,7 +414,7 @@ namespace omni {
         };
 
         /** A general path exception occurred */
-        class file_not_found : virtual public omni::exception
+        class file_not_found : public omni::exception
         {
             public:
                 file_not_found() : omni::exception(OMNI_FILE_NOT_FOUND_STR) {}
@@ -392,21 +434,21 @@ namespace omni {
         };
 
         /** An error occurred on the system pipe */
-        class pipe_exception : virtual public omni::exceptions::environment_exception
+        class pipe_exception : public omni::exceptions::environment_exception
         {
             public:
-                pipe_exception() : omni::exception(OMNI_ERR_PIPE_STR) {}
+                pipe_exception() : omni::exceptions::environment_exception(OMNI_ERR_PIPE_STR) {}
         };
         
         /** An attempt was made to release a semaphore in a non-wait state */
-        class semaphore_release_exception : virtual public omni::exceptions::semaphore_system_exception
+        class semaphore_release_exception : public omni::exceptions::semaphore_system_exception
         {
             public:
                 semaphore_release_exception() : omni::exceptions::semaphore_system_exception(OMNI_ERR_SEM_STATE_STR) {}
         };
         
         /** A system error occurred on the spin_lock object */
-        class spin_lock_exception : virtual public omni::exception
+        class spin_lock_exception : public omni::exception
         {
             public:
                 spin_lock_exception() : omni::exception(OMNI_ERR_SPIN_OBJ_STR) {}
@@ -414,7 +456,7 @@ namespace omni {
         };
         
         /** An error occurred on the stopwatch */
-        class stopwatch_exception : virtual public omni::exception
+        class stopwatch_exception : public omni::exception
         {
             public:
                 stopwatch_exception() : omni::exception(OMNI_ERR_STOPWATCH_STR) {}
@@ -426,21 +468,21 @@ namespace omni {
         };
         
         /** An operation was made on a thread in an already started state and cannot be called once running */
-        class thread_running_exception : virtual public omni::exceptions::thread_exception
+        class thread_running_exception : public omni::exceptions::thread_exception
         {
             public:
                 thread_running_exception() : omni::exceptions::thread_exception(OMNI_THREAD_STARTED_STR) {}
         };
         
         /** An internal state error occurred */
-        class threadpool_state_exception : virtual public omni::exceptions::threadpool_exception
+        class threadpool_state_exception : public omni::exceptions::threadpool_exception
         {
             public:
                 threadpool_state_exception() : omni::exceptions::threadpool_exception(OMNI_ERR_STATE_STR) {}
         };
         
         /** An error occurred and the threadpool could not acquire a thread */
-        class threadpool_thread_exception : virtual public omni::exceptions::threadpool_exception
+        class threadpool_thread_exception : public omni::exceptions::threadpool_exception
         {
             public:
                 threadpool_thread_exception() : omni::exceptions::threadpool_exception(OMNI_ERR_ACQUIRE_STR) {}

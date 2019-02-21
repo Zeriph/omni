@@ -33,7 +33,7 @@ to ensure this file isn't built with the rest. */
 
 #include <omni/framework.hpp>
 
-#if !defined(OMNI_TIMER_LIB) && !defined(OMNI_THREAD_LIB)
+#if !defined(OMNI_TIMER_LIB) && !defined(OMNI_THREAD_LIB) && !defined(OMNI_NET_LIB)
     #include "application.cpp"
     #include "argparser.cpp"
     #include "environment.cpp"
@@ -43,11 +43,18 @@ to ensure this file isn't built with the rest. */
     #include "version.cpp"
 #endif
 
-#if !defined(OMNI_THREAD_LIB)
+#if defined(OMNI_TIMER_LIB) || (!defined(OMNI_THREAD_LIB) && !defined(OMNI_NET_LIB))
     #include "async_timer.cpp"
     #include "drop_timer.cpp"
     #include "queue_timer.cpp"
     #include "sync_timer.cpp"
+#endif
+
+#if defined(OMNI_NET_LIB) || (!defined(OMNI_TIMER_LIB) && !defined(OMNI_THREAD_LIB))
+    // #include "net_util.cpp" # INCOMPLETE
+    // #include "socket.cpp" # INCOMPLETE
+    // #include "tcp.cpp" # INCOMPLETE
+    // #include "udp.cpp" # INCOMPLETE
 #endif
 
 #include "stopwatch.cpp"

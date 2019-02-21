@@ -993,39 +993,11 @@ bool omni::sync::thread::is_detached() const
 
 bool omni::sync::thread::join()
 {
-    // Unknown states can still be joined
-    if (!this->is_alive()) {
-        OMNI_D2_FW("thread is not running");
-        return true;
-    }
-    OMNI_SAFE_THREAD_LOCK_FW
-    if (!this->_hvalid()) { 
-        OMNI_SAFE_THREAD_UNLOCK_FW
-        OMNI_ERR_RETV_FW(OMNI_INVALID_THREAD_HANDLE_STR, omni::exceptions::invalid_thread_handle(), false)
-    }
-    omni::sync::thread_handle_t hndl = this->m_thread;
-    #if defined(OMNI_OS_WIN)
-        this->m_isjoined = true;
-        OMNI_SAFE_THREAD_UNLOCK_FW
-        int ret = ::WaitForSingleObject(OMNI_WIN_TOHNDL_FW(hndl), INFINITE);
-        #if defined(OMNI_DBG_L1)
-            if (ret != 0) { OMNI_DBGEV("error while waiting for thread handle: ", OMNI_GLE_PRNT) }
-        #endif
-        return (ret == 0); // Returns 0 on success
-    #else
-        this->m_isjoined = true;
-        OMNI_SAFE_THREAD_UNLOCK_FW
-        int ret = ::pthread_join(hndl, NULL);
-        #if defined(OMNI_DBG_L1)
-            if (ret != 0) { OMNI_DBGEV("error while waiting for thread handle: ", OMNI_GLE_PRNT) }
-        #endif
-        return (ret == 0); // Returns 0 on success
-    #endif
+    return this->join(omni::sync::INFINITE_TIMEOUT);
 }
 
 bool omni::sync::thread::join(unsigned long timeout)
 {
-    if (timeout == omni::sync::INFINITE_TIMEOUT) { return this->join(); }
     // Unknown states can still be joined
     if (!this->is_alive()) {
         OMNI_D2_FW("thread is not running");
@@ -1037,28 +1009,45 @@ bool omni::sync::thread::join(unsigned long timeout)
         OMNI_ERR_RETV_FW(OMNI_INVALID_THREAD_HANDLE_STR, omni::exceptions::invalid_thread_handle(), false)
     }
     omni::sync::thread_handle_t hndl = this->m_thread;
+    if (hndl == omni::sync::thread_handle()) {
+        OMNI_SAFE_THREAD_UNLOCK_FW
+        OMNI_ERR_RETV_FW(OMNI_INVALID_THREAD_OWNER, omni::exceptions::invalid_thread_owner(), false)
+    }
     #if defined(OMNI_OS_WIN)
         this->m_isjoined = true;
         OMNI_SAFE_THREAD_UNLOCK_FW
-        int ret = ::WaitForSingleObject(OMNI_WIN_TOHNDL_FW(hndl), timeout);
-        #if defined(OMNI_DBG_L1)
-            if (ret != 0) { OMNI_DBGEV("error while waiting for thread handle: ", OMNI_GLE_PRNT) }
-        #endif
-        return (ret == 0); // Returns 0 on success
+        return (
+            (::WaitForSingleObject(OMNI_WIN_TOHNDL_FW(hndl), timeout) == 0) ? true :
+            #if !defined(OMNI_DBG_L1)
+                false
+            #else
+                !(OMNI_DBGEV_FW("error while waiting for thread handle: ", OMNI_GLE_PRNT))
+            #endif
+        );
     #else
         /* There is not a portable mechanism with pthreads to wait on a specific thread without
         implementing a timed_wait condition variable. We don't want the user to have to implement
         a seperate variable based on system, so we implement a 'timeout' loop*/
         this->m_isjoined = true;
         OMNI_SAFE_THREAD_UNLOCK_FW
-        omni::chrono::tick_t ts = omni::chrono::monotonic_tick();
-        OMNI_SLEEP_INIT();
-        volatile bool iav = true;
-        // iav = (::pthread_kill(this->m_thread, 0) != ESRCH); // == "alive"
-        while ((iav = (::pthread_kill(hndl, 0) != ESRCH)) && (omni::chrono::elapsed_ms(ts) < timeout)) {
-            OMNI_SLEEP1();
+        if (timeout != omni::sync::INFINITE_TIMEOUT) {
+            OMNI_SLEEP_INIT();
+            volatile bool iav = true;
+            omni::chrono::tick_t ts = omni::chrono::monotonic_tick();
+            // iav = (::pthread_kill(hndl, 0) != ESRCH); // == "alive"
+            while ((iav = (::pthread_kill(hndl, 0) != ESRCH)) && (omni::chrono::elapsed_ms(ts) < timeout)) {
+                OMNI_SLEEP1();
+            }
+            return (::pthread_kill(hndl, 0) == ESRCH); // == "dead"
         }
-        return (::pthread_kill(hndl, 0) == ESRCH); // == "dead"
+        return (
+            (::pthread_join(hndl, NULL) == 0) ? true :
+            #if !defined(OMNI_DBG_L1)
+                false
+            #else
+                !(OMNI_DBGEV_FW("error while waiting for thread handle: ", OMNI_GLE_PRNT))
+            #endif
+        );
     #endif
 }
 
@@ -1076,6 +1065,10 @@ bool omni::sync::thread::kill()
     }
     int perr = 0;
     omni::sync::thread_handle_t hndl = this->m_thread;
+    if (hndl == omni::sync::thread_handle()) {
+        OMNI_SAFE_THREAD_UNLOCK_FW
+        OMNI_ERR_RETV_FW(OMNI_INVALID_THREAD_OWNER, omni::exceptions::invalid_thread_owner(), false)
+    }
     this->m_state = omni::sync::thread_state::STOP_REQUESTED;
     OMNI_SAFE_THREAD_UNLOCK_FW
     // attempt to kill it

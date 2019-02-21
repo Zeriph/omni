@@ -16,3 +16,23 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+#if !defined(OMNI_COLOR_DEF_HPP)
+#define OMNI_COLOR_DEF_HPP 1
+
+#if defined(OMNI_SAFE_COLOR)
+    #include <omni/sync/lock.hpp>
+    #include <omni/sync/scoped_lock.hpp>
+    #define OMNI_SAFE_CLRDMTX_FW  ,m_mtx()
+    #define OMNI_SAFE_CLRLOCK_FW   this->m_mtx.lock();
+    #define OMNI_SAFE_CLRUNLOCK_FW this->m_mtx.unlock();
+    #define OMNI_SAFE_CLRALOCK_FW  omni::sync::scoped_basic_lock uuid12345(&this->m_mtx);
+    #define OMNI_SAFE_CLROALOCK_FW(o)  omni::sync::scoped_basic_lock uuid54321(&o.m_mtx);
+#else
+    #define OMNI_SAFE_CLRDMTX_FW
+    #define OMNI_SAFE_CLRLOCK_FW
+    #define OMNI_SAFE_CLRUNLOCK_FW
+    #define OMNI_SAFE_CLRALOCK_FW
+    #define OMNI_SAFE_CLROALOCK_FW(o) 
+#endif
+
+#endif // OMNI_COLOR_DEF_HPP

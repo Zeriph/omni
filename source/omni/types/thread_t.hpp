@@ -1547,6 +1547,38 @@ namespace omni {
             extern omni::action unhandled_thread_exception;
             extern omni::event1<void, const omni::exception&> user_thread_exception;
         #endif
+
+        /**
+         * Gets the current system thread handle
+         *    
+         * @return A thread_handle_t of the system thread handle
+         */
+        inline omni::sync::thread_handle_t thread_handle()
+        {
+            #if defined(OMNI_OS_WIN)
+                #if defined(OMNI_WIN_API)
+                    return ::GetCurrentThread();
+                #else
+                    return reinterpret_cast<omni::sync::thread_handle_t>(::GetCurrentThread());
+                #endif
+            #else
+                return ::pthread_self();
+            #endif
+        }
+        
+        /**
+         * Gets the system ID for the current thread
+         *
+         * @return A thread_t thread ID type of the current TID
+         */
+        inline omni::sync::thread_t thread_id()
+        {
+            #if defined(OMNI_OS_WIN)
+                return ::GetCurrentThreadId();
+            #else
+                return ::pthread_self();
+            #endif
+        }
         
         /**
          * Blocks the calling thread until the thread passed in has finished
@@ -1563,8 +1595,18 @@ namespace omni {
             if (handle == 0) { 
                 OMNI_ERR_RETV_FW(OMNI_INVALID_THREAD_HANDLE_STR, omni::exceptions::invalid_thread_handle(), false)
             }
+            if (handle == omni::sync::thread_handle()) {
+                OMNI_ERR_RETV_FW(OMNI_INVALID_THREAD_OWNER, omni::exceptions::invalid_thread_owner(), false)
+            }
             #if defined(OMNI_OS_WIN)
-                return (::WaitForSingleObject(OMNI_WIN_TOHNDL_FW(handle), timeout) == 0); // Returns 0 on success
+                return (
+                    ::WaitForSingleObject(OMNI_WIN_TOHNDL_FW(handle), timeout) == 0) ? true :
+                        #if !defined(OMNI_DBG_L1)
+                            false
+                        #else
+                            !(OMNI_DBGEV_FW("error while waiting for thread handle: ", OMNI_GLE_PRNT))
+                        #endif
+                );
             #else
                 /* There is not a portable mechanism with pthreads to wait on a specific thread without
                 implementing a timed_wait condition variable. We don't want the user to have to implement
@@ -1582,7 +1624,14 @@ namespace omni {
                     }
                     return (::pthread_kill(handle, 0) == ESRCH); // == "dead"
                 }
-                return (::pthread_join(handle, NULL) == 0); // Returns 0 on success
+                return (
+                    (::pthread_join(handle, NULL) == 0) ? true :
+                    #if !defined(OMNI_DBG_L1)
+                        false
+                    #else
+                        !(OMNI_DBGEV_FW("error while waiting for thread handle: ", OMNI_GLE_PRNT))
+                    #endif
+                );
             #endif
         }
         
@@ -1594,14 +1643,7 @@ namespace omni {
          */
         inline bool join_thread(omni::sync::thread_handle_t handle)
         {
-            if (handle == 0) {
-                OMNI_ERR_RETV_FW(OMNI_INVALID_THREAD_HANDLE_STR, omni::exceptions::invalid_thread_handle(), false)
-            }
-            #if defined(OMNI_OS_WIN)
-                return (::WaitForSingleObject(OMNI_WIN_TOHNDL_FW(handle), INFINITE) == 0); // Returns 0 on success
-            #else
-                return (::pthread_join(handle, NULL) == 0); // Returns 0 on success
-            #endif
+            return omni::sync::join_thread(handle, omni::sync::INFINITE_TIMEOUT);
         }
         
         template < void (*fnptr)() >

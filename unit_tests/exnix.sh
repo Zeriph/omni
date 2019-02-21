@@ -1,5 +1,6 @@
 #!/bin/sh
-omni_lib_loc=/code/Zeriph/libraries/omni
+#omni_lib_loc=/code/Zeriph/libraries/omni
+omni_lib_loc=/Code/omni
 exdir=${omni_lib_loc}/examples/classes
 fwexd=${omni_lib_loc}/examples/framework
 zloc=${omni_lib_loc}/source

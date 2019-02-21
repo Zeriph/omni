@@ -89,7 +89,8 @@ class UT_CLASS_DEF
             print_info(omni::sync::safe_spin_wait);
             print_info(omni::sync::conditional);
             print_info(omni::chrono::time);
-            print_info(omni::chrono::span);
+            print_info(omni::chrono::timespan);
+            print_info(omni::chrono::unsigned_timespan);
             print_info(omni::chrono::async_timer);
             print_info(omni::chrono::sync_timer);
             print_info(omni::chrono::queue_timer);

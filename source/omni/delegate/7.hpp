@@ -769,7 +769,7 @@ namespace omni {
              *
              * @param d     The signature compatible delegate to add to the invocation list
              */
-            explicit event7(const omni::delegate7< Ret, PT1, PT2, PT3, PT4, PT5, PT6, PT7 >& d) : 
+            event7(const omni::delegate7< Ret, PT1, PT2, PT3, PT4, PT5, PT6, PT7 >& d) : 
                 OMNI_SAFE_EVENT_MILST_FW
                 m_list()
             {
@@ -1507,6 +1507,8 @@ namespace omni {
     typedef omni::event7<void, void*, void*, void*, void*, void*, void*, void*> action7;
 } // namespace omni
 
+#define OMNI_DEL7_FW(Ret, PT1, PT2, PT3, PT4, PT5, PT6, PT7) omni::delegate7<Ret, PT1, PT2, PT3, PT4, PT5, PT6, PT7>
+#define OMNI_EVT7_FW(Ret, PT1, PT2, PT3, PT4, PT5, PT6, PT7) omni::event7<Ret, PT1, PT2, PT3, PT4, PT5, PT6, PT7>
 #define OMNI_BIND7(Ret, PT1, PT2, PT3, PT4, PT5, PT6, PT7, Class, Function, Obj) omni::delegate7<Ret, PT1, PT2, PT3, PT4, PT5, PT6, PT7>::bind<Class, &Class::Function>(Obj)
 #define OMNI_BIND7_CONST(Ret, PT1, PT2, PT3, PT4, PT5, PT6, PT7, Class, Function, Obj) omni::delegate7<Ret, PT1, PT2, PT3, PT4, PT5, PT6, PT7>::bind_const<Class, &Class::Function>(Obj)
 

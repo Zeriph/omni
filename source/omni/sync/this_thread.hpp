@@ -23,43 +23,11 @@
 namespace omni {
     namespace sync {
         /**
-         * Gets the current system thread handle
-         *    
-         * @return A thread_handle_t of the system thread handle
-         */
-        inline omni::sync::thread_handle_t thread_handle()
-        {
-            #if defined(OMNI_OS_WIN)
-                #if defined(OMNI_WIN_API)
-                    return ::GetCurrentThread();
-                #else
-                    return reinterpret_cast<omni::sync::thread_handle_t>(::GetCurrentThread());
-                #endif
-            #else
-                return ::pthread_self();
-            #endif
-        }
-        
-        /**
-         * Gets the system ID for the current thread
-         *
-         * @return A thread_t thread ID type of the current TID
-         */
-        inline omni::sync::thread_t thread_id()
-        {
-            #if defined(OMNI_OS_WIN)
-                return ::GetCurrentThreadId();
-            #else
-                return ::pthread_self();
-            #endif
-        }
-        
-        /**
          * Stops the current thread from processing messages for the specified time
          * 
          * @param milliseconds The number of milliseconds to sleep the current thread
          */
-        inline void sleep(unsigned long ms)
+        inline void sleep(uint32_t ms)
         {
             switch (ms) {
                 case 0: { // 0 sleep is equivalent to yield

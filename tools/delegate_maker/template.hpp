@@ -734,7 +734,7 @@ PNUMTDEF
              *
              * @param d     The signature compatible delegate to add to the invocation list
              */
-            explicit eventPNUM(const omni::delegatePNUM< Ret, PNUMPTF >& d) : 
+            eventPNUM(const omni::delegatePNUM< Ret, PNUMPTF >& d) : 
                 OMNI_SAFE_EVENT_MILST_FW
                 m_list()
             {
@@ -1472,6 +1472,8 @@ PNUMTDEF
     typedef omni::eventPNUM<void, PNUMVALS> actionPNUM;
 } // namespace omni
 
+#define OMNI_DELPNUM_FW(Ret, PNUMPTF) omni::delegatePNUM<Ret, PNUMPTF>
+#define OMNI_EVTPNUM_FW(Ret, PNUMPTF) omni::eventPNUM<Ret, PNUMPTF>
 #define OMNI_BINDPNUM(Ret, PNUMPTF, Class, Function, Obj) omni::delegatePNUM<Ret, PNUMPTF>::bind<Class, &Class::Function>(Obj)
 #define OMNI_BINDPNUM_CONST(Ret, PNUMPTF, Class, Function, Obj) omni::delegatePNUM<Ret, PNUMPTF>::bind_const<Class, &Class::Function>(Obj)
 

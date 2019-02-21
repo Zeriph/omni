@@ -16,3 +16,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+#if !defined(OMNI_COLOR_T_HPP)
+#define OMNI_COLOR_T_HPP 1
+
+#include <omni/drawing/color.hpp>
+#include <omni/drawing/known_colors.hpp>
+
+#endif // OMNI_COLOR_T_HPP

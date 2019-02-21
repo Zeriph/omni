@@ -64,7 +64,7 @@ int main(int argc, char *argv[]) {
 #include <omni/constants.hpp> // cconsts.hpp, wconsts.hpp
 
 // drawing/geometry
-#include <omni/drawing/color.hpp>
+#include <omni/types/color_t.hpp>
 #include <omni/types/point_t.hpp>
 
 // system/environment
@@ -84,5 +84,8 @@ int main(int argc, char *argv[]) {
 // threading: basic_thread.hpp, thread.hpp, threadpool.hpp, runnable.hpp 
 // locks: basic_lock.hpp, mutex.hpp, binary_semaphore.hpp, semaphore.hpp, conditional.hpp, spin.hpp 
 #include <omni/sync_types.hpp>
+
+// net
+#include <omni/net_types.hpp>
     
 #endif // OMNI_FRAMEWORK_HPP

@@ -68,25 +68,5 @@
 
 // #define OMNI_E2S_FW(v) case v: return OMNI_DEF2STR(v)
 // #define OMNI_E2WS_FW(v) case v: return OMNI_DEF2WSTR(v)
-// TODO: can this be brought into the framework anywhere that won't sacrifice comprehension?
-/*
-#define SW1(a) swtich (v) { OMNI_E2S_FW(a); default: break; }
-#define SW2(a,b) swtich (v) { OMNI_E2S_FW(a); default: break; }
-#define SW3(a,b,c) swtich (v) { OMNI_E2S_FW(a); default: break; }
-#define SW4(a,b,c,d) swtich (v) { OMNI_E2S_FW(a); default: break; }
-#define SW5(a,b,c,d,e) swtich (v) { OMNI_E2S_FW(a); default: break; }
-#define SW6(a,b,c,d,e,f) swtich (v) { OMNI_E2S_FW(a); default: break; }
-#define GET_MACRO(_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,NAME,...) NAME
-#define SW_DEF(...) GET_MACRO(__VA_ARGS__, SW11, SW10, SW9, SW8, SW7, SW6, SW5, SW4, SW3, SW2, SW1)(__VA_ARGS__)
-#define ENUM_DEF(NM, ...) typedef struct NM { \
-                            typedef enum enum_t { __VA_ARGS__ } enum_t; \
-                            static const std::string to_string(const enum_t& v) { \
-                                SW_DEF(__VA_ARGS__) \
-                                return "UNKNOWN"; \
-                            } \
-                            friend std::ostream& operator<<(std::ostream& s, const enum_t& c) \
-                            { s << to_string(c); return s; } \
-                          } NM
-*/
 
 #endif // OMNI_HELPER_HPP

@@ -36,6 +36,9 @@
 #include "units/semaphore.hpp"
 #include "units/smart_ptr.hpp"
 // #include "units/socket.hpp" // incomplete
+// #include "units/tcp.hpp" // incomplete
+// #include "units/udp.hpp" // incomplete
+#include "units/span.hpp"
 #include "units/spin.hpp"
 #include "units/stopwatch.hpp"
 #include "units/string.hpp"

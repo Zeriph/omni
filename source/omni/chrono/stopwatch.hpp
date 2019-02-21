@@ -21,6 +21,19 @@
 #include <omni/defs/class_macros.hpp>
 #include <omni/chrono/tick.hpp>
 
+#if defined(OMNI_SAFE_STOPWATCH)
+    #include <omni/sync/scoped_lock.hpp>
+    #define OMNI_SAFE_SWMTX_FW      m_mtx(),
+    #define OMNI_STOPWATCH_ALOCK_FW omni::sync::scoped_lock<omni::sync::basic_lock> mlock(&this->m_mtx);
+    #define OMNI_STOPWATCH_MLOCK_FW this->m_mtx.lock();
+    #define OMNI_STOPWATCH_ULOCK_FW this->m_mtx.unlock();
+#else
+    #define OMNI_SAFE_SPANMTX_FW
+    #define OMNI_STOPWATCH_ALOCK_FW
+    #define OMNI_STOPWATCH_MLOCK_FW
+    #define OMNI_STOPWATCH_ULOCK_FW
+#endif
+
 namespace omni {
     /**
      * @brief The stopwatch class is a simple timer class that will keep track of monotonic time.
@@ -38,12 +51,11 @@ namespace omni {
     class stopwatch
     {
         public:
-        
             stopwatch();
             stopwatch(const omni::stopwatch &cp);
             ~stopwatch();
-            // TODO: omni::timespan elapsed();
-            
+
+            omni::chrono::timespan elapsed() const;
             uint64_t elapsed_us() const;
             uint64_t elapsed_ms() const;
             uint64_t elapsed_s() const;
@@ -71,6 +83,7 @@ namespace omni {
              * @invariant      [optional] This is the complexity of this function (e.g. O(1) for X conditions, etc.)
              */
             omni::stopwatch& restart(unsigned long offset_ms);
+            // TODO: change all unsigned int's to uint32_t, unsigned long to uint64_t, etc. etc.
             omni::stopwatch& start();
             omni::stopwatch& start(unsigned long offset_ms);
             omni::stopwatch& stop();
@@ -84,9 +97,6 @@ namespace omni {
             OMNI_OSTREAM_RAW_FW(omni::stopwatch, value.elapsed_ms() << " ms")
             
         private:
-            /** zero's the clocks */
-            void _zero();
-            
             /** The internal end clock */
             omni::chrono::tick_t m_end;
             /** The internal start clock */
@@ -95,6 +105,13 @@ namespace omni {
             volatile bool m_isrun;
             /** Determines if the stopwatch has been started and not reset */
             volatile bool m_isstrt;
+
+            #if defined(OMNI_SAFE_STOPWATCH) // TODO: FINISH THIS
+                mutable omni::sync::basic_lock m_mtx;
+            #endif
+
+            /** zero's the clocks */
+            void _zero();
     };
 }
 

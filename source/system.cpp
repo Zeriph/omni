@@ -157,7 +157,7 @@ std::string omni::system::signal_str(int sig)
             return "SIGTERM: terminate";
         default: break; // other/unknown signal
     }
-    return std::string("Other/Unknown: ").append(omni::string::util::to_string(sig));
+    return std::string("Other/Unknown: ").append(omni::string::util::lexical_cast<std::string, int>(sig));
 }
 
 #if defined(OMNI_NON_PORTABLE)

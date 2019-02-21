@@ -16,8 +16,8 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#if !defined(OMNI_TIME_HPP)
-#define OMNI_TIME_HPP 1
+#if !defined(OMNI_DATETIME_HPP)
+#define OMNI_DATETIME_HPP 1
 #include <ctime>
 #include <omni/defs/class_macros.hpp>
 #include <omni/types/tick_t.hpp>
@@ -26,29 +26,30 @@
 namespace omni {
     namespace chrono {
         /** Undocumented: not finished */
-        class time
+        class datetime
         {
             public:
-                time();
-                time(const omni::chrono::time& cp);
-                virtual ~time();
+                datetime();
+                datetime(const omni::chrono::datetime& cp);
+                virtual ~datetime();
                 const omni::string_t to_string_t() const;
-                omni::chrono::time& operator=(const omni::chrono::time& ap);
-                bool operator==(const omni::chrono::time& o) const;
-                bool operator!=(const omni::chrono::time& o) const;
+                omni::chrono::datetime& operator=(const omni::chrono::datetime& ap);
+                bool operator==(const omni::chrono::datetime& o) const;
+                bool operator!=(const omni::chrono::datetime& o) const;
                 
                 // TODO: implement, verify and document
                 /*operator std::string() const;
                 operator std::wstring() const;*/
                 
-                OMNI_MEMBERS_FW(omni::chrono::time) // disposing,name,type(),hash()
+                OMNI_MEMBERS_FW(omni::chrono::datetime) // disposing,name,type(),hash()
                 
-                OMNI_OSTREAM_STR_FW(omni::chrono::time)
-                //OMNI_OSTREAM_FW(omni::chrono::time)
+                OMNI_OSTREAM_STR_FW(omni::chrono::datetime)
+                //OMNI_OSTREAM_FW(omni::chrono::datetime)
                 
             //private:
         };
-        omni::chrono::time now();
+        
+        omni::chrono::datetime now();
     } // namespace chrono
 } // namespace omni
 

@@ -739,7 +739,7 @@ namespace omni {
              *
              * @param d     The signature compatible delegate to add to the invocation list
              */
-            explicit event1(const omni::delegate1< Ret, PT1 >& d) : 
+            event1(const omni::delegate1< Ret, PT1 >& d) : 
                 OMNI_SAFE_EVENT_MILST_FW
                 m_list()
             {
@@ -1477,6 +1477,8 @@ namespace omni {
     typedef omni::event1<void, void*> action1;
 } // namespace omni
 
+#define OMNI_DEL1_FW(Ret, PT1) omni::delegate1<Ret, PT1>
+#define OMNI_EVT1_FW(Ret, PT1) omni::event1<Ret, PT1>
 #define OMNI_BIND1(Ret, PT1, Class, Function, Obj) omni::delegate1<Ret, PT1>::bind<Class, &Class::Function>(Obj)
 #define OMNI_BIND1_CONST(Ret, PT1, Class, Function, Obj) omni::delegate1<Ret, PT1>::bind_const<Class, &Class::Function>(Obj)
 

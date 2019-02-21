@@ -72,8 +72,10 @@
     #endif
     
     #define OMNI_DFMT_FW OMNI_DCER_FW OMNI_DFL_FW OMNI_DFN_FW OMNI_DLN_FW << "ERR_OMNI# "
-    #define OMNI_DBGE(msg) OMNI_DFMT_FW << msg << std::endl;
-    #define OMNI_DBGEV(msg, val) OMNI_DFMT_FW << msg << val << std::endl;
+    #define OMNI_DBGE_FW(msg) OMNI_DFMT_FW << msg << std::endl
+    #define OMNI_DBGEV_FW(msg, val) OMNI_DFMT_FW << msg << val << std::endl
+    #define OMNI_DBGE(msg) OMNI_DBGE_FW(msg);
+    #define OMNI_DBGEV(msg, val) OMNI_DBGEV_FW(msg, val);
     
     #if defined(OMNI_SHOW_DEBUG)
         #undef omnidbg

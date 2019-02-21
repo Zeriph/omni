@@ -774,7 +774,7 @@ namespace omni {
              *
              * @param d     The signature compatible delegate to add to the invocation list
              */
-            explicit event8(const omni::delegate8< Ret, PT1, PT2, PT3, PT4, PT5, PT6, PT7, PT8 >& d) : 
+            event8(const omni::delegate8< Ret, PT1, PT2, PT3, PT4, PT5, PT6, PT7, PT8 >& d) : 
                 OMNI_SAFE_EVENT_MILST_FW
                 m_list()
             {
@@ -1512,6 +1512,8 @@ namespace omni {
     typedef omni::event8<void, void*, void*, void*, void*, void*, void*, void*, void*> action8;
 } // namespace omni
 
+#define OMNI_DEL8_FW(Ret, PT1, PT2, PT3, PT4, PT5, PT6, PT7, PT8) omni::delegate8<Ret, PT1, PT2, PT3, PT4, PT5, PT6, PT7, PT8>
+#define OMNI_EVT8_FW(Ret, PT1, PT2, PT3, PT4, PT5, PT6, PT7, PT8) omni::event8<Ret, PT1, PT2, PT3, PT4, PT5, PT6, PT7, PT8>
 #define OMNI_BIND8(Ret, PT1, PT2, PT3, PT4, PT5, PT6, PT7, PT8, Class, Function, Obj) omni::delegate8<Ret, PT1, PT2, PT3, PT4, PT5, PT6, PT7, PT8>::bind<Class, &Class::Function>(Obj)
 #define OMNI_BIND8_CONST(Ret, PT1, PT2, PT3, PT4, PT5, PT6, PT7, PT8, Class, Function, Obj) omni::delegate8<Ret, PT1, PT2, PT3, PT4, PT5, PT6, PT7, PT8>::bind_const<Class, &Class::Function>(Obj)
 

@@ -1,6 +1,8 @@
 #!/bin/sh
 
 odir="/Code/omni"
+#u=jink
+#g=staff
 
 parse_args()
 {
@@ -25,14 +27,14 @@ tfile="${base}/template.hpp"
 lfile="${odir}/docugen/doc_license.txt"
 
 dlmkr="sh ${base}/delmkr.sh -f ${tfile} -d ${sodir} -n 16 -l ${lfile}"
-dlown="chown -R ${u} ${sodir}/delegate* && chgrp -R ${g} ${sodir}/delegate*"
-dlmod="chmod -R 755 ${sodir}"
+#dlown="chown -R ${u} ${sodir}/delegate* && chgrp -R ${g} ${sodir}/delegate*"
+#dlmod="chmod -R 755 ${sodir}"
 
 echo ${dlmkr}
 eval ${dlmkr}
 
-echo ${dlown}
-eval ${dlown}
+#echo ${dlown}
+#eval ${dlown}
 
 echo ${dlmod}
 eval ${dlmod}
