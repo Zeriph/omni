@@ -36,7 +36,7 @@ omni::application::argparser::argparser(const omni::application::argparser &cp) 
     OMNI_D5_FW("copied");
 }
 
-omni::application::argparser::argparser(const unsigned int& ac, const char** av) :
+omni::application::argparser::argparser(uint32_t ac, const char** av) :
     OMNI_CTOR_FW(omni::application::argparser)
     m_args(),
     m_argc(0)
@@ -44,7 +44,7 @@ omni::application::argparser::argparser(const unsigned int& ac, const char** av)
     this->set(ac, av);
 }
 
-omni::application::argparser::argparser(const unsigned int& ac, const wchar_t** av) :
+omni::application::argparser::argparser(uint32_t ac, const wchar_t** av) :
     OMNI_CTOR_FW(omni::application::argparser)
     m_args(),
     m_argc(0)
@@ -57,7 +57,7 @@ omni::application::argparser::argparser(const omni::seq::std_string_t& av) :
     m_args(),
     m_argc(0)
 {
-    this->m_argc = av.size();
+    this->m_argc = static_cast<uint32_t>(av.size());
     omni::seq::std_string_t::const_iterator it = av.begin();
     while (it != av.end()) {
         omni::string_t tmp = omni::string::util::to_string_t(*it);
@@ -72,7 +72,7 @@ omni::application::argparser::argparser(const omni::seq::std_wstring_t& av) :
     m_args(),
     m_argc(0)
 {
-    this->m_argc = av.size();
+    this->m_argc = static_cast<uint32_t>(av.size());
     omni::seq::std_wstring_t::const_iterator it = av.begin();
     while (it != av.end()) {
         omni::string_t tmp = omni::string::util::to_string_t(*it);
@@ -97,7 +97,7 @@ omni::seq::string_t omni::application::argparser::argv() const
     return ret;
 }
 
-omni::string_t omni::application::argparser::at(const unsigned int& index) const
+omni::string_t omni::application::argparser::at(uint32_t index) const
 {
     if (index > this->m_args.size() || this->m_args.empty()) {
         OMNI_ERR_RETV_FW("Invalid index specified: index out of range", omni::exceptions::index_out_of_range(), omni::string_t())
@@ -119,7 +119,7 @@ bool omni::application::argparser::contains(const std::wstring& sw) const
     return (this->_find(this->m_args.begin(), tmp) != this->m_args.end());
 }
 
-omni::string_t omni::application::argparser::get_arg(const unsigned int& index) const
+omni::string_t omni::application::argparser::get_arg(uint32_t index) const
 {
     if (index > this->m_args.size() || this->m_args.empty()) {
         OMNI_ERR_RETV_FW("Invalid index specified: index out of range", omni::exceptions::index_out_of_range(), omni::string_t())
@@ -198,33 +198,30 @@ omni::seq::string_t omni::application::argparser::get_range(std::size_t start, s
     return rng;
 }
 
-void omni::application::argparser::set(const unsigned int& ac, const char** av)
+void omni::application::argparser::set(uint32_t ac, const char** av)
 {
     this->m_argc = ac;
     this->m_args.clear();
-    for (unsigned int i = 0; i < ac; ++i) {
-        this->m_args.push_back(omni::string::util::to_string_t(av[i]));
+    for (ac = 0; ac < this->m_argc; ++ac) {
+        this->m_args.push_back(omni::string::util::to_string_t(av[ac]));
     }
 }
 
-void omni::application::argparser::set(const unsigned int& ac, const wchar_t** av)
+void omni::application::argparser::set(uint32_t ac, const wchar_t** av)
 {
     this->m_argc = ac;
     this->m_args.clear();
-    for (unsigned int i = 0; i < ac; ++i) {
-        omni::string_t tmp = omni::string::util::to_string_t(av[i]);
-        this->m_args.push_back(tmp);
+    for (ac = 0; ac < this->m_argc; ++ac) {
+        this->m_args.push_back(omni::string::util::to_string_t(av[ac]));
     }
 }
 
 void omni::application::argparser::set(const omni::seq::string_t& av)
 {
-    this->m_argc = av.size();
+    this->m_argc = static_cast<uint32_t>(av.size());
     this->m_args.clear();
-    omni::seq::string_t::const_iterator it = av.begin();
-    while (it != av.end()) {
+    for (omni::seq::string_t::const_iterator it = av.begin(); it != av.end(); ++it) {
         this->m_args.push_back(*it);
-        ++it;
     }
 }
 
@@ -298,7 +295,7 @@ omni::string_t omni::application::argparser::operator[](const std::wstring &sw) 
     return this->get_switch(omni::string::util::to_string_t(sw));
 }
 
-omni::string_t omni::application::argparser::operator[](const unsigned int& index) const
+omni::string_t omni::application::argparser::operator[](uint32_t index) const
 {
     if (index > this->m_args.size() || this->m_args.empty()) {
         OMNI_ERR_RETV_FW("Invalid index specified: index out of range", omni::exceptions::index_out_of_range(), omni::string_t())
@@ -312,7 +309,7 @@ omni::application::argparser& omni::application::argparser::operator=(const omni
         OMNI_ASSIGN_FW(ap);
         this->m_args.clear();
         this->m_args = ap.m_args;
-        this->m_argc = this->m_args.size();
+        this->m_argc = static_cast<uint32_t>(this->m_args.size());
     }
     return *this;
 }

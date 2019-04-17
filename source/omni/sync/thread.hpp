@@ -23,6 +23,7 @@
 #include <omni/sync/this_thread.hpp>
 #include <omni/sync/basic_lock.hpp>
 #include <omni/sync/spin.hpp>
+#include <omni/chrono/span.hpp>
 #include <map>
 
 namespace omni {
@@ -109,22 +110,22 @@ namespace omni {
                 
                 void abort(); // request end nicely
                 bool abort_join();
-                bool abort_join(unsigned long timeout);
+                bool abort_join(uint32_t timeout);
                 bool bind(const omni::sync::parameterized_thread_start& mthd);
                 bool bind(const omni::sync::thread_start& mthd);
                 void detach();
                 void detach(bool allow_rejoin);
                 const omni::sync::thread_union_t get_option(omni::sync::thread_option::enum_t op) const;
                 omni::sync::thread_flags options() const;
-                const omni::sync::thread_handle_t handle() const;
-                const omni::sync::thread_t id() const;
+                omni::sync::thread_handle_t handle() const;
+                omni::sync::thread_t id() const;
                 bool is_alive() const;
                 bool is_bound() const;
                 bool is_parameter_bound() const;
                 bool is_detached() const;
                 bool join(); // default of infinite timeout
-                bool join(unsigned long timeout);
-                //TODO: add bool join(const omni::timespan& t); when omni::timespan complete
+                bool join(uint32_t timeout);
+                bool join(const omni::chrono::unsigned_timespan& span);
                 bool kill(); // Terminate 'immediately'
                 bool reset();
                 bool restart();
@@ -246,7 +247,7 @@ namespace omni {
 namespace std {
     inline void swap(omni::sync::thread& ot1, omni::sync::thread& ot2)
     {
-        ot1.swap(ot2);
+       ot1.swap(ot2);
     }
 }
 

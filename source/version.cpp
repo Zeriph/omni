@@ -48,28 +48,28 @@ omni::util::version::version() :
     OMNI_DV5_FW("created version ", this->to_string_t());
 }
 
-omni::util::version::version(unsigned int mj) :
+omni::util::version::version(uint16_t mj) :
     OMNI_VERSION_CTOR_FW
     m_maj(mj), m_min(0), m_bld(0), m_rev(0)
 {
     OMNI_DV5_FW("created version ", this->to_string_t());
 }
 
-omni::util::version::version(unsigned int mj, unsigned int mn) :
+omni::util::version::version(uint16_t mj, uint16_t mn) :
     OMNI_VERSION_CTOR_FW
     m_maj(mj), m_min(mn), m_bld(0), m_rev(0)
 {
     OMNI_DV5_FW("created version ", this->to_string_t());
 }
 
-omni::util::version::version(unsigned int mj, unsigned int mn, unsigned int bld) :
+omni::util::version::version(uint16_t mj, uint16_t mn, uint32_t bld) :
     OMNI_VERSION_CTOR_FW
     m_maj(mj), m_min(mn), m_bld(bld), m_rev(0)
 {
     OMNI_DV5_FW("created version ", this->to_string_t());
 }
 
-omni::util::version::version(unsigned int mj, unsigned int mn, unsigned int bld, unsigned int rev) :
+omni::util::version::version(uint16_t mj, uint16_t mn, uint32_t bld, uint64_t rev) :
     OMNI_VERSION_CTOR_FW
     m_maj(mj), m_min(mn), m_bld(bld), m_rev(rev)
 {
@@ -117,7 +117,7 @@ omni::util::version omni::util::version::_parse(const std::wstring& v)
     return ret;
 }
 
-bool omni::util::version::_tryparse(const std::string& v, omni::util::version& out)
+bool omni::util::version::_tryparse(const std::string& v, omni::util::version& ret)
 {
     omni::seq::std_string_t s = omni::cstring::split(v, ".");
     if (s.size() > 4) {
@@ -131,14 +131,14 @@ bool omni::util::version::_tryparse(const std::string& v, omni::util::version& o
         ++it;
     }
     it = s.begin();
-    if (it != s.end()) { out.m_maj = omni::cstring::type_cast<unsigned int>(*it); ++it; }
-    if (it != s.end()) { out.m_min = omni::cstring::type_cast<unsigned int>(*it); ++it; }
-    if (it != s.end()) { out.m_bld = omni::cstring::type_cast<unsigned int>(*it); ++it; }
-    if (it != s.end()) { out.m_rev = omni::cstring::type_cast<unsigned int>(*it); ++it; }
+    if (it != s.end()) { ret.m_maj = omni::cstring::type_cast<uint16_t>(*it); ++it; }
+    if (it != s.end()) { ret.m_min = omni::cstring::type_cast<uint16_t>(*it); ++it; }
+    if (it != s.end()) { ret.m_bld = omni::cstring::type_cast<uint32_t>(*it); ++it; }
+    if (it != s.end()) { ret.m_rev = omni::cstring::type_cast<uint64_t>(*it); ++it; }
     return true;
 }
 
-bool omni::util::version::_tryparse(const std::wstring& v, omni::util::version& out)
+bool omni::util::version::_tryparse(const std::wstring& v, omni::util::version& ret)
 {
     omni::seq::std_wstring_t s = omni::wstring::split(v, L".");
     if (s.size() > 4) {
@@ -152,9 +152,9 @@ bool omni::util::version::_tryparse(const std::wstring& v, omni::util::version& 
         ++it;
     }
     it = s.begin();
-    if (it != s.end()) { out.m_maj = omni::wstring::type_cast<unsigned int>(*it); ++it; }
-    if (it != s.end()) { out.m_min = omni::wstring::type_cast<unsigned int>(*it); ++it; }
-    if (it != s.end()) { out.m_bld = omni::wstring::type_cast<unsigned int>(*it); ++it; }
-    if (it != s.end()) { out.m_rev = omni::wstring::type_cast<unsigned int>(*it); ++it; }
+    if (it != s.end()) { ret.m_maj = omni::wstring::type_cast<uint16_t>(*it); ++it; }
+    if (it != s.end()) { ret.m_min = omni::wstring::type_cast<uint16_t>(*it); ++it; }
+    if (it != s.end()) { ret.m_bld = omni::wstring::type_cast<uint32_t>(*it); ++it; }
+    if (it != s.end()) { ret.m_rev = omni::wstring::type_cast<uint64_t>(*it); ++it; }
     return true;
 }

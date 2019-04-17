@@ -20,7 +20,21 @@
 #define OMNI_COLOR_HPP 1
 #include <omni/defs/global.hpp>
 #include <omni/defs/class_macros.hpp>
-#include <omni/defs/color_def.hpp>
+
+#if defined(OMNI_SAFE_COLOR)
+    #include <omni/sync/basic_lock.hpp>
+    #define OMNI_SAFE_CLRDMTX_FW  ,m_mtx()
+    #define OMNI_SAFE_CLRLOCK_FW   this->m_mtx.lock();
+    #define OMNI_SAFE_CLRUNLOCK_FW this->m_mtx.unlock();
+    #define OMNI_SAFE_CLRALOCK_FW  omni::sync::scoped_basic_lock uuid12345(&this->m_mtx);
+    #define OMNI_SAFE_CLROALOCK_FW(o)  omni::sync::scoped_basic_lock uuid54321(&o.m_mtx);
+#else
+    #define OMNI_SAFE_CLRDMTX_FW
+    #define OMNI_SAFE_CLRLOCK_FW
+    #define OMNI_SAFE_CLRUNLOCK_FW
+    #define OMNI_SAFE_CLRALOCK_FW
+    #define OMNI_SAFE_CLROALOCK_FW(o) 
+#endif
 
 namespace omni {
     namespace drawing {
@@ -107,17 +121,11 @@ namespace omni {
 
                 static RgbType hsl_to_rgb(float hue, float saturation, float luminance)
                 {
-                    if (hue > 360.0f || hue < 0.0f) {
-                        // TODO: error (invalid range)
-                        return 0;
-                    }
-                    if (saturation > 1.0f || saturation < 0.0f) {
-                        // TODO: error (invalid range)
-                        return 0;
-                    }
-                    if (luminance > 1.0f || luminance < 0.0f) {
-                        // TODO: error (invalid range)
-                        return 0;
+                    if ((hue > 360.0f || hue < 0.0f) ||
+                        (saturation > 1.0f || saturation < 0.0f) ||
+                        (luminance > 1.0f || luminance < 0.0f))
+                    {
+                        OMNI_ERR_RETV_FW(OMNI_ERR_RANGE_STR, omni::exceptions::invalid_range(), 0)
                     }
                     if ((hue == 0.00f) && (saturation == 0.00f) && (luminance == 0.0f)) { return 0; }
                     BitDepth nmax = std::numeric_limits<BitDepth>::max();
@@ -153,9 +161,9 @@ namespace omni {
                         }
                     }
                     return (
-                        (static_cast<BitDepth>(std::ceilf((tr + m) * nmax)) << (BitSize * 2)) ^
-                        (static_cast<BitDepth>(std::ceilf((tg + m) * nmax)) << BitSize) ^
-                        (static_cast<BitDepth>(std::ceilf((tb + m) * nmax)))
+                        (static_cast<BitDepth>(::ceilf((tr + m) * nmax)) << (BitSize * 2)) ^
+                        (static_cast<BitDepth>(::ceilf((tg + m) * nmax)) << BitSize) ^
+                        (static_cast<BitDepth>(::ceilf((tb + m) * nmax)))
                     );
                 }
 
@@ -306,13 +314,6 @@ namespace omni {
                 BitDepth decrement_r()
                 {
                     OMNI_SAFE_CLRALOCK_FW
-
-                    // TODO: here and else where in omni->
-                    // #if defined(OMNI_SAFE_COLOR)
-                    // RgbType tmp = this->m_r;
-                    // if (++tmp > std::numeric_limits<BitDepth>::max()) { ERROR }
-                    // #endif
-
                     return --this->m_r;
                 }
 
@@ -436,9 +437,10 @@ namespace omni {
                 {
                     if (alpha <= 1.00 && alpha >= 0.00) {
                         OMNI_SAFE_CLRALOCK_FW
-                        this->m_a = std::numeric_limits<BitDepth>::max() * alpha;
+                        this->m_a = static_cast<BitDepth>(std::numeric_limits<BitDepth>::max() * alpha);
+                    } else {
+                        OMNI_ERR_FW(OMNI_ERR_RANGE_STR, omni::exceptions::invalid_range())
                     }
-                    // TODO: error
                 }
 
                 void set_calculate_alpha(bool calc)
@@ -458,9 +460,12 @@ namespace omni {
                 void set_rgb(RgbType rgb)
                 {
                     OMNI_SAFE_CLRALOCK_FW
-                    this->m_r = (rgb >> (BitSize * 2));
-                    this->m_g = (rgb >> BitSize) ^ (this->m_r << BitSize);
-                    this->m_b = (rgb ^ (this->m_g << BitSize)) ^ (this->m_r << (BitSize * 2));
+                    this->m_r = static_cast<BitDepth>(rgb >> (BitSize * 2));
+                    this->m_g = static_cast<BitDepth>((rgb >> BitSize) ^
+                                        (static_cast<RgbType>(this->m_r) << BitSize));
+                    this->m_b = static_cast<BitDepth>(rgb ^ 
+                                        (static_cast<RgbType>(this->m_g) << BitSize) ^ 
+                                        (static_cast<RgbType>(this->m_r) << (BitSize * 2)));
                 }
 
                 void set_rgba(BitDepth r, BitDepth g, BitDepth b, BitDepth a)
@@ -475,45 +480,57 @@ namespace omni {
                 void set_rgba(RgbType rgba)
                 {
                     OMNI_SAFE_CLRALOCK_FW
-                    this->m_r = (rgba >> (BitSize * 3));
-                    this->m_g = (rgba >> (BitSize * 2)) ^ (this->m_r << BitSize);
-                    this->m_b = (((rgba >> BitSize) ^ (this->m_g << BitSize)) ^ (this->m_r << (BitSize * 2)));
-                    this->m_a = (((rgba ^ (this->m_b << BitSize)) ^ (this->m_g << (BitSize * 2))) ^ (this->m_r << (BitSize * 3)));
+                    this->m_r = static_cast<BitDepth>(rgba >> (BitSize * 3));
+                    this->m_g = static_cast<BitDepth>((rgba >> (BitSize * 2)) ^
+                                        (static_cast<RgbType>(this->m_r) << BitSize));
+                    this->m_b = static_cast<BitDepth>((rgba >> BitSize) ^
+                                        (static_cast<RgbType>(this->m_g) << BitSize) ^
+                                        (static_cast<RgbType>(this->m_r) << (BitSize * 2)));
+                    this->m_a = static_cast<BitDepth>(rgba ^ 
+                                        (static_cast<RgbType>(this->m_b) << BitSize) ^
+                                        (static_cast<RgbType>(this->m_g) << (BitSize * 2)) ^
+                                        (static_cast<RgbType>(this->m_r) << (BitSize * 3)));
                 }
 
                 void set_argb(RgbType argb)
                 {
                     OMNI_SAFE_CLRALOCK_FW
-                    this->m_a = (argb >> (BitSize * 3));
-                    this->m_r = (argb >> (BitSize * 2)) ^ (this->m_a << BitSize);
-                    this->m_g = (((argb >> BitSize) ^ (this->m_r << BitSize)) ^ (this->m_a << (BitSize * 2)));
-                    this->m_b = (((argb ^ (this->m_g << BitSize)) ^ (this->m_r << (BitSize * 2))) ^ (this->m_a << (BitSize * 3)));
+                    this->m_a = static_cast<BitDepth>(argb >> (BitSize * 3));
+                    this->m_r = static_cast<BitDepth>((argb >> (BitSize * 2)) ^
+                                        (static_cast<RgbType>(this->m_a) << BitSize));
+                    this->m_g = static_cast<BitDepth>((argb >> BitSize) ^
+                                        (static_cast<RgbType>(this->m_r) << BitSize) ^ 
+                                        (static_cast<RgbType>(this->m_a) << (BitSize * 2)));
+                    this->m_b = static_cast<BitDepth>(argb ^
+                                        (static_cast<RgbType>(this->m_g) << BitSize) ^
+                                        (static_cast<RgbType>(this->m_r) << (BitSize * 2)) ^
+                                        (static_cast<RgbType>(this->m_a) << (BitSize * 3)));
                 }
 
                 RgbType to_rgb() const
                 {
                     OMNI_SAFE_CLRALOCK_FW
-                    return (this->m_r << (BitSize * 2)) ^
-                           (this->m_g << BitSize) ^
-                           (this->m_b);
+                    return (static_cast<RgbType>(this->m_r) << (BitSize * 2)) ^
+                           (static_cast<RgbType>(this->m_g) << BitSize) ^
+                           static_cast<RgbType>(this->m_b);
                 }
 
                 RgbType to_rgba() const
                 {
                     OMNI_SAFE_CLRALOCK_FW
-                    return (this->m_r << (BitSize * 3)) ^
-                           (this->m_g << (BitSize * 2)) ^
-                           (this->m_b << (BitSize)) ^
-                           (this->m_a);
+                    return (static_cast<RgbType>(this->m_r) << (BitSize * 3)) ^
+                           (static_cast<RgbType>(this->m_g) << (BitSize * 2)) ^
+                           (static_cast<RgbType>(this->m_b) << BitSize) ^
+                           static_cast<RgbType>(this->m_a);
                 }
 
                 RgbType to_argb() const
                 {
                     OMNI_SAFE_CLRALOCK_FW
-                    return (this->m_a << (BitSize * 3)) ^
-                           (this->m_r << (BitSize * 2)) ^
-                           (this->m_g << (BitSize)) ^
-                           (this->m_b);
+                    return (static_cast<RgbType>(this->m_a) << (BitSize * 3)) ^
+                           (static_cast<RgbType>(this->m_r) << (BitSize * 2)) ^
+                           (static_cast<RgbType>(this->m_g) << BitSize) ^
+                           static_cast<RgbType>(this->m_b);
                 }
 
                 omni::string_t to_string_t() const
@@ -727,16 +744,32 @@ namespace omni {
                 {
                     OMNI_SAFE_CLRALOCK_FW
                     if (this->m_calc_alpha) {
-                        RgbType rgba = ((this->m_r << (BitSize * 3)) ^ (this->m_g << (BitSize * 2)) ^ (this->m_b << (BitSize)) ^ (this->m_a)) + val;
+                        RgbType rgba = (
+                            (static_cast<RgbType>(this->m_r) << (BitSize * 3)) ^
+                            (static_cast<RgbType>(this->m_g) << (BitSize * 2)) ^
+                            (static_cast<RgbType>(this->m_b) << BitSize) ^
+                            (this->m_a)
+                        ) + val;
                         this->m_r = (rgba >> (BitSize * 3));
-                        this->m_g = (rgba >> (BitSize * 2)) ^ (this->m_r << BitSize);
-                        this->m_b = (((rgba >> BitSize) ^ (this->m_g << BitSize)) ^ (this->m_r << (BitSize * 2)));
-                        this->m_a = (((rgba ^ (this->m_b << BitSize)) ^ (this->m_g << (BitSize * 2))) ^ (this->m_r << (BitSize * 3)));
+                        this->m_g = static_cast<BitDepth>((rgba >> (BitSize * 2)) ^
+                            (static_cast<RgbType>(this->m_r) << BitSize));
+                        this->m_b = static_cast<BitDepth>((rgba >> BitSize) ^
+                            (static_cast<RgbType>(this->m_g) << BitSize) ^
+                            (static_cast<RgbType>(this->m_r) << (BitSize * 2)));
+                        this->m_a = static_cast<BitDepth>(rgba ^
+                            (static_cast<RgbType>(this->m_b) << BitSize) ^
+                            (static_cast<RgbType>(this->m_g) << (BitSize * 2)) ^
+                            (static_cast<RgbType>(this->m_r) << (BitSize * 3)));
                     } else {
-                        RgbType rgb = ((this->m_r << (BitSize * 2)) ^ (this->m_g << BitSize) ^ (this->m_b)) + val;
-                        this->m_r = (rgb >> (BitSize * 2));
-                        this->m_g = (rgb >> BitSize) ^ (this->m_r << BitSize);
-                        this->m_b = (rgb ^ (this->m_g << BitSize)) ^ (this->m_r << (BitSize * 2));
+                        RgbType rgb = (
+                            (static_cast<RgbType>(this->m_r) << (BitSize * 2)) ^
+                            (static_cast<RgbType>(this->m_g) << BitSize) ^
+                            static_cast<RgbType>(this->m_b)) + val;
+                        this->m_r = static_cast<BitDepth>(rgb >> (BitSize * 2));
+                        this->m_g = static_cast<BitDepth>((rgb >> BitSize) ^ (static_cast<RgbType>(this->m_r) << BitSize));
+                        this->m_b = static_cast<BitDepth>(rgb ^
+                            (static_cast<RgbType>(this->m_g) << BitSize) ^
+                            (static_cast<RgbType>(this->m_r) << (BitSize * 2)));
                     }
                     return *this;
                 }
@@ -765,16 +798,28 @@ namespace omni {
                 {
                     OMNI_SAFE_CLRALOCK_FW
                     if (this->m_calc_alpha) {
-                        RgbType rgba = ((this->m_r << (BitSize * 3)) ^ (this->m_g << (BitSize * 2)) ^ (this->m_b << (BitSize)) ^ (this->m_a)) - val;
+                        RgbType rgba = ((static_cast<RgbType>(this->m_r) << (BitSize * 3)) ^
+                            (static_cast<RgbType>(this->m_g) << (BitSize * 2)) ^
+                            (static_cast<RgbType>(this->m_b) << BitSize) ^
+                            static_cast<RgbType>(this->m_a)) - val;
                         this->m_r = (rgba >> (BitSize * 3));
-                        this->m_g = (rgba >> (BitSize * 2)) ^ (this->m_r << BitSize);
-                        this->m_b = (((rgba >> BitSize) ^ (this->m_g << BitSize)) ^ (this->m_r << (BitSize * 2)));
-                        this->m_a = (((rgba ^ (this->m_b << BitSize)) ^ (this->m_g << (BitSize * 2))) ^ (this->m_r << (BitSize * 3)));
+                        this->m_g = ((rgba >> (BitSize * 2)) ^ (static_cast<RgbType>(this->m_r) << BitSize));
+                        this->m_b = ((rgba >> BitSize) ^
+                            (static_cast<RgbType>(this->m_g) << BitSize) ^
+                            (static_cast<RgbType>(this->m_r) << (BitSize * 2)));
+                        this->m_a = (rgba ^
+                            (static_cast<RgbType>(this->m_b) << BitSize) ^
+                            (static_cast<RgbType>(this->m_g) << (BitSize * 2)) ^
+                            (static_cast<RgbType>(this->m_r) << (BitSize * 3)));
                     } else {
-                        RgbType rgb = ((this->m_r << (BitSize * 2)) ^ (this->m_g << BitSize) ^ (this->m_b)) - val;
+                        RgbType rgb = ((static_cast<RgbType>(this->m_r) << (BitSize * 2)) ^
+                            (static_cast<RgbType>(this->m_g) << BitSize) ^
+                            static_cast<RgbType>(this->m_b)) - val;
                         this->m_r = (rgb >> (BitSize * 2));
-                        this->m_g = (rgb >> BitSize) ^ (this->m_r << BitSize);
-                        this->m_b = (rgb ^ (this->m_g << BitSize)) ^ (this->m_r << (BitSize * 2));
+                        this->m_g = ((rgb >> BitSize) ^ (static_cast<RgbType>(this->m_r) << BitSize));
+                        this->m_b = (rgb ^
+                            (static_cast<RgbType>(this->m_g) << BitSize) ^
+                            (static_cast<RgbType>(this->m_r) << (BitSize * 2)));
                     }
                     return *this;
                 }
@@ -793,7 +838,9 @@ namespace omni {
                     omni::event1<void, const omni::drawing::color<BitDepth, RgbType, BitSize>& > disposing;
                 #endif
 
-                OMNI_MNM_MBRT_FW // omni::string_t name
+                #if defined(OMNI_OBJECT_NAME)
+                    omni::string_t name;
+                #endif
 
                 friend std::ostream& operator<<(std::ostream& s, const omni::drawing::color<BitDepth, RgbType, BitSize>& c)
                 { s << c.to_string(); return s; }

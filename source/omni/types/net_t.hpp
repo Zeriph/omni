@@ -21,7 +21,7 @@
 #include <omni/defs/global.hpp>
 #include <omni/defs/class_macros.hpp>
 
-// TODO: a lot of same enum types causing 'duplicate' types
+// TODO: is this a relevant note -> a lot of same enum types causing 'duplicate' types
 
 namespace omni {
     /** The net namespace is used to facilitate certain networking operations and handling */
@@ -281,7 +281,7 @@ namespace omni {
                 {
                     enum_t ret;
                     if (_try_parse(val, ret)) { return ret; }
-                    OMNI_ERRV_FW("invalid enum parse: ", val, omni::exceptions::invalid_enum())
+                    OMNI_ERR_FW("invalid enum parse", omni::exceptions::invalid_enum())
                     return DEFAULT_VALUE();
                 }
 
@@ -345,7 +345,7 @@ namespace omni {
                 }
 
                 template < typename S >
-                static typename S::string_type _to_val(enum_t v)
+                static std::basic_string< typename S::char_type > _to_val(enum_t v)
                 {
                     S ss;
                     switch (v) {
@@ -650,7 +650,7 @@ namespace omni {
                 {
                     enum_t ret;
                     if (_try_parse(val, ret)) { return ret; }
-                    OMNI_ERRV_FW("invalid enum parse: ", val, omni::exceptions::invalid_enum())
+                    OMNI_ERR_FW("invalid enum parse", omni::exceptions::invalid_enum())
                     return DEFAULT_VALUE();
                 }
 
@@ -688,7 +688,7 @@ namespace omni {
                 }
 
                 template < typename S >
-                static typename S::string_type _to_val(enum_t v)
+                static std::basic_string< typename S::char_type > _to_val(enum_t v)
                 {
                     S ss;
                     switch (v) {
@@ -961,7 +961,7 @@ namespace omni {
                 {
                     enum_t ret;
                     if (_try_parse(val, ret)) { return ret; }
-                    OMNI_ERRV_FW("invalid enum parse: ", val, omni::exceptions::invalid_enum())
+                    OMNI_ERR_FW("invalid enum parse", omni::exceptions::invalid_enum())
                     return DEFAULT_VALUE();
                 }
 
@@ -1019,7 +1019,7 @@ namespace omni {
                 }
 
                 template < typename S >
-                static typename S::string_type _to_val(enum_t v)
+                static std::basic_string< typename S::char_type > _to_val(enum_t v)
                 {
                     S ss;
                     switch (v) {
@@ -1352,7 +1352,7 @@ namespace omni {
                 {
                     enum_t ret;
                     if (_try_parse(val, ret)) { return ret; }
-                    OMNI_ERRV_FW("invalid enum parse: ", val, omni::exceptions::invalid_enum())
+                    OMNI_ERR_FW("invalid enum parse", omni::exceptions::invalid_enum())
                     return DEFAULT_VALUE();
                 }
 
@@ -1411,7 +1411,7 @@ namespace omni {
                 }
 
                 template < typename S >
-                static typename S::string_type _to_val(enum_t v)
+                static std::basic_string< typename S::char_type > _to_val(enum_t v)
                 {
                     S ss;
                     switch (v) {
@@ -1749,7 +1749,7 @@ namespace omni {
                 {
                     enum_t ret;
                     if (_try_parse(val, ret)) { return ret; }
-                    OMNI_ERRV_FW("invalid enum parse: ", val, omni::exceptions::invalid_enum())
+                    OMNI_ERR_FW("invalid enum parse", omni::exceptions::invalid_enum())
                     return DEFAULT_VALUE();
                 }
 
@@ -1830,7 +1830,7 @@ namespace omni {
                 }
 
                 template < typename S >
-                static typename S::string_type _to_val(enum_t v)
+                static std::basic_string< typename S::char_type > _to_val(enum_t v)
                 {
                     S ss;
                     switch (v) {
@@ -2175,7 +2175,7 @@ namespace omni {
                 {
                     enum_t ret;
                     if (_try_parse(val, ret)) { return ret; }
-                    OMNI_ERRV_FW("invalid enum parse: ", val, omni::exceptions::invalid_enum())
+                    OMNI_ERR_FW("invalid enum parse", omni::exceptions::invalid_enum())
                     return DEFAULT_VALUE();
                 }
 
@@ -2219,7 +2219,7 @@ namespace omni {
                 }
 
                 template < typename S >
-                static typename S::string_type _to_val(enum_t v)
+                static std::basic_string< typename S::char_type > _to_val(enum_t v)
                 {
                     S ss;
                     switch (v) {
@@ -2484,7 +2484,7 @@ namespace omni {
                 {
                     enum_t ret;
                     if (_try_parse(val, ret)) { return ret; }
-                    OMNI_ERRV_FW("invalid enum parse: ", val, omni::exceptions::invalid_enum())
+                    OMNI_ERR_FW("invalid enum parse", omni::exceptions::invalid_enum())
                     return DEFAULT_VALUE();
                 }
 
@@ -2522,7 +2522,7 @@ namespace omni {
                 }
 
                 template < typename S >
-                static typename S::string_type _to_val(enum_t v)
+                static std::basic_string< typename S::char_type > _to_val(enum_t v)
                 {
                     S ss;
                     switch (v) {
@@ -2777,7 +2777,7 @@ namespace omni {
                 {
                     enum_t ret;
                     if (_try_parse(val, ret)) { return ret; }
-                    OMNI_ERRV_FW("invalid enum parse: ", val, omni::exceptions::invalid_enum())
+                    OMNI_ERR_FW("invalid enum parse", omni::exceptions::invalid_enum())
                     return DEFAULT_VALUE();
                 }
 
@@ -2817,7 +2817,7 @@ namespace omni {
                 }
 
                 template < typename S >
-                static typename S::string_type _to_val(enum_t v)
+                static std::basic_string< typename S::char_type > _to_val(enum_t v)
                 {
                     S ss;
                     switch (v) {
@@ -3116,7 +3116,7 @@ namespace omni {
                 {
                     enum_t ret;
                     if (_try_parse(val, ret)) { return ret; }
-                    OMNI_ERRV_FW("invalid enum parse: ", val, omni::exceptions::invalid_enum())
+                    OMNI_ERR_FW("invalid enum parse", omni::exceptions::invalid_enum())
                     return DEFAULT_VALUE();
                 }
 
@@ -3196,7 +3196,7 @@ namespace omni {
                 }
 
                 template < typename S >
-                static typename S::string_type _to_val(enum_t v)
+                static std::basic_string< typename S::char_type > _to_val(enum_t v)
                 {
                     S ss;
                     switch (v) {
@@ -3533,7 +3533,7 @@ namespace omni {
                 {
                     enum_t ret;
                     if (_try_parse(val, ret)) { return ret; }
-                    OMNI_ERRV_FW("invalid enum parse: ", val, omni::exceptions::invalid_enum())
+                    OMNI_ERR_FW("invalid enum parse", omni::exceptions::invalid_enum())
                     return DEFAULT_VALUE();
                 }
 
@@ -3571,7 +3571,7 @@ namespace omni {
                 }
 
                 template < typename S >
-                static typename S::string_type _to_val(enum_t v)
+                static std::basic_string< typename S::char_type > _to_val(enum_t v)
                 {
                     S ss;
                     switch (v) {
@@ -3826,7 +3826,7 @@ namespace omni {
                 {
                     enum_t ret;
                     if (_try_parse(val, ret)) { return ret; }
-                    OMNI_ERRV_FW("invalid enum parse: ", val, omni::exceptions::invalid_enum())
+                    OMNI_ERR_FW("invalid enum parse", omni::exceptions::invalid_enum())
                     return DEFAULT_VALUE();
                 }
 
@@ -3866,7 +3866,7 @@ namespace omni {
                 }
 
                 template < typename S >
-                static typename S::string_type _to_val(enum_t v)
+                static std::basic_string< typename S::char_type > _to_val(enum_t v)
                 {
                     S ss;
                     switch (v) {

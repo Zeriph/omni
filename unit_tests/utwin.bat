@@ -1,6 +1,8 @@
 @echo off
 setlocal enabledelayedexpansion
 
+REM TODO: this gives a "The syntax of the command is incorrect." on this file .. ?
+
 REM set extralibs="WS2_32.lib" "Mswsock.lib" "AdvAPI32.lib" "User32.lib"
 set omni_lib_loc=G:
 
@@ -77,12 +79,22 @@ if not "%1"=="" (
     ) else if "%1"=="-list" (
         goto list_tests
     REM framework options
-    ) else if "%1"=="-stdcall" (
-        set eopts=%eopts% -oo stdcall
-    ) else if "%2"=="-fastcall" (
-        set eopts=%eopts% -oo fastcall
-    ) else if "%2"=="-cdecl" (
-        set eopts=%eopts% -oo cdecl
+    ) else if "%1"=="-lite" (
+        set eopts=%eopts% -oo lite
+    ) else if "%1"=="-heavy" (
+        set eopts=%eopts% -oo heavy
+    ) else if "%1"=="-no" (
+        set eopts=%eopts% -oo no %2
+        shift
+    ) else if "%1"=="-safe" (
+        set eopts=%eopts% -oo safe fw
+    ) else if "%1"=="-sfw" (
+        set eopts=%eopts% -oo safe %2
+        shift
+    ) else if "%1"=="-np" (
+        set eopts=%eopts% -oo np
+    ) else if "%1"=="-terr" (
+        set eopts=%eopts% -oo terr
     REM framework debug options
     ) else if "%1"=="-d1" (
         set eopts=%eopts% -dbg 1
@@ -96,22 +108,18 @@ if not "%1"=="" (
         set eopts=%eopts% -dbg 5
     ) else if "%1"=="-derr" (
         set eopts=%eopts% -dbg err
-    ) else if "%1"=="-dfl" (
-        set eopts=%eopts% -dbg file
-    ) else if "%1"=="-dfn" (
-        set eopts=%eopts% -dbg func
-    ) else if "%1"=="-dln" (
-        set eopts=%eopts% -dbg line
+    ) else if "%1"=="-dfull" (
+        set eopts=%eopts% -dbg full
     ) else if "%1"=="-dbg1" (
-        set eopts=%eopts% -dbg 1 -dbg file -dbg func -dbg line
+        set eopts=%eopts% -dbg 1 -dbg full
     ) else if "%1"=="-dbg2" (
-        set eopts=%eopts% -dbg 2 -dbg file -dbg func -dbg line
+        set eopts=%eopts% -dbg 2 -dbg full
     ) else if "%1"=="-dbg3" (
-        set eopts=%eopts% -dbg 3 -dbg file -dbg func -dbg line
+        set eopts=%eopts% -dbg 3 -dbg full
     ) else if "%1"=="-dbg4" (
-        set eopts=%eopts% -dbg 4 -dbg file -dbg func -dbg line
+        set eopts=%eopts% -dbg 4 -dbg full
     ) else if "%1"=="-dbg5" (
-        set eopts=%eopts% -dbg 5 -dbg file -dbg func -dbg line
+        set eopts=%eopts% -dbg 5 -dbg full
 	REM compiler/linker options
     ) else if "%1"=="-np" (
 		set eopts=%eopts% -co np
@@ -119,24 +127,15 @@ if not "%1"=="" (
 		set eopts=%eopts% -co x86
 	) else if "%1"=="-x64" (
 		set eopts=%eopts% -co x64
-	) else if "%1"=="-effc" (
-		set eopts=%eopts% -co effc
 	) else if "%1"=="-we" (
 		set eopts=%eopts% -co we
 	) else if "%1"=="-se" (
 		set eopts=%eopts% -co se
     ) else if "%1"=="-nortti" (
         set eopts=%eopts% -co nortti
-    ) else if "%1"=="-opti" (    
-        set eopts=%eopts% -co opti
-    ) else if "%1"=="-opt1" (
-        set eopts=%eopts% -co opt2
-    ) else if "%1"=="-opt2" (
-        set eopts=%eopts% -co opt2
-    ) else if "%1"=="-opt3" (
-        set eopts=%eopts% -co opt3
-    ) else if "%1"=="-opts" (
-        set eopts=%eopts% -co opts
+    ) else if "%1"=="-opt" (    
+        set eopts=%eopts% -co %2
+        shift
     ) else if "%1"=="-noopt" (
         set noopt=1
     ) else if "%1"=="-asm" (
@@ -180,8 +179,9 @@ if !wasEr! equ 1 (
 if %use_log% equ 1 (
 	set llog=-log "%omni_lib_loc%\build\logs\!sys_type!_build.log"
 )
+
 if %noopt% equ 0 (
-    set eopts=%eopts% -co opti -co opt3 -co opts
+    set eopts=%eopts% -d /Oi -co opt 3 -co opt s
 )
 
 set utcpp=main.cpp
@@ -215,14 +215,20 @@ echo                     -v          = Verbose level 1 (basic output)
 echo                     -vv/-v2     = Verbose L2 (show more output)
 echo                     -vvv/-v3    = Verbose L3 (show ALL output)
 echo        -single      Builds library.cpp
-echo        -lib         Builds omni.liv then links against it for the unit tests
+echo        -lib         Builds omni.lib then links against it for the unit tests
 echo        -log         Log the output to the logs folder
 echo        -po          Parse the compile script only
 echo.
 echo framework options:
-echo        -stdcall    Defines the calling convention to be of stdcall
-echo        -fastcall   Defines the calling convention to be of fastcall
-echo        -cdecl      Defines the calling convention to be of cdecl
+echo        -lite       Sets the OMNI_LITE macro definition
+echo        -heavy      Sets the heavy object flag
+echo        -no [op]    Passes along a 'no-flag' to the compile script
+echo        -safe       Sets the OMNI_SAFE_FRAMEWORK macro definition
+echo        -sfw [op]   Set the OMNI_SAFE_[op] macro definition
+echo        -np         Sets the OMNI_NON_PORTABLE compiler flag and enables
+echo                    compilation of 'non-portable' code
+echo        -nouni      Disables the UNICODE flags (does not build unicode)
+echo        -terr       Sets the OMNI_TERMINATE macro
 echo.
 echo framework debug options:
 echo        -d1         Sets the OMNI_SHOW_DEBUG=1
@@ -231,10 +237,8 @@ echo        -d3         Sets the OMNI_SHOW_DEBUG=3
 echo        -d4         Sets the OMNI_SHOW_DEBUG=4
 echo        -d5         Sets the OMNI_SHOW_DEBUG=5
 echo        -derr       Sets OMNI_SHOW_DEBUG_ERR
-echo        -dfl        Sets OMNI_SHOW_DEBUG_FILE
-echo        -dfn        Sets OMNI_SHOW_DEBUG_FUNC
-echo        -dln        Sets OMNI_SHOW_DEBUG_LINE
-echo        -dbgX       equivilant to -dX -dfl -dfn -dln
+echo        -dfull      Sets OMNI_SHOW_DEBUG_FILE, OMNI_SHOW_DEBUG_FUNC andOMNI_SHOW_DEBUG_LINE
+echo        -dbgX       equivalent to -dX -dfull
 echo.
 echo compiler options:
 echo        -x86        Enable 32-bit compilation
@@ -242,12 +246,8 @@ echo        -x64        Enable 64-bit compilation
 echo        -eo         Use the extra compiler/linker flags (can generate erroneous errors)
 echo        -we         Treat all warnings as errors
 echo        -nortti     Disables RTTI (run-time type information) for C++
-echo        -noopt      No optimizations (default of -opti -opt3 -opts)
-echo        -opti       Enable global optimization with intrinsic functions (/Oi /Og)
-echo        -opt1       Enable optimizations (/O1)
-echo        -opt2       Enable more optimizations (/O2)
-echo        -opt3       Maximum optimizations (/Ox)
-echo        -opts       Favor code space (/Os)
+echo        -noopt      No optimizations
+echo        -opt [op]   Enable global optimization based on 0,1,2,3 or s
 echo        -asm        Generate the assembly output (/FAs, .asm file name)
 echo        -gdb        Sets the -ggdb flag, enabling GDB debug output
 echo        -syntax     Sets the -fsyntax-only flag which checks the code for syntax
@@ -288,12 +288,12 @@ if "%ut%"=="" (
     call :toupper !utest! utupper
     set utestflag=OMNI_UT_!utupper!
     if "%ut%"=="full" (
-        set eopts=!eopts! -d _UNICODE -d UNICODE -d OMNI_NON_PORTABLE
-        set eopts=!eopts! -d OMNI_DISPOSE_EVENT -d OMNI_OBJECT_NAME -d OMNI_TYPE_INFO
-        set eopts=!eopts! -d OMNI_SAFE_FRAMEWORK -d OMNI_COMPILE_FLAGS
-        set eopts=!eopts! -d _CONSOLE -d NDEBUG
+        set eopts=!eopts! -oo heavy
+        set eopts=!eopts! -oo safe fw
+        set eopts=!eopts! -oo np
+        set eopts=!eopts! -d _CONSOLE -d NDEBUG -d OMNI_NO_EXTERN_CONSTS
     ) else if "%ut%"=="all" (
-        set eopts=!eopts! -d OMNI_COMPILE_FLAGS
+        set eopts=!eopts! -d OMNI_NO_EXTERN_CONSTS
     )
 )
 goto :eof

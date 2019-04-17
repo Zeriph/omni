@@ -37,10 +37,10 @@ class UT_CLASS_DEF
             std::wcout << "wsv = " << wsv << std::endl;
             
             
-            unsigned int mj = v.maj_value();
-            unsigned int mi = v.min_value();
-            unsigned int mb = v.build();
-            unsigned int mr = v.revision();
+            uint64_t mj = v.major_number();
+            uint64_t mi = v.minor_number();
+            uint64_t mb = v.build();
+            uint64_t mr = v.revision();
             
             std::cout <<mj<<"."<<mi<<"."<<mb<<"."<<mr<<std::endl;
         }

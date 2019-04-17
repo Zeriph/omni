@@ -177,7 +177,7 @@ namespace omni {
                     this->m_sig = false;
                 }
                 
-                void reset(unsigned long sleep_ms)
+                void reset(uint32_t sleep_ms)
                 {
                     OMNI_SLEEP_INIT();
                     this->m_sig = true;
@@ -202,7 +202,7 @@ namespace omni {
                     }
                 }
 
-                bool busy_wait(unsigned long timeout_ms) const
+                bool busy_wait(uint32_t timeout_ms) const
                 {
                     omni::chrono::monotonic::initialize();
                     omni::chrono::tick_t start = omni::chrono::monotonic_tick();
@@ -221,7 +221,7 @@ namespace omni {
                     }
                 }
 
-                bool sleep_wait(unsigned long timeout_ms) const
+                bool sleep_wait(uint32_t timeout_ms) const
                 {
                     OMNI_SLEEP_INIT();
                     #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
@@ -288,7 +288,7 @@ namespace omni {
                     omni::sync::mutex_unlock(this->m_mtx);
                 }
                 
-                void reset(unsigned long sleep_ms)
+                void reset(uint32_t sleep_ms)
                 {
                     OMNI_SLEEP_INIT();
                     omni::sync::mutex_lock(this->m_mtx);
@@ -326,7 +326,7 @@ namespace omni {
                     }
                 }
 
-                bool busy_wait(unsigned long timeout_ms) const
+                bool busy_wait(uint32_t timeout_ms) const
                 {
                     omni::chrono::tick_t start = omni::chrono::monotonic_tick();
                     while (omni::chrono::elapsed_ms(start) <= timeout_ms) {
@@ -362,7 +362,7 @@ namespace omni {
                     }
                 }
 
-                bool sleep_wait(unsigned long timeout_ms) const
+                bool sleep_wait(uint32_t timeout_ms) const
                 {
                     OMNI_SLEEP_INIT();
                     omni::chrono::tick_t start = omni::chrono::monotonic_tick();

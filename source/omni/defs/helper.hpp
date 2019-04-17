@@ -21,11 +21,9 @@
 
 // macro helper functions
 
+// string-izes a macro: e.g. OMNI_DEF2STR(X) prints "X"
 #define OMNI_DEF2STR_FW(x) #x
 #define OMNI_DEF2STR(x) OMNI_DEF2STR_FW(x)
-
-#define OMNI_DEF2WSTR_FW(x) L""#x""
-#define OMNI_DEF2WSTR(x) OMNI_DEF2WSTR_FW(x)
 
 #define OMNI_DEFCONCAT_FW(A, B) A ## B
 #define OMNI_DEFCONCAT(A, B) OMNI_DEFCONCAT_FW(A, B)
@@ -37,10 +35,8 @@
 
 #define OMNI_UNUSED(val) (static_cast<void>(val))
 
-#if !defined(OMNI_WSTR)
-    #define OMNI_WSTR(v) L##v
-    #define OMNI_DWSTR(v) L#v
-#endif
+#define OMNI_WSTR(v) L ## v
+#define OMNI_DWSTR(v) L # v
 
 #if !defined(OMNI_DATE) && defined(__DATE__)
     #undef OMNI_DATE
@@ -67,6 +63,6 @@
 #define OMNI_MAX_PATH_FW 32767 // 32,767 - 1 for '\0'
 
 // #define OMNI_E2S_FW(v) case v: return OMNI_DEF2STR(v)
-// #define OMNI_E2WS_FW(v) case v: return OMNI_DEF2WSTR(v)
+// #define OMNI_E2WS_FW(v) case v: return OMNI_WSTR(v)
 
 #endif // OMNI_HELPER_HPP

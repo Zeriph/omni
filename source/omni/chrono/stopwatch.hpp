@@ -20,18 +20,9 @@
 #define OMNI_STOPWATCH_HPP 1
 #include <omni/defs/class_macros.hpp>
 #include <omni/chrono/tick.hpp>
-
+#include <omni/chrono/span.hpp>
 #if defined(OMNI_SAFE_STOPWATCH)
-    #include <omni/sync/scoped_lock.hpp>
-    #define OMNI_SAFE_SWMTX_FW      m_mtx(),
-    #define OMNI_STOPWATCH_ALOCK_FW omni::sync::scoped_lock<omni::sync::basic_lock> mlock(&this->m_mtx);
-    #define OMNI_STOPWATCH_MLOCK_FW this->m_mtx.lock();
-    #define OMNI_STOPWATCH_ULOCK_FW this->m_mtx.unlock();
-#else
-    #define OMNI_SAFE_SPANMTX_FW
-    #define OMNI_STOPWATCH_ALOCK_FW
-    #define OMNI_STOPWATCH_MLOCK_FW
-    #define OMNI_STOPWATCH_ULOCK_FW
+    #include <omni/sync/basic_lock.hpp>
 #endif
 
 namespace omni {
@@ -55,7 +46,7 @@ namespace omni {
             stopwatch(const omni::stopwatch &cp);
             ~stopwatch();
 
-            omni::chrono::timespan elapsed() const;
+            omni::chrono::unsigned_timespan elapsed() const;
             uint64_t elapsed_us() const;
             uint64_t elapsed_ms() const;
             uint64_t elapsed_s() const;
@@ -82,10 +73,9 @@ namespace omni {
              * 
              * @invariant      [optional] This is the complexity of this function (e.g. O(1) for X conditions, etc.)
              */
-            omni::stopwatch& restart(unsigned long offset_ms);
-            // TODO: change all unsigned int's to uint32_t, unsigned long to uint64_t, etc. etc.
+            omni::stopwatch& restart(uint32_t offset_ms);
             omni::stopwatch& start();
-            omni::stopwatch& start(unsigned long offset_ms);
+            omni::stopwatch& start(uint32_t offset_ms);
             omni::stopwatch& stop();
             omni::stopwatch& operator=(const omni::stopwatch &other);
             omni::stopwatch& operator=(bool enable);
@@ -106,7 +96,7 @@ namespace omni {
             /** Determines if the stopwatch has been started and not reset */
             volatile bool m_isstrt;
 
-            #if defined(OMNI_SAFE_STOPWATCH) // TODO: FINISH THIS
+            #if defined(OMNI_SAFE_STOPWATCH)
                 mutable omni::sync::basic_lock m_mtx;
             #endif
 

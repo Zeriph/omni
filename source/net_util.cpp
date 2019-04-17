@@ -31,19 +31,19 @@
 std::string omni::net::getBroadcastFromIpAndSubnet(const std::string &ip, const std::string &subnet)
 {
     if (!omni::net::isValidIp(ip)) {
-        #if defined(OMNI_SHOW_DEBUG_L1)
+        #if defined(OMNI_SHOW_DEBUG_ERR)
             dbgerr << "Invalid IP: " << ip << std::endl;
         #endif
-        #if !defined(OMNI_NOTHROW)
+        #if !defined(OMNI_NO_THROW)
             throw omni::exceptions::net::invalid_ip(ip);
         #endif
         return "";
     }
     if (!omni::net::isValidIp(subnet)) {
-        #if defined(OMNI_SHOW_DEBUG_L1)
+        #if defined(OMNI_SHOW_DEBUG_ERR)
             dbgerr << "Invalid subnet mask IP: " << subnet << std::endl;
         #endif
-        #if !defined(OMNI_NOTHROW)
+        #if !defined(OMNI_NO_THROW)
             throw omni::exceptions::net::invalid_ip(subnet);
         #endif
         return "";
@@ -71,10 +71,10 @@ std::string omni::net::getBroadcastFromIpAndSubnet(const std::string &ip, const 
 unsigned int omni::net::ipToNum(const std::string &ip)
 {
     if (!omni::net::isValidIp(ip)) {
-        #if defined(OMNI_SHOW_DEBUG_L1)
+        #if defined(OMNI_SHOW_DEBUG_ERR)
             dbgerr << "Invalid IP: " << ip << std::endl;
         #endif
-        #if !defined(OMNI_NOTHROW)
+        #if !defined(OMNI_NO_THROW)
             throw omni::exceptions::net::invalid_ip(ip);
         #endif
         return 0;
@@ -154,7 +154,7 @@ std::string omni::net::numToIp(unsigned int num)
             omni::string::convert::fromType<int>(oct2) + "." + 
             omni::string::convert::fromType<int>(oct3) + "." + 
             omni::string::convert::fromType<int>(oct4));
-    #if defined(OMNI_SHOW_DEBUG_L1)
+    #if defined(OMNI_SHOW_DEBUG_ERR)
         if (!omni::net::isValidIp(NewIp, true)) {
             dbg << num << " -> " << NewIp << ", IP is invalid" << std::endl;
         }

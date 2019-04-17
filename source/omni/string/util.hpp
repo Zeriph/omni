@@ -690,7 +690,7 @@ namespace omni {
                     if (static_cast<std::size_t>(*itr) > 31) { break; }
                     --itr; --end;
                 }
-                if (end != str.length()) { return str.substr(0, end); }
+                if (++end < str.length()) { return str.substr(0, end); }
                 return str;
             }
             
@@ -799,7 +799,7 @@ namespace omni {
                     /* DEV_NOTE: some older compilers complain about the to_string, the 'workaround' is
                     to give the full to_string template parameters with the char type (for a std::string) */
                     std::string ret = std::bitset<OMNI_SIZEOF_BITS(unsigned long)>
-                        (static_cast<unsigned long long>(val)).
+                        (static_cast<uint64_t>(val)).
                         to_string<char, std::char_traits<char>, std::allocator<char> >();
                     if (trim) {
                         std::string::iterator itr = ret.begin();
@@ -843,7 +843,7 @@ namespace omni {
                     if (str.length() > msz) {
                         OMNI_ERR_RETV_FW(OMNI_STRING_INVALID_SIZE_STR, omni::exceptions::invalid_binary_size(), 0)
                     }
-                    return (std::bitset<msz>(omni::string::util::to_string(str)).to_ulong());
+                    return static_cast<unsigned int>(std::bitset<msz>(omni::string::util::to_string(str)).to_ulong());
                 }
                 
                 template < typename std_string_t >

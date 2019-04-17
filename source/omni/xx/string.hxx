@@ -139,7 +139,7 @@ inline OMNI_STRING_T_FW pad_left(OMNI_STRING_T_FW str, const OMNI_STRING_T_FW& p
 template < std::size_t X >
 inline OMNI_STRING_T_FW pad_left(OMNI_STRING_T_FW str, const OMNI_CHAR_T_FW (&pad)[X], std::size_t count)
 {
-    return omni::string::util::pad_left(str, pad);
+    return omni::string::util::pad_left(str, pad, count);
 }
 
 inline OMNI_STRING_T_FW pad_right(OMNI_STRING_T_FW str, OMNI_CHAR_T_FW pad, std::size_t count)
@@ -155,7 +155,7 @@ inline OMNI_STRING_T_FW pad_right(OMNI_STRING_T_FW str, const OMNI_STRING_T_FW& 
 template < std::size_t X >
 inline OMNI_STRING_T_FW pad_right(OMNI_STRING_T_FW str, const OMNI_CHAR_T_FW (&pad)[X], std::size_t count)
 {
-    return omni::string::util::pad_right(str, pad);
+    return omni::string::util::pad_right(str, pad, count);
 }
 
 inline OMNI_STRING_T_FW replace(OMNI_STRING_T_FW str, const OMNI_STRING_T_FW& fnd, const OMNI_STRING_T_FW& newstr, std::size_t pos, bool ignoreCase)

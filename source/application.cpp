@@ -754,14 +754,14 @@ void omni::application::set_return_code(int return_code)
 void omni::application::set_args(const int& argc, const char** argv)
 {
     OMNI_SAFE_APP_LOCK_FW
-    omni::application::args_().set(argc, argv);
+    omni::application::args_().set(static_cast<uint32_t>(argc), argv);
     OMNI_SAFE_APP_UNLOCK_FW
 }
 
 void omni::application::set_args(const int& argc, const wchar_t** argv)
 {
     OMNI_SAFE_APP_LOCK_FW
-    omni::application::args_().set(argc, argv);
+    omni::application::args_().set(static_cast<uint32_t>(argc), argv);
     OMNI_SAFE_APP_UNLOCK_FW
 }
 

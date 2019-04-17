@@ -128,6 +128,12 @@ omni::sync::user_thread_exception(const omni::exception&)
 | care to achieve this while still keeping the code easy to read and maintain.
 */
 
+/* Code layout (padding):
+| Much of the framework is built and designed to avoid padding in any classes, structs or
+| unions, however, not all classes can necessarily (nor should necessarily) be built to
+| avoid padding.
+*/
+
 /* Code Documentation:
 | The raw_src.zip has the original source files that contain documentation notes attached
 | to each function for the custom Omni documentation generator to parse out. The source

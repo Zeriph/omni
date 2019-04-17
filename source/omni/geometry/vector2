@@ -18,4 +18,4 @@
  */
 
 
-#include <omni/types/color_t.hpp>
+#include <omni/geometry/vector2.hpp>

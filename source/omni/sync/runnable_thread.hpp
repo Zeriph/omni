@@ -48,15 +48,15 @@ namespace omni {
                 virtual ~runnable_thread();
                 void abort(); // request end nicely
                 bool abort_join();
-                bool abort_join(unsigned long timeout);
+                bool abort_join(uint32_t timeout);
                 const omni::sync::thread_union_t get_option(omni::sync::thread_option::enum_t op) const;
                 omni::sync::thread_flags get_options() const;
-                const omni::sync::thread_handle_t handle() const;
-                const omni::sync::thread_t id() const;
+                omni::sync::thread_handle_t handle() const;
+                omni::sync::thread_t id() const;
                 bool is_alive() const;
                 bool join(); // default of infinite timeout
-                bool join(unsigned long timeout);
-                //TODO: add bool join(const omni::timespan& t); when omni::timespan complete
+                bool join(uint32_t timeout);
+                bool join(const omni::chrono::unsigned_timespan& span);
                 bool kill(); // Terminate 'immediately'
                 virtual void run(omni::sync::thread_arg_t parm) { OMNI_UNUSED(parm); } // default empty run
                 bool reset();

@@ -130,7 +130,7 @@ std::string omni::environment::expand_vars(const std::string& vars)
             ::wordfree(&env);
         #endif
     #endif
-    OMNI_ERRV_RETV_FW("Error expanding environment variable: ", OMNI_GLE_PRNT, omni::exceptions::environment_exception(OMNI_GLE), omni::string_t())
+    OMNI_ERRV_RETV_FW("Error expanding environment variable: ", OMNI_GLE_PRNT, omni::exceptions::environment_exception(static_cast<size_t>(OMNI_GLE)), omni::string_t())
 }
 
 std::wstring omni::environment::expand_vars(const std::wstring& vars)
@@ -177,7 +177,7 @@ std::wstring omni::environment::expand_vars(const std::wstring& vars)
             ::wordfree(&env);
         #endif
     #endif
-    OMNI_ERRV_RETV_FW("Error expanding environment variable: ", OMNI_GLE_PRNT, omni::exceptions::environment_exception(OMNI_GLE), omni::string_t())
+    OMNI_ERRV_RETV_FW("Error expanding environment variable: ", OMNI_GLE_PRNT, omni::exceptions::environment_exception(static_cast<size_t>(OMNI_GLE)), omni::string_t())
 }
 
 std::string omni::environment::get_var(const std::string& name)
@@ -213,7 +213,7 @@ std::string omni::environment::get_var(const std::string& name)
         char* r = std::getenv(name.c_str());
         if (r != NULL) { return std::string(r); }
     #endif
-    OMNI_ERRV_RETV_FW("Error retrieving environment variable: ", OMNI_GLE_PRNT, omni::exceptions::environment_exception(OMNI_GLE), omni::string_t())
+    OMNI_ERRV_RETV_FW("Error retrieving environment variable: ", OMNI_GLE_PRNT, omni::exceptions::environment_exception(static_cast<size_t>(OMNI_GLE)), omni::string_t())
 }
 
 std::wstring omni::environment::get_var(const std::wstring& name)
@@ -250,7 +250,7 @@ std::wstring omni::environment::get_var(const std::wstring& name)
         char* r = std::getenv(v.c_str());
         if (r != NULL) { return omni::string::util::to_string_t(r); }
     #endif
-    OMNI_ERRV_RETV_FW("Error retrieving environment variable: ", OMNI_GLE_PRNT, omni::exceptions::environment_exception(OMNI_GLE), omni::string_t())
+    OMNI_ERRV_RETV_FW("Error retrieving environment variable: ", OMNI_GLE_PRNT, omni::exceptions::environment_exception(static_cast<size_t>(OMNI_GLE)), omni::string_t())
 }
 
 bool omni::environment::set_var(const std::string& name, const std::string& val)

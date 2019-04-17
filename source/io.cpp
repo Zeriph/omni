@@ -35,10 +35,22 @@
 #include <cstdarg>
 
 #if defined(OMNI_OS_WIN)
+    // Because we are using Windows we need to convert the name to 8.3 format otherwise, it's possible to get
+    // an INVALID_HANDLE_VALUE returned from a valid file. 
+    // Example: 'C:\Develop\C++\file.txt' could exist and there is nothing in the name more than 8 characters
+    // long, but because the folder 'C++' has invalid 8.3 characters in it, it will fail. 'C++' in 8.3 format is 'C__~1'
+    // CreateFile also needs a '\\?\' in front of the file to open an actual file handle ('\\.\' for a device)    
     #define OMNI_FILE_CHECKA_FW(file, ret) if (file.length() > MAX_PATH) { OMNI_ERRV_RETV_FW("file name exceeds maximum path length: ", MAX_PATH, omni::exceptions::path_exception(omni::string::util::to_string(file)), ret) }
     #define OMNI_FILE_CHECKW_FW(file, ret) file; \
             if (tf.length() > 4 && tf.substr(0, 4) != L"\\\\?\\") { tf = std::wstring(L"\\\\?\\") + tf; } \
             if (tf.length() >= OMNI_MAX_PATH_FW) { OMNI_ERRV_RETV_FW("file name exceeds maximum path length: ", OMNI_MAX_PATH_FW, omni::exceptions::path_exception(omni::string::util::to_string(file)), ret) }
+#endif
+
+#if !defined(OMNI_IO_FILE_TRUNCATE_FN)
+    #define OMNI_IO_FILE_TRUNCATE_FN ::truncate
+#endif
+#if !defined(OMNI_IO_FILE_FTRUNCATE_FN)
+    #define OMNI_IO_FILE_FTRUNCATE_FN ::ftruncate
 #endif
 
 #define OMNI_IO_FILE_FW

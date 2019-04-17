@@ -28,11 +28,11 @@ namespace omni {
         omni::string_t cwd();
         std::string error_str(int code);
         bool is_big_endian();
-        long last_error();
+        int32_t last_error();
         std::string last_error_str();
         #if defined(OMNI_NON_PORTABLE)
             omni::string_t path();
-            std::size_t processors();
+            uint64_t processors();
         #endif
         std::string signal_str(int sig);
     }

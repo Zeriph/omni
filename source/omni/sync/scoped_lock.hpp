@@ -37,7 +37,7 @@ namespace omni {
                     this->m_hndl->unlock();
                 }
                 
-                const T *const handle() const
+                T* handle() const
                 {
                     return this->m_hndl;
                 }
@@ -84,7 +84,7 @@ namespace omni {
                     omni::sync::mutex_unlock(*this->m_mtx);
                 }
 
-                const omni::sync::mutex_t *const handle() const
+                omni::sync::mutex_t* handle() const
                 {
                     return this->m_mtx;
                 }

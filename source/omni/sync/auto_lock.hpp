@@ -40,7 +40,7 @@ namespace omni {
                     if (this->m_hndl) { this->m_hndl->unlock(); }
                 }
                 
-                const T *const handle() const
+                const T* handle() const
                 {
                     return this->m_hndl;
                 }
@@ -125,7 +125,7 @@ namespace omni {
                     // don't error on destruction
                 }
 
-                const omni::sync::mutex_t *const handle() const
+                const omni::sync::mutex_t* handle() const
                 {
                     return this->m_hndl;
                 }

@@ -21,7 +21,21 @@
 #include <omni/defs/global.hpp>
 #include <omni/defs/class_macros.hpp>
 #include <omni/geometry/size.hpp>
-#include <omni/defs/point_def.hpp>
+
+#if defined(OMNI_SAFE_POINT2D)
+    #include <omni/sync/basic_lock.hpp>
+    #define OMNI_SAFE_P2DMTX_FW  ,m_mtx()
+    #define OMNI_SAFE_P2LOCK_FW   this->m_mtx.lock();
+    #define OMNI_SAFE_P2UNLOCK_FW this->m_mtx.unlock();
+    #define OMNI_SAFE_P2ALOCK_FW  omni::sync::scoped_basic_lock uuid12345(&this->m_mtx);
+    #define OMNI_SAFE_P2OALOCK_FW(o)  omni::sync::scoped_basic_lock uuid54321(&o.m_mtx);
+#else
+    #define OMNI_SAFE_P2DMTX_FW
+    #define OMNI_SAFE_P2LOCK_FW
+    #define OMNI_SAFE_P2UNLOCK_FW
+    #define OMNI_SAFE_P2ALOCK_FW
+    #define OMNI_SAFE_P2OALOCK_FW(o) 
+#endif
 
 namespace omni {
     namespace geometry {
@@ -29,6 +43,8 @@ namespace omni {
         class point2d
         {
             public:
+                typedef T coordinate_t;
+
                 point2d() : 
                     OMNI_CTOR_FW(omni::geometry::point2d<T>)
                     m_x(0), m_y(0)
@@ -281,7 +297,10 @@ namespace omni {
                     if (this == &val) { return true; }
                     OMNI_SAFE_P2ALOCK_FW
                     OMNI_SAFE_P2OALOCK_FW(val)
-                    return ((this->m_x == val.m_x) && (this->m_y == val.m_y))
+                    return (
+                        // TODO: finish this floating point math crap :/
+                        (this->m_x == val.m_x) && (this->m_y == val.m_y)
+                    )
                     OMNI_EQUAL_FW(val);
                 }
 
@@ -404,11 +423,19 @@ namespace omni {
         typedef omni::geometry::point2d<int32_t> point_t;
         typedef omni::geometry::point2d<int64_t> point64_t;
         typedef omni::geometry::point2d<float> pointF_t;
+        typedef omni::geometry::point2d<double> pointD_t;
+
+        typedef omni_sequence_t<omni::geometry::point_t> point_seq_t;
+        typedef omni_sequence_t<omni::geometry::point64_t> point64_seq_t;
+        typedef omni_sequence_t<omni::geometry::pointF_t> pointF_seq_t;
+        typedef omni_sequence_t<omni::geometry::pointD_t> pointD_seq_t;
 
         template < typename T >
         class point2d_raw
         {
             public:
+                typedef T coordinate_t;
+
                 point2d_raw() : 
                     OMNI_CTOR_FW(omni::geometry::point2d<T>)
                     x(0), y(0)
@@ -432,10 +459,6 @@ namespace omni {
                     OMNI_D5_FW("destroyed");
                 }
 
-                T x;
-
-                T y;
-
                 bool empty() const
                 {
                     return this->x == 0 && this->y == 0;
@@ -446,10 +469,10 @@ namespace omni {
                     return this->x == _x && this->y == _y;
                 }
 
-                void set(T x, T y)
+                void set(T _x, T _y)
                 {
-                    this->x = x;
-                    this->y = y;
+                    this->x = _x;
+                    this->y = _y;
                 }
 
                 void decrement(const point2d_raw<T>& val)
@@ -467,10 +490,10 @@ namespace omni {
                     this->decrement(val.width, val.height);
                 }
 
-                void decrement(T x, T y)
+                void decrement(T _x, T _y)
                 {
-                    this->x -= x;
-                    this->y -= y;
+                    this->x -= _x;
+                    this->y -= _y;
                 }
 
                 void offset(const point2d_raw<T>& val)
@@ -488,10 +511,10 @@ namespace omni {
                     this->offset(val.width, val.height);
                 }
 
-                void offset(T x, T y)
+                void offset(T _x, T _y)
                 {
-                    this->x += x;
-                    this->y += y;
+                    this->x += _x;
+                    this->y += _y;
                 }
 
                 const omni::string_t to_string_t() const
@@ -676,11 +699,21 @@ namespace omni {
                 OMNI_MEMBERS_FW(omni::geometry::point2d_raw<T>) // disposing,name,type(),hash()
 
                 OMNI_OSTREAM_FW(omni::geometry::point2d_raw<T>)
+
+                T x;
+
+                T y;
         };
 
         typedef omni::geometry::point2d_raw<int32_t> raw_point_t;
         typedef omni::geometry::point2d_raw<int64_t> raw_point64_t;
         typedef omni::geometry::point2d_raw<float> raw_pointF_t;
+        typedef omni::geometry::point2d_raw<double> raw_pointD_t;
+
+        typedef omni_sequence_t<omni::geometry::raw_point_t> raw_point_seq_t;
+        typedef omni_sequence_t<omni::geometry::raw_point64_t> raw_point64_seq_t;
+        typedef omni_sequence_t<omni::geometry::raw_pointF_t> raw_pointF_seq_t;
+        typedef omni_sequence_t<omni::geometry::raw_pointD_t> raw_pointD_seq_t;
     }
 }
 

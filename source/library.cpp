@@ -57,6 +57,7 @@ to ensure this file isn't built with the rest. */
     // #include "udp.cpp" # INCOMPLETE
 #endif
 
+#include "datetime.cpp"
 #include "stopwatch.cpp"
     
 #include "binary_semaphore.cpp"

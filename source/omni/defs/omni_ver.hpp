@@ -24,7 +24,7 @@
 
 #define OMNI_FW_VER_MAJ 0 // Major revision
 #define OMNI_FW_VER_MIN 7 // Minor revision
-#define OMNI_FW_VER_SUB 7 // Sub revision
+#define OMNI_FW_VER_SUB 8 // Sub revision
 
 #if defined(OMNI_FW_VER_USE_TIME)
     #define OMNI_FW_TS_FW OMNI_DATE" "OMNI_TIME

@@ -2,6 +2,8 @@
 
 Omni is an object oriented, cross-platform C++ framework, with recognizable paradigms like [thread objects](https://zeriph.com/omni/docs/examples/threading.html), [delegates and events](https://zeriph.com/omni/docs/examples/delegates_and_events.html), and easy to understand [interfaces](https://zeriph.com/omni/docs/classes/index.html), Omni enables you to get clean and stable C++ code to a wider market more efficiently while lowering code maintenance costs.
 
+For more information regarding Omni and more in-depth documentation, you can view the HTML documentation included with the source files, or you can go to the [Omni main site](https://zeriph.com/omni/).
+
 ## Getting Started
 
 Simply grab the latest [source](https://zeriph.com/omni/files/src.zip) and extract it to where you wish, then either `#include <omni/framework>` **or** `#include <omnilib>`, and make sure you include the directory where you extracted the Omni source via your compiler options.

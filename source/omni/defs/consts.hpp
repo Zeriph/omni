@@ -97,6 +97,9 @@
 #if !defined(OMNI_ERR_SIZE_STR)
     #define OMNI_ERR_SIZE_STR "Invalid size written"
 #endif
+#if !defined(OMNI_ERR_RANGE_STR)
+    #define OMNI_ERR_RANGE_STR "Invalid range specified"
+#endif
 #if !defined(OMNI_ERR_STROBJ_STR)
     #define OMNI_ERR_STROBJ_STR "A general exception occurred on the string object"
 #endif
@@ -184,6 +187,9 @@
 #if !defined(OMNI_OVERFLOW_STR)
     #define OMNI_OVERFLOW_STR "A general overflow exception has occurred"
 #endif
+#if !defined(OMNI_UNDERFLOW_STR)
+    #define OMNI_UNDERFLOW_STR "A general underflow exception has occurred"
+#endif
 #if !defined(OMNI_PATH_NOT_ACCESSIBLE_STR)
     #define OMNI_PATH_NOT_ACCESSIBLE_STR "Path not accessible"
 #endif
@@ -233,6 +239,23 @@
 #if !defined(OMNI_PLUS_CHAR)
     #define OMNI_PLUS_CHAR   '+'
 #endif
+
+#if !defined(OMNI_COMMA_WCHAR)
+    #define OMNI_COMMA_WCHAR  L','
+#endif
+#if !defined(OMNI_MINUS_WCHAR)
+    #define OMNI_MINUS_WCHAR  L'-'
+#endif
+#if !defined(OMNI_NCHAR_WCHAR)
+    #define OMNI_NCHAR_WCHAR  L'\0'
+#endif
+#if !defined(OMNI_PERIOD_WCHAR)
+    #define OMNI_PERIOD_WCHAR L'.'
+#endif
+#if !defined(OMNI_PLUS_WCHAR)
+    #define OMNI_PLUS_WCHAR   L'+'
+#endif
+
 
 #if !defined(OMNI_BYTE_STR)
     #define OMNI_BYTE_STR "Byte"

@@ -29,6 +29,7 @@ class UT_CLASS_DEF
             printl("stop");
             sw.stop();
             printv("elapsed ms (~2000): ", sw.elapsed_ms());
+            printv("elapsed: ", sw.elapsed());
             
             printl("sleep 1s");
             omni::sync::sleep(1000);

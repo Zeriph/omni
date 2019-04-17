@@ -79,8 +79,6 @@
 #endif
 
 #if defined(OMNI_OBJECT_NAME)
-    //#include <string>
-    //#define OMNI_MNM_MBRT_FW std::string name;
     #include <omni/types/string_t.hpp>
     // A property that allows you to assign a name to this object
     #define OMNI_MNM_MBRT_FW omni::string_t name;

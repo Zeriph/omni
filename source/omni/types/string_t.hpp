@@ -67,10 +67,10 @@ namespace omni {
             if (str.empty()) { return std::string(); }
             std::size_t sz = str.length();
             #if defined(OMNI_WIN_API)
-                std::size_t nd = ::WideCharToMultiByte(CP_UTF8, 0, &str[0], sz, NULL, 0, NULL, NULL);
+                std::size_t nd = ::WideCharToMultiByte(OMNI_CODE_PAGE, 0, str.c_str(), sz, NULL, 0, NULL, NULL);
                 if (nd != 0) {
-                    std::string cret(static_cast<std::size_t>(nd), '\0');
-                    std::size_t w = ::WideCharToMultiByte(CP_UTF8, 0, &str[0], sz, &cret[0], nd, NULL, NULL);
+                    std::string cret(nd, '\0');
+                    std::size_t w = ::WideCharToMultiByte(OMNI_CODE_PAGE, 0, str.c_str(), sz, &cret[0], nd, NULL, NULL);
                     if (w != 0) {
                         if (w != sz) {
                             OMNI_ERR_RETV_FW("wrote " << w << " but expected size of " << sz, omni::exceptions::invalid_size(), std::string())
@@ -149,10 +149,10 @@ namespace omni {
             if (str.empty()) { return std::wstring(); }
             std::size_t sz = str.length();
             #if defined(OMNI_WIN_API)
-                std::size_t nd = ::MultiByteToWideChar(CP_UTF8, 0, &str[0], sz, NULL, 0);
+                std::size_t nd = ::MultiByteToWideChar(OMNI_CODE_PAGE, 0, str.c_str(), sz, NULL, 0);
                 if (nd != 0) {
-                    std::wstring wret(static_cast<std::size_t>(nd), L'\0');
-                    std::size_t w = ::MultiByteToWideChar(CP_UTF8, 0, &str[0], sz, &wret[0], nd);
+                    std::wstring wret(nd, L'\0');
+                    std::size_t w = ::MultiByteToWideChar(OMNI_CODE_PAGE, 0, str.c_str(), sz, &wret[0], nd);
                     if (w != 0) {
                         if (w != sz) {
                             OMNI_ERR_RETV_FW("wrote " << w << " but expected size of " << sz, omni::exceptions::invalid_size(), std::wstring())
@@ -291,7 +291,7 @@ namespace omni {
         {
             public:
                 template < typename T >
-                static std_string_t lexical_cast(const T& val)
+                inline static std_string_t lexical_cast(const T& val)
                 {
                     return val;
                 }

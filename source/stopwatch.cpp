@@ -17,6 +17,18 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include <omni/chrono/stopwatch.hpp>
+#if defined(OMNI_SAFE_STOPWATCH)
+    #include <omni/sync/scoped_lock.hpp>
+    #define OMNI_SAFE_SWMTX_FW      ,m_mtx()
+    #define OMNI_STOPWATCH_ALOCK_FW omni::sync::scoped_lock<omni::sync::basic_lock> mlock(&this->m_mtx);
+    #define OMNI_STOPWATCH_MLOCK_FW this->m_mtx.lock();
+    #define OMNI_STOPWATCH_ULOCK_FW this->m_mtx.unlock();
+#else
+    #define OMNI_SAFE_SWMTX_FW
+    #define OMNI_STOPWATCH_ALOCK_FW
+    #define OMNI_STOPWATCH_MLOCK_FW
+    #define OMNI_STOPWATCH_ULOCK_FW
+#endif
 
 omni::stopwatch::stopwatch() :
     OMNI_CTOR_FW(omni::stopwatch)
@@ -24,6 +36,7 @@ omni::stopwatch::stopwatch() :
     m_init(),
     m_isrun(false),
     m_isstrt(false)
+    OMNI_SAFE_SWMTX_FW
 {
     #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
         omni::chrono::monotonic::initialize();
@@ -40,6 +53,7 @@ omni::stopwatch::stopwatch(const omni::stopwatch &cp) :
     m_init(),
     m_isrun(false),
     m_isstrt(false)
+    OMNI_SAFE_SWMTX_FW
 {
     #if defined(OMNI_OS_WIN) || defined(OMNI_OS_APPLE)
         this->m_init = cp.m_init;
@@ -63,13 +77,14 @@ omni::stopwatch::~stopwatch()
     OMNI_D5_FW("destroyed");
 }
 
-omni::chrono::timespan omni::stopwatch::elapsed() const
+omni::chrono::unsigned_timespan omni::stopwatch::elapsed() const
 {
-    return omni::chrono::timespan::from_milliseconds(this->elapsed_ms());
+    return omni::chrono::unsigned_timespan::from_microseconds(this->elapsed_us());
 }
 
 uint64_t omni::stopwatch::elapsed_us() const
 {
+    OMNI_STOPWATCH_ALOCK_FW
     return omni::chrono::elapsed_us(this->m_init,
         (this->m_isrun ? omni::chrono::monotonic_tick() : this->m_end)
     );
@@ -77,6 +92,7 @@ uint64_t omni::stopwatch::elapsed_us() const
 
 uint64_t omni::stopwatch::elapsed_ms() const
 {
+    OMNI_STOPWATCH_ALOCK_FW
     return omni::chrono::elapsed_ms(this->m_init,
         (this->m_isrun ? omni::chrono::monotonic_tick() : this->m_end)
     );
@@ -84,6 +100,7 @@ uint64_t omni::stopwatch::elapsed_ms() const
 
 uint64_t omni::stopwatch::elapsed_s() const
 {
+    OMNI_STOPWATCH_ALOCK_FW
     return omni::chrono::elapsed_s(this->m_init,
         (this->m_isrun ? omni::chrono::monotonic_tick() : this->m_end)
     );
@@ -91,6 +108,7 @@ uint64_t omni::stopwatch::elapsed_s() const
 
 bool omni::stopwatch::is_running() const
 {
+    OMNI_STOPWATCH_ALOCK_FW
     return this->m_isrun;
 }
 
@@ -107,7 +125,7 @@ omni::stopwatch& omni::stopwatch::restart()
     return this->restart(0);
 }
 
-omni::stopwatch& omni::stopwatch::restart(unsigned long offset_ms)
+omni::stopwatch& omni::stopwatch::restart(uint32_t offset_ms)
 {
     this->reset();
     OMNI_D2_FW("restarted");
@@ -119,8 +137,9 @@ omni::stopwatch& omni::stopwatch::start()
     return this->start(0);
 }
 
-omni::stopwatch& omni::stopwatch::start(unsigned long offset_ms)
+omni::stopwatch& omni::stopwatch::start(uint32_t offset_ms)
 {
+    OMNI_STOPWATCH_ALOCK_FW
     if (this->m_isrun) {
         // Don't 'start' if we are already running
         OMNI_D2_FW("stopwatch already running");
@@ -178,6 +197,7 @@ omni::stopwatch& omni::stopwatch::start(unsigned long offset_ms)
 
 omni::stopwatch& omni::stopwatch::stop()
 {
+    OMNI_STOPWATCH_ALOCK_FW
     if (this->m_isrun) {
         this->m_end = omni::chrono::monotonic_tick();
         this->m_isrun = false;
@@ -201,6 +221,7 @@ omni::stopwatch& omni::stopwatch::operator=(const omni::stopwatch &other)
 {
     if (this != &other) {
         this->stop();
+        OMNI_STOPWATCH_ALOCK_FW
         OMNI_ASSIGN_FW(other)
         this->m_end = other.m_end;
         this->m_init = other.m_init;
@@ -220,6 +241,7 @@ omni::stopwatch& omni::stopwatch::operator=(bool enable)
 bool omni::stopwatch::operator==(const omni::stopwatch &o) const
 {
     if (this == &o) { return true; }
+    OMNI_STOPWATCH_ALOCK_FW
     return (omni::chrono::equal(this->m_init, o.m_init) &&
             omni::chrono::equal(this->m_end, o.m_end) &&
             this->m_isrun == o.m_isrun &&
@@ -234,6 +256,7 @@ bool omni::stopwatch::operator!=(const omni::stopwatch &o) const
 
 void omni::stopwatch::_zero()
 {
+    OMNI_STOPWATCH_ALOCK_FW
     std::memset(&this->m_init, 0, sizeof(omni::chrono::tick_t));
     this->m_end = this->m_init;
     this->m_isstrt = false;

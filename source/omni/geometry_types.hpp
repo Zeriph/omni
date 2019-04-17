@@ -16,6 +16,14 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+#if !defined(OMNI_POINT_T_HPP)
+#define OMNI_POINT_T_HPP 1
 
+#include <omni/geometry/size.hpp>
+#include <omni/geometry/point2d.hpp>
+#include <omni/geometry/point3d.hpp>
+#include <omni/geometry/vector2.hpp>
+#include <omni/geometry/rectangle.hpp>
+#include <omni/geometry/path.hpp>
 
-#include <omni/base_types.hpp>
+#endif // OMNI_POINT_T_HPP

@@ -416,7 +416,7 @@ namespace omni {
              * 
              * @return A pointer to the underlying target object (if any)
              */
-            void *const target() const
+            void* target() const
             {
                 OMNI_SAFE_DGATE_ALOCK_FW
                 return this->m_target;
@@ -1033,7 +1033,6 @@ namespace omni {
             {
                 OMNI_SAFE_EVENT_ALOCK_FW
                 OMNI_D5_FW("detaching iterators");
-                iterator_t found = this->m_list.end();
                 while (begin != end) {
                     this->_rem(*begin, false);
                     ++begin;
@@ -1097,7 +1096,6 @@ namespace omni {
             {
                 OMNI_SAFE_EVENT_ALOCK_FW
                 OMNI_D5_FW("detaching iterators");
-                iterator_t found = this->m_list.end();
                 while (begin != end) {
                     this->_rem(*begin, true);
                     ++begin;

@@ -30,10 +30,10 @@ namespace omni {
         {
             public:
                 version();
-                version(unsigned int mj);
-                version(unsigned int mj, unsigned int mn);
-                version(unsigned int mj, unsigned int mn, unsigned int bld);
-                version(unsigned int mj, unsigned int mn, unsigned int bld, unsigned int rv);
+                version(uint16_t mj);
+                version(uint16_t mj, uint16_t mn);
+                version(uint16_t mj, uint16_t mn, uint32_t bld);
+                version(uint16_t mj, uint16_t mn, uint32_t bld, uint64_t rv);
                 explicit version(const std::string& str);
                 explicit version(const std::wstring& str);
                 version(const omni::util::version& cp);
@@ -56,23 +56,23 @@ namespace omni {
                 }
                 
                 // maj/major can't be used as a name (some compilers complain)
-                inline unsigned int maj_value() const
+                inline uint16_t major_number() const
                 {
                     return this->m_maj;
                 }
                 
                 // min/minor can't be used as a name (some compilers complain)
-                inline unsigned int min_value() const
+                inline uint16_t minor_number() const
                 {
                     return this->m_min;
                 }
                 
-                inline unsigned int build() const
+                inline uint32_t build() const
                 {
                     return this->m_bld;
                 }
                 
-                inline unsigned int revision() const
+                inline uint64_t revision() const
                 {
                     return this->m_rev;
                 }
@@ -178,13 +178,13 @@ namespace omni {
                 }
                 
                 /** The major version number */
-                unsigned int m_maj; // g++ doesn't like major/minor as member names???
+                uint16_t m_maj; // g++ doesn't like major/minor as member names???
                 /** The minor version number */
-                unsigned int m_min;
+                uint16_t m_min;
                 /** The build version number */
-                unsigned int m_bld;
+                uint32_t m_bld;
                 /** The revision number */
-                unsigned int m_rev;
+                uint64_t m_rev;
         };
     }
 }

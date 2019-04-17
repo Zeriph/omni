@@ -48,7 +48,7 @@ namespace omni {
                 
                 void signal();
                 bool wait();
-                bool wait(unsigned long timeout_ms);
+                bool wait(uint32_t timeout_ms);
                 bool operator==(const omni::sync::conditional& o);            
                 bool operator!=(const omni::sync::conditional& o);
                 
@@ -63,7 +63,7 @@ namespace omni {
                 
                 omni::sync::cond_t m_signal;
                 mutable omni::sync::mutex_t m_wait;
-                unsigned long m_waitreq;
+                uint32_t m_waitreq;
                 volatile mutable bool m_signaled;
         };
     }

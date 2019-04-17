@@ -24,7 +24,6 @@
 #include <omni/string/util.hpp>
 #include <omni/types/fstream_t.hpp>
 #include <omni/sequence.hpp>
-#include <cstdint>
 
 namespace omni {
     namespace io {

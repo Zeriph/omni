@@ -47,25 +47,31 @@ int main(int argc, char *argv[]) {
 
 #include <omni/defs/global.hpp> // os.hpp, helper.hpp, omni_ver.hpp, debug.hpp, exception.hpp
 #include <omni/defs/class_macros.hpp>
-#if defined(OMNI_COMPILE_FLAGS)
-    #include <omni/defs/compile_flags.hpp>
-#endif
 
 // delegates
 #include <omni/delegates.hpp>
+#include <omni/types/invoke_t.hpp>
 
 // generic objects
-#include <omni/base_types.hpp> // char_t.hpp, string_t.hpp, seq_t.hpp, info.hpp, generic_ptr.hpp, smart_ptr.hpp, property.hpp, object.hpp
+#include <omni/types/ptr_t.hpp> // #include <omni/generic_ptr.hpp>
+#include <omni/type.hpp>
+#include <omni/object.hpp>
+#include <omni/property.hpp>
+#include <omni/smart_ptr.hpp>
+#include <omni/sequence.hpp> // types/seq_t.hpp
 
 // strings/constants
-#include <omni/string/util.hpp>
+#include <omni/string/util.hpp> // types/string_t (types/char_t)
 #include <omni/ostream.hpp>
 #include <omni/strings.hpp> // cstring.hpp, wstring.hpp
 #include <omni/constants.hpp> // cconsts.hpp, wconsts.hpp
 
-// drawing/geometry
-#include <omni/types/color_t.hpp>
-#include <omni/types/point_t.hpp>
+// drawing
+#include <omni/color_types.hpp>
+
+// math/geometry
+#include <omni/math.hpp>
+#include <omni/geometry_types.hpp>
 
 // system/environment
 #include <omni/environment.hpp>
@@ -87,5 +93,6 @@ int main(int argc, char *argv[]) {
 
 // net
 #include <omni/net_types.hpp>
+
     
 #endif // OMNI_FRAMEWORK_HPP

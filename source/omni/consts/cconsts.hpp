@@ -24,11 +24,13 @@
 
 namespace omni {
     namespace cconsts {
+        #define OMNI_MISC_T_FW 1
         #define OMNI_CHAR_T_FW char
         #define OMNI_STRW_FW(v) v
         #include <omni/xx/const.hxx>
         #undef OMNI_CHAR_T_FW
         #undef OMNI_STRW_FW
+        #undef OMNI_MISC_T_FW
     }
 }
 

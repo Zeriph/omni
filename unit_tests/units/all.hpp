@@ -88,7 +88,6 @@ class UT_CLASS_DEF
             print_info(omni::sync::spin_wait);
             print_info(omni::sync::safe_spin_wait);
             print_info(omni::sync::conditional);
-            print_info(omni::chrono::time);
             print_info(omni::chrono::timespan);
             print_info(omni::chrono::unsigned_timespan);
             print_info(omni::chrono::async_timer);
@@ -119,7 +118,8 @@ class UT_CLASS_DEF
             print_info(omni::geometry::raw_rectangle_t);
             print_info(omni::geometry::raw_rectangle64_t);
             print_info(omni::geometry::raw_rectangleF_t);
-            print_info(omni::drawing::color);
+            print_info(omni::drawing::color_t);
+            print_info(omni::drawing::color64_t);
 
             // exceptions
             print_info(omni::exception);
@@ -129,6 +129,227 @@ class UT_CLASS_DEF
             print_info(omni::exceptions::threadpool_exception);
             print_info(omni::exceptions::mutex_system_exception);
             print_info(omni::exceptions::semaphore_system_exception);
+
+            // constants (static memory)
+            std::cout << "constant static memory consumed: " <<
+                    sizeof(omni::chrono::DAYS_PER_YEAR) +
+                    sizeof(omni::chrono::DAYS_PER_4_YEARS) +
+                    sizeof(omni::chrono::DAYS_PER_100_YEARS) +
+                    sizeof(omni::chrono::DAYS_PER_400_YEARS) +
+                    sizeof(omni::chrono::DAYS_TO_1601AD) +
+                    sizeof(omni::chrono::DAYS_TO_1899AD) +
+                    sizeof(omni::chrono::DAYS_TO_10000AD) +
+                    sizeof(omni::chrono::TICKS_TO_10000AD) +
+                    sizeof(omni::chrono::MILLISECONDS_TO_10000AD) +
+                    sizeof(omni::chrono::FILE_TIME_OFFSET) +
+                    sizeof(omni::chrono::DOUBLE_DATE_OFFSET) +
+                    sizeof(omni::chrono::OA_DATE_MIN_AS_TICKS) +
+                    sizeof(omni::chrono::OA_DATE_MIN_AS_DOUBLE) +
+                    sizeof(omni::chrono::OA_DATE_MAX_AS_DOUBLE) +
+                    sizeof(omni::chrono::DAYS_TO_MONTH_365) +
+                    sizeof(omni::chrono::DAYS_TO_MONTH_366) +
+
+                    sizeof(omni::chrono::TICKS_PER_NANOSECOND) +
+                    sizeof(omni::chrono::TICKS_PER_MICROSECOND) +
+                    sizeof(omni::chrono::TICKS_PER_MILLISECOND) +
+                    sizeof(omni::chrono::TICKS_PER_TENTH_SECOND) +
+                    sizeof(omni::chrono::TICKS_PER_SECOND) +
+                    sizeof(omni::chrono::TICKS_PER_MINUTE) +
+                    sizeof(omni::chrono::TICKS_PER_HOUR) +
+                    sizeof(omni::chrono::TICKS_PER_DAY) +
+                    sizeof(omni::chrono::NANOSECONDS_PER_MICROSECOND) +
+                    sizeof(omni::chrono::NANOSECONDS_PER_MILLISECOND) +
+                    sizeof(omni::chrono::NANOSECONDS_PER_SECOND) +
+                    sizeof(omni::chrono::NANOSECONDS_PER_MINUTE) +
+                    sizeof(omni::chrono::NANOSECONDS_PER_HOUR) +
+                    sizeof(omni::chrono::NANOSECONDS_PER_DAY) +
+                    sizeof(omni::chrono::MICROSECONDS_PER_NANOSECOND) +
+                    sizeof(omni::chrono::MICROSECONDS_PER_MILLISECOND) +
+                    sizeof(omni::chrono::MICROSECONDS_PER_SECOND) +
+                    sizeof(omni::chrono::MICROSECONDS_PER_MINUTE) +
+                    sizeof(omni::chrono::MICROSECONDS_PER_HOUR) +
+                    sizeof(omni::chrono::MICROSECONDS_PER_DAY) +
+                    sizeof(omni::chrono::MILLISECONDS_PER_NANOSECOND) +
+                    sizeof(omni::chrono::MILLISECONDS_PER_MICROSECOND) +
+                    sizeof(omni::chrono::MILLISECONDS_PER_SECOND) +
+                    sizeof(omni::chrono::MILLISECONDS_PER_MINUTE) +
+                    sizeof(omni::chrono::MILLISECONDS_PER_HOUR) +
+                    sizeof(omni::chrono::MILLISECONDS_PER_DAY) +
+                    sizeof(omni::chrono::SECONDS_PER_NANOSECOND) +
+                    sizeof(omni::chrono::SECONDS_PER_MICROSECOND) +
+                    sizeof(omni::chrono::SECONDS_PER_MILLISECOND) +
+                    sizeof(omni::chrono::SECONDS_PER_MINUTE) +
+                    sizeof(omni::chrono::SECONDS_PER_HOUR) +
+                    sizeof(omni::chrono::SECONDS_PER_DAY) +
+                    sizeof(omni::chrono::MINUTES_PER_NANOSECOND) +
+                    sizeof(omni::chrono::MINUTES_PER_MICROSECOND) +
+                    sizeof(omni::chrono::MINUTES_PER_MILLISECOND) +
+                    sizeof(omni::chrono::MINUTES_PER_SECOND) +
+                    sizeof(omni::chrono::MINUTES_PER_HOUR) +
+                    sizeof(omni::chrono::MINUTES_PER_DAY) +
+                    sizeof(omni::chrono::NANOSECONDS_PER_TICK) +
+                    sizeof(omni::chrono::MICROSECONDS_PER_TICK) +
+                    sizeof(omni::chrono::MILLISECONDS_PER_TICK) +
+                    sizeof(omni::chrono::SECONDS_PER_TICK) +
+                    sizeof(omni::chrono::MINUTES_PER_TICK) +
+                    sizeof(omni::chrono::HOURS_PER_TICK) +
+                    sizeof(omni::chrono::DAYS_PER_TICK) +
+
+                    sizeof(omni::consts::size::binary::KB) +
+                    sizeof(omni::consts::size::binary::MB) +
+                    sizeof(omni::consts::size::binary::GB) +
+                    sizeof(omni::consts::size::decimal::KB) +
+                    sizeof(omni::consts::size::decimal::MB) +
+                    sizeof(omni::consts::size::decimal::GB) +
+                    
+                    // char
+                    sizeof(omni::cconsts::err::DELEGATE_NOT_FOUND) +
+                    sizeof(omni::cconsts::err::ERR_GET_TIME) +
+                    sizeof(omni::cconsts::err::ERR_MEM_ALLOC) +
+                    sizeof(omni::cconsts::err::ERR_OPEN_PARENT_PROC) +
+                    sizeof(omni::cconsts::err::ERR_RET_PRI_CLASS) +
+                    sizeof(omni::cconsts::err::ERR_SET_PRIORITY) +
+                    sizeof(omni::cconsts::err::FILE_NOT_FOUND) +
+                    sizeof(omni::cconsts::err::FILE_NOT_ACCESSIBLE) +
+                    sizeof(omni::cconsts::err::GENERAL_EXCEPTION) +
+                    sizeof(omni::cconsts::err::INDEX_OOR) +
+                    sizeof(omni::cconsts::err::INVALID_BASE) +
+                    sizeof(omni::cconsts::err::INVALID_CHAR) +
+                    sizeof(omni::cconsts::err::INVALID_CAST) +
+                    sizeof(omni::cconsts::err::INVALID_DELEGATE) +
+                    sizeof(omni::cconsts::err::INVALID_DELEGATE_FUNC_PTR) +
+                    sizeof(omni::cconsts::err::INVALID_OPTION) +
+                    sizeof(omni::cconsts::err::INVALID_SETTING) +
+                    sizeof(omni::cconsts::err::INVALID_SEEK_DIR) +
+                    sizeof(omni::cconsts::err::INVALID_THREAD_HANDLE) +
+                    sizeof(omni::cconsts::err::INVALID_THREAD_PRIORITY) +
+                    sizeof(omni::cconsts::err::INVALID_THREAD_START_TYPE) +
+                    sizeof(omni::cconsts::err::INVALID_SIZE) +
+                    sizeof(omni::cconsts::err::PATH_NOT_ACCESSIBLE) +
+                    sizeof(omni::cconsts::err::SET_PRI_UNSUPPORTED) +
+                    sizeof(omni::cconsts::err::STRING_COUNT_GT0) +
+                    sizeof(omni::cconsts::err::STRING_INVALID_BINARY_FORMAT) +
+                    sizeof(omni::cconsts::err::STRING_INVALID_BINARY_STR_SZ) +
+                    sizeof(omni::cconsts::err::STRING_NOT_NUMERIC) +
+                    sizeof(omni::cconsts::err::SUCCESS) +
+                    sizeof(omni::cconsts::err::UNKNOWN) +
+                    sizeof(omni::cconsts::misc::COMMA) +
+                    sizeof(omni::cconsts::misc::MINUS) +
+                    sizeof(omni::cconsts::misc::NCHAR) +
+                    sizeof(omni::cconsts::misc::PERIOD) +
+                    sizeof(omni::cconsts::misc::PLUS) +
+                    sizeof(omni::cconsts::size::binary::string::full::B) +
+                    sizeof(omni::cconsts::size::binary::string::full::KB) +
+                    sizeof(omni::cconsts::size::binary::string::full::MB) +
+                    sizeof(omni::cconsts::size::binary::string::full::GB) +
+                    sizeof(omni::cconsts::size::binary::string::full::TB) +
+                    sizeof(omni::cconsts::size::binary::string::full::PB) +
+                    sizeof(omni::cconsts::size::binary::string::full::EB) +
+                    sizeof(omni::cconsts::size::binary::string::full::ZB) +
+                    sizeof(omni::cconsts::size::binary::string::full::YB) +
+                    sizeof(omni::cconsts::size::binary::string::B) +
+                    sizeof(omni::cconsts::size::binary::string::KB) +
+                    sizeof(omni::cconsts::size::binary::string::MB) +
+                    sizeof(omni::cconsts::size::binary::string::GB) +
+                    sizeof(omni::cconsts::size::binary::string::TB) +
+                    sizeof(omni::cconsts::size::binary::string::PB) +
+                    sizeof(omni::cconsts::size::binary::string::EB) +
+                    sizeof(omni::cconsts::size::binary::string::ZB) +
+                    sizeof(omni::cconsts::size::binary::string::YB) +
+                    sizeof(omni::cconsts::size::decimal::string::full::B) +
+                    sizeof(omni::cconsts::size::decimal::string::full::KB) +
+                    sizeof(omni::cconsts::size::decimal::string::full::MB) +
+                    sizeof(omni::cconsts::size::decimal::string::full::GB) +
+                    sizeof(omni::cconsts::size::decimal::string::full::TB) +
+                    sizeof(omni::cconsts::size::decimal::string::full::PB) +
+                    sizeof(omni::cconsts::size::decimal::string::full::EB) +
+                    sizeof(omni::cconsts::size::decimal::string::full::ZB) +
+                    sizeof(omni::cconsts::size::decimal::string::full::YB) +
+                    sizeof(omni::cconsts::size::decimal::string::B) +
+                    sizeof(omni::cconsts::size::decimal::string::KB) +
+                    sizeof(omni::cconsts::size::decimal::string::MB) +
+                    sizeof(omni::cconsts::size::decimal::string::GB) +
+                    sizeof(omni::cconsts::size::decimal::string::TB) +
+                    sizeof(omni::cconsts::size::decimal::string::PB) +
+                    sizeof(omni::cconsts::size::decimal::string::EB) +
+                    sizeof(omni::cconsts::size::decimal::string::ZB) +
+                    sizeof(omni::cconsts::size::decimal::string::YB) +
+
+                    // wchar_t
+                    sizeof(omni::wconsts::err::DELEGATE_NOT_FOUND) +
+                    sizeof(omni::wconsts::err::ERR_GET_TIME) +
+                    sizeof(omni::wconsts::err::ERR_MEM_ALLOC) +
+                    sizeof(omni::wconsts::err::ERR_OPEN_PARENT_PROC) +
+                    sizeof(omni::wconsts::err::ERR_RET_PRI_CLASS) +
+                    sizeof(omni::wconsts::err::ERR_SET_PRIORITY) +
+                    sizeof(omni::wconsts::err::FILE_NOT_FOUND) +
+                    sizeof(omni::wconsts::err::FILE_NOT_ACCESSIBLE) +
+                    sizeof(omni::wconsts::err::GENERAL_EXCEPTION) +
+                    sizeof(omni::wconsts::err::INDEX_OOR) +
+                    sizeof(omni::wconsts::err::INVALID_BASE) +
+                    sizeof(omni::wconsts::err::INVALID_CHAR) +
+                    sizeof(omni::wconsts::err::INVALID_CAST) +
+                    sizeof(omni::wconsts::err::INVALID_DELEGATE) +
+                    sizeof(omni::wconsts::err::INVALID_DELEGATE_FUNC_PTR) +
+                    sizeof(omni::wconsts::err::INVALID_OPTION) +
+                    sizeof(omni::wconsts::err::INVALID_SETTING) +
+                    sizeof(omni::wconsts::err::INVALID_SEEK_DIR) +
+                    sizeof(omni::wconsts::err::INVALID_THREAD_HANDLE) +
+                    sizeof(omni::wconsts::err::INVALID_THREAD_PRIORITY) +
+                    sizeof(omni::wconsts::err::INVALID_THREAD_START_TYPE) +
+                    sizeof(omni::wconsts::err::INVALID_SIZE) +
+                    sizeof(omni::wconsts::err::PATH_NOT_ACCESSIBLE) +
+                    sizeof(omni::wconsts::err::SET_PRI_UNSUPPORTED) +
+                    sizeof(omni::wconsts::err::STRING_COUNT_GT0) +
+                    sizeof(omni::wconsts::err::STRING_INVALID_BINARY_FORMAT) +
+                    sizeof(omni::wconsts::err::STRING_INVALID_BINARY_STR_SZ) +
+                    sizeof(omni::wconsts::err::STRING_NOT_NUMERIC) +
+                    sizeof(omni::wconsts::err::SUCCESS) +
+                    sizeof(omni::wconsts::err::UNKNOWN) +
+                    sizeof(omni::wconsts::misc::COMMA) +
+                    sizeof(omni::wconsts::misc::MINUS) +
+                    sizeof(omni::wconsts::misc::NCHAR) +
+                    sizeof(omni::wconsts::misc::PERIOD) +
+                    sizeof(omni::wconsts::misc::PLUS) +
+                    sizeof(omni::wconsts::size::binary::string::full::B) +
+                    sizeof(omni::wconsts::size::binary::string::full::KB) +
+                    sizeof(omni::wconsts::size::binary::string::full::MB) +
+                    sizeof(omni::wconsts::size::binary::string::full::GB) +
+                    sizeof(omni::wconsts::size::binary::string::full::TB) +
+                    sizeof(omni::wconsts::size::binary::string::full::PB) +
+                    sizeof(omni::wconsts::size::binary::string::full::EB) +
+                    sizeof(omni::wconsts::size::binary::string::full::ZB) +
+                    sizeof(omni::wconsts::size::binary::string::full::YB) +
+                    sizeof(omni::wconsts::size::binary::string::B) +
+                    sizeof(omni::wconsts::size::binary::string::KB) +
+                    sizeof(omni::wconsts::size::binary::string::MB) +
+                    sizeof(omni::wconsts::size::binary::string::GB) +
+                    sizeof(omni::wconsts::size::binary::string::TB) +
+                    sizeof(omni::wconsts::size::binary::string::PB) +
+                    sizeof(omni::wconsts::size::binary::string::EB) +
+                    sizeof(omni::wconsts::size::binary::string::ZB) +
+                    sizeof(omni::wconsts::size::binary::string::YB) +
+                    sizeof(omni::wconsts::size::decimal::string::full::B) +
+                    sizeof(omni::wconsts::size::decimal::string::full::KB) +
+                    sizeof(omni::wconsts::size::decimal::string::full::MB) +
+                    sizeof(omni::wconsts::size::decimal::string::full::GB) +
+                    sizeof(omni::wconsts::size::decimal::string::full::TB) +
+                    sizeof(omni::wconsts::size::decimal::string::full::PB) +
+                    sizeof(omni::wconsts::size::decimal::string::full::EB) +
+                    sizeof(omni::wconsts::size::decimal::string::full::ZB) +
+                    sizeof(omni::wconsts::size::decimal::string::full::YB) +
+                    sizeof(omni::wconsts::size::decimal::string::B) +
+                    sizeof(omni::wconsts::size::decimal::string::KB) +
+                    sizeof(omni::wconsts::size::decimal::string::MB) +
+                    sizeof(omni::wconsts::size::decimal::string::GB) +
+                    sizeof(omni::wconsts::size::decimal::string::TB) +
+                    sizeof(omni::wconsts::size::decimal::string::PB) +
+                    sizeof(omni::wconsts::size::decimal::string::EB) +
+                    sizeof(omni::wconsts::size::decimal::string::ZB) +
+                    sizeof(omni::wconsts::size::decimal::string::YB) +
+
+                    sizeof(omni::environment::NEW_LINE)
+            << std::endl;
         }
 };
 

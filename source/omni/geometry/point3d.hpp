@@ -21,7 +21,21 @@
 #include <omni/defs/global.hpp>
 #include <omni/defs/class_macros.hpp>
 #include <omni/geometry/size.hpp>
-#include <omni/defs/point_def.hpp>
+
+#if defined(OMNI_SAFE_POINT3D)
+    #include <omni/sync/basic_lock.hpp>
+    #define OMNI_SAFE_P3DMTX_FW  ,m_mtx()
+    #define OMNI_SAFE_P3LOCK_FW   this->m_mtx.lock();
+    #define OMNI_SAFE_P3UNLOCK_FW this->m_mtx.unlock();
+    #define OMNI_SAFE_P3ALOCK_FW  omni::sync::scoped_basic_lock uuid12345(&this->m_mtx);
+    #define OMNI_SAFE_P3OALOCK_FW(o)  omni::sync::scoped_basic_lock uuid54321(&o.m_mtx);
+#else
+    #define OMNI_SAFE_P3DMTX_FW
+    #define OMNI_SAFE_P3LOCK_FW
+    #define OMNI_SAFE_P3UNLOCK_FW
+    #define OMNI_SAFE_P3ALOCK_FW
+    #define OMNI_SAFE_P3OALOCK_FW(o) 
+#endif
 
 namespace omni {
     namespace geometry {
@@ -361,12 +375,6 @@ namespace omni {
                     OMNI_D5_FW("destroyed");
                 }
 
-                T x;
-
-                T y;
-
-                T z;
-
                 bool empty() const
                 {
                     return this->x == 0 && this->y == 0 && this->z == 0;
@@ -375,6 +383,13 @@ namespace omni {
                 bool equals(T _x, T _y, T _z) const
                 {
                     return this->x == _x && this->y == _y && this->z == _z;
+                }
+
+                void set(T _x, T _y, T _z)
+                {
+                    this->x = _x;
+                    this->y = _y;
+                    this->z = _z;
                 }
 
                 omni::string_t to_string_t() const
@@ -474,6 +489,12 @@ namespace omni {
                 OMNI_MEMBERS_FW(omni::geometry::point3d_raw<T>) // disposing,name,type(),hash()
 
                 OMNI_OSTREAM_FW(omni::geometry::point3d_raw<T>)
+
+                T x;
+
+                T y;
+
+                T z;
         };
 
         typedef omni::geometry::point3d_raw<int32_t> raw_point_3d_t;

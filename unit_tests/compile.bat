@@ -145,6 +145,7 @@ set fwsrc=!fwsrc! !common!\async_timer.cpp
 set fwsrc=!fwsrc! !common!\basic_thread.cpp
 set fwsrc=!fwsrc! !common!\binary_semaphore.cpp
 set fwsrc=!fwsrc! !common!\conditional.cpp
+set fwsrc=!fwsrc! !common!\datetime.cpp
 set fwsrc=!fwsrc! !common!\drop_timer.cpp
 set fwsrc=!fwsrc! !common!\environment.cpp
 set fwsrc=!fwsrc! !common!\externs.cpp
@@ -187,6 +188,7 @@ set syntax=0
 set nowinapi=0
 set doasm=0
 set islib=0
+set useuni=1
 
 :argloop
 if not "%1"=="" (
@@ -214,6 +216,13 @@ if not "%1"=="" (
         shift
     ) else if "%1"=="-d" (
         set defines=%defines% /D %2
+        if "%2"=="OMNI_THREAD_STDCALL" (
+            set extraopts=/Gz !extraopts!
+        ) else if "%2"=="OMNI_THREAD_FASTCALL" (
+            set extraopts=/Gr !extraopts!
+        ) else if "%2"=="OMNI_THREAD_CDECL" (
+            set extraopts=/Gd !extraopts!
+        )
         shift
     ) else if "%1"=="-l" (
         set libs=!libs! %2
@@ -241,15 +250,31 @@ if not "%1"=="" (
     ) else if "%1"=="-oo" (
         REM framework options
         REM set fexcep=/EHs
-        if "%2"=="stdcall" (
-            set defines=!defines! /D OMNI_THREAD_STDCALL
-            set extraopts=/Gz !extraopts!
-        ) else if "%2"=="fastcall" (
-            set defines=!defines! /D OMNI_THREAD_FASTCALL
-            set extraopts=/Gr !extraopts!
-        ) else if "%2"=="cdecl" (
-            set defines=!defines! /D OMNI_THREAD_CDECL
-            set extraopts=/Gd !extraopts!
+        if "%2"=="np" (
+            set defines=!defines! /D OMNI_NON_PORTABLE
+        ) else if "%2"=="terr" (
+            set defines=!defines! /D OMNI_TERMINATE
+        ) else if "%2"=="lite" (
+            set defines=!defines! /D OMNI_LITE
+        ) else if "%2"=="heavy" (
+            set defines=!defines! /D OMNI_DISPOSE_EVENT /D OMNI_OBJECT_NAME /D OMNI_TYPE_INFO
+        ) else if "%2"=="safe" (
+            if "%3"=="fw" (
+                set defines=!defines! /D OMNI_SAFE_FRAMEWORK
+            ) else (
+                set defines=!defines! /D OMNI_SAFE_%3
+            )
+        ) else if "%2"=="no" (
+            if "%2"=="throw" (
+                set defines=!defines! /D OMNI_NO_THROW"; fexcep="-fno-exceptions
+            ) else if "%2"=="uni" (
+                useuni=0
+            ) else if "%2"=="extc" (
+                set defines=!defines! /D OMNI_NO_EXTERN_CONSTS 
+            ) else (
+                echo Unknown no-framework option %3
+                goto showusage
+            )
         ) else (
             echo Unknown framework option %2
             goto showusage
@@ -258,27 +283,18 @@ if not "%1"=="" (
     ) else if "%1"=="-dbg" (
         REM framework debug options
         set usedbg=1
-        if "%2"=="1" (
-            set defines=!defines! /D OMNI_SHOW_DEBUG=1
-        ) else if "%2"=="2" (
-            set defines=!defines! /D OMNI_SHOW_DEBUG=2
-        ) else if "%2"=="3" (
-            set defines=!defines! /D OMNI_SHOW_DEBUG=3
-        ) else if "%2"=="4" (
-            set defines=!defines! /D OMNI_SHOW_DEBUG=4
-        ) else if "%2"=="5" (
-            set defines=!defines! /D OMNI_SHOW_DEBUG=5
-        ) else if "%2"=="err" (
+        if "%2"=="err" (
             set defines=!defines! /D OMNI_SHOW_DEBUG_ERR    
-        ) else if "%2"=="file" (
-            set defines=!defines! /D OMNI_SHOW_DEBUG_FILE
-        ) else if "%2"=="func" (
-            set defines=!defines! /D OMNI_SHOW_DEBUG_FUNC
-        ) else if "%2"=="line" (
-            set defines=!defines! /D OMNI_SHOW_DEBUG_LINE
+        ) else if "%2"=="full" (
+            set defines=!defines! /D OMNI_SHOW_DEBUG_FILE /D OMNI_SHOW_DEBUG_FUNC /D OMNI_SHOW_DEBUG_LINE
         ) else (
-            echo Unknown framework debug option %2
-            goto showusage
+            SET "ivar="&for /f "delims=0123456789" %%i in ("%2") do set ivar=%%i
+            if defined ivar (
+                echo Unknown framework debug option %2
+                goto showusage
+            ) else (
+                set defines=!defines! /D OMNI_SHOW_DEBUG=%2
+            )
         )
         shift
     ) else if "%1"=="-co" (
@@ -312,17 +328,15 @@ if not "%1"=="" (
             set extraopts=!extraopts! /WX
         ) else if "%2"=="nortti" (
             set extraopts=/GR- !extraopts!
-        ) else if "%2"=="opti" (
+        ) else if "%2"=="opt" (
             REM /Og is supposed to be removed from cl.exe ..
-            set extraopts=/Oi !extraopts!
-        ) else if "%2"=="opt1" (
-            set extraopts=/O1 !extraopts!
-        ) else if "%2"=="opt2" (
-            set extraopts=/O2 !extraopts!
-        ) else if "%2"=="opt3" (
-            set extraopts=/Ox !extraopts!
-        ) else if "%2"=="opts" (
-            set extraopts=/Os !extraopts!
+            if "%3"=="3" (
+                set extraopts=/Ox !extraopts!
+            ) else if "%3"=="0" (
+                set extraopts=/Oi !extraopts!
+            ) else (
+                set extraopts=/O%~3 !extraopts!
+            )
         ) else if "%2"=="asm" (
             set extraopts=/FAs !extraopts!
             set doasm=1
@@ -662,6 +676,10 @@ if %nowinapi% equ 1 (
     set extraopts=/MT !extraopts!
 )
 
+if %useuni% equ 1 (
+    set defines=!defines! /D _UNICODE /D UNICODE
+)
+
 set includes=!includes! !sdkinclude! /I!vsfldr!\Include"
 set extraopts=/nologo /TP !fexcep! !extraopts!
 set lnkops=!lnkops! !libpath!
@@ -963,9 +981,20 @@ echo        -dbg [ops]  Enables framework debug features
 echo        -co [ops]   Enables compiler/linker features
 echo.
 echo framework options (-oo):
-echo        stdcall     Defines the thread calling convention to be of stdcall
-echo        fastcall    Defines the thread calling convention to be of fastcall
-echo        cdecl       Defines the thread calling convention to be of cdecl
+echo        lite        Defines the OMNI_LITE flag which trims down the code and gets rid
+echo                    of some functionality
+echo        heavy       Defines the OMNI_DISPOSE_EVENT, OMNI_OBJECT_NAME and OMNI_TYPE_INFO macros
+echo        np          Sets the OMNI_NON_PORTABLE compiler flag and enables
+echo                    compilation of 'non-portable' code
+echo        terr        Defines the OMNI_TERMINATE macro
+echo        safe [op]   Defines the macro OMNI_SAFE_[op] where [op] can be the lowercase 'fw' which
+echo                    defines OMNI_SAFE_FRAMEWORK or you can specify the uppercase option, for
+echo                    example: 'safe APPLICATION' will define OMNI_SAFE_APPLICATION
+echo        no [op]     Defines one of the following for [op]:
+echo                    throw     Sets the OMNI_NO_THROW flag and the -fno-exceptions
+echo                              compiler and linker flag
+echo                    uni       Disables the UNICODE flags (does not build using unicode)
+echo                    extc      Defines the OMNI_NO_EXTERN_CONSTS macro
 echo.
 echo framework debug options (-dbg):
 echo        1           Defines the OMNI_SHOW_DEBUG=1
@@ -974,22 +1003,16 @@ echo        3           Defines the OMNI_SHOW_DEBUG=3
 echo        4           Defines the OMNI_SHOW_DEBUG=4
 echo        5           Defines the OMNI_SHOW_DEBUG=5
 echo        err         Defines the OMNI_SHOW_DEBUG_ERR
-echo        file        Defines the OMNI_SHOW_DEBUG_FILE
-echo        func        Defines the OMNI_SHOW_DEBUG_FUNC
-echo        line        Defines the OMNI_SHOW_DEBUG_LINE
+echo        full        Defines OMNI_SHOW_DEBUG_FILE, OMNI_SHOW_DEBUG_FUNC and OMNI_SHOW_DEBUG_LINE
 echo.
 echo compiler options (-co):
 echo        x86         Enable 32-bit compilation
 echo        x64         Enable 64-bit compilation
 echo        we          Treat all warnings as errors
 echo        se          Stop on first error (instead of trying to continue)
-echo        xtra        Use the extra compiler/linker flags (can generate erroneous errors)
 echo        nortti      Disables RTTI (run-time type information) for C++
-echo        opti        Enable global optimization with intrinsic functions (/Oi /Og)
-echo        opt1        Enable optimizations (/O1)
-echo        opt2        Enable more optimizations (/O2)
-echo        opt3        Maximum optimizations (/Ox)
-echo        opts        Favor code space (/Os)
+echo        xtra        Use the extra compiler/linker flags (can generate erroneous errors)
+echo        opt [op]    Enable global optimization based on [op] where [op] is 0, 1, 2, 3 or s
 echo        asm         Generate the assembly output (/FAs, .asm file name)
 echo        gdb         Sets the /Zi flag, enabling debug output
 echo        syntax      Sets the /Zs flag which checks the code for syntax

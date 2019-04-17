@@ -39,8 +39,6 @@ namespace omni {
      * itself can be further extended (if so desired).
      */
     namespace exceptions {
-        // start base exception
-        
         /** An application exception happened within the omni::application namespace */
         class application_exception : public omni::exception
         {
@@ -104,6 +102,7 @@ namespace omni {
                 thread_exception(const char* msg, int perr) : omni::exception(msg, perr) {}
                 thread_exception(const char* msg, std::size_t perr) : omni::exception(msg, perr) {}
                 thread_exception(const char* msg, const char* extra, int perr) : omni::exception(msg, extra, perr) {}
+                thread_exception(const char* msg, const char* extra, std::size_t perr) : omni::exception(msg, extra, perr) {}
                 explicit thread_exception(const std::string& msg) : omni::exception(msg) {}
                 explicit thread_exception(const char* msg) : omni::exception(msg) {}
                 explicit thread_exception(int perr) : omni::exception(OMNI_ERR_THREAD_STR, ": ", perr) {}
@@ -118,8 +117,6 @@ namespace omni {
                 explicit threadpool_exception(const std::string& msg) : omni::exception(msg) {}
                 explicit threadpool_exception(const char* msg) : omni::exception(msg) {}
         };
-        
-        // end base exception
         
         /** An active wait was pending on a call to semaphore destruction */
         class active_wait_exception : public omni::exception
@@ -179,6 +176,26 @@ namespace omni {
                     }
                 }
                 explicit overflow_error(const std::string& var) : omni::exception(OMNI_OVERFLOW_STR) {
+                    this->m_what.append(": ");
+                    this->m_what.append(var);
+                }
+        };
+
+        /** This exception is specific to the Omni Framework, it is here so as not to be confused with the std::underflow_error exception. */
+        class underflow_error : public omni::exception
+        {
+            public:
+                underflow_error() : omni::exception(OMNI_UNDERFLOW_STR) {}
+                explicit underflow_error(const char* var) : omni::exception(OMNI_UNDERFLOW_STR) {
+                    if (var) {
+                        this->m_what.append(": ");
+                        this->m_what.append(var);
+                    } else {
+                        OMNI_DBGE(OMNI_NULL_PTR_STR);
+                        OMNI_EXCEPTION_TERMINATE
+                    }
+                }
+                explicit underflow_error(const std::string& var) : omni::exception(OMNI_UNDERFLOW_STR) {
                     this->m_what.append(": ");
                     this->m_what.append(var);
                 }
@@ -271,6 +288,8 @@ namespace omni {
                     this->m_what.append(name);
                 }
                 explicit invalid_enum(int val) : omni::exception(OMNI_INVALID_ENUM, ": ", val) { }
+                explicit invalid_enum(uint32_t val) : omni::exception(OMNI_INVALID_ENUM, ": ", static_cast<std::size_t>(val)) { }
+                explicit invalid_enum(std::size_t val) : omni::exception(OMNI_INVALID_ENUM, ": ", val) { }
         };
 
         /** A parse error occurred */
@@ -293,6 +312,14 @@ namespace omni {
         {
             public:
                 invalid_release_count() : omni::exceptions::semaphore_system_exception(OMNI_ERR_RELEASE_STR) {}
+        };
+
+        /** An invalid range was specified */
+        class invalid_range : public omni::exception
+        {
+            public:
+                invalid_range() : omni::exception(OMNI_ERR_RANGE_STR) {}
+                explicit invalid_range(const char* msg) : omni::exception(msg) {}
         };
         
         /** Invalid size */

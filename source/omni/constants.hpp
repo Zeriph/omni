@@ -36,15 +36,15 @@ namespace omni {
         namespace size {
             namespace binary {
                 namespace string = OMNI_CONSTS_NS_FW::size::binary::string;
-                const unsigned int KB = OMNI_KIB_IVAL;
-                const unsigned int MB = OMNI_MIB_IVAL;
-                const unsigned int GB = OMNI_GIB_IVAL;
+                OMNI_CONSTEXT_FW const uint32_t KB OMNI_EXT_ASSN_FW(OMNI_KIB_IVAL);
+                OMNI_CONSTEXT_FW const uint32_t MB OMNI_EXT_ASSN_FW(OMNI_MIB_IVAL);
+                OMNI_CONSTEXT_FW const uint32_t GB OMNI_EXT_ASSN_FW(OMNI_GIB_IVAL);
             }
             namespace decimal {
                 namespace string = OMNI_CONSTS_NS_FW::size::decimal::string;
-                const unsigned int KB = OMNI_KB_IVAL; 
-                const unsigned int MB = OMNI_MB_IVAL;
-                const unsigned int GB = OMNI_GB_IVAL;
+                OMNI_CONSTEXT_FW const uint32_t KB OMNI_EXT_ASSN_FW(OMNI_KB_IVAL); 
+                OMNI_CONSTEXT_FW const uint32_t MB OMNI_EXT_ASSN_FW(OMNI_MB_IVAL);
+                OMNI_CONSTEXT_FW const uint32_t GB OMNI_EXT_ASSN_FW(OMNI_GB_IVAL);
             }
         }
     }

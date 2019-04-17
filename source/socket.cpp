@@ -18,7 +18,7 @@
  */
 #include "omni/defs.hpp"
 #include <sstream>
-#if defined(OMNI_IS_WIN)
+#if defined(OMNI_OS_WIN)
     #include <io.h>
     #include <winsock2.h>
     #include <malloc.h>
@@ -183,22 +183,22 @@ void omni::net::socket::p_Initialize(
     omni::net::protocol_type::enum_t protocolType
                                     )
 {
-    #if defined(OMNI_SHOW_DEBUG_L3)
+    #if defined(OMNI_SHOW_DEBUG_ERR)
         dbga << "initializing" << std::endl;
     #endif
     // DEV_NOTE: Normally we would use the initialization list, but since we have actual functions and API calls to make
     // it's best to do the initialization in an initialize function
     this->m_Handle = -1;
-    #if defined(OMNI_IS_WIN) // Microsoft set needed for sockets
-        #if defined(OMNI_SHOW_DEBUG_L4)
+    #if defined(OMNI_OS_WIN) // Microsoft set needed for sockets
+        #if defined(OMNI_SHOW_DEBUG_ERR)
             dbga << "Calling WSAStartup" << std::endl;
         #endif
         WSADATA WSStartData;
         if ((WSAStartup(MAKEWORD(1,1), &WSStartData)) != 0) {
-            #if defined(OMNI_SHOW_DEBUG_L1)
+            #if defined(OMNI_SHOW_DEBUG_ERR)
                 dbgerra << "Could not create omni::net::socket object (WSAStartup failed)" << std::endl;
             #endif
-            #if !defined(OMNI_NOTHROW)
+            #if !defined(OMNI_NO_THROW)
                 throw omni::exceptions::net::wsa_failed();
             #endif
         }
@@ -207,10 +207,10 @@ void omni::net::socket::p_Initialize(
     int st = static_cast<int>(socketType);
     int pt = static_cast<int>(protocolType);
     if ((this->m_Handle = ::socket(af, st, pt)) == -1) {
-        #if defined(OMNI_SHOW_DEBUG_L1)
+        #if defined(OMNI_SHOW_DEBUG_ERR)
             dbgerra << "Could not create socket object (socket() failed)" << std::endl;
         #endif
-        #if !defined(OMNI_NOTHROW)
+        #if !defined(OMNI_NO_THROW)
             throw omni::exceptions::net::socket_create_failed();
         #endif
     }
@@ -284,7 +284,7 @@ omni::net::socket &omni::net::socket::bind(std::string localIP)
 bool omni::net::socket::p_CloseSocket(int timeout, bool shutdown) 
 {
     if (this->m_Handle == -1) { 
-        #if defined(OMNI_SHOW_DEBUG_L1)
+        #if defined(OMNI_SHOW_DEBUG_ERR)
             dbga << "The handle is invalid" << std::endl;
         #endif
         return false; 
@@ -301,28 +301,28 @@ bool omni::net::socket::p_CloseSocket(int timeout, bool shutdown)
         );*/
     }
     if (shutdown && !this->shutdown(omni::net::socket_shutdown::BOTH)) {
-        #if defined(OMNI_SHOW_DEBUG_L1)
+        #if defined(OMNI_SHOW_DEBUG_ERR)
             int ec = omni::system::getLastError();
             dbga << "Could not shutdown the socket: " << ec << " - " << omni::system::getErrorString(ec) << std::endl;
         #endif
     }
     if (!this->m_IsConnected) {
-        #if defined(OMNI_SHOW_DEBUG_L1)
+        #if defined(OMNI_SHOW_DEBUG_ERR)
             dbga << "The socket has already been disconnected, no need to close" << std::endl;
         #endif
         return true;
     }
-    #if defined(OMNI_SHOW_DEBUG_L1)
+    #if defined(OMNI_SHOW_DEBUG_ERR)
         dbga << "Closing the socket" << std::endl;
     #endif
     int ret = -1;
-    #if defined(OMNI_IS_WIN)
+    #if defined(OMNI_OS_WIN)
         ret = closesocket(this->m_Handle);
         if (ret == 0) { WSACleanup(); }
     #else
         ret = close(this->m_Handle);
     #endif
-    #if defined(OMNI_SHOW_DEBUG_L1)
+    #if defined(OMNI_SHOW_DEBUG_ERR)
         if (ret != 0) { 
             int ec = omni::system::getLastError();
             dbga << "There was an error closing the socket: return value = " << ret << ", error = " << ec << " - " << omni::system::getErrorString(ec) << std::endl;
@@ -345,7 +345,7 @@ bool omni::net::socket::close(int timeout)
 bool omni::net::socket::connect(std::string host, int port)
 {
     if (this->m_Handle == -1) { 
-        #if defined(OMNI_SHOW_DEBUG_L1)
+        #if defined(OMNI_SHOW_DEBUG_ERR)
             dbga << "The handle is invalid" << std::endl;
         #endif
         return false; 
@@ -355,7 +355,7 @@ bool omni::net::socket::connect(std::string host, int port)
     Client.sin_family = static_cast<int>(this->m_AddressFamily);
     Client.sin_port = htons(port);
     Client.sin_addr.s_addr = inet_addr(host.c_str());
-    #if defined(OMNI_SHOW_DEBUG_L1)
+    #if defined(OMNI_SHOW_DEBUG_ERR)
         dbga << "Attempting to connect the socket to " << host << ":" << port << std::endl;
     #endif
     this->m_IsConnected = ((::connect(this->m_Handle, (reinterpret_cast<struct sockaddr*>(&Client)), sizeof(Client))) == 0);
@@ -569,23 +569,23 @@ omni::net::socket &omni::net::socket::setSocketOption(
 bool omni::net::socket::shutdown(omni::net::socket_shutdown::enum_t how)
 {
     if (this->m_Handle == -1) { 
-        #if defined(OMNI_SHOW_DEBUG_L1)
+        #if defined(OMNI_SHOW_DEBUG_ERR)
             dbga << "The handle is invalid" << std::endl;
         #endif
         return false; 
     }
     if (this->m_IsShutdown) { 
-        #if defined(OMNI_SHOW_DEBUG_L1)
+        #if defined(OMNI_SHOW_DEBUG_ERR)
             dbga << "The socket is shutdown, nothing to do" << std::endl;
         #endif
         return true;
     }
-    #if defined(OMNI_SHOW_DEBUG_L1)
+    #if defined(OMNI_SHOW_DEBUG_ERR)
         dbga << "Shutting down the socket" << std::endl;
     #endif
     this->m_IsShutdown = (::shutdown(this->m_Handle, static_cast<int>(how)) == 0);
     if (!this->m_IsShutdown) { // Stop sending/receiving data
-        #if defined(OMNI_SHOW_DEBUG_L1)
+        #if defined(OMNI_SHOW_DEBUG_ERR)
             int ErrorCode = omni::system::getLastError();
             dbga << "Socket shutdown failed: " << ErrorCode << " - " << omni::system::getErrorString(ErrorCode) << std::endl;
         #endif

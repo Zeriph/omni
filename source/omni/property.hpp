@@ -23,6 +23,7 @@
 #include <omni/delegate/1.hpp>
 #include <omni/defs/consts.hpp>
 
+// DEV_NOTE: defining OMNI_SAFE_PROP will make all property types thread safe
 #if defined(OMNI_SAFE_PROP)
     #include <omni/sync/scoped_lock.hpp>
     #define OMNI_SAFE_PROP_MTX_FW mutable OMNI_MUTEX_T m_mtx;
@@ -154,23 +155,22 @@ namespace omni {
                 this->m_set = sfn;
             }
             
+            /* DEV_NOTE: you might get compiler warnings about needing to return a `property<T>&` for
+                the post/pre operator overloads (e.g. ++/--), or that we should overload `operator=(property<T>)`,
+                but we specifically don't overload the `operator=(property<T>)` so as all rval's to this
+                instance _should_ be of `value_t` types. For example, in `property<int> t = 10;` if we
+                overloaded `operator=(property<T>)`, the assignment (i.e. `= 10;`) would preform an
+                implicit cast to a `property<int>` with the underlying value of 10, which is not what we want.
+                
+                Instead, by overloading only the operators below, we can treat this `property` type
+                like it's underlying type with all other operations preformed.
+            */
+
             // Operators - get (rval)
             operator value_t()         { return this->_vget(); }
             operator value_t() const   { return this->_vget(); }
             value_t operator()()       { return this->_vget(); }
             value_t operator()() const { return this->_vget(); }
-            
-            /* DEV_NOTE: you might get compiler warnings about property<T> need return 
-            property<T>& for ++/-- post/pre inc/dec, or that we 'should' overload 'operator=', but
-            note that we specifically don't overload the operator=(property_t) so as all rval's
-            to this instance 'should' be of 'value_t' types, example:
-            
-            // overloading the operator= here would give us an implicit cast to a property<int>
-            property<int> t = 10;
-            int i = t--;
-            // here i == 10 and t == 9
-            int x = --t;
-            // here both x and t == 8 */
             
             // Operators - set (lval)
             value_t operator++() { // pre increment
@@ -249,7 +249,7 @@ namespace omni {
                 this->_vset(tmp >> val);
                 return *this;
             }
-            
+
             OMNI_MEMBERS_FW(omni::property<T>) // disposing,name,type(),hash()
 
         private:
@@ -272,52 +272,263 @@ namespace omni {
             get m_get;
             /** The 'set' functor. Used to attach to a user defined or default 'set' function */
             set m_set;
-            /** The underlying m_val */
+            /** The underlying value */
             value_t m_val;
     };
 
-    // TODO: getter/setter?
-    /* example:
-    
-    class test {
+    template < typename T >
+    class property_getter
+    {
         public:
-            omni::property_get<int> x;
-            omni::property_set<int> p;
+            typedef T value_t;
+            typedef omni::delegate<value_t> get;
+            typedef property_getter<value_t> property_t;
 
-            test(int _x) : 
-                x(), p(), m_x(_x)
+            property_getter() : 
+                OMNI_CTOR_FW(omni::property_getter<T>)
+                OMNI_SAFE_PROP_MILST_FW
+                m_get(), m_val()
             {
-                this->x.bind(omni::property_get<int>::delegate::bond<test, &test::_get_x>(*this));
-                this->p.bind(omni::property_set<int>::delegate::bond<test, &test::_set_x>(*this));
-                or
-                this->x.bind<test, &test::_get_x>(*this);
-                this->p.bind<test, &test::_set_x>(*this);
+                OMNI_SAFE_PROP_INIT_FW
+                this->m_get.template bond_const<property_t, &property_t::_get>(*this);
             }
+            
+            property_getter(value_t val) : 
+                OMNI_CTOR_FW(omni::property_getter<T>)
+                OMNI_SAFE_PROP_MILST_FW
+                m_get(), m_val(val)
+            {
+                OMNI_SAFE_PROP_INIT_FW
+                this->m_get.template bond_const<property_t, &property_t::_get>(*this);
+            }
+            
+            property_getter(get gfn) : 
+                OMNI_CTOR_FW(omni::property_getter<T>)
+                OMNI_SAFE_PROP_MILST_FW
+                m_get(gfn), m_val()
+            {
+                OMNI_SAFE_PROP_INIT_FW
+            }
+            
+            property_getter(get gfn, value_t val) : 
+                OMNI_CTOR_FW(omni::property_getter<T>)
+                OMNI_SAFE_PROP_MILST_FW
+                m_get(gfn), m_val(val)
+            {
+                OMNI_SAFE_PROP_INIT_FW
+            }
+            
+            property_getter(const omni::template property_getter<T> &cp) :
+                OMNI_CPCTOR_FW(cp)
+                OMNI_SAFE_PROP_MILST_FW
+                m_get(cp.m_get), m_val(cp.m_val)
+            {
+                OMNI_SAFE_PROP_INIT_FW
+            }
+            
+            ~property_getter()
+            {
+                OMNI_TRY_FW
+                OMNI_DTOR_FW
+                OMNI_SAFE_PROP_DTOR_FW
+                OMNI_CATCH_FW
+            }
+            
+            void bind_get(get gfn)
+            {
+                OMNI_SAFE_PROP_ALOCK_FW
+                this->m_get = gfn;
+            }
+            
+            // DEV_NOTE: see additional notes in omni::property<T>
+
+            // Operators - get (rval)
+            operator value_t()         { return this->_vget(); }
+            operator value_t() const   { return this->_vget(); }
+            value_t operator()()       { return this->_vget(); }
+            value_t operator()() const { return this->_vget(); }
+            
+            OMNI_MEMBERS_FW(omni::property_getter<T>) // disposing,name,type(),hash()
 
         private:
-            int m_x;
+            property_t& operator=(property_getter<T>& other); // = delete
+            property_t& operator=(value_t other); // = delete
 
-            int _get_x()
-            {
-                return this->m_x;
+            value_t _vget() const {
+                OMNI_SAFE_PROP_ALOCK_FW
+                return this->m_get();
             }
-
-            void _set_x(int _x)
-            {
-                this->m_x = _x;
-            }
+            
+            value_t _get() const { return this->m_val; }
+            
+            OMNI_SAFE_PROP_MTX_FW
+            /** The 'get' functor. Used to attach to a user defined or default 'get' function */
+            get m_get;
+            /** The underlying value */
+            value_t m_val;
     };
 
-    then using:
+    template < typename T >
+    class property_setter
+    {
+        public:
+            typedef T value_t;
+            typedef omni::delegate1<void, value_t> set;
+            typedef property_setter<value_t> property_t;
 
-    test t(10);
-    int x = t.x; // OK, x = t.x causes a 'get'
-    t.p = 42;    // OK, t.p = x causes a 'set'
-    t.x = 42;    // compiler fail, causes a 'set' and there are no 'set' functions
-    int p = t.p; // compiler fail, causes a 'get' and there are no 'get' functions
-    
-    
-    */
+            property_setter() : 
+                OMNI_CTOR_FW(omni::property_setter<T>)
+                OMNI_SAFE_PROP_MILST_FW
+                m_set(), m_val()
+            {
+                OMNI_SAFE_PROP_INIT_FW
+                this->m_set.template bond<property_t, &property_t::_set>(*this);
+            }
+            
+            property_setter(value_t val) : 
+                OMNI_CTOR_FW(omni::property_setter<T>)
+                OMNI_SAFE_PROP_MILST_FW
+                m_set(), m_val(val)
+            {
+                OMNI_SAFE_PROP_INIT_FW
+                this->m_set.template bond<property_t, &property_t::_set>(*this);
+            }
+            
+            property_setter(set sfn) : 
+                OMNI_CTOR_FW(omni::property_setter<T>)
+                OMNI_SAFE_PROP_MILST_FW
+                m_set(sfn), m_val()
+            {
+                OMNI_SAFE_PROP_INIT_FW
+            }
+            
+            property_setter(set sfn, value_t val) : 
+                OMNI_CTOR_FW(omni::property_setter<T>)
+                OMNI_SAFE_PROP_MILST_FW
+                m_set(sfn), m_val()
+            {
+                OMNI_SAFE_PROP_INIT_FW
+                this->m_set(val);
+            }
+            
+            property_setter(const omni::template property_setter<T> &cp) :
+                OMNI_CPCTOR_FW(cp)
+                OMNI_SAFE_PROP_MILST_FW
+                m_set(cp.m_set), m_val(cp.m_val)
+            {
+                OMNI_SAFE_PROP_INIT_FW
+            }
+            
+            ~property_setter()
+            {
+                OMNI_TRY_FW
+                OMNI_DTOR_FW
+                OMNI_SAFE_PROP_DTOR_FW
+                OMNI_CATCH_FW
+            }
+            
+            void bind_set(set sfn)
+            {
+                OMNI_SAFE_PROP_ALOCK_FW
+                this->m_set = sfn;
+            }
+            
+            // DEV_NOTE: see additional notes in omni::property<T>
+
+            // Operators - set (lval)
+            value_t operator++() { // pre increment
+                OMNI_SAFE_PROP_ALOCK_FW
+                value_t tmp = this->m_value;
+                this->m_set(++tmp);
+                return tmp;
+            }
+            value_t operator--() { // pre decrement
+                OMNI_SAFE_PROP_ALOCK_FW
+                value_t tmp = this->m_value;
+                this->m_set(--tmp);
+                return tmp;
+            }
+            value_t operator++(int) { // post increment
+                OMNI_SAFE_PROP_ALOCK_FW
+                value_t tmp = this->m_value;
+                value_t t2 = tmp;
+                this->m_set(++t2);
+                return tmp;
+            }
+            value_t operator--(int) { // post decrement
+                OMNI_SAFE_PROP_ALOCK_FW
+                value_t tmp = this->m_value;
+                value_t t2 = tmp;
+                this->m_set(--t2);
+                return tmp;
+            }
+            property_t& operator=(value_t val) {
+                OMNI_SAFE_PROP_ALOCK_FW
+                this->m_set(val);
+                return *this;
+            }
+            property_t& operator+=(value_t val) {
+                OMNI_SAFE_PROP_ALOCK_FW
+                this->m_set(this->m_value + val);
+                return *this;
+            }
+            property_t& operator-=(value_t val) {
+                OMNI_SAFE_PROP_ALOCK_FW
+                this->m_set(this->m_value - val);
+                return *this;
+            }
+            property_t& operator*=(value_t val) {
+                OMNI_SAFE_PROP_ALOCK_FW
+                this->m_set(this->m_value * val);
+                return *this;
+            }
+            property_t& operator/=(value_t val) {
+                OMNI_SAFE_PROP_ALOCK_FW
+                this->m_set(this->m_value / val);
+                return *this;
+            }
+            property_t& operator%=(value_t val) {    
+                OMNI_SAFE_PROP_ALOCK_FW
+                this->m_set(this->m_value % val);
+                return *this;
+            }
+            property_t& operator&=(value_t val) {
+                OMNI_SAFE_PROP_ALOCK_FW
+                this->m_set(this->m_value & val);
+                return *this;
+            }
+            property_t& operator|=(value_t val) {
+                OMNI_SAFE_PROP_ALOCK_FW
+                this->m_set(this->m_value | val);
+                return *this;
+            }
+            property_t& operator^=(value_t val) {
+                OMNI_SAFE_PROP_ALOCK_FW
+                this->m_set(this->m_value ^ val);
+                return *this;
+            }
+            property_t& operator<<=(value_t val) {
+                OMNI_SAFE_PROP_ALOCK_FW
+                this->m_set(this->m_value << val);
+                return *this;
+            }
+            property_t& operator>>=(value_t val) {
+                OMNI_SAFE_PROP_ALOCK_FW
+                this->m_set(this->m_value >> val);
+                return *this;
+            }
+
+            OMNI_MEMBERS_FW(omni::property_setter<T>) // disposing,name,type(),hash()
+
+        private:            
+            void _set(value_t value) { this->m_val = value; }
+            
+            OMNI_SAFE_PROP_MTX_FW
+            /** The 'set' functor. Used to attach to a user defined or default 'set' function */
+            set m_set;
+            /** The underlying value */
+            value_t m_val;
+    };
 }
 
 #endif // OMNI_PROPERTY_HPP

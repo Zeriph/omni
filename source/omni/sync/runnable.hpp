@@ -20,6 +20,7 @@
 #define OMNI_RUNNABLE_T_HPP 1
 #include <omni/defs/class_macros.hpp>
 #include <omni/types/thread_t.hpp>
+#include <omni/chrono/span.hpp>
 
 namespace omni {
     namespace sync {

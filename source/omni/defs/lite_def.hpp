@@ -16,12 +16,18 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#if !defined(OMNI_POINT_T_HPP)
-#define OMNI_POINT_T_HPP 1
+#if !defined(OMNI_LITE_DEF_HPP)
+#define OMNI_LITE_DEF_HPP 1
 
-#include <omni/geometry/size.hpp>
-#include <omni/geometry/point2d.hpp>
-#include <omni/geometry/point3d.hpp>
-#include <omni/geometry/rectangle.hpp>
+// TODO: add any other "lite" framework flags here
 
-#endif // OMNI_POINT_T_HPP
+#if defined(OMNI_LITE)
+    #define OMNI_NO_OBJECT_NAME
+    #define OMNI_NO_DISPOSE_EVENT
+    #define OMNI_NO_TYPE_INFO
+    #define OMNI_NO_FW_VER
+    #define OMNI_NO_SAFE_FRAMEWORK
+    #define OMNI_THREAD_ARGS_RAW_PTR
+#endif
+
+#endif // OMNI_LITE_DEF_HPP

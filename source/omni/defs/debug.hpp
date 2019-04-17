@@ -36,6 +36,11 @@
 #define OMNI_DBGE(msg)
 #define OMNI_DBGEV(msg, val)
 
+#define OMNI_PRINTL(msg) std::cout << msg << std::endl
+#define OMNI_PRINT(msg) std::cout << msg
+#define OMNI_WPRINTL(msg) std::wcout << msg << std::endl
+#define OMNI_WPRINT(msg) std::wcout << msg
+
 #if defined(OMNI_SHOW_DEBUG) || defined(OMNI_SHOW_DEBUG_ERR)
     #if !defined(OMNI_SHOW_DEBUG_ERR)
         #define OMNI_SHOW_DEBUG_ERR

@@ -43,22 +43,6 @@
             public:
                 exception() throw() : m_what(OMNI_GENERAL_EXCEPTION_STR) {}
 
-                // TODO: does this make sense here or anywhere else in the framework
-                // where exception need to be handled in the ctor??
-                /*
-                exception(const char* reason) throw()
-                try : m_what("") {
-                    if (reason) { this->m_what.append(reason); }
-                    else {
-                        OMNI_DBGE(OMNI_NULL_PTR_STR);
-                        OMNI_EXCEPTION_TERMINATE
-                    }
-                } catch (...) {
-                    OMNI_DBGE(OMNI_NULL_PTR_STR);
-                    OMNI_EXCEPTION_TERMINATE
-                }
-                */
-                
                 explicit exception(const char* reason) throw() : m_what("")
                 {
                     if (reason) { this->m_what.append(reason); }

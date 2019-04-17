@@ -58,9 +58,9 @@ omni::sync::conditional::~conditional()
             this->m_signal = 0;
         #endif
     #else
-        int err = ::pthread_cond_destroy(&this->m_signal);
-        if (err != 0) {
-            OMNI_ERRV_FW("An error occurred destroying the conditional: ", err, omni::exceptions::conditional_exception(err))
+        int ret = ::pthread_cond_destroy(&this->m_signal);
+        if (ret != 0) {
+            OMNI_ERRV_FW("An error occurred destroying the conditional: ", ret, omni::exceptions::conditional_exception(ret))
         }
     #endif
     omni::sync::mutex_destroy(this->m_wait);
@@ -93,10 +93,10 @@ void omni::sync::conditional::broadcast()
     #else
         omni::sync::mutex_lock(this->m_wait);
         this->m_signaled = true;
-        int err = ::pthread_cond_broadcast(&this->m_signal);
+        int ret = ::pthread_cond_broadcast(&this->m_signal);
         omni::sync::mutex_unlock(this->m_wait);
-        if (err != 0) {
-            OMNI_ERRV_FW("An error occurred on the conditional: ", err, omni::exceptions::conditional_exception(err))
+        if (ret != 0) {
+            OMNI_ERRV_FW("An error occurred on the conditional: ", ret, omni::exceptions::conditional_exception(ret))
         }
     #endif
 }
@@ -131,10 +131,10 @@ void omni::sync::conditional::signal()
     #else
         omni::sync::mutex_lock(this->m_wait);
         this->m_signaled = true;
-        int err = ::pthread_cond_signal(&this->m_signal);
+        int ret = ::pthread_cond_signal(&this->m_signal);
         omni::sync::mutex_unlock(this->m_wait);
-        if (err != 0) {
-            OMNI_ERRV_FW("An error occurred on the conditional: ", err, omni::exceptions::conditional_exception(err))
+        if (ret != 0) {
+            OMNI_ERRV_FW("An error occurred on the conditional: ", ret, omni::exceptions::conditional_exception(ret))
         }
     #endif
 }
@@ -165,7 +165,7 @@ bool omni::sync::conditional::wait()
                 default: break;
             }
         #else
-            DWORD err = 0;
+            DWORD ret = 0;
             while (!this->signaled()) {
                 omni::sync::scoped_lock<omni::sync::mutex_t> mlock(&this->m_wait);
                 if (!::SleepConditionVariableCS(&this->m_signal, &this->m_wait, INFINITE)) {
@@ -180,18 +180,18 @@ bool omni::sync::conditional::wait()
             }
         #endif
     #else
-        int err = 0;
+        int ret = 0;
         while (!this->signaled()) {
             omni::sync::scoped_lock<omni::sync::mutex_t> mlock(&this->m_wait);
-            err = ::pthread_cond_wait(&this->m_signal, &this->m_wait);
-            if (err == 0) {
+            ret = ::pthread_cond_wait(&this->m_signal, &this->m_wait);
+            if (ret == 0) {
                 // spurious wake up?
                 if (!this->m_signaled) { continue; }
                 --this->m_waitreq;
                 return true;
             }
             #if defined(OMNI_DBG_L3)
-            else { OMNI_DV3_FW("a system error occurred on the conditional object: ", err); }
+            else { OMNI_DV3_FW("a system error occurred on the conditional object: ", ret); }
             #endif
         }
     #endif
@@ -201,7 +201,7 @@ bool omni::sync::conditional::wait()
     return false;
 }
 
-bool omni::sync::conditional::wait(unsigned long timeout_ms)
+bool omni::sync::conditional::wait(uint32_t timeout_ms)
 {
     omni::sync::mutex_lock(this->m_wait);
     if (this->m_signaled) {
@@ -227,17 +227,17 @@ bool omni::sync::conditional::wait(unsigned long timeout_ms)
                 default: break;
             }
         #else
-            DWORD err = 0;
+            DWORD ret = 0;
             while (!this->signaled()) {
                 omni::sync::scoped_lock<omni::sync::mutex_t> mlock(&this->m_wait);
                 if (!::SleepConditionVariableCS(&this->m_signal, &this->m_wait, timeout_ms)) {
-                    err = OMNI_GLE;
-                    if (err == ERROR_TIMEOUT) { // time out while waiting
+                    ret = OMNI_GLE;
+                    if (ret == ERROR_TIMEOUT) { // time out while waiting
                         --this->m_waitreq;
                         return false;
                     }
                     #if defined(OMNI_DBG_L3)
-                    else { OMNI_DV3_FW("a system error occurred on the conditional object: ", err); }
+                    else { OMNI_DV3_FW("a system error occurred on the conditional object: ", ret); }
                     #endif
                 }
                 // spurious wake up?
@@ -247,7 +247,7 @@ bool omni::sync::conditional::wait(unsigned long timeout_ms)
             }
         #endif
     #else
-        int err = 0;
+        int ret = 0;
         struct timespec tm;
         #if defined(OMNI_OS_APPLE)
             struct timeval tv;
@@ -267,18 +267,18 @@ bool omni::sync::conditional::wait(unsigned long timeout_ms)
         }
         while (!this->signaled()) {
             omni::sync::scoped_lock<omni::sync::mutex_t> mlock(&this->m_wait);
-            err = ::pthread_cond_timedwait(&this->m_signal, &this->m_wait, &tm);
-            if (err == 0) {
+            ret = ::pthread_cond_timedwait(&this->m_signal, &this->m_wait, &tm);
+            if (ret == 0) {
                 // spurious wake up?
                 if (!this->m_signaled) { continue; }
                 --this->m_waitreq;
                 return true;
-            } else if (err == ETIMEDOUT) { // time out while waiting
+            } else if (ret == ETIMEDOUT) { // time out while waiting
                 --this->m_waitreq;
                 return false;
             }
             #if defined(OMNI_DBG_L3)
-            else { OMNI_DV3_FW("a system error occurred on the conditional object: ", err); }
+            else { OMNI_DV3_FW("a system error occurred on the conditional object: ", ret); }
             #endif
         }
     #endif
@@ -321,9 +321,9 @@ void omni::sync::conditional::_init()
             ::InitializeConditionVariable(&this->m_signal);
         #endif
     #else
-        int err = ::pthread_cond_init(&this->m_signal, NULL);
-        if (err != 0) {
-            OMNI_ERRV_FW("The event could not be created: ", err, omni::exceptions::conditional_exception(err))
+        int ret = ::pthread_cond_init(&this->m_signal, NULL);
+        if (ret != 0) {
+            OMNI_ERRV_FW("The event could not be created: ", ret, omni::exceptions::conditional_exception(ret))
         }
     #endif
 }

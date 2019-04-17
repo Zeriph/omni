@@ -49,7 +49,7 @@ omni::sync::semaphore::semaphore() :
     this->_init(5);
 }
 
-omni::sync::semaphore::semaphore(unsigned long maxent) :
+omni::sync::semaphore::semaphore(uint32_t maxent) :
     OMNI_CTOR_FW(omni::sync::semaphore)
     m_cnt(0),
     m_max(),
@@ -59,7 +59,7 @@ omni::sync::semaphore::semaphore(unsigned long maxent) :
     this->_init(maxent);
 }
 
-omni::sync::semaphore::semaphore(unsigned long maxent, bool lock1st) :
+omni::sync::semaphore::semaphore(uint32_t maxent, bool lock1st) :
     OMNI_CTOR_FW(omni::sync::semaphore)
     m_cnt(0),
     m_max(),
@@ -79,41 +79,41 @@ omni::sync::semaphore::~semaphore()
     OMNI_CATCH_FW
 }
 
-const omni::sync::semaphore_t omni::sync::semaphore::handle() const
+omni::sync::semaphore_t omni::sync::semaphore::handle() const
 {
     return this->m_sem;
 }
 
-unsigned long omni::sync::semaphore::locked() const
+uint32_t omni::sync::semaphore::locked() const
 {
     OMNI_SAFE_SEM_ALOCK_FW
     return this->m_cnt;
 }
 
-unsigned long omni::sync::semaphore::max_ent() const
+uint32_t omni::sync::semaphore::max_ent() const
 {
     OMNI_SAFE_SEM_ALOCK_FW
     return this->m_max;
 }
 
-unsigned long omni::sync::semaphore::open() const
+uint32_t omni::sync::semaphore::open() const
 {
     OMNI_SAFE_SEM_ALOCK_FW
     return (this->m_max - this->m_cnt);
 }
 
-unsigned long omni::sync::semaphore::release_all()
+uint32_t omni::sync::semaphore::release_all()
 {
     OMNI_SAFE_SEM_LOCK_FW
-    unsigned long cnt = this->m_cnt;
+    uint32_t cnt = this->m_cnt;
     OMNI_SAFE_SEM_UNLOCK_FW
     return this->release(cnt);
 }
 
-unsigned long omni::sync::semaphore::release(unsigned long rcount)
+uint32_t omni::sync::semaphore::release(uint32_t rcount)
 {
     OMNI_SAFE_SEM_ALOCK_FW
-    unsigned long pcnt = this->m_cnt;
+    uint32_t pcnt = this->m_cnt;
     if (rcount == 0 || rcount > pcnt) {
         OMNI_ERR_RETV_FW("an invalid release count was specified", omni::exceptions::invalid_release_count(), 0)
     }
@@ -124,7 +124,7 @@ unsigned long omni::sync::semaphore::release(unsigned long rcount)
             this->m_cnt -= rcount;
         }
     #else
-        for (unsigned long i = rcount; i > 0; --i) {
+        for (uint32_t i = rcount; i > 0; --i) {
             #if defined(OMNI_OS_APPLE)
                 if (::semaphore_signal(this->m_sem) != KERN_SUCCESS)
             #else
@@ -176,7 +176,7 @@ bool omni::sync::semaphore::wait()
     return aq;
 }
 
-bool omni::sync::semaphore::wait(unsigned long timeout_ms)
+bool omni::sync::semaphore::wait(uint32_t timeout_ms)
 {
     bool aq = false;
     #if defined(OMNI_OS_WIN)
@@ -233,6 +233,11 @@ bool omni::sync::semaphore::wait(unsigned long timeout_ms)
     return aq;
 }
 
+bool omni::sync::semaphore::wait(const omni::chrono::unsigned_timespan& span)
+{
+    return this->wait(static_cast<uint32_t>(span.total_milliseconds()));
+}
+
 bool omni::sync::semaphore::trywait()
 {
     return this->wait(0);
@@ -241,7 +246,7 @@ bool omni::sync::semaphore::trywait()
 bool omni::sync::semaphore::operator==(const omni::sync::semaphore& o) const
 {
     if (this == &o) { return true; }
-    unsigned long ocnt = o.locked();
+    uint32_t ocnt = o.locked();
     OMNI_SAFE_SEM_ALOCK_FW
     return (OMNI_SAFE_SEM_EQU_FW(o)
         this->m_cnt == ocnt &&
@@ -278,7 +283,7 @@ void omni::sync::semaphore::_dispose()
     }
 }
 
-void omni::sync::semaphore::_init(unsigned long maxent)
+void omni::sync::semaphore::_init(uint32_t maxent)
 {
 #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
     omni::chrono::monotonic::initialize();
@@ -288,9 +293,9 @@ void omni::sync::semaphore::_init(unsigned long maxent)
     this->m_sem = ::CreateSemaphore(NULL, maxent, maxent, NULL);
     if (this->m_sem == NULL)
 #elif defined(OMNI_OS_APPLE)
-    if (::semaphore_create(::mach_task_self(), &this->m_sem, SYNC_POLICY_FIFO, maxent) != KERN_SUCCESS)
+    if (::semaphore_create(::mach_task_self(), &this->m_sem, SYNC_POLICY_FIFO, static_cast<int>(maxent)) != KERN_SUCCESS)
 #else
-    if (::sem_init(&this->m_sem, 0, maxent) == -1)
+    if (::sem_init(&this->m_sem, 0, static_cast<int>(maxent)) == -1)
 #endif
     {
         // this will hit as well if 'maxent' > SEM_VALUE_MAX

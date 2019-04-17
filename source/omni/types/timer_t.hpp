@@ -123,7 +123,7 @@ namespace omni {
                 }
 
                 /** Returns true if the integer value specified is a valid enum value */
-                static bool is_valid(int val)
+                static bool is_valid(int32_t val)
                 {
                     return _valid(val);
                 }
@@ -191,7 +191,7 @@ namespace omni {
                     return *this;
                 }
 
-                timer_sync_type& operator=(int val)
+                timer_sync_type& operator=(int32_t val)
                 {
                     if (!timer_sync_type::is_valid(val)) {
                         OMNI_ERR_RET_FW("Invalid enumeration value specified.", omni::exceptions::invalid_enum(val));
@@ -211,7 +211,7 @@ namespace omni {
                     return this->m_val < val;
                 }
 
-                bool operator<(int val) const
+                bool operator<(int32_t val) const
                 {
                     return this->m_val < static_cast<enum_t>(val);
                 }
@@ -226,7 +226,7 @@ namespace omni {
                     return this->m_val > val;
                 }
 
-                bool operator>(int val) const
+                bool operator>(int32_t val) const
                 {
                     return this->m_val > val;
                 }
@@ -243,7 +243,7 @@ namespace omni {
                     return this->m_val == val;
                 }
 
-                bool operator==(int val) const
+                bool operator==(int32_t val) const
                 {
                     return this->m_val == val;
                 }
@@ -253,9 +253,9 @@ namespace omni {
                     return this->m_val;
                 }
 
-                operator int() const
+                operator int32_t() const
                 {
-                    return static_cast<int>(this->m_val);
+                    return static_cast<int32_t>(this->m_val);
                 }
 
                 operator std::string() const
@@ -281,7 +281,7 @@ namespace omni {
                 {
                     enum_t ret;
                     if (_try_parse(val, ret)) { return ret; }
-                    OMNI_ERRV_FW("invalid enum parse: ", val, omni::exceptions::invalid_enum())
+                    OMNI_ERR_FW("invalid enum parse", omni::exceptions::invalid_enum())
                     return DEFAULT_VALUE();
                 }
 
@@ -319,7 +319,7 @@ namespace omni {
                 }
 
                 template < typename S >
-                static typename S::string_type _to_val(enum_t v)
+                static std::basic_string< typename S::char_type > _to_val(enum_t v)
                 {
                     S ss;
                     switch (v) {
@@ -332,7 +332,7 @@ namespace omni {
                     return ss.str();
                 }
 
-                static bool _valid(int val)
+                static bool _valid(int32_t val)
                 {
                     return (val == 
                         ASYNCHRONOUS ||

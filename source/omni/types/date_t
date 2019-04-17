@@ -16,27 +16,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#if !defined(OMNI_TYPES_HPP)
-#define OMNI_TYPES_HPP 1
 
-#include <omni/types/invoke_t.hpp>
-#include <omni/types/ostream_t.hpp>
-#include <omni/types/char_t.hpp>
-#include <omni/types/string_t.hpp>
-#include <omni/types/lock_t.hpp>
-#include <omni/types/thread_t.hpp>
-#include <omni/types/tick_t.hpp>
-#include <omni/types/timer_t.hpp>
-#include <omni/types/point_t.hpp>
-#include <omni/types/net_t.hpp>
-#include <omni/types/ptr_t.hpp> // #include <omni/generic_ptr.hpp>
 
-#include <omni/type.hpp>
-#include <omni/object.hpp>
-#include <omni/property.hpp>
-#include <omni/smart_ptr.hpp>
-#include <omni/sequence.hpp>
-
-// TODO: add other 'base types' here
-
-#endif // OMNI_TYPES_HPP
+#include <omni/types/date_t.hpp>

@@ -1,9 +1,4 @@
 #!/bin/sh
-
-
-# TODO: clean up this script (get rid of the OMNI_X options and figure out an easier way to do that)
-# TODO: ensure all compiler options are included
-
 #-Weffc++ (C++ only)
 # Warn about violations of the following style guidelines from Scott
 # Meyers' Effective C++ book:
@@ -77,6 +72,7 @@ fwsrc="${fwsrc} ${common}/async_timer.cpp"
 fwsrc="${fwsrc} ${common}/basic_thread.cpp"
 fwsrc="${fwsrc} ${common}/binary_semaphore.cpp"
 fwsrc="${fwsrc} ${common}/conditional.cpp"
+fwsrc="${fwsrc} ${common}/datetime.cpp"
 fwsrc="${fwsrc} ${common}/drop_timer.cpp"
 fwsrc="${fwsrc} ${common}/environment.cpp"
 fwsrc="${fwsrc} ${common}/externs.cpp"
@@ -176,29 +172,18 @@ usage()
     echo "framework options (-oo):"
 	echo "       lite        Defines the OMNI_LITE flag which trims down the code and gets rid"
 	echo "                   of some functionality"
-    echo "       heavyo      Defines the OMNI_DISPOSE_EVENT, OMNI_OBJECT_NAME and OMNI_TYPE_INFO macros"
-    echo "       sfall       Defines the OMNI_SAFE_FRAMEWORK flag which enables all 'safe' flags"
-    echo "       sfapp       Defines the OMNI_SAFE_APPLICATION flag which sets omni::application thread safe"
-	echo "       sfev        Defines the OMNI_SAFE_EVENTS flag which says omni::event's are thread safe"
-    echo "       sfdg        Defines the OMNI_SAFE_DELEGATES flag which says omni::delegate's are thread safe"
-    echo "       sftmr       Defines the OMNI_SAFE_TIMER flag which says omni::timers's are not thread safe"
-    echo "       sfsem       Defines the OMNI_SAFE_SEMAPHORE flag which says omni::semeaphore's are thread safe"
-    echo "       sfmtx       Defines the OMNI_SAFE_MUTEX flag which says omni::sync::mutex are thread safe"
-    echo "       sfcond      Defines the OMNI_SAFE_CONDITIONAL flag which says omni::sync::conditional are thread safe"
-    echo "       sfthread    Defines the OMNI_SAFE_THREAD flag which says omni::sync::thread are thread safe"
-    echo "       sfrunnable  Defines the OMNI_SAFE_RUNNABLE_THREAD flag which says omni::sync::runnable_thread's are thread safe"
+    echo "       heavy       Defines the OMNI_DISPOSE_EVENT, OMNI_OBJECT_NAME and OMNI_TYPE_INFO macros"
     echo "       np          Sets the OMNI_NON_PORTABLE compiler flag and enables"
     echo "                   compilation of 'non-portable' code"
-    echo "       noexcep     Defines the OMNI_NO_THROW flag and the -fno-exceptions"
-	echo "                   compiler and linker flag"
-    echo "       nouni       Disables the UNICODE flags (does not build using unicode)"
     echo "       terr        Defines the OMNI_TERMINATE macro"
-    echo "       disposing   Defines the OMNI_DISPOSE_EVENT macro"
-    echo "       objname     Defines the OMNI_OBJECT_NAME macro"
-    echo "       typeinfo    Defines the OMNI_TYPE_INFO macro"
-    echo "       stdcall     Defines the thread calling convention to be __attribute__((stdcall))"
-    echo "       fastcall    Defines the thread calling convention to be __attribute__((fastcall))"
-    echo "       cdecl       Defines the thread calling convention to be __attribute__((cdecl))"
+    echo "       safe [op]   Defines the macro OMNI_SAFE_[op] where [op] can be the lowercase 'fw' which"
+    echo "                   defines OMNI_SAFE_FRAMEWORK or you can specify the uppercase option, for"
+    echo "                   example: 'safe APPLICATION' will define OMNI_SAFE_APPLICATION"
+    echo "       no [op]     Defines one of the following for [op]:"
+    echo "                   throw     Sets the OMNI_NO_THROW flag and the -fno-exceptions"
+	echo "                             compiler and linker flag"
+    echo "                   uni       Disables the UNICODE flags (does not build using unicode)"
+    echo "                   extc      Defines the OMNI_NO_EXTERN_CONSTS macro"
     echo
     echo "framework debug options (-dbg):"
     echo "       1           Defines the OMNI_SHOW_DEBUG=1"
@@ -207,9 +192,7 @@ usage()
     echo "       4           Defines the OMNI_SHOW_DEBUG=4"
     echo "       5           Defines the OMNI_SHOW_DEBUG=5"
     echo "       err         Defines the OMNI_SHOW_DEBUG_ERR"
-    echo "       file        Defines the OMNI_SHOW_DEBUG_FILE"
-    echo "       func        Defines the OMNI_SHOW_DEBUG_FUNC"
-    echo "       line        Defines the OMNI_SHOW_DEBUG_LINE"
+    echo "       full        Defines OMNI_SHOW_DEBUG_FILE, OMNI_SHOW_DEBUG_FUNC and OMNI_SHOW_DEBUG_LINE"
     echo
     echo "compiler options (-co):"
     echo "       effc        Sets the -Weffc++ flag which warns about style guidelines"
@@ -218,35 +201,21 @@ usage()
 	echo "       se          Stop on first error (instead of trying to continue)"
     echo "       stats       Sets the -Q flag when compiling which shows statistics of the"
     echo "                   compilation unit"
-    echo "       ep          Sets the -pedantic-errors flag"
+    echo "       pe          Sets the -pedantic-errors flag"
     echo "       lrt         Some platforms need the 'rt' library to compile, this sets the"
     echo "                   -lrt compiler/linker flag to compile/link against the 'rt' libs"
     echo "       nopthread   Disables the -pthread compiler/linker flag"
-	echo "       xtra        Use the extra compiler/linker flags (can generate erroneous errors)"
     echo "       nortti      Disables RTTI (run-time type information) for C++"
-    echo "       opti        Enable global optimization with intrinsic functions (-O)"
-    echo "       opt1        Enable optimizations (-O1)"
-    echo "       opt2        Enable more optimizations (-O2)"
-    echo "       opt3        Maximum optimizations (-O3)"
-    echo "       opts        Favor code space (-Os)"
+    echo "       noconsole   Specifies to not define the _CONSOLE flag"
+	echo "       xtra        Use the extra compiler/linker flags (can generate erroneous errors)"
+    echo "       opt [op]    Enable global optimization based on [op] where [op] is 0, 1, 2, 3 or s"
     echo "       asm         Generate the assembly output (.s file)"
     echo "       ggdb        Sets the -ggdb flag, enabling GDB debug output (for certain compilers)"
-    echo "       gdb         Sets the -g flag, enabling GDB debug output (for certain compilers)"
+    echo "       dbg         Sets the -g flag, enabling GDB debug output (for certain compilers)"
     echo "       libop [op]  Specifies a library build option"
-    echo "       noconsole   Specifies to not define the _CONSOLE flag"
     echo "       syntax      Sets the -fsyntax-only flag which checks the code for syntax"
     echo "                   errors only and does nothing beyond that"
     echo "       std [std]   Compiles the code according to the standard defined by [std]"
-    echo "                   valid values are as follows:"
-    echo "                      c89"
-    echo "                      iso9899:1990"
-    echo "                      iso9899:199409"
-    echo "                      c99"
-    echo "                      iso9899:1999"
-    echo "                      gnu89"
-    echo "                      gnu99"
-    echo "                      c++98"
-    echo "                      gnu++98"
     echo
     echo "Note: since certain portions of Omni are header only, due to template specializations"
     echo "and other C++ specific issues, if you compile Omni as a library with certain preprocessor"
@@ -287,32 +256,26 @@ parse_args()
             "-oo")
                 # framework options
                 case $2 in
-                    "lite") defines="${defines} -DOMNI_LITE" ;;
-                    "heavyo") defines="${defines} -DOMNI_DISPOSE_EVENT -DOMNI_OBJECT_NAME -DOMNI_TYPE_INFO" ;;
-                    "sfall") defines="${defines} -DOMNI_SAFE_FRAMEWORK" ;;
-                    "sfapp") defines="${defines} -DOMNI_SAFE_APPLICATION" ;;
-                    "sfev") defines="${defines} -DOMNI_SAFE_EVENTS" ;;
-                    "sfdg") defines="${defines} -DOMNI_SAFE_DELEGATES" ;;
-                    "sftmr") defines="${defines} -DOMNI_SAFE_TIMER" ;;
-                    "sfsem") defines="${defines} -DOMNI_SAFE_SEMAPHORE" ;;
-                    "sfthread") defines="${defines} -DOMNI_SAFE_THREAD" ;;
-                    "sfrunnable") defines="${defines} -DOMNI_SAFE_RUNNABLE_THREAD" ;;
-                    #define DOMNI_SAFE_PROP
-                    "sfmtx") defines="${defines} -DOMNI_SAFE_MUTEX" ;;
-                    "sfcond") defines="${defines} -DOMNI_SAFE_CONDITIONAL" ;;
                     "np") defines="${defines} -DOMNI_NON_PORTABLE" ;;
-                    "noexcep")
-                        defines="${defines} -DOMNI_NO_THROW"
-                        fexcep="-fno-exceptions"
-                        ;;
-                    "nouni") useuni=0 ;;
-                    "stdcall") defines="${defines} -DOMNI_THREAD_STDCALL" ;;
-                    "fastcall") defines="${defines} -DOMNI_THREAD_FASTCALL" ;;
-                    "cdecl") defines="${defines} -DOMNI_THREAD_CDECL" ;;
                     "terr") defines="${defines} -DOMNI_TERMINATE" ;;
-                    "disposing") defines="${defines} -DOMNI_DISPOSE_EVENT" ;;
-                    "objname") defines="${defines} -DOMNI_OBJECT_NAME" ;;
-                    "typeinfo") defines="${defines} -DOMNI_TYPE_INFO" ;;
+                    "lite") defines="${defines} -DOMNI_LITE" ;;
+                    "heavy") defines="${defines} -DOMNI_DISPOSE_EVENT -DOMNI_OBJECT_NAME -DOMNI_TYPE_INFO" ;;
+                    "safe")
+                        case $3 in
+                            "fw") defines="${defines} -DOMNI_SAFE_FRAMEWORK" ;;
+                            *) defines="${defines} -DOMNI_SAFE_${3}" ;;
+                        esac
+                        shift
+                        ;;
+                    "no")
+                        case $3 in
+                            "throw") defines="${defines} -DOMNI_NO_THROW"; fexcep="-fno-exceptions" ;;
+                            "uni") useuni=0 ;;
+                            "extc") defines="${defines} -DOMNI_NO_EXTERN_CONSTS" ;;
+                            *) echo "Unknown no-framework option $3"; usage ;;
+                        esac
+                        shift
+                        ;;
                     *) echo "Unknown framework option $2"; usage ;;
                 esac
                 shift
@@ -321,16 +284,10 @@ parse_args()
                 # framework debug options
                 has_debug=1
                 case $2 in
-                    "1") defines="${defines} -DOMNI_SHOW_DEBUG=1" ;;
-                    "2") defines="${defines} -DOMNI_SHOW_DEBUG=2" ;;
-                    "3") defines="${defines} -DOMNI_SHOW_DEBUG=3" ;;
-                    "4") defines="${defines} -DOMNI_SHOW_DEBUG=4" ;;
-                    "5") defines="${defines} -DOMNI_SHOW_DEBUG=5" ;;
+                    ''|*[!0-9]*) echo "Unknown debug option $2"; usage ;;
+                    "full") defines="${defines} -DOMNI_SHOW_DEBUG_FILE -DOMNI_SHOW_DEBUG_FUNC -DOMNI_SHOW_DEBUG_LINE" ;;
                     "err") defines="${defines} -DOMNI_SHOW_DEBUG_ERR" ;;
-                    "file") defines="${defines} -DOMNI_SHOW_DEBUG_FILE" ;;
-                    "func") defines="${defines} -DOMNI_SHOW_DEBUG_FUNC" ;;
-                    "line") defines="${defines} -DOMNI_SHOW_DEBUG_LINE" ;;
-                    *) echo "Unknown debug option $2"; usage ;;
+                    *) defines="${defines} -DOMNI_SHOW_DEBUG=${2}" ;;
                 esac
                 shift
                 ;;
@@ -344,22 +301,21 @@ parse_args()
                     "we") extraopts="${extraopts} -Werror" ;;
                     "se") extraopts="${extraopts} -Wfatal-errors" ;;
                     "stats") extraopts="${extraopts} -Q" ;;
-                    "ep") extraopts="${extraopts} -pedantic-errors" ;;
+                    "pe") extraopts="${extraopts} -pedantic-errors" ;;
                     "lrt") extraopts="${extraopts} -lrt" ;;
                     "nopthread") nopthread=1 ;;
                     "nortti") extraopts="${extraopts} -fno-rtti" ;;
-                    "opti") extraopts="${extraopts} -O" ;;
-                    "opt1") extraopts="${extraopts} -O1" ;;
-                    "opt2") extraopts="${extraopts} -O2" ;;
-                    "opt3") extraopts="${extraopts} -O3" ;;
-                    "opts") extraopts="${extraopts} -Os" ;;
                     "noconsole") no_console=1 ;;
                     "asm") doasm=1 ;;
-                    "ggdb")
+                    "opt")
+                        extraopts="${extraopts} -O${3}" # -co opt [0|1|2|3|s]
+                        shift
+                        ;;
+                    "gdb")
                         extraopts="${extraopts} -ggdb"
                         docleanup=0
                         ;;
-                    "gdb")
+                    "dbg")
                         extraopts="${extraopts} -g"
                         docleanup=0
                         ;;

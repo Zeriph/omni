@@ -22,6 +22,7 @@
 #include <omni/types/threadpool_t.hpp>
 #include <omni/sync/basic_thread.hpp>
 #include <omni/sync/basic_lock.hpp>
+#include <omni/chrono/span.hpp>
 #include <list>
 
 namespace omni {

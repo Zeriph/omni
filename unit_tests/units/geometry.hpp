@@ -24,6 +24,7 @@ class UT_CLASS_DEF
             print_info(omni::geometry::raw_rectangle_t);
             print_info(omni::geometry::size_t);
             print_info(omni::geometry::raw_size_t);
+            print_info(omni::geometry::vector2);
         }
         
         void base_test()

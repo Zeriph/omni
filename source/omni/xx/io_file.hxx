@@ -20,19 +20,10 @@
 /* DEV_NOTE: this file is not intended to be used directly by any user code!
 
  i.e. don't #include <omni/xxx_impl.hxx> and don't compile this source directly.
- this file is #include'd directly in other source. 
- 
- The logic is that omni::cstring and omni::wstring namespaces segregate the types
- for explicit calling; i.e. you can call omni::cstring::X to check on a std:string
- and similarly can call omni::wstring::X to check a std::wstring, while still having access
- to the omni::string_t and omn::string::X functions (which are aliases for the other namespaces).
- 
- Since omni::wstring and omni::cstring are merely wrappers for the omni::string::util functions
- (which are templated) that then pass in the appropriate types (std::string/wstring char/wchar_t)
- putting the relevant code in a header with a few #defs for types makes keeping the files
- in sync (for functions) less messy. It does introduce slight confusion to anyone who might
- want to read this specific code or documentation though, hence this note.
+ this file is #include'd directly in other source.
 */
+
+// TODO: parts of this are unfinished (i.e. set_size unix)
 
 // so as not to accidentally build this file with the source this macro is defined in io.cpp
 #if !defined(OMNI_IO_FILE_FW) || !defined(OMNI_PATH_FW) || !defined(OMNI_L_FW) || !defined(OMNI_STRING_T_FW)
@@ -40,9 +31,17 @@
 #endif
 
 #if defined(OMNI_IO_FILE_INTERNAL_FW)
-    namespace omni { namespace io { /** @internal framework helper */ namespace file_internal {
+    namespace omni {
+    namespace io {
+    /** @internal framework helper */
+    namespace file_internal {
 
     #if defined(OMNI_OS_WIN)
+        /* DEV_NOTE: this code is Windows only .. it returns the short/long path name for a file
+        but that's largely irrelevant as it only returns an 8.3 short path name if it's enabled
+        in the registry for above Windows XP. Since this is a one-off type of thing and likely
+        not largely used, this will not be exposed or documented beyond this file scope. */
+
         /** @internal framework helper */
         std::string get_path_name(const std::string& file)
         {
@@ -63,6 +62,7 @@
             }
             return name;
         }
+
         /** @internal framework helper */
         std::wstring get_path_name(const std::wstring& file)
         {
@@ -227,9 +227,12 @@
             OMNI_FILE_CHECKA_FW(file, false)
             HANDLE hfile = ::CreateFileA(file.c_str(), GENERIC_WRITE, FILE_SHARE_READ|FILE_SHARE_WRITE, NULL,
                                                      CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL);
-            int err = omni::system::last_error();
-            if (hfile == INVALID_HANDLE_VALUE || err > 0) {
-                OMNI_DBGEV("error setting file length: ", err)
+            int ret = omni::system::last_error();
+            if (hfile == INVALID_HANDLE_VALUE || ret > 0) {
+                OMNI_DBGEV("error setting file length: ", ret)
+                if (hfile != INVALID_HANDLE_VALUE) {
+                    ::CloseHandle(hfile);
+                }
                 return false;
             }
             ::CloseHandle(hfile);
@@ -253,9 +256,12 @@
             std::wstring tf = OMNI_FILE_CHECKW_FW(file, false)
             HANDLE hfile = ::CreateFileW(tf.c_str(), GENERIC_WRITE, FILE_SHARE_READ|FILE_SHARE_WRITE, NULL,
                                                    CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL);
-            int err = omni::system::last_error();
-            if (hfile == INVALID_HANDLE_VALUE || err > 0) {
-                OMNI_DBGEV("error setting file length: ", err)
+            int ret = omni::system::last_error();
+            if (hfile == INVALID_HANDLE_VALUE || ret > 0) {
+                OMNI_DBGEV("error setting file length: ", ret)
+                if (hfile != INVALID_HANDLE_VALUE) {
+                    ::CloseHandle(hfile);
+                }
                 return false;
             }
             ::CloseHandle(hfile);
@@ -292,19 +298,25 @@
             #if defined(OMNI_WIN_API)
                 OMNI_FILE_CHECKA_FW(file, 0)
                 WIN32_FILE_ATTRIBUTE_DATA finfo;
-                if (::GetFileAttributesExA(file.c_str(), GetFileExInfoStandard, &finfo) == 0) { return 0; }
+                if (::GetFileAttributesExA(file.c_str(), GetFileExInfoStandard, &finfo) == 0) {
+                    return 0;
+                }
                 LARGE_INTEGER sz;
                 sz.HighPart = finfo.nFileSizeHigh;
                 sz.LowPart = finfo.nFileSizeLow;
                 return static_cast<uint64_t>(sz.QuadPart);
             #else
                 struct stat fi;
-                if (::_stat(file.c_str(), &fi) == 0) { return fi.st_size; }
+                if (::_stat(file.c_str(), &fi) == 0) {
+                    return static_cast<uint64_t>(fi.st_size);
+                }
                 return 0;
             #endif
         #else
             struct stat fi;
-            if (::stat(file.c_str(), &fi) == 0) { return fi.st_size; }
+            if (::stat(file.c_str(), &fi) == 0) {
+                return static_cast<uint64_t>(fi.st_size);
+            }
             return 0;
         #endif
     }
@@ -315,19 +327,25 @@
             #if defined(OMNI_WIN_API)
                 std::wstring tf = OMNI_FILE_CHECKW_FW(file, 0)
                 WIN32_FILE_ATTRIBUTE_DATA finfo;
-                if (::GetFileAttributesExW(tf.c_str(), GetFileExInfoStandard, &finfo) == 0) { return 0; }
+                if (::GetFileAttributesExW(tf.c_str(), GetFileExInfoStandard, &finfo) == 0) {
+                    return 0;
+                }
                 LARGE_INTEGER sz;
                 sz.HighPart = finfo.nFileSizeHigh;
                 sz.LowPart = finfo.nFileSizeLow;
                 return static_cast<uint64_t>(sz.QuadPart);
             #else
                 struct stat fi;
-                if (::_wstat(file.c_str(), &fi) == 0) { return fi.st_size;; }
+                if (::_wstat(file.c_str(), &fi) == 0) {
+                    return static_cast<uint64_t>(fi.st_size);
+                }
                 return 0;
             #endif
         #else
             struct stat fi;
-            if (::stat(omni::string::util::to_string(file).c_str(), &fi) == 0) { return fi.st_size;; }
+            if (::stat(omni::string::util::to_string(file).c_str(), &fi) == 0) {
+                return static_cast<uint64_t>(fi.st_size);
+            }
             return 0;
         #endif
     }
@@ -417,15 +435,21 @@
     template < typename STR, typename IFSTREAM, typename SEQ >
     uint64_t rd(const STR& file, SEQ& buffer)
     {
+        // TODO: does wifstream not take wchar_t[] filename?
         IFSTREAM ifile(omni::string::util::to_string(file).c_str(), std::ios::binary);
         if (!ifile.is_open()) { return 0; }
         ifile.seekg(0, ifile.end);
-        size_t length = ifile.tellg();
+        uint64_t length = static_cast<uint64_t>(ifile.tellg());
         ifile.seekg(0, ifile.beg);
-        // TODO: no like
-        ifile.read(reinterpret_cast<typename STR::value_type*>(&buffer[0]), length);
-        length = ifile.gcount();
+        // we can't assume the SEQ type will allow contiguous memory, so we have to loop :/
+        typename STR::value_type* bf = new typename STR::value_type[length];
+        ifile.read(bf, static_cast<std::streamsize>(length));
+        length = static_cast<uint64_t>(ifile.gcount());
         ifile.close();
+        //for (auto i = 0; i < length; ++i) { buffer[i] = bf[i]; }
+        // TODO: verify .. also, is this really the most effeceint way??
+        std::copy(buffer.begin(), buffer.end(), bf);
+        delete[] bf;
         return length;
     }
     /** @internal framework helper */
@@ -455,7 +479,8 @@
     {
         IFSTREAM ifile(omni::string::util::to_string(file).c_str(), std::ios::binary);
         if (!ifile.is_open()) { return 0; }
-        uint64_t length = ifile.tellg();
+        // TODO: verify std::streamsize will work on files larger than std::numeric_limits<long>::max() (~4GB)
+        uint64_t length = static_cast<uint64_t>(ifile.tellg());
         ifile >> buffer;
         length = static_cast<uint64_t>(ifile.tellg()) - length;
         ifile.close();
@@ -476,15 +501,15 @@
     template < typename STR, typename IFSTREAM, typename SEQ >
     uint64_t rd_raw(const STR& file, SEQ* buffer, uint64_t blen)
     {
+        // TODO: verify this functionality
         IFSTREAM ifile(omni::string::util::to_string(file).c_str(), std::ios::binary);
         if (!ifile.is_open()) { return 0; }
-        ifile.seekg (0, ifile.end);
-        uint64_t length = ifile.tellg();
+        ifile.seekg(0, ifile.end);
+        uint64_t length = static_cast<uint64_t>(ifile.tellg());
         ifile.seekg(0, ifile.beg);
         if (length > blen) { length = blen; }
-        // TODO: no like
-        ifile.read(reinterpret_cast<typename STR::value_type*>(buffer), length);
-        length = ifile.gcount();
+        ifile.read(reinterpret_cast<typename STR::value_type*>(buffer), static_cast<std::streamsize>(length));
+        length = static_cast<uint64_t>(ifile.gcount());
         ifile.close();
         return length;
     }
@@ -562,30 +587,55 @@
         /** @internal framework helper */
         bool set_size(const std::string& file, uint64_t size)
         {
-            #if defined(OMNI_OS_WIN)
+            #if defined(OMNI_OS_WIN) && defined(OMNI_WIN_API)
                 OMNI_FILE_CHECKA_FW(file, false)
                 HANDLE hfile = ::CreateFileA(file.c_str(), GENERIC_WRITE, FILE_SHARE_READ|FILE_SHARE_WRITE, NULL,
                                                          CREATE_NEW|OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-                int err = omni::system::last_error();
-                if (hfile == INVALID_HANDLE_VALUE || err > 0) {
-                    OMNI_DBGEV("error setting file length: ", err)
+                int ret = omni::system::last_error();
+                if (hfile == INVALID_HANDLE_VALUE || ret > 0) {
+                    OMNI_DBGEV("error setting file length: ", ret)
+                    if (hfile != INVALID_HANDLE_VALUE) {
+                        ::CloseHandle(hfile);
+                    }
                     return false;
                 }
                 ::SetFilePointer(hfile, size, 0, FILE_BEGIN);
                 ::SetEndOfFile(hfile);
                 ::CloseHandle(hfile);
             #else
-                int fd = ::open(file.c_str(), O_RDWR);
-                if (::ftruncate(fd, size) != 0) {
-                    OMNI_DBGEV("error setting file length: ", omni::system::last_error())
-                    //close(fd);
-                    //return false;
-                }
-                ::close(fd);
-                // NOTE: If the above gives issues, try the following
-                //if (::truncate(file.c_str(), size) != 0) {
-                //    OMNI_DBGEV("error setting file length: ", omni::system::last_error())
-                //}
+                #if defined(OMNI_OS_WIN)
+                    int fd = ::_open(file.c_str(), O_RDWR);
+                    if (fd == -1) {
+                        OMNI_DBGEV("Could not open file: ", omni::system::last_error())
+                        return false;
+                    }
+                    errno_t ret = _chsize_s(fd, static_cast<__int64>(size));
+                    if (ret != 0) {
+                        OMNI_DBGEV("error setting file length: ", ret)
+                        ::_close(fd);
+                        return false;
+                    }
+                    ::_close(fd);
+                #else
+                    #if defined(OMNI_IO_USE_TRUNCATE)
+                        if (OMNI_IO_FILE_TRUNCATE_FN (file.c_str(), static_cast<off_t>(size)) != 0) {
+                            OMNI_DBGEV("error setting file length: ", omni::system::last_error())
+                            return false;
+                        }
+                    #else
+                        int fd = ::open(file.c_str(), O_RDWR);
+                        if (fd == -1) {
+                            OMNI_DBGEV("Could not open file: ", omni::system::last_error())
+                            return false;
+                        }
+                        if (OMNI_IO_FILE_FTRUNCATE_FN (fd, static_cast<off_t>(size)) != 0) {
+                            OMNI_DBGEV("error setting file length: ", omni::system::last_error())
+                            ::close(fd);
+                            return false;
+                        }
+                        ::close(fd);
+                    #endif
+                #endif
             #endif
             return true;
         }
@@ -596,26 +646,51 @@
                 std::wstring tf = OMNI_FILE_CHECKW_FW(file, false)
                 HANDLE hfile = ::CreateFileW(tf.c_str(), GENERIC_WRITE, FILE_SHARE_READ|FILE_SHARE_WRITE, NULL,
                                                        CREATE_NEW|OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-                int err = omni::system::last_error();
-                if (hfile == INVALID_HANDLE_VALUE || err > 0) {
-                    OMNI_DBGEV("error setting file length: ", err)
+                int ret = omni::system::last_error();
+                if (hfile == INVALID_HANDLE_VALUE || ret > 0) {
+                    OMNI_DBGEV("error setting file length: ", ret)
+                    if (hfile != INVALID_HANDLE_VALUE) {
+                        ::CloseHandle(hfile);
+                    }
                     return false;
                 }
                 ::SetFilePointer(hfile, size, 0, FILE_BEGIN);
                 ::SetEndOfFile(hfile);
                 ::CloseHandle(hfile);
             #else
-                int fd = ::open(omni::string::util::to_string(file).c_str(), O_RDWR);
-                if (::ftruncate(fd, size) != 0) {
-                    OMNI_DBGEV("error setting file length: ", omni::system::last_error())
-                    //close(fd);
-                    //return false;
-                }
-                ::close(fd);
-                // NOTE: If the above gives issues, try the following
-                //if (::truncate(file.c_str(), size) != 0) {
-                //    OMNI_DBGEV("error setting file length: ", omni::system::last_error())
-                //}
+                #if defined(OMNI_OS_WIN)
+                    int fd = ::_wopen(file.c_str(), O_RDWR);
+                    if (fd == -1) {
+                        OMNI_DBGEV("Could not open file: ", omni::system::last_error())
+                        return false;
+                    }
+                    errno_t ret = _chsize_s(fd, static_cast<__int64>(size));
+                    if (ret != 0) {
+                        OMNI_DBGEV("error setting file length: ", ret)
+                        ::_close(fd);
+                        return false;
+                    }
+                    ::_close(fd);
+                #else
+                    #if defined(OMNI_IO_USE_TRUNCATE)
+                        if (OMNI_IO_FILE_TRUNCATE_FN (file.c_str(), static_cast<off_t>(size)) != 0) {
+                            OMNI_DBGEV("error setting file length: ", omni::system::last_error())
+                            return false;
+                        }
+                    #else
+                        int fd = ::open(omni::string::util::to_string(file).c_str(), O_RDWR);
+                        if (fd == -1) {
+                            OMNI_DBGEV("Could not open file: ", omni::system::last_error())
+                            return false;
+                        }
+                        if (OMNI_IO_FILE_FTRUNCATE_FN (fd, static_cast<off_t>(size)) != 0) {
+                            OMNI_DBGEV("error setting file length: ", omni::system::last_error())
+                            ::close(fd);
+                            return false;
+                        }
+                        ::close(fd);
+                    #endif
+                #endif
             #endif
             return true;
         }
@@ -625,14 +700,15 @@
     template < typename T, typename O >
     uint64_t write_fw(const std::string& file, const T& buffer, bool append)
     {
+        // TODO: verify functionality
         O ofile(file.c_str(), (append ? (std::ios::binary | std::ios::app) : std::ios::binary));
-        std::size_t start = ofile.tellp();
-        std::size_t end = start;
+        uint64_t start = static_cast<uint64_t>(ofile.tellp());
+        uint64_t end = start;
         ofile << buffer.c_str();
         ofile.flush();
-        end = ofile.tellp();
+        end = static_cast<uint64_t>(ofile.tellp());
         ofile.close();
-        return end - start;   
+        return (end - start);
     }
     /** @internal framework helper */
     uint64_t write(const std::string& file, const std::string& buffer, bool append)
@@ -649,16 +725,17 @@
     template < typename T, typename O, typename S, typename ITR >
     uint64_t write_buf_fw(const std::string& file, const S& buffer, bool append)
     {
+        // TODO: verify functionality
         O ofile(file.c_str(), (append ? (std::ios::binary | std::ios::app) : std::ios::binary));
-        std::size_t start = ofile.tellp();
-        std::size_t end = start;
+        uint64_t start = static_cast<uint64_t>(ofile.tellp());
+        uint64_t end = start;
         for (ITR b = buffer.begin(); b != buffer.end(); ++b) {
             ofile << *b;
         }
         ofile.flush();
-        end = ofile.tellp();
+        end = static_cast<uint64_t>(ofile.tellp());
         ofile.close();
-        return end - start;   
+        return (end - start);
     }
     /** @internal framework helper */
     uint64_t write(const std::string& file, const omni::seq::uchar_t& buffer, bool append)
@@ -685,14 +762,15 @@
     template < typename T >
     uint64_t write_raw_fw(const std::string& file, T buffer, size_t sz, bool append)
     {
+        // TODO: verify functionality
         std::ofstream ofile(file.c_str(), (append ? (std::ios::binary | std::ios::app) : std::ios::binary));
-        std::size_t start = ofile.tellp();
-        std::size_t end = start;
-        ofile.write(reinterpret_cast<const char*>(buffer), sz);
+        uint64_t start = static_cast<uint64_t>(ofile.tellp());
+        uint64_t end = start;
+        ofile.write(reinterpret_cast<const char*>(buffer), static_cast<std::streamsize>(sz));
         ofile.flush();
-        end = ofile.tellp();
+        end = static_cast<uint64_t>(ofile.tellp());
         ofile.close();
-        return end - start;
+        return (end - start);
     }
     /** @internal framework helper */
     uint64_t write_raw(const std::string& file, const unsigned char* buffer, size_t sz, bool append)
@@ -719,17 +797,18 @@
     template < typename T, typename O, typename S >
     uint64_t write_line_buf_fw(const std::string& file, const S& buffer, bool append)
     {
+        // TODO: verify functionality
         O ofile(file.c_str(), (append ? (std::ios::binary | std::ios::app) : std::ios::binary));
-        std::size_t start = ofile.tellp();
-        std::size_t end = start;
+        uint64_t start = static_cast<uint64_t>(ofile.tellp());
+        uint64_t end = start;
         for (typename S::const_iterator b = buffer.begin(); b != buffer.end(); ++b) {
             ofile << *b;
         }
         ofile << std::endl;
         ofile.flush();
-        end = ofile.tellp();
+        end = static_cast<uint64_t>(ofile.tellp());
         ofile.close();
-        return end - start;   
+        return (end - start);
     }
     /** @internal framework helper */
     uint64_t write_line(const std::string& file, const omni::seq::uchar_t& buffer, bool append)
@@ -756,14 +835,15 @@
     template < typename T, typename O >
     uint64_t write_line_fw(const std::string& file, const T& buffer, bool append)
     {
+        // TODO: verify functionality
         O ofile(file.c_str(), (append ? (std::ios::binary | std::ios::app) : std::ios::binary));
-        std::size_t start = ofile.tellp();
-        std::size_t end = start;
+        uint64_t start = static_cast<uint64_t>(ofile.tellp());
+        uint64_t end = start;
         ofile << buffer.c_str() << std::endl;
         ofile.flush();
-        end = ofile.tellp();
+        end = static_cast<uint64_t>(ofile.tellp());
         ofile.close();
-        return end - start;   
+        return (end - start);
     }
     /** @internal framework helper */
     uint64_t write_line(const std::string& file, const std::string& buffer, bool append)
@@ -780,15 +860,16 @@
     template < typename T >
     uint64_t write_line_raw_fw(const std::string& file, T buffer, size_t sz, bool append)
     {
+        // TODO: verify functionality
         std::ofstream ofile(file.c_str(), (append ? (std::ios::binary | std::ios::app) : std::ios::binary));
-        std::size_t start = ofile.tellp();
-        std::size_t end = start;
-        ofile.write(reinterpret_cast<const char*>(buffer), sz);
+        uint64_t start = static_cast<uint64_t>(ofile.tellp());
+        uint64_t end = start;
+        ofile.write(reinterpret_cast<const char*>(buffer), static_cast<std::streamsize>(sz));
         ofile << std::endl;
         ofile.flush();
-        end = ofile.tellp();
+        end = static_cast<uint64_t>(ofile.tellp());
         ofile.close();
-        return end - start;
+        return (end - start);
     }
     /** @internal framework helper */
     uint64_t write_line_raw(const std::string& file, const unsigned char* buffer, size_t sz, bool append)
@@ -951,69 +1032,6 @@ bool omni::io::OMNI_PATH_FW::set_size(const OMNI_STRING_T_FW& file, uint64_t siz
     // 'length' worth of null is because depending on 'length' this could take a long time.
     // No pun intended. Using the API to create a 'sparse' file, it simply tells the FAT
     // (file allocation table) that file 'X' is 'length' in size
-    #if defined(OMNI_OS_WIN)
-        // Because we are using Windows we need to convert the name to 8.3 format otherwise, it's possible to get
-        // an INVALID_HANDLE_VALUE returned from a valid file. 
-        // Example: 'C:\Develop\C++\file.txt' could exist and there is nothing in the name more than 8 characters
-        // long, but because the folder 'C++' has invalid 8.3 characters in it, it will fail. 'C++' in 8.3 format is 'C__~1'
-        // CreateFile also needs a '\\?\' in front of the file to open an actual file handle ('\\.\' for a device)    
-        
-        // First obtain the size needed by passing NULL and 0
-        OMNI_STRING_T_FW name = OMNI_STRW("\\\\?\\"); // + file;
-        long length = GetShortPathName(file.c_str(), NULL, 0);
-        if (length > 0) {
-            omni::char_t *buffer = new omni::char_t[length];
-            // Now simply call again using same long path.
-            length = GetShortPathName(file.c_str(), buffer, length);
-            if (length > 0) { // Could not get the short path name, so return the original
-                OMNI_STRING_T_FW npath(buffer);
-                delete[] buffer;
-                name += npath;
-            } else {
-                delete[] buffer;
-            }
-        } else {
-            name += file;
-        }
-        
-        HANDLE hfile = CreateFile(name.c_str(), // File name
-                                 GENERIC_WRITE,  // Open mode (GENERIC_READ/WRITE/EXECUTE/ALL)
-                                 FILE_SHARE_READ|FILE_SHARE_WRITE, // Shared mode (FILE_SHARE_WRITE/READ/DELETE)
-                                 NULL, // Pointer to the security descriptor
-                                 CREATE_NEW|OPEN_EXISTING, // How to create/open (go to definition to see all)
-                                 FILE_ATTRIBUTE_NORMAL, // File attributes (go to definition to see all)
-                                 NULL); // Handle to file with attributes to copy
-        int err = omni::system::last_error();
-        if (hfile == INVALID_HANDLE_VALUE || err > 0) {
-            OMNI_DBGEV("error setting file length: ", err)
-            return false;
-        }
-        SetFilePointer(hfile, size, 0, FILE_BEGIN);
-        SetEndOfFile(hfile);
-        CloseHandle(hfile);
-    #else
-        // DEV_NOTE: The following functions are POSIX functions and MIGHT NOT
-        // work on your OS/Filesystem. As there is no standard way of setting the length
-        // of a file, you may have to 'hack in' your own way if your needs differ from this
-        //int ftruncate(int fd, off_t length);
-        //int truncate(const char *path, off_t length);
-
-        // DEV_NOTE: Even though the function call is 'truncate' which would imply only
-        // file truncation, if the length passed to the function is longer than the
-        // actual file length, the file is indeed expanded.
-
-        int fd = open(omni::string::util::to_string(file).c_str(), O_RDWR);
-        if (ftruncate(fd, size) != 0) {
-            OMNI_DBGEV("error setting file length: ", omni::system::last_error())
-            //close(fd);
-            //return false;
-        }
-        close(fd);
-        // NOTE: If the above gives issues, try the following
-        //if (truncate(file.c_str(), size) != 0) {
-        //    OMNI_DBGEV("error setting file length: ", omni::system::last_error())
-        //}
-    #endif
     */
     return omni::io::OMNI_PATH_FW::get_size(file) == size;
 }

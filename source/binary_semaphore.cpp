@@ -46,7 +46,7 @@ omni::sync::binary_semaphore::~binary_semaphore()
     OMNI_D5_FW("destroyed");
 }
 
-const omni::sync::semaphore_t omni::sync::binary_semaphore::handle() const
+omni::sync::semaphore_t omni::sync::binary_semaphore::handle() const
 {
     return this->m_sem;
 }
@@ -87,7 +87,7 @@ bool omni::sync::binary_semaphore::lock()
     return false;
 }
 
-bool omni::sync::binary_semaphore::lock(unsigned long timeout_ms)
+bool omni::sync::binary_semaphore::lock(uint32_t timeout_ms)
 {
     #if defined(OMNI_OS_WIN)
         switch(::WaitForSingleObject(this->m_sem, timeout_ms)) {

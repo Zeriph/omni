@@ -21,6 +21,7 @@
 #include <omni/defs/class_macros.hpp>
 #include <omni/types/thread_t.hpp>
 #include <omni/sync/spin.hpp>
+#include <omni/chrono/span.hpp>
 #include <omni/sync/basic_lock.hpp>
 #include <map>
 
@@ -78,16 +79,16 @@ namespace omni {
                 void detach(bool allow_rejoin);
                 const omni::sync::thread_union_t get_option(omni::sync::thread_option::enum_t op) const;
                 omni::sync::thread_flags options() const;
-                const omni::sync::thread_handle_t handle() const;
-                const omni::sync::thread_t id() const;
+                omni::sync::thread_handle_t handle() const;
+                omni::sync::thread_t id() const;
                 bool is_alive() const;
                 bool is_bound() const;
                 bool is_parameter_bound() const;
                 bool is_detached() const;
                 bool is_threadpool_thread() const;
                 bool join(); // default of infinite timeout
-                bool join(unsigned long timeout);
-                //TODO: add bool join(const omni::timespan& t); when omni::timespan complete
+                bool join(uint32_t timeout);
+                bool join(const omni::chrono::unsigned_timespan& span);
                 bool kill(); // Terminate 'immediately'
                 omni::sync::thread_state status() const;
                 omni::sync::thread_t start();

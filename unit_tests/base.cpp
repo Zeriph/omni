@@ -54,35 +54,81 @@
     }
 */
 
-static omni::sync::thread _thread;
-static omni::chrono::unsigned_timespan _span;
-
-static void thread_join_test()
+void unsigned_test(const std::string& val, const std::string& should_be)
 {
-    time_t start = omni::chrono::monotonic::tick();
-    printl("sleeping for 2 seconds");
-    omni::sync::sleep(2000);
-    _span = omni::chrono::elapsed_us(start) * omni::chrono::TICKS_PER_MICROSECOND;
-    printl("leaving thread");
+    omni::chrono::unsigned_timespan t;
+    std::cout << "Parsing '" << val << "'...";
+    if (omni::chrono::unsigned_timespan::try_parse(val, t)) {
+        std::cout << "success: '" << t << "' should be '" << should_be << "'" << std::endl;
+    } else {
+        std::cout << "failed" << std::endl;
+    }
+}
+
+void signed_test(const std::string& val, const std::string& should_be)
+{
+    omni::chrono::timespan t;
+    std::cout << "Parsing '" << val << "'...";
+    if (omni::chrono::timespan::try_parse(val, t)) {
+        std::cout << "success: '" << t << "' should be '" << should_be << "'" << std::endl;
+    } else {
+        std::cout << "failed" << std::endl;
+    }
+}
+
+void do_parse(const std::string& val, const std::string& should_be)
+{
+    signed_test(val, should_be);
+    unsigned_test(val, should_be);
+}
+
+void num_test(const std::string& val)
+{
+    if (omni::string::util::is_numeric(val), true) {
+        std::cout << val << " = yes" << std::endl;
+    } else {
+        std::cout << val << " = no" << std::endl;
+    }
 }
 
 int main(int argc, char* argv[])
-{   
-    _thread.bind(&thread_join_test);
-    printl("bound, starting ...");
-    _thread.start();
-    printl("joining in main thread");
-    _thread.join();
-    printl("leaving main thread");
-    printl("timespan = " << _span);
-    _span += 5 * omni::chrono::TICKS_PER_HOUR;
-    _span += 5 * omni::chrono::TICKS_PER_MINUTE;
-    _span += 5 * omni::chrono::TICKS_PER_DAY;
-    printl("timespan = " << _span);
-    printl("total days = " << _span.total_days());
-    printl("total hours = " << _span.total_hours());
-    printl("total minutes = " << _span.total_minutes());
-    printl("total seconds = " << _span.total_seconds());
-    printl("total ms = " << _span.total_milliseconds());
+{
+    /*omni::geometry::point_seq_t points = omni::geometry::path::get_circle(10, 10, 30);
+
+    std::cout << "point count " << points.size() << std::endl;
+    for (omni::geometry::point_seq_t::iterator itr = points.begin(); itr != points.end(); ++itr) {
+        std::cout << "point: " << *itr << std::endl;
+    }*/
+
+    // [ws][-]{ d | [d.]hh:mm[:ss[.ff]] }[ws]
+
+    std::string s = "here's a standard string";
+    std::wstring w = L"here's a wide string";
+    std::string sw = omni::string_util::to_string(w);
+    std::wstring ws = omni::string_util::to_wstring(s);
+    
+    std::cout << "s = " << s << std::endl;
+    std::wcout << "w = " << w << std::endl;
+    std::cout << "sw = " << sw << std::endl;
+    std::wcout << "ws = " << ws << std::endl;
+
+    std::cout << "cstr dnotfnd = " << omni::cconsts::err::DELEGATE_NOT_FOUND << std::endl;
+    std::wcout << "wstr dnotfnd = " << omni::wconsts::err::DELEGATE_NOT_FOUND << std::endl;
+    
+
+    /*num_test("2");
+    num_test("2.4");
+
+    do_parse("10", "10.00:00:00.0");
+    do_parse("16:24", "0.16:24:00.0");
+    do_parse("25:24", "fail");
+    do_parse("23:60", "fail");
+    do_parse("23:23:23", "0.23:23:23.0");
+    do_parse("2.4:4:2.4", "2.04:04:02.4");
+    do_parse(" 12:10 ", "0.12:10:00.0");
+    do_parse(" -12:10 ", "-0.12:10:00.0");
+    do_parse(" 12:a0 ", "fail");
+    do_parse(" b 12:10 ", "fail");*/
+    
     return 0;
 }

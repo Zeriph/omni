@@ -96,6 +96,7 @@ OMNI_THREAD_FNPTR_T OMNI_THREAD_CALL_T omni::sync::runnable_thread::_start(void*
         OMNI_DBGE(OMNI_INVALID_DELEGATE_FUNC_STR)
         OMNI_THROW_FW(omni::exceptions::invalid_delegate())
         // if nothrow then act as 'killed'
+        // DEV_NOTE: if OMNI_THROW_FW is defined, you might get warnings about this code being unreachable
         t->m_state = omni::sync::thread_state::STOP_REQUESTED;
     }
     // A stop request would mean a user killing this thread, and if that succeeded then we wouldn't get here
@@ -286,7 +287,7 @@ omni::sync::runnable_thread::~runnable_thread()
                 if (to > 0) {
                     bool kod = this->m_ops.kill_on_destroy();
                     OMNI_SAFE_RUNLOCK_FW
-                    this->join(to);
+                    this->join(static_cast<uint32_t>(to));
                     if (kod) { this->kill(); }
                     OMNI_SAFE_RLOCK_FW
                 } else {
@@ -328,7 +329,7 @@ bool omni::sync::runnable_thread::abort_join()
     return this->join();
 }
 
-bool omni::sync::runnable_thread::abort_join(unsigned long timeout)
+bool omni::sync::runnable_thread::abort_join(uint32_t timeout)
 {
     this->abort();
     return this->join(timeout);
@@ -358,6 +359,7 @@ const omni::sync::thread_union_t omni::sync::runnable_thread::get_option(omni::s
             return this->m_ops.stack_size();
         case omni::sync::thread_option::AUTO_JOIN_TIMEOUT:
             return this->m_ops.auto_join_timeout();
+        case omni::sync::thread_option::NONE:
         default: // invalid_option
             OMNI_ERRV_FW("invalid option: ", op, omni::exceptions::invalid_thread_option(static_cast<std::size_t>(op)))
             break;
@@ -371,13 +373,13 @@ omni::sync::thread_flags omni::sync::runnable_thread::get_options() const
     return this->m_ops;
 }
 
-const omni::sync::thread_handle_t omni::sync::runnable_thread::handle() const
+omni::sync::thread_handle_t omni::sync::runnable_thread::handle() const
 {
     OMNI_SAFE_RALOCK_FW
     return this->m_thread;
 }
 
-const omni::sync::thread_t omni::sync::runnable_thread::id() const
+omni::sync::thread_t omni::sync::runnable_thread::id() const
 {
     OMNI_SAFE_RALOCK_FW
     return this->m_tid;
@@ -419,7 +421,7 @@ bool omni::sync::runnable_thread::join()
     return this->join(omni::sync::INFINITE_TIMEOUT);
 }
 
-bool omni::sync::runnable_thread::join(unsigned long timeout)
+bool omni::sync::runnable_thread::join(uint32_t timeout)
 {
     // Unknown states can still be joined
     if (!this->is_alive()) {
@@ -472,6 +474,11 @@ bool omni::sync::runnable_thread::join(unsigned long timeout)
             #endif
         );
     #endif
+}
+
+bool omni::sync::runnable_thread::join(const omni::chrono::unsigned_timespan& span)
+{
+    return this->join(static_cast<uint32_t>(span.total_milliseconds()));
 }
 
 bool omni::sync::runnable_thread::kill()
@@ -618,6 +625,7 @@ void omni::sync::runnable_thread::set_option(omni::sync::thread_option::enum_t o
                 }
                 this->m_ops.set_flag(omni::sync::thread_option::KILL_ON_ASSIGN, val.b_val);
             } break;
+        case omni::sync::thread_option::NONE:
         default:
             OMNI_ERRV_FW("invalid option: ", op, omni::exceptions::invalid_thread_option(static_cast<std::size_t>(op)))
             break;
@@ -1028,7 +1036,7 @@ void omni::sync::runnable_thread::set_priority(omni::sync::thread_priority::enum
         (pri > omni::sync::thread_priority::HIGHEST && pri != omni::sync::thread_priority::REAL_TIME))
     {
         // invalid_priority
-        OMNI_ERRV_RET_FW("invalid priority: ", pri, omni::exceptions::invalid_thread_option(pri))
+        OMNI_ERRV_RET_FW("invalid priority: ", pri, omni::exceptions::invalid_thread_option(static_cast<size_t>(pri)))
     }
     OMNI_SAFE_RLOCK_FW
     // if we're not running, just set the priority til next time

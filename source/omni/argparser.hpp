@@ -31,25 +31,25 @@ namespace omni {
             public:
                 argparser();
                 argparser(const omni::application::argparser& cp);
-                argparser(const unsigned int& ac, const char** av);
-                argparser(const unsigned int& ac, const wchar_t** av);
+                argparser(uint32_t ac, const char** av);
+                argparser(uint32_t ac, const wchar_t** av);
                 explicit argparser(const omni::seq::std_string_t& av);
                 explicit argparser(const omni::seq::std_wstring_t& av);
                 ~argparser();
                 
-                unsigned int argc() const { return this->m_argc; }
+                uint32_t argc() const { return this->m_argc; }
                 omni::seq::string_t argv() const;
-                omni::string_t at(const unsigned int& index) const;
+                omni::string_t at(uint32_t index) const;
                 bool contains(const std::wstring& sw) const;
                 bool contains(const std::string& sw) const;
-                omni::string_t get_arg(const unsigned int& index) const;
+                omni::string_t get_arg(uint32_t index) const;
                 omni::string_t get_switch(const std::wstring& sw) const;
                 omni::string_t get_switch(const std::string& sw) const;
                 omni::seq::string_t get_switches(const omni::string_t& sw) const;
                 omni::seq::string_t get_range(std::size_t start, std::size_t end) const;
                 std::size_t size() const { return static_cast<std::size_t>(this->m_argc); }
-                void set(const unsigned int& ac, const char** av);
-                void set(const unsigned int& ac, const wchar_t** av);
+                void set(uint32_t ac, const char** av);
+                void set(uint32_t ac, const wchar_t** av);
                 void set(const omni::seq::string_t& av);
                 const omni::string_t to_string_t() const;
                 const omni::string_t to_string_t(bool includeArg1) const;
@@ -61,7 +61,7 @@ namespace omni {
                 operator std::wstring() const { return this->to_wstring(false); }
                 omni::string_t operator[](const std::string& sw) const;
                 omni::string_t operator[](const std::wstring& sw) const;
-                omni::string_t operator[](const unsigned int& index) const;
+                omni::string_t operator[](uint32_t index) const;
                 omni::application::argparser& operator=(const omni::application::argparser& ap);
                 bool operator==(const omni::application::argparser& o) const;
                 bool operator!=(const omni::application::argparser& o) const;
@@ -73,7 +73,7 @@ namespace omni {
             private:
                 omni::seq::string_t::const_iterator _find(omni::seq::string_t::const_iterator it, const omni::string_t& f) const;
                 omni::seq::string_t m_args;
-                unsigned int m_argc;
+                uint32_t m_argc;
         };
     }
 }

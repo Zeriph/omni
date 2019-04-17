@@ -25,11 +25,13 @@
 
 namespace omni {
     namespace wconsts {
+        #define OMNI_MISC_T_FW 2
         #define OMNI_CHAR_T_FW wchar_t
-        #define OMNI_STRW_FW(v) L##(v)
+        #define OMNI_STRW_FW(v) OMNI_WSTR(v)
         #include <omni/xx/const.hxx>
         #undef OMNI_CHAR_T_FW
         #undef OMNI_STRW_FW
+        #undef OMNI_MISC_T_FW
     }
 }
 

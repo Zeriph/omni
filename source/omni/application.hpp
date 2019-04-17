@@ -472,7 +472,7 @@ namespace omni {
          * 
          * @return An unsigned integer value of the current bit width.
          */
-        inline unsigned int bit_width()
+        inline uint32_t bit_width()
         { return OMNI_SIZEOF_BITS(char*); }
         
         /**

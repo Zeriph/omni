@@ -72,28 +72,14 @@ usage()
     echo 
     echo "framework options:"
     echo "       -lite       Sets the OMNI_LITE macro definition"
-    echo "       -hvyo       Sets the heavy object flag"
-    echo "       -noexc      Sets the OMNI_NO_THROW macro definition"
-    echo "       -sfall      Sets the OMNI_SAFE_FRAMEWORK macro definition"
-    echo "       -sfapp      Sets the OMNI_SAFE_APPLICATION macro definition"
-    echo "       -sfev       Sets the OMNI_SAFE_EVENTS macro definition"
-    echo "       -sfdg       Sets the OMNI_SAFE_DELEGATES macro definition"
-    echo "       -sftmr      Sets the OMNI_SAFE_TIMER macro definition"
-    echo "       -sfsem      Sets the OMNI_SAFE_SEMAPHORE macro definition"
-    echo "       -sfmtx      Sets the OMNI_SAFE_MUTEX macro definition"
-    echo "       -sfcond     Sets the OMNI_SAFE_CONDITIONAL macro definition"
-    echo "       -sfthread   Sets the OMNI_SAFE_THREAD macro definition"
-    echo "       -sfrunnable Sets the OMNI_SAFE_RUNNABLE_THREAD macro definition"
+    echo "       -heavy      Sets the heavy object flag"
+    echo "       -no [op]    Passes along a 'no-flag' to the compile script"
+    echo "       -safe       Sets the OMNI_SAFE_FRAMEWORK macro definition"
+    echo "       -sfw [op]   Set the OMNI_SAFE_[op] macro definition"
     echo "       -np         Sets the OMNI_NON_PORTABLE compiler flag and enables"
     echo "                   compilation of 'non-portable' code"
     echo "       -nouni      Disables the UNICODE flags (does not build unicode)"
     echo "       -terr       Sets the OMNI_TERMINATE macro"
-    echo "       -disposing  Sets the OMNI_DISPOSE_EVENT macro"
-    echo "       -objname    Sets the OMNI_OBJECT_NAME macro"
-    echo "       -typeinfo   Sets the OMNI_TYPE_INFO macro"
-    echo "       -stdcall    Defines the thread calling convention to be __attribute__((stdcall))"
-    echo "       -fastcall   Defines the thread calling convention to be __attribute__((fastcall))"
-    echo "       -cdecl      Defines the thread calling convention to be __attribute__((cdecl))"
     echo 
     echo "framework debug options:"
     echo "       -d1         Sets the OMNI_SHOW_DEBUG=1"
@@ -102,10 +88,8 @@ usage()
     echo "       -d4         Sets the OMNI_SHOW_DEBUG=4"
     echo "       -d5         Sets the OMNI_SHOW_DEBUG=5"
     echo "       -derr       Sets OMNI_SHOW_DEBUG_ERR"
-    echo "       -dfl        Sets OMNI_SHOW_DEBUG_FILE"
-    echo "       -dfn        Sets OMNI_SHOW_DEBUG_FUNC"
-    echo "       -dln        Sets OMNI_SHOW_DEBUG_LINE"
-    echo "       -dbgX       equivalent to -dX -dfl -dfn -dln"
+    echo "       -dfull      Sets OMNI_SHOW_DEBUG_FILE, OMNI_SHOW_DEBUG_FUNC andOMNI_SHOW_DEBUG_LINE"
+    echo "       -dbgX       equivalent to -dX -dfull"
     echo
     echo "compiler options:"
     echo "       -tc [tc]    Sets the compiler/toolchain to use (default of g++)"
@@ -116,17 +100,13 @@ usage()
 	echo "       -se         Stop on first error (instead of trying to continue)"
     echo "       -stats      Sets the -Q flag when compiling which shows statistics of the"
     echo "                   compilation unit"
-    echo "       -ep         Sets the -pedantic-errors flag"
+    echo "       -pe         Sets the -pedantic-errors flag"
     echo "       -lrt        Some platforms need the 'rt' library to compile, this sets the"
     echo "                   -lrt compiler/linker flag to compile/link against the 'rt' libs"
     echo "       -nopthread  Disables the -pthread compiler/linker flag"
     echo "       -nortti     Disables RTTI (run-time type information) for C++"
-    echo "       -noopt      No optimizations (default of -opti -opt3 -opts)"
-    echo "       -opti       Enable global optimization with intrinsic functions (-O)"
-    echo "       -opt1       Enable optimizations (-O1)"
-    echo "       -opt2       Enable more optimizations (-O2)"
-    echo "       -opt3       Maximum optimizations (-O3)"
-    echo "       -opts       Favor code space (-Os)"
+    echo "       -noopt      No optimizations (default of -opt 3)"
+    echo "       -opt [op]   Enable global optimization based on 0,1,2,3 or s"
     echo "       -asm        Generate the assembly output (.s file)"
     echo "       -gdb        Sets the -ggdb flag, enabling GDB debug output (for certain compilers)"
     echo "       -g          Sets the -g flag, enabling GDB debug output (for certain compilers)"
@@ -135,16 +115,6 @@ usage()
     echo "                   errors only and does nothing beyond that"
 	echo "       -eo         Use the extra compiler/linker flags (can generate erroneous errors)"
     echo "       -std [std]  Compiles the code according to the standard defined by [std]"
-    echo "                   valid values are as follows:"
-    echo "                     c89"
-    echo "                     iso9899:1990"
-    echo "                     iso9899:199409"
-    echo "                     c99"
-    echo "                     iso9899:1999"
-    echo "                     gnu89"
-    echo "                     gnu99"
-    echo "                     c++98"
-    echo "                     gnu++98"
 }
 
 list_tests()
@@ -161,12 +131,13 @@ parse_set_test()
     utupper=`echo ${utest} | tr [a-z] [A-Z]`
     utestflag="OMNI_UT_${utupper}"
     if [ "$1" = "full" ]; then
-        eopts="${eopts} -oo heavyo"
-        eopts="${eopts} -oo sfall"
+        eopts="${eopts} -oo heavy"
+        eopts="${eopts} -oo safe fw"
         eopts="${eopts} -oo np"
-        eopts="${eopts} -d OMNI_COMPILE_FLAGS"
-    elif [ "$ut" = "all" ]; then
-        eopts="${eopts} -d OMNI_COMPILE_FLAGS"
+        eopts="${eopts} -d OMNI_NO_EXTERN_CONSTS"
+    fi
+    if [ "$1" = "all" ]; then
+        eopts="${eopts} -d OMNI_NO_EXTERN_CONSTS"
     fi
 }
 
@@ -209,6 +180,7 @@ parse_args()
 			"osx") sys_type="osx" ;; #; eopts="${eopts} -tc clang++" ;;
             # QNX needs special attention (nopthread because it links automagically)
             "qnx") sys_type="qnx"; eopts="${eopts} -co nopthread -d OMNI_CLOCK_GETRES_REALTIME" ;;
+            
             # compile.sh script options
 			"-c") eopts="${eopts} -c ${2}"; shift ;;
             "-d") edefs="${edefs} -d ${2}"; shift ;;
@@ -228,29 +200,16 @@ parse_args()
             "-po") eopts="${eopts} -po" ;;
 			"-?") usage; exit 0 ;;
             "-list") list_tests; exit 0 ;;
+
             # framework options
             "-lite") eopts="${eopts} -oo lite" ;;
-            "-hvyo") eopts="${eopts} -oo heavyo" ;;
-            "-noexc") eopts="${eopts} -oo noexcep" ;;
-            "-sfall") eopts="${eopts} -oo sfall" ;;
-            "-sfapp") eopts="${eopts} -oo sfapp" ;;
-            "-sfev") eopts="${eopts} -oo sfev" ;;
-            "-sfdg") eopts="${eopts} -oo sfdg" ;;
-            "-sftmr") eopts="${eopts} -oo sftmr" ;;
-            "-sfsem") eopts="${eopts} -oo sfsem" ;;
-            "-sfmtx") eopts="${eopts} -oo sfmtx" ;;
-            "-sfcond") eopts="${eopts} -oo sfcond" ;;
-            "-sfthread") eopts="${eopts} -oo sfthread" ;;
-            "-sfrunnable") eopts="${eopts} -oo sfrunnable" ;;
+            "-heavy") eopts="${eopts} -oo heavy" ;;
+            "-no") eopts="${eopts} -oo no ${3}"; shift ;;
+            "-safe") eopts="${eopts} -oo safe fw" ;;
+            "-sfw") eopts="${eopts} -oo safe ${3}"; shift ;;
             "-np") eopts="${eopts} -oo np" ;;
-            "-nouni") eopts="${eopts} -oo nouni" ;;
             "-terr") eopts="${eopts} -oo terr" ;;
-            "-disposing") eopts="${eopts} -oo disposing" ;;
-            "-objname") eopts="${eopts} -oo objname" ;;
-            "-typeinfo") eopts="${eopts} -oo typeinfo" ;;
-            "-stdcall") eopts="${eopts} -oo stdcall" ;;
-            "-fastcall") eopts="${eopts} -oo fastcall" ;;
-            "-cdecl") eopts="${eopts} -oo cdecl" ;;
+            
             # framework debug options
 			"-d1") eopts="${eopts} -dbg 1" ;;
 			"-d2") eopts="${eopts} -dbg 2" ;;
@@ -258,35 +217,30 @@ parse_args()
             "-d4") eopts="${eopts} -dbg 4" ;;
             "-d5") eopts="${eopts} -dbg 5" ;;
             "-derr") eopts="${eopts} -dbg err" ;;
-            "-dfl") eopts="${eopts} -dbg file" ;;
-            "-dfn") eopts="${eopts} -dbg func" ;;
-            "-dln") eopts="${eopts} -dbg line" ;;
-            "-dbg1") eopts="${eopts} -dbg 1 -dbg file -dbg func -dbg line" ;;
-            "-dbg2") eopts="${eopts} -dbg 2 -dbg file -dbg func -dbg line" ;;
-            "-dbg3") eopts="${eopts} -dbg 3 -dbg file -dbg func -dbg line" ;;
-            "-dbg4") eopts="${eopts} -dbg 4 -dbg file -dbg func -dbg line" ;;
-            "-dbg5") eopts="${eopts} -dbg 5 -dbg file -dbg func -dbg line" ;;
-			# compiler options
+            "-dfull") eopts="${eopts} -dbg full" ;;
+            "-dbg1") eopts="${eopts} -dbg 1 -dbg full" ;;
+            "-dbg2") eopts="${eopts} -dbg 2 -dbg full" ;;
+            "-dbg3") eopts="${eopts} -dbg 3 -dbg full" ;;
+            "-dbg4") eopts="${eopts} -dbg 4 -dbg full" ;;
+            "-dbg5") eopts="${eopts} -dbg 5 -dbg full" ;;
+			
+            # compiler options
             "-effc") eopts="${eopts} -co effc" ;;
             "-we") eopts="${eopts} -co we" ;;
             "-se") eopts="${eopts} -co se" ;;
             "-stats") eopts="${eopts} -co stats" ;;
-            "-ep") eopts="${eopts} -co ep" ;;
+            "-pe") eopts="${eopts} -co pe" ;;
             "-lrt") eopts="${eopts} -co lrt" ;;
             "-nopthread") eopts="${eopts} -co nopthread" ;;
             "-nortti") eopts="${eopts} -co nortti" ;;
             "-noopt") noopt=1 ;;
-            "-opti") eopts="${eopts} -co opti" ;;
-            "-opt1") eopts="${eopts} -co opt1" ;;
-            "-opt2") eopts="${eopts} -co opt2" ;;
-            "-opt3") noopt=0 ;;
-            "-opts") eopts="${eopts} -co opts" ;;
+            "-opt") eopts="${eopts} -co opt ${3}" ;;
             "-asm") eopts="${eopts} -co asm" ;;
             "-gdb")
-                eopts="${eopts} -co ggdb"
+                eopts="${eopts} -co gdb"
                 tmpuvar="" ;;
             "-g")
-                eopts="${eopts} -co gdb"
+                eopts="${eopts} -co dbg"
                 tmpuvar="" ;;
             "-3") is32bit=1 ;;
             "-std") eopts="${eopts} -co std ${2}"; shift ;;
@@ -323,7 +277,7 @@ if [ $use_log -eq 1 ]; then
 fi
 
 if [ $noopt -eq 0 ]; then
-    eopts="${eopts} -co opt3"
+    eopts="${eopts} -co opt 0"
 fi
 
 utcpp="main.cpp"

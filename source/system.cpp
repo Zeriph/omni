@@ -112,7 +112,7 @@ bool omni::system::is_big_endian()
     return ((*(reinterpret_cast<char*>(&test))) == 0x00);
 }
 
-long omni::system::last_error()
+int32_t omni::system::last_error()
 {
     return OMNI_GLE;
 }
@@ -229,7 +229,7 @@ omni::string_t omni::system::path()
     return sret;
 }
 
-std::size_t omni::system::processors()
+uint64_t omni::system::processors()
 {
     //may return 0 when not able to detect
     // if C++11, return std::thread::hardware_concurrency();
@@ -237,12 +237,13 @@ std::size_t omni::system::processors()
         // DEV_NOTE: ifdef OMNI_WIN_API not applicable here
         SYSTEM_INFO si;
         ::GetSystemInfo(&si);
-        return si.dwNumberOfProcessors;
-    // TODO: can't test on HP-UX or Irix right now
+        return static_cast<uint64_t>(si.dwNumberOfProcessors);
     #elif defined(OMNI_OS_HPUX) // HPUX
-        return ::mpctl(MPC_GETNUMSPUS, NULL, NULL);
+        // DEV_NOTE: untested (no access to HPUX system)
+        return static_cast<uint64_t>(::mpctl(MPC_GETNUMSPUS, NULL, NULL));
     #elif defined(OMNI_OS_IRIX) // IRIX
-        return ::sysconf(_SC_NPROC_ONLN);
+        // DEV_NOTE: untested (no access to Irix system)
+        return static_cast<uint64_t>(::sysconf(_SC_NPROC_ONLN));
     #elif defined(OMNI_OS_BSD) // bsd
         int mib[4];
         int ret = 0;
@@ -257,9 +258,9 @@ std::size_t omni::system::processors()
             ::sysctl(mib, 2, &ret, &len, NULL, 0);
             if (ret < 0) { ret = 0; }
         }
-        return ret;
+        return static_cast<uint64_t>(ret);
     #else // *nix
-        return ::sysconf(_SC_NPROCESSORS_ONLN);
+        return static_cast<uint64_t>(::sysconf(_SC_NPROCESSORS_ONLN));
     #endif
 }
 #endif

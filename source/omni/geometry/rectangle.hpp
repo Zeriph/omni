@@ -20,12 +20,26 @@
 #define OMNI_RECTANGLE_HPP 1
 #include <omni/defs/global.hpp>
 #include <omni/defs/class_macros.hpp>
-#include <omni/defs/point_def.hpp>
 #include <omni/geometry/size.hpp>
 #include <omni/geometry/point2d.hpp>
 
 #define OMNI_RECT_XYWH_CONTAINS_FW(rx,ry,rw,rh,ox,oy) ((ox >= rx) && (ox <= (rx + rw)) && (oy >= ry) && (oy <= (ry + rh)))
 #define OMNI_RECT_LTRB_CONTAINS_FW(left,top,right,bottom,ox,oy) ((ox >= left) && (ox <= right) && (oy >= top) && (oy <= bottom))
+
+#if defined(OMNI_SAFE_RECTANGLE)
+    #include <omni/sync/basic_lock.hpp>
+    #define OMNI_SAFE_RECTMTX_FW  ,m_mtx()
+    #define OMNI_SAFE_RECTLOCK_FW   this->m_mtx.lock();
+    #define OMNI_SAFE_RECTUNLOCK_FW this->m_mtx.unlock();
+    #define OMNI_SAFE_RECTALOCK_FW  omni::sync::scoped_basic_lock uuid12345(&this->m_mtx);
+    #define OMNI_SAFE_RECTOALOCK_FW(o)  omni::sync::scoped_basic_lock uuid54321(&o.m_mtx);
+#else
+    #define OMNI_SAFE_RECTMTX_FW
+    #define OMNI_SAFE_RECTLOCK_FW
+    #define OMNI_SAFE_RECTUNLOCK_FW
+    #define OMNI_SAFE_RECTALOCK_FW
+    #define OMNI_SAFE_RECTOALOCK_FW(o) 
+#endif
 
 namespace omni {
     namespace geometry {
@@ -1018,8 +1032,6 @@ namespace omni {
                     return this->size.height;
                 }
 
-                omni::geometry::point2d_raw<T> location;
-
                 T left() const
                 {
                     return this->location.x;
@@ -1029,8 +1041,6 @@ namespace omni {
                 {
                     return this->location.x + this->size.width;
                 }
-
-                omni::geometry::size_raw<T> size;
 
                 T top() const
                 {
@@ -1418,6 +1428,10 @@ namespace omni {
                 OMNI_MEMBERS_FW(omni::geometry::rectangle_raw<T>) // disposing,name,type(),hash()
 
                 OMNI_OSTREAM_FW(omni::geometry::rectangle_raw<T>)
+
+                omni::geometry::point2d_raw<T> location;
+                
+                omni::geometry::size_raw<T> size;
 
             private:
                 omni::geometry::point2d_raw<T> m_loc;

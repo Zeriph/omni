@@ -22,6 +22,7 @@
 #include <cctype>
 #include <cwctype>
 #include <cstdlib>
+#include <cwchar>
 
 // defines the string types to use for different string processing
 #if defined(OMNI_UNICODE)
@@ -48,7 +49,7 @@ namespace omni {
         
         template < typename std_char_t >
         std_char_t to_lower(std_char_t c)
-        { OMNI_ERR_RETV_FW("Invalid template parameter specified.", omni::exceptions::invalid_template_type(), c) }
+        { OMNI_UNUSED(c); OMNI_ERR_RETV_FW("Invalid template parameter specified.", omni::exceptions::invalid_template_type(), c) }
         
         template <>
         inline char to_lower<char>(char c)
@@ -60,7 +61,7 @@ namespace omni {
         
         template < typename std_char_t >
         std_char_t to_upper(std_char_t c)
-        { OMNI_ERR_RETV_FW("Invalid template parameter specified.", omni::exceptions::invalid_template_type(), c) }
+        { OMNI_UNUSED(c); OMNI_ERR_RETV_FW("Invalid template parameter specified.", omni::exceptions::invalid_template_type(), c) }
         
         template <>
         inline char to_upper<char>(char c)
@@ -69,6 +70,82 @@ namespace omni {
         template <>
         inline wchar_t to_upper<wchar_t>(wchar_t c)
         { return std::towupper(c); }
+
+        inline char to_char(wchar_t wc)
+        {
+            #if defined(OMNI_WIN_API)
+                char cret;
+                std::size_t w = ::WideCharToMultiByte(OMNI_CODE_PAGE, 0, &wc, 1, &cret, 1, NULL, NULL);
+                if (w != 1) {
+                    OMNI_ERRV_FW("expected size of 1 got ", w, omni::exceptions::invalid_size())
+                }
+                return cret;
+            #else
+                int rc = std::wctob(wc);
+                if (rc == EOF) {
+                    OMNI_ERR_FW("invalid wchar to char ", omni::exceptions::invalid_type_cast())
+                }
+                return static_cast<char>(rc);
+            #endif
+        }
+
+        inline char to_char(char c)
+        {
+            return c;
+        }
+
+        inline wchar_t to_wchar(char c)
+        {
+            #if defined(OMNI_WIN_API)
+                wchar_t wret;
+                std::size_t w = ::MultiByteToWideChar(OMNI_CODE_PAGE, 0, &c, 1, &wret, 1);
+                if (w != 1) {
+                    OMNI_ERRV_FW("expected size of 1 got ", w, omni::exceptions::invalid_size())
+                }
+                return wret;
+            #else
+                wint_t rc = std::btowc(c);
+                if (rc == WEOF) {
+                    OMNI_ERR_FW("invalid char to wchar ", omni::exceptions::invalid_type_cast())
+                }
+                return static_cast<wchar_t>(rc);
+            #endif
+        }
+
+        inline wchar_t to_wchar(wchar_t wc)
+        {
+            return wc;
+        }
+
+        template < typename Cx, typename Cy >
+        inline Cx to_char_t(Cy c)
+        {
+            return static_cast<Cx>(c);
+        }
+
+        template<>
+        inline char to_char_t<char, wchar_t>(wchar_t c)
+        {
+            return omni::char_util::to_char(c);
+        }
+
+        template<>
+        inline char to_char_t<char, char>(char c)
+        {
+            return c;
+        }
+
+        template<>
+        inline wchar_t to_char_t<wchar_t, char>(char c)
+        {
+            return omni::char_util::to_wchar(c);
+        }
+
+        template<>
+        inline wchar_t to_char_t<wchar_t, wchar_t>(wchar_t c)
+        {
+            return c;
+        }
         
         /** @internal framework helper */
         namespace helpers {

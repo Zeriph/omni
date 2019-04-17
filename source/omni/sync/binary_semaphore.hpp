@@ -33,10 +33,10 @@ namespace omni {
                 binary_semaphore();
                 explicit binary_semaphore(bool initialy_owned);
                 ~binary_semaphore(); // shouldn't inherit
-                const omni::sync::semaphore_t handle() const;
+                omni::sync::semaphore_t handle() const;
                 bool locked() const;
                 bool lock();
-                bool lock(unsigned long timeout_ms);
+                bool lock(uint32_t timeout_ms);
                 bool unlock();
                 bool trylock();
                 bool operator==(const omni::sync::binary_semaphore& o) const;

@@ -19,7 +19,7 @@
 #if !defined(OMNI_NETS_HPP)
 #define OMNI_NETS_HPP 1
 
-//#include <omni/types/net_t.hpp>
+#include <omni/types/net_t.hpp>
 //#include <omni/net/socket.hpp>
 //#include <omni/net/util.hpp>
 //#include <omni/net/tcp.hpp>

@@ -18,4 +18,4 @@
  */
 
 
-#include <omni/types/point_t.hpp>
+#include <omni/math.hpp>

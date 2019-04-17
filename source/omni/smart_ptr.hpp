@@ -33,7 +33,7 @@ namespace omni {
             explicit smart_ptr(pointer_t *val = OMNI_NULL) :
                 OMNI_CTOR_FW(omni::smart_ptr<T>)
                 m_ptr(val),
-                m_cnt(new unsigned long long(1))
+                m_cnt(new uint64_t(1))
             {
                 OMNI_D5_FW("created by ptr");
             }
@@ -154,12 +154,12 @@ namespace omni {
             
             inline void _increment()
             {
-                if (!this->m_cnt) { this->m_cnt = new unsigned long long(0); }
+                if (!this->m_cnt) { this->m_cnt = new uint64_t(0); }
                 ++*this->m_cnt;
             }
             
             T* m_ptr;
-            unsigned long long* m_cnt;
+            uint64_t* m_cnt;
     };
     
     template < typename T >
@@ -172,7 +172,7 @@ namespace omni {
             explicit smart_ptr_safe(pointer_t* val = 0) :
                 OMNI_CTOR_FW(omni::smart_ptr_safe<T>)
                 m_ptr(val),
-                m_cnt(new unsigned long long(1)),
+                m_cnt(new uint64_t(1)),
                 m_mtx()
             {
                 omni::sync::mutex_init(this->m_mtx);
@@ -317,12 +317,12 @@ namespace omni {
             inline void _increment()
             {
                 omni::sync::scoped_lock<omni::sync::mutex_t> alock(&this->m_mtx);
-                if (!this->m_cnt) { this->m_cnt = new unsigned long long(0); }
+                if (!this->m_cnt) { this->m_cnt = new uint64_t(0); }
                 ++*this->m_cnt;
             }
             
             T* m_ptr;
-            unsigned long long* m_cnt;
+            uint64_t* m_cnt;
             mutable omni::sync::mutex_t m_mtx;
     };
 }

@@ -33,12 +33,14 @@ namespace omni {
     template < typename T >
     inline uint64_t type_id(const T& t)
     {
+        OMNI_UNUSED(t);
         return omni::type_id<T>();
     }
     
     template < typename T >
     inline uint64_t type_id(const T *const t)
     {
+        OMNI_UNUSED(t);
         return omni::type_id<T>();
     }
     
@@ -51,24 +53,30 @@ namespace omni {
     template < typename T, typename C >
     inline bool type_of(const C& c)
     {
+        OMNI_UNUSED(c);
         return omni::type_of<T, C>();
     }
     
     template < typename T, typename C >
     inline bool type_of(const C *const c)
     {
+        OMNI_UNUSED(c);
         return omni::type_of<T, C>();
     }
     
     template < typename T, typename C >
     inline bool type_of(const T& t, const C& c)
     {
+        OMNI_UNUSED(t);
+        OMNI_UNUSED(c);
         return omni::type_of<T, C>();
     }
     
     template < typename T, typename C >
     inline bool type_of(const T *const t, const C *const c)
     {
+        OMNI_UNUSED(t);
+        OMNI_UNUSED(c);
         return omni::type_of<T, C>();
     }
 }

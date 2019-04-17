@@ -231,7 +231,7 @@ namespace omni {
                 }
 
                 /** Returns true if the integer value specified is a valid enum value */
-                static bool is_valid(int val)
+                static bool is_valid(uint32_t val)
                 {
                     return _valid(val);
                 }
@@ -242,8 +242,7 @@ namespace omni {
                     if (_valid(rgb)) {
                         return static_cast<enum_t>(rgb);
                     }
-                    // TODO: error
-                    return DEFAULT_VALUE();
+                    OMNI_ERR_RETV_FW("Invalid color specified", omni::exceptions::invalid_enum(), DEFAULT_VALUE())
                 }
 
                 static enum_t from_rgb(omni::drawing::color_t::rgb_t rgb)
@@ -251,8 +250,7 @@ namespace omni {
                     if (_valid(rgb)) {
                         return static_cast<enum_t>(rgb);
                     }
-                    // TODO: error
-                    return DEFAULT_VALUE();
+                    OMNI_ERR_RETV_FW("Invalid RGB value specified", omni::exceptions::invalid_enum(), DEFAULT_VALUE())
                 }
 
                 static color_t get_color(enum_t val)
@@ -260,8 +258,7 @@ namespace omni {
                     if (_valid(val)) {
                         return omni::drawing::color_t(static_cast<omni::drawing::color_t::rgb_t>(val));
                     }
-                    // TODO: error
-                    return omni::drawing::color_t();
+                    OMNI_ERR_RETV_FW("Invalid enum value specified", omni::exceptions::invalid_enum(), omni::drawing::color_t())
                 }
 
                 static omni::drawing::color_t aliceblue() { return omni::drawing::color_t(ALICEBLUE); }
@@ -377,6 +374,7 @@ namespace omni {
                 static omni::drawing::color_t plum() { return omni::drawing::color_t(PLUM); }
                 static omni::drawing::color_t powderblue() { return omni::drawing::color_t(POWDERBLUE); }
                 static omni::drawing::color_t purple() { return omni::drawing::color_t(PURPLE); }
+                static omni::drawing::color_t rebeccapurple() { return omni::drawing::color_t(REBECCAPURPLE); }
                 static omni::drawing::color_t red() { return omni::drawing::color_t(RED); }
                 static omni::drawing::color_t rosybrown() { return omni::drawing::color_t(ROSYBROWN); }
                 static omni::drawing::color_t royalblue() { return omni::drawing::color_t(ROYALBLUE); }
@@ -468,7 +466,7 @@ namespace omni {
                     return *this;
                 }
 
-                known_colors& operator=(int val)
+                known_colors& operator=(uint32_t val)
                 {
                     if (!known_colors::is_valid(val)) {
                         OMNI_ERR_RET_FW("Invalid enumeration value specified.", omni::exceptions::invalid_enum(val));
@@ -488,7 +486,7 @@ namespace omni {
                     return this->m_val < val;
                 }
 
-                bool operator<(int val) const
+                bool operator<(uint32_t val) const
                 {
                     return this->m_val < static_cast<enum_t>(val);
                 }
@@ -503,7 +501,7 @@ namespace omni {
                     return this->m_val > val;
                 }
 
-                bool operator>(int val) const
+                bool operator>(uint32_t val) const
                 {
                     return this->m_val > val;
                 }
@@ -520,7 +518,7 @@ namespace omni {
                     return this->m_val == val;
                 }
 
-                bool operator==(int val) const
+                bool operator==(uint32_t val) const
                 {
                     return this->m_val == val;
                 }
@@ -530,9 +528,9 @@ namespace omni {
                     return this->m_val;
                 }
 
-                operator int() const
+                operator uint32_t() const
                 {
-                    return static_cast<int>(this->m_val);
+                    return static_cast<uint32_t>(this->m_val);
                 }
 
                 operator std::string() const
@@ -568,7 +566,7 @@ namespace omni {
                 {
                     enum_t ret;
                     if (_try_parse(val, ret)) { return ret; }
-                    OMNI_ERRV_FW("invalid enum parse: ", val, omni::exceptions::invalid_enum())
+                    OMNI_ERR_FW("invalid enum parse", omni::exceptions::invalid_enum())
                     return DEFAULT_VALUE();
                 }
 
@@ -617,7 +615,7 @@ namespace omni {
                         OMNI_S2E_FW(CORNFLOWERBLUE)
                         OMNI_S2E_FW(CORNSILK)
                         OMNI_S2E_FW(CRIMSON)
-                        //OMNI_S2E_FW(CYAN) // same as aqua
+                        OMNI_S2E_FW(CYAN)
                         OMNI_S2E_FW(DARKBLUE)
                         OMNI_S2E_FW(DARKCYAN)
                         OMNI_S2E_FW(DARKGOLDENROD)
@@ -676,7 +674,7 @@ namespace omni {
                         OMNI_S2E_FW(LIME)
                         OMNI_S2E_FW(LIMEGREEN)
                         OMNI_S2E_FW(LINEN)
-                        //OMNI_S2E_FW(MAGENTA) // same as fuchsia
+                        OMNI_S2E_FW(MAGENTA)
                         OMNI_S2E_FW(MAROON)
                         OMNI_S2E_FW(MEDIUMAQUAMARINE)
                         OMNI_S2E_FW(MEDIUMBLUE)
@@ -710,6 +708,7 @@ namespace omni {
                         OMNI_S2E_FW(PLUM)
                         OMNI_S2E_FW(POWDERBLUE)
                         OMNI_S2E_FW(PURPLE)
+                        OMNI_S2E_FW(REBECCAPURPLE)
                         OMNI_S2E_FW(RED)
                         OMNI_S2E_FW(ROSYBROWN)
                         OMNI_S2E_FW(ROYALBLUE)
@@ -742,7 +741,7 @@ namespace omni {
                 }
 
                 template < typename S >
-                static typename S::string_type _to_val(enum_t v)
+                static std::basic_string< typename S::char_type > _to_val(enum_t v)
                 {
                     S ss;
                     switch (v) {
@@ -859,6 +858,7 @@ namespace omni {
                         OMNI_E2SS_FW(PLUM);
                         OMNI_E2SS_FW(POWDERBLUE);
                         OMNI_E2SS_FW(PURPLE);
+                        OMNI_E2SS_FW(REBECCAPURPLE);
                         OMNI_E2SS_FW(RED);
                         OMNI_E2SS_FW(ROSYBROWN);
                         OMNI_E2SS_FW(ROYALBLUE);
@@ -891,7 +891,7 @@ namespace omni {
                     return ss.str();
                 }
 
-                static bool _valid(uint64_t val)
+                static bool _valid(uint32_t val)
                 {
                     return (val == 
                             ALICEBLUE ||
@@ -1007,6 +1007,7 @@ namespace omni {
                             PLUM ||
                             POWDERBLUE ||
                             PURPLE ||
+                            REBECCAPURPLE ||
                             RED ||
                             ROSYBROWN ||
                             ROYALBLUE ||
