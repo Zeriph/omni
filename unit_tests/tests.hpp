@@ -36,7 +36,7 @@
 #include "units/runnable.hpp"
 #include "units/semaphore.hpp"
 #include "units/smart_ptr.hpp"
-// #include "units/socket.hpp" // incomplete
+#include "units/socket.hpp" // incomplete
 // #include "units/tcp.hpp" // incomplete
 // #include "units/udp.hpp" // incomplete
 #include "units/spin.hpp"

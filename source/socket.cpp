@@ -16,615 +16,726 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#include "omni/defs.hpp"
-#include <sstream>
-#if defined(OMNI_OS_WIN)
-    #include <io.h>
-    #include <winsock2.h>
-    #include <malloc.h>
-    #include <windows.h>
+#include <omni/net/socket.hpp>
+#include <omni/net/util.hpp>
+#include <omni/defs/debug.hpp>
+
+#if defined(OMNI_SAFE_SOCKET)
+    #include <omni/sync/basic_lock.hpp>
+    #define OMNI_SAFE_SOCKMTX_FW  ,m_mtx()
+    #define OMNI_SAFE_SOCKLOCK_FW   this->m_mtx.lock();
+    #define OMNI_SAFE_SOCKUNLOCK_FW this->m_mtx.unlock();
+    #define OMNI_SAFE_SOCKALOCK_FW  omni::sync::scoped_basic_lock uuid12345(&this->m_mtx);
+    #define OMNI_SAFE_SOCKOALOCK_FW(o)  omni::sync::scoped_basic_lock uuid54321(&o.m_mtx);
 #else
-    #include <unistd.h>
-    #include <sys/socket.h>
-    #include <netinet/in.h>
-    #include <arpa/inet.h>
-    #include <netdb.h>
-    #include <signal.h>
+    #define OMNI_SAFE_SOCKMTX_FW
+    #define OMNI_SAFE_SOCKLOCK_FW
+    #define OMNI_SAFE_SOCKUNLOCK_FW
+    #define OMNI_SAFE_SOCKALOCK_FW
+    #define OMNI_SAFE_SOCKOALOCK_FW(o) 
 #endif
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <string.h>
-#include "omni/omni.hpp"
-#include "omni/socket.hpp"
-#include "omni/net.hpp"
-#include "omni/system.hpp"
-#include "omni/exceptions.hpp"
-#include "omni/debug.hpp"
 
-omni::net::socket::socket() :
-    OMNI_INHERIT_OBJECT_DEF_MACRO
-    blocking(0),
-    dontFragment(0),
-    enableBroadcast(0),
-    exclusiveAddressUse(0),
-    lingerstate(),
-    multicastLoopback(0),
-    nodelay(0),
-    receiveBufferSize(0),
-    receiveTimeout(0),
-    sendBufferSize(0),
-    sendTimeout(0),
-    ttl(0),
-    useOnlyOverlappedIO(0),
-    datareceived(),
-    m_AddressFamily(omni::net::address_family::UNKNOWN),
-    m_Available(0),
-    m_IsConnected(0),
-    m_IsBound(0),
-    m_IsShutdown(0),
-    m_Handle(0),
-    m_LocalEndPoint(""),
-    m_ProtocolType(omni::net::protocol_type::UNKNOWN),
-    m_RemoteEndPoint(""),
-    m_SocketType(omni::net::socket_type::UNKNOWN)
+// TODO: AF_UNIX address family is for IPC .. so NOT for omni::net::socket .. it would be for omni::ipc::socket
+// TODO: make note for omni docs of system call made (like ::connect/::WSAConnect, etc.)
+
+omni::net::socket_error omni::net::socket::_close(uint16_t timeout, bool shutdown)
 {
-    this->p_Initialize(
-        omni::net::address_family::UNKNOWN,
-        omni::net::socket_type::UNKNOWN,
-        omni::net::protocol_type::UNKNOWN
-    );
+    OMNI_SAFE_SOCKALOCK_FW
+    if (!this->m_open) {
+        return (this->m_last_err = omni::net::socket_error::NOT_INITIALIZED);
+    }
+    if (this->m_connected || this->m_bound) {
+        if (timeout > 0) {
+            struct linger lop;
+            lop.l_onoff = 1;
+            lop.l_linger = timeout;
+            if (::setsockopt(this->m_socket, SOL_SOCKET, SO_LINGER, reinterpret_cast<char*>(&lop), sizeof(struct linger)) != 0) {
+                return this->_parse_error(OMNI_SOCKET_ERR_FW);
+            }
+        }
+        if (shutdown && (this->shutdown(omni::net::socket_shutdown::BOTH) != omni::net::socket_error::SUCCESS)) {
+            OMNI_DBGE("could not shutdown the socket")
+            return this->m_last_err;
+        }
+        if (OMNI_SOCKET_CLOSE_FW(this->m_socket) != 0) {
+            return this->_parse_error(OMNI_SOCKET_ERR_FW);
+        }
+        #if defined(OMNI_OS_WIN)
+            ::WSACleanup();
+        #endif
+        if (shutdown) {
+            this->m_socket = OMNI_INVALID_SOCKET;
+            std::memset(&this->m_addr, 0, sizeof(this->m_addr));
+        }
+        this->m_open = false;
+        this->m_connected = false;
+        this->m_bound = false;
+        this->m_listen = false;
+        this->m_last_err = omni::net::socket_error::SUCCESS;
+    } else {
+        this->m_last_err = omni::net::socket_error::NOT_CONNECTED;
+    }
+    return this->m_last_err;
 }
 
-omni::net::socket::socket(const omni::net::socket &cp) :
-    OMNI_INHERIT_OBJECT_CPY_MACRO
-    blocking(cp.blocking),
-    dontFragment(cp.dontFragment),
-    enableBroadcast(cp.enableBroadcast),
-    exclusiveAddressUse(cp.exclusiveAddressUse),
-    lingerstate(cp.lingerstate),
-    multicastLoopback(cp.multicastLoopback),
-    nodelay(cp.nodelay),
-    receiveBufferSize(cp.receiveBufferSize),
-    receiveTimeout(cp.receiveTimeout),
-    sendBufferSize(cp.sendBufferSize),
-    sendTimeout(cp.sendTimeout),
-    ttl(cp.ttl),
-    useOnlyOverlappedIO(cp.useOnlyOverlappedIO),
-    datareceived(cp.datareceived),
-    m_AddressFamily(omni::net::address_family::UNKNOWN),
-    m_Available(0),
-    m_IsConnected(0),
-    m_IsBound(0),
-    m_IsShutdown(0),
-    m_Handle(0),
-    m_LocalEndPoint(""),
-    m_ProtocolType(omni::net::protocol_type::UNKNOWN),
-    m_RemoteEndPoint(""),
-    m_SocketType(omni::net::socket_type::UNKNOWN)
+omni::net::socket_error omni::net::socket::_parse_error(int err)
 {
-    this->p_Initialize(
-        omni::net::address_family::UNKNOWN,
-        omni::net::socket_type::UNKNOWN,
-        omni::net::protocol_type::UNKNOWN
-    );
-    this->m_AddressFamily = cp.addressFamily();
-    this->m_Available = cp.available();
-    this->m_IsConnected = cp.connected();
-    this->m_IsBound = cp.is_bound();
-    this->m_IsShutdown = cp.is_shut();
-    this->m_Handle = cp.handle();
-    this->m_LocalEndPoint = cp.localEndPoint();
-    this->m_ProtocolType = cp.protocolType();
-    this->m_RemoteEndPoint = cp.remoteEndPoint();
-    this->m_SocketType = cp.socketType();
+    switch (err) {
+        #if defined(OMNI_OS_WIN)
+            case WSANOTINITIALISED: // A successful WSAStartup call must occur before using this function.
+                return (this->m_last_err = omni::net::socket_error::NOT_INITIALIZED);
+            case WSAENETDOWN: // The network subsystem has failed.
+                return (this->m_last_err = omni::net::socket_error::NETWORK_DOWN);
+            case WSAEADDRINUSE: // The local address of the socket is already in use and the socket was not marked to allow address reuse with SO_REUSEADDR. This error usually occurs during the execution of bind, but could be delayed until this function if the bind function operates on a partially wildcard address (involving ADDR_ANY) and if a specific address needs to be "committed" at the time of this function.
+                return (this->m_last_err = omni::net::socket_error::ADDRESS_ALREADY_IN_USE);
+            case WSAEINTR: // The (blocking) Windows Socket 1.1 call was canceled through WSACancelBlockingCall.
+                return (this->m_last_err = omni::net::socket_error::INTERRUPTED);
+            case WSAEINPROGRESS: // A blocking Windows Sockets 1.1 call is in progress, or the service provider is still processing a callback function.
+                return (this->m_last_err = omni::net::socket_error::IN_PROGRESS);
+            case WSAEALREADY: // A nonblocking connect or WSAConnect call is in progress on the specified socket.
+                return (this->m_last_err = omni::net::socket_error::ALREADY_IN_PROGRESS);
+            case WSAEADDRNOTAVAIL: // The remote address is not a valid address (such as ADDR_ANY).
+                return (this->m_last_err = omni::net::socket_error::ADDRESS_NOT_AVAILABLE);
+            case WSAEAFNOSUPPORT: // Addresses in the specified family cannot be used with this socket.
+                return (this->m_last_err = omni::net::socket_error::ADDRESS_FAMILY_NOT_SUPPORTED);
+            case WSAECONNREFUSED: // The attempt to connect was rejected.
+                return (this->m_last_err = omni::net::socket_error::CONNECTION_REFUSED);
+            case WSAEFAULT: // The name or the namelen parameter is not a valid part of the user address space, the namelen parameter is too small, the buffer length for lpCalleeData, lpSQOS, and lpGQOS are too small, or the buffer length for lpCallerData is too large.
+                return (this->m_last_err = omni::net::socket_error::FAULT);
+            case WSAEINVAL: // The parameter s is a listening socket, or the destination address specified is not consistent with that of the constrained group to which the socket belongs, or the lpGQOS parameter is not NULL.
+                return (this->m_last_err = omni::net::socket_error::INVALID_ARGUMENT);
+            case WSAEISCONN: // The socket is already connected (connection-oriented sockets only).
+                return (this->m_last_err = omni::net::socket_error::IS_CONNECTED);
+            case WSAENETUNREACH: // The network cannot be reached from this host at this time.
+                return (this->m_last_err = omni::net::socket_error::NETWORK_UNREACHABLE);
+            case WSAEHOSTUNREACH: // A socket operation was attempted to an unreachable host.
+                return (this->m_last_err = omni::net::socket_error::HOST_UNREACHABLE);
+            case WSAENOBUFS: // No buffer space is available. The socket cannot be connected.
+                return (this->m_last_err = omni::net::socket_error::NO_BUFFER_SPACE_AVAILABLE);
+            case WSAENOTSOCK: // The descriptor is not a socket.
+                return (this->m_last_err = omni::net::socket_error::NOT_SOCKET);
+            case WSAEOPNOTSUPP: // The FLOWSPEC structures specified in lpSQOS and lpGQOS cannot be satisfied.
+                return (this->m_last_err = omni::net::socket_error::OPERATION_NOT_SUPPORTED);
+            case WSAEPROTONOSUPPORT: // The lpCallerData parameter is not supported by the service provider.
+                return (this->m_last_err = omni::net::socket_error::PROTOCOL_NOT_SUPPORTED);
+            case WSAETIMEDOUT: // Attempt to connect timed out without establishing a connection.
+                return (this->m_last_err = omni::net::socket_error::TIMED_OUT);
+            case WSAEWOULDBLOCK: // The socket is marked as nonblocking and the connection cannot be completed immediately.
+                return (this->m_last_err = omni::net::socket_error::WOULD_BLOCK);
+            case WSAEACCES: // Attempt to connect datagram socket to broadcast address failed because setsockopt SO_BROADCAST is not enabled. 
+                return (this->m_last_err = omni::net::socket_error::ACCESS_DENIED);
+        #else
+            case EACCES:        // For UNIX domain sockets, which are identified by pathname: Write permission is denied on the socket file, or search permission is denied for one of the directories in the path prefix.
+                return (this->m_last_err = omni::net::socket_error::ACCESS_DENIED);
+            case EPERM:         // The user tried to connect to a broadcast address without having the socket broadcast flag enabled or the connection request failed because of a local firewall rule.
+                return (this->m_last_err = omni::net::socket_error::OPERATION_NOT_SUPPORTED);
+            case EADDRINUSE:    // Local address is already in use.
+                return (this->m_last_err = omni::net::socket_error::ADDRESS_ALREADY_IN_USE);
+            case EADDRNOTAVAIL: // (Internet domain sockets) The socket referred to by sockfd had not previously been bound to an address and, upon attempting to bind it to an ephemeral port, it was determined that all port numbers in the ephemeral port range are currently in use.
+                return (this->m_last_err = omni::net::socket_error::ADDRESS_NOT_AVAILABLE);
+            case EAFNOSUPPORT:  // The passed address didn't have the correct address family in its sa_family field.
+                return (this->m_last_err = omni::net::socket_error::ADDRESS_FAMILY_NOT_SUPPORTED);
+            case EAGAIN:        // For nonblocking UNIX domain sockets, the socket is nonblocking, and the connection cannot be completed immediately.  For other socket families, there are insufficient entries in the routing cache.
+                return (this->m_last_err = omni::net::socket_error::AGAIN);
+            case EALREADY:      // The socket is nonblocking and a previous connection attempt has not yet been completed.
+                return (this->m_last_err = omni::net::socket_error::ALREADY_IN_PROGRESS);
+            case ECONNREFUSED:  // A connect() on a stream socket found no one listening on the remote address.
+                return (this->m_last_err = omni::net::socket_error::CONNECTION_REFUSED);
+            case EFAULT:        // The socket structure address is outside the user's address space.
+                return (this->m_last_err = omni::net::socket_error::FAULT);
+            case EINPROGRESS:   // The socket is nonblocking and the connection cannot be completed immediately.  (UNIX domain sockets failed with EAGAIN instead.)
+                return (this->m_last_err = omni::net::socket_error::IN_PROGRESS);
+            case EINTR:         // The system call was interrupted by a signal that was caught; see signal(7).
+                return (this->m_last_err = omni::net::socket_error::INTERRUPTED);
+            case EISCONN:       // The socket is already connected.
+                return (this->m_last_err = omni::net::socket_error::IS_CONNECTED);
+            case ENETUNREACH:   // Network is unreachable.
+                return (this->m_last_err = omni::net::socket_error::NETWORK_UNREACHABLE);
+            case EBADF:         // sockfd is not a valid open file descriptor.
+            case ENOTSOCK:      // The file descriptor sockfd does not refer to a socket.
+                return (this->m_last_err = omni::net::socket_error::NOT_SOCKET);
+            case EPROTOTYPE:    // The socket type does not support the requested communications protocol.  This error can occur, for example, on an attempt to connect a UNIX domain datagram socket to a stream socket.
+                return (this->m_last_err = omni::net::socket_error::PROTOCOL_NOT_SUPPORTED);
+            case ETIMEDOUT:     // Timeout while attempting connection.  The server may be too busy to accept new connections.  Note that for IP sockets the timeout may be very long when syncookies are enabled on the server.
+                return (this->m_last_err = omni::net::socket_error::TIMED_OUT);
+        #endif
+        default: break;
+    }
+    return (this->m_last_err = static_cast<omni::net::socket_error::enum_t>(err));
 }
 
-omni::net::socket::socket(
-    omni::net::address_family::enum_t addressFamily, 
-    omni::net::socket_type::enum_t socketType, 
-    omni::net::protocol_type::enum_t protocolType) :
-    OMNI_INHERIT_OBJECT_DEF_MACRO
-    blocking(0),
-    dontFragment(0),
-    enableBroadcast(0),
-    exclusiveAddressUse(0),
-    lingerstate(),
-    multicastLoopback(0),
-    nodelay(0),
-    receiveBufferSize(0),
-    receiveTimeout(0),
-    sendBufferSize(0),
-    sendTimeout(0),
-    ttl(0),
-    useOnlyOverlappedIO(0),
-    datareceived(),
-    m_AddressFamily(addressFamily),
-    m_Available(0),
-    m_IsConnected(0),
-    m_IsBound(0),
-    m_IsShutdown(0),
-    m_Handle(0),
-    m_LocalEndPoint(""),
-    m_ProtocolType(protocolType),
-    m_RemoteEndPoint(""),
-    m_SocketType(socketType)
+omni::net::socket::socket(omni::net::address_family family,
+                          omni::net::socket_type type, 
+                          omni::net::protocol_type protocol) :
+    OMNI_CTOR_FW(omni::net::socket)
+    m_socket(OMNI_INVALID_SOCKET), m_addr(), m_family(family), m_proto(protocol), m_type(type), 
+    m_last_err(omni::net::socket_error::UNSPECIFIED), m_ep4(), m_port(), m_bep4(), m_bport(), 
+    m_connected(), m_bound(), m_open(), m_shut(), m_listen()
+    OMNI_SAFE_SOCKMTX_FW
 {
-    this->p_Initialize(addressFamily, socketType, protocolType);
+    if (this->open() != omni::net::socket_error::SUCCESS) {
+        OMNI_D1_FW("error opening the socket");
+    }
+}
+
+omni::net::socket::socket(omni::net::socket_type type,
+                          omni::net::protocol_type protocol) :
+    OMNI_CTOR_FW(omni::net::socket)
+    m_socket(OMNI_INVALID_SOCKET), m_addr(), m_family(omni::net::address_family::UNSPECIFIED),
+    m_proto(protocol), m_type(type), m_last_err(omni::net::socket_error::UNSPECIFIED), m_ep4(), 
+    m_port(), m_bep4(), m_bport(), m_connected(), m_bound(), m_open(), m_shut(), m_listen()
+    OMNI_SAFE_SOCKMTX_FW
+{
+    if (this->open() != omni::net::socket_error::SUCCESS) {
+        OMNI_D1_FW("error opening the socket");
+    }
 }
 
 omni::net::socket::~socket()
 {
-    this->dispose();
+    OMNI_TRY_FW
+    if (this->close() != omni::net::socket_error::SUCCESS) {
+        OMNI_D1_FW("error closing socket");
+    }
+    OMNI_DTOR_FW
+    OMNI_CATCH_FW
+    OMNI_D5_FW("destroyed");
 }
 
-omni::net::address_family::enum_t omni::net::socket::addressFamily() const
+omni::net::socket_error omni::net::socket::accept(omni::net::endpoint_descriptor& remote_ep)
 {
-    return this->m_AddressFamily;
+    OMNI_SAFE_SOCKALOCK_FW
+    if (!this->m_open) {
+        return (this->m_last_err = omni::net::socket_error::NOT_INITIALIZED);
+    } else if (!this->m_listen) { // includes this->m_bound (can't listen if not bound)
+        return (this->m_last_err = omni::net::socket_error::DESTINATION_ADDRESS_REQUIRED);
+    }
+    OMNI_SOCKLEN_FW out_len = sizeof(remote_ep.addr);
+    remote_ep.sock = OMNI_SOCKET_ACCEPT_FW(this->m_socket, &(remote_ep.addr), &out_len);
+    if (remote_ep.sock == OMNI_INVALID_SOCKET) {
+        return this->_parse_error(OMNI_SOCKET_ERR_FW);
+    }
+    return (this->m_last_err = omni::net::socket_error::SUCCESS);
 }
 
-int omni::net::socket::available() const
+omni::net::socket_error omni::net::socket::bind()
 {
-    return this->m_Available;
+    OMNI_SAFE_SOCKLOCK_FW
+    uint32_t ip = this->m_ep4;
+    uint16_t port = this->m_port;
+    OMNI_SAFE_SOCKUNLOCK_FW
+    return this->bind(ip, port);
 }
 
-bool omni::net::socket::connected() const
+omni::net::socket_error omni::net::socket::bind(uint32_t ip, uint16_t port)
 {
-    return this->m_IsConnected;
+    OMNI_SAFE_SOCKALOCK_FW
+    if (!this->m_open) {
+        return (this->m_last_err = omni::net::socket_error::NOT_INITIALIZED);
+    } else if (this->m_connected) { // can't bind to a 'connect()'ed socket
+        return (this->m_last_err = omni::net::socket_error::IS_CONNECTED);
+    } else if (this->m_bound) {
+        return (this->m_last_err = omni::net::socket_error::ADDRESS_ALREADY_IN_USE);
+    }
+    this->m_bep4 = ip;
+    this->m_bport = port;
+    std::memset(&this->m_addr, 0, sizeof(this->m_addr));
+    switch (this->m_family.value()) {
+        case omni::net::address_family::INTERNETWORK: {
+            omni::net::sockaddr_in_t addr;
+            std::memset(&addr, 0, sizeof(addr));
+            addr.sin_family = static_cast<int>(this->m_family);
+            addr.sin_port = htons(this->m_bport);
+            addr.sin_addr.s_addr = htonl(this->m_bep4);
+            std::memcpy(&(this->m_addr), &addr, sizeof(addr));
+        } break;
+        // TODO: how do you set this?
+        /*case omni::net::address_family::INTERNETWORK_V6: {
+            omni::net::sockaddr_in6_t addr6;
+            std::memset(&addr6, 0, sizeof(addr6));
+            addr6.sin6_family = static_cast<int>(this->m_family);
+            addr6.sin6_port = htons(this->m_bport);
+            // addr6.sin6_addr = IN6ADDR_ANY_INIT;
+            std::memcpy(&(this->m_addr), &addr6, sizeof(addr6));
+        } break;*/
+        default:
+            // omni::net::address_family::UNIX is not support in this socket since that's an IPC protocol
+            return (this->m_last_err = omni::net::socket_error::PROTOCOL_FAMILY_NOT_SUPPORTED);
+    }
+    if (::bind(this->m_socket, &(this->m_addr), sizeof(this->m_addr)) != 0) {
+        this->m_bound = false;
+        return this->_parse_error(OMNI_SOCKET_ERR_FW);
+    }
+    this->m_bound = true;
+    return (this->m_last_err = omni::net::socket_error::SUCCESS);
 }
 
-unsigned int omni::net::socket::handle() const
+omni::net::socket_error omni::net::socket::bind(const std::string& ip, uint16_t port)
 {
-    return this->m_Handle;
+    uint32_t ep;
+    if (omni::net::util::try_parse_ip4(ip, ep)) {
+        return this->bind(ep, port);
+    }
+    return omni::net::socket_error::INVALID_ARGUMENT;
 }
 
-void omni::net::socket::p_Initialize(
-    omni::net::address_family::enum_t addressFamily, 
-    omni::net::socket_type::enum_t socketType, 
-    omni::net::protocol_type::enum_t protocolType
-                                    )
+omni::net::socket_error omni::net::socket::bind(const std::wstring& ip, uint16_t port)
 {
-    #if defined(OMNI_SHOW_DEBUG_ERR)
-        dbga << "initializing" << std::endl;
-    #endif
-    // DEV_NOTE: Normally we would use the initialization list, but since we have actual functions and API calls to make
-    // it's best to do the initialization in an initialize function
-    this->m_Handle = -1;
-    #if defined(OMNI_OS_WIN) // Microsoft set needed for sockets
-        #if defined(OMNI_SHOW_DEBUG_ERR)
-            dbga << "Calling WSAStartup" << std::endl;
-        #endif
-        WSADATA WSStartData;
-        if ((WSAStartup(MAKEWORD(1,1), &WSStartData)) != 0) {
-            #if defined(OMNI_SHOW_DEBUG_ERR)
-                dbgerra << "Could not create omni::net::socket object (WSAStartup failed)" << std::endl;
-            #endif
-            #if !defined(OMNI_NO_THROW)
-                throw omni::exceptions::net::wsa_failed();
-            #endif
+    uint32_t ep;
+    if (omni::net::util::try_parse_ip4(ip, ep)) {
+        return this->bind(ep, port);
+    }
+    return omni::net::socket_error::INVALID_ARGUMENT;
+}
+
+omni::net::socket_error omni::net::socket::bind(const std::string& ip)
+{
+    return this->bind(ip, 0);
+}
+
+omni::net::socket_error omni::net::socket::bind(const std::wstring& ip)
+{
+    return this->bind(ip, 0);
+}
+
+omni::net::socket_error omni::net::socket::close()
+{
+    return this->close(0);
+}
+
+omni::net::socket_error omni::net::socket::close(uint16_t timeout)
+{
+    return this->_close(timeout, false);
+}
+
+omni::net::socket_error omni::net::socket::connect()
+{
+    OMNI_SAFE_SOCKALOCK_FW
+    // DEV_NOTE: htons/etc. could be macro's so we don't use global namespace (i.e. ::htons)
+    if (!this->m_open) {
+        return (this->m_last_err = omni::net::socket_error::NOT_INITIALIZED);
+    } else if (this->m_connected) {
+        return (this->m_last_err = omni::net::socket_error::IS_CONNECTED);
+    } else if (this->m_bound) {
+        return (this->m_last_err = omni::net::socket_error::ADDRESS_ALREADY_IN_USE);
+    }
+    std::memset(&this->m_addr, 0, sizeof(this->m_addr));
+    // TODO: need to figure out this hacky C based polymorph
+    switch (this->m_family.value()) {
+        case omni::net::address_family::INTERNETWORK: {
+            omni::net::sockaddr_in_t addr;
+            std::memset(&addr, 0, sizeof(addr));
+            addr.sin_family = static_cast<int>(this->m_family);
+            addr.sin_port = htons(this->m_port);
+            addr.sin_addr.s_addr = htonl(this->m_ep4);
+            std::memcpy(&(this->m_addr), &addr, sizeof(addr));
+        } break;
+        // TODO: how do you set this?
+        /*case omni::net::address_family::INTERNETWORK_V6: {
+            omni::net::sockaddr_in6_t addr6;
+            std::memset(&addr6, 0, sizeof(addr6));
+            addr6.sin6_family = static_cast<int>(this->m_family);
+            addr6.sin6_port = htons(this->m_port);
+            // addr6.sin6_addr = IN6ADDR_ANY_INIT;
+            std::memcpy(&(this->m_addr), &addr6, sizeof(addr6));
+        } break;*/
+        default:
+            // omni::net::address_family::UNIX is not support in this socket since that's an IPC protocol
+            return (this->m_last_err = omni::net::socket_error::PROTOCOL_FAMILY_NOT_SUPPORTED);
+    }
+    if (OMNI_SOCKET_CONNECT_FW(this->m_socket, &(this->m_addr), sizeof(this->m_addr)) != 0) {
+        this->m_connected = false;
+        return this->_parse_error(OMNI_SOCKET_ERR_FW);
+    }
+    this->m_connected = true;
+    this->m_shut = false;
+    return (this->m_last_err = omni::net::socket_error::SUCCESS);
+    
+}
+
+omni::net::socket_error omni::net::socket::connect(uint32_t ip, uint16_t port)
+{
+    OMNI_SAFE_SOCKLOCK_FW
+    this->m_ep4 = ip;
+    this->m_port = port;   
+    OMNI_SAFE_SOCKUNLOCK_FW
+    return this->connect();
+}
+
+omni::net::socket_error omni::net::socket::connect(const std::string& ip, uint16_t port)
+{
+    uint32_t ep = 0;
+    if (!omni::net::util::try_parse_ip4(ip, ep)) {
+        return omni::net::socket_error::ADDRESS_NOT_AVAILABLE;
+    }
+    return this->connect(ep, port);
+}
+
+omni::net::socket_error omni::net::socket::connect(const std::wstring& ip, uint16_t port)
+{
+    return this->connect(omni::string::util::to_string(ip), port);
+}
+
+omni::net::socket_error omni::net::socket::disconnect(bool reuse)
+{
+    return this->_close(0, reuse);
+}
+
+omni::net::socket_error omni::net::socket::open()
+{
+    OMNI_SAFE_SOCKALOCK_FW
+    if (this->m_open) {
+        return (this->m_last_err = omni::net::socket_error::ADDRESS_ALREADY_IN_USE);
+    }
+    #if defined(OMNI_OS_WIN)
+        WSADATA sdata;
+        int err = ::WSAStartup(MAKEWORD(OMNI_WINSOCK_HIGH, OMNI_WINSOCK_LOW), &sdata);
+        if (err != 0) {
+            // Could not get the winsock dll, fail since can't create socket
+            OMNI_DBGEV("a system error occurred in WSAStartUp: ", err)
+            return this->_parse_error(err);
         }
     #endif
-    int af = static_cast<int>(addressFamily);
-    int st = static_cast<int>(socketType);
-    int pt = static_cast<int>(protocolType);
-    if ((this->m_Handle = ::socket(af, st, pt)) == -1) {
-        #if defined(OMNI_SHOW_DEBUG_ERR)
-            dbgerra << "Could not create socket object (socket() failed)" << std::endl;
-        #endif
-        #if !defined(OMNI_NO_THROW)
-            throw omni::exceptions::net::socket_create_failed();
-        #endif
+    this->m_socket = OMNI_SOCKET_OPEN_FW(this->m_family, this->m_type, this->m_proto);
+    if (this->m_socket == OMNI_INVALID_SOCKET) {
+        int err = OMNI_SOCKET_ERR_FW;
+        OMNI_DBGEV("a system error occurred creating the socket: ", err)
+        return this->_parse_error(err);
     }
-    this->m_AddressFamily = addressFamily;
-    this->m_ProtocolType = protocolType;
-    this->m_SocketType = socketType;
-    this->m_Available = -1;
-    this->m_IsConnected = false;
-    this->m_IsBound = false;
-    this->m_IsShutdown = false;
-    this->m_LocalEndPoint = "";
-    this->m_RemoteEndPoint = "";
-    this->sendBufferSize = 0;
-    this->sendTimeout = 0;
-    this->ttl = 255;
-    this->useOnlyOverlappedIO = false;
-    this->receiveBufferSize = 65536;
-    this->receiveTimeout = 1000;
-    this->multicastLoopback = false;
-    this->nodelay = true;
-    this->dontFragment = false;
-    this->enableBroadcast = false;
-    this->exclusiveAddressUse = false;
+    this->m_open = true;
+    this->m_shut = false;
+    return (this->m_last_err = omni::net::socket_error::SUCCESS);
+}
+
+omni::net::socket_error omni::net::socket::open(omni::net::socket_type type, omni::net::protocol_type protocol)
+{
+    OMNI_SAFE_SOCKLOCK_FW
+    this->m_type = type;
+    this->m_proto = protocol;
+    OMNI_SAFE_SOCKUNLOCK_FW
+    return this->open();
+}
+
+omni::net::socket_error omni::net::socket::open(omni::net::address_family family, omni::net::socket_type type, omni::net::protocol_type protocol)
+{
+    OMNI_SAFE_SOCKLOCK_FW
+    this->m_family = family;
+    this->m_type = type;
+    this->m_proto = protocol;
+    OMNI_SAFE_SOCKUNLOCK_FW
+    return this->open();
+}
+
+omni::net::socket_error omni::net::socket::listen(int32_t backlog)
+{
+    OMNI_SAFE_SOCKALOCK_FW
+    if (!this->m_open) {
+        return (this->m_last_err = omni::net::socket_error::NOT_INITIALIZED);
+    } else if (!this->m_bound) {
+        return (this->m_last_err = omni::net::socket_error::DESTINATION_ADDRESS_REQUIRED);
+    } else if (this->m_connected) {
+        return (this->m_last_err = omni::net::socket_error::IS_CONNECTED);
+    }
+    if (backlog > SOMAXCONN) {
+        return (this->m_last_err = omni::net::socket_error::INVALID_ARGUMENT);
+    }
+    if (::listen(this->m_socket, static_cast<int>(backlog)) != 0) {
+        return this->_parse_error(OMNI_SOCKET_ERR_FW);
+    }
+    this->m_listen = true;
+    return (this->m_last_err = omni::net::socket_error::SUCCESS);
+}
+
+omni::net::socket_error omni::net::socket::shutdown(omni::net::socket_shutdown how)
+{
+    OMNI_SAFE_SOCKALOCK_FW
+    if (!this->m_open) {
+        return (this->m_last_err = omni::net::socket_error::NOT_INITIALIZED);
+    } else if (this->m_shut) {
+        return (this->m_last_err = omni::net::socket_error::SUCCESS);
+    }
+    int err = ::shutdown(this->m_socket, static_cast<int>(how));
+    if (err == OMNI_SOCK_SYSERR_FW) {
+        return this->_parse_error(OMNI_SOCKET_ERR_FW);
+    }
+    this->m_shut = true;
+    this->m_listen = false;
+    return (this->m_last_err = omni::net::socket_error::SUCCESS);
+}
+
+
+omni::net::socket_error omni::net::socket::set_socket_option(omni::net::socket_option_level op_level, int32_t op_name, int32_t op_val)
+{
+    OMNI_SAFE_SOCKALOCK_FW
+    if (!this->m_open) {
+        return (this->m_last_err = omni::net::socket_error::NOT_INITIALIZED);
+    }
+    int err = 0;
+    if ((op_level.value() == omni::net::socket_option_level::SOCKET) &&
+        ((op_name == omni::net::socket_option::LINGER) || (op_name == omni::net::socket_option::DONT_LINGER)))
+    {
+        struct linger lop;
+        std::memset(&lop, 0, sizeof(struct linger));
+        if (op_name == omni::net::socket_option::LINGER) {
+            lop.l_onoff = 1;
+            lop.l_linger = op_val;
+        }
+        err = ::setsockopt(this->m_socket,
+                           static_cast<int>(op_level),
+                           static_cast<int>(omni::net::socket_option::LINGER),
+                           reinterpret_cast<char*>(&lop),
+                           sizeof(struct linger));
+    } else {
+        err = ::setsockopt(this->m_socket,
+                           static_cast<int>(op_level),
+                           static_cast<int>(op_name),
+                           reinterpret_cast<char*>(&op_val),
+                           sizeof(int32_t));
+    }
+    if (err != 0) {
+        return this->_parse_error(OMNI_SOCKET_ERR_FW);
+    }
+    return (this->m_last_err = omni::net::socket_error::SUCCESS);
+}
+
+omni::net::socket_error omni::net::socket::set_socket_option(omni::net::socket_option_level op_level, omni::net::socket_option op_name, int32_t op_val)
+{
+    return this->set_socket_option(op_level, static_cast<int32_t>(op_name.value()), op_val);
+}
+
+omni::net::socket_error omni::net::socket::set_socket_option(omni::net::socket_option_level op_level, omni::net::tcp_option op_name, int32_t op_val)
+{
+    return this->set_socket_option(op_level, static_cast<int32_t>(op_name.value()), op_val);
+}
+
+omni::net::socket_error omni::net::socket::receive(omni::unsafe_t buffer, uint32_t len, uint32_t& rcvd)
+{
+    return this->receive(buffer, len, omni::net::socket_flags::NONE, rcvd);
+}
+
+omni::net::socket_error omni::net::socket::receive(omni::unsafe_t buffer, uint32_t offset, uint32_t len, omni::net::socket_flags flags, uint32_t& rcvd)
+{
+    return this->receive(buffer + offset, len, flags, rcvd);
+}
+
+omni::net::socket_error omni::net::socket::receive(omni::unsafe_t buffer, uint32_t len, omni::net::socket_flags flags, uint32_t& rcvd)
+{
+    OMNI_SAFE_SOCKALOCK_FW
+    if (!this->m_open) {
+        return (this->m_last_err = omni::net::socket_error::NOT_INITIALIZED);
+    }
+    //recv(this->m_socket, (reinterpret_cast<void*>(buffer+offset)), len, flags);
+    return (this->m_last_err = omni::net::socket_error::SUCCESS);
+}
+
+
+
+omni::net::socket_error omni::net::socket::receive_from(omni::unsafe_t buffer, uint32_t offset, uint32_t len, const std::string& ip, uint32_t& rcvd)
+{
+    return this->receive_from(buffer, offset, len, omni::net::socket_flags::NONE, ip, rcvd);
+}
+
+omni::net::socket_error omni::net::socket::receive_from(omni::unsafe_t buffer, uint32_t offset, uint32_t len, omni::net::socket_flags flags, const std::string& ip, uint32_t& rcvd)
+{
+    OMNI_SAFE_SOCKALOCK_FW
+    if (!this->m_open) {
+        return (this->m_last_err = omni::net::socket_error::NOT_INITIALIZED);
+    }
+
+    return (this->m_last_err = omni::net::socket_error::SUCCESS);
+}
+omni::net::socket_error omni::net::socket::receive_from(omni::unsafe_t buffer, uint32_t len, const std::string& ip, uint32_t& rcvd)
+{
+    return this->receive_from(buffer, 0, len, omni::net::socket_flags::NONE, ip, rcvd);
+}
+
+omni::net::socket_error omni::net::socket::receive_from(omni::unsafe_t buffer, uint32_t len, omni::net::socket_flags flags, const std::string& ip, uint32_t& rcvd)
+{
+    return this->receive_from(buffer, 0, len, flags, ip, rcvd);
+}
+
+omni::net::socket_error omni::net::socket::send(const omni::unsafe_t buffer, uint32_t len, uint32_t& sent)
+{
+    return this->send(buffer, 0, len, omni::net::socket_flags::NONE, sent);
+}
+
+omni::net::socket_error omni::net::socket::send(const omni::unsafe_t buffer, uint32_t len, omni::net::socket_flags flags, uint32_t& sent)
+{
+    return this->send(buffer, 0, len, flags, sent);
+}
+
+omni::net::socket_error omni::net::socket::send(const omni::unsafe_t buffer, uint32_t offset, uint32_t len, omni::net::socket_flags flags, uint32_t& sent)
+{
+    OMNI_SAFE_SOCKALOCK_FW
+    if (!this->m_open) {
+        return (this->m_last_err = omni::net::socket_error::NOT_INITIALIZED);
+    }
+
+    return (this->m_last_err = omni::net::socket_error::SUCCESS);
+}
+
+omni::net::socket_error omni::net::socket::send_to(const omni::unsafe_t buffer, uint32_t len, const std::string& ip, uint16_t port, uint32_t& sent)
+{
+    return this->send_to(buffer, 0, len, omni::net::socket_flags::NONE, ip, port, sent);
+}
+
+omni::net::socket_error omni::net::socket::send_to(const omni::unsafe_t buffer, uint32_t len, omni::net::socket_flags flags, const std::string& ip, uint16_t port, uint32_t& sent)
+{
+    return this->send_to(buffer, 0, len, flags, ip, port, sent);
+}
+
+omni::net::socket_error omni::net::socket::send_to(const omni::unsafe_t buffer, uint32_t offset, uint32_t len, const std::string& ip, uint16_t port, uint32_t& sent)
+{
+    return this->send_to(buffer, offset, len, omni::net::socket_flags::NONE, ip, port, sent);
+}
+
+omni::net::socket_error omni::net::socket::send_to(const omni::unsafe_t buffer, uint32_t offset, uint32_t len, omni::net::socket_flags flags, const std::string& ip, uint16_t port, uint32_t& sent)
+{
+    OMNI_SAFE_SOCKALOCK_FW
+    if (!this->m_open) {
+        return (this->m_last_err = omni::net::socket_error::NOT_INITIALIZED);
+    }
+
+    return (this->m_last_err = omni::net::socket_error::SUCCESS);
+}
+
+omni::net::address_family omni::net::socket::address_family() const
+{
+    OMNI_SAFE_SOCKALOCK_FW
+    return this->m_family;
+}
+
+uint32_t omni::net::socket::endpoint() const
+{
+    OMNI_SAFE_SOCKALOCK_FW
+    return this->m_ep4;
+}
+
+uint16_t omni::net::socket::port() const
+{
+    OMNI_SAFE_SOCKALOCK_FW
+    return this->m_port;
+}
+
+uint32_t omni::net::socket::bound_endpoint() const
+{
+    OMNI_SAFE_SOCKALOCK_FW
+    return this->m_bep4;
+}
+
+uint16_t omni::net::socket::bound_port() const
+{
+    OMNI_SAFE_SOCKALOCK_FW
+    return this->m_bport;
+}
+
+omni::net::socket_t omni::net::socket::native_handle() const
+{
+    OMNI_SAFE_SOCKALOCK_FW
+    return this->m_socket;
 }
 
 bool omni::net::socket::is_bound() const
 {
-    return this->m_IsBound;
+    OMNI_SAFE_SOCKALOCK_FW
+    return this->m_bound;
 }
 
-bool omni::net::socket::is_shut() const
+bool omni::net::socket::is_connected() const
 {
-    return this->m_IsShutdown;
+    OMNI_SAFE_SOCKALOCK_FW
+    return this->m_connected;
 }
 
-const char *omni::net::socket::localEndPoint() const
+bool omni::net::socket::is_open() const
 {
-    // TODO: Finish
-    return this->m_LocalEndPoint;
+    OMNI_SAFE_SOCKALOCK_FW
+    return this->m_open;
 }
 
-omni::net::protocol_type::enum_t omni::net::socket::protocolType() const
+bool omni::net::socket::is_shutdown() const
 {
-    return this->m_ProtocolType;
+    OMNI_SAFE_SOCKALOCK_FW
+    return this->m_shut;
 }
 
-const char *omni::net::socket::remoteEndPoint() const
+bool omni::net::socket::is_listening() const
 {
-    // TODO: Finish
-    return this->m_RemoteEndPoint;
+    OMNI_SAFE_SOCKALOCK_FW
+    return this->m_listen;
 }
 
-omni::net::socket_type::enum_t omni::net::socket::socketType() const
+omni::net::socket_error omni::net::socket::last_error() const
 {
-    return this->m_SocketType;
+    OMNI_SAFE_SOCKALOCK_FW
+    return this->m_last_err;
 }
 
-omni::net::socket &omni::net::socket::accept()
+omni::net::protocol_type omni::net::socket::protocol() const
 {
-    // TODO: Finish
+    OMNI_SAFE_SOCKALOCK_FW
+    return this->m_proto;
+}
+
+omni::net::socket& omni::net::socket::set_address_family(omni::net::address_family family)
+{
+    OMNI_SAFE_SOCKALOCK_FW
+    if (this->m_open) {
+        OMNI_ERR_FW("The socket is open", omni::exceptions::socket_exception(static_cast<int>(omni::net::socket_error::IS_CONNECTED)));
+    }
+    this->m_family = family;
     return *this;
 }
 
-omni::net::socket &omni::net::socket::bind(std::string localIP)
+omni::net::socket& omni::net::socket::set_protocol_type(omni::net::protocol_type protocol)
 {
-    // TODO: Finish
-    OMNI_UNUSED(localIP);
+    OMNI_SAFE_SOCKALOCK_FW
+    if (this->m_open) {
+        OMNI_ERR_FW("The socket is open", omni::exceptions::socket_exception(static_cast<int>(omni::net::socket_error::IS_CONNECTED)));
+    }
+    this->m_proto = protocol;
     return *this;
 }
 
-bool omni::net::socket::p_CloseSocket(int timeout, bool shutdown) 
+omni::net::socket& omni::net::socket::set_socket_type(omni::net::socket_type type)
 {
-    if (this->m_Handle == -1) { 
-        #if defined(OMNI_SHOW_DEBUG_ERR)
-            dbga << "The handle is invalid" << std::endl;
-        #endif
-        return false; 
+    OMNI_SAFE_SOCKALOCK_FW
+    if (this->m_open) {
+        OMNI_ERR_FW("The socket is open", omni::exceptions::socket_exception(static_cast<int>(omni::net::socket_error::IS_CONNECTED)));
     }
-    if (timeout > 0) {
-        // TODO: setsockopt needs to set a LINGER struct so that it's timeout val = timeout
-        //setsockopt(m_Handle, 
-        /*int setsockopt(
-            SOCKET s,
-            int level,
-            int optname,
-            const char *optval,
-            int optlen
-        );*/
-    }
-    if (shutdown && !this->shutdown(omni::net::socket_shutdown::BOTH)) {
-        #if defined(OMNI_SHOW_DEBUG_ERR)
-            int ec = omni::system::getLastError();
-            dbga << "Could not shutdown the socket: " << ec << " - " << omni::system::getErrorString(ec) << std::endl;
-        #endif
-    }
-    if (!this->m_IsConnected) {
-        #if defined(OMNI_SHOW_DEBUG_ERR)
-            dbga << "The socket has already been disconnected, no need to close" << std::endl;
-        #endif
-        return true;
-    }
-    #if defined(OMNI_SHOW_DEBUG_ERR)
-        dbga << "Closing the socket" << std::endl;
-    #endif
-    int ret = -1;
-    #if defined(OMNI_OS_WIN)
-        ret = closesocket(this->m_Handle);
-        if (ret == 0) { WSACleanup(); }
-    #else
-        ret = close(this->m_Handle);
-    #endif
-    #if defined(OMNI_SHOW_DEBUG_ERR)
-        if (ret != 0) { 
-            int ec = omni::system::getLastError();
-            dbga << "There was an error closing the socket: return value = " << ret << ", error = " << ec << " - " << omni::system::getErrorString(ec) << std::endl;
-        }
-    #endif
-    this->m_IsConnected = !(ret == 0);
-    return this->m_IsConnected;
-}
-
-bool omni::net::socket::close()
-{
-    return this->close(1000);
-}
-
-bool omni::net::socket::close(int timeout)
-{
-    return this->p_CloseSocket(timeout, true);
-}
-
-bool omni::net::socket::connect(std::string host, int port)
-{
-    if (this->m_Handle == -1) { 
-        #if defined(OMNI_SHOW_DEBUG_ERR)
-            dbga << "The handle is invalid" << std::endl;
-        #endif
-        return false; 
-    }
-    struct sockaddr_in Client;
-    memset(&Client, 0, (sizeof(Client))); // recv
-    Client.sin_family = static_cast<int>(this->m_AddressFamily);
-    Client.sin_port = htons(port);
-    Client.sin_addr.s_addr = inet_addr(host.c_str());
-    #if defined(OMNI_SHOW_DEBUG_ERR)
-        dbga << "Attempting to connect the socket to " << host << ":" << port << std::endl;
-    #endif
-    this->m_IsConnected = ((::connect(this->m_Handle, (reinterpret_cast<struct sockaddr*>(&Client)), sizeof(Client))) == 0);
-    this->m_IsShutdown = !this->m_IsConnected;
-    return this->m_IsConnected;
-}
-
-bool omni::net::socket::disconnect(bool reuseSocket)
-{
-    return this->p_CloseSocket(0, reuseSocket);
-}
-
-void omni::net::socket::dispose()
-{
-    if (this->m_IsConnected) { this->close(0); }
-}
-
-omni::net::socket *omni::net::socket::duplicateAndClose()
-{
-    omni::net::socket *Copy = new socket(*this);
-    this->close();
-    return Copy;
-    // TODO: Finish .. Socket *Copy = new socket(*this);
-    //                 this->Close();
-    //                 return Copy;
-    return (new omni::net::socket());
-}
-
-char *omni::net::socket::getSocketOption(
-    omni::net::socket_option_level::enum_t optionLevel, 
-    omni::net::socket_option_name::enum_t optionName, 
-    int optionLength) const
-{
-    // TODO: Finish
-    OMNI_UNUSED(optionLevel);
-    OMNI_UNUSED(optionName);
-    OMNI_UNUSED(optionLength);
-    return 0;
-}
-
-int omni::net::socket::iocontrol(int ioControlCode, char *optionInValue, char *optionOutValue)
-{
-    // TODO: Finish
-    OMNI_UNUSED(ioControlCode);
-    OMNI_UNUSED(optionInValue);
-    OMNI_UNUSED(optionOutValue);
-    return 0;
-}
-
-omni::net::socket &omni::net::socket::listen(int backlog)
-{
-    // TODO: Finish
-    OMNI_UNUSED(backlog);
+    this->m_type = type;
     return *this;
 }
 
-bool omni::net::socket::poll(int microSeconds, omni::net::select_mode::enum_t mode)
+omni::net::socket_type omni::net::socket::socket_type() const
 {
-    // TODO: Finish
-    OMNI_UNUSED(microSeconds);
-    OMNI_UNUSED(mode);
-    return 0;
+    OMNI_SAFE_SOCKALOCK_FW
+    return this->m_type;
 }
 
-int omni::net::socket::receive(char *buffer, int size)
+omni::string_t omni::net::socket::to_string_t() const
 {
-    // TODO: Finish
-    OMNI_UNUSED(buffer);
-    OMNI_UNUSED(size);
-    return 0;
+    omni::sstream_t s;
+    OMNI_SAFE_SOCKLOCK_FW
+    s << omni::net::util::to_dotted_ip4_string_t(this->m_ep4) << ":" << this->m_port;
+    OMNI_SAFE_SOCKUNLOCK_FW
+    return s.str();
 }
 
-int omni::net::socket::receive(char *buffer, int size, omni::net::socket_flags::enum_t socketFlags)
+std::string omni::net::socket::to_string() const
 {
-    // TODO: Finish
-    OMNI_UNUSED(buffer);
-    OMNI_UNUSED(size);
-    OMNI_UNUSED(socketFlags);
-    return 0;
+    std::stringstream s;
+    OMNI_SAFE_SOCKLOCK_FW
+    s << omni::net::util::to_dotted_ip4_string(this->m_ep4) << ":" << this->m_port;
+    OMNI_SAFE_SOCKUNLOCK_FW
+    return s.str();
 }
 
-int omni::net::socket::receive(char *buffer, int offset, int size, omni::net::socket_flags::enum_t socketFlags)
+std::wstring omni::net::socket::to_wstring() const
 {
-    // TODO: Finish
-    OMNI_UNUSED(buffer);
-    OMNI_UNUSED(offset);
-    OMNI_UNUSED(size);
-    OMNI_UNUSED(socketFlags);
-    return 0;
-}
-
-int omni::net::socket::receive(
-    char *buffer, 
-    int offset, 
-    int size, 
-    omni::net::socket_flags::enum_t socketFlags, 
-    omni::net::socket_error::enum_t &errorCode
-                            )
-{
-    // TODO: Finish
-    OMNI_UNUSED(buffer);
-    OMNI_UNUSED(offset);
-    OMNI_UNUSED(size);
-    OMNI_UNUSED(socketFlags);
-    OMNI_UNUSED(errorCode);
-    return 0;
-}
-
-int omni::net::socket::receiveFrom(
-    char *buffer, 
-    int size, 
-    omni::net::socket_flags::enum_t socketFlags, 
-    const char *remoteIP
-                                )
-{
-    // TODO: Finish
-    OMNI_UNUSED(buffer);
-    OMNI_UNUSED(size);
-    OMNI_UNUSED(socketFlags);
-    OMNI_UNUSED(remoteIP);
-    return 0;
-}
-
-int omni::net::socket::receiveFrom(
-    char *buffer, 
-    int offset, 
-    int size, 
-    omni::net::socket_flags::enum_t socketFlags, 
-    const char *remoteIP
-                                )
-{
-    // TODO: Finish
-    OMNI_UNUSED(buffer);
-    OMNI_UNUSED(offset);
-    OMNI_UNUSED(size);
-    OMNI_UNUSED(socketFlags);
-    OMNI_UNUSED(remoteIP);
-    return 0;
-}
-
-int omni::net::socket::send(const char *buffer, int size, omni::net::socket_flags::enum_t socketFlags)
-{
-    // TODO: Finish
-    OMNI_UNUSED(buffer);
-    OMNI_UNUSED(size);
-    OMNI_UNUSED(socketFlags);
-    return 0;
-}
-
-int omni::net::socket::send(const char *buffer, int offset, int size, omni::net::socket_flags::enum_t socketFlags)
-{
-    // TODO: Finish
-    OMNI_UNUSED(buffer);
-    OMNI_UNUSED(offset);
-    OMNI_UNUSED(size);
-    OMNI_UNUSED(socketFlags);
-    return 0;
-}
-
-int omni::net::socket::send(
-    const char *buffer, 
-    int offset, 
-    int size, 
-    omni::net::socket_flags::enum_t socketFlags, 
-    omni::net::socket_error::enum_t &errorCode
-                            )
-{
-    // TODO: Finish
-    OMNI_UNUSED(buffer);
-    OMNI_UNUSED(offset);
-    OMNI_UNUSED(size);
-    OMNI_UNUSED(socketFlags);
-    OMNI_UNUSED(errorCode);
-    return 0;
-}
-
-int omni::net::socket::sendto(const char *buffer, int size, omni::net::socket_flags::enum_t socketFlags, const char *remoteIP)
-{
-    // TODO: Finish
-    OMNI_UNUSED(buffer);
-    OMNI_UNUSED(size);
-    OMNI_UNUSED(socketFlags);
-    OMNI_UNUSED(remoteIP);
-    return 0;
-}
-
-int omni::net::socket::sendto(const char *buffer, int offset, int size, omni::net::socket_flags::enum_t socketFlags, const char *remoteIP)
-{
-    // TODO: Finish
-    OMNI_UNUSED(buffer);
-    OMNI_UNUSED(offset);
-    OMNI_UNUSED(size);
-    OMNI_UNUSED(socketFlags);
-    OMNI_UNUSED(remoteIP);
-    return 0;
-}
-
-omni::net::socket &omni::net::socket::setSocketOption(
-    omni::net::socket_option_level::enum_t optionLevel, 
-    omni::net::socket_option_name::enum_t optionName, 
-    int optionValue
-                                    )
-{
-    // TODO: Finish
-    OMNI_UNUSED(optionLevel);
-    OMNI_UNUSED(optionName);
-    OMNI_UNUSED(optionValue);
-    return *this;
-}
-
-bool omni::net::socket::shutdown(omni::net::socket_shutdown::enum_t how)
-{
-    if (this->m_Handle == -1) { 
-        #if defined(OMNI_SHOW_DEBUG_ERR)
-            dbga << "The handle is invalid" << std::endl;
-        #endif
-        return false; 
-    }
-    if (this->m_IsShutdown) { 
-        #if defined(OMNI_SHOW_DEBUG_ERR)
-            dbga << "The socket is shutdown, nothing to do" << std::endl;
-        #endif
-        return true;
-    }
-    #if defined(OMNI_SHOW_DEBUG_ERR)
-        dbga << "Shutting down the socket" << std::endl;
-    #endif
-    this->m_IsShutdown = (::shutdown(this->m_Handle, static_cast<int>(how)) == 0);
-    if (!this->m_IsShutdown) { // Stop sending/receiving data
-        #if defined(OMNI_SHOW_DEBUG_ERR)
-            int ErrorCode = omni::system::getLastError();
-            dbga << "Socket shutdown failed: " << ErrorCode << " - " << omni::system::getErrorString(ErrorCode) << std::endl;
-        #endif
-    }
-    return this->m_IsShutdown;
-}
-
-const std::string omni::net::socket::tostring() const
-{
-    // TODO: return this->IP
-    return "0.0.0.0";
-}
-
-omni::net::socket &omni::net::socket::operator= (const omni::net::socket &other)
-{
-    this->close();
-    this->blocking = other.blocking;
-    this->dontFragment = other.dontFragment;
-    this->enableBroadcast = other.enableBroadcast;
-    this->exclusiveAddressUse = other.exclusiveAddressUse;
-    this->lingerstate = other.lingerstate,
-    this->multicastLoopback = other.multicastLoopback;
-    this->nodelay = other.nodelay;
-    this->receiveBufferSize = other.receiveBufferSize;
-    this->receiveTimeout = other.receiveTimeout;
-    this->sendBufferSize = other.sendBufferSize;
-    this->sendTimeout = other.sendTimeout;
-    this->ttl = other.ttl;
-    this->useOnlyOverlappedIO = other.useOnlyOverlappedIO;
-    this->datareceived = other.datareceived;    
-    this->m_AddressFamily = other.addressFamily();
-    this->m_Available = other.available();
-    this->m_IsConnected = other.connected();
-    this->m_IsBound = other.is_bound();
-    this->m_IsShutdown = other.is_shut();
-    this->m_Handle = other.handle();
-    this->m_LocalEndPoint = other.localEndPoint();
-    this->m_ProtocolType = other.protocolType();
-    this->m_RemoteEndPoint = other.remoteEndPoint();
-    this->m_SocketType = other.socketType();
-    return *this;
+    std::wstringstream s;
+    OMNI_SAFE_SOCKLOCK_FW
+    s << omni::net::util::to_dotted_ip4_wstring(this->m_ep4) << ":" << this->m_port;
+    OMNI_SAFE_SOCKUNLOCK_FW
+    return s.str();
 }

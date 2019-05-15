@@ -19,127 +19,129 @@
 #if !defined(OMNI_SOCKET_HPP)
 #define OMNI_SOCKET_HPP 1
 #include <omni/types/net_t.hpp>
-#include <omni/delegate/0.hpp>
-#include <omni/delegate/1.hpp>
-#include <omni/exception.hpp>
-#include <string>
-#include <csignal>
+#include <omni/net/host_helper.hpp>
 
 namespace omni {
     namespace net {
-        // DEV_NOTE: While we could make socket a stream object, we would be overloading just about everything
-        // because of how we handle sockets vs. normal streams
         /** The socket class is used to facilitate network communications */
         class socket
         {
-            socket(const omni::net::socket &cp); // = delete
-            
             public:
-                socket();
                 socket(omni::net::address_family family,
-                       omni::net::socket_type type, 
+                       omni::net::socket_type type,
                        omni::net::protocol_type protocol);
-                virtual ~socket();
-                
-                bool blocking;
-                bool dontFragment;
-                bool enableBroadcast;
-                bool exclusiveAddressUse;
-                omni::net::linger_option linger_state;
-                bool multicastLoopback;
-                bool nodelay;
-                int receiveBufferSize;
-                int receiveTimeout;
-                int sendBufferSize;
-                int sendTimeout;
-                short ttl;
-                bool useOnlyOverlappedIO;
+                socket(omni::net::socket_type type, omni::net::protocol_type protocol);
+                ~socket();
                 
                 omni::net::address_family address_family() const;
-                int available() const;
-                omni::net::socket& accept();
-                omni::net::socket& bind(std::string ip);
-                bool connected() const;
-                bool close();
-                bool close(int timeout);
-                bool connect(std::string host, int port);
-                bool disconnect(bool reuse);
-                unsigned int native_handle() const;
+                omni::net::socket_error accept(omni::net::endpoint_descriptor& remote_ep);
+                omni::net::socket_error bind();
+                omni::net::socket_error bind(uint32_t ip, uint16_t port);
+                omni::net::socket_error bind(const std::string& ip, uint16_t port);
+                omni::net::socket_error bind(const std::wstring& ip, uint16_t port);
+                omni::net::socket_error bind(const std::string& ip);
+                omni::net::socket_error bind(const std::wstring& ip);
+                uint32_t bound_endpoint() const;
+                uint16_t bound_port() const;
+                omni::net::socket_error close();
+                omni::net::socket_error close(uint16_t timeout);
+                omni::net::socket_error connect();
+                omni::net::socket_error connect(uint32_t ip, uint16_t port);
+                omni::net::socket_error connect(const std::string& ip, uint16_t port);
+                omni::net::socket_error connect(const std::wstring& ip, uint16_t port);
+                omni::net::socket_error disconnect(bool reuse);
+                uint32_t endpoint() const;
+                omni::net::socket_t native_handle() const;
+                omni::net::socket_error open();
+                omni::net::socket_error open(omni::net::socket_type type, omni::net::protocol_type protocol);
+                omni::net::socket_error open(omni::net::address_family family, omni::net::socket_type type, omni::net::protocol_type protocol);
+                uint16_t port() const;
                 bool is_bound() const;
-                bool is_shut() const;
-                omni::net::socket& listen(int backlog);
-                bool poll(int microSeconds, omni::net::select_mode::enum_t mode);
-                omni::net::protocol_type::enum_t protocol() const;
-                omni::net::socket& set_socket_option(omni::net::socket_option_level::enum_t optionLevel, omni::net::socket_option_name::enum_t optionName, int optionValue);
-                bool shutdown(omni::net::socket_shutdown::enum_t how);
-                omni::net::socket_type::enum_t socket_type() const;;
-                const std::string to_string() const;
-                
-                
-                omni::net::socket *duplicateAndClose();
-                char *getSocketOption(omni::net::socket_option_level::enum_t optionLevel, omni::net::socket_option_name::enum_t optionName, int optionLength) const;
-                int iocontrol(int ioControlCode, char *optionInValue, char *optionOutValue);
-                const char *localEndPoint() const;
-                const char *remoteEndPoint() const;
-                
-                int receive(char *buffer, int size);
-                int receive(char *buffer, int size, omni::net::socket_flags::enum_t socketFlags);
-                int receive(char *buffer, int offset, int size, omni::net::socket_flags::enum_t socketFlags);
-                int receive(char *buffer, int offset, int size, omni::net::socket_flags::enum_t socketFlags, omni::net::socket_error::enum_t &errorCode);
-                int receiveFrom(char *buffer, int size, omni::net::socket_flags::enum_t socketFlags, const char *remoteIP);
-                int receiveFrom(char *buffer, int offset, int size, omni::net::socket_flags::enum_t socketFlags, const char *remoteIP);
-                int send(const char *buffer, int size, omni::net::socket_flags::enum_t socketFlags);
-                int send(const char *buffer, int offset, int size, omni::net::socket_flags::enum_t socketFlags);
-                int send(const char *buffer, int offset, int size, omni::net::socket_flags::enum_t socketFlags, omni::net::socket_error::enum_t &errorCode);
-                int sendto(const char *buffer, int size, omni::net::socket_flags::enum_t socketFlags, const char *remoteIP);
-                int sendto(const char *buffer, int offset, int size, omni::net::socket_flags::enum_t socketFlags, const char *remoteIP);
-                
-                
-                // Events
-                /** Occurs when data is received on the socket */
-                omni::action received;
-                
-                // Operators
-                omni::net::socket& operator= (const omni::net::socket &other);
-                omni::net::socket& operator<< (const char* data); // writes data to socket
-                omni::net::socket& operator>> (const char* read); // reads data from socket
-                
-                /* examples for operator overload:
-                omni::net::socket s("192.168.1.1", 80);
-                ...
-                s.connect();
-                if (s.connected()) {
-                    if (isServer) {
-                        const char *data;
-                        s >> data; // wait until data read from socket, then put to 'data' (don't forget about mem leeks, etc)
-                        printf("data rcvd: %s\n", data);
-                        s << "hiya! how's it going?"; // showing operator<<(const char*)
-                    } else { // client
-                        // write to socket
-                        std::string data = "hello there";
-                        const char *rcvd;
-                        s << data; // showing operator<<(std::string)
-                        s >> rcvd;
-                        printf("data rcvd: %s\n", rcvd);
-                    }
+                bool is_connected() const;
+                bool is_open() const;
+                bool is_shutdown() const;
+                bool is_listening() const;
+                omni::net::socket_error listen(int32_t backlog);
+                omni::net::socket_error last_error() const;
+                omni::net::protocol_type protocol() const;
+                omni::net::socket_error set_socket_option(omni::net::socket_option_level op_level, int32_t op_name, int32_t op_val);
+                omni::net::socket_error set_socket_option(omni::net::socket_option_level op_level, omni::net::socket_option op_name, int32_t op_val);
+                omni::net::socket_error set_socket_option(omni::net::socket_option_level op_level, omni::net::tcp_option op_name, int32_t op_val);
+                omni::net::socket& set_address_family(omni::net::address_family family);
+                omni::net::socket& set_protocol_type(omni::net::protocol_type protocol);
+                omni::net::socket& set_socket_type(omni::net::socket_type type);
+                omni::net::socket_error shutdown(omni::net::socket_shutdown how);
+                omni::net::socket_type socket_type() const;
+                omni::string_t to_string_t() const;
+                std::string to_string() const;
+                std::wstring to_wstring() const;
+
+                operator std::string() const
+                {
+                    return this->to_string();
                 }
-                */
+
+                operator std::wstring() const
+                {
+                    return this->to_wstring();
+                }
+
+                OMNI_MEMBERS_FW(omni::net::socket) // disposing,name,type(),hash()
+
+                OMNI_OSTREAM_FW(omni::net::socket)
+
+                
+                //omni::net::socket_error get_socket_option(omni::net::socket_option_level op_level, omni::net::socket_option op_name, omni::unsafe_t out_val, size_t out_len) const;
+                //omni::net::socket_error get_socket_option(omni::net::socket_option_level op_level, omni::net::tcp_option op_name, omni::unsafe_t out_val, size_t out_len) const;
+                //omni::net::socket_error io_control(uint32_t op_code, omni::unsafe_t val, size_t val_len);
+                //omni::net::socket_error io_control(uint32_t op_code, omni::unsafe_t val, size_t val_len, omni::unsafe_t out_val, size_t out_len);
+                //omni::net::socket_error poll(uint32_t us, omni::net::select_mode mode);
+                
+                omni::net::socket_error receive(omni::unsafe_t buffer, uint32_t len, uint32_t& rcvd);
+                omni::net::socket_error receive(omni::unsafe_t buffer, uint32_t len, omni::net::socket_flags flags, uint32_t& rcvd);
+                omni::net::socket_error receive(omni::unsafe_t buffer, uint32_t offset, uint32_t len, omni::net::socket_flags flags, uint32_t& rcvd);
+
+                omni::net::socket_error receive_from(omni::unsafe_t buffer, uint32_t len, const std::string& ip, uint32_t& rcvd);
+                omni::net::socket_error receive_from(omni::unsafe_t buffer, uint32_t len, omni::net::socket_flags flags, const std::string& ip, uint32_t& rcvd);
+                omni::net::socket_error receive_from(omni::unsafe_t buffer, uint32_t offset, uint32_t len, const std::string& ip, uint32_t& rcvd);
+                omni::net::socket_error receive_from(omni::unsafe_t buffer, uint32_t offset, uint32_t len, omni::net::socket_flags flags, const std::string& ip, uint32_t& rcvd);
+                
+                omni::net::socket_error send(const omni::unsafe_t buffer, uint32_t len, uint32_t& sent);
+                omni::net::socket_error send(const omni::unsafe_t buffer, uint32_t len, omni::net::socket_flags flags, uint32_t& sent);
+                omni::net::socket_error send(const omni::unsafe_t buffer, uint32_t offset, uint32_t len, omni::net::socket_flags flags, uint32_t& sent);
+                
+                omni::net::socket_error send_to(const omni::unsafe_t buffer, uint32_t len, const std::string& ip, uint16_t port, uint32_t& sent);
+                omni::net::socket_error send_to(const omni::unsafe_t buffer, uint32_t len, omni::net::socket_flags flags, const std::string& ip, uint16_t port, uint32_t& sent);
+                omni::net::socket_error send_to(const omni::unsafe_t buffer, uint32_t offset, uint32_t len, const std::string& ip, uint16_t port, uint32_t& sent);
+                omni::net::socket_error send_to(const omni::unsafe_t buffer, uint32_t offset, uint32_t len, omni::net::socket_flags flags, const std::string& ip, uint16_t port, uint32_t& sent);
+                
                 
             private:
-                // Methods
-                void p_Initialize(omni::net::address_family::enum_t addressFamily, omni::net::socket_type::enum_t socketType, omni::net::protocol_type::enum_t protocolType);
-                bool p_CloseSocket(int timeout, bool shutdown);
-                // Members
-                omni::net::address_family::enum_t m_AddressFamily;
-                int m_Available;
-                bool m_IsConnected;
-                bool m_IsBound;
-                bool m_IsShutdown;
-                int m_Handle;
-                const char *m_LocalEndPoint;
-                omni::net::protocol_type::enum_t m_ProtocolType;
-                const char *m_RemoteEndPoint;
-                omni::net::socket_type::enum_t m_SocketType;
+                socket(); // = delete
+                socket(const omni::net::socket &cp); // = delete
+                omni::net::socket& operator= (const omni::net::socket &other); // = delete
+                
+                omni::net::socket_t m_socket;
+                omni::net::sockaddr_t m_addr;
+                omni::net::address_family m_family;
+                omni::net::protocol_type m_proto;
+                omni::net::socket_type m_type;
+                omni::net::socket_error m_last_err;
+                uint32_t m_ep4;
+                uint16_t m_port;
+                uint32_t m_bep4;
+                uint16_t m_bport;
+                bool m_connected;
+                bool m_bound;
+                bool m_open;
+                bool m_shut;
+                bool m_listen;
+                #if defined(OMNI_SAFE_SOCKET)
+                    mutable omni::sync::basic_lock m_mtx;
+                #endif
+
+                omni::net::socket_error _close(uint16_t timeout, bool shutdown);
+                omni::net::socket_error _parse_error(int err);
         };
     }
 }

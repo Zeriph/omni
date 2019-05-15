@@ -1,7 +1,5 @@
 #!/bin/sh
 
-# TODO: clean up this script (get rid of the OMNI_X options and figure out an easier way to do that)
-
 #omni_lib_loc=/code/Zeriph/libraries/omni
 omni_lib_loc=/Code/omni
 

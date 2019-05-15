@@ -35,17 +35,135 @@ namespace omni {
     typedef OMNI_CHAR_T char_t;
 
     namespace char_util {
+        inline bool is_alpha(char c)
+        { return (std::isalpha(c) != 0); }
+        
+        inline bool is_alpha(wchar_t c)
+        { return (std::iswalpha(c) != 0); }
+
         inline bool is_digit(char c)
         { return (std::isdigit(c) != 0); }
         
         inline bool is_digit(wchar_t c)
         { return (std::iswdigit(c) != 0); }
         
-        inline bool is_alpha(char c)
-        { return (std::isalpha(c) != 0); }
-        
-        inline bool is_alpha(wchar_t c)
-        { return (std::iswalpha(c) != 0); }
+        inline bool is_hex(char c)
+        {
+            switch (c) {
+                case 'A': case 'a':
+                case 'B': case 'b':
+                case 'C': case 'c':
+                case 'D': case 'd':
+                case 'E': case 'e':
+                case 'F': case 'f':
+                case '0': case '1': case '2': case '3': case '4': 
+                case '5': case '6': case '7': case '8': case '9': 
+                    return true;
+                default: break;
+            }
+            return false;
+        }
+
+        inline bool is_hex(wchar_t c)
+        {
+            switch (c) {
+                case L'A': case L'a':
+                case L'B': case L'b':
+                case L'C': case L'c':
+                case L'D': case L'd':
+                case L'E': case L'e':
+                case L'F': case L'f':
+                case L'0': case L'1': case L'2': case L'3': case L'4': 
+                case L'5': case L'6': case L'7': case L'8': case L'9': 
+                    return true;
+                default: break;
+            }
+            return false;
+        }
+
+        inline bool is_octal(char c)
+        {
+            switch (c) {
+                case '0': case '1': case '2': case '3':
+                case '4':  case '5': case '6': case '7':
+                    return true;
+                default: break;
+            }
+            return false;
+        }
+
+        inline bool is_octal(wchar_t c)
+        {
+            switch (c) {
+                case L'0': case L'1': case L'2': case L'3':
+                case L'4': case L'5': case L'6': case L'7':
+                    return true;
+                default: break;
+            }
+            return false;
+        }
+
+        inline char to_char(wchar_t wc, int code_page)
+        {
+            #if defined(OMNI_WIN_API)
+                char cret;
+                std::size_t w = ::WideCharToMultiByte(code_page, 0, &wc, 1, &cret, 1, NULL, NULL);
+                if (w != 1) {
+                    OMNI_ERRV_FW("expected size of 1 got ", w, omni::exceptions::invalid_size())
+                }
+                return cret;
+            #else
+                OMNI_UNUSED(code_page);
+                int rc = std::wctob(wc);
+                if (rc == EOF) {
+                    OMNI_ERR_FW("invalid wchar to char ", omni::exceptions::invalid_type_cast())
+                }
+                return static_cast<char>(rc);
+            #endif
+        }
+
+        inline char to_char(wchar_t wc)
+        {
+            return omni::char_util::to_char(wc, OMNI_CODE_PAGE);
+        }
+
+        inline char to_char(char c)
+        {
+            return c;
+        }
+
+        inline char to_char(char c, int code_page)
+        {
+            OMNI_UNUSED(code_page);
+            return c;
+        }
+
+        inline int to_int(char c, bool has_hex)
+        {
+            if (omni::char_util::is_digit(c)) {
+                return c - '0';
+            } else if (has_hex) {
+                switch (c) {
+                    case 'A': case 'a': return 10;
+                    case 'B': case 'b': return 11;
+                    case 'C': case 'c': return 12;
+                    case 'D': case 'd': return 13;
+                    case 'E': case 'e': return 14;
+                    case 'F': case 'f': return 15;
+                    default: break;
+                }
+            }
+            return -1;
+        }
+
+        inline int to_int(wchar_t c, bool has_hex)
+        { return omni::char_util::to_int(omni::char_util::to_char(c), has_hex); }
+
+        inline int to_int(char c)
+        { return omni::char_util::to_int(c, false); }
+
+        inline int to_int(wchar_t c)
+        { return omni::char_util::to_int(omni::char_util::to_char(c)); }
         
         template < typename std_char_t >
         std_char_t to_lower(std_char_t c)
@@ -71,39 +189,17 @@ namespace omni {
         inline wchar_t to_upper<wchar_t>(wchar_t c)
         { return std::towupper(c); }
 
-        inline char to_char(wchar_t wc)
-        {
-            #if defined(OMNI_WIN_API)
-                char cret;
-                std::size_t w = ::WideCharToMultiByte(OMNI_CODE_PAGE, 0, &wc, 1, &cret, 1, NULL, NULL);
-                if (w != 1) {
-                    OMNI_ERRV_FW("expected size of 1 got ", w, omni::exceptions::invalid_size())
-                }
-                return cret;
-            #else
-                int rc = std::wctob(wc);
-                if (rc == EOF) {
-                    OMNI_ERR_FW("invalid wchar to char ", omni::exceptions::invalid_type_cast())
-                }
-                return static_cast<char>(rc);
-            #endif
-        }
-
-        inline char to_char(char c)
-        {
-            return c;
-        }
-
-        inline wchar_t to_wchar(char c)
+        inline wchar_t to_wchar(char c, int code_page)
         {
             #if defined(OMNI_WIN_API)
                 wchar_t wret;
-                std::size_t w = ::MultiByteToWideChar(OMNI_CODE_PAGE, 0, &c, 1, &wret, 1);
+                std::size_t w = ::MultiByteToWideChar(code_page, 0, &c, 1, &wret, 1);
                 if (w != 1) {
                     OMNI_ERRV_FW("expected size of 1 got ", w, omni::exceptions::invalid_size())
                 }
                 return wret;
             #else
+                OMNI_UNUSED(code_page);
                 wint_t rc = std::btowc(c);
                 if (rc == WEOF) {
                     OMNI_ERR_FW("invalid char to wchar ", omni::exceptions::invalid_type_cast())
@@ -112,8 +208,19 @@ namespace omni {
             #endif
         }
 
+        inline wchar_t to_wchar(char c)
+        {
+            return omni::char_util::to_wchar(c, OMNI_CODE_PAGE);
+        }
+
         inline wchar_t to_wchar(wchar_t wc)
         {
+            return wc;
+        }
+
+        inline wchar_t to_wchar(wchar_t wc, int code_page)
+        {
+            OMNI_UNUSED(code_page);
             return wc;
         }
 

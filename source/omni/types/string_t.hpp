@@ -62,15 +62,15 @@ namespace omni {
         }
 
         /** @internal framework helper */
-        inline std::string to_string(const std::wstring& str)
+        inline std::string to_string(const std::wstring& str, int code_page)
         {
             if (str.empty()) { return std::string(); }
             std::size_t sz = str.length();
             #if defined(OMNI_WIN_API)
-                std::size_t nd = ::WideCharToMultiByte(OMNI_CODE_PAGE, 0, str.c_str(), sz, NULL, 0, NULL, NULL);
+                std::size_t nd = ::WideCharToMultiByte(code_page, 0, str.c_str(), sz, NULL, 0, NULL, NULL);
                 if (nd != 0) {
                     std::string cret(nd, '\0');
-                    std::size_t w = ::WideCharToMultiByte(OMNI_CODE_PAGE, 0, str.c_str(), sz, &cret[0], nd, NULL, NULL);
+                    std::size_t w = ::WideCharToMultiByte(code_page, 0, str.c_str(), sz, &cret[0], nd, NULL, NULL);
                     if (w != 0) {
                         if (w != sz) {
                             OMNI_ERR_RETV_FW("wrote " << w << " but expected size of " << sz, omni::exceptions::invalid_size(), std::string())
@@ -81,6 +81,7 @@ namespace omni {
                 OMNI_THROW_FW(omni::exceptions::invalid_size())
                 return std::string();
             #else
+                OMNI_UNUSED(code_page);
                 std::string cret(sz, '\0');
                 std::size_t w = std::wcstombs(&cret[0], str.c_str(), sz);
                 if (w != 0) {
@@ -92,6 +93,49 @@ namespace omni {
                 OMNI_THROW_FW(omni::exceptions::invalid_size())
                 return std::string();
             #endif
+        }
+
+        /** @internal framework helper */
+        inline std::string to_string(const std::wstring& str)
+        {
+            return omni::string_util::to_string(str, OMNI_CODE_PAGE);
+        }
+
+        /** @internal framework helper */
+        inline std::string to_string(const wchar_t* str, int code_page)
+        {
+            if (str) { return omni::string_util::to_string(std::wstring(str), code_page); }
+            OMNI_ERR_RETV_FW("Null pointer specified", omni::exceptions::null_pointer_exception(), std::string())
+        }
+
+        /** @internal framework helper */
+        template < std::size_t X >
+        inline std::string to_string(const wchar_t (&str)[X], int code_page)
+        {
+            return omni::string_util::to_string(std::wstring(str), code_page);
+        }
+
+        /** @internal framework helper */
+        inline std::string to_string(const char* str, int code_page)
+        {
+            OMNI_UNUSED(code_page);
+            if (str) { return std::string(str); }
+            OMNI_ERR_RETV_FW("Null pointer specified", omni::exceptions::null_pointer_exception(), std::string())
+        }
+
+        /** @internal framework helper */
+        template < std::size_t X >
+        inline std::string to_string(const char (&str)[X], int code_page)
+        {
+            OMNI_UNUSED(code_page);
+            return std::string(str);
+        }
+
+        /** @internal framework helper */
+        inline std::string to_string(const std::string& str, int code_page)
+        {
+            OMNI_UNUSED(code_page);
+            return str;
         }
 
         /** @internal framework helper */
@@ -144,15 +188,15 @@ namespace omni {
         }
 
         /** @internal framework helper */
-        inline std::wstring to_wstring(const std::string& str)
+        inline std::wstring to_wstring(const std::string& str, int code_page)
         {
             if (str.empty()) { return std::wstring(); }
             std::size_t sz = str.length();
             #if defined(OMNI_WIN_API)
-                std::size_t nd = ::MultiByteToWideChar(OMNI_CODE_PAGE, 0, str.c_str(), sz, NULL, 0);
+                std::size_t nd = ::MultiByteToWideChar(code_page, 0, str.c_str(), sz, NULL, 0);
                 if (nd != 0) {
                     std::wstring wret(nd, L'\0');
-                    std::size_t w = ::MultiByteToWideChar(OMNI_CODE_PAGE, 0, str.c_str(), sz, &wret[0], nd);
+                    std::size_t w = ::MultiByteToWideChar(code_page, 0, str.c_str(), sz, &wret[0], nd);
                     if (w != 0) {
                         if (w != sz) {
                             OMNI_ERR_RETV_FW("wrote " << w << " but expected size of " << sz, omni::exceptions::invalid_size(), std::wstring())
@@ -163,6 +207,7 @@ namespace omni {
                 OMNI_THROW_FW(omni::exceptions::invalid_size())
                 return std::wstring();
             #else
+                OMNI_UNUSED(code_page);
                 std::wstring wret(sz, L'\0');
                 std::size_t w = std::mbstowcs(&wret[0], str.c_str(), sz);
                 if (w != 0) {
@@ -174,6 +219,49 @@ namespace omni {
                 OMNI_THROW_FW(omni::exceptions::invalid_size())
                 return std::wstring();
             #endif
+        }
+
+        /** @internal framework helper */
+        inline std::wstring to_wstring(const std::string& str)
+        {
+            return omni::string_util::to_wstring(str, OMNI_CODE_PAGE);
+        }
+
+        /** @internal framework helper */
+        inline std::wstring to_wstring(const char* str, int code_page)
+        {
+            if (str) { return omni::string_util::to_wstring(std::string(str), code_page); }
+            OMNI_ERR_RETV_FW("Null pointer specified", omni::exceptions::null_pointer_exception(), std::wstring())
+        }
+
+        /** @internal framework helper */
+        template < std::size_t X >
+        inline std::wstring to_wstring(const char (&str)[X], int code_page)
+        {
+            return omni::string_util::to_wstring(std::string(str), code_page);
+        }
+
+        /** @internal framework helper */
+        inline std::wstring to_wstring(const wchar_t* str, int code_page)
+        {
+            OMNI_UNUSED(code_page);
+            if (str) { return std::wstring(str); }
+            OMNI_ERR_RETV_FW("Null pointer specified", omni::exceptions::null_pointer_exception(), std::wstring())
+        }
+
+        /** @internal framework helper */
+        template < std::size_t X >
+        inline std::wstring to_wstring(const wchar_t (&str)[X], int code_page)
+        {
+            OMNI_UNUSED(code_page);
+            return std::wstring(str);
+        }
+
+        /** @internal framework helper */
+        inline std::wstring to_wstring(const std::wstring& str, int code_page)
+        {
+            OMNI_UNUSED(code_page);
+            return str;
         }
 
         /** @internal framework helper */

@@ -51,10 +51,9 @@ to ensure this file isn't built with the rest. */
 #endif
 
 #if defined(OMNI_NET_LIB) || (!defined(OMNI_TIMER_LIB) && !defined(OMNI_THREAD_LIB))
-    // #include "net_util.cpp" # INCOMPLETE
-    // #include "socket.cpp" # INCOMPLETE
-    // #include "tcp.cpp" # INCOMPLETE
-    // #include "udp.cpp" # INCOMPLETE
+    #include "socket.cpp"
+    // #include "server.cpp" # INCOMPLETE
+    // #include "client.cpp" # INCOMPLETE
 #endif
 
 #include "datetime.cpp"

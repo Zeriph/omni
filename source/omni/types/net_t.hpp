@@ -20,8 +20,15 @@
 #define OMNI_NET_T_HPP
 #include <omni/defs/global.hpp>
 #include <omni/defs/class_macros.hpp>
+#include <omni/defs/net_def.hpp>
 
-// TODO: is this a relevant note -> a lot of same enum types causing 'duplicate' types
+/*
+    DEV_NOTE: There are numerous socket functions that are standard, while there are also numerous socket functions
+    that are OS/implementation specific. Since there are _too_ many variations on what a socket can do, as well as
+    what a socket _might_ be able to do, there are various enum types for the `net` namespace that do not have what
+    could potentially be 'all' types. Instead, the user can simply utilize the values they need for the platform they
+    are targetting.
+*/
 
 namespace omni {
     /** The net namespace is used to facilitate certain networking operations and handling */
@@ -30,42 +37,19 @@ namespace omni {
         class address_family {
             public:
                 typedef enum enum_t {
-                    UNKNOWN = -1,
-                    UNSPECIFIED = 0,
-                    UNIX = 1,
-                    INTERNETWORK = 2,
-                    IMPLINK = 3,
-                    PUP = 4,
-                    CHAOS = 5,
-                    IPX = 6,
-                    NS = 6,
-                    OSI = 7,
-                    ISO = 7,
-                    ECMA = 8,
-                    DATAKIT = 9,
-                    CCITT = 10,
-                    SNA = 11,
-                    DECNET = 12,
-                    DATALINK = 13,
-                    LAT = 14,
-                    HYPERCHANNEL = 15,
-                    APPLETALK = 16,
-                    NETBIOS = 17,
-                    VOICEVIEW = 18,
-                    FIREFOX = 19,
-                    BANYAN = 21,
-                    ATM = 22,
-                    INTERNETWORK_V6 = 23,
-                    CLUSTER = 24,
-                    IEEE12844 = 25,
-                    IRDA = 26,
-                    NETWORK_DESIGNERS = 28
+                    UNSPECIFIED = AF_UNSPEC,
+                    UNIX = AF_UNIX,
+                    INTERNETWORK = AF_INET,
+                    INTERNETWORK_V6 = AF_INET6,
+                    SNA = AF_SNA,
+                    DECNET = AF_DECnet,
+                    APPLETALK = AF_APPLETALK
                 } enum_t;
                 
                 /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
-                    return 30;
+                    return 7;
                 }
 
                 /** The default value for this enum instance */
@@ -310,36 +294,13 @@ namespace omni {
                 static bool _try_parse(const std::string& val, enum_t& out)
                 {
                     if (!val.empty()) {
-                        OMNI_S2E_FW(UNKNOWN)
                         OMNI_S2E_FW(UNSPECIFIED)
                         OMNI_S2E_FW(UNIX)
                         OMNI_S2E_FW(INTERNETWORK)
-                        OMNI_S2E_FW(IMPLINK)
-                        OMNI_S2E_FW(PUP)
-                        OMNI_S2E_FW(CHAOS)
-                        OMNI_S2E_FW(IPX)
-                        //OMNI_S2E_FW(NS)
-                        OMNI_S2E_FW(OSI)
-                        //OMNI_S2E_FW(ISO)
-                        OMNI_S2E_FW(ECMA)
-                        OMNI_S2E_FW(DATAKIT)
-                        OMNI_S2E_FW(CCITT)
+                        OMNI_S2E_FW(INTERNETWORK_V6)
                         OMNI_S2E_FW(SNA)
                         OMNI_S2E_FW(DECNET)
-                        OMNI_S2E_FW(DATALINK)
-                        OMNI_S2E_FW(LAT)
-                        OMNI_S2E_FW(HYPERCHANNEL)
                         OMNI_S2E_FW(APPLETALK)
-                        OMNI_S2E_FW(NETBIOS)
-                        OMNI_S2E_FW(VOICEVIEW)
-                        OMNI_S2E_FW(FIREFOX)
-                        OMNI_S2E_FW(BANYAN)
-                        OMNI_S2E_FW(ATM)
-                        OMNI_S2E_FW(INTERNETWORK_V6)
-                        OMNI_S2E_FW(CLUSTER)
-                        OMNI_S2E_FW(IEEE12844)
-                        OMNI_S2E_FW(IRDA)
-                        OMNI_S2E_FW(NETWORK_DESIGNERS)
                     }
                     return false;
                 }
@@ -349,36 +310,13 @@ namespace omni {
                 {
                     S ss;
                     switch (v) {
-                        OMNI_E2SS_FW(UNKNOWN);
                         OMNI_E2SS_FW(UNSPECIFIED);
                         OMNI_E2SS_FW(UNIX);
                         OMNI_E2SS_FW(INTERNETWORK);
-                        OMNI_E2SS_FW(IMPLINK);
-                        OMNI_E2SS_FW(PUP);
-                        OMNI_E2SS_FW(CHAOS);
-                        OMNI_E2SS_FW(IPX);
-                        //OMNI_E2SS_FW(NS);
-                        OMNI_E2SS_FW(OSI);
-                        //OMNI_E2SS_FW(ISO);
-                        OMNI_E2SS_FW(ECMA);
-                        OMNI_E2SS_FW(DATAKIT);
-                        OMNI_E2SS_FW(CCITT);
+                        OMNI_E2SS_FW(INTERNETWORK_V6);
                         OMNI_E2SS_FW(SNA);
                         OMNI_E2SS_FW(DECNET);
-                        OMNI_E2SS_FW(DATALINK);
-                        OMNI_E2SS_FW(LAT);
-                        OMNI_E2SS_FW(HYPERCHANNEL);
                         OMNI_E2SS_FW(APPLETALK);
-                        OMNI_E2SS_FW(NETBIOS);
-                        OMNI_E2SS_FW(VOICEVIEW);
-                        OMNI_E2SS_FW(FIREFOX);
-                        OMNI_E2SS_FW(BANYAN);
-                        OMNI_E2SS_FW(ATM);
-                        OMNI_E2SS_FW(INTERNETWORK_V6);
-                        OMNI_E2SS_FW(CLUSTER);
-                        OMNI_E2SS_FW(IEEE12844);
-                        OMNI_E2SS_FW(IRDA);
-                        OMNI_E2SS_FW(NETWORK_DESIGNERS);
                         default: ss << "UNKNOWN"; break;
                     }
                     return ss.str();
@@ -387,36 +325,13 @@ namespace omni {
                 static bool _valid(int val)
                 {
                     return (val == 
-                        UNKNOWN ||
                         UNSPECIFIED ||
                         UNIX ||
                         INTERNETWORK ||
-                        IMPLINK ||
-                        PUP ||
-                        CHAOS ||
-                        IPX ||
-                        //NS ||
-                        OSI ||
-                        //ISO ||
-                        ECMA ||
-                        DATAKIT ||
-                        CCITT ||
+                        INTERNETWORK_V6 ||
                         SNA ||
                         DECNET ||
-                        DATALINK ||
-                        LAT ||
-                        HYPERCHANNEL ||
-                        APPLETALK ||
-                        NETBIOS ||
-                        VOICEVIEW ||
-                        FIREFOX ||
-                        BANYAN ||
-                        ATM ||
-                        INTERNETWORK_V6 ||
-                        CLUSTER ||
-                        IEEE12844 ||
-                        IRDA ||
-                        NETWORK_DESIGNERS
+                        APPLETALK
                     );
                 }
         };
@@ -1107,42 +1022,29 @@ namespace omni {
             public:
                 typedef enum enum_t {
                     UNKNOWN = -1,
-                    IPV6_HOP_BY_HOP_OPTIONS = 0,
-                    UNSPECIFIED = 0,
-                    IP = 0,
-                    ICMP = 1,
-                    IGMP = 2,
-                    GGP = 3,
-                    IPV4 = 4,
-                    TCP = 6,
-                    PUP = 12,
-                    UDP = 17,
-                    IDP = 22,
-                    IPV6 = 41,
-                    IPV6_ROUTING_HEADER = 43,
-                    IPV6_FRAGMENT_HEADER = 44,
-                    IPSEC_ENCAPSULATING_SECURITY_PAYLOAD = 50,
-                    IPSEC_AUTHENTICATION_HEADER = 51,
-                    ICMPV6 = 58,
-                    IPV6_NO_NEXT_HEADER = 59,
-                    IPV6_DESTINATION_OPTIONS = 60,
-                    ND = 77,
-                    RAW = 255,
-                    IPX = 1000,
-                    SPX = 1256,
-                    SPXII = 1257
+                    IP = IPPROTO_IP,
+                    ICMP = IPPROTO_ICMP,
+                    IGMP = IPPROTO_IGMP,
+                    EGP = IPPROTO_EGP,
+                    TCP = IPPROTO_TCP,
+                    PUP = IPPROTO_PUP,
+                    UDP = IPPROTO_UDP,
+                    IDP = IPPROTO_IDP,
+                    IPV6 = IPPROTO_IPV6,
+                    ICMPV6 = IPPROTO_ICMPV6,
+                    RAW = IPPROTO_RAW
                 } enum_t;
                 
                 /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
-                    return 25;
+                    return 13;
                 }
 
                 /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
-                    return UNSPECIFIED;
+                    return IP;
                 }
 
                 /** Converts the enum to its string representation */
@@ -1382,30 +1284,17 @@ namespace omni {
                 {
                     if (!val.empty()) {
                         OMNI_S2E_FW(UNKNOWN)
-                        //OMNI_S2E_FW(IPV6_HOP_BY_HOP_OPTIONS)
-                        //OMNI_S2E_FW(UNSPECIFIED)
                         OMNI_S2E_FW(IP)
                         OMNI_S2E_FW(ICMP)
                         OMNI_S2E_FW(IGMP)
-                        OMNI_S2E_FW(GGP)
-                        OMNI_S2E_FW(IPV4)
+                        OMNI_S2E_FW(EGP)
                         OMNI_S2E_FW(TCP)
                         OMNI_S2E_FW(PUP)
                         OMNI_S2E_FW(UDP)
                         OMNI_S2E_FW(IDP)
                         OMNI_S2E_FW(IPV6)
-                        OMNI_S2E_FW(IPV6_ROUTING_HEADER)
-                        OMNI_S2E_FW(IPV6_FRAGMENT_HEADER)
-                        OMNI_S2E_FW(IPSEC_ENCAPSULATING_SECURITY_PAYLOAD)
-                        OMNI_S2E_FW(IPSEC_AUTHENTICATION_HEADER)
                         OMNI_S2E_FW(ICMPV6)
-                        OMNI_S2E_FW(IPV6_NO_NEXT_HEADER)
-                        OMNI_S2E_FW(IPV6_DESTINATION_OPTIONS)
-                        OMNI_S2E_FW(ND)
                         OMNI_S2E_FW(RAW)
-                        OMNI_S2E_FW(IPX)
-                        OMNI_S2E_FW(SPX)
-                        OMNI_S2E_FW(SPXII)
                     }
                     return false;
                 }
@@ -1416,30 +1305,17 @@ namespace omni {
                     S ss;
                     switch (v) {
                         OMNI_E2SS_FW(UNKNOWN);
-                        //OMNI_E2SS_FW(IPV6_HOP_BY_HOP_OPTIONS);
-                        //OMNI_E2SS_FW(UNSPECIFIED);
                         OMNI_E2SS_FW(IP);
                         OMNI_E2SS_FW(ICMP);
                         OMNI_E2SS_FW(IGMP);
-                        OMNI_E2SS_FW(GGP);
-                        OMNI_E2SS_FW(IPV4);
+                        OMNI_E2SS_FW(EGP);
                         OMNI_E2SS_FW(TCP);
                         OMNI_E2SS_FW(PUP);
                         OMNI_E2SS_FW(UDP);
                         OMNI_E2SS_FW(IDP);
                         OMNI_E2SS_FW(IPV6);
-                        OMNI_E2SS_FW(IPV6_ROUTING_HEADER);
-                        OMNI_E2SS_FW(IPV6_FRAGMENT_HEADER);
-                        OMNI_E2SS_FW(IPSEC_ENCAPSULATING_SECURITY_PAYLOAD);
-                        OMNI_E2SS_FW(IPSEC_AUTHENTICATION_HEADER);
                         OMNI_E2SS_FW(ICMPV6);
-                        OMNI_E2SS_FW(IPV6_NO_NEXT_HEADER);
-                        OMNI_E2SS_FW(IPV6_DESTINATION_OPTIONS);
-                        OMNI_E2SS_FW(ND);
                         OMNI_E2SS_FW(RAW);
-                        OMNI_E2SS_FW(IPX);
-                        OMNI_E2SS_FW(SPX);
-                        OMNI_E2SS_FW(SPXII);
                         default: ss << "UNKNOWN"; break;
                     }
                     return ss.str();
@@ -1449,30 +1325,17 @@ namespace omni {
                 {
                     return (val == 
                         UNKNOWN ||
-                        //IPV6_HOP_BY_HOP_OPTIONS ||
-                        //UNSPECIFIED ||
                         IP ||
                         ICMP ||
                         IGMP ||
-                        GGP ||
-                        IPV4 ||
+                        EGP ||
                         TCP ||
                         PUP ||
                         UDP ||
                         IDP ||
                         IPV6 ||
-                        IPV6_ROUTING_HEADER ||
-                        IPV6_FRAGMENT_HEADER ||
-                        IPSEC_ENCAPSULATING_SECURITY_PAYLOAD ||
-                        IPSEC_AUTHENTICATION_HEADER ||
                         ICMPV6 ||
-                        IPV6_NO_NEXT_HEADER ||
-                        IPV6_DESTINATION_OPTIONS ||
-                        ND ||
-                        RAW ||
-                        IPX ||
-                        SPX ||
-                        SPXII
+                        RAW
                     );
                 }
         };
@@ -1489,7 +1352,7 @@ namespace omni {
                     ACCESS_DENIED = 10013,
                     FAULT = 10014,
                     INVALID_ARGUMENT = 10022,
-                    TOO_MANY_OPENSOCKETS = 10024,
+                    TOO_MANY_OPEN_SOCKETS = 10024,
                     WOULD_BLOCK = 10035,
                     IN_PROGRESS = 10036,
                     ALREADY_IN_PROGRESS = 10037,
@@ -1524,16 +1387,16 @@ namespace omni {
                     NOT_INITIALIZED = 10093,
                     DISCONNECTING = 10101,
                     TYPE_NOT_FOUND = 10109,
-                    HOST_NOT_FND = 11001,
-                    TRYAGAIN = 11002,
-                    NORECOVERY = 11003,
-                    NODATA = 11004
+                    NO_HOST = 11001,  // DEV_NOTE: HOST_NOT_FOUND is a #define in netdb.h
+                    AGAIN = 11002,  // DEV_NOTE: TRY_AGAIN is a #define in netdb.h
+                    NO_RECOVER = 11003, // DEV_NOTE: NO_RECOVERY is a #define in netdb.h
+                    NO_DAT = 11004     // DEV_NOTE: NO_DATA is a #define in netdb.h
                 } enum_t;
                 
                 /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
-                    return 47;
+                    return 48;
                 }
 
                 /** The default value for this enum instance */
@@ -1786,7 +1649,7 @@ namespace omni {
                         OMNI_S2E_FW(ACCESS_DENIED)
                         OMNI_S2E_FW(FAULT)
                         OMNI_S2E_FW(INVALID_ARGUMENT)
-                        OMNI_S2E_FW(TOO_MANY_OPENSOCKETS)
+                        OMNI_S2E_FW(TOO_MANY_OPEN_SOCKETS)
                         OMNI_S2E_FW(WOULD_BLOCK)
                         OMNI_S2E_FW(IN_PROGRESS)
                         OMNI_S2E_FW(ALREADY_IN_PROGRESS)
@@ -1821,10 +1684,10 @@ namespace omni {
                         OMNI_S2E_FW(NOT_INITIALIZED)
                         OMNI_S2E_FW(DISCONNECTING)
                         OMNI_S2E_FW(TYPE_NOT_FOUND)
-                        OMNI_S2E_FW(HOST_NOT_FND)
-                        OMNI_S2E_FW(TRYAGAIN)
-                        OMNI_S2E_FW(NORECOVERY)
-                        OMNI_S2E_FW(NODATA)
+                        OMNI_S2E_FW(NO_HOST)
+                        OMNI_S2E_FW(AGAIN)
+                        OMNI_S2E_FW(NO_RECOVER)
+                        OMNI_S2E_FW(NO_DAT)
                     }
                     return false;
                 }
@@ -1842,7 +1705,7 @@ namespace omni {
                         OMNI_E2SS_FW(ACCESS_DENIED);
                         OMNI_E2SS_FW(FAULT);
                         OMNI_E2SS_FW(INVALID_ARGUMENT);
-                        OMNI_E2SS_FW(TOO_MANY_OPENSOCKETS);
+                        OMNI_E2SS_FW(TOO_MANY_OPEN_SOCKETS);
                         OMNI_E2SS_FW(WOULD_BLOCK);
                         OMNI_E2SS_FW(IN_PROGRESS);
                         OMNI_E2SS_FW(ALREADY_IN_PROGRESS);
@@ -1877,10 +1740,10 @@ namespace omni {
                         OMNI_E2SS_FW(NOT_INITIALIZED);
                         OMNI_E2SS_FW(DISCONNECTING);
                         OMNI_E2SS_FW(TYPE_NOT_FOUND);
-                        OMNI_E2SS_FW(HOST_NOT_FND);
-                        OMNI_E2SS_FW(TRYAGAIN);
-                        OMNI_E2SS_FW(NORECOVERY);
-                        OMNI_E2SS_FW(NODATA);
+                        OMNI_E2SS_FW(NO_HOST);
+                        OMNI_E2SS_FW(AGAIN);
+                        OMNI_E2SS_FW(NO_RECOVER);
+                        OMNI_E2SS_FW(NO_DAT);
                         default: ss << "UNKNOWN"; break;
                     }
                     return ss.str();
@@ -1897,7 +1760,7 @@ namespace omni {
                         ACCESS_DENIED ||
                         FAULT ||
                         INVALID_ARGUMENT ||
-                        TOO_MANY_OPENSOCKETS ||
+                        TOO_MANY_OPEN_SOCKETS ||
                         WOULD_BLOCK ||
                         IN_PROGRESS ||
                         ALREADY_IN_PROGRESS ||
@@ -1932,10 +1795,10 @@ namespace omni {
                         NOT_INITIALIZED ||
                         DISCONNECTING ||
                         TYPE_NOT_FOUND ||
-                        HOST_NOT_FND ||
-                        TRYAGAIN ||
-                        NORECOVERY ||
-                        NODATA
+                        NO_HOST ||
+                        AGAIN ||
+                        NO_RECOVER ||
+                        NO_DAT
                     );
                 }
         };
@@ -1945,17 +1808,12 @@ namespace omni {
             public:
                 typedef enum enum_t {
                     NONE = 0,
-                    OUT_OF_BAND = 1,
-                    PEEK = 2,
-                    DONT_ROUTE = 4,
-                    MAX_IO_VECTOR_LENGTH = 16,
-                    TRUNCATED = 256,
-                    CONTROL_DATA_TRUNCATED = 512,
-                    BROADCAST = 1024,
-                    MULTICAST = 2048,
-                    PARTIAL = 32768
+                    OUT_OF_BAND = MSG_OOB,          // 1
+                    PEEK = MSG_PEEK,                // 2
+                    DONT_ROUTE = MSG_DONTROUTE,     // 4
+                    END_OF_RECORD = OMNI_MSG_EOR,   // 8 (0 for Windows)
                 } enum_t;
-                
+
                 /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
@@ -2551,17 +2409,17 @@ namespace omni {
             public:
                 typedef enum enum_t {
                     UNSPECIFIED = -1,
-                    IP = 0,
-                    IP6 = 41,
-                    TCP = 6,
-                    UDP = 17,
-                    SOCKET = 65535
+                    IP = IPPROTO_IP, // 0
+                    IP6 = IPPROTO_IPV6, // 41
+                    TCP = IPPROTO_TCP, // 6
+                    UDP = IPPROTO_UDP, //17
+                    SOCKET = SOL_SOCKET // 65535
                 } enum_t;
                 
                 /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
-                    return 5;
+                    return 6;
                 }
 
                 /** The default value for this enum instance */
@@ -2845,62 +2703,34 @@ namespace omni {
                 }
         };
         
-        /** socket_option_name defines enum values for configuration option names. */
-        class socket_option_name {
+        /** socket_option defines enum values for configuration option names. */
+        class socket_option {
             public:
                 typedef enum enum_t {
                     DONT_LINGER = -129,
-                    EXCLUSIVE_ADDRESSUSE = -5,
                     UNSPECIFIED = -1,
-                    IPOPTIONS = 1,
-                    NO_DELAY = 1,
-                    NO_CHECKSUM = 1,
-                    DEBUG = 1,
-                    BSD_URGENT = 2,
-                    EXPEDITED = 2,
-                    HEADER_INCLUDED = 2,
-                    ACCEPT_CONNECTION = 2,
-                    TYPE_OF_SERVICE = 3,
-                    REUSE_ADDRESS = 4,
-                    IP_TIME_TO_LIVE = 4,
-                    KEEP_ALIVE = 8,
-                    MULTICAST_INTERFACE = 9,
-                    MULTICAST_TIME_TO_LIVE = 10,
-                    MULTICAST_LOOPBACK = 11,
-                    ADD_MEMBERSHIP = 12,
-                    DROP_MEMBERSHIP = 13,
-                    DONT_FRAGMENT = 14,
-                    ADDSOURCEMEMBERSHIP = 15,
-                    DROP_SOURCE_MEMBERSHIP = 16,
-                    DONT_ROUTE = 16,
-                    BLOCK_SOURCE = 17,
-                    UNBLOCK_SOURCE = 18,
-                    PACKET_INFORMATION = 19,
-                    CHECKSUM_COVERAGE = 20,
-                    HOP_LIMIT = 21,
-                    IP_PROTECTION_LEVEL = 23,
-                    IPV6ONLY = 27,
-                    BROADCAST = 32,
-                    USE_LOOPBACK = 64,
-                    LINGER = 128,
-                    OUT_OF_BAND_INLINE = 256,
-                    SEND_BUFFER = 4097,
-                    RECEIVE_BUFFER = 4098,
-                    SEND_LOW_WATER = 4099,
-                    RECEIVE_LOW_WATER = 4100,
-                    SEND_TIMEOUT = 4101,
-                    RECEIVE_TIMEOUT = 4102,
-                    ERR = 4103,
-                    SOCKET_TYPE = 4104,
-                    UPDATE_ACCEPT_CONTEXT = 28683,
-                    UPDATE_CONNECT_CONTEXT = 28688,
-                    MAX_CONNECTIONS = 2147483647
+                    DEBUG = SO_DEBUG, // 1,
+                    ACCEPT_CONNECTION = SO_ACCEPTCONN, // 2,
+                    REUSE_ADDRESS = SO_REUSEADDR, // 4,
+                    KEEP_ALIVE = SO_KEEPALIVE, // 8,
+                    DONT_ROUTE = SO_DONTROUTE, // 16,
+                    BROADCAST = SO_BROADCAST, // 32,
+                    LINGER = SO_LINGER, // 128,
+                    OUT_OF_BAND_INLINE = SO_OOBINLINE, // 256,
+                    SEND_BUFFER = SO_SNDBUF, // 4097,
+                    RECEIVE_BUFFER = SO_RCVBUF, // 4098,
+                    SEND_LOW_WATER = SO_SNDLOWAT, // 4099,
+                    RECEIVE_LOW_WATER = SO_RCVLOWAT, // 4100,
+                    SEND_TIMEOUT = SO_SNDTIMEO, // 4101,
+                    RECEIVE_TIMEOUT = SO_RCVTIMEO, // 4102,
+                    ERR = SO_ERROR, // 4103,
+                    SOCKET_TYPE = SO_TYPE, // 4104,
                 } enum_t;
                 
                 /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
-                    return 45;
+                    return 19;
                 }
 
                 /** The default value for this enum instance */
@@ -2946,13 +2776,13 @@ namespace omni {
                 }
 
                 /** Tries parsing a string value into its enum representation */
-                static bool try_parse(const std::string& val, socket_option_name& out)
+                static bool try_parse(const std::string& val, socket_option& out)
                 {
                     return _try_parse(val, out);
                 }
 
                 /** Tries parsing a wide string value into its enum representation */
-                static bool try_parse(const std::wstring& val, socket_option_name& out)
+                static bool try_parse(const std::wstring& val, socket_option& out)
                 {
                     return _try_parse(val, out);
                 }
@@ -2963,22 +2793,22 @@ namespace omni {
                     return _valid(val);
                 }
 
-                socket_option_name() :
-                    OMNI_CTOR_FW(omni::net::socket_option_name)
+                socket_option() :
+                    OMNI_CTOR_FW(omni::net::socket_option)
                     m_val(DEFAULT_VALUE())
                 { }
 
-                socket_option_name(const socket_option_name& cp) :
+                socket_option(const socket_option& cp) :
                     OMNI_CPCTOR_FW(cp)
                     m_val(cp.m_val)
                 { }
 
-                socket_option_name(enum_t val) : 
-                    OMNI_CTOR_FW(omni::net::socket_option_name)
+                socket_option(enum_t val) : 
+                    OMNI_CTOR_FW(omni::net::socket_option)
                     m_val(val)
                 { }
 
-                ~socket_option_name()
+                ~socket_option()
                 {
                     OMNI_TRY_FW
                     OMNI_DTOR_FW
@@ -3001,7 +2831,7 @@ namespace omni {
                     return to_wstring(this->m_val);
                 }
 
-                bool operator!=(const socket_option_name& val) const
+                bool operator!=(const socket_option& val) const
                 {
                     return !(*this == val);
                 }
@@ -3011,7 +2841,7 @@ namespace omni {
                     return (this->m_val != val);
                 }
                 
-                socket_option_name& operator=(const socket_option_name& val)
+                socket_option& operator=(const socket_option& val)
                 {
                     if (this != &val) {
                         OMNI_ASSIGN_FW(val)
@@ -3020,15 +2850,15 @@ namespace omni {
                     return *this;
                 }
 
-                socket_option_name& operator=(enum_t val)
+                socket_option& operator=(enum_t val)
                 {
                     this->m_val = val;
                     return *this;
                 }
 
-                socket_option_name& operator=(int val)
+                socket_option& operator=(int val)
                 {
-                    if (!socket_option_name::is_valid(val)) {
+                    if (!socket_option::is_valid(val)) {
                         OMNI_ERR_RET_FW("Invalid enumeration value specified.", omni::exceptions::invalid_enum(val));
                     } else {
                         this->m_val = static_cast<enum_t>(val);
@@ -3036,7 +2866,7 @@ namespace omni {
                     return *this;
                 }
 
-                bool operator<(const socket_option_name& val) const
+                bool operator<(const socket_option& val) const
                 {
                     return this->m_val < val.m_val;
                 }
@@ -3051,7 +2881,7 @@ namespace omni {
                     return this->m_val < static_cast<enum_t>(val);
                 }
 
-                bool operator>(const socket_option_name& val) const
+                bool operator>(const socket_option& val) const
                 {
                     return this->m_val > val.m_val;
                 }
@@ -3066,7 +2896,7 @@ namespace omni {
                     return this->m_val > val;
                 }
 
-                bool operator==(const socket_option_name& val) const
+                bool operator==(const socket_option& val) const
                 {
                     if (this == &val) { return true; }
                     return this->m_val == val.m_val
@@ -3103,9 +2933,9 @@ namespace omni {
                     return this->to_wstring();
                 }
 
-                OMNI_MEMBERS_FW(omni::net::socket_option_name) // disposing,name,type(),hash()
+                OMNI_MEMBERS_FW(omni::net::socket_option) // disposing,name,type(),hash()
 
-                OMNI_OSTREAM_FW(omni::net::socket_option_name)
+                OMNI_OSTREAM_FW(omni::net::socket_option)
                 OMNI_OSTREAM_FN_FW(enum_t)
 
             private:
@@ -3127,7 +2957,7 @@ namespace omni {
                 }
 
                 template < typename S >
-                static bool _try_parse(const S& val, socket_option_name& out)
+                static bool _try_parse(const S& val, socket_option& out)
                 {
                     enum_t tmp;
                     if (_try_parse(val, tmp)) {
@@ -3146,38 +2976,13 @@ namespace omni {
                 {
                     if (!val.empty()) {
                         OMNI_S2E_FW(DONT_LINGER)
-                        OMNI_S2E_FW(EXCLUSIVE_ADDRESSUSE)
                         OMNI_S2E_FW(UNSPECIFIED)
-                        //OMNI_S2E_FW(IPOPTIONS)
-                        OMNI_S2E_FW(NO_DELAY)
-                        //OMNI_S2E_FW(NO_CHECKSUM)
-                        //OMNI_S2E_FW(DEBUG)
-                        OMNI_S2E_FW(BSD_URGENT)
-                        //OMNI_S2E_FW(EXPEDITED)
-                        //OMNI_S2E_FW(HEADER_INCLUDED)
-                        //OMNI_S2E_FW(ACCEPT_CONNECTION)
-                        OMNI_S2E_FW(TYPE_OF_SERVICE)
-                        //OMNI_S2E_FW(REUSE_ADDRESS)
-                        OMNI_S2E_FW(IP_TIME_TO_LIVE)
+                        OMNI_S2E_FW(DEBUG)
+                        OMNI_S2E_FW(ACCEPT_CONNECTION)
+                        OMNI_S2E_FW(REUSE_ADDRESS)
                         OMNI_S2E_FW(KEEP_ALIVE)
-                        OMNI_S2E_FW(MULTICAST_INTERFACE)
-                        OMNI_S2E_FW(MULTICAST_TIME_TO_LIVE)
-                        OMNI_S2E_FW(MULTICAST_LOOPBACK)
-                        OMNI_S2E_FW(ADD_MEMBERSHIP)
-                        OMNI_S2E_FW(DROP_MEMBERSHIP)
-                        OMNI_S2E_FW(DONT_FRAGMENT)
-                        OMNI_S2E_FW(ADDSOURCEMEMBERSHIP)
-                        //OMNI_S2E_FW(DROP_SOURCE_MEMBERSHIP)
                         OMNI_S2E_FW(DONT_ROUTE)
-                        OMNI_S2E_FW(BLOCK_SOURCE)
-                        OMNI_S2E_FW(UNBLOCK_SOURCE)
-                        OMNI_S2E_FW(PACKET_INFORMATION)
-                        OMNI_S2E_FW(CHECKSUM_COVERAGE)
-                        OMNI_S2E_FW(HOP_LIMIT)
-                        OMNI_S2E_FW(IP_PROTECTION_LEVEL)
-                        OMNI_S2E_FW(IPV6ONLY)
                         OMNI_S2E_FW(BROADCAST)
-                        OMNI_S2E_FW(USE_LOOPBACK)
                         OMNI_S2E_FW(LINGER)
                         OMNI_S2E_FW(OUT_OF_BAND_INLINE)
                         OMNI_S2E_FW(SEND_BUFFER)
@@ -3188,9 +2993,6 @@ namespace omni {
                         OMNI_S2E_FW(RECEIVE_TIMEOUT)
                         OMNI_S2E_FW(ERR)
                         OMNI_S2E_FW(SOCKET_TYPE)
-                        OMNI_S2E_FW(UPDATE_ACCEPT_CONTEXT)
-                        OMNI_S2E_FW(UPDATE_CONNECT_CONTEXT)
-                        OMNI_S2E_FW(MAX_CONNECTIONS)
                     }
                     return false;
                 }
@@ -3201,38 +3003,13 @@ namespace omni {
                     S ss;
                     switch (v) {
                         OMNI_E2SS_FW(DONT_LINGER);
-                        OMNI_E2SS_FW(EXCLUSIVE_ADDRESSUSE);
                         OMNI_E2SS_FW(UNSPECIFIED);
-                        //OMNI_E2SS_FW(IPOPTIONS);
-                        OMNI_E2SS_FW(NO_DELAY);
-                        //OMNI_E2SS_FW(NO_CHECKSUM);
-                        //OMNI_E2SS_FW(DEBUG);
-                        OMNI_E2SS_FW(BSD_URGENT);
-                        //OMNI_E2SS_FW(EXPEDITED);
-                        //OMNI_E2SS_FW(HEADER_INCLUDED);
-                        //OMNI_E2SS_FW(ACCEPT_CONNECTION);
-                        OMNI_E2SS_FW(TYPE_OF_SERVICE);
-                        //OMNI_E2SS_FW(REUSE_ADDRESS);
-                        OMNI_E2SS_FW(IP_TIME_TO_LIVE);
+                        OMNI_E2SS_FW(DEBUG);
+                        OMNI_E2SS_FW(ACCEPT_CONNECTION);
+                        OMNI_E2SS_FW(REUSE_ADDRESS);
                         OMNI_E2SS_FW(KEEP_ALIVE);
-                        OMNI_E2SS_FW(MULTICAST_INTERFACE);
-                        OMNI_E2SS_FW(MULTICAST_TIME_TO_LIVE);
-                        OMNI_E2SS_FW(MULTICAST_LOOPBACK);
-                        OMNI_E2SS_FW(ADD_MEMBERSHIP);
-                        OMNI_E2SS_FW(DROP_MEMBERSHIP);
-                        OMNI_E2SS_FW(DONT_FRAGMENT);
-                        OMNI_E2SS_FW(ADDSOURCEMEMBERSHIP);
-                        //OMNI_E2SS_FW(DROP_SOURCE_MEMBERSHIP);
                         OMNI_E2SS_FW(DONT_ROUTE);
-                        OMNI_E2SS_FW(BLOCK_SOURCE);
-                        OMNI_E2SS_FW(UNBLOCK_SOURCE);
-                        OMNI_E2SS_FW(PACKET_INFORMATION);
-                        OMNI_E2SS_FW(CHECKSUM_COVERAGE);
-                        OMNI_E2SS_FW(HOP_LIMIT);
-                        OMNI_E2SS_FW(IP_PROTECTION_LEVEL);
-                        OMNI_E2SS_FW(IPV6ONLY);
                         OMNI_E2SS_FW(BROADCAST);
-                        OMNI_E2SS_FW(USE_LOOPBACK);
                         OMNI_E2SS_FW(LINGER);
                         OMNI_E2SS_FW(OUT_OF_BAND_INLINE);
                         OMNI_E2SS_FW(SEND_BUFFER);
@@ -3243,9 +3020,6 @@ namespace omni {
                         OMNI_E2SS_FW(RECEIVE_TIMEOUT);
                         OMNI_E2SS_FW(ERR);
                         OMNI_E2SS_FW(SOCKET_TYPE);
-                        OMNI_E2SS_FW(UPDATE_ACCEPT_CONTEXT);
-                        OMNI_E2SS_FW(UPDATE_CONNECT_CONTEXT);
-                        OMNI_E2SS_FW(MAX_CONNECTIONS);
                         default: ss << "UNKNOWN"; break;
                     }
                     return ss.str();
@@ -3253,40 +3027,15 @@ namespace omni {
 
                 static bool _valid(int val)
                 {
-                    return (val == 
+                    return (val ==                         
                         DONT_LINGER ||
-                        EXCLUSIVE_ADDRESSUSE ||
                         UNSPECIFIED ||
-                        //IPOPTIONS ||
-                        NO_DELAY ||
-                        //NO_CHECKSUM ||
-                        //DEBUG ||
-                        BSD_URGENT ||
-                        //EXPEDITED ||
-                        //HEADER_INCLUDED ||
-                        //ACCEPT_CONNECTION ||
-                        TYPE_OF_SERVICE ||
-                        //REUSE_ADDRESS ||
-                        IP_TIME_TO_LIVE ||
+                        DEBUG ||
+                        ACCEPT_CONNECTION ||
+                        REUSE_ADDRESS ||
                         KEEP_ALIVE ||
-                        MULTICAST_INTERFACE ||
-                        MULTICAST_TIME_TO_LIVE ||
-                        MULTICAST_LOOPBACK ||
-                        ADD_MEMBERSHIP ||
-                        DROP_MEMBERSHIP ||
-                        DONT_FRAGMENT ||
-                        ADDSOURCEMEMBERSHIP ||
-                        //DROP_SOURCE_MEMBERSHIP ||
                         DONT_ROUTE ||
-                        BLOCK_SOURCE ||
-                        UNBLOCK_SOURCE ||
-                        PACKET_INFORMATION ||
-                        CHECKSUM_COVERAGE ||
-                        HOP_LIMIT ||
-                        IP_PROTECTION_LEVEL ||
-                        IPV6ONLY ||
                         BROADCAST ||
-                        USE_LOOPBACK ||
                         LINGER ||
                         OUT_OF_BAND_INLINE ||
                         SEND_BUFFER ||
@@ -3296,10 +3045,298 @@ namespace omni {
                         SEND_TIMEOUT ||
                         RECEIVE_TIMEOUT ||
                         ERR ||
-                        SOCKET_TYPE ||
-                        UPDATE_ACCEPT_CONTEXT ||
-                        UPDATE_CONNECT_CONTEXT ||
-                        MAX_CONNECTIONS
+                        SOCKET_TYPE
+                    );
+                }
+        };
+
+        /** tcp_option defines enum values for configuration option names. */
+        class tcp_option {
+            public:
+                typedef enum enum_t {
+                    UNSPECIFIED = -1,
+                    NO_DELAY = TCP_NODELAY, // 1,
+                    #if defined(TCP_KEEPALIVE)
+                        KEEP_ALIVE = TCP_KEEPALIVE
+                    #else
+                        KEEP_ALIVE = SO_KEEPALIVE
+                    #endif
+                } enum_t;
+                
+                /** Defines the number of elements in the enum */
+                static inline unsigned short COUNT()
+                {
+                    return 3;
+                }
+
+                /** The default value for this enum instance */
+                static inline enum_t DEFAULT_VALUE()
+                {
+                    return UNSPECIFIED;
+                }
+
+                /** Converts the enum to its string representation */
+                static std::string to_string(enum_t v)
+                {
+                    return _to_val<std::stringstream>(v);
+                }
+            
+                /** Converts the enum to its wide string representation */
+                static std::wstring to_wstring(enum_t v)
+                {
+                    return _to_val<std::wstringstream>(v);
+                }
+
+                /** Parsing a string value into its enum representation */
+                static enum_t parse(const std::string& val)
+                {
+                    return _parse(val);
+                }
+
+                /** Parsing a wide string value into its enum representation */
+                static enum_t parse(const std::wstring& val)
+                {
+                    return _parse(val);
+                }
+
+                /** Tries parsing a string value into its enum representation */
+                static bool try_parse(const std::string& val, enum_t& out)
+                {
+                    return _try_parse(val, out);
+                }
+
+                /** Tries parsing a wide string value into its enum representation */
+                static bool try_parse(const std::wstring& val, enum_t& out)
+                {
+                    return _try_parse(val, out);
+                }
+
+                /** Tries parsing a string value into its enum representation */
+                static bool try_parse(const std::string& val, tcp_option& out)
+                {
+                    return _try_parse(val, out);
+                }
+
+                /** Tries parsing a wide string value into its enum representation */
+                static bool try_parse(const std::wstring& val, tcp_option& out)
+                {
+                    return _try_parse(val, out);
+                }
+
+                /** Returns true if the integer value specified is a valid enum value */
+                static bool is_valid(int val)
+                {
+                    return _valid(val);
+                }
+
+                tcp_option() :
+                    OMNI_CTOR_FW(omni::net::tcp_option)
+                    m_val(DEFAULT_VALUE())
+                { }
+
+                tcp_option(const tcp_option& cp) :
+                    OMNI_CPCTOR_FW(cp)
+                    m_val(cp.m_val)
+                { }
+
+                tcp_option(enum_t val) : 
+                    OMNI_CTOR_FW(omni::net::tcp_option)
+                    m_val(val)
+                { }
+
+                ~tcp_option()
+                {
+                    OMNI_TRY_FW
+                    OMNI_DTOR_FW
+                    OMNI_CATCH_FW
+                    OMNI_D5_FW("destroyed");
+                }
+
+                enum_t value() const
+                {
+                    return this->m_val;
+                }
+
+                const std::string to_string() const
+                {
+                    return to_string(this->m_val);
+                }
+
+                const std::wstring to_wstring() const
+                {
+                    return to_wstring(this->m_val);
+                }
+
+                bool operator!=(const tcp_option& val) const
+                {
+                    return !(*this == val);
+                }
+                
+                bool operator!=(enum_t val) const
+                {
+                    return (this->m_val != val);
+                }
+                
+                tcp_option& operator=(const tcp_option& val)
+                {
+                    if (this != &val) {
+                        OMNI_ASSIGN_FW(val)
+                        this->m_val = val.m_val;
+                    }
+                    return *this;
+                }
+
+                tcp_option& operator=(enum_t val)
+                {
+                    this->m_val = val;
+                    return *this;
+                }
+
+                tcp_option& operator=(int val)
+                {
+                    if (!tcp_option::is_valid(val)) {
+                        OMNI_ERR_RET_FW("Invalid enumeration value specified.", omni::exceptions::invalid_enum(val));
+                    } else {
+                        this->m_val = static_cast<enum_t>(val);
+                    }
+                    return *this;
+                }
+
+                bool operator<(const tcp_option& val) const
+                {
+                    return this->m_val < val.m_val;
+                }
+
+                bool operator<(enum_t val) const
+                {
+                    return this->m_val < val;
+                }
+
+                bool operator<(int val) const
+                {
+                    return this->m_val < static_cast<enum_t>(val);
+                }
+
+                bool operator>(const tcp_option& val) const
+                {
+                    return this->m_val > val.m_val;
+                }
+
+                bool operator>(enum_t val) const
+                {
+                    return this->m_val > val;
+                }
+
+                bool operator>(int val) const
+                {
+                    return this->m_val > val;
+                }
+
+                bool operator==(const tcp_option& val) const
+                {
+                    if (this == &val) { return true; }
+                    return this->m_val == val.m_val
+                            OMNI_EQUAL_FW(val);
+                }
+
+                bool operator==(enum_t val) const
+                {
+                    return this->m_val == val;
+                }
+
+                bool operator==(int val) const
+                {
+                    return this->m_val == val;
+                }
+
+                operator enum_t() const
+                {
+                    return this->m_val;
+                }
+
+                operator int() const
+                {
+                    return static_cast<int>(this->m_val);
+                }
+
+                operator std::string() const
+                {
+                    return this->to_string();
+                }
+
+                operator std::wstring() const
+                {
+                    return this->to_wstring();
+                }
+
+                OMNI_MEMBERS_FW(omni::net::tcp_option) // disposing,name,type(),hash()
+
+                OMNI_OSTREAM_FW(omni::net::tcp_option)
+                OMNI_OSTREAM_FN_FW(enum_t)
+
+            private:
+                enum_t m_val;
+
+                template < typename S >
+                static enum_t _parse(const S& val)
+                {
+                    enum_t ret;
+                    if (_try_parse(val, ret)) { return ret; }
+                    OMNI_ERR_FW("invalid enum parse", omni::exceptions::invalid_enum())
+                    return DEFAULT_VALUE();
+                }
+
+                template < typename S >
+                static bool _try_parse(const S& str, enum_t& out)
+                {
+                    return _try_parse(omni::string::util::to_upper(str), out);
+                }
+
+                template < typename S >
+                static bool _try_parse(const S& val, tcp_option& out)
+                {
+                    enum_t tmp;
+                    if (_try_parse(val, tmp)) {
+                        out.m_val = tmp;
+                        return true;
+                    }
+                    return false;
+                }
+
+                static bool _try_parse(const std::wstring& val, enum_t& out)
+                {
+                    return _try_parse(omni::string::util::to_string(val), out);
+                }
+
+                static bool _try_parse(const std::string& val, enum_t& out)
+                {
+                    if (!val.empty()) {
+                        OMNI_S2E_FW(UNSPECIFIED)
+                        OMNI_S2E_FW(NO_DELAY)
+                        OMNI_S2E_FW(KEEP_ALIVE)
+                    }
+                    return false;
+                }
+
+                template < typename S >
+                static std::basic_string< typename S::char_type > _to_val(enum_t v)
+                {
+                    S ss;
+                    switch (v) {
+                        OMNI_E2SS_FW(UNSPECIFIED);
+                        OMNI_E2SS_FW(NO_DELAY);
+                        OMNI_E2SS_FW(KEEP_ALIVE);
+                        default: ss << "UNKNOWN"; break;
+                    }
+                    return ss.str();
+                }
+
+                static bool _valid(int val)
+                {
+                    return (val == 
+                        UNSPECIFIED ||
+                        NO_DELAY ||
+                        KEEP_ALIVE
                     );
                 }
         };
@@ -3309,9 +3346,9 @@ namespace omni {
             public:
                 typedef enum enum_t {
                     UNSPECIFIED = -1,
-                    RECEIVE = 0,
-                    SEND = 1,
-                    BOTH = 2
+                    RECEIVE = OMNI_SOCK_RECEIVE_FW,
+                    SEND = OMNI_SOCK_SEND_FW,
+                    BOTH = OMNI_SOCK_BOTH_FW
                 } enum_t;
                 
                 /** Defines the number of elements in the enum */
@@ -3600,11 +3637,11 @@ namespace omni {
             public:
                 typedef enum enum_t {
                     UNKNOWN = -1,
-                    STREAM = 1,
-                    DGRAM = 2,
-                    RAW = 3,
-                    RDM = 4,
-                    SEQPACKET = 5
+                    STREAM = SOCK_STREAM,
+                    DGRAM = SOCK_DGRAM,
+                    RAW = SOCK_RAW,
+                    RDM = SOCK_RDM,
+                    SEQPACKET = SOCK_SEQPACKET
                 } enum_t;
                 
                 /** Defines the number of elements in the enum */
@@ -3893,70 +3930,55 @@ namespace omni {
                     );
                 }
         };
-    
-        /*
-        #if !defined(SOCK_RECEIVE)
-            #define SOCK_RECEIVE 0
-        #endif
-        #if !defined(SOCK_SEND)
-            #define SOCK_SEND 1
-        #endif
-        #if !defined(SOCK_BOTH)
-            #define SOCK_BOTH 2
-        #endif
-        #if !defined(OMNI_OS_WIN)
-            #if !defined(SOCKET)
-                #define SOCKET int
-            #endif
-        #endif
-        */
-        
-        /**
-         * Specifies whether a  will remain connected after a call to the Close()
-         * or TcpClient.Close() methods and the length of time it will remain connected, if data remains to be sent.
-         */
-        typedef struct linger_option {
-            /** The default constructor */
-            linger_option() : enabled(false), linger_time(0) { }
-            /**
-             * Initializes a new instance of the linger_option class.
-             * @param enable true to remain connected after the Close() method is called; otherwise, false.
-             * @param seconds The number of seconds to remain connected after the Close() method is called.
-             */
-            linger_option(bool enable, int seconds) : enabled(enable), linger_time(seconds) { }
-            /**
-             * Gets or sets a value that indicates whether to linger after the 
-             * is closed.
-             * 
-             * @return true if the  should linger after Close() is called; otherwise, false.                
-             */
-            bool enabled;
-            /**
-             * Gets or sets the amount of time to remain connected after calling the Close()
-             * method if data remains to be sent.
-             * 
-             * @return The amount of time, in seconds, to remain connected after calling Close().
-             */
-            int linger_time;
-        } linger_option;
-        
-        /* A struct to hold network interface information 
-        typedef struct net_interface {
-            // Gets the IP address associated with this interface (if any) 
-            std::string address;
-            // Gets the subnet mask of this interface (if any) 
-            std::string subnet;
-            // Gets the broadcast of this interface (if any) 
-            std::string broadcast;
-            // Gets the speed of this interface 
-            long speed;
-            // Gets the network adapter description 
-            std::string description;
-            // Gets if the interface is currently up or down 
-            bool is_up;
-            // Gets the interface type of this interface 
-            omni::net::network_interface::enum_t type;
-        } net_interface;*/
+
+        typedef OMNI_SOCKET_T socket_t;
+        typedef OMNI_SOCKADDR_IN_T sockaddr_in_t;
+        typedef OMNI_SOCKADDR_IN6_T sockaddr_in6_t;
+        typedef OMNI_SOCKADDR_UN_T sockaddr_un_t;
+        typedef OMNI_SOCKADDR_T sockaddr_t;
+        typedef OMNI_SOCKET_XFR_T xfr_t;
+
+        typedef struct endpoint_descriptor {
+            omni::net::socket_t sock;
+            omni::net::sockaddr_t addr;
+
+            endpoint_descriptor() :
+                sock(OMNI_INVALID_SOCKET), addr()
+            {
+                std::memset(&this->addr, 0, sizeof(omni::net::sockaddr_t));
+            }
+
+            endpoint_descriptor(const omni::net::endpoint_descriptor& cp) :
+                sock(cp.sock), addr(cp.addr)
+            {}
+
+            explicit endpoint_descriptor(omni::net::socket_t s) :
+                sock(s), addr()
+            {
+                std::memset(&this->addr, 0, sizeof(omni::net::sockaddr_t));
+            }
+
+            explicit endpoint_descriptor(omni::net::sockaddr_t sa) :
+                sock(OMNI_INVALID_SOCKET), addr(sa)
+            {
+            }
+
+            endpoint_descriptor(omni::net::socket_t s, omni::net::sockaddr_t sa) :
+                sock(s), addr(sa)
+            {
+            }
+
+            ~endpoint_descriptor() { }
+            
+            endpoint_descriptor& operator=(const omni::net::endpoint_descriptor& o)
+            {
+                if (this != &o) {
+                    this->sock = o.sock;
+                    this->addr = o.addr;
+                }
+                return *this;
+            }
+        } endpoint_descriptor;
     }
 }
 

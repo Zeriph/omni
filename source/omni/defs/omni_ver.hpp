@@ -20,17 +20,16 @@
 #define OMNI_VER_HPP 1
 #if !defined(OMNI_NO_FW_VER)
 #include <omni/defs/helper.hpp>
-// OMNI_NO_FW_VER is a compile time flag that can be used so the omni framework version is not 'baked in' to your binary
 
 #define OMNI_FW_VER_MAJ 0 // Major revision
 #define OMNI_FW_VER_MIN 7 // Minor revision
-#define OMNI_FW_VER_SUB 8 // Sub revision
+#define OMNI_FW_VER_SUB 9 // Sub revision
 
 #if defined(OMNI_FW_VER_USE_TIME)
-    #define OMNI_FW_TS_FW OMNI_DATE" "OMNI_TIME
-    #define OMNI_FW_VER_STR OMNI_DEF2STR(OMNI_FW_VER_MAJ)"."OMNI_DEF2STR(OMNI_FW_VER_MIN)"."OMNI_DEF2STR(OMNI_FW_VER_SUB)" ("OMNI_FW_TS_FW")"
+    #define OMNI_FW_TS_FW OMNI_DATE " " OMNI_TIME
+    #define OMNI_FW_VER_STR OMNI_DEF2STR(OMNI_FW_VER_MAJ) "." OMNI_DEF2STR(OMNI_FW_VER_MIN) "." OMNI_DEF2STR(OMNI_FW_VER_SUB) " (" OMNI_FW_TS_FW ")"
 #else
-    #define OMNI_FW_VER_STR OMNI_DEF2STR(OMNI_FW_VER_MAJ)"."OMNI_DEF2STR(OMNI_FW_VER_MIN)"."OMNI_DEF2STR(OMNI_FW_VER_SUB)
+    #define OMNI_FW_VER_STR OMNI_DEF2STR(OMNI_FW_VER_MAJ) "." OMNI_DEF2STR(OMNI_FW_VER_MIN) "." OMNI_DEF2STR(OMNI_FW_VER_SUB)
 #endif
     
 #endif // !OMNI_NO_FW_VER

@@ -48,7 +48,7 @@ bool omni::environment::create_var(const std::wstring& name)
             return (::SetEnvironmentVariableW(name.c_str(), L"") != 0);
         #endif
     #else
-        return (::setenv(omni::string::util::to_string(name).c_str(), "", 1) == 0);
+        return (::setenv(omni::string::to_string(name).c_str(), "", 1) == 0);
     #endif
 }
 
@@ -82,7 +82,7 @@ bool omni::environment::delete_var(const std::wstring& name)
             return (::SetEnvironmentVariableW(name.c_str(), NULL) != 0);
         #endif
     #else
-        std::string n = omni::string::util::to_string(name);
+        std::string n = omni::string::to_string(name);
         return (::unsetenv(n.c_str()) == 0);
     #endif
 }
@@ -153,7 +153,7 @@ std::wstring omni::environment::expand_vars(const std::wstring& vars)
             /* DEV_NOTE: some platforms do not implement the GLIBC wordexp (like OpenBSD)
             for many security reasons. As such it's not really a good idea to call this function
             without validating the user input; this is here for a convenience function. */
-            std::string cmd = "echo \"" + omni::string::util::to_string(vars) + "\"";
+            std::string cmd = "echo \"" + omni::string::to_string(vars) + "\"";
             FILE *fp = ::popen(cmd.c_str(), "r");
             if (fp == NULL) {
                 OMNI_ERR_RETV_FW("Error expanding environment variable: failed to open pipe", omni::exceptions::pipe_exception(), omni::string_t())
@@ -163,16 +163,16 @@ std::wstring omni::environment::expand_vars(const std::wstring& vars)
             while (std::fgets(cval, FILENAME_MAX-1, fp) != NULL) { ret.append(cval); }
             ::pclose(fp);
             delete[] cval;
-            return omni::string::util::to_wstring(ret);
+            return omni::string::to_wstring(ret);
         #else
-            std::string v = omni::string::util::to_string(vars);
+            std::string v = omni::string::to_string(vars);
             ::wordexp_t env;
             if (::wordexp(v.c_str(), &env, 0) == 0) {
                 std::string ret;
                 char **w = env.we_wordv;
                 for (unsigned int i = 0; i < env.we_wordc; ++i) { ret.append(w[i]); }
                 ::wordfree(&env);
-                return omni::string::util::to_wstring(ret);
+                return omni::string::to_wstring(ret);
             }
             ::wordfree(&env);
         #endif
@@ -246,9 +246,9 @@ std::wstring omni::environment::get_var(const std::wstring& name)
             }
         #endif
     #else
-        std::string v = omni::string::util::to_string(name);
+        std::string v = omni::string::to_string(name);
         char* r = std::getenv(v.c_str());
-        if (r != NULL) { return omni::string::util::to_string_t(r); }
+        if (r != NULL) { return omni::string::to_string_t(r); }
     #endif
     OMNI_ERRV_RETV_FW("Error retrieving environment variable: ", OMNI_GLE_PRNT, omni::exceptions::environment_exception(static_cast<size_t>(OMNI_GLE)), omni::string_t())
 }
@@ -296,8 +296,8 @@ bool omni::environment::set_var(const std::wstring& name, const std::wstring& va
             return (::SetEnvironmentVariableW(name.c_str(), val.c_str()) != 0);
         #endif
     #else
-        std::string n = omni::string::util::to_string(name);
-        std::string v = omni::string::util::to_string(val);
+        std::string n = omni::string::to_string(name);
+        std::string v = omni::string::to_string(val);
         // always overwrite
         return (::setenv(n.c_str(), v.c_str(), 1) == 0);
     #endif
@@ -347,7 +347,7 @@ bool omni::environment::var_exists(const std::wstring& name)
             }
         #endif
     #else
-        std::string v = omni::string::util::to_string(name);
+        std::string v = omni::string::to_string(name);
         char* r = std::getenv(v.c_str());
         if (r != NULL) { ret = true; }
     #endif

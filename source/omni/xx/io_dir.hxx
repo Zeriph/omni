@@ -77,7 +77,7 @@
                 #endif
             #else
                 struct stat fi;
-                if (::stat(omni::string::util::to_string(folder).c_str(), &fi) == 0) { return (S_ISDIR(fi.st_mode)); }
+                if (::stat(omni::string::to_string(folder).c_str(), &fi) == 0) { return (S_ISDIR(fi.st_mode)); }
                 return false;
             #endif
         }
@@ -96,7 +96,7 @@
                 std::string top = omni::io::cpath::get_parent_name(folder);
                 if (!omni::io::dir_internal::exists(top)) {
                     if (!omni::io::dir_internal::create(top, true)) {
-                        OMNI_ERRV_RETV_FW("could not create parent directory: ", omni::string::util::to_string_t(top), omni::exceptions::path_exception(omni::string::util::to_string(top)), false)
+                        OMNI_ERRV_RETV_FW("could not create parent directory: ", omni::string::to_string_t(top), omni::exceptions::path_exception(omni::string::to_string(top)), false)
                     }
                 }
             }
@@ -122,7 +122,7 @@
                 std::wstring top = omni::io::wpath::get_parent_name(folder);
                 if (!omni::io::dir_internal::exists(top)) {
                     if (!omni::io::dir_internal::create(top, true)) {
-                        OMNI_ERRV_RETV_FW("could not create parent directory: ", omni::string::util::to_string_t(top), omni::exceptions::path_exception(omni::string::util::to_string(top)), false)
+                        OMNI_ERRV_RETV_FW("could not create parent directory: ", omni::string::to_string_t(top), omni::exceptions::path_exception(omni::string::to_string(top)), false)
                     }
                 }
             }
@@ -137,7 +137,7 @@
                     (::_wmkdir(folder.c_str()) == 0);
                 #endif
             #else
-                (::mkdir(omni::string::util::to_string(folder).c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) == 0);
+                (::mkdir(omni::string::to_string(folder).c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) == 0);
             #endif
         }
 
@@ -198,7 +198,7 @@
                     HANDLE hFile = ::FindFirstFileW(tf.c_str(), &c_file);
                     if (hFile != INVALID_HANDLE_VALUE) {
                         do {
-                            std::wstring fname = omni::string::util::to_wstring(c_file.cFileName);
+                            std::wstring fname = omni::string::to_wstring(c_file.cFileName);
                             if (fname != L"." && fname != L".." ) { // don't add root dir
                                 std::wstring file = omni::io::wpath::combine(name, fname);
                                 if (ftype == 0) {
@@ -262,11 +262,11 @@
                 SEQ dirs;
                 DIR *dp;
                 struct dirent *dirp;
-                if ((dp = ::opendir(omni::string::util::to_string(name).c_str())) == NULL) {
-                    OMNI_ERRV_RETV_FW("Error opening file: ", errno, omni::exceptions::path_exception(omni::string::util::to_string(name)), dirs)
+                if ((dp = ::opendir(omni::string::to_string(name).c_str())) == NULL) {
+                    OMNI_ERRV_RETV_FW("Error opening file: ", errno, omni::exceptions::path_exception(omni::string::to_string(name)), dirs)
                 }
                 while ((dirp = ::readdir(dp)) != NULL) {
-                    std::wstring fname = std::wstring(omni::string::util::to_wstring(dirp->d_name));
+                    std::wstring fname = std::wstring(omni::string::to_wstring(dirp->d_name));
                     if (fname == L"." || fname == L"..") { continue; }
                     std::wstring file = omni::io::wpath::combine(name, fname);
                     if (ftype == 0) {
@@ -287,7 +287,7 @@
             STR name = omni::io::path::trim_trailing_slash(folder);
             if (!omni::io::dir_internal::exists(name)) {
                 SEQ dirs;
-                OMNI_ERRV_RETV_FW("directory does not exist: ", omni::string::util::to_string_t(name), omni::exceptions::path_exception(omni::string::util::to_string(name)), dirs)
+                OMNI_ERRV_RETV_FW("directory does not exist: ", omni::string::to_string_t(name), omni::exceptions::path_exception(omni::string::to_string(name)), dirs)
             }
             #if defined(OMNI_OS_WIN)
                 return get_dir_cont_win_fw<SEQ>(name, ftype);
@@ -317,20 +317,20 @@
                     OMNI_FILE_CHECKA_FW(new_name, false)
                     BOOL ret = ::MoveFileA(folder.c_str(), new_name.c_str());
                     if (ret == 0) {
-                        OMNI_DV1_FW("error moving file: ", omni::string::util::to_string_t(omni::system::last_error_str()));
+                        OMNI_DV1_FW("error moving file: ", omni::string::to_string_t(omni::system::last_error_str()));
                         return false;
                     }
                 #else
                     int ret = ::_rename(folder.c_str(), new_name.c_str());
                     if (ret != 0) {
-                        OMNI_DV1_FW("error moving file: ", omni::string::util::to_string_t(omni::system::error_str(ret)));
+                        OMNI_DV1_FW("error moving file: ", omni::string::to_string_t(omni::system::error_str(ret)));
                         return false;
                     }
                 #endif
             #else
                 int ret = ::rename(folder.c_str(), new_name.c_str());
                 if (ret != 0) {
-                    OMNI_DV1_FW("error moving file: ", omni::string::util::to_string_t(omni::system::error_str(ret)));
+                    OMNI_DV1_FW("error moving file: ", omni::string::to_string_t(omni::system::error_str(ret)));
                     return false;
                 }
             #endif
@@ -357,20 +357,20 @@
                     std::wstring nf = OMNI_FILE_CHECKW_FW(new_name, false)
                     BOOL ret = ::MoveFileW(tf.c_str(), nf.c_str());
                     if (ret == 0) {
-                        OMNI_DV1_FW("error moving file: ", omni::string::util::to_string_t(omni::system::last_error_str()));
+                        OMNI_DV1_FW("error moving file: ", omni::string::to_string_t(omni::system::last_error_str()));
                         return false;
                     }
                 #else
                     int ret = ::_wrename(folder.c_str(), new_name.c_str());
                     if (ret != 0) {
-                        OMNI_DV1_FW("error moving file: ", omni::string::util::to_string_t(omni::system::error_str(ret)));
+                        OMNI_DV1_FW("error moving file: ", omni::string::to_string_t(omni::system::error_str(ret)));
                         return false;
                     }
                 #endif
             #else
-                int ret = ::rename(omni::string::util::to_string(folder).c_str(), omni::string::util::to_string(new_name).c_str());
+                int ret = ::rename(omni::string::to_string(folder).c_str(), omni::string::to_string(new_name).c_str());
                 if (ret != 0) {
-                    OMNI_DV1_FW("error moving file: ", omni::string::util::to_string_t(omni::system::error_str(ret)));
+                    OMNI_DV1_FW("error moving file: ", omni::string::to_string_t(omni::system::error_str(ret)));
                     return false;
                 }
             #endif
@@ -396,10 +396,10 @@
             std::string name = omni::io::path::trim_trailing_slash(folder);
             if (name == "/" || name == "\\" || (name.size() == 2 && name.at(1) == ':')) { return false; } // its a root drive
             if (recursive) {
-                OMNI_DV1_FW("recursively deleting: ", omni::string::util::to_string_t(name));
+                OMNI_DV1_FW("recursively deleting: ", omni::string::to_string_t(name));
                 recursive_rem(name);
             }
-            OMNI_DV1_FW("deleting: ", omni::string::util::to_string_t(name));
+            OMNI_DV1_FW("deleting: ", omni::string::to_string_t(name));
             #if defined(OMNI_OS_WIN)
                 #if defined(OMNI_WIN_API)
                     OMNI_FILE_CHECKA_FW(name, false)
@@ -411,7 +411,7 @@
                 if (::rmdir(name.c_str()) != 0)
             #endif
             {
-                OMNI_DV1_FW("folder could not be deleted: ", omni::string::util::to_string_t(omni::system::last_error_str()));
+                OMNI_DV1_FW("folder could not be deleted: ", omni::string::to_string_t(omni::system::last_error_str()));
                 return false;
             }
             return !omni::io::dir_internal::exists(folder);
@@ -422,7 +422,7 @@
             std::wstring name = omni::io::path::trim_trailing_slash(folder);
             if (name == L"/" || name == L"\\" || (name.size() == 2 && name.at(1) == L':')) { return false; } // its a root drive
             if (recursive) {
-                OMNI_DV1_FW("recursively deleting: ", omni::string::util::to_string_t(name));
+                OMNI_DV1_FW("recursively deleting: ", omni::string::to_string_t(name));
                 recursive_rem(name);
             }
             #if defined(OMNI_OS_WIN)
@@ -433,10 +433,10 @@
                     if (::_wrmdir(name.c_str()) != 0)
                 #endif
             #else
-                if (::rmdir(omni::string::util::to_string(name).c_str()) != 0)
+                if (::rmdir(omni::string::to_string(name).c_str()) != 0)
             #endif
             {
-                OMNI_DV1_FW("folder could not be deleted: ", omni::string::util::to_string_t(omni::system::last_error_str()));
+                OMNI_DV1_FW("folder could not be deleted: ", omni::string::to_string_t(omni::system::last_error_str()));
                 return false;
             }
             return !omni::io::dir_internal::exists(folder);
@@ -459,9 +459,9 @@ bool omni::io::OMNI_PATH_FW::copy(const OMNI_STRING_T_FW& folder, const OMNI_STR
     bool ret = true;
     if (files.size() > 0) {
         for (omni::seq::OMNI_CHAR_T_FW::iterator file = files.begin(); file != files.end(); ++file) {
-            OMNI_DV1_FW("copying file to: ", omni::string::util::to_string_t(omni::io::path::combine(new_name, omni::io::path::get_name(*file))));
+            OMNI_DV1_FW("copying file to: ", omni::string::to_string_t(omni::io::path::combine(new_name, omni::io::path::get_name(*file))));
             if (!omni::io::file::copy(*file, omni::io::path::combine(new_name, omni::io::path::get_name(*file)))) {
-                OMNI_DV1_FW("could not copy file: ", omni::string::util::to_string_t(*file));
+                OMNI_DV1_FW("could not copy file: ", omni::string::to_string_t(*file));
                 ret = false;
             }
         }
@@ -470,9 +470,9 @@ bool omni::io::OMNI_PATH_FW::copy(const OMNI_STRING_T_FW& folder, const OMNI_STR
         omni::seq::OMNI_CHAR_T_FW dirs = omni::io::directory::get_directories(folder);
         if (dirs.size() > 0) {
             for (omni::seq::OMNI_CHAR_T_FW::iterator dir = dirs.begin(); dir != dirs.end(); ++dir) {
-                OMNI_DV1_FW("copying directory to: ", omni::string::util::to_string_t(omni::io::path::combine(new_name, omni::io::path::get_name(*dir))));
+                OMNI_DV1_FW("copying directory to: ", omni::string::to_string_t(omni::io::path::combine(new_name, omni::io::path::get_name(*dir))));
                 if (!omni::io::directory::copy(*dir, omni::io::path::combine(new_name, omni::io::path::get_name(*dir)))) {
-                    OMNI_DV1_FW("could not copy dir: ", omni::string::util::to_string_t(*dir));
+                    OMNI_DV1_FW("could not copy dir: ", omni::string::to_string_t(*dir));
                     ret = false;
                 }
             }

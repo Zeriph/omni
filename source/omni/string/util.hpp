@@ -27,6 +27,12 @@
 
 namespace omni {
     namespace string {
+        /**
+         * @brief   The util namespace is utilized by omni::cstring and omni::wstring
+         *          directly. You can use the omni::string::util namespace directly in
+         *          user code, but it is recommended you utilize the omni::(c|w)string
+         *          namespace versions instead.
+         */
         namespace util {
             template < typename std_string_t >
             bool is_numeric(const std_string_t& str, bool ignore_period)
@@ -624,7 +630,56 @@ namespace omni {
                 if (str) { return omni::string::util::to_type<T>(std::wstring(str)); }
                 OMNI_ERR_RETV_FW("Null pointer specified", omni::exceptions::null_pointer_exception(), T())
             }
-            
+
+            template < typename T >
+            inline T to_type(const std::string& str, uint8_t base)
+            {
+                if (base == 10) {
+                    return omni::string::util::to_type<T>(str);
+                }
+                return static_cast<T>(std::strtoul(str.c_str(), 0, base));
+            }
+
+            template <>
+            inline bool to_type<bool>(const std::string& str, uint8_t base)
+            {
+                OMNI_UNUSED(base);
+                return omni::string::util::to_type<bool>(str);
+            }
+
+            template < typename T >
+            inline T to_type(const char* str, uint8_t base)
+            {
+                if (!str) { OMNI_ERR_RETV_FW("Null pointer specified", omni::exceptions::null_pointer_exception(), T()) }
+                return omni::string::util::to_type<T>(std::string(str), base);
+            }
+
+            template < typename T >
+            inline T to_type(const std::wstring& str, uint8_t base)
+            {
+                if (base == 10) {
+                    return omni::string::util::to_type<T>(str);
+                }
+                return static_cast<T>(std::strtoul(omni::string::util::to_string(str).c_str(), 0, base));
+            }
+
+            template <>
+            inline bool to_type<bool>(const std::wstring& str, uint8_t base)
+            {
+                OMNI_UNUSED(base);
+                return omni::string::util::to_type<bool>(str);
+            }
+
+            template < typename T >
+            inline T to_type(const wchar_t* str, uint8_t base)
+            {
+                if (!str) { OMNI_ERR_RETV_FW("Null pointer specified", omni::exceptions::null_pointer_exception(), T()) }
+                if (base == 10) {
+                    return omni::string::util::to_type<T>(std::wstring(str));
+                }
+                return static_cast<T>(std::strtoul(omni::string::util::to_string(str).c_str(), 0, base));
+            }
+                        
             template < typename std_string_t >
             std_string_t trim_front_syschars(std_string_t str)
             {
@@ -883,6 +938,7 @@ namespace omni {
                 }
             } // namespace binary
         } // namespace util
+
         /* DEV_NOTE: Some info on the logic idea behind the separation of logic in string namespaces.
         
         If OMNI_UNICODE is defined, then
@@ -907,11 +963,13 @@ namespace omni {
         to different string utility functions. You might want to make a build with the
         omni::string_t as a std::wstring type, but might want to specifically check against
         a std::string type (i.e. ensure type safety), so you can still use the omni::string
-        namespace functions are your default types then use the omni::cstring namespace
-        to check on a std::string type. It should be noted that the omni::string/cstrin/wstring
-        namespaces are merely type safe convenience wrappers to the omni::string::util namespace,
-        which contains the same functions, but templated for ease of reuse (e.g. you could
-        call omni::string::util::trim<std::string>(str, "ABC"), or, if a specific 3rd party
+        namespace functions as your default types then use the omni::cstring namespace
+        to check on a std::string type.
+        
+        It should be noted that the omni::string/cstring/wstring namespaces are merely
+        type safe convenience wrappers to the omni::string::util namespace, which contains
+        the same functions, but templated for ease of reuse (e.g. you could call
+        omni::string::util::trim<std::string>(str, "ABC"), or, if a specific 3rd party
         library had another type of base string type, you could potentially call 
         omni::string::util::trim<SomeOtherStringType>(str, "ABC"))
         */

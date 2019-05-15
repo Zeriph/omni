@@ -63,7 +63,7 @@ namespace omni {
                 name(),
                 tag()
             {
-                this->name = omni::string::util::to_string_t(std::string(nm));
+                this->name = omni::string::to_string_t(std::string(nm));
                 OMNI_DV5_FW("created omni::object with name ", this->name);
             }
             
@@ -80,7 +80,7 @@ namespace omni {
                 name(),
                 tag()
             { 
-                this->name = omni::string::util::to_string_t(std::string(nm));
+                this->name = omni::string::to_string_t(std::string(nm));
                 OMNI_DV5_FW("created omni::object with name ", this->name);
             }
             
@@ -147,7 +147,7 @@ namespace omni {
                 name(),
                 tag()
             {
-                this->name = omni::string::util::to_string_t(nm);
+                this->name = omni::string::to_string_t(nm);
                 // this ctor is only valid for derived types
                 OMNI_DV5_FW("created omni::object with name ", this->name);
             }

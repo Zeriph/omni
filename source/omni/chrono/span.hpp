@@ -688,6 +688,7 @@ namespace omni {
                         return true;
                     }
 
+                    // TODO: optimize this whole function
                     Char period = omni::char_util::to_char_t<Char, char>('.');
                     Str delim = omni::string::util::to_type<Str>(":");
                     Str pdel = omni::string::util::to_type<Str>(".");

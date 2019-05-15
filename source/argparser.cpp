@@ -60,7 +60,7 @@ omni::application::argparser::argparser(const omni::seq::std_string_t& av) :
     this->m_argc = static_cast<uint32_t>(av.size());
     omni::seq::std_string_t::const_iterator it = av.begin();
     while (it != av.end()) {
-        omni::string_t tmp = omni::string::util::to_string_t(*it);
+        omni::string_t tmp = omni::string::to_string_t(*it);
         this->m_args.push_back(tmp);
         ++it;
     }
@@ -75,7 +75,7 @@ omni::application::argparser::argparser(const omni::seq::std_wstring_t& av) :
     this->m_argc = static_cast<uint32_t>(av.size());
     omni::seq::std_wstring_t::const_iterator it = av.begin();
     while (it != av.end()) {
-        omni::string_t tmp = omni::string::util::to_string_t(*it);
+        omni::string_t tmp = omni::string::to_string_t(*it);
         this->m_args.push_back(tmp);
         ++it;
     }
@@ -108,14 +108,14 @@ omni::string_t omni::application::argparser::at(uint32_t index) const
 bool omni::application::argparser::contains(const std::string& sw) const
 {
     if (sw.empty()) { return false; }
-    omni::string_t tmp = omni::string::util::to_string_t(sw);
+    omni::string_t tmp = omni::string::to_string_t(sw);
     return (this->_find(this->m_args.begin(), tmp) != this->m_args.end());
 }
 
 bool omni::application::argparser::contains(const std::wstring& sw) const
 {
     if (sw.empty()) { return false; }
-    omni::string_t tmp = omni::string::util::to_string_t(sw);
+    omni::string_t tmp = omni::string::to_string_t(sw);
     return (this->_find(this->m_args.begin(), tmp) != this->m_args.end());
 }
 
@@ -133,7 +133,7 @@ omni::string_t omni::application::argparser::get_switch(const std::string& sw) c
         OMNI_D1_FW("invalid switch specified");
         return omni::string_t();
     }
-    omni::string_t tmp = omni::string::util::to_string_t(sw);
+    omni::string_t tmp = omni::string::to_string_t(sw);
     omni::seq::string_t::const_iterator it = this->_find(this->m_args.begin(), tmp);
     if (it != this->m_args.end()) {
         if ((++it) != this->m_args.end()) {
@@ -149,7 +149,7 @@ omni::string_t omni::application::argparser::get_switch(const std::wstring& sw) 
         OMNI_D1_FW("invalid switch specified");
         return omni::string_t();
     }
-    omni::string_t tmp = omni::string::util::to_string_t(sw);
+    omni::string_t tmp = omni::string::to_string_t(sw);
     omni::seq::string_t::const_iterator it = this->_find(this->m_args.begin(), tmp);
     if (it != this->m_args.end()) {
         if ((++it) != this->m_args.end()) {
@@ -203,7 +203,7 @@ void omni::application::argparser::set(uint32_t ac, const char** av)
     this->m_argc = ac;
     this->m_args.clear();
     for (ac = 0; ac < this->m_argc; ++ac) {
-        this->m_args.push_back(omni::string::util::to_string_t(av[ac]));
+        this->m_args.push_back(omni::string::to_string_t(av[ac]));
     }
 }
 
@@ -212,7 +212,7 @@ void omni::application::argparser::set(uint32_t ac, const wchar_t** av)
     this->m_argc = ac;
     this->m_args.clear();
     for (ac = 0; ac < this->m_argc; ++ac) {
-        this->m_args.push_back(omni::string::util::to_string_t(av[ac]));
+        this->m_args.push_back(omni::string::to_string_t(av[ac]));
     }
 }
 
@@ -251,7 +251,7 @@ const std::string omni::application::argparser::to_string(bool includeArg1) cons
     omni::seq::string_t::const_iterator it = this->m_args.begin();
     if (!includeArg1) { ++it; }
     while (it != this->m_args.end()) {
-        tmp = omni::string::util::to_string(*it);
+        tmp = omni::string::to_string(*it);
         if (omni::cstring::contains(tmp, " ")) {
             ret.append(q).append(tmp).append(q);
         } else {
@@ -274,7 +274,7 @@ const std::wstring omni::application::argparser::to_wstring(bool includeArg1) co
     omni::seq::string_t::const_iterator it = this->m_args.begin();
     if (!includeArg1) { ++it; }
     while (it != this->m_args.end()) {
-        tmp = omni::string::util::to_wstring(*it);
+        tmp = omni::string::to_wstring(*it);
         if (omni::wstring::contains(tmp, L" ")) {
             ret.append(q).append(tmp).append(q);
         } else {
@@ -287,12 +287,12 @@ const std::wstring omni::application::argparser::to_wstring(bool includeArg1) co
 
 omni::string_t omni::application::argparser::operator[](const std::string &sw) const
 {
-    return this->get_switch(omni::string::util::to_string_t(sw));
+    return this->get_switch(omni::string::to_string_t(sw));
 }
 
 omni::string_t omni::application::argparser::operator[](const std::wstring &sw) const
 {
-    return this->get_switch(omni::string::util::to_string_t(sw));
+    return this->get_switch(omni::string::to_string_t(sw));
 }
 
 omni::string_t omni::application::argparser::operator[](uint32_t index) const

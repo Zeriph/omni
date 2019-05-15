@@ -289,7 +289,6 @@ namespace omni {
                 }
                 explicit invalid_enum(int val) : omni::exception(OMNI_INVALID_ENUM, ": ", val) { }
                 explicit invalid_enum(uint32_t val) : omni::exception(OMNI_INVALID_ENUM, ": ", static_cast<std::size_t>(val)) { }
-                explicit invalid_enum(std::size_t val) : omni::exception(OMNI_INVALID_ENUM, ": ", val) { }
         };
 
         /** A parse error occurred */
@@ -312,6 +311,14 @@ namespace omni {
         {
             public:
                 invalid_release_count() : omni::exceptions::semaphore_system_exception(OMNI_ERR_RELEASE_STR) {}
+        };
+
+        /** An invalid base was specified */
+        class invalid_base : public omni::exception
+        {
+            public:
+                invalid_base() : omni::exception(OMNI_ERR_BASE_STR) {}
+                explicit invalid_base(const char* msg) : omni::exception(msg) {}
         };
 
         /** An invalid range was specified */
@@ -513,6 +520,20 @@ namespace omni {
         {
             public:
                 threadpool_thread_exception() : omni::exceptions::threadpool_exception(OMNI_ERR_ACQUIRE_STR) {}
+        };
+
+        /** An error occurred on the socket */
+        class socket_exception : public omni::exception
+        {
+            public:
+                socket_exception() : omni::exception(OMNI_ERR_SOCKET_STR) {}
+                socket_exception(const char* msg, int er) : omni::exception(msg, er) {}
+                socket_exception(const char* msg, long er) : omni::exception(msg ,er) {}
+                socket_exception(const char* msg, size_t er) : omni::exception(msg ,er) {}
+                explicit socket_exception(const char* msg) : omni::exception(msg) {}
+                explicit socket_exception(int er) : omni::exception(OMNI_ERR_SOCKET_STR, ": ", er) {}
+                explicit socket_exception(long er) : omni::exception(OMNI_ERR_SOCKET_STR, ": ", er) {}
+                explicit socket_exception(size_t er) : omni::exception(OMNI_ERR_SOCKET_STR, ": ", er) {}
         };
     } // namespace exceptions    
 } // namespace omni

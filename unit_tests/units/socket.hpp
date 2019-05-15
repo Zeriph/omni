@@ -15,7 +15,7 @@ class UT_CLASS_DEF
         
         void base_test()
         {
-            omni::net::socket* s = new omni::net::socket();
+            omni::net::socket* s = new omni::net::socket(omni::net::address_family::INTERNETWORK, omni::net::socket_type::STREAM, omni::net::protocol_type::IP);
             delete s;
         }
 };

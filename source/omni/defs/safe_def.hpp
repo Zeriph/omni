@@ -38,6 +38,7 @@
     #define OMNI_SAFE_TIMERS
     #define OMNI_SAFE_THREADS
     #define OMNI_SAFE_GEOMETRY
+    #define OMNI_SAFE_NET
     #define OMNI_CHECK_ARITHMETIC_OVERFLOW
 #endif
 
@@ -71,6 +72,12 @@
         #define OMNI_NO_SAFE_THREADS
     #endif
 #endif
+#if defined(OMNI_SAFE_NET) && (defined(OMNI_NO_SAFE_NET) || defined(OMNI_NO_SAFE_FRAMEWORK))
+    #undef OMNI_SAFE_NET
+    #if !defined(OMNI_NO_SAFE_NET)
+        #define OMNI_NO_SAFE_NET
+    #endif
+#endif
 
 #if defined(OMNI_SAFE_CHRONO)
     #define OMNI_SAFE_SPAN
@@ -102,6 +109,10 @@
     #define OMNI_SAFE_POINT3D
     #define OMNI_SAFE_RECTANGLE
     #define OMNI_SAFE_VECTOR2
+#endif
+
+#if defined(OMNI_SAFE_NET)
+    #define OMNI_SAFE_SOCKET
 #endif
 
 #if defined(OMNI_SAFE_APPLICATION) && (defined(OMNI_NO_SAFE_APPLICATION) || defined(OMNI_NO_SAFE_FRAMEWORK))

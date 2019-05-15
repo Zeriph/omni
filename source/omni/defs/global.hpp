@@ -22,6 +22,7 @@
 #include <omni/defs/helper.hpp>
 #include <omni/defs/omni_ver.hpp>
 #include <cstddef>
+#include <limits>
 
 #if defined(_USE_MATH_DEFINES)
     #define OMNI_USE_MATH_DEFINES_FW 1
@@ -49,7 +50,7 @@
 #if defined(OMNI_BUILD_UNSAFE)
     #define OMNI_NO_MUTEX_OWNER
     #define OMNI_NO_SAFE_FRAMEWORK
-    #define OMNI_NO_THROW
+    #define OMNI_NO_THROW // DEV_NOTE: this is highly UN-recommended
 #endif
 
 // default auto-init chrono::tick
@@ -100,7 +101,11 @@
 #endif
 
 #if !defined(OMNI_CODE_PAGE)
-    #define OMNI_CODE_PAGE CP_UTF8
+    #if defined(OMNI_OS_WIN) || defined(CP_UTF8)
+        #define OMNI_CODE_PAGE CP_UTF8
+    #else
+        #define OMNI_CODE_PAGE 0
+    #endif
 #endif
 
 #if defined(OMNI_ENABLE_CXX)
@@ -127,6 +132,10 @@
         #endif
     #endif
 #endif
+
+namespace omni {
+    typedef void* unsafe_t;
+}
 
 /* DEV_NOTE: something that came across was a 'virtual thunk' error, this happened when compiling the
 framework as a library using certain features (like omni::type_info or omni::object) and then compiling

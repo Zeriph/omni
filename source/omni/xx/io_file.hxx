@@ -139,7 +139,7 @@
             #endif
         #else
             struct stat fi;
-            if (::stat(omni::string::util::to_string(file).c_str(), &fi) == 0) {
+            if (::stat(omni::string::to_string(file).c_str(), &fi) == 0) {
                 #if defined(S_ISSOCK)
                     return !(S_ISDIR(fi.st_mode)) && !(S_ISSOCK(fi.st_mode));
                 #else
@@ -154,14 +154,14 @@
     template < typename STR, typename ISTREAM, typename OSTREAM >
     bool copy(const STR& file, const STR& new_name)
     {
-        ISTREAM src(omni::string::util::to_string(file).c_str(), std::ios::binary);
+        ISTREAM src(omni::string::to_string(file).c_str(), std::ios::binary);
         if (!src.is_open()) {
-            OMNI_ERRV_RETV_FW(OMNI_PATH_NOT_ACCESSIBLE_STR, omni::string::util::to_string_t(file), omni::exceptions::path_exception(omni::string::util::to_string(file)), false)
+            OMNI_ERRV_RETV_FW(OMNI_PATH_NOT_ACCESSIBLE_STR, omni::string::to_string_t(file), omni::exceptions::path_exception(omni::string::to_string(file)), false)
         }
-        OSTREAM dst(omni::string::util::to_string(new_name).c_str(), std::ios::binary);
+        OSTREAM dst(omni::string::to_string(new_name).c_str(), std::ios::binary);
         if (!dst.is_open()) {
             src.close();
-            OMNI_ERRV_RETV_FW(OMNI_PATH_NOT_ACCESSIBLE_STR, omni::string::util::to_string_t(new_name), omni::exceptions::path_exception(omni::string::util::to_string(new_name)), false)
+            OMNI_ERRV_RETV_FW(OMNI_PATH_NOT_ACCESSIBLE_STR, omni::string::to_string_t(new_name), omni::exceptions::path_exception(omni::string::to_string(new_name)), false)
         }
         dst << src.rdbuf();
         src.close();
@@ -174,7 +174,7 @@
         #if defined(OMNI_OS_WIN) && defined(OMNI_WIN_API)
             OMNI_FILE_CHECKA_FW(file, false)
             if (::CopyFileA(file.c_str(), new_name.c_str(), FALSE) == 0) {
-                OMNI_DBGEV("error copying file: ", omni::string::util::to_string_t(omni::system::last_error_str()));
+                OMNI_DBGEV("error copying file: ", omni::string::to_string_t(omni::system::last_error_str()));
                 return false;
             }
             return omni::io::file_internal::exists(new_name);
@@ -189,7 +189,7 @@
             std::wstring tf = OMNI_FILE_CHECKW_FW(file, false)
             std::wstring nf = OMNI_FILE_CHECKW_FW(new_name, false)
             if (::CopyFileW(tf.c_str(), nf.c_str(), FALSE) == 0) {
-                OMNI_DBGEV("error copying file: ", omni::string::util::to_string_t(omni::system::last_error_str()));
+                OMNI_DBGEV("error copying file: ", omni::string::to_string_t(omni::system::last_error_str()));
                 return false;
             }
             return omni::io::file_internal::exists(new_name);
@@ -208,7 +208,7 @@
                 return false;
             }
         }
-        OSTREAM out(omni::string::util::to_string(file).c_str(), std::ios::binary|std::ios::out);
+        OSTREAM out(omni::string::to_string(file).c_str(), std::ios::binary|std::ios::out);
         out.close(); // close/flush
         return omni::io::file_internal::exists(file);
     }
@@ -275,7 +275,7 @@
     template < typename STR, typename ISTRM, typename SSTRM >
     STR get_contents(const STR& file)
     {
-        ISTRM ifile(omni::string::util::to_string(file).c_str());
+        ISTRM ifile(omni::string::to_string(file).c_str());
         SSTRM buf;
         buf << ifile.rdbuf();
         return buf.str();
@@ -343,7 +343,7 @@
             #endif
         #else
             struct stat fi;
-            if (::stat(omni::string::util::to_string(file).c_str(), &fi) == 0) {
+            if (::stat(omni::string::to_string(file).c_str(), &fi) == 0) {
                 return static_cast<uint64_t>(fi.st_size);
             }
             return 0;
@@ -371,20 +371,20 @@
                 OMNI_FILE_CHECKA_FW(new_name, false)
                 BOOL ret = ::MoveFileA(file.c_str(), new_name.c_str());
                 if (ret == 0) {
-                    OMNI_DV1_FW("error moving file: ", omni::string::util::to_string_t(omni::system::last_error_str()));
+                    OMNI_DV1_FW("error moving file: ", omni::string::to_string_t(omni::system::last_error_str()));
                     return false;
                 }
             #else
                 int ret = ::_rename(file.c_str(), new_name.c_str());
                 if (ret != 0) {
-                    OMNI_DV1_FW("error moving file: ", omni::string::util::to_string_t(omni::system::error_str(ret)));
+                    OMNI_DV1_FW("error moving file: ", omni::string::to_string_t(omni::system::error_str(ret)));
                     return false;
                 }
             #endif
         #else
             int ret = ::rename(file.c_str(), new_name.c_str());
             if (ret != 0) {
-                OMNI_DV1_FW("error moving file: ", omni::string::util::to_string_t(omni::system::error_str(ret)));
+                OMNI_DV1_FW("error moving file: ", omni::string::to_string_t(omni::system::error_str(ret)));
                 return false;
             }
         #endif
@@ -411,20 +411,20 @@
                 std::wstring nf = OMNI_FILE_CHECKW_FW(new_name, false)
                 BOOL ret = ::MoveFileW(tf.c_str(), nf.c_str());
                 if (ret == 0) {
-                    OMNI_DV1_FW("error moving file: ", omni::string::util::to_string_t(omni::system::last_error_str()));
+                    OMNI_DV1_FW("error moving file: ", omni::string::to_string_t(omni::system::last_error_str()));
                     return false;
                 }
             #else
                 int ret = ::_wrename(file.c_str(), new_name.c_str());
                 if (ret != 0) {
-                    OMNI_DV1_FW("error moving file: ", omni::string::util::to_string_t(omni::system::error_str(ret)));
+                    OMNI_DV1_FW("error moving file: ", omni::string::to_string_t(omni::system::error_str(ret)));
                     return false;
                 }
             #endif
         #else
-            int ret = ::rename(omni::string::util::to_string(file).c_str(), omni::string::util::to_string(new_name).c_str());
+            int ret = ::rename(omni::string::to_string(file).c_str(), omni::string::to_string(new_name).c_str());
             if (ret != 0) {
-                OMNI_DV1_FW("error moving file: ", omni::string::util::to_string_t(omni::system::error_str(ret)));
+                OMNI_DV1_FW("error moving file: ", omni::string::to_string_t(omni::system::error_str(ret)));
                 return false;
             }
         #endif
@@ -436,7 +436,7 @@
     uint64_t rd(const STR& file, SEQ& buffer)
     {
         // TODO: does wifstream not take wchar_t[] filename?
-        IFSTREAM ifile(omni::string::util::to_string(file).c_str(), std::ios::binary);
+        IFSTREAM ifile(omni::string::to_string(file).c_str(), std::ios::binary);
         if (!ifile.is_open()) { return 0; }
         ifile.seekg(0, ifile.end);
         uint64_t length = static_cast<uint64_t>(ifile.tellg());
@@ -477,7 +477,7 @@
     template < typename STR, typename IFSTREAM >
     uint64_t rd_f(const STR& file, STR& buffer)
     {
-        IFSTREAM ifile(omni::string::util::to_string(file).c_str(), std::ios::binary);
+        IFSTREAM ifile(omni::string::to_string(file).c_str(), std::ios::binary);
         if (!ifile.is_open()) { return 0; }
         // TODO: verify std::streamsize will work on files larger than std::numeric_limits<long>::max() (~4GB)
         uint64_t length = static_cast<uint64_t>(ifile.tellg());
@@ -502,7 +502,7 @@
     uint64_t rd_raw(const STR& file, SEQ* buffer, uint64_t blen)
     {
         // TODO: verify this functionality
-        IFSTREAM ifile(omni::string::util::to_string(file).c_str(), std::ios::binary);
+        IFSTREAM ifile(omni::string::to_string(file).c_str(), std::ios::binary);
         if (!ifile.is_open()) { return 0; }
         ifile.seekg(0, ifile.end);
         uint64_t length = static_cast<uint64_t>(ifile.tellg());
@@ -541,7 +541,7 @@
             #if defined(OMNI_WIN_API)
                 OMNI_FILE_CHECKA_FW(file, false)
                 if (::DeleteFileA(file.c_str()) == 0) {
-                    OMNI_DV1_FW("error deleting file: ", omni::string::util::to_string_t(omni::system::last_error_str()));
+                    OMNI_DV1_FW("error deleting file: ", omni::string::to_string_t(omni::system::last_error_str()));
                     return false;
                 }
             #else
@@ -565,7 +565,7 @@
             #if defined(OMNI_WIN_API)
                 std::wstring tf = OMNI_FILE_CHECKW_FW(file, false)
                 if (::DeleteFileW(tf.c_str()) == 0) {
-                    OMNI_DV1_FW("error deleting file: ", omni::string::util::to_string_t(omni::system::last_error_str()));
+                    OMNI_DV1_FW("error deleting file: ", omni::string::to_string_t(omni::system::last_error_str()));
                     return false;
                 }
             #else
@@ -575,7 +575,7 @@
                 }
             #endif
         #else
-            if (::remove(omni::string::util::to_string(file).c_str()) != 0) {
+            if (::remove(omni::string::to_string(file).c_str()) != 0) {
                 OMNI_DV1_FW("error deleting file: ", omni::system::last_error());
                 return false;
             }
@@ -678,7 +678,7 @@
                             return false;
                         }
                     #else
-                        int fd = ::open(omni::string::util::to_string(file).c_str(), O_RDWR);
+                        int fd = ::open(omni::string::to_string(file).c_str(), O_RDWR);
                         if (fd == -1) {
                             OMNI_DBGEV("Could not open file: ", omni::system::last_error())
                             return false;
@@ -718,7 +718,7 @@
     /** @internal framework helper */
     uint64_t write(const std::wstring& file, const std::wstring& buffer, bool append)
     {
-        return write_fw<std::wstring, std::wofstream>(omni::string::util::to_string(file), buffer, append);
+        return write_fw<std::wstring, std::wofstream>(omni::string::to_string(file), buffer, append);
     }
 
     /** @internal framework helper */
@@ -745,7 +745,7 @@
     /** @internal framework helper */
     uint64_t write(const std::wstring& file, const omni::seq::uchar_t& buffer, bool append)
     {
-        return write_buf_fw<std::wstring, std::wofstream, omni::seq::uchar_t, omni::seq::uchar_t::const_iterator>(omni::string::util::to_string(file), buffer, append);
+        return write_buf_fw<std::wstring, std::wofstream, omni::seq::uchar_t, omni::seq::uchar_t::const_iterator>(omni::string::to_string(file), buffer, append);
     }
     /** @internal framework helper */
     uint64_t write(const std::string& file, const omni::seq::char_t& buffer, bool append)
@@ -755,7 +755,7 @@
     /** @internal framework helper */
     uint64_t write(const std::wstring& file, const omni::seq::char_t& buffer, bool append)
     {
-        return write_buf_fw<std::wstring, std::wofstream, omni::seq::char_t, omni::seq::char_t::const_iterator>(omni::string::util::to_string(file), buffer, append);
+        return write_buf_fw<std::wstring, std::wofstream, omni::seq::char_t, omni::seq::char_t::const_iterator>(omni::string::to_string(file), buffer, append);
     }
 
     /** @internal framework helper */
@@ -780,7 +780,7 @@
     /** @internal framework helper */
     uint64_t write_raw(const std::wstring& file, const unsigned char* buffer, size_t sz, bool append)
     {
-        return write_raw_fw<const unsigned char*>(omni::string::util::to_string(file), buffer, sz, append);
+        return write_raw_fw<const unsigned char*>(omni::string::to_string(file), buffer, sz, append);
     }
     /** @internal framework helper */
     uint64_t write_raw(const std::string& file, const char* buffer, size_t sz, bool append)
@@ -790,7 +790,7 @@
     /** @internal framework helper */
     uint64_t write_raw(const std::wstring& file, const char* buffer, size_t sz, bool append)
     {
-        return write_raw_fw<const char*>(omni::string::util::to_string(file), buffer, sz, append);
+        return write_raw_fw<const char*>(omni::string::to_string(file), buffer, sz, append);
     }
 
     /** @internal framework helper */
@@ -818,7 +818,7 @@
     /** @internal framework helper */
     uint64_t write_line(const std::wstring& file, const omni::seq::uchar_t& buffer, bool append)
     {
-        return write_line_buf_fw<std::wstring, std::wofstream, omni::seq::uchar_t>(omni::string::util::to_string(file), buffer, append);
+        return write_line_buf_fw<std::wstring, std::wofstream, omni::seq::uchar_t>(omni::string::to_string(file), buffer, append);
     }
     /** @internal framework helper */
     uint64_t write_line(const std::string& file, const omni::seq::char_t& buffer, bool append)
@@ -828,7 +828,7 @@
     /** @internal framework helper */
     uint64_t write_line(const std::wstring& file, const omni::seq::char_t& buffer, bool append)
     {
-        return write_line_buf_fw<std::wstring, std::wofstream, omni::seq::char_t>(omni::string::util::to_string(file), buffer, append);
+        return write_line_buf_fw<std::wstring, std::wofstream, omni::seq::char_t>(omni::string::to_string(file), buffer, append);
     }
 
     /** @internal framework helper */
@@ -853,7 +853,7 @@
     /** @internal framework helper */
     uint64_t write_line(const std::wstring& file, const std::wstring& buffer, bool append)
     {
-        return write_line_fw<std::wstring, std::wofstream>(omni::string::util::to_string(file), buffer, append);
+        return write_line_fw<std::wstring, std::wofstream>(omni::string::to_string(file), buffer, append);
     }
 
     /** @internal framework helper */
@@ -879,7 +879,7 @@
     /** @internal framework helper */
     uint64_t write_line_raw(const std::wstring& file, const unsigned char* buffer, size_t sz, bool append)
     {
-        return write_line_raw_fw<const unsigned char*>(omni::string::util::to_string(file), buffer, sz, append);
+        return write_line_raw_fw<const unsigned char*>(omni::string::to_string(file), buffer, sz, append);
     }
     /** @internal framework helper */
     uint64_t write_line_raw(const std::string& file, const char* buffer, size_t sz, bool append)
@@ -889,7 +889,7 @@
     /** @internal framework helper */
     uint64_t write_line_raw(const std::wstring& file, const char* buffer, size_t sz, bool append)
     {
-        return write_line_raw_fw<const char*>(omni::string::util::to_string(file), buffer, sz, append);
+        return write_line_raw_fw<const char*>(omni::string::to_string(file), buffer, sz, append);
     }
 
     } } }
@@ -918,14 +918,14 @@ bool omni::io::OMNI_PATH_FW::copy(const OMNI_STRING_T_FW& file, const OMNI_STRIN
         OMNI_ERR_RETV_FW(OMNI_PATH_EMPTY, omni::exceptions::path_exception(), false);
     }
     if (file == new_name) {
-        OMNI_DBGEV("Old and new path are the same: ", omni::string::util::to_string_t(file));
+        OMNI_DBGEV("Old and new path are the same: ", omni::string::to_string_t(file));
         return true;
     }
     if (!omni::io::file_internal::exists(file)) {
-        OMNI_ERRV_RETV_FW(OMNI_FILE_NOT_FOUND_STR, omni::string::util::to_string_t(file), omni::exceptions::file_not_found(omni::string::util::to_string(file)), false);
+        OMNI_ERRV_RETV_FW(OMNI_FILE_NOT_FOUND_STR, omni::string::to_string_t(file), omni::exceptions::file_not_found(omni::string::to_string(file)), false);
     }
     if (!overwrite && omni::io::file_internal::exists(new_name)) {
-        OMNI_DBGEV("New path already exists: ", omni::string::util::to_string_t(new_name));
+        OMNI_DBGEV("New path already exists: ", omni::string::to_string_t(new_name));
         return false;
     }
     if (omni::io::file_internal::copy(file, new_name)) {
@@ -947,7 +947,7 @@ bool omni::io::OMNI_PATH_FW::exists(const OMNI_STRING_T_FW& file)
 OMNI_STRING_T_FW omni::io::OMNI_PATH_FW::get_contents(const OMNI_STRING_T_FW& file)
 {
     if (!omni::io::file_internal::exists(file)) {
-        OMNI_ERRV_RETV_FW("file does not exist: ", omni::string::util::to_string_t(file), omni::exceptions::path_exception(omni::string::util::to_string(file)), OMNI_STRING_T_FW())
+        OMNI_ERRV_RETV_FW("file does not exist: ", omni::string::to_string_t(file), omni::exceptions::path_exception(omni::string::to_string(file)), OMNI_STRING_T_FW())
     }
     return omni::io::file_internal::get_contents(file);
 }
@@ -955,7 +955,7 @@ OMNI_STRING_T_FW omni::io::OMNI_PATH_FW::get_contents(const OMNI_STRING_T_FW& fi
 uint64_t omni::io::OMNI_PATH_FW::get_size(const OMNI_STRING_T_FW& file)
 {
     if (!omni::io::file_internal::exists(file)) {
-        OMNI_ERRV_RETV_FW("file does not exist: ", omni::string::util::to_string_t(file), omni::exceptions::path_exception(omni::string::util::to_string(file)), 0)
+        OMNI_ERRV_RETV_FW("file does not exist: ", omni::string::to_string_t(file), omni::exceptions::path_exception(omni::string::to_string(file)), 0)
     }
     return omni::io::file_internal::get_size(file);
 }
@@ -963,10 +963,10 @@ uint64_t omni::io::OMNI_PATH_FW::get_size(const OMNI_STRING_T_FW& file)
 bool omni::io::OMNI_PATH_FW::move(const OMNI_STRING_T_FW& file, const OMNI_STRING_T_FW& new_name, bool create_path)
 {
     if (!omni::io::file_internal::exists(file)) {
-        OMNI_ERRV_RETV_FW("file does not exist: ", omni::string::util::to_string_t(file), omni::exceptions::path_exception(omni::string::util::to_string(file)), false)
+        OMNI_ERRV_RETV_FW("file does not exist: ", omni::string::to_string_t(file), omni::exceptions::path_exception(omni::string::to_string(file)), false)
     }
     if (omni::io::file_internal::exists(new_name)) {
-        OMNI_ERRV_RETV_FW("file already exists: ", omni::string::util::to_string_t(new_name), omni::exceptions::path_exception(omni::string::util::to_string(new_name)), false)
+        OMNI_ERRV_RETV_FW("file already exists: ", omni::string::to_string_t(new_name), omni::exceptions::path_exception(omni::string::to_string(new_name)), false)
     }
     return omni::io::file_internal::mv(file, new_name, create_path);
 }
@@ -999,7 +999,7 @@ uint64_t omni::io::OMNI_PATH_FW::read_raw(const OMNI_STRING_T_FW& file, char* bu
 bool omni::io::OMNI_PATH_FW::remove(const OMNI_STRING_T_FW& file)
 {
     if (!omni::io::file_internal::exists(file)) {
-        OMNI_DV1_FW("file does not exists: ", omni::string::util::to_string_t(file));
+        OMNI_DV1_FW("file does not exists: ", omni::string::to_string_t(file));
         return true;
     }
     return omni::io::file_internal::rem(file);

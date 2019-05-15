@@ -120,6 +120,7 @@ class UT_CLASS_DEF
             print_info(omni::geometry::raw_rectangleF_t);
             print_info(omni::drawing::color_t);
             print_info(omni::drawing::color64_t);
+            print_info(omni::net::socket);
 
             // exceptions
             print_info(omni::exception);

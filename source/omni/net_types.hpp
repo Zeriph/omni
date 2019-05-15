@@ -20,10 +20,10 @@
 #define OMNI_NETS_HPP 1
 
 #include <omni/types/net_t.hpp>
-//#include <omni/net/socket.hpp>
-//#include <omni/net/util.hpp>
-//#include <omni/net/tcp.hpp>
-//#include <omni/net/udp.hpp>
+#include <omni/net/util.hpp>
+#include <omni/net/socket.hpp>
+//#include <omni/net/client.hpp>
+//#include <omni/net/server.hpp>
 
 
 #endif // OMNI_NETS_HPP

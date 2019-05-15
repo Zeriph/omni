@@ -97,6 +97,9 @@
 #if !defined(OMNI_ERR_SIZE_STR)
     #define OMNI_ERR_SIZE_STR "Invalid size written"
 #endif
+#if !defined(OMNI_ERR_BASE_STR)
+    #define OMNI_ERR_BASE_STR "Invalid base specified"
+#endif
 #if !defined(OMNI_ERR_RANGE_STR)
     #define OMNI_ERR_RANGE_STR "Invalid range specified"
 #endif
@@ -105,6 +108,9 @@
 #endif
 #if !defined(OMNI_ERR_STOPWATCH_STR)
     #define OMNI_ERR_STOPWATCH_STR "An error occurred on the stopwatch object"
+#endif
+#if !defined(OMNI_ERR_SOCKET_STR)
+    #define OMNI_ERR_SOCKET_STR "An error occurred on the socket object"
 #endif
 #if !defined(OMNI_FILE_NOT_FOUND_STR)
     #define OMNI_FILE_NOT_FOUND_STR "File not found"
