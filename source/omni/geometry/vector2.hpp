@@ -42,54 +42,59 @@ namespace omni {
         class vector2
         {
             public:
-                // TODO: float compares for the various stuff (point_t, size_t, etc._t) ... floating point math sucks
-                typedef omni::delegate2<bool, double, double> comparator;
-
                 vector2() :
                     OMNI_CTOR_FW(omni::geometry::vector2)
-                    m_x(), m_y(), m_comp(&omni::math::are_equal<double>)
+                    m_x(), m_y()
                     OMNI_SAFE_VEC2MTX_FW
                 {
                 }
 
                 vector2(const omni::geometry::vector2& cp) :
                     OMNI_CPCTOR_FW(cp)
-                    m_x(cp.x()), m_y(cp.y()), m_comp(cp.m_comp)
+                    m_x(cp.x()), m_y(cp.y())
                     OMNI_SAFE_VEC2MTX_FW
                 {
                 }
                 
                 vector2(omni::geometry::point_t p) :
                     OMNI_CTOR_FW(omni::geometry::vector2)
-                    m_x(p.x()), m_y(p.y()), m_comp(&omni::math::are_equal<double>)
+                    m_x(p.x()), m_y(p.y())
                     OMNI_SAFE_VEC2MTX_FW
                 {
                 }
 
                 vector2(omni::geometry::point64_t p) :
                     OMNI_CTOR_FW(omni::geometry::vector2)
-                    m_x(p.x()), m_y(p.y()), m_comp(&omni::math::are_equal<double>)
+                    m_x(p.x()), m_y(p.y())
                     OMNI_SAFE_VEC2MTX_FW
                 {
                 }
 
                 vector2(omni::geometry::pointF_t p) :
                     OMNI_CTOR_FW(omni::geometry::vector2)
-                    m_x(p.x()), m_y(p.y()), m_comp(&omni::math::are_equal<double>)
+                    m_x(p.x()), m_y(p.y())
                     OMNI_SAFE_VEC2MTX_FW
                 {
                 }
 
                 template < typename T >
-                vector2(omni::geometry::point2d<T> p) :
+                vector2(const omni::geometry::point2d<T>& p) :
                     OMNI_CTOR_FW(omni::geometry::vector2)
-                    m_x(p.x()), m_y(p.y()), m_comp(&omni::math::are_equal<double>)
+                    m_x(p.x()), m_y(p.y())
+                    OMNI_SAFE_VEC2MTX_FW
+                {
+                }
+
+                template < typename T >
+                vector2(const omni::math::dimensional<T, 2>& p) :
+                    OMNI_CTOR_FW(omni::geometry::vector2)
+                    m_x(p[0]), m_y(p[1])
                     OMNI_SAFE_VEC2MTX_FW
                 {
                 }
 
                 vector2(double x, double y) :
-                    m_x(x), m_y(y), m_comp(&omni::math::are_equal<double>)
+                    m_x(x), m_y(y)
                     OMNI_SAFE_VEC2MTX_FW
                 {
                 }
@@ -100,12 +105,6 @@ namespace omni {
                     OMNI_DTOR_FW
                     OMNI_CATCH_FW
                     OMNI_D5_FW("destroyed");
-                }
-
-                void set_float_comparetor(const comparator& compare)
-                {
-                    OMNI_SAFE_VEC2ALOCK_FW
-                    this->m_comp = compare;
                 }
 
                 double x() const
@@ -120,7 +119,17 @@ namespace omni {
                     return this->m_y;
                 }
 
-                const omni::string_t to_string_t() const
+                void swap(vector2& o)
+                {
+                    if (this != &o) {
+                        OMNI_SAFE_VEC2ALOCK_FW
+                        OMNI_SAFE_VEC2OALOCK_FW(o)
+                        std::swap(this->m_x, o.m_x);
+                        std::swap(this->m_y, o.m_y);
+                    }
+                }
+
+                omni::string_t to_string_t() const
                 {
                     omni::sstream_t s;
                     OMNI_SAFE_VEC2LOCK_FW
@@ -129,7 +138,7 @@ namespace omni {
                     return s.str();
                 }
 
-                const std::string to_string() const
+                std::string to_string() const
                 {
                     std::stringstream s;
                     OMNI_SAFE_VEC2LOCK_FW
@@ -138,7 +147,7 @@ namespace omni {
                     return s.str();
                 }
 
-                const std::wstring to_wstring() const
+                std::wstring to_wstring() const
                 {
                     std::wstringstream s;
                     OMNI_SAFE_VEC2LOCK_FW
@@ -181,9 +190,8 @@ namespace omni {
                     OMNI_SAFE_VEC2ALOCK_FW
                     OMNI_SAFE_VEC2OALOCK_FW(b)
                     return (
-                        this->m_comp(this->m_x, b.m_x) &&
-                        this->m_comp(this->m_y, b.m_y)
-                        //(this->m_x == b.m_x) && (this->m_y == b.m_y)
+                        omni::math::are_equal<double>(this->m_x, b.m_x) &&
+                        omni::math::are_equal<double>(this->m_y, b.m_y)
                     )
                     OMNI_EQUAL_FW(b);
                 }
@@ -193,6 +201,7 @@ namespace omni {
                     if (this != &b) {
                         OMNI_SAFE_VEC2ALOCK_FW
                         OMNI_SAFE_VEC2OALOCK_FW(b)
+                        OMNI_ASSIGN_FW(b)
                         this->m_x = b.m_x;
                         this->m_y = b.m_y;
                     }
@@ -241,42 +250,6 @@ namespace omni {
                     OMNI_SAFE_VEC2ALOCK_FW
                     return std::sqrt((this->m_x * this->m_x) + (this->m_y * this->m_y));
                 }
-
-
-                /*
-                static omni::geometry::point_t calculate_point(double x1, double y1, double x2, double y2, double distance)
-                {
-                    return calculate_point(vector2(x1, y1), vector2(x2, y2), distance);
-                }
-
-                static omni::geometry::point_t calculate_point(const vector2& a, const vector2& b, double distance)
-                {
-                    vector2 ab = a - b;
-                    return a + ab.unit_vector() * distance;
-                }
-
-                static omni::geometry::pointF_t calculate_pointF(double x1, double y1, double x2, double y2, double distance)
-                {
-                    return calculate_pointF(vector2(x1, y1), vector2(x2, y2), distance);
-                }
-
-                static omni::geometry::pointF_t calculate_pointF(const vector2& a, const vector2& b, double distance)
-                {
-                    vector2 ab = a - b;
-                    return a + ab.unit_vector() * distance;
-                }
-
-                static omni::geometry::pointD_t calculate_pointD(double x1, double y1, double x2, double y2, double distance)
-                {
-                    return calculate_pointD(vector2(x1, y1), vector2(x2, y2), distance);
-                }
-
-                static omni::geometry::pointD_t calculate_pointD(const vector2& a, const vector2& b, double distance)
-                {
-                    vector2 ab = a - b;
-                    return a + ab.unit_vector() * distance;
-                }*/
-
                 
                 template < typename T >
                 static omni::geometry::point2d<T> calculate_point(const vector2& a, const vector2& b, double distance)
@@ -284,6 +257,7 @@ namespace omni {
                     vector2 ab = a - b;
                     return a + ab.unit_vector() * distance;
                 }
+
                 template < typename T >
                 static omni::geometry::point2d<T> calculate_point(T x1, T y1, T x2, T y2, T distance)
                 {
@@ -301,12 +275,19 @@ namespace omni {
             private:
                 double m_x;
                 double m_y;
-                comparator m_comp;
 
                 #if defined(OMNI_SAFE_VECTOR2)
                     mutable omni::sync::basic_lock m_mtx;
                 #endif
         };
+    }
+}
+
+namespace std {
+    template < typename T >
+    inline void swap(omni::geometry::vector2& o1, omni::geometry::vector2& o2)
+    {
+        o1.swap(o2);
     }
 }
 

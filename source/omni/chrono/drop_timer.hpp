@@ -57,6 +57,7 @@ namespace omni {
                 void stop();
                 void stop(uint32_t join_timeout);
                 void stop(uint32_t join_timeout, bool kill_on_timeout);
+                void swap(omni::chrono::drop_timer& other);
                 omni::chrono::timer_sync_type::enum_t tick_type() const { return omni::chrono::timer_sync_type::DROP; }
                 omni::chrono::drop_timer& operator=(const omni::chrono::drop_timer& other);
                 bool operator==(const omni::chrono::drop_timer& o) const;
@@ -84,5 +85,12 @@ namespace omni {
         };
     } // namespace chrono
 } // namespace omni
+
+namespace std {
+    inline void swap(omni::chrono::drop_timer& o1, omni::chrono::drop_timer& o2)
+    {
+        o1.swap(o2);
+    }
+}
 
 #endif // OMNI_DROP_TIMER_HPP

@@ -20,12 +20,14 @@
 #if defined(OMNI_SAFE_STOPWATCH)
     #include <omni/sync/scoped_lock.hpp>
     #define OMNI_SAFE_SWMTX_FW      ,m_mtx()
-    #define OMNI_STOPWATCH_ALOCK_FW omni::sync::scoped_lock<omni::sync::basic_lock> mlock(&this->m_mtx);
+    #define OMNI_STOPWATCH_ALOCK_FW omni::sync::scoped_lock<omni::sync::basic_lock> uuid12345(&this->m_mtx);
+    #define OMNI_STOPWATCH_OLOCK_FW(o) omni::sync::scoped_lock<omni::sync::basic_lock> uuid54321(&o.m_mtx);
     #define OMNI_STOPWATCH_MLOCK_FW this->m_mtx.lock();
     #define OMNI_STOPWATCH_ULOCK_FW this->m_mtx.unlock();
 #else
     #define OMNI_SAFE_SWMTX_FW
     #define OMNI_STOPWATCH_ALOCK_FW
+    #define OMNI_STOPWATCH_OLOCK_FW(o) 
     #define OMNI_STOPWATCH_MLOCK_FW
     #define OMNI_STOPWATCH_ULOCK_FW
 #endif
@@ -215,6 +217,18 @@ omni::stopwatch& omni::stopwatch::stop()
         else { OMNI_D2_FW("stopwatch not running"); }
     #endif
     return *this;
+}
+
+void omni::stopwatch::swap(omni::stopwatch& o)
+{
+    if (this != &o) {
+        OMNI_STOPWATCH_ALOCK_FW
+        OMNI_STOPWATCH_OLOCK_FW(o)
+        std::swap(this->m_end, o.m_end);
+        std::swap(this->m_init, o.m_init);
+        std::swap(this->m_isrun, o.m_isrun);
+        std::swap(this->m_isstrt, o.m_isstrt);
+    }
 }
 
 omni::stopwatch& omni::stopwatch::operator=(const omni::stopwatch &other)

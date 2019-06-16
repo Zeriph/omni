@@ -248,7 +248,7 @@ std::wstring omni::environment::get_var(const std::wstring& name)
     #else
         std::string v = omni::string::to_string(name);
         char* r = std::getenv(v.c_str());
-        if (r != NULL) { return omni::string::to_string_t(r); }
+        if (r != NULL) { return omni::string::to_wstring(r); }
     #endif
     OMNI_ERRV_RETV_FW("Error retrieving environment variable: ", OMNI_GLE_PRNT, omni::exceptions::environment_exception(static_cast<size_t>(OMNI_GLE)), omni::string_t())
 }

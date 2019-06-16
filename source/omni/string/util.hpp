@@ -562,7 +562,7 @@ namespace omni {
             }
             
             template < typename T >
-            inline T to_type(const std::string &str)
+            inline T to_type(const std::string& str)
             {
                 if (str.empty()) { return T(); }
                 T ret;                

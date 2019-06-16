@@ -101,7 +101,7 @@ namespace omni {
                 OMNI_D5_FW("destroyed");
             }
 
-            virtual const omni::string_t to_string_t() const { return this->name; }
+            virtual omni::string_t to_string_t() const { return this->name; }
 
             uint64_t type() const { return omni::type_id<omni::object>(); }
 

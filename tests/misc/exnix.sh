@@ -5,10 +5,10 @@ exdir=${omni_lib_loc}/examples/classes
 fwexd=${omni_lib_loc}/examples/framework
 zloc=${omni_lib_loc}/source
 zsrc=${zloc}/library.cpp
-zout="bin/$1"
+zout="${omni_lib_loc}/tests/bin/$1"
 xfile="${exdir}/$1.cpp"
 zexd="-DOMNI_SHOW_DEBUG=5 -DOMNI_SHOW_DEBUG_ERR -DOMNI_SHOW_DEBUG_FILE -DOMNI_SHOW_DEBUG_FUNC -DOMNI_SHOW_DEBUG_LINE"
-zexf="-DOMNI_UT_FULL -DOMNI_SHOW_DEBUG=5 -DOMNI_SHOW_DEBUG_ERR -DOMNI_SHOW_DEBUG_FILE -DOMNI_SHOW_DEBUG_FUNC -DOMNI_SHOW_DEBUG_LINE -DOMNI_DISPOSE_EVENT -DOMNI_OBJECT_NAME -DOMNI_TYPE_INFO -DOMNI_SAFE_FRAMEWORK -DOMNI_NON_PORTABLE -DOMNI_COMPILE_FLAGS"
+zexf="-DOMNI_UT_FULL -DOMNI_SHOW_DEBUG=5 -DOMNI_SHOW_DEBUG_ERR -DOMNI_SHOW_DEBUG_FILE -DOMNI_SHOW_DEBUG_FUNC -DOMNI_SHOW_DEBUG_LINE -DOMNI_DISPOSE_EVENT -DOMNI_OBJECT_NAME -DOMNI_TYPE_INFO -DOMNI_SAFE_FRAMEWORK -DOMNI_NON_PORTABLE"
 
 if [ "$1" == "list" ]; then
     find ${exdir} -type f -name "*.cpp" -exec basename "{}" ";"

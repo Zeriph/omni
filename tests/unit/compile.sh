@@ -38,7 +38,7 @@
 # curdate=`date "+%Y-%m-%d %H:%M:%S"`
 # echo "Build started: ${curdate}"
 
-omni_lib_loc=/code/Zeriph/libraries/omni
+omni_lib_loc=/Code/omni
 
 check_omni_lib_loc()
 {
@@ -58,7 +58,7 @@ check_omni_lib_loc()
 check_omni_lib_loc $*
 
 common="${omni_lib_loc}/source"
-odir="${omni_lib_loc}/build"
+odir="${omni_lib_loc}/tests/build"
 defines=""
 toolchain=g++
 libchain=ar
@@ -74,6 +74,7 @@ fwsrc="${fwsrc} ${common}/binary_semaphore.cpp"
 fwsrc="${fwsrc} ${common}/conditional.cpp"
 fwsrc="${fwsrc} ${common}/datetime.cpp"
 fwsrc="${fwsrc} ${common}/drop_timer.cpp"
+fwsrc="${fwsrc} ${common}/endpoint_descriptor.cpp"
 fwsrc="${fwsrc} ${common}/environment.cpp"
 fwsrc="${fwsrc} ${common}/externs.cpp"
 fwsrc="${fwsrc} ${common}/io.cpp"
@@ -82,7 +83,7 @@ fwsrc="${fwsrc} ${common}/mutex.cpp"
 fwsrc="${fwsrc} ${common}/queue_timer.cpp"
 fwsrc="${fwsrc} ${common}/runnable.cpp"
 fwsrc="${fwsrc} ${common}/semaphore.cpp"
-# fwsrc="${fwsrc} ${common}/socket.cpp # incomplete
+fwsrc="${fwsrc} ${common}/socket.cpp"
 fwsrc="${fwsrc} ${common}/stopwatch.cpp"
 fwsrc="${fwsrc} ${common}/sync_timer.cpp"
 fwsrc="${fwsrc} ${common}/system.cpp"
@@ -91,8 +92,8 @@ fwsrc="${fwsrc} ${common}/threadpool.cpp"
 fwsrc="${fwsrc} ${common}/version.cpp"
 includes="-I${common}"
 extraopts=""
-#log_file="${omni_lib_loc}/build/logs/build.log"
-#err_log_file="${omni_lib_loc}/build/logs/error.log"
+#log_file="${omni_lib_loc}/tests/logs/build.log"
+#err_log_file="${omni_lib_loc}/tests/logs/error.log"
 log_file=""
 err_log_file=""
 verbose=0
@@ -373,10 +374,10 @@ if [ $has_debug -eq 0 ]; then
     defines="${defines} -DNDEBUG"
 fi
 
-binfldr="${odir}/bin"
+binfldr="${omni_lib_loc}/tests/bin"
 objdir="${odir}/obj"
 asmdir="${odir}/asm"
-utofile="${binfldr}/omni.a"
+utofile="${binfldr}/libomni.a"
 
 if [ ! -d ${objdir} ]; then
     msg "mkdir ${objdir}"

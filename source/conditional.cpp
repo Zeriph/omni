@@ -20,6 +20,7 @@
 #include <omni/sync/scoped_lock.hpp>
 #include <omni/system.hpp> // OMNI_GLE_PRNT
 #include <omni/exception.hpp>
+#include <omni/sync/this_thread.hpp>
 
 omni::sync::conditional::conditional() :
     OMNI_CTOR_FW(omni::sync::conditional)

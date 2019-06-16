@@ -51,6 +51,7 @@ to ensure this file isn't built with the rest. */
 #endif
 
 #if defined(OMNI_NET_LIB) || (!defined(OMNI_TIMER_LIB) && !defined(OMNI_THREAD_LIB))
+    #include "endpoint_descriptor.cpp"
     #include "socket.cpp"
     // #include "server.cpp" # INCOMPLETE
     // #include "client.cpp" # INCOMPLETE

@@ -96,9 +96,10 @@ namespace omni {
 
 
                 ~datetime();
-                const omni::string_t to_string_t() const;
-                const std::string to_string() const;
-                const std::wstring to_wstring() const;
+                void swap(omni::chrono::datetime& other);
+                omni::string_t to_string_t() const;
+                std::string to_string() const;
+                std::wstring to_wstring() const;
                 omni::chrono::datetime& operator=(const omni::chrono::datetime& ap);
                 bool operator==(const omni::chrono::datetime& o) const;
                 bool operator!=(const omni::chrono::datetime& o) const;

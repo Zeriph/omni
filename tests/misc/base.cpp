@@ -52,7 +52,6 @@
         print_r(r3, 3);
         print_r(r4, 4);
     }
-*/
 
 void unsigned_test(const std::string& val, const std::string& should_be)
 {
@@ -184,21 +183,13 @@ void do_ip_tests()
 }
 
 int main(int argc, char* argv[])
-{
-    omni::net::socket s(omni::net::address_family::INTERNETWORK, omni::net::socket_type::STREAM, omni::net::protocol_type::IP);
-    std::cout << "s is bound? " << (s.is_bound() ? "yes" : "no") << std::endl;
-    std::cout << "s is connected? " << (s.is_connected() ? "yes" : "no") << std::endl;
-    std::cout << "s is open? " << (s.is_open() ? "yes" : "no") << std::endl;
-    std::cout << "s is listening? " << (s.is_listening() ? "yes" : "no") << std::endl;
-    std::cout << "s is shutdown? " << (s.is_shutdown() ? "yes" : "no") << std::endl;
-    
-    
-    /*omni::geometry::point_seq_t points = omni::geometry::path::get_circle(10, 10, 30);
+{   
+    omni::geometry::point_seq_t points = omni::geometry::path::get_circle(10, 10, 30);
 
     std::cout << "point count " << points.size() << std::endl;
     for (omni::geometry::point_seq_t::iterator itr = points.begin(); itr != points.end(); ++itr) {
         std::cout << "point: " << *itr << std::endl;
-    }*/
+    }
 
     // [ws][-]{ d | [d.]hh:mm[:ss[.ff]] }[ws]
     /*num_test("2");
@@ -213,7 +204,98 @@ int main(int argc, char* argv[])
     do_parse(" 12:10 ", "0.12:10:00.0");
     do_parse(" -12:10 ", "-0.12:10:00.0");
     do_parse(" 12:a0 ", "fail");
-    do_parse(" b 12:10 ", "fail");*/
+    do_parse(" b 12:10 ", "fail");
     
     return 0;
+}
+*/
+
+//#include <omnilib>
+//#include <vector>
+
+class server {
+    public:
+        server() :
+            m_clients(),
+            m_sock(omni::net::address_family::INET, omni::net::socket_type::STREAM, omni::net::protocol_type::TCP),
+            m_run(false)
+        {
+            if (this->m_sock.bind(12345) == omni::net::socket_error::SUCCESS) {
+                this->m_sock.listen();
+            }
+        }
+
+        ~server()
+        {
+            this->_stop();
+        }
+
+        bool is_running() const
+        {
+            omni::sync::scoped_basic_lock lock(&this->m_mtx);
+            return this->m_run;
+        }
+
+        void run()
+        {
+            this->m_mtx.lock();
+            if (this->m_sock.is_listening()) {
+                this->m_run = true;
+            }
+            this->m_mtx.unlock();
+            while (this->is_running()) {
+                omni::net::endpoint_descriptor* client = new omni::net::endpoint_descriptor();
+                if (this->m_sock.accept(*client) == omni::net::socket_error::SUCCESS) {
+                    this->m_clients.push_back(client);
+                }
+            }
+        }
+
+        void signal(int sig)
+        {
+            omni::sync::scoped_basic_lock lock(&this->m_mtx);
+            uint32_t xfr = 0;
+            for (std::vector<omni::net::endpoint_descriptor*>::iterator client = this->m_clients.begin();
+                 client != this->m_clients.end();
+                 ++client)
+            {
+                (*client)->send("END", 4, xfr);
+            }
+            this->m_run = false;
+        }
+
+        operator bool()
+        {
+            omni::sync::scoped_basic_lock lock(&this->m_mtx);
+            return this->m_sock.is_listening();
+        }
+
+    private:
+        std::vector<omni::net::endpoint_descriptor*> m_clients;
+        omni::net::socket m_sock;
+        mutable omni::sync::basic_lock m_mtx;
+        volatile bool m_run;
+
+        void _stop()
+        {
+            omni::sync::scoped_basic_lock lock(&this->m_mtx);
+            for (std::vector<omni::net::endpoint_descriptor*>::iterator client = this->m_clients.begin();
+                 client != this->m_clients.end();
+                 ++client)
+            {
+                (*client)->close();
+                delete (*client);
+            }
+            this->m_sock.disconnect(false); // shutdown and don't reuse socket
+        }
+};
+
+int main(int argc, const char* argv[])
+{
+    server srv;
+    if (srv) {
+        omni::application::signal_handler::attach(omni::application::signal_handler::callback::bind<server, &server::signal>(&srv));
+        return omni::application::run(argc, argv, omni::sync::bind<server, &server::run>(&srv), true, true);
+    }
+    return -1;
 }

@@ -1,8 +1,6 @@
 @echo off
 setlocal enabledelayedexpansion
 
-REM TODO: this gives a "The syntax of the command is incorrect." on this file .. ?
-
 REM set extralibs="WS2_32.lib" "Mswsock.lib" "AdvAPI32.lib" "User32.lib"
 set omni_lib_loc=G:
 
@@ -17,8 +15,8 @@ for %%a in (%*) do (
     )
 )
 
-set binfldr=%omni_lib_loc%\unit_tests\bin
-set utloc=%omni_lib_loc%\unit_tests\units
+set binfldr=%omni_lib_loc%\tests\bin
+set utloc=%omni_lib_loc%\tests\unit\units
 set unit_tests=
 for %%u in (!utloc!\*.hpp) do (
     set tname=%%u
@@ -177,18 +175,17 @@ if !wasEr! equ 1 (
 )
 
 if %use_log% equ 1 (
-	set llog=-log "%omni_lib_loc%\build\logs\!sys_type!_build.log"
+	set llog=-log "%omni_lib_loc%\tests\logs\!sys_type!_build.log"
 )
 
 if %noopt% equ 0 (
     set eopts=%eopts% -d /Oi -co opt 3 -co opt s
 )
 
-set utcpp=main.cpp
 set utofile=!binfldr!\!sys_type!_test.exe
-set utdef=-s !omni_lib_loc!\unit_tests\!utcpp! -i !omni_lib_loc!\unit_tests -d !utestflag!
+set utdef=-s !omni_lib_loc!\tests\unit\main.cpp -i !omni_lib_loc!\tests\unit -d !utestflag!
 
-set cpopt=call compile.bat %utdef% %uvar% -o %utofile% %eopts% %edefs% %vs% %llog% %libs%
+set cpopt=call !omni_lib_loc!\tests\unit\compile.bat %utdef% %uvar% -o %utofile% %eopts% %edefs% %vs% %llog% %libs%
 echo %cpopt%
 %cpopt%
 
@@ -291,9 +288,7 @@ if "%ut%"=="" (
         set eopts=!eopts! -oo heavy
         set eopts=!eopts! -oo safe fw
         set eopts=!eopts! -oo np
-        set eopts=!eopts! -d _CONSOLE -d NDEBUG -d OMNI_NO_EXTERN_CONSTS
-    ) else if "%ut%"=="all" (
-        set eopts=!eopts! -d OMNI_NO_EXTERN_CONSTS
+        set eopts=!eopts! -d _CONSOLE -d NDEBUG
     )
 )
 goto :eof

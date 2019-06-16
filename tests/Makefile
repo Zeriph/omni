@@ -2,9 +2,9 @@
 # CXX=g++
 
 # the various build directories
-OMNI_DIR=/code/Zeriph/omni
+OMNI_DIR=/Code/omni
 OMNI_SDIR=$(OMNI_DIR)/source
-OMNI_ODIR=$(OMNI_DIR)/build/obj
+OMNI_ODIR=$(OMNI_DIR)/tests/build/obj
 # Omni framework source files
 OMNI_SRC=application.cpp
 	argparser.cpp
@@ -12,16 +12,18 @@ OMNI_SRC=application.cpp
 	basic_thread.cpp
 	binary_semaphore.cpp
 	conditional.cpp
+	datetime.cpp
 	drop_timer.cpp
+	enpoint_descriptor.cpp
 	environment.cpp
 	externs.cpp
 	io.cpp
-	library.cpp
+#	library.cpp
 	mutex.cpp
-	omnilib
 	queue_timer.cpp
 	runnable.cpp
 	semaphore.cpp
+	socket.cpp
 	stopwatch.cpp
 	sync_timer.cpp
 	system.cpp
@@ -30,7 +32,7 @@ OMNI_SRC=application.cpp
 	version.cpp
 # translate the source to obj files
 OMNI_O=$(OMNI_SRC:%.cpp=$(OMNI_ODIR)/%.o)
-OMNI_LIB=$(OMNI_DIR)/build/bin/libomni.a
+OMNI_LIB=$(OMNI_DIR)/test/bin/libomni.a
 
 # OMNI_FLAGS are the default flags for compilation
 OMNI_FLAGS=-pthread -rt -O3 -DNDEBUG -D_CONSOLE 

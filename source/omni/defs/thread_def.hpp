@@ -92,7 +92,7 @@
         code where these macros are used will not make use of
         the __attribute__((Xcall)) compiler flag (especially
         since most of the code where this is being used is thread
-        code). NOTE however that if you wish to, you can define
+        code). NOTE however that if you wish, you can define
         OMNI_THREAD_CALL_T to be what you wish (__attribute__((std/fastcall/cdecl))
     */
     #if !defined(OMNI_THREAD_CALL_T)
@@ -111,7 +111,7 @@
     #define OMNI_SLEEP_INIT() struct timespec omni_stime; struct timespec omni_rtime; struct timespec* omni_ta[3] = { 0, &omni_stime, &omni_rtime }
     #define OMNI_SLEEP_WAIT_FW while ((::nanosleep(omni_ta[1], omni_ta[2]) == -1) && (errno == EINTR)) { omni_ta[0] = omni_ta[1]; omni_ta[1] = omni_ta[2]; omni_ta[2] = omni_ta[0]; }
     #define OMNI_SLEEP1()  omni_ta[1]->tv_sec = 0; omni_ta[1]->tv_nsec = 1000000; OMNI_SLEEP_WAIT_FW
-    #define OMNI_SLEEP(ms) omni_ta[1]->tv_sec = ((ms < 1000) ? 0 : (ms/1000)); omni_ta[1]->tv_nsec = ((ms % 1000) * 1000000); OMNI_SLEEP_WAIT_FW
+    #define OMNI_SLEEP(ms) omni_ta[1]->tv_sec = (((ms) < 1000) ? 0 : ((ms) / 1000)); omni_ta[1]->tv_nsec = (((ms) % 1000) * 1000000); OMNI_SLEEP_WAIT_FW
     #define OMNI_THREAD_YIELD() ::sched_yield()
 #endif
 
@@ -121,7 +121,7 @@
         #define OMNI_THREAD_ARG_NULL_T OMNI_NULL
     #else
         #define OMNI_THREAD_ARGS_T omni::generic_ptr
-    #define OMNI_THREAD_ARG_NULL_T omni::generic_ptr::null()
+        #define OMNI_THREAD_ARG_NULL_T omni::generic_ptr::null()
     #endif
 #endif
 

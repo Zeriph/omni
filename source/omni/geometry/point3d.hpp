@@ -55,6 +55,12 @@ namespace omni {
                     OMNI_SAFE_P3DMTX_FW
                 { }
 
+                point3d(const omni::math::dimensional<T, 3>& cp) : 
+                    OMNI_CTOR_FW(omni::geometry::point3d<T>)
+                    m_x(cp[0]), m_y(cp[1]), m_z(cp[2])
+                    OMNI_SAFE_P3DMTX_FW
+                { }
+
                 point3d(T x, T y, T z) : 
                     OMNI_CTOR_FW(omni::geometry::point3d<T>)
                     m_x(x), m_y(y), m_z(z)
@@ -96,7 +102,10 @@ namespace omni {
                 bool equals(T x, T y, T z) const
                 {
                     OMNI_SAFE_P3ALOCK_FW
-                    return this->m_x == x && this->m_y == y && this->m_z == z;
+                    return
+                        omni::math::are_equal<T>(this->m_x, x) &&
+                        omni::math::are_equal<T>(this->m_y, y) &&
+                        omni::math::are_equal<T>(this->m_z, z);
                 }
 
                 void set_coordinates(T x, T y, T z)
@@ -105,6 +114,11 @@ namespace omni {
                     this->m_x = x;
                     this->m_y = y;
                     this->m_z = z;
+                }
+
+                void set_coordinates(const omni::math::dimensional<T, 3>& point)
+                {
+                    this->set_coordinates(point[0], point[1], point[2]);
                 }
 
                 T decrement_x()
@@ -179,6 +193,17 @@ namespace omni {
                     return (this->m_z += val);
                 }
 
+                void swap(point3d<T>& o)
+                {
+                    if (this != &o) {
+                        OMNI_SAFE_P3ALOCK_FW
+                        OMNI_SAFE_P3OALOCK_FW(o)
+                        std::swap(this->m_x, o.m_x);
+                        std::swap(this->m_y, o.m_y);
+                        std::swap(this->m_z, o.m_z);
+                    }
+                }
+
                 omni::string_t to_string_t() const
                 {
                     omni::sstream_t s;
@@ -188,7 +213,7 @@ namespace omni {
                     return s.str();
                 }
 
-                const std::string to_string() const
+                std::string to_string() const
                 {
                     std::stringstream s;
                     OMNI_SAFE_P3LOCK_FW
@@ -197,7 +222,7 @@ namespace omni {
                     return s.str();
                 }
 
-                const std::wstring to_wstring() const
+                std::wstring to_wstring() const
                 {
                     std::wstringstream s;
                     OMNI_SAFE_P3LOCK_FW
@@ -214,7 +239,7 @@ namespace omni {
                 {
                     return !(*this == val);
                 }
-                
+
                 point3d<T>& operator=(const point3d<T>& val)
                 {
                     if (this != &val) {
@@ -253,9 +278,10 @@ namespace omni {
                     if (this == &val) { return true; }
                     OMNI_SAFE_P3ALOCK_FW
                     OMNI_SAFE_P3OALOCK_FW(val)
-                    return (this->m_x == val.m_x &&
-                            this->m_y == val.m_y &&
-                            this->m_z == val.m_z)
+                    return (
+                        omni::math::are_equal<T>(this->m_x, val.m_x) &&
+                        omni::math::are_equal<T>(this->m_y, val.m_y) &&
+                        omni::math::are_equal<T>(this->m_z, val.m_z))
                     OMNI_EQUAL_FW(val);
                 }
 
@@ -362,6 +388,11 @@ namespace omni {
                     x(cp.x), y(cp.y), z(cp.z)
                 { }
 
+                point3d_raw(const omni::math::dimensional<T, 3>& cp) : 
+                    OMNI_CTOR_FW(omni::geometry::point3d_raw<T>)
+                    x(cp[0]), y(cp[1]), z(cp[2])
+                { }
+
                 point3d_raw(T _x, T _y, T _z) : 
                     OMNI_CTOR_FW(omni::geometry::point3d_raw<T>)
                     x(_x), y(_y), z(_z)
@@ -382,7 +413,10 @@ namespace omni {
 
                 bool equals(T _x, T _y, T _z) const
                 {
-                    return this->x == _x && this->y == _y && this->z == _z;
+                    return
+                        omni::math::are_equal<T>(this->x, _x) &&
+                        omni::math::are_equal<T>(this->y, _y) &&
+                        omni::math::are_equal<T>(this->z, _z);
                 }
 
                 void set(T _x, T _y, T _z)
@@ -392,6 +426,15 @@ namespace omni {
                     this->z = _z;
                 }
 
+                void swap(point3d_raw<T>& o)
+                {
+                    if (this != &o) {
+                        std::swap(this->x, o.x);
+                        std::swap(this->y, o.y);
+                        std::swap(this->z, o.z);
+                    }
+                }
+
                 omni::string_t to_string_t() const
                 {
                     omni::sstream_t s;
@@ -399,14 +442,14 @@ namespace omni {
                     return s.str();
                 }
 
-                const std::string to_string() const
+                std::string to_string() const
                 {
                     std::stringstream s;
                     s << "{" << this->x << "," << this->y << "," << this->z << "}";
                     return s.str();
                 }
 
-                const std::wstring to_wstring() const
+                std::wstring to_wstring() const
                 {
                     std::wstringstream s;
                     s << "{" << this->x << "," << this->y << "," << this->z << "}";
@@ -417,7 +460,7 @@ namespace omni {
 
                 operator std::wstring() const { return this->to_wstring(); }
 
-                bool operator!=(const point3d_raw< T >& val) const
+                bool operator!=(const point3d_raw<T>& val) const
                 {
                     return !(*this == val);
                 }
@@ -447,12 +490,13 @@ namespace omni {
                            this->z > val.z;
                 }
 
-                bool operator==(const point3d_raw< T >& val) const
+                bool operator==(const point3d_raw<T>& val) const
                 {
                     if (this == &val) { return true; }
-                    return (this->x == val.x &&
-                            this->y == val.y &&
-                            this->z == val.z)
+                    return (
+                        omni::math::are_equal<T>(this->x, val.x) &&
+                        omni::math::are_equal<T>(this->y, val.y) &&
+                        omni::math::are_equal<T>(this->z, val.z))
                     OMNI_EQUAL_FW(val);
                 }
 
@@ -500,6 +544,20 @@ namespace omni {
         typedef omni::geometry::point3d_raw<int32_t> raw_point_3d_t;
         typedef omni::geometry::point3d_raw<int64_t> raw_point64_3d_t;
         typedef omni::geometry::point3d_raw<float> raw_pointF_3d_t;
+    }
+}
+
+namespace std {
+    template < typename T >
+    inline void swap(omni::geometry::point3d<T>& o1, omni::geometry::point3d<T>& o2)
+    {
+        o1.swap(o2);
+    }
+
+    template < typename T >
+    inline void swap(omni::geometry::point3d_raw<T>& o1, omni::geometry::point3d_raw<T>& o2)
+    {
+        o1.swap(o2);
     }
 }
 

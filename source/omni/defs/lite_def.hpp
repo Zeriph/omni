@@ -19,7 +19,7 @@
 #if !defined(OMNI_LITE_DEF_HPP)
 #define OMNI_LITE_DEF_HPP 1
 
-// TODO: add any other "lite" framework flags here
+// TODO: (continuous) add any other "lite" framework flags here
 
 #if defined(OMNI_LITE)
     #define OMNI_NO_OBJECT_NAME

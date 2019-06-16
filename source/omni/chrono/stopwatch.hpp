@@ -77,6 +77,7 @@ namespace omni {
             omni::stopwatch& start();
             omni::stopwatch& start(uint32_t offset_ms);
             omni::stopwatch& stop();
+            void swap(omni::stopwatch& o);
             omni::stopwatch& operator=(const omni::stopwatch &other);
             omni::stopwatch& operator=(bool enable);
             bool operator==(const omni::stopwatch &o) const;
@@ -103,6 +104,13 @@ namespace omni {
             /** zero's the clocks */
             void _zero();
     };
+}
+
+namespace std {
+    inline void swap(omni::stopwatch& o1, omni::stopwatch& o2)
+    {
+        o1.swap(o2);
+    }
 }
 
 #endif // OMNI_STOPWATCH_HPP

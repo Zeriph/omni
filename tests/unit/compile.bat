@@ -136,7 +136,7 @@ for %%a in (%*) do (
 )
 
 set common=!omni_lib_loc!\source
-set odir=!omni_lib_loc!\build
+set odir=!omni_lib_loc!\tests\build
 set fexcep=/EHa
 set source=
 set fwsrc=!common!\application.cpp
@@ -147,6 +147,7 @@ set fwsrc=!fwsrc! !common!\binary_semaphore.cpp
 set fwsrc=!fwsrc! !common!\conditional.cpp
 set fwsrc=!fwsrc! !common!\datetime.cpp
 set fwsrc=!fwsrc! !common!\drop_timer.cpp
+set fwsrc=!fwsrc! !common!\endpoint_descriptor.cpp
 set fwsrc=!fwsrc! !common!\environment.cpp
 set fwsrc=!fwsrc! !common!\externs.cpp
 set fwsrc=!fwsrc! !common!\io.cpp
@@ -155,7 +156,7 @@ set fwsrc=!fwsrc! !common!\mutex.cpp
 set fwsrc=!fwsrc! !common!\queue_timer.cpp
 set fwsrc=!fwsrc! !common!\runnable.cpp
 set fwsrc=!fwsrc! !common!\semaphore.cpp
-REM set fwsrc=!fwsrc! !common!\socket.cpp # incomplete
+set fwsrc=!fwsrc! !common!\socket.cpp
 set fwsrc=!fwsrc! !common!\stopwatch.cpp
 set fwsrc=!fwsrc! !common!\sync_timer.cpp
 set fwsrc=!fwsrc! !common!\system.cpp
@@ -680,14 +681,14 @@ if %useuni% equ 1 (
     set defines=!defines! /D _UNICODE /D UNICODE
 )
 
-set includes=!includes! !sdkinclude! /I!vsfldr!\Include"
+set includes=!includes! !sdkinclude! /I!winsdk!\Include" /I!vsfldr!\Include"
 set extraopts=/nologo /TP !fexcep! !extraopts!
-set lnkops=!lnkops! !libpath!
+set lnkops=!lnkops! !libpath! /LIBPATH:!winsdk!\Lib"
 
-set binfldr=!odir!\bin
+set binfldr=!omni_lib_loc!\tests\bin
 set objdir=!odir!\obj
 set asmdir=!odir!\asm
-set utofile=!binfldr!\omni.lib
+set utofile=!binfldr!\libomni.lib
 
 if not exist %objdir% (
     echo mkdir %objdir%
@@ -898,7 +899,7 @@ if not "%source%" == "" (
         
         set lcompchain=!linkchain!
         if %islib% equ 1 (
-            set libs=!libs! omni.lib
+            set libs=!libs! libomni.lib
             set lnkops=!lnkops! /LIBPATH:!binfldr!
         )
         set lisodt=%date:~10,4%-%date:~4,2%-%date:~7,2% %time:~0,2%:%time:~3,2%:%time:~6,2%

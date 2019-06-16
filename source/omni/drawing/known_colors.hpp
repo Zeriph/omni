@@ -431,12 +431,12 @@ namespace omni {
                     return this->m_val;
                 }
 
-                const std::string to_string() const
+                std::string to_string() const
                 {
                     return to_string(this->m_val);
                 }
 
-                const std::wstring to_wstring() const
+                std::wstring to_wstring() const
                 {
                     return to_wstring(this->m_val);
                 }
@@ -886,7 +886,9 @@ namespace omni {
                         OMNI_E2SS_FW(WHITESMOKE);
                         OMNI_E2SS_FW(YELLOW);
                         OMNI_E2SS_FW(YELLOWGREEN);
-                        default: ss << "UNKNOWN"; break;
+                        default:
+                            ss << "UNKNOWN (" << static_cast<int>(v) << ")";
+                            break;
                     }
                     return ss.str();
                 }

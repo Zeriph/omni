@@ -20,8 +20,8 @@ check_omni_lib_loc()
 
 check_omni_lib_loc $*
 
-binfldr="${omni_lib_loc}/unit_tests/bin"
-utloc="${omni_lib_loc}/unit_tests/units"
+binfldr="${omni_lib_loc}/tests/bin"
+utloc="${omni_lib_loc}/tests/unit/units"
 unit_tests=""
 for utf in ${utloc}/*.hpp; do
     tname=${utf#$utloc/}
@@ -132,10 +132,6 @@ parse_set_test()
         eopts="${eopts} -oo heavy"
         eopts="${eopts} -oo safe fw"
         eopts="${eopts} -oo np"
-        eopts="${eopts} -d OMNI_NO_EXTERN_CONSTS"
-    fi
-    if [ "$1" = "all" ]; then
-        eopts="${eopts} -d OMNI_NO_EXTERN_CONSTS"
     fi
 }
 
@@ -270,18 +266,17 @@ if [ "${sys_type}" = "osx" ]; then
 fi
 
 if [ $use_log -eq 1 ]; then
-    llog="-log ${omni_lib_loc}/build/logs/${sys_type}_build.log"
-    elog="-elog ${omni_lib_loc}/build/logs/${sys_type}_error.log"
+    llog="-log ${omni_lib_loc}/tests/logs/${sys_type}_build.log"
+    elog="-elog ${omni_lib_loc}/tests/logs/${sys_type}_error.log"
 fi
 
 if [ $noopt -eq 0 ]; then
     eopts="${eopts} -co opt 0"
 fi
 
-utcpp="main.cpp"
 utofile="${binfldr}/${sys_type}_test"
-utdef="-s ${omni_lib_loc}/unit_tests/${utcpp} -i ${omni_lib_loc}/unit_tests -d ${utestflag}"
+utdef="-s ${omni_lib_loc}/tests/unit/main.cpp -i ${omni_lib_loc}/tests/unit -d ${utestflag}"
 
-cpopt="compile.sh ${utdef} -o ${utofile} -fw ${omni_lib_loc} ${eopts} ${edefs} ${vs} ${llog} ${elog}"
+cpopt="${omni_lib_loc}/tests/unit/compile.sh ${utdef} -o ${utofile} -fw ${omni_lib_loc} ${eopts} ${edefs} ${vs} ${llog} ${elog}"
 echo "sh ${cpopt}"
 eval "sh ${cpopt}"

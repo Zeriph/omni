@@ -148,12 +148,12 @@ namespace omni {
                     return this->m_val;
                 }
 
-                const std::string to_string() const
+                std::string to_string() const
                 {
                     return to_string(this->m_val);
                 }
 
-                const std::wstring to_wstring() const
+                std::wstring to_wstring() const
                 {
                     return to_wstring(this->m_val);
                 }
@@ -325,7 +325,9 @@ namespace omni {
                         OMNI_E2SS_FW(ABOVE_NORMAL);
                         OMNI_E2SS_FW(HIGHEST);
                         OMNI_E2SS_FW(REAL_TIME);
-                        default: ss << "UNKNOWN"; break;
+                        default:
+                            ss << "UNKNOWN (" << static_cast<int>(v) << ")";
+                            break;
                     }
                     return ss.str();
                 }
@@ -449,12 +451,12 @@ namespace omni {
                     return this->m_val;
                 }
 
-                const std::string to_string() const
+                std::string to_string() const
                 {
                     return to_string(this->m_val);
                 }
 
-                const std::wstring to_wstring() const
+                std::wstring to_wstring() const
                 {
                     return to_wstring(this->m_val);
                 }
@@ -616,7 +618,9 @@ namespace omni {
                     switch (v) {
                         OMNI_E2SS_FW(USER);
                         OMNI_E2SS_FW(NOW);
-                        default: ss << "UNKNOWN"; break;
+                        default:
+                            ss << "UNKNOWN (" << static_cast<int>(v) << ")";
+                            break;
                     }
                     return ss.str();
                 }
@@ -749,12 +753,12 @@ namespace omni {
                     return this->m_val;
                 }
 
-                const std::string to_string() const
+                std::string to_string() const
                 {
                     return to_string(this->m_val);
                 }
 
-                const std::wstring to_wstring() const
+                std::wstring to_wstring() const
                 {
                     return to_wstring(this->m_val);
                 }
@@ -930,7 +934,9 @@ namespace omni {
                         OMNI_E2SS_FW(ABORT_REQUESTED);
                         OMNI_E2SS_FW(ABORTED);
                         OMNI_E2SS_FW(UNKNOWN);
-                        default: ss << "UNKNOWN"; break;
+                        default:
+                            ss << "UNKNOWN (" << static_cast<int>(v) << ")";
+                            break;
                     }
                     return ss.str();
                 }
@@ -1067,12 +1073,12 @@ namespace omni {
                     return this->m_val;
                 }
 
-                const std::string to_string() const
+                std::string to_string() const
                 {
                     return to_string(this->m_val);
                 }
 
-                const std::wstring to_wstring() const
+                std::wstring to_wstring() const
                 {
                     return to_wstring(this->m_val);
                 }
@@ -1252,7 +1258,9 @@ namespace omni {
                         OMNI_E2SS_FW(KILL_ON_ASSIGN);
                         OMNI_E2SS_FW(STACK_SIZE);
                         OMNI_E2SS_FW(AUTO_JOIN_TIMEOUT);
-                        default: ss << "UNKNOWN"; break;
+                        default:
+                            ss << "UNKNOWN (" << static_cast<int>(v) << ")";
+                            break;
                     }
                     return ss.str();
                 }

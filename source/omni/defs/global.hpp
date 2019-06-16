@@ -23,6 +23,7 @@
 #include <omni/defs/omni_ver.hpp>
 #include <cstddef>
 #include <limits>
+#include <utility>
 
 #if defined(_USE_MATH_DEFINES)
     #define OMNI_USE_MATH_DEFINES_FW 1

@@ -1,0 +1,27 @@
+The following is a list of known issues or action items for the current version
+of the framework and does not contain a chronological history (that is what the
+git/svn histories are for). This list is like a "live" list meant to be more of
+an all encompassing 'future' and 'todo' list noted and posted in the code repo.
+
+Current version: 0.8.0
+
+-The datetime class is still being worked on.
+
+-The omni::geometry::path namespace needs to be vetted and polished.
+
+-The omni::math namespace needs a few functions vetted.
+
+-The omni::net::socket/endpoint classes only support IP4 (no IP6/Unix yet).
+
+-The I/O namespace has been tested and works with the majority of functions
+but has not been fully vetted for functionality across platforms.
+
+-need to update the framework with the following:
+#if defined(OMNI_CHECK_ARITHMETIC_OVERFLOW)
+    if (omni::bits::will_addition_overflow(a,b)) { error }
+#endif
+NOTE: need to actually pay attention to this since this check needs to happen
+BEFORE the error condition, so in instances where there are unary operations,
+this won't necessarily work and will need to make the user aware in the docs.
+
+-C++11 is not fully integrated

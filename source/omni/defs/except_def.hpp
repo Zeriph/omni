@@ -21,21 +21,23 @@
 
 /* 
   The order of error reporting in the framework:
-   -Default is to throw base class omni::exception (which derives from std::execption) on framework errors
-   -If OMNI_NO_THROW is defined, then OMNI_TERMINATE, which is default defined as std::terminate(), is called
+   -Default is to throw base class omni::exception (which derives from std::exception) on framework errors
+
+   -If OMNI_NO_THROW is defined, then OMNI_TERMINATE (defined by default as std::terminate), is called
     on exception instead of throwing the omni::exception. Since std::terminate calls the installed
     std::terminate_handler, the Omni framework will leave it to the user to catch this if they wish
-    by using the std::set_terminate function or using the omni::application::terminate_handler::attach.
+    by using the std::set_terminate function or using omni::application::terminate_handler::attach.
     Otherwise, if no handler is installed, then std::abort is called, in which case the framework
     will catch that via the std::signal(SIGABRT, sig_handler) function call, but only if the user made
     use of the omni::application::run function(s). If no facility is installed, nor a 'run' function called
     to facilitate a std::abort trap, then the program will crash when std::abort is called upon std::terminate
-   -If OMNI_NO_THROW && OMNI_NO_TERMINATE are defined then neither std::terminate is called nor are any
-    exceptions thrown. All error handling is left to external validation (i.e. false/null values being returned
-    or functions returning early [quick fail]). This is only recommended in the event that you're compiler does
-    not support any exception handling mechanism or the library used does not support any standard functions
-    (like terminate or abort), even in this case it is advised to change the std::terminate call below to whatever
-    error mechanism your platform does support.
+   
+   -If OMNI_NO_THROW && OMNI_NO_TERMINATE are defined then std::terminate is not called, nor are any exceptions
+    thrown. All error handling is left to external validation, meaning false or null values being returned from
+    functions or the function simply returning early [quick fail]. This is only recommended in the event that
+    your environment does not support C++ exception handling mechanism or the library used does not support any
+    standard functions (like terminate or abort), even in this case it is advised to change the std::terminate call
+    below to whatever error mechanism your platform does support.
 */
 
 #if defined(OMNI_NO_EXCEPT) && defined(OMNI_NO_THROW)
@@ -61,7 +63,10 @@
 #endif
 // if no_throw, use std::terminate
 #if defined(OMNI_NO_THROW)
-    // DEV_NOTE: exceptions (i.e. the try {} catch block) only really 'cost' more if there's an actual exception
+    // DEV_NOTE: despite common misconception about exceptions in C++ and the 'cost' associated
+    // with a try..catch block, exceptions in C++ really only 'cost' more if there is an actual
+    // exception in your code. Handling all error in your code before an exception happens would
+    // be the ideal scenario to work in.
     #if defined(OMNI_THROW)
         #undef OMNI_THROW
     #endif

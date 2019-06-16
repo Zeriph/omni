@@ -23,8 +23,6 @@
  this file is #include'd directly in other source.
 */
 
-// TODO: parts of this are unfinished (i.e. set_size unix)
-
 // so as not to accidentally build this file with the source this macro is defined in io.cpp
 #if !defined(OMNI_IO_FILE_FW) || !defined(OMNI_PATH_FW) || !defined(OMNI_L_FW) || !defined(OMNI_STRING_T_FW)
     #error invalid preprocessor directive detected
@@ -435,8 +433,9 @@
     template < typename STR, typename IFSTREAM, typename SEQ >
     uint64_t rd(const STR& file, SEQ& buffer)
     {
-        // TODO: does wifstream not take wchar_t[] filename?
-        IFSTREAM ifile(omni::string::to_string(file).c_str(), std::ios::binary);
+        // DEV_NOTE: wifstream not take wchar_t[] filename since it's basic_ifstream<wchar_t>, which the constructors
+        // for basic_ifstream are only basic_ifstream(const char* file..) and basic_ifstream(const std::string& file...)
+        IFSTREAM ifile(omni::string::to_string(file), std::ios::binary);
         if (!ifile.is_open()) { return 0; }
         ifile.seekg(0, ifile.end);
         uint64_t length = static_cast<uint64_t>(ifile.tellg());

@@ -225,12 +225,12 @@ void omni::application::argparser::set(const omni::seq::string_t& av)
     }
 }
 
-const omni::string_t omni::application::argparser::to_string_t() const
+omni::string_t omni::application::argparser::to_string_t() const
 {
     return this->to_string_t(false);
 }
 
-const omni::string_t omni::application::argparser::to_string_t(bool includeArg1) const
+omni::string_t omni::application::argparser::to_string_t(bool includeArg1) const
 {
     #if defined(OMNI_UNICODE)
         return this->to_wstring(includeArg1);
@@ -239,12 +239,12 @@ const omni::string_t omni::application::argparser::to_string_t(bool includeArg1)
     #endif
 }
 
-const std::string omni::application::argparser::to_string() const
+std::string omni::application::argparser::to_string() const
 {
     return this->to_string(false);
 }
 
-const std::string omni::application::argparser::to_string(bool includeArg1) const
+std::string omni::application::argparser::to_string(bool includeArg1) const
 {
     std::string ret, tmp;
     std::string q("\"");
@@ -262,12 +262,12 @@ const std::string omni::application::argparser::to_string(bool includeArg1) cons
     return ret;
 }
 
-const std::wstring omni::application::argparser::to_wstring() const
+std::wstring omni::application::argparser::to_wstring() const
 {
     return this->to_wstring(false);
 }
 
-const std::wstring omni::application::argparser::to_wstring(bool includeArg1) const
+std::wstring omni::application::argparser::to_wstring(bool includeArg1) const
 {
     std::wstring ret, tmp;
     std::wstring q(L"\"");
@@ -285,12 +285,12 @@ const std::wstring omni::application::argparser::to_wstring(bool includeArg1) co
     return ret;
 }
 
-omni::string_t omni::application::argparser::operator[](const std::string &sw) const
+omni::string_t omni::application::argparser::operator[](const std::string& sw) const
 {
     return this->get_switch(omni::string::to_string_t(sw));
 }
 
-omni::string_t omni::application::argparser::operator[](const std::wstring &sw) const
+omni::string_t omni::application::argparser::operator[](const std::wstring& sw) const
 {
     return this->get_switch(omni::string::to_string_t(sw));
 }

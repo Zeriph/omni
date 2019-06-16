@@ -36,6 +36,8 @@
         #define STRICT // don't imply int types for handles
         #define NOMINMAX // don't conflict with std::min/std::max
     #endif
+    #include <winsock2.h>
+    #include <winsock.h>
     #include <windows.h>
     #if defined(OMNI_UNICODE)
         // macro to determine if platform is windows unicode

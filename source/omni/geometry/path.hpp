@@ -26,6 +26,7 @@
 
 namespace omni {
     namespace geometry {
+        /** Undocumented: not finished */
         namespace path {
             template < typename T >
             static typename omni_sequence_t< omni::geometry::point2d<T> > get_circle(T x, T y, T radius, T step, bool invert_x, bool invert_y)
@@ -96,6 +97,8 @@ namespace omni {
             }
 
             /*
+                TODO: OLD CODE .. remove once tests complete
+
                 static omni::geometry::point_seq_t get_circle(double x, double y, double radius, double step, bool invert_x, bool invert_y)
                 {
                     omni::geometry::point_seq_t points;
@@ -213,8 +216,6 @@ namespace omni {
                 }
             */
 
-            // TODO: finish this up (weffc stuff)
-
             template < typename T >
             static omni::geometry::point2d<T> get_point_on_circle(T angle, T radius, T center_x, T center_y)
             {
@@ -228,6 +229,8 @@ namespace omni {
             }
 
             /*
+                TODO: OLD CODE .. remove once tests complete
+
                 static omni::geometry::pointF_t get_pointF_on_circle(double angle, double radius, double center_x, double center_y)
                 {
                     if (angle > 360) {
@@ -275,21 +278,20 @@ namespace omni {
                 }
             */
 
-
             template < typename T >
-            static typename omni_sequence_t< omni::geometry::point2d<T> > get_path(T x1, T y1, T x2, T y2, T step)
+            static typename omni_sequence_t< omni::geometry::point2d<T> > get_path(T x1, T y1, T x2, T y2, T step, uint32_t skip, bool remove_duplicates)
             {
                 omni_sequence_t< omni::geometry::point2d<T> > points;
                 bool negx = (x1 > x2);
                 bool negy = (y1 > y2);
                 points.push_back(omni::geometry::point2d<T>(x1, y1));
-                if (x1 == x2) { // vertical line (y change, x doesn't)
+                if (omni::math::are_equal<T>(x1, x2)) { // vertical line (y change, x doesn't)
                     if (negy) {
                         for (; y1 > y2; --y1) { points.push_back(omni::geometry::point2d<T>(x1, y1)); }
                     } else {
                         for (; y1 < y2; ++y1) { points.push_back(omni::geometry::point2d<T>(x1, y1)); }
                     }
-                } else if (y1 == y2) { // horiz. line (x change, y doesn't)
+                } else if (omni::math::are_equal<T>(y1, y2)) { // horiz. line (x change, y doesn't)
                     if (negx) {
                         for (; x1 > x2; --x1) { points.push_back(omni::geometry::point2d<T>(x1, y1)); }
                     } else {
@@ -301,185 +303,66 @@ namespace omni {
                     T len = std::sqrt((run * run) + (rise * rise));
                     for (T L = 1.0; L < len; L += step) {
                         points.push_back(omni::geometry::vector2::calculate_point<T>(x1, y1, x2, y2, L));
-                        //omni::geometry::point2d<T> pt = omni::geometry::vector2::calculate_point<T>(x1, y1, x2, y2, L);
-                        //if (std::find(points.begin(), points.end(), pt) == points.end()) { points.push_back(pt); }
                     }
                 }
                 points.push_back(omni::geometry::point2d<T>(x2, y2));
+                if (skip > 0 || remove_duplicates) {
+                    uint32_t x = 0;
+                    typename omni_sequence_t< omni::geometry::point2d<T> >::iterator it = points.begin();
+                    typename omni_sequence_t< omni::geometry::point2d<T> >::iterator next = (it + 1);
+                    for (; (skip > 0) && (it != points.end()); it = next++) {
+                        if (++x % skip == 0) { continue; }
+                        if (x == skip) { x = 0; }
+                        points.erase(it);
+                    }
+                    // TODO: finish this .. optimize function
+                    if (remove_duplicates) {
+                        it = points.begin(); next = (it + 1);
+                        while (next != points.end()) {
+                            if (omni::math::are_equal<T>(*it, *next)) {
+                                points.erase(next);
+                                next = (it + 1);
+                            } else {
+                                it = next++;
+                            }
+                        }
+                    }
+
+                }
                 return points;
             }
 
+            template < typename T >
+            static typename omni_sequence_t< omni::geometry::point2d<T> > get_path(T x1, T y1, T x2, T y2, T step)
+            {
+                return omni::geometry::path::get_path<T>(x1, y1, x2, y2, step, true);
+            }
+
             /*
-                static omni::geometry::pointF_seq_t get_pathF(double x1, double y1, double x2, double y2, double step)
-                {
-                    omni::geometry::pointF_seq_t points;
-                    bool negx = (x1 > x2);
-                    bool negy = (y1 > y2);
-                    points.push_back(omni::geometry::pointF_t(x1, y1));
-                    if (x1 == x2) { // vertical line (y change, x doesn't)
-                        if (negy) {
-                            for (; y1 > y2; --y1) { points.push_back(omni::geometry::pointF_t(x1, y1)); }
-                        } else {
-                            for (; y1 < y2; ++y1) { points.push_back(omni::geometry::pointF_t(x1, y1)); }
-                        }
-                    } else if (y1 == y2) { // horiz. line (x change, y doesn't)
-                        if (negx) {
-                            for (; x1 > x2; --x1) { points.push_back(omni::geometry::pointF_t(x1, y1)); }
-                        } else {
-                            for (; x1 < x2; ++x1) { points.push_back(omni::geometry::pointF_t(x1, y1)); }
-                        }
-                    } else { // slant line (x && y change)
-                        double run = x2 - x1;
-                        double rise = y2 - y1;
-                        double len = std::sqrt((run * run) + (rise * rise));
-                        for (double L = 1.0; L < len; L += step) {
-                            omni::geometry::pointF_t pt = omni::geometry::vector2::calculate_pointF(x1, y1, x2, y2, L);
-                            if (std::find(points.begin(), points.end(), pt) == points.end()) { points.push_back(pt); }
-                        }
-                    }
-                    points.push_back(omni::geometry::pointF_t(x2, y2));
-                    return points;
-                }
+                TODO: OLD CODE .. remove once tests complete
 
-                static omni::geometry::pointF_seq_t get_pathF(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
+                template < typename T >
+                static typename omni_sequence_t< omni::geometry::point2d<T> > get_path(T x1, T y1, T x2, T y2, T step, uint32_t skip, bool remove_duplicates)
                 {
-                    omni::geometry::pointF_seq_t points;
-                    bool negx = (x1 > x2);
-                    bool negy = (y1 > y2);
-                    points.push_back(omni::geometry::pointF_t(x1, y1));
-                    if (x1 == x2) { // vertical line (y change, x doesn't)
-                        if (negy) {
-                            for (; y1 > y2; --y1) { points.push_back(omni::geometry::pointF_t(x1, y1)); }
-                        } else {
-                            for (; y1 < y2; ++y1) { points.push_back(omni::geometry::pointF_t(x1, y1)); }
+                    if (skip > 0) {
+                        omni_sequence_t< omni::geometry::point2d<T> > path = omni::geometry::path::get_path<T>(x1, y1, x2, y2, step, remove_duplicates);
+                        uint32_t x = 0;
+                        for (omni::geometry::point_seq_t::iterator itr = path.begin(); itr != path.end(); ++itr) {
+                            if (++x % skip == 0) { continue; }
+                            if (x == skip) { x = 0; }
+                            path.erase(itr--);
                         }
-                    } else if (y1 == y2) { // horiz. line (x change, y doesn't)
-                        if (negx) {
-                            for (; x1 > x2; --x1) { points.push_back(omni::geometry::pointF_t(x1, y1)); }
-                        } else {
-                            for (; x1 < x2; ++x1) { points.push_back(omni::geometry::pointF_t(x1, y1)); }
-                        }
-                    } else { // slant line (x && y change)
-                        int32_t run = x2 - x1;
-                        int32_t rise = y2 - y1;
-                        double len = std::sqrt((run * run) + (rise * rise));
-                        for (double L = 1.0; L < len; ++L) {
-                            omni::geometry::pointF_t pt = omni::geometry::vector2::calculate_pointF(x1, y1, x2, y2, L);
-                            if (std::find(points.begin(), points.end(), pt) == points.end()) { points.push_back(pt); }
-                        }
+                        return path;
                     }
-                    points.push_back(omni::geometry::pointF_t(x2, y2));
-                    return points;
-                }
-
-                static omni::geometry::point_seq_t get_path(double x1, double y1, double x2, double y2, double step)
-                {
-                    omni::geometry::point_seq_t points;
-                    bool negx = (x1 > x2);
-                    bool negy = (y1 > y2);
-                    points.push_back(omni::geometry::point_t(x1, y1));
-                    if (x1 == x2) { // vertical line (y change, x doesn't)
-                        if (negy) {
-                            for (; y1 > y2; --y1) { points.push_back(omni::geometry::point_t(x1, y1)); }
-                        } else {
-                            for (; y1 < y2; ++y1) { points.push_back(omni::geometry::point_t(x1, y1)); }
-                        }
-                    } else if (y1 == y2) { // horiz. line (x change, y doesn't)
-                        if (negx) {
-                            for (; x1 > x2; --x1) { points.push_back(omni::geometry::point_t(x1, y1)); }
-                        } else {
-                            for (; x1 < x2; ++x1) { points.push_back(omni::geometry::point_t(x1, y1)); }
-                        }
-                    } else { // slant line (x && y change)
-                        double run = x2 - x1;
-                        double rise = y2 - y1;
-                        double len = std::sqrt((run * run) + (rise * rise));
-                        for (double L = 1.0; L < len; L += step) {
-                            omni::geometry::point_t pt = omni::geometry::vector2::calculate_point(x1, y1, x2, y2, L);
-                            if (std::find(points.begin(), points.end(), pt) == points.end()) { points.push_back(pt); }
-                        }
-                    }
-                    points.push_back(omni::geometry::point_t(x2, y2));
-                    return points;
-                }
-
-                static omni::geometry::point_seq_t get_path(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
-                {
-                    omni::geometry::point_seq_t points;
-                    bool negx = (x1 > x2);
-                    bool negy = (y1 > y2);
-                    points.push_back(omni::geometry::point_t(x1, y1));
-                    if (x1 == x2) { // vertical line (y change, x doesn't)
-                        if (negy) {
-                            for (; y1 > y2; --y1) { points.push_back(omni::geometry::point_t(x1, y1)); }
-                        } else {
-                            for (; y1 < y2; ++y1) { points.push_back(omni::geometry::point_t(x1, y1)); }
-                        }
-                    } else if (y1 == y2) { // horiz. line (x change, y doesn't)
-                        if (negx) {
-                            for (; x1 > x2; --x1) { points.push_back(omni::geometry::point_t(x1, y1)); }
-                        } else {
-                            for (; x1 < x2; ++x1) { points.push_back(omni::geometry::point_t(x1, y1)); }
-                        }
-                    } else { // slant line (x && y change)
-                        int32_t run = x2 - x1;
-                        int32_t rise = y2 - y1;
-                        double len = std::sqrt((run * run) + (rise * rise));
-                        for (double L = 1.0; L < len; ++L) {
-                            omni::geometry::point_t pt = omni::geometry::vector2::calculate_point(x1, y1, x2, y2, L);
-                            if (std::find(points.begin(), points.end(), pt) == points.end()) { points.push_back(pt); }
-                        }
-                    }
-                    points.push_back(omni::geometry::point_t(x2, y2));
-                    return points;
+                    return omni::geometry::path::get_path<T>(x1, y1, x2, y2, step, remove_duplicates);
                 }
             */
 
             template < typename T >
             static typename omni_sequence_t< omni::geometry::point2d<T> > get_path(T x1, T y1, T x2, T y2, T step, uint32_t skip)
             {
-                if (skip > 0) {
-                    omni_sequence_t< omni::geometry::point2d<T> > path = omni::geometry::path::get_path<T>(x1, y1, x2, y2, step);
-                    uint32_t x = 0;
-                    for (omni::geometry::point_seq_t::iterator itr = path.begin(); itr != path.end(); ++itr) {
-                        if (++x % skip == 0) { continue; }
-                        if (x == skip) { x = 0; }
-                        path.erase(itr--);
-                    }
-                    return path;
-                }
-                return omni::geometry::path::get_path<T>(x1, y1, x2, y2, step);
+                return omni::geometry::path::get_path<T>(x1, y1, x2, y2, step, skip, true);
             }
-
-            /*
-                static omni::geometry::point_seq_t get_path(double x1, double y1, double x2, double y2, double step, uint32_t skip)
-                {
-                    omni::geometry::point_seq_t path = omni::geometry::path::get_path(x1, y1, x2, y2, step);
-                    if (skip > 0) {
-                        int32_t x = -1;
-                        for (omni::geometry::point_seq_t::iterator itr = path.begin(); itr != path.end(); ++itr) {
-                            if (++x == skip) { x = 0; }
-                            if (x % skip == 0) { continue; }
-                            path.erase(itr--);
-                        }
-                    }
-                    return path;
-                }
-
-                static omni::geometry::point_seq_t get_path(int32_t x1, int32_t y1, int32_t x2, int32_t y2, uint32_t skip)
-                {
-                    omni::geometry::point_seq_t path = omni::geometry::path::get_path(x1, y1, x2, y2);
-                    if (skip > 0) {
-                        int32_t x = -1;
-                        for (omni::geometry::point_seq_t::iterator itr = path.begin(); itr != path.end(); ++itr) {
-                            if (++x == skip) { x = 0; }
-                            if (x % skip == 0) { continue; }
-                            path.erase(itr--);
-                        }
-                    }
-                    return path;
-                }
-            */
         }
     }
 }

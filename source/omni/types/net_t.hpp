@@ -40,7 +40,9 @@ namespace omni {
                     UNSPECIFIED = AF_UNSPEC,
                     UNIX = AF_UNIX,
                     INTERNETWORK = AF_INET,
+                    INET = AF_INET,
                     INTERNETWORK_V6 = AF_INET6,
+                    INET6 = AF_INET6,
                     SNA = AF_SNA,
                     DECNET = AF_DECnet,
                     APPLETALK = AF_APPLETALK
@@ -49,7 +51,7 @@ namespace omni {
                 /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
-                    return 7;
+                    return 9;
                 }
 
                 /** The default value for this enum instance */
@@ -140,12 +142,12 @@ namespace omni {
                     return this->m_val;
                 }
 
-                const std::string to_string() const
+                std::string to_string() const
                 {
                     return to_string(this->m_val);
                 }
 
-                const std::wstring to_wstring() const
+                std::wstring to_wstring() const
                 {
                     return to_wstring(this->m_val);
                 }
@@ -237,9 +239,9 @@ namespace omni {
                     return this->m_val;
                 }
 
-                operator int() const
+                operator int32_t() const
                 {
-                    return static_cast<int>(this->m_val);
+                    return static_cast<int32_t>(this->m_val);
                 }
 
                 operator std::string() const
@@ -297,7 +299,9 @@ namespace omni {
                         OMNI_S2E_FW(UNSPECIFIED)
                         OMNI_S2E_FW(UNIX)
                         OMNI_S2E_FW(INTERNETWORK)
+                        OMNI_S2E_FW(INET)
                         OMNI_S2E_FW(INTERNETWORK_V6)
+                        OMNI_S2E_FW(INET6)
                         OMNI_S2E_FW(SNA)
                         OMNI_S2E_FW(DECNET)
                         OMNI_S2E_FW(APPLETALK)
@@ -313,11 +317,15 @@ namespace omni {
                         OMNI_E2SS_FW(UNSPECIFIED);
                         OMNI_E2SS_FW(UNIX);
                         OMNI_E2SS_FW(INTERNETWORK);
+                        //OMNI_E2SS_FW(INET);
                         OMNI_E2SS_FW(INTERNETWORK_V6);
+                        //OMNI_E2SS_FW(INET6);
                         OMNI_E2SS_FW(SNA);
                         OMNI_E2SS_FW(DECNET);
                         OMNI_E2SS_FW(APPLETALK);
-                        default: ss << "UNKNOWN"; break;
+                        default:
+                            ss << "UNKNOWN (" << static_cast<int>(v) << ")";
+                            break;
                     }
                     return ss.str();
                 }
@@ -328,693 +336,14 @@ namespace omni {
                         UNSPECIFIED ||
                         UNIX ||
                         INTERNETWORK ||
+                        // INET ||
                         INTERNETWORK_V6 ||
+                        // INET6 ||
                         SNA ||
                         DECNET ||
                         APPLETALK
                     );
                 }
-        };
-        
-        /** network_interface defines enum values for what kind of interface the network card is */
-        class network_interface {
-            public:
-                typedef enum enum_t {
-                    UNSPECIFIED = -1,
-                    LOOPBACK = 0,
-                    ETHERNET,
-                    WIRELESS
-                } enum_t;
-                
-                /** Defines the number of elements in the enum */
-                static inline unsigned short COUNT()
-                {
-                    return 3;
-                }
-
-                /** The default value for this enum instance */
-                static inline enum_t DEFAULT_VALUE()
-                {
-                    return UNSPECIFIED;
-                }
-
-                /** Converts the enum to its string representation */
-                static std::string to_string(enum_t v)
-                {
-                    return _to_val<std::stringstream>(v);
-                }
-            
-                /** Converts the enum to its wide string representation */
-                static std::wstring to_wstring(enum_t v)
-                {
-                    return _to_val<std::wstringstream>(v);
-                }
-
-                /** Parsing a string value into its enum representation */
-                static enum_t parse(const std::string& val)
-                {
-                    return _parse(val);
-                }
-
-                /** Parsing a wide string value into its enum representation */
-                static enum_t parse(const std::wstring& val)
-                {
-                    return _parse(val);
-                }
-
-                /** Tries parsing a string value into its enum representation */
-                static bool try_parse(const std::string& val, enum_t& out)
-                {
-                    return _try_parse(val, out);
-                }
-
-                /** Tries parsing a wide string value into its enum representation */
-                static bool try_parse(const std::wstring& val, enum_t& out)
-                {
-                    return _try_parse(val, out);
-                }
-
-                /** Tries parsing a string value into its enum representation */
-                static bool try_parse(const std::string& val, network_interface& out)
-                {
-                    return _try_parse(val, out);
-                }
-
-                /** Tries parsing a wide string value into its enum representation */
-                static bool try_parse(const std::wstring& val, network_interface& out)
-                {
-                    return _try_parse(val, out);
-                }
-
-                /** Returns true if the integer value specified is a valid enum value */
-                static bool is_valid(int val)
-                {
-                    return _valid(val);
-                }
-                
-                network_interface() :
-                    OMNI_CTOR_FW(omni::net::network_interface)
-                    m_val(DEFAULT_VALUE())
-                { }
-
-                network_interface(const network_interface& cp) :
-                    OMNI_CPCTOR_FW(cp)
-                    m_val(cp.m_val)
-                { }
-
-                network_interface(enum_t val) : 
-                    OMNI_CTOR_FW(omni::net::network_interface)
-                    m_val(val)
-                { }
-
-                ~network_interface()
-                {
-                    OMNI_TRY_FW
-                    OMNI_DTOR_FW
-                    OMNI_CATCH_FW
-                    OMNI_D5_FW("destroyed");
-                }
-
-                enum_t value() const
-                {
-                    return this->m_val;
-                }
-
-                const std::string to_string() const
-                {
-                    return to_string(this->m_val);
-                }
-
-                const std::wstring to_wstring() const
-                {
-                    return to_wstring(this->m_val);
-                }
-
-                bool operator!=(const network_interface& val) const
-                {
-                    return !(*this == val);
-                }
-                
-                bool operator!=(enum_t val) const
-                {
-                    return (this->m_val != val);
-                }
-                
-                network_interface& operator=(const network_interface& val)
-                {
-                    if (this != &val) {
-                        OMNI_ASSIGN_FW(val)
-                        this->m_val = val.m_val;
-                    }
-                    return *this;
-                }
-
-                network_interface& operator=(enum_t val)
-                {
-                    this->m_val = val;
-                    return *this;
-                }
-
-                network_interface& operator=(int val)
-                {
-                    if (!network_interface::is_valid(val)) {
-                        OMNI_ERR_RET_FW("Invalid enumeration value specified.", omni::exceptions::invalid_enum(val));
-                    } else {
-                        this->m_val = static_cast<enum_t>(val);
-                    }
-                    return *this;
-                }
-
-                bool operator<(const network_interface& val) const
-                {
-                    return this->m_val < val.m_val;
-                }
-
-                bool operator<(enum_t val) const
-                {
-                    return this->m_val < val;
-                }
-
-                bool operator<(int val) const
-                {
-                    return this->m_val < static_cast<enum_t>(val);
-                }
-
-                bool operator>(const network_interface& val) const
-                {
-                    return this->m_val > val.m_val;
-                }
-
-                bool operator>(enum_t val) const
-                {
-                    return this->m_val > val;
-                }
-
-                bool operator>(int val) const
-                {
-                    return this->m_val > val;
-                }
-
-                bool operator==(const network_interface& val) const
-                {
-                    if (this == &val) { return true; }
-                    return this->m_val == val.m_val
-                            OMNI_EQUAL_FW(val);
-                }
-
-                bool operator==(enum_t val) const
-                {
-                    return this->m_val == val;
-                }
-
-                bool operator==(int val) const
-                {
-                    return this->m_val == val;
-                }
-
-                operator enum_t() const
-                {
-                    return this->m_val;
-                }
-
-                operator int() const
-                {
-                    return static_cast<int>(this->m_val);
-                }
-
-                operator std::string() const
-                {
-                    return this->to_string();
-                }
-
-                operator std::wstring() const
-                {
-                    return this->to_wstring();
-                }
-
-                OMNI_MEMBERS_FW(omni::net::network_interface) // disposing,name,type(),hash()
-
-                OMNI_OSTREAM_FW(omni::net::network_interface)
-                OMNI_OSTREAM_FN_FW(enum_t)
-
-            private:
-                enum_t m_val;
-
-                template < typename S >
-                static enum_t _parse(const S& val)
-                {
-                    enum_t ret;
-                    if (_try_parse(val, ret)) { return ret; }
-                    OMNI_ERR_FW("invalid enum parse", omni::exceptions::invalid_enum())
-                    return DEFAULT_VALUE();
-                }
-
-                template < typename S >
-                static bool _try_parse(const S& str, enum_t& out)
-                {
-                    return _try_parse(omni::string::util::to_upper(str), out);
-                }
-
-                template < typename S >
-                static bool _try_parse(const S& val, network_interface& out)
-                {
-                    enum_t tmp;
-                    if (_try_parse(val, tmp)) {
-                        out.m_val = tmp;
-                        return true;
-                    }
-                    return false;
-                }
-
-                static bool _try_parse(const std::wstring& val, enum_t& out)
-                {
-                    return _try_parse(omni::string::util::to_string(val), out);
-                }
-
-                static bool _try_parse(const std::string& val, enum_t& out)
-                {
-                    if (!val.empty()) {
-                        OMNI_S2E_FW(UNSPECIFIED)
-                        OMNI_S2E_FW(LOOPBACK)
-                        OMNI_S2E_FW(ETHERNET)
-                        OMNI_S2E_FW(WIRELESS)
-                    }
-                    return false;
-                }
-
-                template < typename S >
-                static std::basic_string< typename S::char_type > _to_val(enum_t v)
-                {
-                    S ss;
-                    switch (v) {
-                        OMNI_E2SS_FW(UNSPECIFIED);
-                        OMNI_E2SS_FW(LOOPBACK);
-                        OMNI_E2SS_FW(ETHERNET);
-                        OMNI_E2SS_FW(WIRELESS);
-                        default: ss << "UNKNOWN"; break;
-                    }
-                    return ss.str();
-                }
-
-                static bool _valid(int val)
-                {
-                    return (val == 
-                        UNSPECIFIED ||
-                        LOOPBACK ||
-                        ETHERNET ||
-                        WIRELESS
-                    );
-                }
-        };
-        
-        /** ping_reply defines enum values for reply information received from a ping request */
-        class ping_reply {
-            public:
-                typedef enum enum_t {
-                    UNKNOWN,
-                    SUCCESS,
-                    DESTINATION_NETWORK_UNREACHABLE,
-                    DESTINATION_HOST_UNREACHABLE,
-                    DESTINATION_PROHIBITED,
-                    DESTINATION_PROTOCOL_UNREACHABLE,
-                    DESTINATION_PORT_UNREACHABLE,
-                    NO_RESOURCES,
-                    BAD_OPTION,
-                    HARDWARE_ERROR,
-                    PACKET_TOO_BIG,
-                    TIMED_OUT,
-                    BAD_ROUTE,
-                    TTL_EXPIRED,
-                    TTL_REASSEMBLY_TIME_EXCEEDED,
-                    PARAMETER_PROBLEM,
-                    SOURCE_QUENCH,
-                    BAD_DESTINATION,
-                    DESTINATION_UNREACHABLE,
-                    TIME_EXCEEDED,
-                    BAD_HEADER,
-                    UNRECOGNIZED_NEXT_HEADER,
-                    ICMP_ERROR,
-                    DESTINATIONS_COPEMISMATCH
-                } enum_t;
-                
-                /** Defines the number of elements in the enum */
-                static inline unsigned short COUNT()
-                {
-                    return 24;
-                }
-
-                /** The default value for this enum instance */
-                static inline enum_t DEFAULT_VALUE()
-                {
-                    return UNKNOWN;
-                }
-
-                /** Converts the enum to its string representation */
-                static std::string to_string(enum_t v)
-                {
-                    return _to_val<std::stringstream>(v);
-                }
-            
-                /** Converts the enum to its wide string representation */
-                static std::wstring to_wstring(enum_t v)
-                {
-                    return _to_val<std::wstringstream>(v);
-                }
-
-                /** Parsing a string value into its enum representation */
-                static enum_t parse(const std::string& val)
-                {
-                    return _parse(val);
-                }
-
-                /** Parsing a wide string value into its enum representation */
-                static enum_t parse(const std::wstring& val)
-                {
-                    return _parse(val);
-                }
-
-                /** Tries parsing a string value into its enum representation */
-                static bool try_parse(const std::string& val, enum_t& out)
-                {
-                    return _try_parse(val, out);
-                }
-
-                /** Tries parsing a wide string value into its enum representation */
-                static bool try_parse(const std::wstring& val, enum_t& out)
-                {
-                    return _try_parse(val, out);
-                }
-
-                /** Tries parsing a string value into its enum representation */
-                static bool try_parse(const std::string& val, ping_reply& out)
-                {
-                    return _try_parse(val, out);
-                }
-
-                /** Tries parsing a wide string value into its enum representation */
-                static bool try_parse(const std::wstring& val, ping_reply& out)
-                {
-                    return _try_parse(val, out);
-                }
-
-                /** Returns true if the integer value specified is a valid enum value */
-                static bool is_valid(int val)
-                {
-                    return _valid(val);
-                }
-                
-                ping_reply() :
-                    OMNI_CTOR_FW(omni::net::ping_reply)
-                    m_val(DEFAULT_VALUE())
-                { }
-
-                ping_reply(const ping_reply& cp) :
-                    OMNI_CPCTOR_FW(cp)
-                    m_val(cp.m_val)
-                { }
-
-                ping_reply(enum_t val) : 
-                    OMNI_CTOR_FW(omni::net::ping_reply)
-                    m_val(val)
-                { }
-
-                ~ping_reply()
-                {
-                    OMNI_TRY_FW
-                    OMNI_DTOR_FW
-                    OMNI_CATCH_FW
-                    OMNI_D5_FW("destroyed");
-                }
-
-                enum_t value() const
-                {
-                    return this->m_val;
-                }
-
-                const std::string to_string() const
-                {
-                    return to_string(this->m_val);
-                }
-
-                const std::wstring to_wstring() const
-                {
-                    return to_wstring(this->m_val);
-                }
-
-                bool operator!=(const ping_reply& val) const
-                {
-                    return !(*this == val);
-                }
-                
-                bool operator!=(enum_t val) const
-                {
-                    return (this->m_val != val);
-                }
-                
-                ping_reply& operator=(const ping_reply& val)
-                {
-                    if (this != &val) {
-                        OMNI_ASSIGN_FW(val)
-                        this->m_val = val.m_val;
-                    }
-                    return *this;
-                }
-
-                ping_reply& operator=(enum_t val)
-                {
-                    this->m_val = val;
-                    return *this;
-                }
-
-                ping_reply& operator=(int val)
-                {
-                    if (!ping_reply::is_valid(val)) {
-                        OMNI_ERR_RET_FW("Invalid enumeration value specified.", omni::exceptions::invalid_enum(val));
-                    } else {
-                        this->m_val = static_cast<enum_t>(val);
-                    }
-                    return *this;
-                }
-
-                bool operator<(const ping_reply& val) const
-                {
-                    return this->m_val < val.m_val;
-                }
-
-                bool operator<(enum_t val) const
-                {
-                    return this->m_val < val;
-                }
-
-                bool operator<(int val) const
-                {
-                    return this->m_val < static_cast<enum_t>(val);
-                }
-
-                bool operator>(const ping_reply& val) const
-                {
-                    return this->m_val > val.m_val;
-                }
-
-                bool operator>(enum_t val) const
-                {
-                    return this->m_val > val;
-                }
-
-                bool operator>(int val) const
-                {
-                    return this->m_val > val;
-                }
-
-                bool operator==(const ping_reply& val) const
-                {
-                    if (this == &val) { return true; }
-                    return this->m_val == val.m_val
-                            OMNI_EQUAL_FW(val);
-                }
-
-                bool operator==(enum_t val) const
-                {
-                    return this->m_val == val;
-                }
-
-                bool operator==(int val) const
-                {
-                    return this->m_val == val;
-                }
-
-                operator enum_t() const
-                {
-                    return this->m_val;
-                }
-
-                operator int() const
-                {
-                    return static_cast<int>(this->m_val);
-                }
-
-                operator std::string() const
-                {
-                    return this->to_string();
-                }
-
-                operator std::wstring() const
-                {
-                    return this->to_wstring();
-                }
-
-                OMNI_MEMBERS_FW(omni::net::ping_reply) // disposing,name,type(),hash()
-                
-                OMNI_OSTREAM_FW(omni::net::ping_reply)
-                OMNI_OSTREAM_FN_FW(enum_t)
-
-            private:
-                enum_t m_val;
-
-                template < typename S >
-                static enum_t _parse(const S& val)
-                {
-                    enum_t ret;
-                    if (_try_parse(val, ret)) { return ret; }
-                    OMNI_ERR_FW("invalid enum parse", omni::exceptions::invalid_enum())
-                    return DEFAULT_VALUE();
-                }
-
-                template < typename S >
-                static bool _try_parse(const S& str, enum_t& out)
-                {
-                    return _try_parse(omni::string::util::to_upper(str), out);
-                }
-
-                template < typename S >
-                static bool _try_parse(const S& val, ping_reply& out)
-                {
-                    enum_t tmp;
-                    if (_try_parse(val, tmp)) {
-                        out.m_val = tmp;
-                        return true;
-                    }
-                    return false;
-                }
-
-                static bool _try_parse(const std::wstring& val, enum_t& out)
-                {
-                    return _try_parse(omni::string::util::to_string(val), out);
-                }
-
-                static bool _try_parse(const std::string& val, enum_t& out)
-                {
-                    if (!val.empty()) {
-                        OMNI_S2E_FW(UNKNOWN)
-                        OMNI_S2E_FW(SUCCESS)
-                        OMNI_S2E_FW(DESTINATION_NETWORK_UNREACHABLE)
-                        OMNI_S2E_FW(DESTINATION_HOST_UNREACHABLE)
-                        OMNI_S2E_FW(DESTINATION_PROHIBITED)
-                        OMNI_S2E_FW(DESTINATION_PROTOCOL_UNREACHABLE)
-                        OMNI_S2E_FW(DESTINATION_PORT_UNREACHABLE)
-                        OMNI_S2E_FW(NO_RESOURCES)
-                        OMNI_S2E_FW(BAD_OPTION)
-                        OMNI_S2E_FW(HARDWARE_ERROR)
-                        OMNI_S2E_FW(PACKET_TOO_BIG)
-                        OMNI_S2E_FW(TIMED_OUT)
-                        OMNI_S2E_FW(BAD_ROUTE)
-                        OMNI_S2E_FW(TTL_EXPIRED)
-                        OMNI_S2E_FW(TTL_REASSEMBLY_TIME_EXCEEDED)
-                        OMNI_S2E_FW(PARAMETER_PROBLEM)
-                        OMNI_S2E_FW(SOURCE_QUENCH)
-                        OMNI_S2E_FW(BAD_DESTINATION)
-                        OMNI_S2E_FW(DESTINATION_UNREACHABLE)
-                        OMNI_S2E_FW(TIME_EXCEEDED)
-                        OMNI_S2E_FW(BAD_HEADER)
-                        OMNI_S2E_FW(UNRECOGNIZED_NEXT_HEADER)
-                        OMNI_S2E_FW(ICMP_ERROR)
-                        OMNI_S2E_FW(DESTINATIONS_COPEMISMATCH)
-                    }
-                    return false;
-                }
-
-                template < typename S >
-                static std::basic_string< typename S::char_type > _to_val(enum_t v)
-                {
-                    S ss;
-                    switch (v) {
-                        OMNI_E2SS_FW(UNKNOWN);
-                        OMNI_E2SS_FW(SUCCESS);
-                        OMNI_E2SS_FW(DESTINATION_NETWORK_UNREACHABLE);
-                        OMNI_E2SS_FW(DESTINATION_HOST_UNREACHABLE);
-                        OMNI_E2SS_FW(DESTINATION_PROHIBITED);
-                        OMNI_E2SS_FW(DESTINATION_PROTOCOL_UNREACHABLE);
-                        OMNI_E2SS_FW(DESTINATION_PORT_UNREACHABLE);
-                        OMNI_E2SS_FW(NO_RESOURCES);
-                        OMNI_E2SS_FW(BAD_OPTION);
-                        OMNI_E2SS_FW(HARDWARE_ERROR);
-                        OMNI_E2SS_FW(PACKET_TOO_BIG);
-                        OMNI_E2SS_FW(TIMED_OUT);
-                        OMNI_E2SS_FW(BAD_ROUTE);
-                        OMNI_E2SS_FW(TTL_EXPIRED);
-                        OMNI_E2SS_FW(TTL_REASSEMBLY_TIME_EXCEEDED);
-                        OMNI_E2SS_FW(PARAMETER_PROBLEM);
-                        OMNI_E2SS_FW(SOURCE_QUENCH);
-                        OMNI_E2SS_FW(BAD_DESTINATION);
-                        OMNI_E2SS_FW(DESTINATION_UNREACHABLE);
-                        OMNI_E2SS_FW(TIME_EXCEEDED);
-                        OMNI_E2SS_FW(BAD_HEADER);
-                        OMNI_E2SS_FW(UNRECOGNIZED_NEXT_HEADER);
-                        OMNI_E2SS_FW(ICMP_ERROR);
-                        OMNI_E2SS_FW(DESTINATIONS_COPEMISMATCH);
-                        default: ss << "UNKNOWN"; break;
-                    }
-                    return ss.str();
-                }
-
-                static bool _valid(int val)
-                {
-                    return (val ==
-                        UNKNOWN ||
-                        SUCCESS ||
-                        DESTINATION_NETWORK_UNREACHABLE ||
-                        DESTINATION_HOST_UNREACHABLE ||
-                        DESTINATION_PROHIBITED ||
-                        DESTINATION_PROTOCOL_UNREACHABLE ||
-                        DESTINATION_PORT_UNREACHABLE ||
-                        NO_RESOURCES ||
-                        BAD_OPTION ||
-                        HARDWARE_ERROR ||
-                        PACKET_TOO_BIG ||
-                        TIMED_OUT ||
-                        BAD_ROUTE ||
-                        TTL_EXPIRED ||
-                        TTL_REASSEMBLY_TIME_EXCEEDED ||
-                        PARAMETER_PROBLEM ||
-                        SOURCE_QUENCH ||
-                        BAD_DESTINATION ||
-                        DESTINATION_UNREACHABLE ||
-                        TIME_EXCEEDED ||
-                        BAD_HEADER ||
-                        UNRECOGNIZED_NEXT_HEADER ||
-                        ICMP_ERROR ||
-                        DESTINATIONS_COPEMISMATCH
-                    );
-                }
-
-                // Gets or sets the ping buffer to send
-                //char *buffer;
-                // Gets or sets the flag to not fragment the ICMP message
-                //bool dont_fragment;
-                // Gets or sets the TTL for the ICMP message
-                //int ttl;
-                // Gets the time it took for the ICMB message to go and come back
-                //long round_trip_time;
-                // The reply type of this instance
-                //omni::net::ping_reply::enum_t status;
-                
-                /*ping_reply() :
-                    buffer(0),
-                    dont_fragment(false),
-                    ttl(255),
-                    round_trim_time(0),
-                    status(omni::net::ping_reply::UNKNOWN)
-                {}*/
         };
         
         /** protocol_type defines enum values for the protocols that the omni::net::socket class supports. */
@@ -1129,12 +458,12 @@ namespace omni {
                     return this->m_val;
                 }
 
-                const std::string to_string() const
+                std::string to_string() const
                 {
                     return to_string(this->m_val);
                 }
 
-                const std::wstring to_wstring() const
+                std::wstring to_wstring() const
                 {
                     return to_wstring(this->m_val);
                 }
@@ -1226,9 +555,9 @@ namespace omni {
                     return this->m_val;
                 }
 
-                operator int() const
+                operator int32_t() const
                 {
-                    return static_cast<int>(this->m_val);
+                    return static_cast<int32_t>(this->m_val);
                 }
 
                 operator std::string() const
@@ -1316,7 +645,9 @@ namespace omni {
                         OMNI_E2SS_FW(IPV6);
                         OMNI_E2SS_FW(ICMPV6);
                         OMNI_E2SS_FW(RAW);
-                        default: ss << "UNKNOWN"; break;
+                        default:
+                            ss << "UNKNOWN (" << static_cast<int>(v) << ")";
+                            break;
                     }
                     return ss.str();
                 }
@@ -1387,10 +718,10 @@ namespace omni {
                     NOT_INITIALIZED = 10093,
                     DISCONNECTING = 10101,
                     TYPE_NOT_FOUND = 10109,
-                    NO_HOST = 11001,  // DEV_NOTE: HOST_NOT_FOUND is a #define in netdb.h
-                    AGAIN = 11002,  // DEV_NOTE: TRY_AGAIN is a #define in netdb.h
+                    NO_HOST = 11001,    // DEV_NOTE: HOST_NOT_FOUND is a #define in netdb.h
+                    AGAIN = 11002,      // DEV_NOTE: TRY_AGAIN is a #define in netdb.h
                     NO_RECOVER = 11003, // DEV_NOTE: NO_RECOVERY is a #define in netdb.h
-                    NO_DAT = 11004     // DEV_NOTE: NO_DATA is a #define in netdb.h
+                    NO_DAT = 11004      // DEV_NOTE: NO_DATA is a #define in netdb.h
                 } enum_t;
                 
                 /** Defines the number of elements in the enum */
@@ -1487,12 +818,12 @@ namespace omni {
                     return this->m_val;
                 }
 
-                const std::string to_string() const
+                std::string to_string() const
                 {
                     return to_string(this->m_val);
                 }
 
-                const std::wstring to_wstring() const
+                std::wstring to_wstring() const
                 {
                     return to_wstring(this->m_val);
                 }
@@ -1584,9 +915,9 @@ namespace omni {
                     return this->m_val;
                 }
 
-                operator int() const
+                operator int32_t() const
                 {
-                    return static_cast<int>(this->m_val);
+                    return static_cast<int32_t>(this->m_val);
                 }
 
                 operator std::string() const
@@ -1744,7 +1075,9 @@ namespace omni {
                         OMNI_E2SS_FW(AGAIN);
                         OMNI_E2SS_FW(NO_RECOVER);
                         OMNI_E2SS_FW(NO_DAT);
-                        default: ss << "UNKNOWN"; break;
+                        default:
+                            ss << "UNKNOWN (" << static_cast<int>(v) << ")";
+                            break;
                     }
                     return ss.str();
                 }
@@ -1817,7 +1150,7 @@ namespace omni {
                 /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
-                    return 10;
+                    return 5;
                 }
 
                 /** The default value for this enum instance */
@@ -1908,12 +1241,12 @@ namespace omni {
                     return this->m_val;
                 }
 
-                const std::string to_string() const
+                std::string to_string() const
                 {
                     return to_string(this->m_val);
                 }
 
-                const std::wstring to_wstring() const
+                std::wstring to_wstring() const
                 {
                     return to_wstring(this->m_val);
                 }
@@ -2005,9 +1338,9 @@ namespace omni {
                     return this->m_val;
                 }
 
-                operator int() const
+                operator int32_t() const
                 {
-                    return static_cast<int>(this->m_val);
+                    return static_cast<int32_t>(this->m_val);
                 }
 
                 operator std::string() const
@@ -2066,12 +1399,7 @@ namespace omni {
                         OMNI_S2E_FW(OUT_OF_BAND)
                         OMNI_S2E_FW(PEEK)
                         OMNI_S2E_FW(DONT_ROUTE)
-                        OMNI_S2E_FW(MAX_IO_VECTOR_LENGTH)
-                        OMNI_S2E_FW(TRUNCATED)
-                        OMNI_S2E_FW(CONTROL_DATA_TRUNCATED)
-                        OMNI_S2E_FW(BROADCAST)
-                        OMNI_S2E_FW(MULTICAST)
-                        OMNI_S2E_FW(PARTIAL)
+                        OMNI_S2E_FW(END_OF_RECORD)
                     }
                     return false;
                 }
@@ -2085,13 +1413,10 @@ namespace omni {
                         OMNI_E2SS_FW(OUT_OF_BAND);
                         OMNI_E2SS_FW(PEEK);
                         OMNI_E2SS_FW(DONT_ROUTE);
-                        OMNI_E2SS_FW(MAX_IO_VECTOR_LENGTH);
-                        OMNI_E2SS_FW(TRUNCATED);
-                        OMNI_E2SS_FW(CONTROL_DATA_TRUNCATED);
-                        OMNI_E2SS_FW(BROADCAST);
-                        OMNI_E2SS_FW(MULTICAST);
-                        OMNI_E2SS_FW(PARTIAL);
-                        default: ss << "UNKNOWN"; break;
+                        //OMNI_E2SS_FW(END_OF_RECORD);
+                        default:
+                            ss << "UNKNOWN (" << static_cast<int>(v) << ")";
+                            break;
                     }
                     return ss.str();
                 }
@@ -2103,12 +1428,7 @@ namespace omni {
                         OUT_OF_BAND ||
                         PEEK ||
                         DONT_ROUTE ||
-                        MAX_IO_VECTOR_LENGTH ||
-                        TRUNCATED ||
-                        CONTROL_DATA_TRUNCATED ||
-                        BROADCAST ||
-                        MULTICAST ||
-                        PARTIAL
+                        END_OF_RECORD
                     );
                 }
         };
@@ -2217,12 +1537,12 @@ namespace omni {
                     return this->m_val;
                 }
 
-                const std::string to_string() const
+                std::string to_string() const
                 {
                     return to_string(this->m_val);
                 }
 
-                const std::wstring to_wstring() const
+                std::wstring to_wstring() const
                 {
                     return to_wstring(this->m_val);
                 }
@@ -2314,9 +1634,9 @@ namespace omni {
                     return this->m_val;
                 }
 
-                operator int() const
+                operator int32_t() const
                 {
-                    return static_cast<int>(this->m_val);
+                    return static_cast<int32_t>(this->m_val);
                 }
 
                 operator std::string() const
@@ -2388,7 +1708,9 @@ namespace omni {
                         OMNI_E2SS_FW(SELECT_READ);
                         OMNI_E2SS_FW(SELECT_WRITE);
                         OMNI_E2SS_FW(SELECT_ERROR);
-                        default: ss << "UNKNOWN"; break;
+                        default:
+                            ss << "UNKNOWN (" << static_cast<int>(v) << ")";
+                            break;
                     }
                     return ss.str();
                 }
@@ -2510,12 +1832,12 @@ namespace omni {
                     return this->m_val;
                 }
 
-                const std::string to_string() const
+                std::string to_string() const
                 {
                     return to_string(this->m_val);
                 }
 
-                const std::wstring to_wstring() const
+                std::wstring to_wstring() const
                 {
                     return to_wstring(this->m_val);
                 }
@@ -2607,9 +1929,9 @@ namespace omni {
                     return this->m_val;
                 }
 
-                operator int() const
+                operator int32_t() const
                 {
-                    return static_cast<int>(this->m_val);
+                    return static_cast<int32_t>(this->m_val);
                 }
 
                 operator std::string() const
@@ -2685,7 +2007,9 @@ namespace omni {
                         OMNI_E2SS_FW(TCP);
                         OMNI_E2SS_FW(UDP);
                         OMNI_E2SS_FW(SOCKET);
-                        default: ss << "UNKNOWN"; break;
+                        default:
+                            ss << "UNKNOWN (" << static_cast<int>(v) << ")";
+                            break;
                     }
                     return ss.str();
                 }
@@ -2821,12 +2145,12 @@ namespace omni {
                     return this->m_val;
                 }
 
-                const std::string to_string() const
+                std::string to_string() const
                 {
                     return to_string(this->m_val);
                 }
 
-                const std::wstring to_wstring() const
+                std::wstring to_wstring() const
                 {
                     return to_wstring(this->m_val);
                 }
@@ -2918,9 +2242,9 @@ namespace omni {
                     return this->m_val;
                 }
 
-                operator int() const
+                operator int32_t() const
                 {
-                    return static_cast<int>(this->m_val);
+                    return static_cast<int32_t>(this->m_val);
                 }
 
                 operator std::string() const
@@ -3020,7 +2344,9 @@ namespace omni {
                         OMNI_E2SS_FW(RECEIVE_TIMEOUT);
                         OMNI_E2SS_FW(ERR);
                         OMNI_E2SS_FW(SOCKET_TYPE);
-                        default: ss << "UNKNOWN"; break;
+                        default:
+                            ss << "UNKNOWN (" << static_cast<int>(v) << ")";
+                            break;
                     }
                     return ss.str();
                 }
@@ -3157,12 +2483,12 @@ namespace omni {
                     return this->m_val;
                 }
 
-                const std::string to_string() const
+                std::string to_string() const
                 {
                     return to_string(this->m_val);
                 }
 
-                const std::wstring to_wstring() const
+                std::wstring to_wstring() const
                 {
                     return to_wstring(this->m_val);
                 }
@@ -3254,9 +2580,9 @@ namespace omni {
                     return this->m_val;
                 }
 
-                operator int() const
+                operator int32_t() const
                 {
-                    return static_cast<int>(this->m_val);
+                    return static_cast<int32_t>(this->m_val);
                 }
 
                 operator std::string() const
@@ -3326,7 +2652,9 @@ namespace omni {
                         OMNI_E2SS_FW(UNSPECIFIED);
                         OMNI_E2SS_FW(NO_DELAY);
                         OMNI_E2SS_FW(KEEP_ALIVE);
-                        default: ss << "UNKNOWN"; break;
+                        default:
+                            ss << "UNKNOWN (" << static_cast<int>(v) << ")";
+                            break;
                     }
                     return ss.str();
                 }
@@ -3445,12 +2773,12 @@ namespace omni {
                     return this->m_val;
                 }
 
-                const std::string to_string() const
+                std::string to_string() const
                 {
                     return to_string(this->m_val);
                 }
 
-                const std::wstring to_wstring() const
+                std::wstring to_wstring() const
                 {
                     return to_wstring(this->m_val);
                 }
@@ -3542,9 +2870,9 @@ namespace omni {
                     return this->m_val;
                 }
 
-                operator int() const
+                operator int32_t() const
                 {
-                    return static_cast<int>(this->m_val);
+                    return static_cast<int32_t>(this->m_val);
                 }
 
                 operator std::string() const
@@ -3616,7 +2944,9 @@ namespace omni {
                         OMNI_E2SS_FW(RECEIVE);
                         OMNI_E2SS_FW(SEND);
                         OMNI_E2SS_FW(BOTH);
-                        default: ss << "UNKNOWN"; break;
+                        default:
+                            ss << "UNKNOWN (" << static_cast<int>(v) << ")";
+                            break;
                     }
                     return ss.str();
                 }
@@ -3738,12 +3068,12 @@ namespace omni {
                     return this->m_val;
                 }
 
-                const std::string to_string() const
+                std::string to_string() const
                 {
                     return to_string(this->m_val);
                 }
 
-                const std::wstring to_wstring() const
+                std::wstring to_wstring() const
                 {
                     return to_wstring(this->m_val);
                 }
@@ -3835,9 +3165,9 @@ namespace omni {
                     return this->m_val;
                 }
 
-                operator int() const
+                operator int32_t() const
                 {
-                    return static_cast<int>(this->m_val);
+                    return static_cast<int32_t>(this->m_val);
                 }
 
                 operator std::string() const
@@ -3913,7 +3243,9 @@ namespace omni {
                         OMNI_E2SS_FW(RAW);
                         OMNI_E2SS_FW(RDM);
                         OMNI_E2SS_FW(SEQPACKET);
-                        default: ss << "UNKNOWN"; break;
+                        default:
+                            ss << "UNKNOWN (" << static_cast<int>(v) << ")";
+                            break;
                     }
                     return ss.str();
                 }
@@ -3931,54 +3263,12 @@ namespace omni {
                 }
         };
 
-        typedef OMNI_SOCKET_T socket_t;
-        typedef OMNI_SOCKADDR_IN_T sockaddr_in_t;
-        typedef OMNI_SOCKADDR_IN6_T sockaddr_in6_t;
-        typedef OMNI_SOCKADDR_UN_T sockaddr_un_t;
-        typedef OMNI_SOCKADDR_T sockaddr_t;
-        typedef OMNI_SOCKET_XFR_T xfr_t;
-
-        typedef struct endpoint_descriptor {
-            omni::net::socket_t sock;
-            omni::net::sockaddr_t addr;
-
-            endpoint_descriptor() :
-                sock(OMNI_INVALID_SOCKET), addr()
-            {
-                std::memset(&this->addr, 0, sizeof(omni::net::sockaddr_t));
-            }
-
-            endpoint_descriptor(const omni::net::endpoint_descriptor& cp) :
-                sock(cp.sock), addr(cp.addr)
-            {}
-
-            explicit endpoint_descriptor(omni::net::socket_t s) :
-                sock(s), addr()
-            {
-                std::memset(&this->addr, 0, sizeof(omni::net::sockaddr_t));
-            }
-
-            explicit endpoint_descriptor(omni::net::sockaddr_t sa) :
-                sock(OMNI_INVALID_SOCKET), addr(sa)
-            {
-            }
-
-            endpoint_descriptor(omni::net::socket_t s, omni::net::sockaddr_t sa) :
-                sock(s), addr(sa)
-            {
-            }
-
-            ~endpoint_descriptor() { }
-            
-            endpoint_descriptor& operator=(const omni::net::endpoint_descriptor& o)
-            {
-                if (this != &o) {
-                    this->sock = o.sock;
-                    this->addr = o.addr;
-                }
-                return *this;
-            }
-        } endpoint_descriptor;
+        typedef OMNI_SOCKET_T_FW socket_t;
+        typedef OMNI_SOCKADDR_IN_T_FW sockaddr_in_t;
+        typedef OMNI_SOCKADDR_IN6_T_FW sockaddr_in6_t;
+        typedef OMNI_SOCKADDR_UN_T_FW sockaddr_un_t;
+        typedef OMNI_SOCKADDR_T_FW sockaddr_t;
+        typedef OMNI_SOCKET_XFR_T_FW xfr_t;
     }
 }
 

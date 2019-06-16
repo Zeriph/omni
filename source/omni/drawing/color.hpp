@@ -507,6 +507,18 @@ namespace omni {
                                         (static_cast<RgbType>(this->m_a) << (BitSize * 3)));
                 }
 
+                void swap(color<BitDepth, RgbType, BitSize>& o)
+                {
+                    if (this != &o) {
+                        OMNI_SAFE_CLRALOCK_FW
+                        OMNI_SAFE_CLROALOCK_FW(o)
+                        std::swap(this->m_r, o.m_r);
+                        std::swap(this->m_g, o.m_g);
+                        std::swap(this->m_b, o.m_b);
+                        std::swap(this->m_a, o.m_a);
+                    }
+                }
+
                 RgbType to_rgb() const
                 {
                     OMNI_SAFE_CLRALOCK_FW
@@ -545,7 +557,7 @@ namespace omni {
                     return s.str();
                 }
 
-                const std::string to_string() const
+                std::string to_string() const
                 {
                     std::stringstream s;
                     OMNI_SAFE_CLRLOCK_FW
@@ -557,7 +569,7 @@ namespace omni {
                     return s.str();
                 }
 
-                const std::wstring to_wstring() const
+                std::wstring to_wstring() const
                 {
                     std::wstringstream s;
                     OMNI_SAFE_CLRLOCK_FW
@@ -873,6 +885,14 @@ namespace omni {
 
         typedef omni::drawing::color<uint8_t, uint32_t> color_t;
         typedef omni::drawing::color<uint16_t, uint64_t> color64_t;
+    }
+}
+
+namespace std {
+    template < typename BitDepth, typename RgbType, uint8_t BitSize >
+    inline void swap(omni::drawing::color<BitDepth, RgbType, BitSize>& o1, omni::drawing::color<BitDepth, RgbType, BitSize>& o2)
+    {
+        o1.swap(o2);
     }
 }
 

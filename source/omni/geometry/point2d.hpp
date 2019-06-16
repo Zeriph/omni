@@ -57,6 +57,12 @@ namespace omni {
                     OMNI_SAFE_P2DMTX_FW
                 { }
 
+                point2d(const omni::math::dimensional<T, 2>& cp) :
+                    OMNI_CTOR_FW(omni::geometry::point2d<T>)
+                    m_x(cp[0]), m_y(cp[0])
+                    OMNI_SAFE_P2DMTX_FW
+                { }
+
                 point2d(T x, T y) : 
                     OMNI_CTOR_FW(omni::geometry::point2d<T>)
                     m_x(x), m_y(y)
@@ -155,6 +161,11 @@ namespace omni {
                     this->decrement(val.x(), val.y());
                 }
 
+                void decrement(const omni::math::dimensional<T, 2>& val)
+                {
+                    this->decrement(val[0], val[1]);
+                }
+
                 void decrement(const omni::geometry::size<T>& val)
                 {
                     this->decrement(val.width(), val.height());
@@ -177,6 +188,11 @@ namespace omni {
                     this->offset(val.x(), val.y());
                 }
 
+                void offset(const omni::math::dimensional<T, 2>& val)
+                {
+                    this->offset(val[0], val[1]);
+                }
+
                 void offset(const omni::geometry::size<T>& val)
                 {
                     this->offset(val.width(), val.height());
@@ -194,7 +210,17 @@ namespace omni {
                     this->m_y += y;
                 }
 
-                const omni::string_t to_string_t() const
+                void swap(point2d<T>& o)
+                {
+                    if (this != &o) {
+                        OMNI_SAFE_P2ALOCK_FW
+                        OMNI_SAFE_P2OALOCK_FW(o)
+                        std::swap(this->m_x, o.m_x);
+                        std::swap(this->m_y, o.m_y);
+                    }
+                }
+
+                omni::string_t to_string_t() const
                 {
                     omni::sstream_t s;
                     OMNI_SAFE_P2LOCK_FW
@@ -203,7 +229,7 @@ namespace omni {
                     return s.str();
                 }
 
-                const std::string to_string() const
+                std::string to_string() const
                 {
                     std::stringstream s;
                     OMNI_SAFE_P2LOCK_FW
@@ -212,7 +238,7 @@ namespace omni {
                     return s.str();
                 }
 
-                const std::wstring to_wstring() const
+                std::wstring to_wstring() const
                 {
                     std::wstringstream s;
                     OMNI_SAFE_P2LOCK_FW
@@ -229,6 +255,13 @@ namespace omni {
                 operator std::wstring() const
                 {
                     return this->to_wstring();
+                }
+
+                omni::math::dimensional<T, 2> to_dimensional() const
+                {
+                    OMNI_SAFE_P2ALOCK_FW
+                    T vals[2] = { this->m_x, this->m_y };
+                    return omni::math::dimensional<T, 2>(vals);
                 }
                 
                 omni::geometry::size<T> to_size() const
@@ -298,8 +331,8 @@ namespace omni {
                     OMNI_SAFE_P2ALOCK_FW
                     OMNI_SAFE_P2OALOCK_FW(val)
                     return (
-                        // TODO: finish this floating point math crap :/
-                        (this->m_x == val.m_x) && (this->m_y == val.m_y)
+                        omni::math::are_equal<T>(this->m_x, val.m_x) &&
+                        omni::math::are_equal<T>(this->m_y, val.m_y)
                     )
                     OMNI_EQUAL_FW(val);
                 }
@@ -309,6 +342,12 @@ namespace omni {
                     OMNI_SAFE_P2ALOCK_FW
                     OMNI_SAFE_P2OALOCK_FW(val)
                     return point2d<T>((this->m_x + val.m_x), (this->m_y + val.m_y));
+                }
+
+                point2d<T> operator+(const omni::math::dimensional<T, 2>& val)
+                {
+                    OMNI_SAFE_P2ALOCK_FW
+                    return point2d<T>((this->m_x + val[0]), (this->m_y + val[1]));
                 }
 
                 point2d<T> operator+(const omni::geometry::size<T>& val)
@@ -330,6 +369,12 @@ namespace omni {
                     return point2d<T>((this->m_x - val.m_x), (this->m_y - val.m_y));
                 }
 
+                point2d<T> operator-(const omni::math::dimensional<T, 2>& val)
+                {
+                    OMNI_SAFE_P2ALOCK_FW
+                    return point2d<T>((this->m_x - val[0]), (this->m_y - val[1]));
+                }
+
                 point2d<T> operator-(const omni::geometry::size<T>& val)
                 {
                     OMNI_SAFE_P2ALOCK_FW
@@ -345,6 +390,12 @@ namespace omni {
                 point2d<T>& operator+=(const point2d<T>& val)
                 {
                     this->offset(val.x(), val.y());
+                    return *this;
+                }
+
+                point2d<T> operator+=(const omni::math::dimensional<T, 2>& val)
+                {
+                    this->offset(val[0], val[1]);
                     return *this;
                 }
 
@@ -366,6 +417,12 @@ namespace omni {
                     return *this;
                 }
 
+                point2d<T> operator-=(const omni::math::dimensional<T, 2>& val)
+                {
+                    this->decrement(val[0], val[1]);
+                    return *this;
+                }
+
                 point2d<T>& operator-=(const omni::geometry::size<T>& val)
                 {
                     this->decrement(val.width(), val.height());
@@ -378,6 +435,11 @@ namespace omni {
                     return *this;
                 }
 
+                operator omni::math::dimensional<T, 2>() const
+                {
+                    return this->to_dimensional();
+                }
+
                 operator omni::geometry::size<T>() const
                 {
                     return this->to_size();
@@ -388,11 +450,16 @@ namespace omni {
                     return this->to_size_raw();
                 }
 
+                static point2d<T> add(const point2d<T>& point, const omni::math::dimensional<T, 2> coord)
+                {
+                    return point2d<T>(point.x() + coord[0], point.y() + coord[1]);
+                }
+
                 static point2d<T> add(const point2d<T>& point, const omni::geometry::size<T> sz)
                 {
                     return point2d<T>(point.x() + sz.width(), point.y() + sz.height());
                 }
-
+                
                 static point2d<T> add(const point2d<T>& point, const omni::geometry::size_raw<T> sz)
                 {
                     return point2d<T>(point.x() + sz.width, point.y() + sz.height);
@@ -446,6 +513,11 @@ namespace omni {
                     x(cp.x), y(cp.y)
                 { }
 
+                point2d_raw(const omni::math::dimensional<T, 2>& cp) :
+                    OMNI_CTOR_FW(omni::geometry::point2d<T>)
+                    x(cp[0]), y(cp[1])
+                { }
+
                 point2d_raw(T _x, T _y) : 
                     OMNI_CTOR_FW(omni::geometry::point2d<T>)
                     x(_x), y(_y)
@@ -475,9 +547,22 @@ namespace omni {
                     this->y = _y;
                 }
 
+                void swap(point2d_raw<T>& o)
+                {
+                    if (this != &o) {
+                        std::swap(this->x, o.x);
+                        std::swap(this->y, o.y);
+                    }
+                }
+
                 void decrement(const point2d_raw<T>& val)
                 {
                     this->decrement(val.x, val.y);
+                }
+
+                void decrement(const omni::math::dimensional<T, 2>& val)
+                {
+                    this->decrement(val[0], val[1]);
                 }
 
                 void decrement(const omni::geometry::size<T>& val)
@@ -501,6 +586,11 @@ namespace omni {
                     this->offset(val.x, val.y);
                 }
 
+                void offset(const omni::math::dimensional<T, 2>& val)
+                {
+                    this->offset(val[0], val[1]);
+                }
+
                 void offset(const omni::geometry::size<T>& val)
                 {
                     this->offset(val.width(), val.height());
@@ -517,21 +607,21 @@ namespace omni {
                     this->y += _y;
                 }
 
-                const omni::string_t to_string_t() const
+                omni::string_t to_string_t() const
                 {
                     omni::sstream_t s;
                     s << "{" << this->x << "," << this->y << "}";
                     return s.str();
                 }
 
-                const std::string to_string() const
+                std::string to_string() const
                 {
                     std::stringstream s;
                     s << "{" << this->x << "," << this->y << "}";
                     return s.str();
                 }
 
-                const std::wstring to_wstring() const
+                std::wstring to_wstring() const
                 {
                     std::wstringstream s;
                     s << "{" << this->x << "," << this->y << "}";
@@ -546,6 +636,12 @@ namespace omni {
                 operator std::wstring() const
                 {
                     return this->to_wstring();
+                }
+
+                omni::math::dimensional<T, 2> to_dimensional() const
+                {
+                    T vals[2] = { this->x, this->y };
+                    return omni::math::dimensional<T, 2>(vals);
                 }
                 
                 omni::geometry::size<T> to_size() const
@@ -596,13 +692,21 @@ namespace omni {
                 bool operator==(const point2d_raw<T>& val) const
                 {
                     if (this == &val) { return true; }
-                    return ((this->x == val.x) && (this->y == val.y))
+                    return (
+                        omni::math::are_equal<T>(this->x, val.x) &&
+                        omni::math::are_equal<T>(this->y, val.y)
+                    )
                     OMNI_EQUAL_FW(val);
                 }
 
                 point2d_raw<T> operator+(const point2d_raw<T>& val)
                 {
                     return point2d_raw<T>((this->x + val.x), (this->y + val.y));
+                }
+
+                point2d_raw<T> operator+(const omni::math::dimensional<T, 2>& val)
+                {
+                    return point2d_raw<T>((this->x + val[0]), (this->y + val[1]));
                 }
 
                 point2d_raw<T> operator+(const omni::geometry::size<T>& val)
@@ -618,6 +722,11 @@ namespace omni {
                 point2d_raw<T> operator-(const point2d_raw<T>& val)
                 {
                     return point2d_raw<T>((this->x - val.x), (this->y - val.y));
+                }
+
+                point2d_raw<T> operator-(const omni::math::dimensional<T, 2>& val)
+                {
+                    return point2d_raw<T>((this->x - val[0]), (this->y - val[1]));
                 }
 
                 point2d_raw<T> operator-(const omni::geometry::size<T>& val)
@@ -636,6 +745,12 @@ namespace omni {
                     return *this;
                 }
 
+                point2d_raw<T>& operator+=(const omni::math::dimensional<T, 2>& val)
+                {
+                    this->offset(val);
+                    return *this;
+                }
+
                 point2d_raw<T>& operator+=(const omni::geometry::size<T>& val)
                 {
                     this->offset(val.width(), val.height());
@@ -651,6 +766,12 @@ namespace omni {
                 point2d_raw<T>& operator-=(const point2d_raw<T>& val)
                 {
                     this->decrement(val.x, val.y);
+                    return *this;
+                }
+
+                point2d_raw<T>& operator-=(const omni::math::dimensional<T, 2>& val)
+                {
+                    this->decrement(val);
                     return *this;
                 }
 
@@ -676,6 +797,11 @@ namespace omni {
                     return this->to_size_raw();
                 }
 
+                static point2d_raw<T> add(const point2d_raw<T>& point, const omni::math::dimensional<T, 2> sz)
+                {
+                    return point2d_raw<T>(point.x + sz[0], point.y + sz[1]);
+                }
+
                 static point2d_raw<T> add(const point2d_raw<T>& point, const omni::geometry::size<T> sz)
                 {
                     return point2d_raw<T>(point.x + sz.width(), point.y + sz.height());
@@ -684,6 +810,11 @@ namespace omni {
                 static point2d_raw<T> add(const point2d_raw<T>& point, const omni::geometry::size_raw<T> sz)
                 {
                     return point2d_raw<T>(point.x + sz.width, point.y + sz.height);
+                }
+
+                static point2d_raw<T> subtract(const point2d_raw<T>& point, const omni::math::dimensional<T, 2> sz)
+                {
+                    return point2d_raw<T>(point.x - sz[0], point.y - sz[1]);
                 }
 
                 static point2d_raw<T> subtract(const point2d_raw<T>& point, const omni::geometry::size<T> sz)
@@ -714,6 +845,20 @@ namespace omni {
         typedef omni_sequence_t<omni::geometry::raw_point64_t> raw_point64_seq_t;
         typedef omni_sequence_t<omni::geometry::raw_pointF_t> raw_pointF_seq_t;
         typedef omni_sequence_t<omni::geometry::raw_pointD_t> raw_pointD_seq_t;
+    }
+}
+
+namespace std {
+    template < typename T >
+    inline void swap(omni::geometry::point2d<T>& o1, omni::geometry::point2d<T>& o2)
+    {
+        o1.swap(o2);
+    }
+
+    template < typename T >
+    inline void swap(omni::geometry::point2d_raw<T>& o1, omni::geometry::point2d_raw<T>& o2)
+    {
+        o1.swap(o2);
     }
 }
 

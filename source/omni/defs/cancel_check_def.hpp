@@ -19,7 +19,7 @@
 #if !defined(OMNI_CANCEL_CHECK_DEF_HPP)
 #define OMNI_CANCEL_CHECK_DEF_HPP 1
 
-// TODO: add any other 'no' framework entities here that do _not_ relate to the 'safe' options
+// TODO: (continuous) add any other 'no' framework entities here that do _not_ relate to the 'safe' options
 
 #if defined(OMNI_OBJECT_NAME) && defined(OMNI_NO_OBJECT_NAME)
     #undef OMNI_OBJECT_NAME

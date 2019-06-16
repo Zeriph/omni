@@ -24,7 +24,8 @@
 
 // must #include <omni/sync/scoped_lock.hpp>
 #define OMNI_SAFE_TCTRMTX_FW m_mtx(), 
-#define OMNI_TMRALOCK_FW  omni::sync::scoped_lock<omni::sync::basic_lock> mlock(&this->m_mtx);
+#define OMNI_TMRALOCK_FW  omni::sync::scoped_lock<omni::sync::basic_lock> uuid12345(&this->m_mtx);
+#define OMNI_TMROLOCK_FW(o)  omni::sync::scoped_lock<omni::sync::basic_lock> uuid54321(&o.m_mtx);
 #define OMNI_TMRLOCK_FW  this->m_mtx.lock();
 #define OMNI_TMRUNLOCK_FW  this->m_mtx.unlock();
 

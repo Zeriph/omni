@@ -1,7 +1,7 @@
-#if defined(OMNI_UT_FULL)
+#if defined(OMNI_UT_ALL)
 
-#define UT_NAME full
-#define UT_DESC "Full framework with compilation options (only compiled with OMNI_UT_FULL)"
+#define UT_NAME all
+#define UT_DESC "Displays sizeof info for the various classes"
 #include <utdefs/unit_test.hpp>
 
 class UT_CLASS_DEF
@@ -13,7 +13,7 @@ class UT_CLASS_DEF
         UT_CLASS_CTOR() {}
         
         UT_CLASS_DTOR() {}
-        
+
         void base_test() { this->info_test(); }
         
         void info_test()
@@ -121,7 +121,7 @@ class UT_CLASS_DEF
             print_info(omni::drawing::color_t);
             print_info(omni::drawing::color64_t);
             print_info(omni::net::socket);
-            
+
             // exceptions
             print_info(omni::exception);
             print_info(omni::exceptions::string_exception);
@@ -204,156 +204,159 @@ class UT_CLASS_DEF
                     sizeof(omni::consts::size::decimal::GB) +
                     
                     // char
-                    sizeof(omni::cconsts::err::DELEGATE_NOT_FOUND) +
-                    sizeof(omni::cconsts::err::ERR_GET_TIME) +
-                    sizeof(omni::cconsts::err::ERR_MEM_ALLOC) +
-                    sizeof(omni::cconsts::err::ERR_OPEN_PARENT_PROC) +
-                    sizeof(omni::cconsts::err::ERR_RET_PRI_CLASS) +
-                    sizeof(omni::cconsts::err::ERR_SET_PRIORITY) +
-                    sizeof(omni::cconsts::err::FILE_NOT_FOUND) +
-                    sizeof(omni::cconsts::err::FILE_NOT_ACCESSIBLE) +
-                    sizeof(omni::cconsts::err::GENERAL_EXCEPTION) +
-                    sizeof(omni::cconsts::err::INDEX_OOR) +
-                    sizeof(omni::cconsts::err::INVALID_BASE) +
-                    sizeof(omni::cconsts::err::INVALID_CHAR) +
-                    sizeof(omni::cconsts::err::INVALID_CAST) +
-                    sizeof(omni::cconsts::err::INVALID_DELEGATE) +
-                    sizeof(omni::cconsts::err::INVALID_DELEGATE_FUNC_PTR) +
-                    sizeof(omni::cconsts::err::INVALID_OPTION) +
-                    sizeof(omni::cconsts::err::INVALID_SETTING) +
-                    sizeof(omni::cconsts::err::INVALID_SEEK_DIR) +
-                    sizeof(omni::cconsts::err::INVALID_THREAD_HANDLE) +
-                    sizeof(omni::cconsts::err::INVALID_THREAD_PRIORITY) +
-                    sizeof(omni::cconsts::err::INVALID_THREAD_START_TYPE) +
-                    sizeof(omni::cconsts::err::INVALID_SIZE) +
-                    sizeof(omni::cconsts::err::PATH_NOT_ACCESSIBLE) +
-                    sizeof(omni::cconsts::err::SET_PRI_UNSUPPORTED) +
-                    sizeof(omni::cconsts::err::STRING_COUNT_GT0) +
-                    sizeof(omni::cconsts::err::STRING_INVALID_BINARY_FORMAT) +
-                    sizeof(omni::cconsts::err::STRING_INVALID_BINARY_STR_SZ) +
-                    sizeof(omni::cconsts::err::STRING_NOT_NUMERIC) +
-                    sizeof(omni::cconsts::err::SUCCESS) +
-                    sizeof(omni::cconsts::err::UNKNOWN) +
+                    std::strlen(omni::cconsts::err::DELEGATE_NOT_FOUND) +
+                    std::strlen(omni::cconsts::err::ERR_GET_TIME) +
+                    std::strlen(omni::cconsts::err::ERR_MEM_ALLOC) +
+                    std::strlen(omni::cconsts::err::ERR_OPEN_PARENT_PROC) +
+                    std::strlen(omni::cconsts::err::ERR_RET_PRI_CLASS) +
+                    std::strlen(omni::cconsts::err::ERR_SET_PRIORITY) +
+                    std::strlen(omni::cconsts::err::FILE_NOT_FOUND) +
+                    std::strlen(omni::cconsts::err::FILE_NOT_ACCESSIBLE) +
+                    std::strlen(omni::cconsts::err::GENERAL_EXCEPTION) +
+                    std::strlen(omni::cconsts::err::INDEX_OOR) +
+                    std::strlen(omni::cconsts::err::INVALID_BASE) +
+                    std::strlen(omni::cconsts::err::INVALID_CHAR) +
+                    std::strlen(omni::cconsts::err::INVALID_CAST) +
+                    std::strlen(omni::cconsts::err::INVALID_DELEGATE) +
+                    std::strlen(omni::cconsts::err::INVALID_DELEGATE_FUNC_PTR) +
+                    std::strlen(omni::cconsts::err::INVALID_OPTION) +
+                    std::strlen(omni::cconsts::err::INVALID_SETTING) +
+                    std::strlen(omni::cconsts::err::INVALID_SEEK_DIR) +
+                    std::strlen(omni::cconsts::err::INVALID_THREAD_HANDLE) +
+                    std::strlen(omni::cconsts::err::INVALID_THREAD_PRIORITY) +
+                    std::strlen(omni::cconsts::err::INVALID_THREAD_START_TYPE) +
+                    std::strlen(omni::cconsts::err::INVALID_SIZE) +
+                    std::strlen(omni::cconsts::err::PATH_NOT_ACCESSIBLE) +
+                    std::strlen(omni::cconsts::err::SET_PRI_UNSUPPORTED) +
+                    std::strlen(omni::cconsts::err::STRING_COUNT_GT0) +
+                    std::strlen(omni::cconsts::err::STRING_INVALID_BINARY_FORMAT) +
+                    std::strlen(omni::cconsts::err::STRING_INVALID_BINARY_STR_SZ) +
+                    std::strlen(omni::cconsts::err::STRING_NOT_NUMERIC) +
+                    std::strlen(omni::cconsts::err::SUCCESS) +
+                    std::strlen(omni::cconsts::err::UNKNOWN) +
                     sizeof(omni::cconsts::misc::COMMA) +
                     sizeof(omni::cconsts::misc::MINUS) +
                     sizeof(omni::cconsts::misc::NCHAR) +
                     sizeof(omni::cconsts::misc::PERIOD) +
                     sizeof(omni::cconsts::misc::PLUS) +
-                    sizeof(omni::cconsts::size::binary::string::full::B) +
-                    sizeof(omni::cconsts::size::binary::string::full::KB) +
-                    sizeof(omni::cconsts::size::binary::string::full::MB) +
-                    sizeof(omni::cconsts::size::binary::string::full::GB) +
-                    sizeof(omni::cconsts::size::binary::string::full::TB) +
-                    sizeof(omni::cconsts::size::binary::string::full::PB) +
-                    sizeof(omni::cconsts::size::binary::string::full::EB) +
-                    sizeof(omni::cconsts::size::binary::string::full::ZB) +
-                    sizeof(omni::cconsts::size::binary::string::full::YB) +
-                    sizeof(omni::cconsts::size::binary::string::B) +
-                    sizeof(omni::cconsts::size::binary::string::KB) +
-                    sizeof(omni::cconsts::size::binary::string::MB) +
-                    sizeof(omni::cconsts::size::binary::string::GB) +
-                    sizeof(omni::cconsts::size::binary::string::TB) +
-                    sizeof(omni::cconsts::size::binary::string::PB) +
-                    sizeof(omni::cconsts::size::binary::string::EB) +
-                    sizeof(omni::cconsts::size::binary::string::ZB) +
-                    sizeof(omni::cconsts::size::binary::string::YB) +
-                    sizeof(omni::cconsts::size::decimal::string::full::B) +
-                    sizeof(omni::cconsts::size::decimal::string::full::KB) +
-                    sizeof(omni::cconsts::size::decimal::string::full::MB) +
-                    sizeof(omni::cconsts::size::decimal::string::full::GB) +
-                    sizeof(omni::cconsts::size::decimal::string::full::TB) +
-                    sizeof(omni::cconsts::size::decimal::string::full::PB) +
-                    sizeof(omni::cconsts::size::decimal::string::full::EB) +
-                    sizeof(omni::cconsts::size::decimal::string::full::ZB) +
-                    sizeof(omni::cconsts::size::decimal::string::full::YB) +
-                    sizeof(omni::cconsts::size::decimal::string::B) +
-                    sizeof(omni::cconsts::size::decimal::string::KB) +
-                    sizeof(omni::cconsts::size::decimal::string::MB) +
-                    sizeof(omni::cconsts::size::decimal::string::GB) +
-                    sizeof(omni::cconsts::size::decimal::string::TB) +
-                    sizeof(omni::cconsts::size::decimal::string::PB) +
-                    sizeof(omni::cconsts::size::decimal::string::EB) +
-                    sizeof(omni::cconsts::size::decimal::string::ZB) +
-                    sizeof(omni::cconsts::size::decimal::string::YB) +
+                    std::strlen(omni::cconsts::size::binary::string::full::B) +
+                    std::strlen(omni::cconsts::size::binary::string::full::KB) +
+                    std::strlen(omni::cconsts::size::binary::string::full::MB) +
+                    std::strlen(omni::cconsts::size::binary::string::full::GB) +
+                    std::strlen(omni::cconsts::size::binary::string::full::TB) +
+                    std::strlen(omni::cconsts::size::binary::string::full::PB) +
+                    std::strlen(omni::cconsts::size::binary::string::full::EB) +
+                    std::strlen(omni::cconsts::size::binary::string::full::ZB) +
+                    std::strlen(omni::cconsts::size::binary::string::full::YB) +
+                    std::strlen(omni::cconsts::size::binary::string::B) +
+                    std::strlen(omni::cconsts::size::binary::string::KB) +
+                    std::strlen(omni::cconsts::size::binary::string::MB) +
+                    std::strlen(omni::cconsts::size::binary::string::GB) +
+                    std::strlen(omni::cconsts::size::binary::string::TB) +
+                    std::strlen(omni::cconsts::size::binary::string::PB) +
+                    std::strlen(omni::cconsts::size::binary::string::EB) +
+                    std::strlen(omni::cconsts::size::binary::string::ZB) +
+                    std::strlen(omni::cconsts::size::binary::string::YB) +
+                    std::strlen(omni::cconsts::size::decimal::string::full::B) +
+                    std::strlen(omni::cconsts::size::decimal::string::full::KB) +
+                    std::strlen(omni::cconsts::size::decimal::string::full::MB) +
+                    std::strlen(omni::cconsts::size::decimal::string::full::GB) +
+                    std::strlen(omni::cconsts::size::decimal::string::full::TB) +
+                    std::strlen(omni::cconsts::size::decimal::string::full::PB) +
+                    std::strlen(omni::cconsts::size::decimal::string::full::EB) +
+                    std::strlen(omni::cconsts::size::decimal::string::full::ZB) +
+                    std::strlen(omni::cconsts::size::decimal::string::full::YB) +
+                    std::strlen(omni::cconsts::size::decimal::string::B) +
+                    std::strlen(omni::cconsts::size::decimal::string::KB) +
+                    std::strlen(omni::cconsts::size::decimal::string::MB) +
+                    std::strlen(omni::cconsts::size::decimal::string::GB) +
+                    std::strlen(omni::cconsts::size::decimal::string::TB) +
+                    std::strlen(omni::cconsts::size::decimal::string::PB) +
+                    std::strlen(omni::cconsts::size::decimal::string::EB) +
+                    std::strlen(omni::cconsts::size::decimal::string::ZB) +
+                    std::strlen(omni::cconsts::size::decimal::string::YB) +
 
                     // wchar_t
-                    sizeof(omni::wconsts::err::DELEGATE_NOT_FOUND) +
-                    sizeof(omni::wconsts::err::ERR_GET_TIME) +
-                    sizeof(omni::wconsts::err::ERR_MEM_ALLOC) +
-                    sizeof(omni::wconsts::err::ERR_OPEN_PARENT_PROC) +
-                    sizeof(omni::wconsts::err::ERR_RET_PRI_CLASS) +
-                    sizeof(omni::wconsts::err::ERR_SET_PRIORITY) +
-                    sizeof(omni::wconsts::err::FILE_NOT_FOUND) +
-                    sizeof(omni::wconsts::err::FILE_NOT_ACCESSIBLE) +
-                    sizeof(omni::wconsts::err::GENERAL_EXCEPTION) +
-                    sizeof(omni::wconsts::err::INDEX_OOR) +
-                    sizeof(omni::wconsts::err::INVALID_BASE) +
-                    sizeof(omni::wconsts::err::INVALID_CHAR) +
-                    sizeof(omni::wconsts::err::INVALID_CAST) +
-                    sizeof(omni::wconsts::err::INVALID_DELEGATE) +
-                    sizeof(omni::wconsts::err::INVALID_DELEGATE_FUNC_PTR) +
-                    sizeof(omni::wconsts::err::INVALID_OPTION) +
-                    sizeof(omni::wconsts::err::INVALID_SETTING) +
-                    sizeof(omni::wconsts::err::INVALID_SEEK_DIR) +
-                    sizeof(omni::wconsts::err::INVALID_THREAD_HANDLE) +
-                    sizeof(omni::wconsts::err::INVALID_THREAD_PRIORITY) +
-                    sizeof(omni::wconsts::err::INVALID_THREAD_START_TYPE) +
-                    sizeof(omni::wconsts::err::INVALID_SIZE) +
-                    sizeof(omni::wconsts::err::PATH_NOT_ACCESSIBLE) +
-                    sizeof(omni::wconsts::err::SET_PRI_UNSUPPORTED) +
-                    sizeof(omni::wconsts::err::STRING_COUNT_GT0) +
-                    sizeof(omni::wconsts::err::STRING_INVALID_BINARY_FORMAT) +
-                    sizeof(omni::wconsts::err::STRING_INVALID_BINARY_STR_SZ) +
-                    sizeof(omni::wconsts::err::STRING_NOT_NUMERIC) +
-                    sizeof(omni::wconsts::err::SUCCESS) +
-                    sizeof(omni::wconsts::err::UNKNOWN) +
+                    std::wcslen(omni::wconsts::err::DELEGATE_NOT_FOUND) +
+                    std::wcslen(omni::wconsts::err::ERR_GET_TIME) +
+                    std::wcslen(omni::wconsts::err::ERR_MEM_ALLOC) +
+                    std::wcslen(omni::wconsts::err::ERR_OPEN_PARENT_PROC) +
+                    std::wcslen(omni::wconsts::err::ERR_RET_PRI_CLASS) +
+                    std::wcslen(omni::wconsts::err::ERR_SET_PRIORITY) +
+                    std::wcslen(omni::wconsts::err::FILE_NOT_FOUND) +
+                    std::wcslen(omni::wconsts::err::FILE_NOT_ACCESSIBLE) +
+                    std::wcslen(omni::wconsts::err::GENERAL_EXCEPTION) +
+                    std::wcslen(omni::wconsts::err::INDEX_OOR) +
+                    std::wcslen(omni::wconsts::err::INVALID_BASE) +
+                    std::wcslen(omni::wconsts::err::INVALID_CHAR) +
+                    std::wcslen(omni::wconsts::err::INVALID_CAST) +
+                    std::wcslen(omni::wconsts::err::INVALID_DELEGATE) +
+                    std::wcslen(omni::wconsts::err::INVALID_DELEGATE_FUNC_PTR) +
+                    std::wcslen(omni::wconsts::err::INVALID_OPTION) +
+                    std::wcslen(omni::wconsts::err::INVALID_SETTING) +
+                    std::wcslen(omni::wconsts::err::INVALID_SEEK_DIR) +
+                    std::wcslen(omni::wconsts::err::INVALID_THREAD_HANDLE) +
+                    std::wcslen(omni::wconsts::err::INVALID_THREAD_PRIORITY) +
+                    std::wcslen(omni::wconsts::err::INVALID_THREAD_START_TYPE) +
+                    std::wcslen(omni::wconsts::err::INVALID_SIZE) +
+                    std::wcslen(omni::wconsts::err::PATH_NOT_ACCESSIBLE) +
+                    std::wcslen(omni::wconsts::err::SET_PRI_UNSUPPORTED) +
+                    std::wcslen(omni::wconsts::err::STRING_COUNT_GT0) +
+                    std::wcslen(omni::wconsts::err::STRING_INVALID_BINARY_FORMAT) +
+                    std::wcslen(omni::wconsts::err::STRING_INVALID_BINARY_STR_SZ) +
+                    std::wcslen(omni::wconsts::err::STRING_NOT_NUMERIC) +
+                    std::wcslen(omni::wconsts::err::SUCCESS) +
+                    std::wcslen(omni::wconsts::err::UNKNOWN) +
                     sizeof(omni::wconsts::misc::COMMA) +
                     sizeof(omni::wconsts::misc::MINUS) +
                     sizeof(omni::wconsts::misc::NCHAR) +
                     sizeof(omni::wconsts::misc::PERIOD) +
                     sizeof(omni::wconsts::misc::PLUS) +
-                    sizeof(omni::wconsts::size::binary::string::full::B) +
-                    sizeof(omni::wconsts::size::binary::string::full::KB) +
-                    sizeof(omni::wconsts::size::binary::string::full::MB) +
-                    sizeof(omni::wconsts::size::binary::string::full::GB) +
-                    sizeof(omni::wconsts::size::binary::string::full::TB) +
-                    sizeof(omni::wconsts::size::binary::string::full::PB) +
-                    sizeof(omni::wconsts::size::binary::string::full::EB) +
-                    sizeof(omni::wconsts::size::binary::string::full::ZB) +
-                    sizeof(omni::wconsts::size::binary::string::full::YB) +
-                    sizeof(omni::wconsts::size::binary::string::B) +
-                    sizeof(omni::wconsts::size::binary::string::KB) +
-                    sizeof(omni::wconsts::size::binary::string::MB) +
-                    sizeof(omni::wconsts::size::binary::string::GB) +
-                    sizeof(omni::wconsts::size::binary::string::TB) +
-                    sizeof(omni::wconsts::size::binary::string::PB) +
-                    sizeof(omni::wconsts::size::binary::string::EB) +
-                    sizeof(omni::wconsts::size::binary::string::ZB) +
-                    sizeof(omni::wconsts::size::binary::string::YB) +
-                    sizeof(omni::wconsts::size::decimal::string::full::B) +
-                    sizeof(omni::wconsts::size::decimal::string::full::KB) +
-                    sizeof(omni::wconsts::size::decimal::string::full::MB) +
-                    sizeof(omni::wconsts::size::decimal::string::full::GB) +
-                    sizeof(omni::wconsts::size::decimal::string::full::TB) +
-                    sizeof(omni::wconsts::size::decimal::string::full::PB) +
-                    sizeof(omni::wconsts::size::decimal::string::full::EB) +
-                    sizeof(omni::wconsts::size::decimal::string::full::ZB) +
-                    sizeof(omni::wconsts::size::decimal::string::full::YB) +
-                    sizeof(omni::wconsts::size::decimal::string::B) +
-                    sizeof(omni::wconsts::size::decimal::string::KB) +
-                    sizeof(omni::wconsts::size::decimal::string::MB) +
-                    sizeof(omni::wconsts::size::decimal::string::GB) +
-                    sizeof(omni::wconsts::size::decimal::string::TB) +
-                    sizeof(omni::wconsts::size::decimal::string::PB) +
-                    sizeof(omni::wconsts::size::decimal::string::EB) +
-                    sizeof(omni::wconsts::size::decimal::string::ZB) +
-                    sizeof(omni::wconsts::size::decimal::string::YB) +
-
-                    sizeof(omni::environment::NEW_LINE)
+                    std::wcslen(omni::wconsts::size::binary::string::full::B) +
+                    std::wcslen(omni::wconsts::size::binary::string::full::KB) +
+                    std::wcslen(omni::wconsts::size::binary::string::full::MB) +
+                    std::wcslen(omni::wconsts::size::binary::string::full::GB) +
+                    std::wcslen(omni::wconsts::size::binary::string::full::TB) +
+                    std::wcslen(omni::wconsts::size::binary::string::full::PB) +
+                    std::wcslen(omni::wconsts::size::binary::string::full::EB) +
+                    std::wcslen(omni::wconsts::size::binary::string::full::ZB) +
+                    std::wcslen(omni::wconsts::size::binary::string::full::YB) +
+                    std::wcslen(omni::wconsts::size::binary::string::B) +
+                    std::wcslen(omni::wconsts::size::binary::string::KB) +
+                    std::wcslen(omni::wconsts::size::binary::string::MB) +
+                    std::wcslen(omni::wconsts::size::binary::string::GB) +
+                    std::wcslen(omni::wconsts::size::binary::string::TB) +
+                    std::wcslen(omni::wconsts::size::binary::string::PB) +
+                    std::wcslen(omni::wconsts::size::binary::string::EB) +
+                    std::wcslen(omni::wconsts::size::binary::string::ZB) +
+                    std::wcslen(omni::wconsts::size::binary::string::YB) +
+                    std::wcslen(omni::wconsts::size::decimal::string::full::B) +
+                    std::wcslen(omni::wconsts::size::decimal::string::full::KB) +
+                    std::wcslen(omni::wconsts::size::decimal::string::full::MB) +
+                    std::wcslen(omni::wconsts::size::decimal::string::full::GB) +
+                    std::wcslen(omni::wconsts::size::decimal::string::full::TB) +
+                    std::wcslen(omni::wconsts::size::decimal::string::full::PB) +
+                    std::wcslen(omni::wconsts::size::decimal::string::full::EB) +
+                    std::wcslen(omni::wconsts::size::decimal::string::full::ZB) +
+                    std::wcslen(omni::wconsts::size::decimal::string::full::YB) +
+                    std::wcslen(omni::wconsts::size::decimal::string::B) +
+                    std::wcslen(omni::wconsts::size::decimal::string::KB) +
+                    std::wcslen(omni::wconsts::size::decimal::string::MB) +
+                    std::wcslen(omni::wconsts::size::decimal::string::GB) +
+                    std::wcslen(omni::wconsts::size::decimal::string::TB) +
+                    std::wcslen(omni::wconsts::size::decimal::string::PB) +
+                    std::wcslen(omni::wconsts::size::decimal::string::EB) +
+                    std::wcslen(omni::wconsts::size::decimal::string::ZB) +
+                    std::wcslen(omni::wconsts::size::decimal::string::YB) +
+                    #if defined(OMNI_UNICODE)
+                        std::wcslen(omni::environment::NEW_LINE)
+                    #else
+                        std::strlen(omni::environment::NEW_LINE)
+                    #endif
             << std::endl;
         }
 };
 
 #include <utdefs/udefs.hpp> // static instance def'd and clean up #def's
 
-#endif // OMNI_UT_FULL
+#endif // OMNI_UT_ALL

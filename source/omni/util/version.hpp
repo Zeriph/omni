@@ -77,7 +77,7 @@ namespace omni {
                     return this->m_rev;
                 }
                 
-                inline const omni::string_t to_string_t() const
+                inline omni::string_t to_string_t() const
                 {
                     omni::sstream_t o;
                     o << this->m_maj << "." << this->m_min << "." <<
@@ -85,7 +85,7 @@ namespace omni {
                     return o.str();
                 }
                 
-                inline const std::string to_string() const
+                inline std::string to_string() const
                 {
                     std::stringstream o;
                     o << this->m_maj << "." << this->m_min << "." <<
@@ -93,7 +93,7 @@ namespace omni {
                     return o.str();
                 }
                 
-                inline const std::wstring to_wstring() const
+                inline std::wstring to_wstring() const
                 {
                     std::wstringstream o;
                     o << this->m_maj << "." << this->m_min << "." <<

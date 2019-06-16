@@ -51,12 +51,12 @@ namespace omni {
                 void set(uint32_t ac, const char** av);
                 void set(uint32_t ac, const wchar_t** av);
                 void set(const omni::seq::string_t& av);
-                const omni::string_t to_string_t() const;
-                const omni::string_t to_string_t(bool includeArg1) const;
-                const std::string to_string() const;
-                const std::string to_string(bool includeArg1) const;
-                const std::wstring to_wstring() const;
-                const std::wstring to_wstring(bool includeArg1) const;
+                omni::string_t to_string_t() const;
+                omni::string_t to_string_t(bool includeArg1) const;
+                std::string to_string() const;
+                std::string to_string(bool includeArg1) const;
+                std::wstring to_wstring() const;
+                std::wstring to_wstring(bool includeArg1) const;
                 operator std::string() const { return this->to_string(false); }
                 operator std::wstring() const { return this->to_wstring(false); }
                 omni::string_t operator[](const std::string& sw) const;

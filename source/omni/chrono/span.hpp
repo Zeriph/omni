@@ -26,12 +26,14 @@
 #if defined(OMNI_SAFE_SPAN)
     #include <omni/sync/basic_lock.hpp>
     #define OMNI_SAFE_SPANMTX_FW  ,m_mtx()
-    #define OMNI_SPAN_ALOCK_FW    omni::sync::scoped_lock<omni::sync::basic_lock> mlock(&this->m_mtx);
+    #define OMNI_SPAN_ALOCK_FW    omni::sync::scoped_lock<omni::sync::basic_lock> uuid12345(&this->m_mtx);
+    #define OMNI_SPAN_OLOCK_FW(o) omni::sync::scoped_lock<omni::sync::basic_lock> uuid54321(&o.m_mtx);
     #define OMNI_SPAN_MLOCK_FW    this->m_mtx.lock();
     #define OMNI_SPAN_ULOCK_FW    this->m_mtx.unlock();
 #else
     #define OMNI_SAFE_SPANMTX_FW
     #define OMNI_SPAN_ALOCK_FW
+    #define OMNI_SPAN_OLOCK_FW(o) 
     #define OMNI_SPAN_MLOCK_FW
     #define OMNI_SPAN_ULOCK_FW
 #endif
@@ -236,6 +238,15 @@ namespace omni {
                         return span< TickType >(-this->m_ticks);
                     }
                     OMNI_ERR_RETV_FW(OMNI_OVERFLOW_STR, omni::exceptions::overflow_error("cannot negate unsigned span"), span< TickType >::zero())
+                }
+
+                void swap(span< TickType >& o)
+                {
+                    if (this != &o) {
+                        OMNI_SPAN_ALOCK_FW
+                        OMNI_SPAN_OLOCK_FW(o)
+                        std::swap(this->m_ticks, o.m_ticks);
+                    }
                 }
 
                 omni::string_t to_string_t() const
@@ -678,6 +689,7 @@ namespace omni {
                     } else if (ts[0] == omni::char_util::to_char_t<Char, char>('+')) {
                         ts = ts.substr(1); // remove the + sign
                     }
+
                     TickType val;
                     if (omni::string::util::is_numeric(ts)) {
                         // 1 number: days, ranging from 0 to 10675199 (whole numbers only)
@@ -688,7 +700,6 @@ namespace omni {
                         return true;
                     }
 
-                    // TODO: optimize this whole function
                     Char period = omni::char_util::to_char_t<Char, char>('.');
                     Str delim = omni::string::util::to_type<Str>(":");
                     Str pdel = omni::string::util::to_type<Str>(".");
@@ -699,13 +710,11 @@ namespace omni {
                         omni_sequence_t<Str> vals = omni::string::util::split(ts, delim);
                         omni_sequence_t<Str> pvals;
                         switch (vals.size()) {
-                            case 2:
+                            case 2: {
                                 // d.h:m | h:m
                                 if (!omni::string::util::is_numeric(vals[0], true) ||
                                     !omni::string::util::is_numeric(vals[1]))
-                                {
-                                    return false;
-                                }
+                                { return false; }
                                 mins = omni::string::util::to_type<TickType>(vals[1]);
                                 if (vals[0].find(period) != Str::npos) {
                                     pvals = omni::string::util::split(vals[0], pdel);
@@ -714,15 +723,13 @@ namespace omni {
                                 } else {
                                     hrs = omni::string::util::to_type<TickType>(vals[0]);
                                 }
-                                break;
-                            case 3:
+                            } break;
+                            case 3: {
                                 // h:m:s | h:m:.f | h:m:s.f | d.h:m:s | d.h:m:.f | d.h:m:s.f
                                 if (!omni::string::util::is_numeric(vals[0], true) ||
                                     !omni::string::util::is_numeric(vals[1]) ||
                                     !omni::string::util::is_numeric(vals[2], true))
-                                {
-                                    return false;
-                                }
+                                { return false; }
                                 mins = omni::string::util::to_type<TickType>(vals[1]);
                                 if (vals[0].find(period) != Str::npos) {
                                     // d.h: m:s | d.h: m:.f | d.h: m:s.f
@@ -733,14 +740,11 @@ namespace omni {
                                     // h: m:s | h: m:.f | h: m:s.f
                                     hrs = omni::string::util::to_type<TickType>(vals[0]);
                                 }
-
                                 if (vals[2].find(period) != Str::npos) {
                                     // h:m: .f | d.h:m: .f | h:m: s.f | d.h:m: s.f
                                     pvals = omni::string::util::split(vals[2], pdel);
                                     if (pvals.size() > 1) {
-                                        if (!pvals[0].empty()) {
-                                            sec = omni::string::util::to_type<TickType>(pvals[0]);
-                                        }
+                                        if (!pvals[0].empty()) { sec = omni::string::util::to_type<TickType>(pvals[0]); }
                                         msstr = pvals[1];
                                     } else {
                                         msstr = pvals[0];
@@ -749,18 +753,15 @@ namespace omni {
                                     // h:m: s | d.h:m: s
                                     sec = omni::string::util::to_type<TickType>(vals[2]);
                                 }
-                                break;
+                            } break;
                         }
                         // hh 	Hours, ranging from 0 to 23.
                         // mm 	Minutes, ranging from 0 to 59.
                         // ss 	Optional seconds, ranging from 0 to 59.
                         // ff 	Optional fractional seconds, consisting of one to seven decimal digits.
-                        if ((hrs < 0 || hrs > 23) ||
-                            (mins < 0 || mins > 59) ||
-                            (sec < 0 || sec > 59))
-                        {
-                            return false;
-                        }
+                        if ((hrs < 0 || hrs > 23) || (mins < 0 || mins > 59) || (sec < 0 || sec > 59))
+                        { return false; }
+
                         if (!msstr.empty()) {
                             ms = omni::string::util::to_type<double>(omni::string::util::to_type<Str>("0.") + msstr) * 1000;
                         }
@@ -779,5 +780,13 @@ namespace omni {
         typedef omni::chrono::span<uint64_t> unsigned_timespan;
     } // namespace chrono
 } // namespace omni
+
+namespace std {
+    template < typename TickType >
+    inline void swap(omni::chrono::span<TickType>& o1, omni::chrono::span<TickType>& o2)
+    {
+        o1.swap(o2);
+    }
+}
 
 #endif // OMNI_SPAN_HPP

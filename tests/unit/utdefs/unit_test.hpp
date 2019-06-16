@@ -5,6 +5,7 @@
 
 #define OMNI_UTDBGOUT omni::out
 
+#define b2s(b) ((b) ? "true" : "false")
 #define print(m) OMNI_UTDBGOUT << m
 #define printl(m) OMNI_UTDBGOUT << m << std::endl
 #define printv(m, v) OMNI_UTDBGOUT << m << v << std::endl

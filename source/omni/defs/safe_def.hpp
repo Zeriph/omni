@@ -19,7 +19,7 @@
 #if !defined(OMNI_SAFE_DEF_HPP)
 #define OMNI_SAFE_DEF_HPP 1
 
-// TODO: add any other "safe" framework entities here
+// TODO: (continuous) add any other "safe" framework entities here
 
 // DEV_NOTE: while most classes in the framework will have a 'safe' version, enum classes will _not_
 
@@ -113,6 +113,7 @@
 
 #if defined(OMNI_SAFE_NET)
     #define OMNI_SAFE_SOCKET
+    #define OMNI_SAFE_SOCKET_EP
 #endif
 
 #if defined(OMNI_SAFE_APPLICATION) && (defined(OMNI_NO_SAFE_APPLICATION) || defined(OMNI_NO_SAFE_FRAMEWORK))
@@ -245,6 +246,18 @@
     #undef OMNI_SAFE_DATETIME
     #if !defined(OMNI_NO_SAFE_DATETIME)
         #define OMNI_NO_SAFE_DATETIME
+    #endif
+#endif
+#if defined(OMNI_SAFE_SOCKET) && (defined(OMNI_NO_SAFE_SOCKET) || defined(OMNI_NO_SAFE_FRAMEWORK))
+    #undef OMNI_SAFE_SOCKET
+    #if !defined(OMNI_NO_SAFE_SOCKET)
+        #define OMNI_NO_SAFE_SOCKET
+    #endif
+#endif
+#if defined(OMNI_SAFE_SOCKET_EP) && (defined(OMNI_NO_SAFE_SOCKET_EP) || defined(OMNI_NO_SAFE_FRAMEWORK))
+    #undef OMNI_SAFE_SOCKET_EP
+    #if !defined(OMNI_NO_SAFE_SOCKET_EP)
+        #define OMNI_NO_SAFE_SOCKET_EP
     #endif
 #endif
 

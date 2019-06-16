@@ -23,11 +23,13 @@
     #include <omni/sync/scoped_lock.hpp>
     #define OMNI_SAFE_QTMQMTX_FW OMNI_SAFE_TCTRMTX_FW m_qmtx(),
     #define OMNI_TMR_ALOCK_FW    OMNI_TMRALOCK_FW
+    #define OMNI_TMR_OLOCK_FW(o) OMNI_TMROLOCK_FW(o)
     #define OMNI_TMR_MLOCK_FW    OMNI_TMRLOCK_FW
     #define OMNI_TMR_ULOCK_FW    OMNI_TMRUNLOCK_FW
 #else
     #define OMNI_SAFE_QTMQMTX_FW
     #define OMNI_TMR_ALOCK_FW
+    #define OMNI_TMR_OLOCK_FW(o)
     #define OMNI_TMR_MLOCK_FW
     #define OMNI_TMR_ULOCK_FW
 #endif
@@ -168,6 +170,21 @@ omni::chrono::queue_timer::queue_timer(uint32_t interval_ms,
     #endif
     OMNI_DV5_FW("created with interval of ", this->m_int);
     this->start(delay);
+}
+
+void omni::chrono::queue_timer::swap(omni::chrono::queue_timer& other)
+{
+    if (this != &other) {
+        OMNI_TMR_ALOCK_FW
+        OMNI_TMR_OLOCK_FW(other)
+        std::swap(this->m_thread, other.m_thread);
+        std::swap(this->m_qthread, other.m_qthread);
+        std::swap(this->m_que, other.m_que);
+        std::swap(this->m_int, other.m_int);
+        std::swap(this->m_auto, other.m_auto);
+        std::swap(this->m_isrun, other.m_isrun);
+        std::swap(this->m_stopreq, other.m_stopreq);
+    }
 }
 
 omni::chrono::queue_timer& omni::chrono::queue_timer::operator=(const omni::chrono::queue_timer& other)

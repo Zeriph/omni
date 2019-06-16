@@ -49,6 +49,11 @@ namespace omni {
             return OMNI_RECT_XYWH_CONTAINS_FW(x, y, w, h, x2, y2);
         }
         template < typename T >
+        inline bool rectangle_xywh_contains_point(T x, T y, T w, T h, const omni::math::dimensional<T, 2>& point)
+        {
+            return OMNI_RECT_XYWH_CONTAINS_FW(x, y, w, h, point[0], point[1]);
+        }
+        template < typename T >
         inline bool rectangle_xywh_contains_point(T x, T y, T w, T h, const omni::geometry::point2d<T>& point)
         {
             return OMNI_RECT_XYWH_CONTAINS_FW(x, y, w, h, point.x(), point.y());
@@ -63,6 +68,11 @@ namespace omni {
         inline bool rectangle_ltrb_contains_point(T left, T top, T right, T bottom, T x, T y)
         {
             return OMNI_RECT_LTRB_CONTAINS_FW(left, top, right, bottom, x, y);
+        }
+        template < typename T >
+        inline bool rectangle_ltrb_contains_point(T left, T top, T right, T bottom, const omni::math::dimensional<T, 2>& point)
+        {
+            return OMNI_RECT_LTRB_CONTAINS_FW(left, top, right, bottom, point[0], point[1]);
         }
         template < typename T >
         inline bool rectangle_ltrb_contains_point(T left, T top, T right, T bottom, const omni::geometry::point2d<T>& point)
@@ -93,6 +103,12 @@ namespace omni {
                     this->_recalc_edge();
                 }
 
+                rectangle(const omni::math::dimensional<T, 4>& cp) :
+                    OMNI_CTOR_FW(omni::geometry::rectangle<T>)
+                    m_loc(cp[0], cp[1]), m_edge((cp[0] + cp[2]), (cp[1] + cp[3])), m_size(cp[2], cp[3])
+                    OMNI_SAFE_RECTMTX_FW
+                { }
+
                 rectangle(T x, T y, T w, T h) : 
                     OMNI_CTOR_FW(omni::geometry::rectangle<T>)
                     m_loc(x, y), m_edge((x + w), (y + h)), m_size(w, h)
@@ -113,6 +129,11 @@ namespace omni {
                     return OMNI_RECT_LTRB_CONTAINS_FW(this->m_loc.x, this->m_loc.y, this->m_edge.x, this->m_edge.y, x, y);
                 }
 
+                bool contains(const omni::math::dimensional<T, 2>& point) const
+                {
+                    return this->contains(point[0], point[1]);
+                }
+
                 bool contains(const omni::geometry::point2d<T>& point) const
                 {
                     return this->contains(point.x(), point.y());
@@ -129,6 +150,11 @@ namespace omni {
                     return
                         OMNI_RECT_LTRB_CONTAINS_FW(this->m_loc.x, this->m_loc.y, this->m_edge.x, this->m_edge.y, left, top) &&
                         OMNI_RECT_LTRB_CONTAINS_FW(this->m_loc.x, this->m_loc.y, this->m_edge.x, this->m_edge.y, right, bottom);
+                }
+
+                bool contains(const omni::math::dimensional<T, 4>& point) const
+                {
+                    return this->contains(point[0], point[1], point[2], point[3]);
                 }
                 
                 bool contains(const omni::geometry::point2d<T>& point, const omni::geometry::size<T> sz) const
@@ -169,6 +195,11 @@ namespace omni {
                     this->deflate(sz.width, sz.height);
                 }
 
+                void deflate(const omni::math::dimensional<T, 2>& sz) const
+                {
+                    this->deflate(sz[0], sz[1]);
+                }
+
                 void inflate(T w, T h)
                 {
                     OMNI_SAFE_RECTALOCK_FW
@@ -186,6 +217,11 @@ namespace omni {
                 void inflate(const omni::geometry::size_raw<T>& sz)
                 {
                     this->inflate(sz.width, sz.height);
+                }
+
+                void inflate(const omni::math::dimensional<T, 2>& sz) const
+                {
+                    this->inflate(sz[0], sz[1]);
                 }
 
                 void intersect(const rectangle<T>& r2)
@@ -240,6 +276,11 @@ namespace omni {
                     return this->intersects_with(point.x, point.y, (point.x + sz.width), (point.y + sz.height));
                 }
 
+                bool intersects_with(const omni::math::dimensional<T, 4>& rect) const
+                {
+                    return this->intersects_with(rect[0], rect[1], rect[2], rect[3]);
+                }
+
                 bool intersects_with(const rectangle<T>& rect) const
                 {
                     return this->intersects_with(rect.left(), rect.top(), rect.right(), rect.bottom());
@@ -278,6 +319,11 @@ namespace omni {
                     return this->decrement(point.x, point.y);
                 }
 
+                void decrement(const omni::math::dimensional<T, 2>& point)
+                {
+                    return this->decrement(point[0], point[1]);
+                }
+
                 void offset(T x, T y)
                 {
                     OMNI_SAFE_RECTALOCK_FW
@@ -295,6 +341,11 @@ namespace omni {
                 void offset(const omni::geometry::point2d_raw<T>& point)
                 {
                     return this->offset(point.x, point.y);
+                }
+
+                void offset(const omni::math::dimensional<T, 2>& coord)
+                {
+                    return this->offset(coord[0], coord[1]);
                 }
 
                 T bottom() const
@@ -371,6 +422,11 @@ namespace omni {
                     this->_recalc_edge();
                 }
 
+                void set_location(const omni::math::dimensional<T, 2>& coord)
+                {
+                    this->set_location(coord[0], coord[1]);
+                }
+
                 void set_location(const omni::geometry::point2d<T>& point)
                 {
                     this->set_location(point.x(), point.y());
@@ -389,6 +445,11 @@ namespace omni {
                     this->_recalc_edge();
                 }
 
+                void set_size(const omni::math::dimensional<T, 2>& coord)
+                {
+                    this->set_size(coord[0], coord[1]);
+                }
+
                 void set_size(const omni::geometry::size<T>& sz)
                 {
                     this->set_size(sz.width(), sz.height());
@@ -397,6 +458,16 @@ namespace omni {
                 void set_size(const omni::geometry::size_raw<T>& sz)
                 {
                     this->set_size(sz.width, sz.height);
+                }
+
+                void swap(rectangle<T>& o)
+                {
+                    if (this != &o) {
+                        OMNI_SAFE_RECTALOCK_FW
+                        OMNI_SAFE_RECTOALOCK_FW(o)
+                        std::swap(this->m_loc, o.m_loc);
+                        std::swap(this->m_size, o.m_size);
+                    }
                 }
                 
                 T decrement_x()
@@ -464,13 +535,14 @@ namespace omni {
                 bool equals(T x, T y, T w, T h)
                 {
                     OMNI_SAFE_RECTALOCK_FW
-                    return this->m_loc.x == x &&
-                           this->m_loc.y == y &&
-                           this->m_size.width == w &&
-                           this->m_size.height == h;
+                    return
+                        omni::math::are_equal<T>(this->m_loc.x, x) &&
+                        omni::math::are_equal<T>(this->m_loc.y, y) &&
+                        omni::math::are_equal<T>(this->m_size.width, w) &&
+                        omni::math::are_equal<T>(this->m_size.height, h);
                 }
 
-                const omni::string_t to_string_t() const
+                omni::string_t to_string_t() const
                 {
                     omni::sstream_t s;
                     OMNI_SAFE_RECTLOCK_FW
@@ -479,7 +551,7 @@ namespace omni {
                     return s.str();
                 }
 
-                const std::string to_string() const
+                std::string to_string() const
                 {
                     std::string ret = "{";
                     OMNI_SAFE_RECTLOCK_FW
@@ -491,7 +563,7 @@ namespace omni {
                     return ret;
                 }
 
-                const std::wstring to_wstring() const
+                std::wstring to_wstring() const
                 {
                     std::wstring ret = L"{";
                     OMNI_SAFE_RECTLOCK_FW
@@ -522,6 +594,7 @@ namespace omni {
                 {
                     if (this != &val) {
                         OMNI_SAFE_RECTALOCK_FW
+                        OMNI_SAFE_RECTOALOCK_FW(val)
                         OMNI_ASSIGN_FW(val)
                         this->m_loc.x = val.m_loc.x;
                         this->m_loc.y = val.m_loc.y;
@@ -536,39 +609,44 @@ namespace omni {
                 {
                     if (this == &val) { return true; }
                     OMNI_SAFE_RECTALOCK_FW
-                    return (this->m_loc.x == val.m_loc.x &&
-                            this->m_loc.y == val.m_loc.y &&
-                            this->m_size.width == val.m_size.width &&
-                            this->m_size.height == val.m_size.height)
+                    return (
+                        omni::math::are_equal<T>(this->m_loc.x, val.m_loc.x) &&
+                        omni::math::are_equal<T>(this->m_loc.y, val.m_loc.y) &&
+                        omni::math::are_equal<T>(this->m_size.width, val.m_size.width) &&
+                        omni::math::are_equal<T>(this->m_size.height, val.m_size.height))
                     OMNI_EQUAL_FW(val);
                 }
 
                 bool operator==(const omni::geometry::point2d<T>& val) const
                 {
                     OMNI_SAFE_RECTALOCK_FW
-                    return (this->m_loc.x == val.x() &&
-                            this->m_loc.y == val.y());
+                    return (
+                        omni::math::are_equal<T>(this->m_loc.x, val.x()) &&
+                        omni::math::are_equal<T>(this->m_loc.y, val.y()));
                 }
 
                 bool operator==(const omni::geometry::point2d_raw<T>& val) const
                 {
                     OMNI_SAFE_RECTALOCK_FW
-                    return (this->m_loc.x == val.x &&
-                            this->m_loc.y == val.y);
+                    return (
+                        omni::math::are_equal<T>(this->m_loc.x, val.x) &&
+                        omni::math::are_equal<T>(this->m_loc.y, val.y));
                 }
 
                 bool operator==(const omni::geometry::size<T>& val) const
                 {
                     OMNI_SAFE_RECTALOCK_FW
-                    return (this->m_size.width == val.width() &&
-                            this->m_size.height == val.height());
+                    return (
+                        omni::math::are_equal<T>(this->m_size.width, val.width()) &&
+                        omni::math::are_equal<T>(this->m_size.height, val.height()));
                 }
 
                 bool operator==(const omni::geometry::size_raw<T>& val) const
                 {
                     OMNI_SAFE_RECTALOCK_FW
-                    return (this->m_size.width == val.width &&
-                            this->m_size.height == val.height);
+                    return (
+                        omni::math::are_equal<T>(this->m_size.width, val.width) &&
+                        omni::math::are_equal<T>(this->m_size.height, val.height));
                 }
 
                 bool operator<(const omni::geometry::point2d<T>& val) const
@@ -829,8 +907,12 @@ namespace omni {
                 rectangle_raw(const omni::geometry::rectangle_raw<T>& cp) :
                     OMNI_CPCTOR_FW(cp)
                     location(cp.location), size(cp.size)
-                {
-                }
+                { }
+
+                rectangle_raw(const omni::math::dimensional<T, 4>& cp) :
+                    OMNI_CTOR_FW(omni::geometry::rectangle_raw<T>)
+                    location(cp[0], cp[1]), size(cp[2], cp[3])
+                { }
 
                 rectangle_raw(T x, T y, T w, T h) : 
                     OMNI_CTOR_FW(omni::geometry::rectangle_raw<T>)
@@ -850,6 +932,11 @@ namespace omni {
                     return OMNI_RECT_XYWH_CONTAINS_FW(this->location.x, this->location.y, this->size.width, this->size.height, x, y);
                 }
 
+                bool contains(const omni::math::dimensional<T, 2>& point) const
+                {
+                    return this->contains(point[0], point[1]);
+                }
+
                 bool contains(const omni::geometry::point2d<T>& point) const
                 {
                     return this->contains(point.x(), point.y());
@@ -865,6 +952,11 @@ namespace omni {
                     return
                         OMNI_RECT_XYWH_CONTAINS_FW(this->location.x, this->location.y, this->size.width, this->size.height, left, top) &&
                         OMNI_RECT_XYWH_CONTAINS_FW(this->location.x, this->location.y, this->size.width, this->size.height, right, bottom);
+                }
+
+                bool contains(const omni::math::dimensional<T, 4>& rect) const
+                {
+                    return this->contains(rect[0], rect[1], rect[2], rect[3]);
                 }
                 
                 bool contains(const omni::geometry::point2d<T>& point, const omni::geometry::size<T> sz) const
@@ -892,6 +984,11 @@ namespace omni {
                     this->size.height -= h;
                 }
 
+                void deflate(const omni::math::dimensional<T, 2>& sz)
+                {
+                    this->deflate(sz[0], sz[1]);
+                }
+
                 void deflate(const omni::geometry::size<T>& sz)
                 {
                     this->deflate(sz.width(), sz.height());
@@ -906,6 +1003,11 @@ namespace omni {
                 {
                     this->size.width += w;
                     this->size.height += h;
+                }
+
+                void inflate(const omni::math::dimensional<T, 2>& sz)
+                {
+                    this->inflate(sz[0], sz[1]);
                 }
 
                 void inflate(const omni::geometry::size<T>& sz)
@@ -966,6 +1068,11 @@ namespace omni {
                     return this->intersects_with(point.x, point.y, (point.x + sz.width), (point.y + sz.height));
                 }
 
+                bool intersects_with(const omni::math::dimensional<T, 4>& rect) const
+                {
+                    return this->intersects_with(rect[0], rect[1], rect[2], rect[3]);
+                }
+
                 bool intersects_with(const rectangle_raw<T>& rect) const
                 {
                     return this->intersects_with(rect.left(), rect.top(), rect.right(), rect.bottom());
@@ -991,6 +1098,11 @@ namespace omni {
                     this->location.y -= y;
                 }
 
+                void decrement(const omni::math::dimensional<T, 2>& point)
+                {
+                    this->decrement(point[0], point[1]);
+                }
+
                 void decrement(const omni::geometry::point2d<T>& point)
                 {
                     return this->decrement(point.x(), point.y());
@@ -1005,6 +1117,11 @@ namespace omni {
                 {
                     this->location.x += x;
                     this->location.y += y;
+                }
+
+                void offset(const omni::math::dimensional<T, 2>& point)
+                {
+                    this->offset(point[0], point[2]);
                 }
 
                 void offset(const omni::geometry::point2d<T>& point)
@@ -1068,6 +1185,11 @@ namespace omni {
                     this->location.y = y;
                 }
 
+                void set_location(const omni::math::dimensional<T, 2>& point)
+                {
+                    this->set_location(point[0], point[1]);
+                }
+
                 void set_location(const omni::geometry::point2d<T>& point)
                 {
                     this->set_location(point.x(), point.y());
@@ -1084,6 +1206,11 @@ namespace omni {
                     this->size.height = h;
                 }
 
+                void set_size(const omni::math::dimensional<T, 2>& sz)
+                {
+                    this->set_size(sz[0], sz[1]);
+                }
+
                 void set_size(const omni::geometry::size<T>& sz)
                 {
                     this->set_size(sz.width(), sz.height());
@@ -1092,6 +1219,14 @@ namespace omni {
                 void set_size(const omni::geometry::size_raw<T>& sz)
                 {
                     this->set_size(sz.width, sz.height);
+                }
+
+                void swap(rectangle_raw<T>& o)
+                {
+                    if (this != &o) {
+                        std::swap(this->location, o.location);
+                        std::swap(this->size, o.size);
+                    }
                 }
                 
                 T decrement_x()
@@ -1141,20 +1276,21 @@ namespace omni {
 
                 bool equals(T _x, T _y, T _w, T _h)
                 {
-                    return this->location.x == _x &&
-                           this->location.y == _y &&
-                           this->size.width == _w &&
-                           this->size.height == _h;
+                    return
+                        omni::math::are_equal<T>(this->location.x, _x) &&
+                        omni::math::are_equal<T>(this->location.y, _y) &&
+                        omni::math::are_equal<T>(this->size.width, _w) &&
+                        omni::math::are_equal<T>(this->size.height, _h);
                 }
 
-                const omni::string_t to_string_t() const
+                omni::string_t to_string_t() const
                 {
                     omni::sstream_t s;
                     s << "{" << this->location.to_string_t() << "," << this->size.to_string_t() << "}";
                     return s.str();
                 }
 
-                const std::string to_string() const
+                std::string to_string() const
                 {
                     std::string ret = "{";
                     ret.append(this->location.to_string());
@@ -1164,7 +1300,7 @@ namespace omni {
                     return ret;
                 }
 
-                const std::wstring to_wstring() const
+                std::wstring to_wstring() const
                 {
                     std::wstring ret = L"{";
                     ret.append(this->location.to_wstring());
@@ -1200,35 +1336,40 @@ namespace omni {
                 bool operator==(const rectangle_raw<T>& val) const
                 {
                     if (this == &val) { return true; }
-                    return (this->m_loc.x == val.m_loc.x &&
-                            this->m_loc.y == val.m_loc.y &&
-                            this->size.width == val.size.width &&
-                            this->size.height == val.size.height)
+                    return (
+                        omni::math::are_equal<T>(this->m_loc.x, val.m_loc.x) &&
+                        omni::math::are_equal<T>(this->m_loc.y, val.m_loc.y) &&
+                        omni::math::are_equal<T>(this->size.width, val.size.width) &&
+                        omni::math::are_equal<T>(this->size.height, val.size.height))
                     OMNI_EQUAL_FW(val);
                 }
 
                 bool operator==(const omni::geometry::point2d<T>& val) const
                 {
-                    return (this->location.x == val.x() &&
-                            this->location.y == val.y());
+                    return (
+                        omni::math::are_equal<T>(this->location.x, val.x()) &&
+                        omni::math::are_equal<T>(this->location.y, val.y()));
                 }
 
                 bool operator==(const omni::geometry::point2d_raw<T>& val) const
                 {
-                    return (this->location.x == val.x &&
-                            this->location.y == val.y);
+                    return (
+                        omni::math::are_equal<T>(this->location.x, val.x) &&
+                        omni::math::are_equal<T>(this->location.y, val.y));
                 }
 
                 bool operator==(const omni::geometry::size<T>& val) const
                 {
-                    return (this->size.width == val.width() &&
-                            this->size.height == val.height());
+                    return (
+                        omni::math::are_equal<T>(this->size.width, val.width()) &&
+                        omni::math::are_equal<T>(this->size.height, val.height()));
                 }
 
                 bool operator==(const omni::geometry::size_raw<T>& val) const
                 {
-                    return (this->size.width == val.width &&
-                            this->size.height == val.height);
+                    return (
+                        omni::math::are_equal<T>(this->size.width, val.width) &&
+                        omni::math::are_equal<T>(this->size.height, val.height));
                 }
 
                 bool operator<(const omni::geometry::point2d<T>& val) const
@@ -1452,6 +1593,20 @@ namespace omni {
         typedef omni::geometry::rectangle_raw<int32_t> raw_rectangle_t;
         typedef omni::geometry::rectangle_raw<int64_t> raw_rectangle64_t;
         typedef omni::geometry::rectangle_raw<float> raw_rectangleF_t;
+    }
+}
+
+namespace std {
+    template < typename T >
+    inline void swap(omni::geometry::rectangle<T>& o1, omni::geometry::rectangle<T>& o2)
+    {
+        o1.swap(o2);
+    }
+
+    template < typename T >
+    inline void swap(omni::geometry::rectangle_raw<T>& o1, omni::geometry::rectangle_raw<T>& o2)
+    {
+        o1.swap(o2);
     }
 }
 

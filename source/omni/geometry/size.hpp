@@ -20,6 +20,7 @@
 #define OMNI_GEOMETRY_SIZE_HPP 1
 #include <omni/defs/global.hpp>
 #include <omni/defs/class_macros.hpp>
+#include <omni/types/math_t.hpp>
 
 #if defined(OMNI_SAFE_GEO_SIZE)
     #include <omni/sync/basic_lock.hpp>
@@ -54,6 +55,12 @@ namespace omni {
                     OMNI_SAFE_GSZDMTX_FW
                 { }
 
+                size(const omni::math::dimensional<T, 2>& cp) :
+                    OMNI_CPCTOR_FW(cp)
+                    m_w(cp[0]), m_h(cp[1])
+                    OMNI_SAFE_GSZDMTX_FW
+                { }
+
                 size(T w, T h) : 
                     OMNI_CTOR_FW(omni::geometry::size<T>)
                     m_w(w), m_h(h)
@@ -83,7 +90,9 @@ namespace omni {
                 bool empty() const
                 {
                     OMNI_SAFE_GSZALOCK_FW
-                    return this->m_w == 0 && this->m_h == 0;
+                    return
+                        omni::math::are_equal<T>(this->m_w, 0) &&
+                        omni::math::are_equal<T>(this->m_h, 0);
                 }
 
                 void set_dimensions(T w, T h)
@@ -93,7 +102,17 @@ namespace omni {
                     this->m_h = h;
                 }
 
-                const omni::string_t to_string_t() const
+                void swap(size<T>& o)
+                {
+                    if (this != &o) {
+                        OMNI_SAFE_GSZALOCK_FW
+                        OMNI_SAFE_GSZOALOCK_FW(o)
+                        std::swap(this->m_w, o.m_w);
+                        std::swap(this->m_h, o.m_h);
+                    }
+                }
+
+                omni::string_t to_string_t() const
                 {
                     omni::sstream_t s;
                     OMNI_SAFE_GSZLOCK_FW
@@ -102,7 +121,7 @@ namespace omni {
                     return s.str();
                 }
 
-                const std::string to_string() const
+                std::string to_string() const
                 {
                     std::stringstream s;
                     OMNI_SAFE_GSZLOCK_FW
@@ -111,7 +130,7 @@ namespace omni {
                     return s.str();
                 }
 
-                const std::wstring to_wstring() const
+                std::wstring to_wstring() const
                 {
                     std::wstringstream s;
                     OMNI_SAFE_GSZLOCK_FW
@@ -128,6 +147,13 @@ namespace omni {
                 operator std::wstring() const
                 {
                     return this->to_wstring();
+                }
+
+                operator omni::math::dimensional<T, 2>() const
+                {
+                    OMNI_SAFE_GSZALOCK_FW
+                    T vals[2] = { this->m_w, this->m_h };
+                    return omni::math::dimensional<T, 2>(vals);
                 }
 
                 bool operator!=(const size<T>& val) const
@@ -184,7 +210,9 @@ namespace omni {
                     if (this == &val) { return true; }
                     OMNI_SAFE_GSZALOCK_FW
                     OMNI_SAFE_GSZOALOCK_FW(val)
-                    return (this->m_w == val.m_w && this->m_h == val.m_h)
+                    return (
+                        omni::math::are_equal<T>(this->m_w, val.m_w) &&
+                        omni::math::are_equal<T>(this->m_h, val.m_h))
                     OMNI_EQUAL_FW(val);
                 }
 
@@ -286,6 +314,11 @@ namespace omni {
                     width(cp.width), height(cp.height)
                 { }
 
+                size_raw(const omni::math::dimensional<T, 2>& cp) :
+                    OMNI_CTOR_FW(omni::geometry::size_raw<T>)
+                    width(cp[0]), height(cp[1])
+                { }
+
                 size_raw(T w, T h) : 
                     OMNI_CTOR_FW(omni::geometry::size_raw<T>)
                     width(w), height(h)
@@ -299,23 +332,36 @@ namespace omni {
                     OMNI_D5_FW("destroyed");
                 }
 
-                bool empty() const { return this->width == 0 && this->height == 0; }
+                bool empty() const
+                {
+                    return
+                        omni::math::are_equal<T>(this->width, 0) &&
+                        omni::math::are_equal<T>(this->height, 0);
+                }
 
-                const omni::string_t to_string_t() const
+                void swap(size_raw<T>& o)
+                {
+                    if (this != &o) {
+                        std::swap(this->w, o.w);
+                        std::swap(this->h, o.h);
+                    }
+                }
+
+                omni::string_t to_string_t() const
                 {
                     omni::sstream_t s;
                     s << "{" << this->width << "," << this->height << "}";
                     return s.str();
                 }
 
-                const std::string to_string() const
+                std::string to_string() const
                 {
                     std::stringstream s;
                     s << "{" << this->width << "," << this->height << "}";
                     return s.str();
                 }
 
-                const std::wstring to_wstring() const
+                std::wstring to_wstring() const
                 {
                     std::wstringstream s;
                     s << "{" << this->width << "," << this->height << "}";
@@ -330,6 +376,12 @@ namespace omni {
                 operator std::wstring() const
                 {
                     return this->to_wstring();
+                }
+
+                operator omni::math::dimensional<T, 2>() const
+                {
+                    T vals[2] = { this->width, this->height };
+                    return omni::math::dimensional<T, 2>(vals);
                 }
 
                 bool operator!=(const size_raw< T >& val) const
@@ -370,7 +422,10 @@ namespace omni {
                 bool operator==(const size_raw< T >& val) const
                 {
                     if (this == &val) { return true; }
-                    return (this->width == val.width && this->height == val.height)
+                    return (
+                        omni::math::are_equal<T>(this->width, val.width) &&
+                        omni::math::are_equal<T>(this->height, val.height)
+                    )
                     OMNI_EQUAL_FW(val);
                 }
 
@@ -410,6 +465,20 @@ namespace omni {
         typedef omni::geometry::size_raw<int32_t> raw_size_t;
         typedef omni::geometry::size_raw<int64_t> raw_size64_t;
         typedef omni::geometry::size_raw<float> raw_sizeF_t;
+    }
+}
+
+namespace std {
+    template < typename T >
+    inline void swap(omni::geometry::size<T>& o1, omni::geometry::size<T>& o2)
+    {
+        o1.swap(o2);
+    }
+
+    template < typename T >
+    inline void swap(omni::geometry::size_raw<T>& o1, omni::geometry::size_raw<T>& o2)
+    {
+        o1.swap(o2);
     }
 }
 
