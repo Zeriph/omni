@@ -23,84 +23,121 @@ g++ main.cpp /source/omni/library.cpp -I/source/omni -pthread -o program.bin
 
 ### Using Omni
 
-An example using [timers](https://zeriph.com/omni/docs/examples/timers.html):
+A simplistic example using [timers](https://zeriph.com/omni/docs/examples/timers.html) and [sockets](https://zeriph.com/omni/docs/examples/sockets.html):
 
 ```
-#include <omni/framework>
+#include <omnilib>
+#include <vector>
+#include <map>
 
-static omni::sync::basic_lock mtx;
-static std::map<int, std::string> vals;
-static std::map<int, int> tcount;
+static std::vector<omni::net::endpoint_descriptor> clients;
+static std::map<omni::net::endpoint_descriptor*, omni::chrono::async_timer> timers;
+static volatile bool running;
 
-void print_status(int val, const std::string& el)
+static void timer_tick(omni::chrono::tick_t tick_time, const omni::generic_ptr& sobj)
 {
-    mtx.lock();
-    std::cout << "Thread #" << omni::sync::thread_id() << " (" << vals[val] << ") " << el << std::endl;
-    mtx.unlock();
+    if (!running) { return; }
+    omni::net::endpoint_descriptor* ep = static_cast<omni::net::endpoint_descriptor*>(sobj);
+    if (ep != OMNI_NULL) {
+        if (!ep->is_connected()) {
+            timers[ep].stop();
+        } else {
+            uint32_t xfr = 0;
+            char buf[4] = { 'L', 'U', 'B', 0 };
+            if (ep->send(buf, sizeof(buf), xfr) != omni::net::socket_error::SUCCESS) {
+                std::cerr << "Error sending to client '" << *ep << "': " << ep->last_error() << std::endl;
+            } else {
+                if (ep->receive(buf, sizeof(buf), xfr) != omni::net::socket_error::SUCCESS) {
+                    std::cerr << "Error receiving from client '" << *ep << "': " << ep->last_error() << std::endl;
+                } else {
+                    if (std::strncmp(buf, "DUB", 4) != 0) {
+                        std::cerr << "Heartbeat error, LUB sent but DUB not received; data = '" << buf << "' .. stopping timer." << std::endl;
+                        timers[ep].stop();
+                    } else {
+                        std::cout << "Client '" << *ep << "' still alive!" << std::endl;
+                    }
+                }
+            }
+        }
+    }
 }
 
-void timer_tick(omni::chrono::tick_t tick_time, const omni::generic_ptr& sobj)
+static void server_thread()
 {
-    int idx = (*static_cast<int*>(sobj));
-    tcount[idx] = tcount[idx] + 1;
-    print_status(idx, "enter");
-    omni::sync::sleep(1500); // sleep 1.5s
-    print_status(idx, "leaving");
+    omni::net::socket server_sock(omni::net::address_family::INET, omni::net::socket_type::STREAM, omni::net::protocol_type::TCP);
+    if (server_sock.bind(12345) != omni::net::socket_error::SUCCESS) {
+        std::cerr << "Error binding on socket: " << server_sock.last_error() << std::endl;
+    } else {
+        std::cout << "Bound to port " << server_sock.bound_port() << std::endl;
+        if (server_sock.listen() != omni::net::socket_error::SUCCESS) {
+            std::cerr << "Error listening on socket: " << server_sock.last_error() << std::endl;
+        } else {
+            std::cout << "Ready to accept connections" << std::endl;
+            while (running) {
+                omni::net::endpoint_descriptor remote_ep;
+                if (server_sock.accept(remote_ep) != omni::net::socket_error::SUCCESS) {
+                    std::cerr << "Error accepting on socket: " << server_sock.last_error() << std::endl;
+                } else {
+                    std::cout << "Client connected: " << remote_ep << std::endl;
+                    clients.push_back(remote_ep);
+                    timers[&clients.back()] = omni::chrono::async_timer(1000, &timer_tick);
+                    timers[&clients.back()].state_object = &clients.back();
+                    std::cout << "Starting heartbeat timer for client " << clients.back() << std::endl;
+                    timers[&clients.back()].start();
+                }
+            }
+            for (std::vector<omni::net::endpoint_descriptor>::iterator it = clients.begin(); it != clients.end(); ++it) {
+                timers[&(*it)].stop();
+                it->close();
+            }
+        }
+    }
+}
+
+static void client_thread()
+{
+    omni::net::socket sock(omni::net::address_family::INET, omni::net::socket_type::STREAM, omni::net::protocol_type::TCP);
+    if (sock.connect("127.0.0.1", 12345) != omni::net::socket_error::SUCCESS) {
+        std::cerr << "Error connecting: " << sock.last_error() << std::endl;
+    } else {
+        uint32_t xfr = 0;
+        char buff[4] = { 'D', 'U', 'B', 0 };
+        while (running) {
+            if (sock.receive(buff, sizeof(buff), xfr) != omni::net::socket_error::SUCCESS) {
+                std::cerr << "Error receiving: " << sock.last_error() << std::endl;
+                running = false;
+            } else {
+                std::cout << "Data received: " << buff << std::endl;
+                if (sock.send("DUB", 4, xfr) != omni::net::socket_error::SUCCESS) {
+                    std::cerr << "Error sending: " << sock.last_error() << std::endl;
+                }
+            }
+        }
+    }
+}
+
+static void signal_handler(int sig)
+{
+    running = false;
 }
 
 int main(int argc, char* argv[])
 {
-    int idx[] = { 1, 2, 3, 4 };
-    vals[1] = "async_timer";
-    vals[2] = "sync_timer";
-    vals[3] = "queue_timer";
-    vals[4] = "drop_timer";
-    
-    omni::chrono::async_timer atimer(1000, &timer_tick);
-    atimer.state_object = &idx[0];
-    
-    omni::chrono::sync_timer  stimer(1000);
-    omni::chrono::queue_timer qtimer(1000);
-    omni::chrono::drop_timer  dtimer(1000);
-
-    stimer.tick += &timer_tick;
-    stimer.state_object = &idx[1];
-    
-    qtimer.tick += &timer_tick;
-    qtimer.state_object = &idx[2];
-    
-    dtimer.tick += &timer_tick;
-    dtimer.state_object = &idx[3];
-    
-    std::cout << "starting timers" << std::endl;
-    atimer.start(); // 6 ticks
-    stimer.start(); // approximately 3 ticks (delay)
-    qtimer.start(); // 6 ticks (deferred)
-    dtimer.start(); // approximately 5 ticks
-    
-    std::cout << "sleeping 6 seconds" << std::endl;
-    omni::sync::sleep(6000); // sleep 6s
-    
-    std::cout << "stopping timers" << std::endl;
-    atimer.stop();
-    stimer.stop();
-    qtimer.stop();
-    dtimer.stop();
-    
-    std::cout << "sleeping 3 seconds to wait the other ticks" << std::endl;
-    omni::sync::sleep(3000); // sleep 6s
-    
-    for (int i = 1; i <= 4; ++i) {
-        std::cout << vals[i] << " tick count: " << tcount[i] << std::endl;
+    omni::application::signal_handler::attach(&signal_handler);
+    running = true;
+    if (argc > 1) {
+        std::string arg = omni::string::to_lower(argv[1]);
+        if (arg == "-c") {
+            return omni::application::run(&client_thread);
+        }
     }
-    
-    return 0;
+    return omni::application::run(&server_thread);
 }
 ```
 
 ## Deployment
 
-Omni is designed with both static and dynamic linking in mind and can be deployed however you might need.
+Omni is designed with both static and dynamic linking in mind and can be deployed however you might need; for more information on building you can view the [build help](https://zeriph.com/omni/docs/build/index.html).
 
 ## Authors
 
@@ -108,7 +145,7 @@ Omni is designed with both static and dynamic linking in mind and can be deploye
 
 ## License
 
-Omni has a permissive free license that allows you to make derivative works or use Omni how you see fit without worry of license issues - see the [LICENSE.md](LICENSE.md) file for details
+Omni has a permissive free license that allows you to make derivative works or use Omni how you see fit without worry of license issues - see the [LICENSE.md](LICENSE.md) file for details.
 
 ## Acknowledgments
  

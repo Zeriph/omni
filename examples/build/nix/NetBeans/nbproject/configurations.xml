@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="84">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="omni" displayName="omni" projectFiles="true">
+<start_zeriph_omni_section>
+<zeriph_source_format><itemPath>{0}</itemPath>
+</zeriph_source_format>
+<zeriph_header_format><itemPath>{0}</itemPath>
+</zeriph_header_format>
+<zeriph_slash>/</zeriph_slash>
+<zeriph_path>/source/omni/</zeriph_path>
+<zeriph_tabspace>  </zeriph_tabspace>
+<zeriph_virt_folder><logicalFolder name="{0}" displayName="{0}" projectFiles="true">
+{1}
+</logicalFolder>
+</zeriph_virt_folder>
+<zeriph_virt_folder_rec>true</zeriph_virt_folder_rec>
+</start_zeriph_omni_section>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceRootList>
+    <Elem>/source/omni</Elem>
+  </sourceRootList>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="3">
+      <toolsSet>
+        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>false</dependencyChecking>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <commandlineTool>gcc</commandlineTool>
+          <incDir>
+            <pElem>/source/omni</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <standard>4</standard>
+          <commandlineTool>g++</commandlineTool>
+          <incDir>
+            <pElem>/source/omni</pElem>
+          </incDir>
+        </ccTool>
+        <asmTool>
+          <commandlineTool>as</commandlineTool>
+        </asmTool>
+        <archiverTool>
+        </archiverTool>
+      </compileType>
+    </conf>
+  </confs>
+</configurationDescriptor>

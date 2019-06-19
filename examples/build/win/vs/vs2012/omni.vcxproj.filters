@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="omni">
+      <UniqueIdentifier>{e55e61b4-319c-40df-83ec-d14180736be0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+<zeriph_inline_source>\    <ClCompile Include="{0}" /></zeriph_inline_source>
+  </ItemGroup>
+  <ItemGroup>
+<zeriph_inline_header>\    <ClInclude Include="{0}">
+      <Filter>omni</Filter>
+    </ClInclude></zeriph_inline_header>
+  </ItemGroup>
+</Project>

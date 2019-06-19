@@ -30,7 +30,7 @@ namespace omni {
         {
             public:
                 endpoint_descriptor();
-                endpoint_descriptor(endpoint_descriptor& cp);
+                endpoint_descriptor(const endpoint_descriptor& cp);
                 ~endpoint_descriptor();
                 
                 omni::net::socket_error connect(const omni::net::socket_t& serv_sock);

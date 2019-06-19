@@ -1,0 +1,60 @@
+@name Timers
+@brief The various timers in the framework can give you a steadily timed tick event.
+@details
+A timer is a mechanism by which you can have an event repeat based on a specified time interval. After the specified interval has lapsed, the @c tick event will be raised and any omni::chrono::timer_delegate delegates attached will be invoked. There are 4 types of timer classes to utilize within the framework:
+
+@c omni::chrono::async_timer
+@c omni::chrono::sync_timer
+@c omni::chrono::queue_timer
+@c omni::chrono::drop_timer
+
+Each timer has the same functionality (i.e. the same member functions) and utilizes an omni::sync::basic_thread that raises a @c tick event after a specified interval has passed. What differentiates the timer types is how they handle any attached delegates to the @c tick event that take @i longer @i than the specified tick time and could cause an overlap in ticks. As an example, take the following timer tick functions:
+
+@code
+void timer_tick_short(omni::chrono::tick_t tick_time, const omni::generic_ptr& state_obj)
+{
+    std::cout << "In tick!" << std::endl;
+    std::cout << "Leaving tick!" << std::endl;
+}
+
+void timer_tick_long(omni::chrono::tick_t tick_time, const omni::generic_ptr& state_obj)
+{
+    std::cout << "In tick!" << std::endl;
+    omni::sync::sleep(2000);
+    std::cout << "Leaving tick!" << std::endl;
+}
+
+omni::chrono::async_timer tobj(1000); // 1 second
+tobj.tick += timer_tick_short;
+tobj.tick += timer_tick_long;
+@code
+
+If we have a timer object with a tick interval of 1 second (1000 ms) the @c timer_tick_short function will execute and return with no delays yet the @c timer_tick_long function will take longer to execute than the interval between ticks, and thus an overlap in ticks can occur. It is this overlapping of ticks where each timer has a different approach.
+
+@section Asynchronous Timer
+
+The omni::chrono::async_timer spawns a thread to preform the @c tick event when the specified interval has passed.
+
+As such, any delegates attached to the async timer must be re-entrant or protect any shared data with a synchronization primitive like a mutex or binary semaphore. The @c async_timer utilizes a separate thread to guarantee the @c tick event is not blocked by attached delegates that might take longer than the specified interval, this ensures that no matter how long an attached delegate might take the tick event @i will @i occur after the specified interval has lapsed.
+
+@section Synchronous Timer
+
+The omni::chrono::sync_timer does @i not @i spawn a thread to do the tick event and instead calls the tick event directly, immediately following the interval lapse.
+
+This blocking nature will delay the time the next tick occurs by the time it takes for each attached function to execute; so if a @c sync_timer were created with a tick interval of 1000 milliseconds and @c timer_tick_long were attached to it, then the tick will occur after 1 second and the next tick won't occur for another 2 seconds afterwards (instead of 1 second) because of the omni::sync::sleep in the @c timer_tick_long function, totalling to 3 seconds for the next tick (versus the 1 second interval).
+
+@section Queue Timer
+
+The omni::chrono::queue_timer will spawn a thread to do the tick event on (similar to the @c async_timer), but when a tick event occurs on the @c queue_timer the time it ticked and state object are added to a queue if the tick event thread is still executing.
+
+If the queue is empty after the tick event occurs then the tick thread dies and a new one will be spawned on the next tick event; if the queue is @b @i not @i @b empty, the tick thread will pop off each event in the queue, executing in the order it was added regardless of tick interval. In this manner, it is possible to have multiple tick events occur in quick succession if the queue has any items in it due to a tick event taking longer than the interval. 
+
+@section Drop Timer
+ 
+The omni::chrono::drop_timer differs from the other types in that it will ignore any ticks that occur if a @c tick event is currently happening.
+
+Like the other timer types the @c drop_timer executes the tick event on a separate thread, but if the next tick occurs when the current tick thread is still active then it is dropped (ignored) and the timer continues in this fashion. There are no alerts to the user if a tick event was dropped.
+
+@section Why Separate Timers?
+
+Each timer has a separate idiom to it to allow a greater flexibility in how you design your code. The timer types are separated out instead of having 1 class that could "do it all" because merging the capabilities of each timer type into one class would bloat the size of the class needlessly if you only ever needed 1 timer type over another (i.e. an @c async_timer over a @c queue_timer type).

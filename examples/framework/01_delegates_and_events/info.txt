@@ -1,0 +1,720 @@
+@name Delegates and Events
+@brief The delegate and event classes are the staple of Omni that allow it to achieve the flexibility it has.
+@details
+One of the key features of Omni and it's ability to emulate certain programming idioms is the delegate class; it is the underlying function pointer object (a.k.a. functor) that enables many aspects of the framework to operate. The omni::delegate and omni::event classes allow you to invoke object instances and functions from other areas of code similar to that of a function pointer or callback. Similar to the <a href="https://msdn.microsoft.com/en-us/library/aa288459%28v=vs.71%29.aspx">C# delegate</a> the omni::delegate allows a programmer to encapsulate either a method, for static or non-member functions, or a an object and a method giving greater flexibility than simple function pointers. 
+
+@section Function Pointers
+One of the more powerful features of C and C++ is the function pointer. As the name implies, a function pointer allows signature compatible functions to be called indirectly via a pointer to the function address. Example:
+
+@code
+#include <iostream>
+
+#define printit(v) std::cout << #v << " = " << v << std::endl
+
+int add(int a, int b) { return a+b; }
+int multi(int a, int b) { return a*b; }
+int shift(int a, int b) { return a<<b; }
+
+int main(int argc, char* argv[])
+{
+    // function pointer to the function add
+    int (*fn_ptr)(int, int) = &add;
+    // list of function pointers
+    int (*fn_ptr_arr[])(int, int) = { &add, &multi, &shift };
+    int a = 1;
+    int b = 2;
+    int c = add(a, b); // call directly
+    printit(c); // c = 3
+    c = fn_ptr(b, c); // call indirectly
+    printit(c); // c = 5
+    for (int i = 0; i < 3; ++i) {
+        c = fn_ptr_arr[i](c, b);
+    }
+    printit(c); // c = 56
+    return 0;
+}
+@code
+
+Since C++ allows for member functions within @c struct types and classes as well as allowing for polymorphic types (i.e. class inheritance), the function pointer is very essential to the underlying language constructs.
+
+If you wish to get a function pointer to a member function of a class, you'll need to ensure the member function is a @c static function. In this way you can grab a function pointer to member function or @c namespace function similar to how you grab a global scope function. Example:
+
+@code
+#include <iostream>
+
+#define printit(v) std::cout << #v << " = " << v << std::endl
+#define printfn(v) std::cout << #v << "::" << __FUNCTION__ << std::endl
+
+namespace MyNamespace {
+    int add(int a, int b) { printfn(MyNamespace); return a+b; }
+}
+
+class MyClass {
+    public:
+        static int multi(int a, int b) { printfn(MyClass); return a*b; }
+};
+
+typedef struct MyStruct {
+    static int shift(int a, int b) { printfn(MyStruct); return a<<b; }
+} MyStruct;
+
+int main(int argc, char* argv[])
+{
+    // function pointer to the function add
+    int (*fn_ptr)(int, int) = &MyNamespace::add;
+    // list of function pointers
+    int (*fn_ptr_arr[])(int, int) = { &MyNamespace::add, &MyClass::multi, &MyStruct::shift };
+    int a = 1;
+    int b = 2;
+    int c = MyNamespace::add(a, b); // call directly
+    printit(c); // = 3
+    c = fn_ptr(b, c); // call indirectly
+    printit(c); // = 5
+    for (int i = 0; i < 3; ++i) {
+        c = fn_ptr_arr[i](c, b); // call function pointer
+        printit(c);
+        switch (i) { // call directly
+            case 0: c = MyNamespace::add(c, b); break;
+            case 1: c = MyClass::multi(c, b); break;
+            case 2: c = MyStruct::shift(c, b); break;
+        }
+        printit(c);
+    }
+    return 0;
+}
+@code
+
+Function pointers can allow for more dynamic code and, as stated earlier, are an essential part of the C++ language with idioms like @c virtual functions and class inheritance. 
+
+While extremely powerful and useful tools, they do have certain limitations. For example, you cannot grab a pointer to a non-static member function directly and to do so requires some extra semantics in your code that can make it more verbose and/or less clear to it's full intention. Example:
+
+@code
+#include <iostream>
+
+#define printit(v) std::cout << #v << " = " << v << std::endl
+
+class MyClass {
+    public:
+        MyClass() : m_val() {}
+        MyClass(int val) : m_val(val) {}
+        int add(int a, int b) { return this->m_val+a+b; }
+        int multi(int a, int b) { return this->m_val*a*b; }
+        int shift(int a, int b) { return this->m_val + (a<<b); }
+    private:
+        int m_val;
+};
+
+int main(int argc, char* argv[])
+{
+    int (MyClass::*fn_ptr)(int, int) = &MyClass::add;
+    int (MyClass::*fn_ptr_arr[])(int, int) = { &MyClass::add, &MyClass::multi, &MyClass::shift };
+    int a = 1;
+    int b = 2;
+    MyClass mc0;
+    MyClass mc2(2);
+    int c = mc0.add(a, b); // can't call directly, must use object
+    printit(c); // = 3
+    // we can't call directly via c = fn_ptr(b, c);
+    // error: must use '.*' or '->*' to call pointer-to-member function in 'fn_ptr (...)'
+    // so then we need to use a pointer-to-member function call    
+    c = ((&mc0)->*(fn_ptr))(b, c);
+    printit(c); // = 5
+    c = ((&mc2)->*(fn_ptr))(b, c);
+    printit(c); // = 9
+    for (int i = 0; i < 3; ++i) {
+        c = ((&mc0)->*(fn_ptr_arr[i]))(c, b);
+    }
+    printit(c); // 0 (mc0 has m_val = 0)
+    for (int i = 0; i < 3; ++i) {
+        c = ((&mc2)->*(fn_ptr_arr[i]))(c, b);
+    }
+    printit(c); // 66
+    return 0;
+}
+@code
+
+This caveat to the language constructs limits how you can specifically design your classes, or rather, you need to shoe-horn your class into the language, which inhibits your design decisions and forces you to think twice about how to design your code. As an  example, in Java there is no notion of a function pointer or delegate (like there is in <a href="https://msdn.microsoft.com/en-us/library/ms173171.aspx">C#</a>), to this, if you wanted to create a thread on a class instance, you need to inherit from the <a href="https://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.html" class="code">Runnable</a> Java class to then create a <a href="https://docs.oracle.com/javase/7/docs/api/java/lang/Thread.html" class="code">Thread</a> that takes a class that is a @c Runnable type (vs. C# where you simply pass in the @c object.method to a <a href="https://msdn.microsoft.com/en-us/library/system.threading.thread%28v=vs.110%29.aspx" class="code">System.Threading.Thread</a> constructor). Inheriting like this adds extra layers to your code and can cause innocuous bugs to occur if not handled properly (e.g. the diamond problem).
+
+To help alleviate the design constraints of this and to allow cleaner code, the omni::delegate allows you to bind a signature compatible member function or static function to a compile-time type-safe functor type.
+
+@section The Delegate
+The omni::delegate is a @c template class that wraps a function pointer and object instance so that you can use the @c delegate class just like a function pointer and can be invoked just as if you were to call the function itself, example:
+
+@code
+#include <omni/framework>
+
+bool some_function(int val)
+{
+    std::cout << "Hello from a delegate! val = " << val << std::endl;
+    return (val > 0);
+}
+
+int main(int argc, char* argv[])
+{
+    // signify a delegate function that returns bool and takes 1 int param
+    omni::delegate1<bool, int> dval = &some_function;
+    dval(42); // call like a function
+    return (dval(-1) ? -1 : 0);
+}
+@code
+
+The first template parameter is the return type of the function, so an @c omni::delegate<void> @c can only bind to functions that have a @c void return type, any additional template parameters are the parameters the function itself takes, so @c omni::delegate1<void, int> defines a delegate type that can only bind to functions that have a @c void return type and take a single @c int parameters.
+
+For normal function pointers, like in the example above, a <code>typedef</code>'d function pointer might prove more efficient for your specific needs (e.g. <code>typedef bool (*function_ptr_t)(int);</code>), and while the omni::delegate can wrap a non-member function pointer, its intent is to delegate function handling of member instances, for example:
+
+@code
+#include <omni/framework>
+
+class Object
+{
+    public:
+        Object() : m_val(42) {}
+        Object(int val) : m_val(val) {}
+        
+        int get() { return this->m_val; }
+        void set(int val) { this->m_val = val; }
+        
+    private:
+        int m_val;
+};
+
+typedef omni::delegate<int> get_delegate_t;
+typedef omni::delegate1<void, int> set_delegate_t;
+
+#define printit(v) std::cout << #v << " = " << v.get() << std::endl;
+
+int main(int argc, char* argv[])
+{
+    Object o1;
+    Object o2(100);
+    get_delegate_t getter = get_delegate_t::bind<Object, &Object::get>(o1);
+    set_delegate_t setter = set_delegate_t::bind<Object, &Object::set>(o1);
+    
+    printit(o1); // 42
+    printit(o2); // 100
+    
+    setter(o2.get() + 10); // same as o1.set(o2.get() + 10)
+    o2.set(getter()); // same as o2.set(o1.get())
+    
+    printit(o1); // 110
+    printit(o2); // 110
+    
+    // set the getter to a different target but keep the function the same
+    // this is unsafe since the target types can be unrelated to the function pointer itself
+    getter.unsafe_set_target(o2);
+    
+    setter(o2.get() + 10); // same as o1.set(o2.get() + 10)
+    o2.set(getter()); // same as o2.set(o2.get())
+    
+    printit(o1); // 120
+    printit(o2); // 110
+    return 0;
+}
+@code
+
+The delegate class is able to bind to a specific object and call a non-static member function of that instance, additionally being able to change the target being invoked while @i not @i changing the underlying function pointer itself allowing for a more dynamic programming environment.
+
+This ability to bind to either a normal function pointer or to a non-static member function allows you to focus on building more robust, extensible and maintainable code; for example, looking at the Java and C# thread reference from above, being able to bind to a specific object with a thread also allows more fluid code to be designed and utilized:
+
+@code
+#include <omni/framework>
+
+#define printit(v) std::cout << "(" << omni::sync::thread_id() << "): " << #v << " = " << v.get() << std::endl;
+
+class Object
+{
+    public:
+        Object() : m_val(42), m_mtx() {}
+        Object(int val) : m_val(val), m_mtx() {}
+        
+        int get()
+        {
+            omni::sync::auto_basic_lock alock(&this->m_mtx);
+            return this->m_val;
+        }
+            
+        void set(int val)
+        {
+            omni::sync::auto_basic_lock alock(&this->m_mtx);
+            this->m_val = val;
+        }
+        
+        void thread_func()
+        {
+            int i = this->get();
+            printit((*this));
+            for (; i < 1000; i = this->get()) {
+                this->set(i + 1);
+                omni::sync::yield_thread();
+            }
+            printit((*this));
+        }
+        
+    private:
+        int m_val;
+        omni::sync::basic_lock m_mtx;
+};
+
+int main(int argc, char* argv[])
+{
+    Object o1;
+    Object o2(100);
+    omni::sync::thread_start ts = omni::sync::bind<Object, &Object::thread_func>(o1);
+    printit(o1); // 42
+    printit(o2); // 100
+    
+    omni::sync::basic_thread t1(ts);
+    omni::sync::basic_thread t2(ts);
+    
+    printit(o1);
+    printit(o2);
+    
+    ts.unsafe_set_target(o2);
+    printit(o1);
+    printit(o2);
+    
+    // re-attach to o2 and restart
+    t1.detach(); t2.detach();
+    t1.bind(ts); t2.bind(ts);
+    t1.start();  t2.start();
+    t1.join();   t2.join();
+    
+    printit(o1); // 1000
+    printit(o2); // 1000
+    return 0;
+}
+@code
+
+Additionally, you may have noticed that for non-member functions we've simply used the @c function-pointer syntax to assign the function to the delegate, e.g.
+<code>
+omni::delegate<void> dval = some_function;
+// or
+omni::delegate<void> dval = &some_function;
+</code>
+This is because the @c delegate class has an @c implicit constructor that allow you to create an omni::delegate from a non-member function (to allow for less verbose code), example:
+
+@code
+#include <omni/framework>
+
+void some_function()
+{
+    std::cout << "Hello" << std::endl;
+}
+
+void run_function(const omni::delegate<void>& dval)
+{
+    dval();
+}
+
+int main(int argc, char* argv[])
+{
+    // implicit creation of an omni::delegate
+    run_function(&some_function);
+    return 0;
+}
+@code
+
+In this manner you're able to design your classes and functions without the need for extra semantics cluttering your code while still expressing the intent of the code.
+
+It should be noted, however, that function overload and name resolution rules still apply. So if you defined 2 versions of @c run_function where 1 takes an <code>omni::delegate<void></code> and the other takes an <code>omni::delegate1<void, int></code> as its parameters, the compiler will not be able to disambiguate between the two, this is true if you replaced the @c omni::delegate with a raw function pointers as well, as an example:
+
+@code
+#include <omni/framework>
+
+void some_function()
+{
+    std::cout << "Hello from void" << std::endl;
+}
+
+void some_function(int val)
+{
+    std::cout << "Hello with " << val << std::endl;
+}
+
+void run_function(const omni::delegate<void>& dval) { dval(); }
+void run_function(const omni::delegate1<void, int>& dval) { dval(42); }
+
+void raw_function(void (*dval)()) { dval(); }
+void raw_function(void (*dval)(int)) { dval(42); }
+
+int main(int argc, char* argv[])
+{
+    run_function(&some_function); // error: ambiguous call
+    raw_function(&some_function); // error: ambiguous call
+    return 0;
+}
+@code
+
+@b NOTE: this code will @i not @i compile because of the ambiguity error. @b
+
+To fix it such that it is unambiguous to the compiler you must explicitly create the delegate from the function pointer, example:
+
+@code
+int main(int argc, char* argv[])
+{
+    omni::delegate<void> nval = &some_function;
+    omni::delegate1<void, int> ival = &some_function;
+    run_function(ival); // unambiguous
+    run_function(nval); // unambiguous
+    return 0;
+}
+@code
+
+The omni::delegate aims to be similar in functionality to that of the C# delegate while being as light as possible on CPU and memory consumption, as such, the class only maintains 2 pointers and an invocation of the delegate incurs only a couple of extra @c JMP (to invoke the actual function). To this, the @c delegate is not thread safe by design so calling @c unbind and @c bind on 2 separate threads will yield undefined behavior if there are no synchronization primitives around the calls. If you would like the delegate classes to be thread safe when accessing any of the members, you will need to define OMNI_SAFE_DELEGATES when compiling, which adds an omni::sync::mutex_t to the @c delegate class to protect the underlying data (thus adding computational time to the invocation of the delegates).
+
+One caveat to the omni::delegate with compilers that do not support variadic templates, is that when you wish to bind to a function that has multiple parameters to it you must use the appropriate omni::delegate class that has the same number of template parameters defined for it. For example, the omni::delegate has only 1 template parameter and this defines the return type of the function that can be bound to, to bind to a function that takes 1 parameter, you would use the omni::delegate1 where the first template parameter is the function return type and the second template parameter is the single parameter the function takes. The omni::delegate2 has 3 template parameters, 1 for function return type, 2 for the function parameters, omni::delegate3 has 4, and so on up to the omni::delegate16. Note that we use a custom generation tool that can build an @c omni::delegateN class but we've only built up to the omni::delegate16 because, generally speaking, a function with more than a few parameters might be better served (and more efficient on a low level) by passing in a P.O.D. @c struct type with your variables.
+
+While it might be a caveat it can also be useful in the fact that specifying the explicit type (over using variadic templates) expresses the intent of the code more clearly, for example <code>omni::delegate3<void, int, int, int> my_delegate;</code> is clear to it's type and parameters, while <code>omni::delegate<void, ...> my_delegate;</code> might be vague to an initial reader of the code.
+
+There does exists a helper macro, within the framework, to define a delegate of any size and return type: OMNI_DELEGATE or it's lowercase helper omni_delegate can both be used as a helper to create (not bind) a delegate.
+
+@code
+#include <omni/framework>
+
+int function0()
+{
+    return 42;
+}
+
+int function3(int x, int y, int z)
+{
+    return (x * y) / z;
+}
+
+void function1(int a)
+{
+    std::cout << a << std::endl;
+}
+
+int main(int argc, char* argv[])
+{
+    // omni::delegate<int> f0 = &function0;
+    omni_delegate(int) f0 = &function0;
+
+    // omni::delegate3<int, int, int, int> f3 = &function3;
+    omni_delegate(int, int, int, int) f3 = &function3;
+
+    // omni::delegate1<void, int> f1 = &function1;
+    omni_delegate(void, int) f1 = &function1;
+
+    f1(f3(f0(), f0(), f0()));
+
+    return 0;
+}
+@code
+
+There too exists a helper macro that can be utilized within user code, to make binding to a delegate less verbose as well, the OMNI_BIND helper macro and its lowercase equivalent @c omni_bind can be used much like the OMNI_DELEGATE macro to help bind to class objects and their member functions:
+
+@code
+#include <omni/framework>
+
+class MyClass
+{
+    public:
+        MyClass() : m_val(42) {}
+        MyClass(int v) : m_val(v) {}
+
+        int get()
+        {
+            return this->m_val;
+        }
+
+        void set(int x, int y)
+        {
+            this->m_val = x + y;
+        }
+
+        void print()
+        {
+            std::cout << this->m_val << std::endl;
+        }
+
+    private:
+        int m_val;
+};
+
+int main(int argc, char* argv[])
+{
+    MyClass obj(42);
+
+    // omni::delegate<int> pv = omni::delegate<void>::bind<MyClass, &MyClass::print>(obj);
+    omni_delegate(void) pv = omni_bind(void, MyClass, print, obj);
+
+    // omni::delegate2<void, int, int> sv = omni::delegate2<void, int, int>::bind<MyClass, &MyClass::set>(obj);
+    omni_delegate(void, int, int) sv = omni_bind(void, int, int, MyClass, set, obj);
+    
+    // NOTE: you can use the OMNI_DELEGATE macro to bind as well
+    // omni::delegate2<void, int, int> sv = omni::delegate2<void, int, int>::bind<MyClass, &MyClass::set>(obj);
+    omni_delegate(void, int, int) sv2 = omni_delegate(void, int, int)::bind<MyClass, &MyClass::set>(obj);
+    
+    // omni::delegate<int> gv = omni::delegate<int>::bind<MyClass, &MyClass::get>(obj);
+    omni_delegate(int) gv = omni_bind(int, MyClass, get, obj);
+
+    obj.print();
+    pv();
+    sv(10, 20);
+    
+    obj.print();
+    pv();
+    sv2(30, 10);
+
+    obj.print();
+    std::cout << gv() << std::endl;
+
+    return 0;
+}
+@code
+
+The omni::delegate classes are expressly for binding to functions and are more akin to a callback by design (which is why each @c delegate has a generic @c typedef of <code>typedef omni::delegate<void> callback</code>). One functionality of the C# delegate that those whom are familiar with is the event system, or a multicast delegate. The multicast delegate allows you to bind, or attach, multiple delegates to a single @c delegate instance, utilizing the @c += and @c -= operators, that can then all be invoked like an event. This is @i not @i true of the omni::delegate as its intention is not to be a list of delegates, but a specific delegate that represents a specific object and/or method.
+
+To this, the omni::event is designed to emulate the behavior of a C# multicast delegate/event with the overloaded @c += and @c -= operators to attach/detach.
+
+@section The Event
+While the delegate allows you to bind to specific functions and objects, the omni::event is a way to call a list of delegates that are function signature compatible to the underlying delegate type. The event system of the framework allows you to concern yourself with the details of your classes and functions and less with the frameworks implementation details.
+
+The omni::event class is a template class that allows you to bind multiple delegates to a single event, regardless of the underlying type. The omni::event and omni::delegate classes do not care about the underlying class type and instead only that the function being attached to matches the @c delegate signature. This flexibility allows you to attach multiple object types to a single event.
+
+As an example, the omni::chrono::async_timer and other timer classes have an underlying omni::sync::basic_thread that sits in a loop and, after a specified time, raises the omni::chrono::async_timer::tick event:
+
+@code
+#include <omni/framework>
+
+#define printit(v) std::cout << "(" << omni::sync::thread_id() << "): " << #v << " = " << v << std::endl;
+
+class Type1
+{
+    public:
+        Type1() : m_val(42) {}
+        
+        // tick event is defined: omni::delegate2<omni::chrono::tick_t, const omni::generic_ptr&>
+        void timer_ticked(omni::chrono::tick_t time, const omni::generic_ptr& state_object)
+        {
+            this->m_val += 10;
+            printit((*this));
+        }
+        
+        friend std::ostream& operator<<(std::ostream& os, const Type1& t)
+        {
+            os << "Type1: " << t.m_val;
+            return os;
+        }
+        
+    private:
+        int m_val;
+};
+
+class Type2
+{
+    public:
+        Type2() : m_val(2) {}
+        
+        void timer_ticked(omni::chrono::tick_t time, const omni::generic_ptr& state_object)
+        {
+            this->m_val += 10;
+            printit((*this));
+        }
+        
+        friend std::ostream& operator<<(std::ostream& os, const Type2& t)
+        {
+            os << "Type2: " << t.m_val;
+            return os;
+        }
+        
+    private:
+        int m_val;
+};
+
+void timer_ticked(omni::chrono::tick_t time, const omni::generic_ptr& state_object)
+{
+    printit(omni::chrono::elapsed_ms(time));
+}
+
+int main(int argc, char* argv[])
+{
+    Type1 o1;
+    Type2 o2;
+    omni::chrono::async_timer tobj(1000); // 1 second interval
+    printit(o1);
+    printit(o2);
+    
+    // to attach to an event, simply call the += operator and attach a delegate
+    tobj.tick += &timer_ticked; // implicit construction of a delegate with timer_ticked as the function
+    tobj.tick += omni::chrono::timer_delegate::bind<Type1, &Type1::timer_ticked>(o1);
+    tobj.tick += omni::chrono::timer_delegate::bind<Type2, &Type2::timer_ticked>(o2);
+    
+    tobj.start();
+    omni::sync::sleep(5000); // will do 4 ticks
+    tobj.stop();
+    
+    printit(o1);
+    printit(o2);
+    return 0;
+}
+@code
+
+Notice how there's only 1 timer object yet 3 functions are called (since there are 3 delegates attached), each on the same thread.
+
+Similar to the C# event structures, to attach an omni::delegate to an event, the omni::event class overloads the @c += operator as well as provides the omni::event::attach function to add a signature compatible delegate to the underlying list. Detaching a delegate is just as simple, calling the overloaded @c -= operator or the omni::event::detach function, for example:
+
+@code
+#include <omni/framework>
+
+#define printv(v) std::cout << v << std::endl
+
+volatile bool do_run;
+omni::event1<void, int> signal_event;
+
+void got_signal2(int sig)
+{
+    printv("This function will never be called!");
+}
+
+void got_signal1(int sig)
+{
+    printv("Signal 1, detaching");
+    signal_event -= &got_signal2;
+    printv("Signal 1, leaving");
+}
+
+void signalled(int sig)
+{
+    std::cout << "calling attached delegates with signal " << sig << std::endl;
+    signal_event(sig);
+    printv("stopping");
+    do_run = false;
+}
+
+int main(int argc, char* argv[])
+{
+    signal_event += got_signal1;
+    signal_event += got_signal2;
+    signal(SIGINT, &signalled);
+    do_run = true;
+    printv("Waiting for SIGINT...");
+    while (do_run) { omni::sync::sleep(50); }
+    printv("Leaving...");
+    return 0;
+}
+@code
+
+Any delegates attached are invoked in the order they are attached as many times as they are attached, as such you can detach a delegate that has not yet been invoked (as in the example above). Detaching a delegate removes the @i @b last @b @i instance of that delegate from the list and thus that delegate that was detached will not be invoked. If the delegate is attached multiple times, the last instance is still the only one removed; to detach all instance you will need to explicitly call the omni::event::detach_all function, example:
+
+@code
+#include <omni/framework>
+
+#define printv(v) std::cout << v << std::endl
+
+void function1() { std::cout<<"1 "; }
+void function2() { std::cout<<"2 "; }
+void function3() { std::cout<<"3 "; }
+void end() { std::cout<<std::endl; }
+
+int main(int argc, char* argv[])
+{
+    // omni::action is a typedef of omni::event<void>
+    omni::action events;
+    events += function3;
+    events += function1;
+    events += function2;
+    events += function3;
+    events += function2;
+    events += function1;
+    events += end; // for endl;
+    events(); // 3 1 2 3 2 1
+    printv("removing 3");
+    events -= function3;
+    events(); // 3 1 2 2 1
+    printv("removing 1");
+    events -= function1;
+    events(); // 3 1 2 2
+    printv("removing all 2");
+    events.detach_all(function2);
+    events(); // 3 1
+    return 0;
+}
+@code
+
+If you detach a delegate that has already been invoked, or is the current one being invoked, since that delegate has already been called it is merely removed from the underlying list. @b Note: @b removing a delegate that has not been attached or removing one from an event with an empty invocation list will @i not @i produce an error.
+
+Since delegates can return values, in the case of an event with multiple delegates attached, the value returned is from the last attached delegate in the invocation list. If you detach a delegate that happens to be the last one in the list while the 2nd to last delegate is being invoked (as in the example above), it is undefined as to the value being returned and thus an exception is thrown, for example:
+
+@code
+#include <omni/framework>
+
+#define printv(v) std::cout << v << std::endl
+
+omni::event1<int, int> events;
+
+int some_function3(int val)
+{
+    std::cout << "Function 3, returning " << (val + 30) << std::endl;
+    return (val + 30);
+}
+
+int some_function2(int val)
+{
+    std::cout << "This function will never be called!" << std::endl;
+    std::cout << "Function 2, returning " << (val + 42) << std::endl;
+    return (val + 42);
+}
+
+int some_function1(int val)
+{
+    printv("Function 1, detaching");
+    events -= &some_function2; // remove the last instance
+    std::cout << "Function 1, returning " << (val + 10) << std::endl;
+    return (val + 10);
+}
+
+int main(int argc, char* argv[])
+{
+    events += some_function1;
+    events += some_function2;
+    printv("Invoking...");
+    int retval = 0;
+    try {
+        retval = events(42);
+        /* some_function2 is the last on the list, so retval should be 84 since
+        the last function in the event list is the one to return a value. But
+        since we've detached it in some_function1 with '-= &some_function2' the
+        value returned will actually be undefined, and thus an exception is thrown */
+    } catch (omni::exceptions::invalid_delegate_invoke e) {
+        std::cout << "Exception caught: " << e << std::endl;
+    }
+    std::cout << "retval = " << retval << std::endl;
+    // attach some_function1&3 to show it's the last function invoked that returns
+    events += some_function1;
+    events += some_function3;
+    /* we can call it again here and no error will occur since
+    the some_function2 delegate has already been removed */
+    retval = events(42);
+    std::cout << "retval = " << retval << std::endl;
+    return 0;
+}
+@code
+
+The reason for this being how the underlying list iteration and invocation happens on an event, additionally, to void additional memory or stack/registers being utilized, a temporary object is not used when returning from the underlying invoked delegates in the list, it is the value directly returned by the user supplied function.
+
+As with the omni::delegate class, the omni::event is not inherently thread safe, thus a call to @c attach and @c detach on 2 separate threads can result in @i undefined behavior @i if the list is modified while being read. Defining the OMNI_SAFE_EVENTS when compiling adds an omni::sync::mutex_t to the @c event class to protect the underlying data (thus adding computational time to the invocation of the event and delegates). Defining OMNI_SAFE_EVENTS does @b @i not @i @b define the OMNI_SAFE_DELEGATES flag, so while an omni::event might be thread safe, unless you specify that delegates are too, they will not be.
+
+Additionally, like the omni::delegate that has a @c typedef for an omni::callback the omni::event has a @c typedef for a default action event, example:
+
+@code
+namespace omni {
+    typedef omni::delegate<void> callback;
+    typedef omni::event<void> action;
+}
+
+void some_function() { }
+
+omni::callback cb = &some_function;
+omni::action act;
+act += cb;
+act += &some_function;
+@code
+
+Also, like the omni::delegate, there exists a helper macro that can be utilized within user code to make attaching a delegate less verbose as well, the OMNI_EVENT macro and it's lowercase equivalent @c omni_event.
+
+Each type of the delegate and event system is defined within its own header, so the omni::delegate, omni::callback, omni::event and omni::action are all defined in @h omni/delegate/0.hpp @h while the omni::delegate1, omni::event1, etc. are defined in @h omni/delegate/1.hpp @h and so on in this fashion.
+
+Including @h omni/delegates.hpp @h will include all of the delegate and event types.

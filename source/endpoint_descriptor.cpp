@@ -73,22 +73,13 @@ omni::net::endpoint_descriptor::endpoint_descriptor() :
 {
 }
 
-omni::net::endpoint_descriptor::endpoint_descriptor(omni::net::endpoint_descriptor& cp) :
+omni::net::endpoint_descriptor::endpoint_descriptor(const omni::net::endpoint_descriptor& cp) :
     OMNI_CTOR_FW(omni::net::endpoint_descriptor)
     m_socket(OMNI_INVALID_SOCKET), m_addr(), m_last_err(omni::net::socket_error::UNSPECIFIED),
     m_connected(), m_shut()
     OMNI_SAFE_SOCKEPMTX_FW
 {
-    OMNI_SAFE_SOCKEPOALOCK_FW(cp)
-    this->m_socket = cp.m_socket;
-    this->m_addr = cp.m_addr;
-    this->m_connected = cp.m_connected;
-    this->m_shut = cp.m_shut;
-    
-    cp.m_socket = OMNI_INVALID_SOCKET;
-    std::memset(&cp.m_addr, 0, sizeof(cp.m_addr));
-    cp.m_connected = false;
-    cp.m_shut = false;
+    this->swap(*const_cast<omni::net::endpoint_descriptor*>(&cp));
 }
 
 omni::net::endpoint_descriptor::~endpoint_descriptor()

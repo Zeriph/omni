@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="omni" />
+		<Option pch_mode="2" />
+		<Option compiler="g++" />
+		<Build>
+			<Target title="debug">
+				<Option output="debug/omni" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="obj/" />
+				<Option type="2" />
+				<Option compiler="g++" />
+				<Option createDefFile="1" />
+			</Target>
+		</Build>
+<start_zeriph_omni_section>
+<zeriph_source_format><Unit filename="{0}" />
+</zeriph_source_format>
+<zeriph_header_format><Unit filename="{0}" />
+</zeriph_header_format>
+<zeriph_slash>/</zeriph_slash>
+<zeriph_path>/source/omni/</zeriph_path>
+<zeriph_tabspace>		</zeriph_tabspace>
+<zeriph_virt_folder></zeriph_virt_folder>
+<zeriph_virt_folder_rec>false</zeriph_virt_folder_rec>
+</start_zeriph_omni_section>
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

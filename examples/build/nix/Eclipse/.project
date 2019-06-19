@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>omni</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.cdt.managedbuilder.core.genmakebuilder</name>
+			<triggers>clean,full,incremental,</triggers>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.cdt.managedbuilder.core.ScannerConfigBuilder</name>
+			<triggers>full,incremental,</triggers>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.cdt.core.cnature</nature>
+		<nature>org.eclipse.cdt.core.ccnature</nature>
+		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
+		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
+	</natures>
+	<linkedResources>
+<start_zeriph_omni_section>
+<zeriph_source_format><link>
+    <name>{0.nm_path}</name>
+    <type>1</type>
+    <location>{0}</location>
+</link>
+</zeriph_source_format>
+<zeriph_header_format><link>
+    <name>{0.nm_path}</name>
+    <type>1</type>
+    <location>{0}</location>
+</link>
+</zeriph_header_format>
+<zeriph_slash>/</zeriph_slash>
+<zeriph_path>/source/omni/</zeriph_path>
+<zeriph_tabspace>		</zeriph_tabspace>
+<zeriph_virt_folder><link>
+    <name>{0}</name>
+    <type>2</type>
+    <locationURI>virtual:/virtual</locationURI>
+</link>
+</zeriph_virt_folder>
+<zeriph_virt_folder_rec>false</zeriph_virt_folder_rec>
+</start_zeriph_omni_section>
+	</linkedResources>
+</projectDescription>

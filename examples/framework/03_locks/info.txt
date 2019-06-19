@@ -1,0 +1,143 @@
+@name Synchronization Locks
+@brief There are numerous locking primitives to allow finer control of your code given the nature of synchronization.
+@details
+When adding multiple threads to a program, care must be taken to ensure any shared data amongst the threads is synchronized properly; without the synchronization, it's possible for a data race to occur. A data race is a condition in which multiple threads try and read and write the same memory location (i.e. variable) at the same time.
+
+To allow a greater amount of flexibility with your code and the framework, there are a few synchronization classes each serving a different purpose with different idioms:
+
+@c omni::sync::basic_lock
+@c omni::sync::mutex
+@c omni::sync::binary_semaphore
+@c omni::sync::conditional
+@c omni::sync::semaphore
+@c omni::sync::spin_lock
+@c omni::sync::spin_wait
+@c omni::sync::safe_spin_wait
+<code>omni::sync::auto_lock<T></code>
+<code>omni::sync::scoped_lock<T></code>
+
+It should be noted that most of the lock types are inherently thread safe (except where noted below). This is simply due to the locking nature of the classes and how they've been designed.
+
+@section Basic Locks (Mutex)
+The first type is the omni::sync::basic_lock which is a basic wrapper class for an omni::sync::mutex_t and maintains a simple lock count to keep track if the underlying mutex is still locked on destruction . The @c basic_lock is, as the name implies, a basic synchronization locking mechanism that allows multi-threaded code to act on data in a thread-safe manner. The @c basic_lock does not maintain thread ownership or anything beyond if it's still in a locked state on destruction (which would signal a dead-lock condition occurred).
+
+The omni::sync::mutex class is similar to the @c basic_lock in that it wraps an omni::sync::mutex_t and maintains a lock count for dead-lock conditions, if the OMNI_SAFE_MUTEX is defined, it maintains another internal @c mutex_t to give thread-safe access to the underlying lock count and handles. Additionally, and most importantly, the @c mutex class can maintain thread ownership if OMNI_MUTEX_OWNER is defined; it is @b @i undefined behavior @i @b if @c unlock is called on a mutex from a thread that does not own the mutex handle, for example:
+
+@code
+omni::sync::mutex mtx;
+omni::sync::basic_lock block;
+
+void thread1()
+{
+    /* this is undefined since no ownership is maintained,
+    so this call might succeed but it's implementation defined
+    as to what actually "happens" (i.e. success or crash) */
+    block.unlock();
+    
+    // this will generate an error because of the undefined nature
+    mtx.unlock();
+}
+
+int main()
+{
+    mtx.lock(); // main thread "owns" the mutex
+    block.lock(); // main thread "owns" the lock
+    omni::sync::thread t1(&thread1);
+    t1.start();
+    t1.join();
+    return 0;
+}
+@code
+
+It should be noted that both the omni::sync::basic_lock and omni::sync::mutex are recursive locks, so a thread that calls @c lock twice without calling @c unlock will not result in an immediate dead-lock; care should be taken, however, as a dead-lock situation can still arise if @c unlock is @i not @i called an equal number of times as @c lock is.
+
+@section Semaphores
+
+Semaphore objects in Omni differ from mutex types in that they are not recursive, additionally semaphores can have multiple locks on them (i.e. multiple "owners") but none of the locking types (mutex or semaphore) will "auto" unlock on destruction. As with the mutex, semaphore types cannot have active waits on destruction, in other words, you cannot call @c lock without @i also @i calling @c unlock on any synchronization type.
+
+The omni::sync::semaphore is a non-recursive lock that allows multiple waits to call the object. As with a mutex, the "owner" of the lock will be allowed to execute and those waiting for the lock will block until said lock is free. With a mutex you can only have 1 owner, and thus only 1 lock on the object at a time, but with a semaphore, you can have multiple "owners" and thus multiple lines of code executing while others wait.  
+
+The omni::sync::binary_semaphore is a non-recursive lock and is similar to a mutex in that only 1 "owner" can have the lock at any given time (vs. a normal omni::sync::semaphore which can have multiple).
+
+A recursive lock allows a thread to call @c lock on an object multiple times without causing a dead-lock, for example:
+
+@code
+omni::sync::mutex mtx;
+
+int main()
+{
+    // won't dead-lock
+    for (int i = 0; i < 10; ++i) { mtx.lock(); }
+    std::cout << "here!" << std::endl;
+    // but must call unlock as many times as we've called locked
+    for (int i = 0; i < 10; ++i) { mtx.unlock(); }
+    return 0;
+}
+@code
+
+A non-recursive lock @b @i will @i @b cause a dead-lock in a situation where one can happen, for example:
+
+@code
+omni::sync::binary_semaphore binsem; // 1 owner
+omni::sync::semaphore sem; // default of 5 "owners"
+
+int main()
+{
+    // main thread "owns" the binary lock
+    binsem.wait();
+    // main thread "owns" all available wait slots
+    for (int i = 0; i < 5; ++i) { sem.wait(); }
+    
+    binsem.wait(); // dead-lock!
+    // or
+    sem.wait(); // dead-lock!
+    
+    std::cout << "This will never display" << std::endl;
+    return 0;
+}
+@code
+
+In this code, @c wait is called twice on the @c binary_semaphore without @c release ever being called. This causes a dead-lock since the @c binary_semaphore is not recursive. As well, the @c semaphore has a default wait slot of 5, so in this code all available slots are taken in the for loop causing any additional calls to @c wait on the semaphore to dead-lock since @c release was never called at least 1 time on the semaphore.
+
+@section Spin Locks and Waits
+
+Mutex and Semaphore objects can be quite complex and add additional computational time that might not always be ideal. Sometimes small waits are all that are needed and to this Omni has 3 types of @c spin wait types.
+
+The omni::sync::spin_lock is a basic interlocked exchange type that calls the platform specific API for a spin lock type (which are usually kernel objects that are efficiently designed for this type of wait).
+
+The omni::sync::spin_wait is a basic boolean check in a tight loop with a OMNI_THREAD_YIELD call to not consume 100% CPU. Since this is a basic boolean check, it is not thread-safe and cannot be guaranteed in a multi-threaded environment to yield accurately, that is, if you call one of the wait functions on the @c spin_wait object and happen to check if it @c signalled on another thread at the "same" time, it cannot be guaranteed that the result returned was not over-written by the other thread.
+
+The omni::sync::safe_spin_wait is the same as a omni::sync::spin_wait except it has a omni::sync::mutex_t object to keep the underlying boolean lock thread-safe, guaranteeing it's results.
+
+Each spin lock/wait does not care about thread ownership or if it's @c locked on destruction as that is not what they are intended for. These types of synchronization primitives are intended for a small waits and thus need to be used accordingly. Spin locks and waits are similar to a "flood gate" type of scenario where all threads that have called one of the @c wait functions will block until @c signal is called, in which case all threads will continue and non will block on the spin object until it is @c reset accordingly.
+
+Dead-locks can occur on spin locks but not in the same way as they can with a @c binary_semaphore type. For example:
+
+@code
+omni::sync::spin_wait obj;
+
+// thread 1
+obj.wait();
+obj.wait();
+
+// thread 2
+obj.signal();
+@code
+
+In this code, <code>thread 1</code> will wait until the object is signalled, then after it is signalled, it will call wait again, but depending on the spin lock type and if it is reset or not, the thread will just continue (i.e. @i not @i wait). If the spin object had been reset and never signalled again, then a dead-lock condition would occur.
+
+@section The Conditional
+
+The omni::sync::conditional is a locking type that allows an event based locking mechanism to occur. When a @c conditional is utilized, all threads that have called @c wait on the object will block until either @c signal or @c broadcast is called. If @c broadcast is called, all threads that have blocked until that time will be released and signal is reset. If @c signal is called, vs. the @c broadcast function, only a single thread will be released according to the thread scheduling policy of the platform (usually in the order called to wait).
+
+As with the @c mutex and @c semaphore objects, a @c conditional type cannot have active waits when the object is being destroyed or an exception occurs. And like the @c spin lock/wait types, a dead-lock can occur if @c wait is called multiple times in a row without being signalled and/or reset.
+
+@section Scoped Locks
+
+None of the locking types mentioned allow for an "auto" unlock, that is, when an object goes out of scope it does not automatically unlock/release the object. To this, if you wish automatically lock and unlock the different types of objects, you can use one of the auto locking/scoped lock template classes to achieve this.
+
+Both the omni::sync::auto_lock and the omni::sync::scoped_lock operate on types that have member functions of @c lock and @c unlock to which they call @c lock when the auto lock object is created and call @c unlock when the object is destroyed, effectively giving a scoped locking mechanism.
+
+The difference between the 2 classes is that @c auto_lock validates the handle pointer passed in and will throw an exception if the pointer is invalid and the @c scoped_lock does no such checks and instead just directly calls @c lock and @c unlock on the underlying handle.
+
+Since these are template functions, types that have member functions of @c lock and @c unlock (like the @c std::mutex in C++11) will work with these functions.

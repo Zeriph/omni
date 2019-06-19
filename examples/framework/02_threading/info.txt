@@ -1,0 +1,340 @@
+@name Threading
+@brief The framework contains different thread classes to allow a greater flexibility with threading.
+@details
+Using object-oriented design while adding multiple threads to a project can add an additional level of complexity and determinism concerns that need to be addressed. To couple threading with the idea of the omni::delegate, the framework has 3 types of thread classes to utilize with various capabilities to solve different thread or design issues as well as a thread pool implementation to allow queuing of tasks to be run by multiple threads.
+
+@section Thread Types
+The omni::sync::basic_thread, omni::sync::thread and omni::sync::runnable_thread classes each encapsulate a thread and allow you to manage it to some extent, as well as provide some common functionality among the types (like the thread ID or stack size), in addition, each class allows you to bind to a specific function or object instance via the omni::sync::thread_start and omni::sync::parameterized_thread_start types. The omni::sync::thread_start is a @c typedef of an omni::callback which can attach to functions and object instance functions that don't return a value (i.e. @c void function) and take 0 parameters, while the omni::sync::parameterized_thread_start is a @c typedef of an <code>omni::delegate1<void, omni::sync::thread_arg_t></code> that can attach to functions that don't return a value and take 1 parameter that is a type of omni::sync::thread_arg_t, example:
+
+@code
+#include <omni/framework>
+
+void thread_fn()
+{
+    // thread code
+}
+
+void thread_fn2(omni::sync::thread_arg_t param)
+{
+    int val = *(static_cast<int*>(param));
+    // thread code
+}
+
+int main(int argc, char* argv[])
+{
+    int val = 10;
+    omni::sync::thread t(&thread_fn);
+    t.start();
+    t.join();
+    t.reset(); // allow thread re-use
+    t.bind(&thread_fn2);
+    t.start(&val);
+    t.join();
+    return 0;
+}
+@code
+
+Each thread class shares some common functionality amongst them, like the ability to @c join or @c kill a thread, as well, each thread's @c start function does not return until the underlying thread has completely started and the function is about to be called. This adds a extra level of determinism to thread code to allow a developer to know how and when a thread has started, example:
+
+@code
+#include <omni/framework>
+
+void thread_fn()
+{
+    // thread code
+}
+
+int main(int argc, char* argv[])
+{
+    omni::sync::thread t(&thread_fn);
+    // start() will not return until thread_fn is about to be called
+    t.start();
+    // the actual system thread has started and we now have valid handles, so we can use them
+    std::cout << "Thread id: " << t.id() << std::endl;
+    // wait for the thread to finish
+    t.join();
+    return 0;
+}
+@code
+
+This extra level of determinism can help a developer when muli-threaded code and real-time requirements are needed to ensure that each thread is valid or has started properly.
+
+Additionally, while the underlying thread itself might be thread-safe, the individual thread classes are not inherently thread safe unless you specify one of the @c OMNI_SAFE_THREAD preprocessor defines to enable thread-safe thread classes. If these macros are not defined, calls to an instance of the thread cannot be guaranteed across threads and synchronization primitives would need to be used to ensure proper access.
+
+While each of thread classes do share some common functionality among them (like the ability to @c join on them), they do not inherit from each other nor do they share any thread specific code (i.e. the underlying thread code itself). Each class serves a different purpose to suit a specific threading need.
+
+@section Basic Thread
+The omni::sync::basic_thread is a basic wrapper class for a system thread. Like the other thread types, it maintains some basic information about the thread like the thread ID, stack size and other basic properties. The @c basic_thread does not provide extra semantics to manage the underlying system thread beyond the basic capabilities of @c join and @c kill along with other common threading properties (like the handle and ID). 
+
+The @c basic_thread will automatically start if a delegate function is supplied to the constructor, example:
+
+@code
+#include <omni/framework>
+
+void thread_fn()
+{
+    // thread code
+}
+
+int main(int argc, char* argv[])
+{
+    omni::sync::basic_thread t(&thread_fn); // starts the thread automatically if the delegate is valid
+    t.join(); // wait for the thread to finish
+    return 0;
+}
+@code
+
+If no delegate is specified then you must use the omni::sync::basic_thread::bind method to attach a delegate to the thread, otherwise an error will occur if you try to call @c start on the thread. If @c bind is called to attach a function, or the start type is specified as omni::sync::thread_start_type::USER then the calling code must explicitly start the thread in order for the underlying system thread to spawn, example:
+
+@code
+#include <omni/framework>
+
+void thread_fn()
+{
+    // thread code
+}
+
+int main(int argc, char* argv[])
+{
+    omni::sync::basic_thread t1(); // no funciton attached
+    omni::sync::basic_thread t2(&thread_fn, omni::sync::thread_start_type::USER); // user started
+    t1.bind(&thread_fn);
+    t1.start(); // explicit start
+    t2.start(); // explicit start
+    t1.join();
+    t2.join();
+    return 0;
+}
+@code
+
+Care must be taken when using a @c basic_thread since, as the name implies, it is a basic thread type that merely spawns a thread for the user and (by default) detaches the underlying handles to the thread so it can be destroyed or go out of scope and still have the thread run. Because of this, unless other options are specified for the thread, the user must take care to protect the running thread from ending prematurely (e.g. thread ends when the application ends).
+
+Basic thread types can be useful when you need to spawn a short-lived thread because there's minimal overhead in the thread object; a long-lived thread could be spawned from this type as well since, by default, the @c basic_thread will detach on destruction. The basic thread type does not have the functionality to signal an abort on the thread, only to kill it. Since the thread is detached, you must be aware of this if you choose to have a longer-lived thread spawned, you will need to have mechanisms in place to be alerted when the thread should end.
+
+The omni::sync::basic_thread is also the thread type used in the omni::sync::threadpool to manage the tasks; if a @c basic_thread is created within a threadpool, the omni::sync::basic_thread::is_threadpool_thread will return true (otherwise it's always false).
+
+@section Managed Thread
+The omni::sync::thread is considered a @i managed @i thread because it has more logic and a little more overhead than the @c basic_thread type. The extra overhead and logic allow the @c thread type to be aborted (via omni::sync::thread::abort, omni::sync::thread::abort_requested and omni::sync::thread::request_abort) as well as keeping track of the thread's state and raising an even when the thread has completed (via omni::sync::thread::completed) or if an abort has been requested (via omni::sync::thread::aborted), example:
+
+@code
+#include <omni/framework>
+
+void thread_fn()
+{
+    std::cout << "Entered thread: " << omni::sync::thread_id() << std::endl;
+    while (!omni::sync::thread::abort_requested()) {
+        omni::sync::sleep(50);
+    }
+    std::cout << "Leaving thread: " << omni::sync::thread_id() << std::endl;
+}
+
+int main(int argc, char* argv[])
+{
+    std::cout << "Main: creating threads" << std::endl;
+    omni::sync::thread thread1(&thread_fn); // user start
+    omni::sync::thread thread2(&thread_fn, omni::sync::thread_start_type::NOW); // auto started
+    
+    std::cout << "Main: threads created, starting" << std::endl;
+    omni::sync::thread_t tid = thread1.start(); // user start
+    
+    std::cout << "Main: sleep 1s" << std::endl;
+    omni::sync::sleep(1000);
+    omni::sync::thread::request_abort(tid); // can specify thread id
+    std::cout << "Main: join thread1" << std::endl;
+    thread1.join();
+    
+    std::cout << "Main: abort join thread2" << std::endl;
+    thread2.abort(); // calls abort then joins    
+    
+    std::cout << "Main: leaving" << std::endl;
+    return 0;
+}
+@code
+
+The managed thread automatically joins on destruction (if it's been started) which differs from the basic thread (which detaches, by default, on destruction). Another key difference is that the managed thread does not automatically start if no start type has been specified. So if you construct an omni::sync::thread and specify a delegate, you must explicitly call omni::sync::thread::start for the thread to spawn, example:
+
+@code
+#include <omni/framework>
+
+void thread_fn()
+{
+    omni::sync::thread_t tid = omni::sync::thread_id();
+    std::cout << "Entered thread: " << tid << std::endl;
+    while (!omni::sync::thread::abort_requested()) {
+        omni::sync::sleep(50);
+    }
+    std::cout << "Thread sleep: " << tid << std::endl;
+    omni::sync::sleep(1000);
+    std::cout << "Leaving thread: " << tid << std::endl;
+}
+
+int main(int argc, char* argv[])
+{
+    std::cout << "Main: creating threads" << std::endl;
+    omni::sync::thread thread1(&thread_fn); // user start
+    omni::sync::thread thread2(&thread_fn, omni::sync::thread_start_type::NOW); // auto started
+    
+    std::cout << "Main: threads created, starting" << std::endl;
+    thread1.start(); // user start
+    
+    std::cout << "Main: sleep 1s" << std::endl;
+    omni::sync::sleep(1000);
+    std::cout << "Main: aborting" << std::endl;
+    thread1.abort();
+    thread2.abort();
+    
+    std::cout << "Main: leaving, threads auto-join on destruction" << std::endl;
+    return 0;
+}
+@code
+
+While there is a lot of overlap between the omni::sync::thread and the omni::sync::basic_thread the @c thread does @b not @b inherit from, or utilize any of the @c basic_thread class code. While this might add extra code that need be maintained and double checked within the framework, it's a small development price to pay to avoid the inheritance cost for these types (since one of the aims of the framework is to ensure a small foot print where feasible).
+
+@section Runnable
+The omni::sync::runnable_thread allows you to inherit from the omni::sync::runnable class and create a thread which calls the underlying virtual @c run function of the object (a familiar idiom used in other languages like Java). The omni::sync::thread and omni::sync::basic_thread are not meant to be derived from and utilize a different programming idiom to start a thread on a class; to this, it might be more familiar for you to derive your object from the omni::sync::runnable to create an omni::sync::runnable_thread which calls the @c run function in your derived class. And unlike the @c thread and @c basic_thread the @c runnable_thread class is designed to be derived from, since it derives from a @c runnable itself. It is designed this way to allow greater flexibility in how you can build or design your classes, example:
+
+@code
+#include <omni/framework>
+#include <vector>
+
+typedef std::vector<omni::sync::runnable_thread> thread_list;
+
+class Master : public omni::sync::runnable_thread
+{
+    public:
+        Master() : m_threads() {}
+        
+        ~Master()
+        {
+            std::cout << "Master: wait threads" << std::endl;
+            thread_list::iterator itr = this->m_threads.begin();
+            while (itr != this->m_threads.end()) {
+                itr->join();
+                ++itr;
+            }
+        }
+        
+        void add(const omni::sync::runnable& r)
+        {
+            this->m_threads.push_back(omni::sync::runnable_thread(r));
+        }
+    
+        virtual void run(omni::sync::thread_arg_t parm)
+        {
+            std::cout << "Master: start threads" << std::endl;
+            thread_list::iterator itr = this->m_threads.begin();
+            while (itr != this->m_threads.end()) {
+                itr->start();
+                ++itr;
+            }
+        }
+        
+    private:
+        thread_list m_threads;
+};
+
+class Slave : public omni::sync::runnable
+{
+    public:
+        Slave() : m_val(42) {}
+        ~Slave() {}
+        
+        virtual void run(omni::sync::thread_arg_t parm)
+        {
+            std::cout << "Slave enter, val: " << this->m_val << std::endl;
+            omni::sync::sleep(2000);
+            std::cout << "Slave leave, val: " << this->m_val << std::endl;
+        }
+        
+        void set(int val) { this->m_val = val; }
+        
+    private:
+        int m_val;
+};
+
+int main(int argc, char* argv[])
+{
+    std::cout << "Main: allocating threads" << std::endl;
+    Master master;
+    Slave slaves[10];
+    for (int i = 0; i < 10; ++i) {
+        master.add(slaves[i]);
+        slaves[i].set(i);
+    }
+    std::cout << "Main: starting" << std::endl;
+    master.start(); // user start
+    master.join(); // join to ensure all threads start
+    std::cout << "Main: leaving" << std::endl;
+    return 0;
+}
+@code
+
+It should be noted that the base @c runnable class is an abstract class (since the @c run function is pure virtual) so be aware of this if you intended to utilize a base omni::sync::runnable type.
+
+@section Thread Pool
+The omni::sync::threadpool is a way to queue a task and have a thread consume the task. The @c threadpool type is a class that can be instantiated and created in separate instances to allow for separate thread pools (in the event you might want separate thread pool instances vs. an application wide thread pool).
+
+As the name implies, the @c threadpool class is an intelligently managed pool of threads that will spawn a number of threads to preform the tasks in the queue. The minimum and maximum number of threads active will depend on the number of tasks in the queue as well as the values specified via the member function omni::sync::threadpool::set_max_threads and omni::sync::threadpool::set_min_threads which set the maximum thread count and minimum threshold respectively.
+
+When queuing a task (a delegate), the @c threadpool class will follow a few rules to determine how the queued task should be handled:
+
+1.) If the queue is empty, a pre-allocated thread is spawned and the task is preformed (as if you had just spawned an omni::sync::basic_thread with the delegate).
+
+2.) If the queue is @i not @i empty but the active thread count is less than the minimum, an already allocated thread is restarted to perform the task.
+
+3.) If the queue is @i not @i empty and the active thread count is greater than the minimum and less than the maximum, a new thread is allocated and spawned to perform the task.
+
+4.) If the queue is @i not @i empty and the active thread count is at the maximum, the task is simply queued until a thread can become available to preform the task.
+
+The tasks are preformed in a FIFO manner, so any tasks pushed in first will be the tasks to be preformed first by any available threads. It should also be noted that any tasks queued are preformed as soon as an available thread can consume and preform it, there is no intentional delay between the act of queueing the task and an available thread consuming the tasks beyond the CPU time it takes to preform said actions.
+
+There is also no "wait" time when all active threads end, that is, once the task queue is empty, the threads end and do not wait around in the event a task might be queued; a thread is started once a task is queued so waiting in this fashion is moot.
+
+Setting the maximum thread count sets the maximum number of active threads (and thus active tasks) that can concurrently run within the @c threadpool instance. Setting the minimum number of threads sets the number of omni::sync::basic_thread objects the @c threadpool will have pre-allocated for when a task is queued; the allocated thread is not started until a task is queued. As an example:
+
+@code
+#include <omni/framework>
+
+// default 25 max, 5 min
+static omni::sync::threadpool pool;
+
+#define printen() std::cout << __FUNCTION__ << " tid: " << omni::sync::thread_id() << " enter, sleep 1s" << std::endl
+#define printlv() std::cout << __FUNCTION__ << " tid: " << omni::sync::thread_id() << " leaving" << std::endl
+
+void pool_func1(omni::sync::thread_arg_t parm)
+{
+    printen();
+    omni::sync::sleep(1000);
+    printlv();
+}
+
+void pool_func2(omni::sync::thread_arg_t parm)
+{
+    printen();
+    omni::sync::sleep(2000);
+    printlv();
+}
+
+int main(int argc, char* argv[])
+{
+    std::cout << "Main: queueing" << std::endl;
+    for (int i = 0; i < 100; ++i) {
+        if (i % 2 == 0) {
+            pool.queue(&pool_func2);
+        } else {
+            pool.queue(&pool_func1);
+        }
+    } 
+    std::cout << "Main: waiting" << std::endl;
+    pool.wait_active_queue();
+    std::cout << "Main: leaving" << std::endl;
+    return 0;
+}
+@code
+
+When a thread completes a task it does not immediately shut down, instead it checks the queue for any tasks that might need to be performed and if the list is empty, then the thread will shut down.
+
+A thread pool is typically something you use when you need a bunch of short-lived threads. You wouldn't necessarily create a large application loop in a thread pool thread; though you could, that is not what it is designed for. When a @c threadpool instance is being destroyed, if there are threads still active, they will be joined on and the @c threadpool instance will not be fully destructed until all threads have completed.
+
+@section Additional Notes
+As with the rest of the framework, none of these types are themselves thread safe. So a race condition can occur if you spawn a thread from one thread while trying to get the id from another (for example). You can elect to protect the thread type with a synchronization primitive (like an omni::sync::mutex for example) or you can define one of the @c OMNI_SAFE_XXX flags for the specific thread type (OMNI_SAFE_THREAD for the omni::sync::thread or OMNI_SAFE_RUNNABLE_THREAD for the omni::sync::runnable_thread for instance).
