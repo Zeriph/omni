@@ -26,262 +26,108 @@
 
 namespace omni {
     namespace geometry {
-        /** Undocumented: not finished */
         namespace path {
-            template < typename T >
-            static typename omni_sequence_t< omni::geometry::point2d<T> > get_circle(T x, T y, T radius, T step, bool invert_x, bool invert_y)
+            template < template < class, class > class std_seq_t, typename T, typename std_allocator_t >
+            inline std_seq_t< typename omni::geometry::point2d< T >, std_allocator_t >
+            circle(T x, T y, T radius, T step, bool invert_x, bool invert_y)
             {
-                omni_sequence_t< omni::geometry::point2d<T> > points;
-                T x1, y1;
-                T angle;
+                typedef std_seq_t< omni::geometry::point2d<T>, std_allocator_t > gp_seq_t;
+                gp_seq_t points;
+                double x1, y1, angle;
                 if (invert_x && invert_y) { // Flip Horiz/Vert
-                    for (angle = static_cast<T>(0); angle < static_cast<T>(360); angle += step) {
-                        x1 = std::ceil(x + (radius * std::cos((OMNI_PI_180 * angle) - angle)));
-                        y1 = std::ceil(y + (radius * std::sin((OMNI_PI_180 * angle) - angle)));
-                        points.push_back(omni::geometry::point2d<T>(x1, y1));
-                        //omni::geometry::point2d<T> p(x1, y1);
-                        //if (std::find(points.begin(), points.end(), p) == points.end()) { points.push_back(p); }
+                    for (angle = 0; angle < 360; angle += step) {
+                        x1 = (static_cast<double>(x) + (static_cast<double>(radius) * std::cos(angle * OMNI_PI_180)));
+                        y1 = (static_cast<double>(x) + (static_cast<double>(radius) * std::sin(angle * OMNI_PI_180)));
+                        points.push_back(omni::geometry::point2d<T>(static_cast<T>(x1), static_cast<T>(y1)));
                     }
                 } else if (invert_x) { // Flip Horiz
-                    for (angle = static_cast<T>(360); angle > static_cast<T>(0); angle -= step) {
-                        x1 = std::ceil(x + (radius * std::cos((OMNI_PI_180 * angle) - angle)));
-                        y1 = std::ceil(y + (radius * std::sin((OMNI_PI_180 * angle) - angle)));
-                        points.push_back(omni::geometry::point2d<T>(x1, y1));
-                        //omni::geometry::point_t p(x1, y1);
-                        //if (std::find(points.begin(), points.end(), p) == points.end()) { points.push_back(p); }
+                    for (angle = 360; angle > 0; angle -= step) {
+                        x1 = (static_cast<double>(x) + (static_cast<double>(radius) * std::cos(angle * OMNI_PI_180)));
+                        y1 = (static_cast<double>(x) + (static_cast<double>(radius) * std::sin(angle * OMNI_PI_180)));
+                        points.push_back(omni::geometry::point2d<T>(static_cast<T>(x1), static_cast<T>(y1)));
                     }
                 } else if (invert_y) { // Flip Vert
-                    for (angle = static_cast<T>(180); angle > static_cast<T>(0); angle -= step) {
-                        x1 = std::ceil(x + (radius * std::cos((OMNI_PI_180 * angle) - angle)));
-                        y1 = std::ceil(y + (radius * std::sin((OMNI_PI_180 * angle) - angle)));
-                        points.push_back(omni::geometry::point2d<T>(x1, y1));
-                        //omni::geometry::point_t p(x1, y1);
-                        //if (std::find(points.begin(), points.end(), p) == points.end()) { points.push_back(p); }
+                    for (angle = 180; angle > 0; angle -= step) {
+                        x1 = (static_cast<double>(x) + (static_cast<double>(radius) * std::cos(angle * OMNI_PI_180)));
+                        y1 = (static_cast<double>(x) + (static_cast<double>(radius) * std::sin(angle * OMNI_PI_180)));
+                        points.push_back(omni::geometry::point2d<T>(static_cast<T>(x1), static_cast<T>(y1)));
                     }
-                    for (angle = static_cast<T>(360); angle > static_cast<T>(180); angle -= step) {
-                        x1 = std::ceil(x + (radius * std::cos((OMNI_PI_180 * angle) - angle)));
-                        y1 = std::ceil(y + (radius * std::sin((OMNI_PI_180 * angle) - angle)));
-                        points.push_back(omni::geometry::point2d<T>(x1, y1));
-                        //omni::geometry::point_t p(x1, y1);
-                        //if (std::find(points.begin(), points.end(), p) == points.end()) { points.push_back(p); }
+                    for (angle = 360; angle > 180; angle -= step) {
+                        x1 = (static_cast<double>(x) + (static_cast<double>(radius) * std::cos(angle * OMNI_PI_180)));
+                        y1 = (static_cast<double>(x) + (static_cast<double>(radius) * std::sin(angle * OMNI_PI_180)));
+                        points.push_back(omni::geometry::point2d<T>(static_cast<T>(x1), static_cast<T>(y1)));
                     }
                 } else { // Normal
-                    for (angle = static_cast<T>(180); angle < static_cast<T>(360); angle += step) {
-                        x1 = std::ceil(x + (radius * std::cos((OMNI_PI_180 * angle) - angle)));
-                        y1 = std::ceil(y + (radius * std::sin((OMNI_PI_180 * angle) - angle)));
-                        points.push_back(omni::geometry::point2d<T>(x1, y1));
-                        //omni::geometry::point_t p(x1, y1);
-                        //if (std::find(points.begin(), points.end(), p) == points.end()) { points.push_back(p); }
+                    for (angle = 180; angle < 360; angle += step) {
+                        x1 = (static_cast<double>(x) + (static_cast<double>(radius) * std::cos(angle * OMNI_PI_180)));
+                        y1 = (static_cast<double>(x) + (static_cast<double>(radius) * std::sin(angle * OMNI_PI_180)));
+                        points.push_back(omni::geometry::point2d<T>(static_cast<T>(x1), static_cast<T>(y1)));
                     }
-                    for (angle = static_cast<T>(0); angle < static_cast<T>(180); angle += step) {
-                        x1 = std::ceil(x + (radius * std::cos((OMNI_PI_180 * angle) - angle)));
-                        y1 = std::ceil(y + (radius * std::sin((OMNI_PI_180 * angle) - angle)));
-                        points.push_back(omni::geometry::point2d<T>(x1, y1));
-                        //omni::geometry::point_t p(x1, y1);
-                        //if (std::find(points.begin(), points.end(), p) == points.end()) { points.push_back(p); }
+                    for (angle = 0; angle < 180; angle += step) {
+                        x1 = (static_cast<double>(x) + (static_cast<double>(radius) * std::cos(angle * OMNI_PI_180)));
+                        y1 = (static_cast<double>(x) + (static_cast<double>(radius) * std::sin(angle * OMNI_PI_180)));
+                        points.push_back(omni::geometry::point2d<T>(static_cast<T>(x1), static_cast<T>(y1)));
+                    }
+                }
+                for (typename gp_seq_t::iterator a = points.begin(); a != points.end(); ++a) {
+                    for (typename gp_seq_t::iterator b = (a + 1); b != points.end(); ++b) {
+                        if (*a == *b) {
+                            points.erase(b);
+                            --b;
+                        }
                     }
                 }
                 return points;
             }
 
-            template < typename T >
-            static typename omni_sequence_t< omni::geometry::point2d<T> > get_circle(T x, T y, T radius, T step)
+            template < template < class, class > class std_seq_t, typename T  >
+            inline std_seq_t< typename omni::geometry::point2d< T >, typename std::allocator< omni::geometry::point2d< T > > >
+            circle(T x, T y, T radius, T step, bool invert_x, bool invert_y)
             {
-                return get_circle(x, y, radius, step, false, false);
+                return circle< std_seq_t, T, std::allocator< omni::geometry::point2d< T > > >(x, y, radius, step, invert_x, invert_y);
+            }
+
+            template < template < class, class > class std_seq_t, typename T  >
+            inline std_seq_t< typename omni::geometry::point2d< T >, typename std::allocator< omni::geometry::point2d< T > > >
+            circle(T x, T y, T radius, T step)
+            {
+                return circle< std_seq_t, T, std::allocator< omni::geometry::point2d< T > > >(x, y, radius, step, false, false);
+            }
+
+            template < template < class, class > class std_seq_t, typename T  >
+            inline std_seq_t< typename omni::geometry::point2d< T >, typename std::allocator< omni::geometry::point2d< T > > >
+            circle(T x, T y, T radius)
+            {
+                return circle< std_seq_t, T, std::allocator< omni::geometry::point2d< T > > >(x, y, radius, T(1), false, false);
             }
 
             template < typename T >
-            static typename omni_sequence_t< omni::geometry::point2d<T> > get_circle(T x, T y, T radius)
+            inline typename omni_sequence_t< omni::geometry::point2d<T> >
+            circle(T x, T y, T radius, T step, bool invert_x, bool invert_y)
             {
-                return get_circle(x, y, radius, static_cast<T>(1), false, false);
+                return circle<omni_sequence_t, T>(x, y, radius, step, invert_x, invert_y);
             }
 
-            /*
-                TODO: OLD CODE .. remove once tests complete
-
-                static omni::geometry::point_seq_t get_circle(double x, double y, double radius, double step, bool invert_x, bool invert_y)
-                {
-                    omni::geometry::point_seq_t points;
-                    double x1, y1;
-                    double angle;
-                    if (invert_x && invert_y) { // Flip Horiz/Vert
-                        for (angle = 0; angle < 360; angle += step) {
-                            x1 = std::ceil(x + (radius * std::cos((OMNI_PI_180 * angle) - angle)));
-                            y1 = std::ceil(y + (radius * std::sin((OMNI_PI_180 * angle) - angle)));
-                            omni::geometry::point_t p(x1, y1);
-                            if (std::find(points.begin(), points.end(), p) == points.end()) { points.push_back(p); }
-                        }
-                    } else if (invert_x) { // Flip Horiz
-                        for (angle = 360; angle > 0; angle -= step) {
-                            x1 = std::ceil(x + (radius * std::cos((OMNI_PI_180 * angle) - angle)));
-                            y1 = std::ceil(y + (radius * std::sin((OMNI_PI_180 * angle) - angle)));
-                            omni::geometry::point_t p(x1, y1);
-                            if (std::find(points.begin(), points.end(), p) == points.end()) { points.push_back(p); }
-                        }
-                    } else if (invert_y) { // Flip Vert
-                        for (angle = 180; angle > 0; angle -= step) {
-                            x1 = std::ceil(x + (radius * std::cos((OMNI_PI_180 * angle) - angle)));
-                            y1 = std::ceil(y + (radius * std::sin((OMNI_PI_180 * angle) - angle)));
-                            omni::geometry::point_t p(x1, y1);
-                            if (std::find(points.begin(), points.end(), p) == points.end()) { points.push_back(p); }
-                        }
-                        for (angle = 360; angle > 180; angle -= step) {
-                            x1 = std::ceil(x + (radius * std::cos((OMNI_PI_180 * angle) - angle)));
-                            y1 = std::ceil(y + (radius * std::sin((OMNI_PI_180 * angle) - angle)));
-                            omni::geometry::point_t p(x1, y1);
-                            if (std::find(points.begin(), points.end(), p) == points.end()) { points.push_back(p); }
-                        }
-                    } else { // Normal
-                        for (angle = 180; angle < 360; angle += step) {
-                            x1 = std::ceil(x + (radius * std::cos((OMNI_PI_180 * angle) - angle)));
-                            y1 = std::ceil(y + (radius * std::sin((OMNI_PI_180 * angle) - angle)));
-                            omni::geometry::point_t p(x1, y1);
-                            if (std::find(points.begin(), points.end(), p) == points.end()) { points.push_back(p); }
-                        }
-                        for (angle = 0; angle < 180; angle += step) {
-                            x1 = std::ceil(x + (radius * std::cos((OMNI_PI_180 * angle) - angle)));
-                            y1 = std::ceil(y + (radius * std::sin((OMNI_PI_180 * angle) - angle)));
-                            omni::geometry::point_t p(x1, y1);
-                            if (std::find(points.begin(), points.end(), p) == points.end()) { points.push_back(p); }
-                        }
-                    }
-                    return points;
-                }
-
-                static omni::geometry::point_seq_t get_circle(int32_t x, int32_t y, uint32_t radius, bool invert_x, bool invert_y)
-                {
-                    omni::geometry::point_seq_t points;
-                    double x0 = static_cast<double>(x);
-                    double y0 = static_cast<double>(y);
-                    double r = static_cast<double>(radius);
-                    double x1, y1;
-                    int angle;
-                    if (invert_x && invert_y) { // Flip Horiz/Vert
-                        for (angle = 0; angle < 360; ++angle) {
-                            x1 = std::ceil(x0 + (r * omni::math::RADS_COS[angle]));
-                            y1 = std::ceil(y0 + (r * omni::math::RADS_SIN[angle]));
-                            omni::geometry::point_t p(x1, y1);
-                            if (std::find(points.begin(), points.end(), p) == points.end()) { points.push_back(p); }
-                        }
-                    } else if (invert_x) { // Flip Horiz
-                        for (angle = 360; angle > 0; --angle) {
-                            x1 = std::ceil(x0 + (r * omni::math::RADS_COS[angle]));
-                            y1 = std::ceil(y0 + (r * omni::math::RADS_SIN[angle]));
-                            omni::geometry::point_t p(x1, y1);
-                            if (std::find(points.begin(), points.end(), p) == points.end()) { points.push_back(p); }
-                        }
-                    } else if (invert_y) { // Flip Vert
-                        for (angle = 180; angle > 0; --angle) {
-                            x1 = std::ceil(x0 + (r * omni::math::RADS_COS[angle]));
-                            y1 = std::ceil(y0 + (r * omni::math::RADS_SIN[angle]));
-                            omni::geometry::point_t p(x1, y1);
-                            if (std::find(points.begin(), points.end(), p) == points.end()) { points.push_back(p); }
-                        }
-                        for (angle = 360; angle > 180; --angle) {
-                            x1 = std::ceil(x0 + (r * omni::math::RADS_COS[angle]));
-                            y1 = std::ceil(y0 + (r * omni::math::RADS_SIN[angle]));
-                            omni::geometry::point_t p(x1, y1);
-                            if (std::find(points.begin(), points.end(), p) == points.end()) { points.push_back(p); }
-                        }
-                    } else { // Normal
-                        for (angle = 180; angle < 360; ++angle) {
-                            x1 = std::ceil(x0 + (r * omni::math::RADS_COS[angle]));
-                            y1 = std::ceil(y0 + (r * omni::math::RADS_SIN[angle]));
-                            omni::geometry::point_t p(x1, y1);
-                            if (std::find(points.begin(), points.end(), p) == points.end()) { points.push_back(p); }
-                        }
-                        for (angle = 0; angle < 180; ++angle) {
-                            x1 = std::ceil(x0 + (r * omni::math::RADS_COS[angle]));
-                            y1 = std::ceil(y0 + (r * omni::math::RADS_SIN[angle]));
-                            omni::geometry::point_t p(x1, y1);
-                            if (std::find(points.begin(), points.end(), p) == points.end()) { points.push_back(p); }
-                        }
-                    }
-                    return points;
-                }
-
-                static omni::geometry::point_seq_t get_circle(double x, double y, double radius)
-                {
-                    return omni::geometry::path::get_circle(x, y, radius, 1.0, false, false);
-                }
-
-                static omni::geometry::point_seq_t get_circle(double x, double y, double radius, double step)
-                {
-                    return omni::geometry::path::get_circle(x, y, radius, step, false, false);
-                }
-
-                static omni::geometry::point_seq_t get_circle(int32_t x, int32_t y, uint32_t radius)
-                {
-                    return omni::geometry::path::get_circle(x, y, radius, false, false);
-                }
-            */
-
             template < typename T >
-            static omni::geometry::point2d<T> get_point_on_circle(T angle, T radius, T center_x, T center_y)
+            inline typename omni_sequence_t< omni::geometry::point2d<T> >
+            circle(T x, T y, T radius, T step)
             {
-                if (angle > static_cast<T>(360)) {
-                    OMNI_ERR_RETV_FW("angle cannot be greater than 360 degrees", omni::exceptions::overflow_error("angle cannot be greater than 360 degrees"), omni::geometry::pointF_t())
-                }
-                return omni::geometry::point2d<T>(
-                    (center_x + (radius * std::cos((OMNI_PI_180 * angle) - angle))),
-                    (center_y + (radius * std::sin((OMNI_PI_180 * angle) - angle)))
-                );
+                return circle<omni_sequence_t, T>(x, y, radius, step);
             }
 
-            /*
-                TODO: OLD CODE .. remove once tests complete
-
-                static omni::geometry::pointF_t get_pointF_on_circle(double angle, double radius, double center_x, double center_y)
-                {
-                    if (angle > 360) {
-                        OMNI_ERR_RETV_FW("angle cannot be greater than 360 degrees", omni::exceptions::overflow_error("angle cannot be greater than 360 degrees"), omni::geometry::pointF_t())
-                    }
-                    return omni::geometry::pointF_t(
-                        (center_x + (radius * std::cos((OMNI_PI_180 * angle) - angle))),
-                        (center_y + (radius * std::sin((OMNI_PI_180 * angle) - angle)))
-                    );
-                }
-
-                static omni::geometry::pointF_t get_pointF_on_circle(uint16_t angle, uint32_t radius, int32_t center_x, int32_t center_y)
-                {
-                    if (angle > 360) {
-                        OMNI_ERR_RETV_FW("angle cannot be greater than 360 degrees", omni::exceptions::overflow_error("angle cannot be greater than 360 degrees"), omni::geometry::pointF_t())
-                    }
-                    double rad = static_cast<double>(radius);
-                    return omni::geometry::pointF_t(
-                        (static_cast<double>(center_x) + (rad * omni::math::RADS_COS[angle])),
-                        (static_cast<double>(center_y) + (rad * omni::math::RADS_SIN[angle]))
-                    );
-                }
-
-                static omni::geometry::point_t get_point_on_circle(double angle, double radius, double center_x, double center_y)
-                {
-                    if (angle > 360) {
-                        OMNI_ERR_RETV_FW("angle cannot be greater than 360 degrees", omni::exceptions::overflow_error("angle cannot be greater than 360 degrees"), omni::geometry::pointF_t())
-                    }
-                    return omni::geometry::point_t(
-                        static_cast<omni::geometry::point_t::coordinate_t>(std::ceil(center_x + (radius * std::cos((OMNI_PI_180 * angle) - angle)))),
-                        static_cast<omni::geometry::point_t::coordinate_t>(std::ceil(center_y + (radius * std::sin((OMNI_PI_180 * angle) - angle))))
-                    );
-                }
-
-                static omni::geometry::point_t get_point_on_circle(uint16_t angle, uint32_t radius, int32_t center_x, int32_t center_y)
-                {
-                    if (angle > 360) {
-                        OMNI_ERR_RETV_FW("angle cannot be greater than 360 degrees", omni::exceptions::overflow_error("angle cannot be greater than 360 degrees"), omni::geometry::pointF_t())
-                    }
-                    double rad = static_cast<double>(radius);
-                    return omni::geometry::point_t(
-                        static_cast<omni::geometry::point_t::coordinate_t>(std::ceil(static_cast<double>(center_x) + (rad * omni::math::RADS_COS[angle]))),
-                        static_cast<omni::geometry::point_t::coordinate_t>(std::ceil(static_cast<double>(center_y) + (rad * omni::math::RADS_SIN[angle])))
-                    );
-                }
-            */
-
             template < typename T >
-            static typename omni_sequence_t< omni::geometry::point2d<T> > get_path(T x1, T y1, T x2, T y2, T step, uint32_t skip, bool remove_duplicates)
+            inline typename omni_sequence_t< omni::geometry::point2d<T> >
+            circle(T x, T y, T radius)
             {
-                omni_sequence_t< omni::geometry::point2d<T> > points;
+                return circle<omni_sequence_t, T>(x, y, radius);
+            }
+
+            template < template < class, class > class std_seq_t, typename T, typename std_allocator_t >
+            inline std_seq_t< typename omni::geometry::point2d< T >, std_allocator_t >
+            line(T x1, T y1, T x2, T y2, T step, uint32_t skip, bool remove_duplicates)
+            {
+                typedef std_seq_t< omni::geometry::point2d<T>, std_allocator_t > gp_seq_t;
+                gp_seq_t points;
                 bool negx = (x1 > x2);
                 bool negy = (y1 > y2);
                 points.push_back(omni::geometry::point2d<T>(x1, y1));
@@ -300,68 +146,279 @@ namespace omni {
                 } else { // slant line (x && y change)
                     T run = x2 - x1;
                     T rise = y2 - y1;
-                    T len = std::sqrt((run * run) + (rise * rise));
-                    for (T L = 1.0; L < len; L += step) {
-                        points.push_back(omni::geometry::vector2::calculate_point<T>(x1, y1, x2, y2, L));
+                    double len = std::sqrt(static_cast<double>(run * run) + static_cast<double>(rise * rise));
+                    for (double L = 1.0; L < len; L += static_cast<double>(step)) {
+                        points.push_back(omni::geometry::vector2::calculate_point<T>(x1, y1, x2, y2, static_cast<T>(L)));
                     }
                 }
                 points.push_back(omni::geometry::point2d<T>(x2, y2));
-                if (skip > 0 || remove_duplicates) {
+                if (remove_duplicates) {
+                    typename gp_seq_t::iterator it = points.begin();
+                    typename gp_seq_t::iterator next = (it + 1);
+                    while (next != points.end()) {
+                        if (*it == *next) {
+                            points.erase(next);
+                            next = (it + 1);
+                        }
+                        it = next++;
+                    }
+                }
+                if (skip > 0) {
                     uint32_t x = 0;
-                    typename omni_sequence_t< omni::geometry::point2d<T> >::iterator it = points.begin();
-                    typename omni_sequence_t< omni::geometry::point2d<T> >::iterator next = (it + 1);
-                    for (; (skip > 0) && (it != points.end()); it = next++) {
+                    for (typename gp_seq_t::iterator itr = points.begin(); itr != points.end(); ++itr) {
                         if (++x % skip == 0) { continue; }
                         if (x == skip) { x = 0; }
-                        points.erase(it);
+                        points.erase(itr--);
                     }
-                    // TODO: finish this .. optimize function
-                    if (remove_duplicates) {
-                        it = points.begin(); next = (it + 1);
-                        while (next != points.end()) {
-                            if (omni::math::are_equal<T>(*it, *next)) {
-                                points.erase(next);
-                                next = (it + 1);
-                            } else {
-                                it = next++;
-                            }
-                        }
-                    }
-
                 }
                 return points;
             }
 
-            template < typename T >
-            static typename omni_sequence_t< omni::geometry::point2d<T> > get_path(T x1, T y1, T x2, T y2, T step)
+            template < template < class, class > class std_seq_t, typename T, typename std_allocator_t >
+            inline std_seq_t< typename omni::geometry::point2d< T >, std_allocator_t >
+            line(T x1, T y1, T x2, T y2, T step, uint32_t skip)
             {
-                return omni::geometry::path::get_path<T>(x1, y1, x2, y2, step, true);
+                return line<std_seq_t, T, std_allocator_t>(x1, y1, x2, y2, step, skip, true);
             }
 
-            /*
-                TODO: OLD CODE .. remove once tests complete
+            template < template < class, class > class std_seq_t, typename T, typename std_allocator_t >
+            inline std_seq_t< typename omni::geometry::point2d< T >, std_allocator_t >
+            line(T x1, T y1, T x2, T y2, T step)
+            {
+                return line<std_seq_t, T, std_allocator_t>(x1, y1, x2, y2, step, 0, true);
+            }
 
-                template < typename T >
-                static typename omni_sequence_t< omni::geometry::point2d<T> > get_path(T x1, T y1, T x2, T y2, T step, uint32_t skip, bool remove_duplicates)
-                {
-                    if (skip > 0) {
-                        omni_sequence_t< omni::geometry::point2d<T> > path = omni::geometry::path::get_path<T>(x1, y1, x2, y2, step, remove_duplicates);
-                        uint32_t x = 0;
-                        for (omni::geometry::point_seq_t::iterator itr = path.begin(); itr != path.end(); ++itr) {
-                            if (++x % skip == 0) { continue; }
-                            if (x == skip) { x = 0; }
-                            path.erase(itr--);
-                        }
-                        return path;
-                    }
-                    return omni::geometry::path::get_path<T>(x1, y1, x2, y2, step, remove_duplicates);
-                }
-            */
+            template < template < class, class > class std_seq_t, typename T, typename std_allocator_t >
+            inline std_seq_t< typename omni::geometry::point2d< T >, std_allocator_t >
+            line(T x1, T y1, T x2, T y2)
+            {
+                return line<std_seq_t, T, std_allocator_t>(x1, y1, x2, y2, T(1), 0, true);
+            }
+
+            template < template < class, class > class std_seq_t, typename T >
+            inline std_seq_t< typename omni::geometry::point2d< T >, typename std::allocator< omni::geometry::point2d< T > > >
+            line(T x1, T y1, T x2, T y2, T step, uint32_t skip, bool remove_duplicates)
+            {
+                return line<std_seq_t, T, std::allocator< omni::geometry::point2d<T> > >(x1, y1, x2, y2, step, skip, remove_duplicates);
+            }
+
+            template < template < class, class > class std_seq_t, typename T >
+            inline std_seq_t< typename omni::geometry::point2d<T>, typename std::allocator< omni::geometry::point2d<T> > >
+            line(T x1, T y1, T x2, T y2, T step, uint32_t skip)
+            {
+                return line<std_seq_t, T>(x1, y1, x2, y2, step, skip, true);
+            }
+
+            template < template < class, class > class std_seq_t, typename T >
+            inline std_seq_t< typename omni::geometry::point2d<T>, typename std::allocator< omni::geometry::point2d<T> > >
+            line(T x1, T y1, T x2, T y2, T step)
+            {
+                return line<std_seq_t, T>(x1, y1, x2, y2, step, 0, true);
+            }
+
+            template < template < class, class > class std_seq_t, typename T >
+            inline std_seq_t< typename omni::geometry::point2d<T>, typename std::allocator< omni::geometry::point2d<T> > >
+            line(T x1, T y1, T x2, T y2)
+            {
+                return line<std_seq_t, T>(x1, y1, x2, y2, T(1), 0, true);
+            }
 
             template < typename T >
-            static typename omni_sequence_t< omni::geometry::point2d<T> > get_path(T x1, T y1, T x2, T y2, T step, uint32_t skip)
+            inline omni_sequence_t< omni::geometry::point2d< T > >
+            line(T x1, T y1, T x2, T y2, T step, uint32_t skip, bool remove_duplicates)
             {
-                return omni::geometry::path::get_path<T>(x1, y1, x2, y2, step, skip, true);
+                return omni::geometry::path::line<omni_sequence_t, T>(x1, y1, x2, y2, step, skip, remove_duplicates);
+            }
+
+            template < typename T >
+            inline omni_sequence_t< omni::geometry::point2d< T > >
+            line(T x1, T y1, T x2, T y2, T step, uint32_t skip)
+            {
+                return omni::geometry::path::line<omni_sequence_t, T>(x1, y1, x2, y2, step, skip, true);
+            }
+
+            template < typename T >
+            inline omni_sequence_t< omni::geometry::point2d< T > >
+            line(T x1, T y1, T x2, T y2, T step)
+            {
+                return omni::geometry::path::line<omni_sequence_t, T>(x1, y1, x2, y2, step, 0, true);
+            }
+
+            template < typename T >
+            inline omni_sequence_t< omni::geometry::point2d< T > >
+            line(T x1, T y1, T x2, T y2)
+            {
+                return omni::geometry::path::line<omni_sequence_t, T>(x1, y1, x2, y2, T(1), 0, true);
+            }
+
+            template < template < class, class > class std_seq_t, typename T, typename std_allocator_t >
+            inline std_seq_t< typename omni::geometry::point2d< T >, std_allocator_t >
+            rectangle(T x, T y, T x_len, T y_len, T step, bool invert_x, bool invert_y)
+            {
+                typedef std_seq_t< omni::geometry::point2d<T>, std_allocator_t > gp_seq_t;
+                gp_seq_t points;
+                T x1, y1, xm, ym;
+                if (invert_x && invert_y) {
+                    xm = (x - x_len);
+                    ym = (y - y_len);
+                    for (x1 = x; x1 > xm; x1 -= step) {
+                        points.push_back(omni::geometry::point2d<T>(x1, y));
+                    }
+                    for (y1 = y; y1 > ym; y1 -= step) {
+                        points.push_back(omni::geometry::point2d<T>(xm, y1));
+                    }
+                    points.push_back(omni::geometry::point2d<T>(xm, ym));
+                    for (x1 = xm + step; x1 < x; x1 += step) {
+                        points.push_back(omni::geometry::point2d<T>(x1, ym));
+                    }
+                    points.push_back(omni::geometry::point2d<T>(x, ym));
+                    for (y1 = ym - step; y1 < y; y1 += step) {
+                        points.push_back(omni::geometry::point2d<T>(x, y1));
+                    }
+                } else if (invert_x) {
+                    xm = (x - x_len);
+                    ym = (y + y_len);
+                    for (x1 = x; x1 > xm; x1 -= step) {
+                        points.push_back(omni::geometry::point2d<T>(x1, y));
+                    }
+                    for (y1 = y; y1 < ym; y1 += step) {
+                        points.push_back(omni::geometry::point2d<T>(xm, y1));
+                    }
+                    points.push_back(omni::geometry::point2d<T>(xm, ym));
+                    for (x1 = xm + step; x1 < x; x1 += step) {
+                        points.push_back(omni::geometry::point2d<T>(x1, ym));
+                    }
+                    points.push_back(omni::geometry::point2d<T>(x, ym));
+                    for (y1 = ym - step; y1 > y; y1 -= step) {
+                        points.push_back(omni::geometry::point2d<T>(x, y1));
+                    }
+                } else if (invert_y) {
+                    xm = (x + x_len);
+                    ym = (y - y_len);
+                    for (x1 = x; x1 < xm; x1 += step) {
+                        points.push_back(omni::geometry::point2d<T>(x1, y));
+                    }
+                    for (y1 = y; y1 > ym; y1 -= step) {
+                        points.push_back(omni::geometry::point2d<T>(xm, y1));
+                    }
+                    points.push_back(omni::geometry::point2d<T>(xm, ym));
+                    for (x1 = xm - step; x1 > x; x1 -= step) {
+                        points.push_back(omni::geometry::point2d<T>(x1, ym));
+                    }
+                    points.push_back(omni::geometry::point2d<T>(x, ym));
+                    for (y1 = ym - step; y1 < y; y1 += step) {
+                        points.push_back(omni::geometry::point2d<T>(x, y1));
+                    }
+                } else {
+                    xm = (x + x_len);
+                    ym = (y + y_len);
+                    for (x1 = x; x1 < xm; x1 += step) {
+                        points.push_back(omni::geometry::point2d<T>(x1, y));
+                    }
+                    for (y1 = y; y1 < ym; y1 += step) {
+                        points.push_back(omni::geometry::point2d<T>(xm, y1));
+                    }
+                    points.push_back(omni::geometry::point2d<T>(xm, ym));
+                    for (x1 = xm - step; x1 > x; x1 -= step) {
+                        points.push_back(omni::geometry::point2d<T>(x1, ym));
+                    }
+                    points.push_back(omni::geometry::point2d<T>(x, ym));
+                    for (y1 = ym - step; y1 > y; y1 -= step) {
+                        points.push_back(omni::geometry::point2d<T>(x, y1));
+                    }
+                }
+                return points;
+            }
+
+            template < template < class, class > class std_seq_t, typename T >
+            inline std_seq_t< typename omni::geometry::point2d< T >, typename std::allocator< omni::geometry::point2d< T > > >
+            rectangle(T x, T y, T x_len, T y_len, T step, bool invert_x, bool invert_y)
+            {
+                return rectangle<std_seq_t, T, std::allocator< omni::geometry::point2d< T > > >(x, y, x_len, y_len, step);
+            }
+
+            template < template < class, class > class std_seq_t, typename T >
+            inline std_seq_t< typename omni::geometry::point2d< T >, typename std::allocator< omni::geometry::point2d< T > > >
+            rectangle(T x, T y, T x_len, T y_len, T step)
+            {
+                return rectangle<std_seq_t, T, std::allocator< omni::geometry::point2d< T > > >(x, y, x_len, y_len, step, false, false);
+            }
+
+            template < template < class, class > class std_seq_t, typename T >
+            inline std_seq_t< typename omni::geometry::point2d< T >, typename std::allocator< omni::geometry::point2d< T > > >
+            rectangle(T x, T y, T x_len, T y_len)
+            {
+                return rectangle<std_seq_t, T, std::allocator< omni::geometry::point2d< T > > >(x, y, x_len, y_len, T(1), false, false);
+            }
+
+            template < typename T >
+            inline omni_sequence_t< omni::geometry::point2d< T > >
+            rectangle(T x, T y, T x_len, T y_len, T step, bool invert_x, bool invert_y)
+            {
+                return omni::geometry::path::rectangle<omni_sequence_t, T>(x, y, x_len, y_len, step, invert_x, invert_y);
+            }
+
+            template < typename T >
+            inline omni_sequence_t< omni::geometry::point2d< T > >
+            rectangle(T x, T y, T x_len, T y_len, T step)
+            {
+                return omni::geometry::path::rectangle<omni_sequence_t, T>(x, y, x_len, y_len, step);
+            }
+
+            template < typename T >
+            inline omni_sequence_t< omni::geometry::point2d< T > >
+            rectangle(T x, T y, T x_len, T y_len)
+            {
+                return omni::geometry::path::rectangle<omni_sequence_t, T>(x, y, x_len, y_len);
+            }
+
+            template < template < class, class > class std_seq_t, typename T, typename std_allocator_t >
+            inline std_seq_t< typename omni::geometry::point2d< T >, std_allocator_t >
+            square(T x, T y, T len, T step, bool invert_x, bool invert_y)
+            {
+                return rectangle<std_seq_t, T, std_allocator_t>(x, y, len, len, step, invert_x, invert_y);
+            }
+
+            template < template < class, class > class std_seq_t, typename T >
+            inline std_seq_t< typename omni::geometry::point2d< T >, typename std::allocator< omni::geometry::point2d< T > > >
+            square(T x, T y, T len, T step, bool invert_x, bool invert_y)
+            {
+                return square<std_seq_t, T, std::allocator< omni::geometry::point2d< T > > >(x, y, len, step, invert_x, invert_y);
+            }
+
+            template < template < class, class > class std_seq_t, typename T >
+            inline std_seq_t< typename omni::geometry::point2d< T >, typename std::allocator< omni::geometry::point2d< T > > >
+            square(T x, T y, T len, T step)
+            {
+                return square<std_seq_t, T, std::allocator< omni::geometry::point2d< T > > >(x, y, len, step, false, false);
+            }
+
+            template < template < class, class > class std_seq_t, typename T >
+            inline std_seq_t< typename omni::geometry::point2d< T >, typename std::allocator< omni::geometry::point2d< T > > >
+            square(T x, T y, T len)
+            {
+                return square<std_seq_t, T, std::allocator< omni::geometry::point2d< T > > >(x, y, len, T(1));
+            }
+
+            template < typename T >
+            inline omni_sequence_t< omni::geometry::point2d< T > >
+            square(T x, T y, T len, T step, bool invert_x, bool invert_y)
+            {
+                return omni::geometry::path::square<omni_sequence_t, T>(x, y, len, step, invert_x, invert_y);
+            }
+
+            template < typename T >
+            inline omni_sequence_t< omni::geometry::point2d< T > >
+            square(T x, T y, T len, T step)
+            {
+                return omni::geometry::path::square<omni_sequence_t, T>(x, y, len, step);
+            }
+
+            template < typename T >
+            inline omni_sequence_t< omni::geometry::point2d< T > >
+            square(T x, T y, T len)
+            {
+                return omni::geometry::path::square<omni_sequence_t, T>(x, y, len);
             }
         }
     }

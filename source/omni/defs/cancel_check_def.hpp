@@ -30,6 +30,9 @@
 #if defined(OMNI_TYPE_INFO) && defined(OMNI_NO_TYPE_INFO)
     #undef OMNI_TYPE_INFO
 #endif
+#if defined(OMNI_HEAVY_OBJECT_COMPARE) && defined(OMNI_NO_HEAVY_OBJECT_COMPARE)
+    #undef OMNI_HEAVY_OBJECT_COMPARE
+#endif
 #if defined(OMNI_CHRONO_AUTO_INIT_TICK) && defined(OMNI_NO_CHRONO_AUTO_INIT_TICK)
     #undef OMNI_CHRONO_AUTO_INIT_TICK
 #endif

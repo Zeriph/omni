@@ -23,7 +23,7 @@ class UT_CLASS_DEF
         
         void base_test()
         {
-            omni::net::socket s(omni::net::address_family::, omni::net::socket_type::STREAM, omni::net::protocol_type::TCP);
+            omni::net::socket s(omni::net::address_family::INET, omni::net::socket_type::STREAM, omni::net::protocol_type::TCP);
             std::cout << "socket is connected: " << OMNI_BOOL2STR(s.is_connected()) << std::endl;
         }
 

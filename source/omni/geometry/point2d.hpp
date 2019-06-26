@@ -298,7 +298,7 @@ namespace omni {
                     if (this == &val) { return false; }
                     OMNI_SAFE_P2ALOCK_FW
                     OMNI_SAFE_P2OALOCK_FW(val)
-                    return (this->m_x < val.m_x) && (this->m_y < val.m_y);
+                    return (this->m_x < val.m_x) || ((this->m_x == val.m_x) && (this->m_y < val.m_y));
                 }
 
                 bool operator<=(const point2d<T>& val) const
@@ -314,7 +314,7 @@ namespace omni {
                     if (this == &val) { return false; }
                     OMNI_SAFE_P2ALOCK_FW
                     OMNI_SAFE_P2OALOCK_FW(val)
-                    return (this->m_x > val.m_x) && (this->m_y > val.m_y);
+                    return (this->m_x > val.m_x) || ((this->m_x == val.m_x) && (this->m_y > val.m_y));
                 }
 
                 bool operator>=(const point2d<T>& val) const

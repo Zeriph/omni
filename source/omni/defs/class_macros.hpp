@@ -150,7 +150,11 @@
     #define OMNI_OCTOR_FW(cls) : OMNI_OBJ_CTV2_FW OMNI_OBJ_CTV3_FW(cls) OMNI_OBJ_CTV4_FW
     #define OMNI_CPCTOR_FW(cp) OMNI_OBJ_CCTV2_FW(cp) OMNI_OBJ_CCTV3_FW(cp) OMNI_OBJ_CCTV4_FW ,
     #define OMNI_OCPCTOR_FW(cp) : OMNI_OBJ_CCTV2_FW(cp) OMNI_OBJ_CCTV3_FW(cp) OMNI_OBJ_CCTV4_FW
-    #define OMNI_EQUAL_FW(val) && OMNI_OBJ_ETV2_FW(val) OMNI_OBJ_ETV3_FW(val) OMNI_OBJ_ETV4_FW(val)
+    #if defined(OMNI_HEAVY_OBJECT_COMPARE)
+        #define OMNI_EQUAL_FW(val) && OMNI_OBJ_ETV2_FW(val) OMNI_OBJ_ETV3_FW(val) OMNI_OBJ_ETV4_FW(val)
+    #else
+        #define OMNI_EQUAL_FW(val) 
+    #endif
 #else
     #define OMNI_CTOR_FW(cls)
     #define OMNI_OCTOR_FW(cls)

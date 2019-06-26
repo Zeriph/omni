@@ -31,7 +31,7 @@ to ensure this file isn't built with the rest. */
 
 #if !defined(OMNI_NO_SINGLE_FILE)
 
-#include <omni/framework.hpp>
+#include "omni/framework.hpp"
 
 #if !defined(OMNI_TIMER_LIB) && !defined(OMNI_THREAD_LIB) && !defined(OMNI_NET_LIB)
     #include "application.cpp"

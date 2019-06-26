@@ -128,7 +128,7 @@ parse_set_test()
     utest=$1
     utupper=`echo ${utest} | tr [a-z] [A-Z]`
     utestflag="OMNI_UT_${utupper}"
-    if [ "$1" = "full" ]; then
+    if [ "$1" == "full" ]; then
         eopts="${eopts} -oo heavy"
         eopts="${eopts} -oo safe fw"
         eopts="${eopts} -oo np"
@@ -148,7 +148,7 @@ parse_test()
 			break
 		fi
 	done
-	if [ "$ut" = "" ]; then
+	if [ "$ut" == "" ]; then
         if [ -f ${utloc}/$1.hpp ]; then
 		    echo "Empty unit test specified; this might indicate a shell escape issue"
         else
@@ -254,14 +254,14 @@ parse_test $tmput
 
 if [ $is32bit -eq 1 ]; then
     eopts="${eopts} -co libop elf32-i386 -c -m32"
-    if [ "${sys_type}" = "osx" ]; then
+    if [ "${sys_type}" == "osx" ]; then
         eopts="${eopts} -c -Xlinker -c -arch -c -Xlinker -c i386"
     else
         eopts="${eopts} -c -Xlinker -c -melf_i386"
     fi
 fi
 
-if [ "${sys_type}" = "osx" ]; then
+if [ "${sys_type}" == "osx" ]; then
     eopts="${eopts} -co nopthread"
 fi
 

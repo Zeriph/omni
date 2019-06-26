@@ -11,6 +11,7 @@
 #define printv(m, v) OMNI_UTDBGOUT << m << v << std::endl
 #define printsw(v) case v: printl(#v); break
 #define printswe(v, e) case v: OMNI_UTDBGOUT << e << #v << std::endl; break
+#define printve(m, v, e) OMNI_UTDBGOUT << m << v << " -- expected: " << e << std::endl
 
 #define cprint(m) std::cout << m
 #define cprintl(m) std::cout << m << std::endl

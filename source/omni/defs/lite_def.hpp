@@ -25,6 +25,7 @@
     #define OMNI_NO_OBJECT_NAME
     #define OMNI_NO_DISPOSE_EVENT
     #define OMNI_NO_TYPE_INFO
+    #define OMNI_NO_HEAVY_OBJECT_COMPARE
     #define OMNI_NO_FW_VER
     #define OMNI_NO_SAFE_FRAMEWORK
     #define OMNI_THREAD_ARGS_RAW_PTR

@@ -18,11 +18,6 @@
  */
 #if !defined(OMNI_FRAMEWORK_HPP)
 #define OMNI_FRAMEWORK_HPP 1
-/*
-    The Omni framework is copyright Zeriph Enterprises LLC. The Zeriph name is trademarked
-    Zeriph Enterprises LLC. For more licensing information, please see the included license.txt
-    file or visit http://www.zeriph.com/legal.html
-*/
 
 /* Use this header to have access to the complete framework, example:
 
@@ -40,7 +35,7 @@ int main(int argc, char *argv[]) {
     omni::application::set_args(argc, argv);
     omni::thread t(&some_thread);
     t.start();
-    omni::application::run();
+    return omni::application::run();
 }
  
 */

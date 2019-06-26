@@ -130,4 +130,11 @@ namespace omni {
     } // namespace chrono
 } // namespace omni
 
+namespace std {
+    inline void swap(omni::chrono::datetime& o1, omni::chrono::datetime& o2)
+    {
+        o1.swap(o2);
+    }
+}
+
 #endif // OMNI_TIME_HPP

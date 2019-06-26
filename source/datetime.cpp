@@ -20,12 +20,14 @@
 
 #if defined(OMNI_SAFE_DATETIME)
     #define OMNI_SAFE_DTTMMTX_FW m_mtx(),
-    #define OMNI_DTTM_ALOCK_FW    omni::sync::scoped_lock<omni::sync::basic_lock> mlock(&this->m_mtx);
+    #define OMNI_DTTM_ALOCK_FW    omni::sync::scoped_lock<omni::sync::basic_lock> uuid12345(&this->m_mtx);
+    #define OMNI_DTTM_OLOCK_FW    omni::sync::scoped_lock<omni::sync::basic_lock> uuid54321(&this->m_mtx);
     #define OMNI_DTTM_MLOCK_FW    this->m_mtx.lock();
     #define OMNI_DTTM_ULOCK_FW    this->m_mtx.unlock();
 #else
     #define OMNI_SAFE_DTTMMTX_FW
     #define OMNI_DTTM_ALOCK_FW
+    #define OMNI_DTTM_OLOCK_FW
     #define OMNI_DTTM_MLOCK_FW
     #define OMNI_DTTM_ULOCK_FW
 #endif

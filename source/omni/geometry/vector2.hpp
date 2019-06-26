@@ -261,7 +261,7 @@ namespace omni {
                 template < typename T >
                 static omni::geometry::point2d<T> calculate_point(T x1, T y1, T x2, T y2, T distance)
                 {
-                    return calculate_point(
+                    return omni::geometry::vector2::calculate_point<T>(
                         vector2(omni::geometry::point2d<T>(x1, y1)),
                         vector2(omni::geometry::point2d<T>(x2, y2)),
                         distance
@@ -284,7 +284,6 @@ namespace omni {
 }
 
 namespace std {
-    template < typename T >
     inline void swap(omni::geometry::vector2& o1, omni::geometry::vector2& o2)
     {
         o1.swap(o2);

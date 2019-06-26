@@ -53,17 +53,15 @@ namespace omni {
         template <> inline bool are_equal<int32_t>(int32_t x, int32_t y) { return x == y; }
         template <> inline bool are_equal<uint64_t>(uint64_t x, uint64_t y) { return x == y; }
         template <> inline bool are_equal<int64_t>(int64_t x, int64_t y) { return x == y; }
-
-        // TODO: verify results of unit test
         
         inline double rad_to_deg(double rad)
         {
-            return rad * OMNI_PI_180; // degrees = radians * π / 180
+            return rad * OMNI_180_PI; // degrees = radians * π / 180
         }
 
         inline double deg_to_rad(double deg)
         {
-            return deg * OMNI_180_PI; // radians =  degrees * 180 / π
+            return deg * OMNI_PI_180; // radians =  degrees * 180 / π
         }
 
         template < typename T >
@@ -266,6 +264,25 @@ namespace omni {
         }
 
         template < typename T >
+        inline void point_on_circle(T angle, T radius, T center_x, T center_y, T& out_x, T& out_y)
+        {
+            if (angle > static_cast<T>(360)) {
+                OMNI_ERR_FW("angle cannot be greater than 360 degrees", omni::exceptions::overflow_error("angle cannot be greater than 360 degrees"))
+            }
+            out_x = OMNI_MATH_GET_POINT_X_FW(T, center_x, radius, angle);
+            out_y = OMNI_MATH_GET_POINT_Y_FW(T, center_y, radius, angle);
+        }
+
+        template <> inline void point_on_circle<int64_t>(int64_t angle, int64_t radius, int64_t center_x, int64_t center_y, int64_t& out_x, int64_t& out_y) { OMNI_MATH_GET_POINT_INT_FW(int64_t, out_x, out_y, center_x, center_y, radius, angle); }
+        template <> inline void point_on_circle<uint64_t>(uint64_t angle, uint64_t radius, uint64_t center_x, uint64_t center_y, uint64_t& out_x, uint64_t& out_y) { OMNI_MATH_GET_POINT_INT_FW(uint64_t, out_x, out_y, center_x, center_y, radius, angle); }
+        template <> inline void point_on_circle<int32_t>(int32_t angle, int32_t radius, int32_t center_x, int32_t center_y, int32_t& out_x, int32_t& out_y) { OMNI_MATH_GET_POINT_INT_FW(int32_t, out_x, out_y, center_x, center_y, radius, angle); }
+        template <> inline void point_on_circle<uint32_t>(uint32_t angle, uint32_t radius, uint32_t center_x, uint32_t center_y, uint32_t& out_x, uint32_t& out_y) { OMNI_MATH_GET_POINT_INT_FW(uint32_t, out_x, out_y, center_x, center_y, radius, angle); }
+        template <> inline void point_on_circle<int16_t>(int16_t angle, int16_t radius, int16_t center_x, int16_t center_y, int16_t& out_x, int16_t& out_y) { OMNI_MATH_GET_POINT_INT_FW(int16_t, out_x, out_y, center_x, center_y, radius, angle); }
+        template <> inline void point_on_circle<uint16_t>(uint16_t angle, uint16_t radius, uint16_t center_x, uint16_t center_y, uint16_t& out_x, uint16_t& out_y) { OMNI_MATH_GET_POINT_INT_FW(uint16_t, out_x, out_y, center_x, center_y, radius, angle); }
+        template <> inline void point_on_circle<int8_t>(int8_t angle, int8_t radius, int8_t center_x, int8_t center_y, int8_t& out_x, int8_t& out_y) { out_x = OMNI_MATH_GET_POINT_X_INT_FW(int8_t, center_x, radius, angle); out_y = OMNI_MATH_GET_POINT_Y_INT_FW(int8_t, center_y, radius, angle); }
+        template <> inline void point_on_circle<uint8_t>(uint8_t angle, uint8_t radius, uint8_t center_x, uint8_t center_y, uint8_t& out_x, uint8_t& out_y) { out_x = OMNI_MATH_GET_POINT_X_INT_FW(uint8_t, center_x, radius, angle); out_y = OMNI_MATH_GET_POINT_Y_INT_FW(uint8_t, center_y, radius, angle); }
+
+        template < typename T >
         inline omni::math::ordinal_name quadrant(T x, T y)
         {
             // x+ = 1000 = 8, x- = 0100 = 4
@@ -298,8 +315,8 @@ namespace omni {
             if (omni::math::are_equal(a, T(0))) {
                 OMNI_ERR_FW("division by zero, a must not be 0", omni::exceptions::invalid_range("division by zero, a must not be 0"))
             }
-            x_plus = (-b) + std::sqrt(static_cast<long double>(((b*b) - (4*a*c))) / (2*a));
-            x_minus = (-b) - std::sqrt(static_cast<long double>(((b*b) - (4*a*c))) / (2*a));
+            x_plus = ((-b) + std::sqrt(static_cast<long double>((b * b) - (4 * a * c)))) / (2 * a);
+            x_minus = ((-b) - std::sqrt(static_cast<long double>((b * b) - (4 * a * c)))) / (2 * a);
         }
 
         template < typename T >
@@ -316,7 +333,7 @@ namespace omni {
             if (omni::math::are_equal(start_x, end_x)) {
                 OMNI_ERR_RETV_FW("division by zero, x values equal", omni::exceptions::invalid_range("division by zero, x values equal"), 0.0)
             }
-            return static_cast<double>(end_y - start_y) / end_x - start_x;
+            return static_cast<double>(end_y - start_y) / static_cast<double>(end_x - start_x);
         }
 
         template < typename T >

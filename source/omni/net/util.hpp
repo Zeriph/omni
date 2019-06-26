@@ -400,13 +400,13 @@ namespace omni {
                 return omni::net::util::get_host(ip, OMNI_SOCKET_DEFAULT_GET_HOST_PORT, omni::net::address_family::UNSPECIFIED, host);
             }
 
-            template < template < class, class > class std_seq_t >
+            template < template < class, class > class std_seq_t, typename std_allocator_t >
             inline omni::net::socket_error get_ip(const std::string& host,
                                                   uint16_t port,
                                                   omni::net::address_family family,
                                                   omni::net::socket_type type,
                                                   omni::net::protocol_type proto,
-                                                  std_seq_t< std::string, std::allocator<std::string> >& ips)
+                                                  std_seq_t< std::string, std_allocator_t >& ips)
             {
                 if (host.empty()) { return omni::net::socket_error::DESTINATION_ADDRESS_REQUIRED; }
                 #if defined(OMNI_OS_WIN)
@@ -432,6 +432,17 @@ namespace omni {
                 }
                 ::freeaddrinfo(result);
                 return omni::net::socket_error::SUCCESS;
+            }
+
+            template < template < class, class > class std_seq_t >
+            inline omni::net::socket_error get_ip(const std::string& host,
+                                                  uint16_t port,
+                                                  omni::net::address_family family,
+                                                  omni::net::socket_type type,
+                                                  omni::net::protocol_type proto,
+                                                  std_seq_t< std::string, std::allocator<std::string> >& ips)
+            {
+                return get_ip<std_seq_t, std::allocator<std::string> >(host, port, family, type, proto, ips);
             }
 
             template < template < class, class > class std_seq_t >
@@ -488,13 +499,13 @@ namespace omni {
                                                ips);
             }
 
-            template < template < class, class > class std_seq_t >
+            template < template < class, class > class std_seq_t, typename std_allocator_t >
             inline omni::net::socket_error get_ip(const std::wstring& host,
                                                   uint16_t port,
                                                   omni::net::address_family family,
                                                   omni::net::socket_type type,
                                                   omni::net::protocol_type proto,
-                                                  std_seq_t< std::wstring, std::allocator<std::wstring> >& ips)
+                                                  std_seq_t< std::wstring, std_allocator_t >& ips)
             {
                 if (host.empty()) { return omni::net::socket_error::DESTINATION_ADDRESS_REQUIRED; }
                 #if defined(OMNI_OS_WIN)
@@ -550,6 +561,17 @@ namespace omni {
                     ::freeaddrinfo(result);
                 #endif
                 return omni::net::socket_error::SUCCESS;
+            }
+
+            template < template < class, class > class std_seq_t >
+            inline omni::net::socket_error get_ip(const std::wstring& host,
+                                                  uint16_t port,
+                                                  omni::net::address_family family,
+                                                  omni::net::socket_type type,
+                                                  omni::net::protocol_type proto,
+                                                  std_seq_t< std::wstring, std::allocator<std::wstring> >& ips)
+            {
+                return get_ip<std_seq_t, std::allocator<std::wstring> >(host, port, family, type, proto, ips);
             }
 
             template < template < class, class > class std_seq_t >
