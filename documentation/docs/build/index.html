@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Framework - Build Examples</title>
+<link rel="stylesheet" type="text/css" href="../../content/main.css" /><link rel="icon" type="image/png" href="../../content/favicon.png" />
+<script type="text/javascript" src="../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Framework</div><ul>
+<li title="What is Omni?"><a href="../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="../htmlsrc/index.html">Source</a></li><li title="Framework classes and namespaces">
+<a href="../classes/index.html">Class Index</a></li><li title="Download and view examples">
+<a href="../examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="index.html" class="current">Building</a></li><li title="Omni compiler options">
+<a href="../options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../api.html">System API</a></li><li title="Other Considerations">
+<a href="../consider.html">Considerations</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../search.html">Search the Framework</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="http://www.zeriph.com">Zeriph Enterprises, LLC</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle"><a name="omni_build_examples"></a>Build Examples</div><div class="content"><div>
+The following is a table of common IDE solution and project files that contain a reference to the framework source, these
+solution files are bare-bones configurations that will allow you to build the framework as a static library (<code>.lib</code>
+or <code>.a</code>) but can be <a href="#reference_source">referenced</a> in many ways to suit your needs.<br><br>
+Each solution references the source at the directory <code>C:\source\omni</code> on Windows platforms and <code>/source/code</code>
+for non-Windows platforms. The Windows based <i>cross-platform</i> project files (those associated with cross-platform IDE's like 
+Qt or Eclipse) reference <a href="http://www.mingw.org/">MinGW/MSYS</a> as their compiler tool chains, but can be switched for 
+<a href="http://www.cygwin.com/">Cygwin</a> or another tool chain if you choose.<br><br>
+It should be noted that how to install a compiler (assuming a compiler was not installed with your platform) and/or setup
+a build environment is beyond the scope of this help documentation; there is a plethora of well written manuals on how to
+install and setup a C++ compiler for the various platforms available for free through various outlets.<br><br>
+<center><table class="solutions">
+    <tr align="center"><td class="f">IDE</td><td>Windows</td><td>Apple</td><td>Linux</td></tr>
+    <!-- CodeBlocks -->
+    <tr><td title="CodeBlocks" class="f"><a href="http://www.codeblocks.org">CodeBlocks</a></td>
+    <td title="Windows project file"><a href="win/CodeBlocks.zip">download</a></td>
+    <td title="Apple project file"><a href="osx/CodeBlocks.zip">download</a></td>
+    <td title="Linux/Unix project file"><a href="nix/CodeBlocks.zip">download</a></td></tr>
+    <!-- DevCPP -->
+    <tr><td title="DevCPP" class="f"><a href="http://www.bloodshed.net/devcpp.html">DevCPP</a></td>
+    <td title="Windows project file"><a href="win/DevCPP.zip">download</a></td>
+    <td title="Apple project file"><a href="osx/DevCPP.zip">download</a></td>
+    <td title="Linux/Unix project file"><a href="nix/DevCPP.zip">download</a></td></tr>
+    <!-- Eclipse -->
+    <tr><td title="Eclipse" class="f"><a href="http://www.eclipse.org">Eclipse</a></td>
+    <td title="Windows project file"><a href="win/Eclipse.zip">download</a></td>
+    <td title="Apple project file"><a href="osx/Eclipse.zip">download</a></td>
+    <td title="Linux/Unix project file"><a href="nix/Eclipse.zip">download</a></td></tr>
+    <!-- NetBeans -->
+    <tr><td title="NetBeans" class="f"><a href="http://www.netbeans.org">NetBeans</a></td>
+    <td title="Windows project file"><a href="win/NetBeans.zip">download</a></td>
+    <td title="Apple project file"><a href="osx/NetBeans.zip">download</a></td>
+    <td title="Linux/Unix project file"><a href="nix/NetBeans.zip">download</a></td></tr>
+    <!-- Qt Creator -->
+    <tr><td title="Qt Creator" class="f"><a href="http://qt-project.org/wiki/Category:Tools::QtCreator">Qt</a></td>
+    <td title="Windows project file"><a href="win/Qt.zip">download</a></td>
+    <td title="Apple project file"><a href="osx/Qt.zip">download</a></td>
+    <td title="Linux/Unix project file"><a href="nix/Qt.zip">download</a></td></tr>
+    <!-- shell -->
+    <tr><td title="shell/batch build" class="f">shell/console</td>
+    <td title="Windows batch file (right click to save)"><a href="win/batch.zip">download</a></td>
+    <td title="Apple shell script (right click to save)"><a href="osx/shell.zip">download</a></td>
+    <td title="Linux/Unix shell script (right click to save)"><a href="nix/shell.zip">download</a></td></tr>
+    <!-- Xcode -->
+    <tr><td title="Xcode" class="f"><a href="https://developer.apple.com/xcode/">Xcode</a></td>
+    <td title="Windows project file">N/A</td>
+    <td title="Apple project file"><a href="osx/Xcode.zip">download</a></td>
+    <td title="Linux/Unix project file">N/A</td></tr>
+    <!-- VS -->
+    <tr><td title="Microsoft Visual Studio" class="f"><a href="http://www.microsoft.com/visualstudio/">Visual Studio</a></td>
+    <td title="Windows project file"><a href="win/vs.zip">download</a></td>
+    <td title="Apple project file">N/A</td>
+    <td title="Linux/Unix project file">N/A</td></tr>
+</table><br></center>
+<b>Note</b>: if you have put the framework source somewhere other than the default location (e.g. <code>C:\source\omni\</code> or 
+<code>/source/omni</code>), it is recommended you open the project file in a text editor and replace the default location
+with the location you have placed the source. In some files the source location is a project file macro that can just be
+swapped for yours for convenience.<br>
+<a class="toppg" href="#topopage">top</a><br><br>
+<a name="reference_source"></a><font style="font-size:20px;">Referencing the source</font><br>
+There are multiple ways to reference and build the framework source. You could use the above project files
+to build a static library and then reference and link against it in other projects. You could also include
+the above project files in your other solutions/projects directly; this has the same effect as the prior option
+(a static library build) except that the library is directly referenced via the project instead of via an external
+binary reference (e.g. referencing the <code>.pro</code>/<code>.sln</code> vs. the <code>.lib</code>/<code>.a</code>).<br><br>
+You can also include the source directly in your projects, where by you will need to ensure you build your project such that it
+references the needed system libraries for the framework source you are using (like specifying <code>-pthread</code>
+if building any synchronization code on POSIX platforms).<br><br>
+As well, the framework has been designed so that you could build the entire framework by simply building the file 
+<code><a href="../htmlsrc/library.cpp.html">library.cpp</a></code>. This is a convenience file that can be used for
+simpler command line builds. Example:<br><br>
+<code>
+g++ your_code.cpp /source/omni/library.cpp -I/source/omni -pthread<br>
+</code>
+or<br>
+<code>
+cl.exe your_code.cpp C:\source\omni\library.cpp -IC:\source\omni<br>
+</code><br>
+This allows for you to run unit tests or cut down on build times by having a single source file to parse and build.<br>
+<a class="toppg" href="#topopage">top</a><br><br>
+<a name="omni_more_help"></a><font style="font-size:20px;">Need more help?</font><br>
+While we have tried to architect as much of the framework source and help files to be as trivial to setup and use
+as possible, we also know there is always that one time that something just does not go right. If you need help setting up,
+referencing or using the framework, you can contact the <a href="mailto:omniqa@zeriph.com">Omni Q&amp;A</a> for support
+and we will be glad to assist in what ways we can!<br><br>
+<a class="toppg" href="#topopage">top</a><br><br>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

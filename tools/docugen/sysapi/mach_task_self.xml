@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<SysAPI xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>mach_task_self</Name>
+  <Link>http://www.opensource.apple.com/source/xnu/xnu-1456.1.26/osfmk/man/mach_task_self.html</Link>
+  <SysType>Apple</SysType>
+</SysAPI>

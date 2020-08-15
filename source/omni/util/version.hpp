@@ -55,13 +55,13 @@ namespace omni {
                     return omni::util::version::_tryparse(str, out);
                 }
                 
-                // maj/major can't be used as a name (some compilers complain)
+                // maj/major cannot be used as a name (some compilers complain)
                 inline uint16_t major_number() const
                 {
                     return this->m_maj;
                 }
                 
-                // min/minor can't be used as a name (some compilers complain)
+                // min/minor cannot be used as a name (some compilers complain)
                 inline uint16_t minor_number() const
                 {
                     return this->m_min;
@@ -178,7 +178,7 @@ namespace omni {
                 }
                 
                 /** The major version number */
-                uint16_t m_maj; // g++ doesn't like major/minor as member names???
+                uint16_t m_maj; // g++ does not like major/minor as member names???
                 /** The minor version number */
                 uint16_t m_min;
                 /** The build version number */

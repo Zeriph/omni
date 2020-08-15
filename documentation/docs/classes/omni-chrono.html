@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - namespace: omni::chrono</title>
+<link rel="stylesheet" type="text/css" href="../../content/main.css" /><link rel="icon" type="image/png" href="../../content/favicon.png" />
+<script type="text/javascript" src="../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="../htmlsrc/index.html">Source</a></li><li title="Library classes and namespaces">
+<a href="index.html" class="current">Class Index</a></li><li title="Download and view examples">
+<a href="../examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="../options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../api.html">System API</a></li><li title="Other Considerations">
+<a href="../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle">omni::chrono</div><div class="content"><div>
+<div class="docdiv"><a name="nm"></a>
+<font class="docu">NAME</font><br><br>
+<code><a href="../htmlsrc/omni/chrono/async_timer.hpp.html#omni::chrono" class="chnm">
+    omni::chrono
+    </a></code><br>
+<br>A namespace of <a href="omni.html" class="code">omni</a><br><br>
+    <code><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/chrono/async_timer.hpp.html">omni/chrono/async_timer.hpp</a>&gt;</font></code><br><code>namespace omni::chrono</code><br>
+    <br>
+    <font class="docu">MEMBERS</font><br>
+    <br>
+    <code><a href="../classes/omni-chrono-async_timer.html">omni::chrono::async_timer</a><br>
+    <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a><br>
+    <a href="../classes/omni-chrono-date_time_kind.html">omni::chrono::date_time_kind</a><br>
+    <a href="../classes/omni-chrono-date_time_styles@4020@7B.html">omni::chrono::date_time_styles {</a><br>
+    <a href="../classes/omni-chrono-day_of_week.html">omni::chrono::day_of_week</a><br>
+    <a href="../classes/omni-chrono-drop_timer.html">omni::chrono::drop_timer</a><br>
+    <a href="../classes/omni-chrono-monotonic.html">omni::chrono::monotonic</a><br>
+    <a href="../classes/omni-chrono-queue_timer.html">omni::chrono::queue_timer</a><br>
+    <a href="../classes/omni-chrono-span.html">omni::chrono::span</a><br>
+    <a href="../classes/omni-chrono-sync_timer.html">omni::chrono::sync_timer</a><br>
+    <a href="../classes/omni-chrono-timer_sync_type.html">omni::chrono::timer_sync_type</a><br>
+    <a href="../classes/omni-chrono-timer_args.html">omni::chrono::timer_args</a><br>
+    <font class="syn_ins">inline</font> int64_t <a href="../classes/omni-chrono-max_ticks.html">omni::chrono::MAX_TICKS</a>()<br>
+    <font class="syn_ins">inline</font> int64_t <a href="../classes/omni-chrono-min_ticks.html">omni::chrono::MIN_TICKS</a>()<br>
+    <font class="syn_ins">inline</font> <font class="syn_typ">uint16_t</font> <a href="../classes/omni-chrono-days_in_month.html">omni::chrono::days_in_month</a>(<font class="syn_typ">uint16_t</font> year, <font class="syn_typ">uint8_t</font> month)<br>
+    <font class="syn_ins">inline</font> <font class="syn_typ">uint64_t</font> <a href="../classes/omni-chrono-elapsed_ms.html">omni::chrono::elapsed_ms</a>(<a href="../classes/omni-chrono-tick_t.html">omni::chrono::tick_t</a> init, <a href="../classes/omni-chrono-tick_t.html">omni::chrono::tick_t</a> end)<br>
+    <font class="syn_ins">inline</font> <font class="syn_typ">uint64_t</font> <a href="../classes/omni-chrono-elapsed_s.html">omni::chrono::elapsed_s</a>(<a href="../classes/omni-chrono-tick_t.html">omni::chrono::tick_t</a> init, <a href="../classes/omni-chrono-tick_t.html">omni::chrono::tick_t</a> end)<br>
+    <font class="syn_ins">inline</font> <font class="syn_typ">uint64_t</font> <a href="../classes/omni-chrono-elapsed_us.html">omni::chrono::elapsed_us</a>(<a href="../classes/omni-chrono-tick_t.html">omni::chrono::tick_t</a> init, <a href="../classes/omni-chrono-tick_t.html">omni::chrono::tick_t</a> end)<br>
+    <font class="syn_ins">inline</font> <font class="syn_typ">bool</font> <a href="../classes/omni-chrono-equal.html">omni::chrono::equal</a>(<font class="syn_typ">const</font> <a href="../classes/omni-chrono-tick_t.html">omni::chrono::tick_t</a>&amp; t1, <font class="syn_typ">const</font> <a href="../classes/omni-chrono-tick_t.html">omni::chrono::tick_t</a>&amp; t2)<br>
+    <font class="syn_ins">inline</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> <a href="../classes/omni-chrono-from_binary.html">omni::chrono::from_binary</a>(int64_t date_data)<br>
+    <font class="syn_ins">inline</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> <a href="../classes/omni-chrono-from_file_time.html">omni::chrono::from_file_time</a>(int64_t file_time)<br>
+    <font class="syn_ins">inline</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> <a href="../classes/omni-chrono-from_file_time_utc.html">omni::chrono::from_file_time_utc</a>(int64_t file_time)<br>
+    <font class="syn_ins">inline</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> <a href="../classes/omni-chrono-from_oa_date.html">omni::chrono::from_oa_date</a>(<font class="syn_typ">double</font> d)<br>
+    <font class="syn_ins">inline</font> <font class="syn_typ">bool</font> <a href="../classes/omni-chrono-is_leap_year.html">omni::chrono::is_leap_year</a>(<font class="syn_typ">uint16_t</font> year)<br>
+    <font class="syn_ins">inline</font> <a href="../classes/omni-chrono-tick_t.html">omni::chrono::tick_t</a> <a href="../classes/omni-chrono-monotonic_tick.html">omni::chrono::monotonic_tick</a>()<br>
+    <font class="syn_ins">inline</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> <a href="../classes/omni-chrono-now.html">omni::chrono::now</a>()<br>
+    <font class="syn_ins">inline</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> <a href="../classes/omni-chrono-specify_kind.html">omni::chrono::specify_kind</a>(<font class="syn_typ">const</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; value, <font class="syn_typ">const</font> <a href="../classes/omni-chrono-date_time_kind.html">omni::chrono::date_time_kind</a>&amp; kind)<br>
+    <font class="syn_ins">inline</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> <a href="../classes/omni-chrono-today.html">omni::chrono::today</a>()<br>
+    <font class="syn_ins">inline</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> <a href="../classes/omni-chrono-utc_now.html">omni::chrono::utc_now</a>()<br>
+    <a href="../classes/omni-chrono-days_per_100_years.html">omni::chrono::DAYS_PER_100_YEARS</a><br>
+    <a href="../classes/omni-chrono-days_per_400_years.html">omni::chrono::DAYS_PER_400_YEARS</a><br>
+    <a href="../classes/omni-chrono-days_per_4_years.html">omni::chrono::DAYS_PER_4_YEARS</a><br>
+    <a href="../classes/omni-chrono-days_per_year.html">omni::chrono::DAYS_PER_YEAR</a><br>
+    <a href="../classes/omni-chrono-days_to_10000ad.html">omni::chrono::DAYS_TO_10000AD</a><br>
+    <a href="../classes/omni-chrono-days_to_1601ad.html">omni::chrono::DAYS_TO_1601AD</a><br>
+    <a href="../classes/omni-chrono-days_to_1899ad.html">omni::chrono::DAYS_TO_1899AD</a><br>
+    <a href="../classes/omni-chrono-days_to_epoch.html">omni::chrono::DAYS_TO_EPOCH</a><br>
+    <a href="../classes/omni-chrono-days_to_month_365.html">omni::chrono::DAYS_TO_MONTH_365</a><br>
+    <a href="../classes/omni-chrono-days_to_month_366.html">omni::chrono::DAYS_TO_MONTH_366</a><br>
+    <a href="../classes/omni-chrono-double_date_offset.html">omni::chrono::DOUBLE_DATE_OFFSET</a><br>
+    <a href="../classes/omni-chrono-epoch_offset.html">omni::chrono::EPOCH_OFFSET</a><br>
+    <a href="../classes/omni-chrono-file_time_offset.html">omni::chrono::FILE_TIME_OFFSET</a><br>
+    <a href="../classes/omni-chrono-microseconds_per_day.html">omni::chrono::MICROSECONDS_PER_DAY</a><br>
+    <a href="../classes/omni-chrono-microseconds_per_hour.html">omni::chrono::MICROSECONDS_PER_HOUR</a><br>
+    <a href="../classes/omni-chrono-microseconds_per_millisecond.html">omni::chrono::MICROSECONDS_PER_MILLISECOND</a><br>
+    <a href="../classes/omni-chrono-microseconds_per_minute.html">omni::chrono::MICROSECONDS_PER_MINUTE</a><br>
+    <a href="../classes/omni-chrono-microseconds_per_second.html">omni::chrono::MICROSECONDS_PER_SECOND</a><br>
+    <a href="../classes/omni-chrono-milliseconds_per_day.html">omni::chrono::MILLISECONDS_PER_DAY</a><br>
+    <a href="../classes/omni-chrono-milliseconds_per_hour.html">omni::chrono::MILLISECONDS_PER_HOUR</a><br>
+    <a href="../classes/omni-chrono-milliseconds_per_minute.html">omni::chrono::MILLISECONDS_PER_MINUTE</a><br>
+    <a href="../classes/omni-chrono-milliseconds_per_second.html">omni::chrono::MILLISECONDS_PER_SECOND</a><br>
+    <a href="../classes/omni-chrono-milliseconds_to_10000ad.html">omni::chrono::MILLISECONDS_TO_10000AD</a><br>
+    <a href="../classes/omni-chrono-minutes_per_day.html">omni::chrono::MINUTES_PER_DAY</a><br>
+    <a href="../classes/omni-chrono-minutes_per_hour.html">omni::chrono::MINUTES_PER_HOUR</a><br>
+    <a href="../classes/omni-chrono-nanoseconds_per_day.html">omni::chrono::NANOSECONDS_PER_DAY</a><br>
+    <a href="../classes/omni-chrono-nanoseconds_per_hour.html">omni::chrono::NANOSECONDS_PER_HOUR</a><br>
+    <a href="../classes/omni-chrono-nanoseconds_per_microsecond.html">omni::chrono::NANOSECONDS_PER_MICROSECOND</a><br>
+    <a href="../classes/omni-chrono-nanoseconds_per_millisecond.html">omni::chrono::NANOSECONDS_PER_MILLISECOND</a><br>
+    <a href="../classes/omni-chrono-nanoseconds_per_minute.html">omni::chrono::NANOSECONDS_PER_MINUTE</a><br>
+    <a href="../classes/omni-chrono-nanoseconds_per_second.html">omni::chrono::NANOSECONDS_PER_SECOND</a><br>
+    <a href="../classes/omni-chrono-nanoseconds_per_tick.html">omni::chrono::NANOSECONDS_PER_TICK</a><br>
+    <a href="../classes/omni-chrono-oa_date_min_as_ticks.html">omni::chrono::OA_DATE_MIN_AS_TICKS</a><br>
+    <a href="../classes/omni-chrono-seconds_per_day.html">omni::chrono::SECONDS_PER_DAY</a><br>
+    <a href="../classes/omni-chrono-seconds_per_hour.html">omni::chrono::SECONDS_PER_HOUR</a><br>
+    <a href="../classes/omni-chrono-seconds_per_minute.html">omni::chrono::SECONDS_PER_MINUTE</a><br>
+    <a href="../classes/omni-chrono-ticks_per_day.html">omni::chrono::TICKS_PER_DAY</a><br>
+    <a href="../classes/omni-chrono-ticks_per_hour.html">omni::chrono::TICKS_PER_HOUR</a><br>
+    <a href="../classes/omni-chrono-ticks_per_microsecond.html">omni::chrono::TICKS_PER_MICROSECOND</a><br>
+    <a href="../classes/omni-chrono-ticks_per_millisecond.html">omni::chrono::TICKS_PER_MILLISECOND</a><br>
+    <a href="../classes/omni-chrono-ticks_per_minute.html">omni::chrono::TICKS_PER_MINUTE</a><br>
+    <a href="../classes/omni-chrono-ticks_per_second.html">omni::chrono::TICKS_PER_SECOND</a><br>
+    <a href="../classes/omni-chrono-ticks_per_tenth_second.html">omni::chrono::TICKS_PER_TENTH_SECOND</a><br>
+    <a href="../classes/omni-chrono-ticks_to_10000ad.html">omni::chrono::TICKS_TO_10000AD</a><br>
+    <a href="../classes/omni-chrono-freq_t.html">omni::chrono::freq_t</a><br>
+    <a href="../classes/omni-chrono-span_t.html">omni::chrono::span_t</a><br>
+    <a href="../classes/omni-chrono-tick_t.html">omni::chrono::tick_t</a><br>
+    <a href="../classes/omni-chrono-time_span.html">omni::chrono::time_span</a><br>
+    <a href="../classes/omni-chrono-timer_delegate.html">omni::chrono::timer_delegate</a><br>
+    <a href="../classes/omni-chrono-timer_event.html">omni::chrono::timer_event</a><br>
+    <a href="../classes/omni-chrono-unsigned_span_t.html">omni::chrono::unsigned_span_t</a><br>
+    </code>
+</div><br>
+<div class="docdiv"><a name="syn"></a>
+<font class="docu">SYNOPSIS</font><br><br>
+No synopsis.
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<div class="docdiv"><a name="desc"></a>
+<font class="docu">DESCRIPTION</font><br><br>
+No description.
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+
+
+
+
+
+
+
+
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

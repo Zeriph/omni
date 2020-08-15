@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_EVENT</Name>
+  <Brief>A helper macro for defining an omni::event
+</Brief>
+  <Considerations>No special considerations.
+</Considerations>
+  <Description>This helper macro allows you to define an omni::event of any parameter length without having to specify the specific omni::event type. In other words, usually one would have to define an omni::event with 2 parameter types by declaring it as such omni::event2&lt;void, int, int&gt; additionally, one would have to define an omni::event that takes 1 parameter as such omni::event1&lt;void, int&gt; this is true for any of the omni::event types up to 16 parameters.
+
+So that you do not have to specify the specific event type, you can use the @c omni_event helper macro to define the correct omni::event type without having to be specific each time, reducing code and confusion.
+
+@code
+int function0()
+{
+    return 42;
+}
+
+int function3(int x, int y, int z)
+{
+    return (x * y) / z;
+}
+
+int main(int argc, char* argv[])
+{
+    // omni::event&lt;int&gt; f0(&amp;function0);
+    omni_event(int) f0(&amp;function0);
+
+    // omni::delegate3&lt;int, int, int, int&gt; f3 = &amp;function3;
+    omni_delegate(int, int, int, int) f3 = &amp;function3;
+
+    std::cout &lt;&lt; f3(f0(), f0(), f0()) &lt;&lt; std::endl;
+
+    return 0;
+}
+@code
+
+You can even use the macro in @c typedef definitions:
+
+@code
+typedef omni_delegate(int, int, int, int) functor3;
+typedef omni_delegate(int) functor1;
+
+int function0()
+{
+    return 42;
+}
+
+int function3(int x, int y, int z)
+{
+    return (x * y) / z;
+}
+
+int main(int argc, char* argv[])
+{
+    functor1 f1 = &amp;function1;
+    functor3 f3 = &amp;function3;
+
+    std::cout &lt;&lt; f3(f1(), f1(), f1()) &lt;&lt; std::endl;
+
+    return 0;
+}
+@code
+</Description>
+  <Notes>None.
+</Notes>
+  <PlatformSpecific>No platform specific notes.
+</PlatformSpecific>
+  <Synopsis>Creating and defining omni::delegate types can get quite verbose when dealing with a function with multiple parameters. To alleviate this, you can use this helper macro to define an omni::delegate with a number of parameters and a specific return type:
+
+@code
+int function0()
+{
+    return 42;
+}
+
+int function3(int x, int y, int z)
+{
+    return (x * y) / z;
+}
+
+int main(int argc, char* argv[])
+{
+    // omni::delegate&lt;int&gt; f0 = &amp;function0;
+    omni_delegate(int) f0 = &amp;function0;
+
+    // omni::delegate3&lt;int, int, int, int&gt; f3 = &amp;function3;
+    omni_delegate(int, int, int, int) f3 = &amp;function3;
+
+    std::cout &lt;&lt; f3(f0(), f0(), f0()) &lt;&lt; std::endl;
+
+    return 0;
+}
+@code
+</Synopsis>
+  <IsHelper>true</IsHelper>
+  <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
+</MacroOp>

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_DEF2STR</Name>
+  <Brief>String-izes the value passed in
+</Brief>
+  <Considerations>No special considerations.
+</Considerations>
+  <Description>OMNI_DEF2STR expands the value passed into a string value.
+
+Example:
+
+@code
+#define MY_DEF(val) std::string(OMNI_DEF2STR(val))
+
+std::string h = MY_DEF(hello world);
+std::cout &lt;&lt; h &lt;&lt; std::endl;
+// output will be 'hello world' on the standard output
+@code
+</Description>
+  <Notes>None.
+</Notes>
+  <PlatformSpecific>No platform specific notes.
+</PlatformSpecific>
+  <Synopsis>A helper macro that turns a @c #defined macro value into a string literal.
+</Synopsis>
+  <IsHelper>true</IsHelper>
+  <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
+</MacroOp>

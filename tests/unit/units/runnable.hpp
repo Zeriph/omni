@@ -24,7 +24,7 @@ class UT_CLASS_DEF
         
         UT_CLASS_DTOR() {}
         
-        void info_test() { UT_INFO_TEST(); } // TODO: print_info(omni::sync::runnable_thread);
+        void info_test() { UT_INFO_TEST(); }
         
         void base_test()
         {

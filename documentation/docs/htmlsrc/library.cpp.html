@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - library.cpp</title>
+<link rel="stylesheet" type="text/css" href="../../content/main.css" /><link rel="icon" type="image/png" href="../../content/favicon.png" />
+<script type="text/javascript" src="../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="index.html" class="current">Source</a></li><li title="Library classes and namespaces">
+<a href="../classes/index.html">Class Index</a></li><li title="Download and view examples">
+<a href="../examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="../options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../api.html">System API</a></li><li title="Other Considerations">
+<a href="../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle"><a href="../../files/src/library.cpp" onclick="return popup('../../files/src/library.cpp')">library.cpp</a></div><div class="content"><div>
+<code><div class="cpphtmllines">
+<!--start line numbers-->
+0001:<br><div id="cmntl1" name="cmntl1">0002:<br>0003:<br>0004:<br>0005:<br>0006:<br>0007:<br>0008:<br>0009:<br>00010:<br>00011:<br>00012:<br>00013:<br>00014:<br>00015:<br>00016:<br>00017:<br>00018:<br></div>00019:<br>
+00020:<br>00021:<br><div id="cmntl2" name="cmntl2">00022:<br>00023:<br>00024:<br>00025:<br>00026:<br>00027:<br>00028:<br>00029:<br>00030:<br></div>00031:<br>00032:<br>00033:<br>00034:<br>00035:<br>00036:<br>00037:<br>00038:<br>00039:<br>
+00040:<br>00041:<br>00042:<br>00043:<br>00044:<br>00045:<br>00046:<br>00047:<br>00048:<br>00049:<br>00050:<br>00051:<br>00052:<br>00053:<br>00054:<br>00055:<br>00056:<br>00057:<br>00058:<br>00059:<br>
+00060:<br>00061:<br>00062:<br>00063:<br>00064:<br>00065:<br>00066:<br>00067:<br>00068:<br>00069:<br>00070:<br>00071:<br>00072:<br>00073:<br>00074:<br>
+<!--end line numbers-->
+</div><div class="cpphtmlcmnt">
+<!--start collapse columns-->
+<img src="../../content/tree/min.gif" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<br><img src="../../content/tree/min.gif" id="cmnti2" name="cmnti2" onclick="collapse('2', '../../');" /><br><div id="cmnts2" name="cmnts2"><br><br><br><br><br><br><br><br><br></div><div></div><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<!--end collapse columns-->
+</div><div class="cpphtml" style="margin-left:3em;">
+<!--start highlighted code-->
+<font class="syn_cmt">/*<div class="syn_ex" id="cmnt1" name="cmnt1">
+ * Copyright (c), Zeriph Enterprises<br>
+ * All rights reserved.<br>
+ * <br>
+ * Contributor(s):<br>
+ * Zechariah Perez, omni (at) zeriph (dot) com<br>
+ * <br>
+ * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS &quot;AS IS&quot; AND ANY<br>
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED<br>
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE<br>
+ * DISCLAIMED. IN NO EVENT SHALL ZERIPH AND CONTRIBUTORS BE LIABLE FOR ANY<br>
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES<br>
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;<br>
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND<br>
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT<br>
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS<br>
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.<br>
+ */</div><div></div></font>
+<br>
+<br>
+<font class="syn_cmt">/* The purpose of this file is to compile the entire Omni library in one large<div class="syn_ex" id="cmnt2" name="cmnt2">
+object file or in one step for a compile script/command line. This is mostly<br>
+for convenience; you could do the following<br>
+<br>
+*nix: g++ your_source.cpp /source/omni/library.cpp -I/source/omni -O3 -rt -pthread<br>
+win: cl.exe your_source.cpp C:\source\omni\library.cpp /IC:\source\omni /Ox<br>
+<br>
+If you have a need such that you do not want this file built (possibly a script<br>
+that automatically compiles any .cpp files), you can define OMNI_NO_SINGLE_FILE<br>
+to ensure this file is not built with the rest. */</div><div></div></font>
+<br>
+<font class="syn_pre">#if !defined(<a href="../options/omni_no_single_file.html">OMNI_NO_SINGLE_FILE</a>)</font><br>
+<br>
+<font class="syn_pre">#include <font class="syn_str">&quot;omni/library.hpp&quot;</font></font><br>
+<br>
+<font class="syn_pre">#if !defined(<a href="../options/omni_timer_lib.html">OMNI_TIMER_LIB</a>) &amp;&amp; !defined(<a href="../options/omni_thread_lib.html">OMNI_THREAD_LIB</a>) &amp;&amp; !defined(<a href="../options/omni_net_lib.html">OMNI_NET_LIB</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include <font class="syn_str">&quot;application.cpp&quot;</font></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include <font class="syn_str">&quot;argparser.cpp&quot;</font></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include <font class="syn_str">&quot;environment.cpp&quot;</font></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include <font class="syn_str">&quot;externs.cpp&quot;</font></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include <font class="syn_str">&quot;io.cpp&quot;</font></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include <font class="syn_str">&quot;system.cpp&quot;</font></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include <font class="syn_str">&quot;version.cpp&quot;</font></font><br>
+<font class="syn_pre">#endif</font><br>
+<br>
+<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../options/omni_timer_lib.html">OMNI_TIMER_LIB</a>) || (!defined(<a href="../options/omni_thread_lib.html">OMNI_THREAD_LIB</a>) &amp;&amp; !defined(<a href="../options/omni_net_lib.html">OMNI_NET_LIB</a>))</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include <font class="syn_str">&quot;async_timer.cpp&quot;</font></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include <font class="syn_str">&quot;drop_timer.cpp&quot;</font></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include <font class="syn_str">&quot;queue_timer.cpp&quot;</font></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include <font class="syn_str">&quot;sync_timer.cpp&quot;</font></font><br>
+<font class="syn_pre">#endif</font><br>
+<br>
+<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../options/omni_net_lib.html">OMNI_NET_LIB</a>) || (!defined(<a href="../options/omni_timer_lib.html">OMNI_TIMER_LIB</a>) &amp;&amp; !defined(<a href="../options/omni_thread_lib.html">OMNI_THREAD_LIB</a>))</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include <font class="syn_str">&quot;endpoint_descriptor.cpp&quot;</font></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include <font class="syn_str">&quot;socket.cpp&quot;</font></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// #include &quot;server.cpp&quot; # INCOMPLETE</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// #include &quot;client.cpp&quot; # INCOMPLETE</font><br>
+<font class="syn_pre">#endif</font><br>
+<br>
+<font class="syn_pre">#include <font class="syn_str">&quot;date_time.cpp&quot;</font></font><br>
+<font class="syn_pre">#include <font class="syn_str">&quot;stopwatch.cpp&quot;</font></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+<font class="syn_pre">#include <font class="syn_str">&quot;binary_semaphore.cpp&quot;</font></font><br>
+<font class="syn_pre">#include <font class="syn_str">&quot;conditional.cpp&quot;</font></font><br>
+<font class="syn_pre">#include <font class="syn_str">&quot;mutex.cpp&quot;</font></font><br>
+<font class="syn_pre">#include <font class="syn_str">&quot;semaphore.cpp&quot;</font></font><br>
+<br>
+<font class="syn_pre">#include <font class="syn_str">&quot;basic_thread.cpp&quot;</font></font><br>
+<font class="syn_pre">#include <font class="syn_str">&quot;runnable.cpp&quot;</font></font><br>
+<font class="syn_pre">#include <font class="syn_str">&quot;thread.cpp&quot;</font></font><br>
+<font class="syn_pre">#include <font class="syn_str">&quot;threadpool.cpp&quot;</font></font><br>
+<br>
+<font class="syn_pre">#endif</font><br>
+<!--end highlighted code-->
+</div></code><br>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS(); collapseAll('2', '../../');</script></body></html>

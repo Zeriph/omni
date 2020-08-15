@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_SHOW_DEBUG_FILE</Name>
+  <Brief>Displays the file as part of the debug output.</Brief>
+  <Considerations>No special considerations.</Considerations>
+  <Description>When specified, all debug output will include the file name of where the debug output originated.</Description>
+  <Notes>OMNI_SHOW_DEBUG must be specified for this flag to work.</Notes>
+  <PlatformSpecific>No platform specific details.</PlatformSpecific>
+  <Synopsis>&lt;code&gt;#define OMNI_SHOW_DEBUG_FILE&lt;/code&gt;
+Signifies to format the debug output to display the file name in front of the output.</Synopsis>
+  <IsHelper>false</IsHelper>
+  <IsConstant>false</IsConstant>
+</MacroOp>

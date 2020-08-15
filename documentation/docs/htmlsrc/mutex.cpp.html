@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - mutex.cpp</title>
+<link rel="stylesheet" type="text/css" href="../../content/main.css" /><link rel="icon" type="image/png" href="../../content/favicon.png" />
+<script type="text/javascript" src="../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="index.html" class="current">Source</a></li><li title="Library classes and namespaces">
+<a href="../classes/index.html">Class Index</a></li><li title="Download and view examples">
+<a href="../examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="../options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../api.html">System API</a></li><li title="Other Considerations">
+<a href="../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle"><a href="../../files/src/mutex.cpp" onclick="return popup('../../files/src/mutex.cpp')">mutex.cpp</a></div><div class="content"><div>
+<code><div class="cpphtmllines">
+<!--start line numbers-->
+00001:<br><div id="cmntl1" name="cmntl1">00002:<br>00003:<br>00004:<br>00005:<br>00006:<br>00007:<br>00008:<br>00009:<br>000010:<br>000011:<br>000012:<br>000013:<br>000014:<br>000015:<br>000016:<br>000017:<br>000018:<br></div>000019:<br>
+000020:<br>000021:<br>000022:<br>000023:<br>000024:<br>000025:<br>000026:<br>000027:<br>000028:<br>000029:<br>000030:<br>000031:<br>000032:<br>000033:<br>000034:<br>000035:<br>000036:<br>000037:<br>000038:<br>000039:<br>
+000040:<br>000041:<br>000042:<br>000043:<br>000044:<br>000045:<br>000046:<br>000047:<br>000048:<br>000049:<br>000050:<br>000051:<br>000052:<br>000053:<br>000054:<br>000055:<br>000056:<br>000057:<br>000058:<br>000059:<br>
+000060:<br>000061:<br>000062:<br>000063:<br>000064:<br>000065:<br>000066:<br>000067:<br>000068:<br>000069:<br>000070:<br>000071:<br>000072:<br>000073:<br>000074:<br>000075:<br>000076:<br>000077:<br>000078:<br>000079:<br>
+000080:<br>000081:<br>000082:<br>000083:<br>000084:<br>000085:<br>000086:<br>000087:<br>000088:<br>000089:<br>000090:<br>000091:<br>000092:<br>000093:<br>000094:<br>000095:<br>000096:<br><div id="cmntl2" name="cmntl2">000097:<br>000098:<br></div>000099:<br>
+0000100:<br>0000101:<br>0000102:<br>0000103:<br>0000104:<br>0000105:<br>0000106:<br>0000107:<br>0000108:<br>0000109:<br>0000110:<br>0000111:<br>0000112:<br>0000113:<br>0000114:<br>0000115:<br>0000116:<br>0000117:<br>0000118:<br>0000119:<br>
+0000120:<br>0000121:<br>0000122:<br>0000123:<br>0000124:<br>0000125:<br>0000126:<br>0000127:<br>0000128:<br>0000129:<br>0000130:<br>0000131:<br>0000132:<br>0000133:<br>0000134:<br>0000135:<br>0000136:<br>0000137:<br>0000138:<br>0000139:<br>
+0000140:<br>0000141:<br>0000142:<br>0000143:<br>0000144:<br>0000145:<br>0000146:<br>0000147:<br>0000148:<br>0000149:<br>0000150:<br>0000151:<br>0000152:<br>0000153:<br>0000154:<br>0000155:<br>0000156:<br>0000157:<br>0000158:<br>0000159:<br>
+0000160:<br>0000161:<br>0000162:<br>0000163:<br>0000164:<br>0000165:<br>0000166:<br>0000167:<br>0000168:<br>0000169:<br>0000170:<br>0000171:<br>0000172:<br>0000173:<br>0000174:<br>0000175:<br>0000176:<br>0000177:<br>0000178:<br>0000179:<br>
+0000180:<br>0000181:<br>
+<!--end line numbers-->
+</div><div class="cpphtmlcmnt">
+<!--start collapse columns-->
+<img src="../../content/tree/min.gif" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><img src="../../content/tree/min.gif" id="cmnti2" name="cmnti2" onclick="collapse('2', '../../');" /><br><div id="cmnts2" name="cmnts2"><br><br></div><div></div><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br>
+<!--end collapse columns-->
+</div><div class="cpphtml" style="margin-left:3.75em;">
+<!--start highlighted code-->
+<font class="syn_cmt">/*<div class="syn_ex" id="cmnt1" name="cmnt1">
+ * Copyright (c), Zeriph Enterprises<br>
+ * All rights reserved.<br>
+ * <br>
+ * Contributor(s):<br>
+ * Zechariah Perez, omni (at) zeriph (dot) com<br>
+ * <br>
+ * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS &quot;AS IS&quot; AND ANY<br>
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED<br>
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE<br>
+ * DISCLAIMED. IN NO EVENT SHALL ZERIPH AND CONTRIBUTORS BE LIABLE FOR ANY<br>
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES<br>
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;<br>
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND<br>
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT<br>
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS<br>
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.<br>
+ */</div><div></div></font>
+<font class="syn_pre">#include &lt;<a href="omni/sync/mutex.hpp.html">omni/sync/mutex.hpp</a>&gt;</font><br>
+<br>
+<font class="syn_cmt">// DEV_NOTE: reason for the #def calls for mutex lock/unlock/etc. is to avoid extra function calls to <a href="../classes/omni-sync-mutex_init.html">omni::sync::mutex_init</a>/lock/etc.</font><br>
+<font class="syn_cmt">// which are just function wrappers for the #def values</font><br>
+<br>
+<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../options/omni_mutex_owner.html">OMNI_MUTEX_OWNER</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_MOLIST_FW , m_owner()</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../options/omni_os_win.html">OMNI_OS_WIN</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_MOCALL_FW ::<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms683183%28v=vs.85%29.aspx">GetCurrentThreadId</a>()</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_MOCALL_FW ::<a href="http://pubs.opengroup.org/onlinepubs/009695399/functions/pthread_self.html">pthread_self</a>()</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../options/omni_throw.html">OMNI_THROW</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_MOERR_FW throw <a href="../classes/omni-exceptions-invalid_thread_owner.html">omni::exceptions::invalid_thread_owner</a>();</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../options/omni_terminate.html">OMNI_TERMINATE</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_MOERR_FW <a href="../options/omni_terminate.html">OMNI_TERMINATE</a>;</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_MOERR_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_MOCHK_FW if (this-&gt;m_owner != OMNI_MOCALL_FW) { OMNI_MOERR_FW }</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_MOGET_FW this-&gt;m_owner = OMNI_MOCALL_FW;</font><br>
+<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_MOLIST_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_MOCHK_FW </font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_MOGET_FW </font><br>
+<font class="syn_pre">#endif</font><br>
+<font class="syn_pre"><font class="syn_pre">#if defined <a href="../options/omni_safe_mutex.html">OMNI_SAFE_MUTEX</a></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_XMTX_FW&nbsp;&nbsp;&nbsp;&nbsp;   , m_imtx()</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_XALOCK_FW&nbsp;&nbsp;&nbsp;&nbsp; <a href="../classes/omni-sync-scoped_lock.html">omni::sync::scoped_lock</a>&lt;<a href="../classes/omni-sync-mutex_t.html">omni::sync::mutex_t</a>&gt; amtimtx(&amp;this-&gt;m_imtx);</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_XINIT_FW&nbsp;&nbsp;&nbsp;&nbsp;  <a href="../classes/omni-sync-mutex_init.html">omni::sync::mutex_init</a>(this-&gt;m_imtx);</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_XLOCK_FW&nbsp;&nbsp;&nbsp;&nbsp;  <a href="../classes/omni-sync-mutex_lock.html">omni::sync::mutex_lock</a>(this-&gt;m_imtx);</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_XUNLOCK_FW&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-mutex_unlock.html">omni::sync::mutex_unlock</a>(this-&gt;m_imtx);</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_XDTOR_FW&nbsp;&nbsp;&nbsp;&nbsp;  <a href="../classes/omni-sync-mutex_destroy.html">omni::sync::mutex_destroy</a>(this-&gt;m_imtx);</font><br>
+<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_XMTX_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_XALOCK_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_XINIT_FW </font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_XLOCK_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_XUNLOCK_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_XDTOR_FW</font><br>
+<font class="syn_pre">#endif</font><br>
+<br>
+<a href="../classes/omni-sync-mutex-mutex.html">omni::sync::mutex::mutex</a>() : <br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CTOR_FW(<a href="../classes/omni-sync-mutex.html">omni::sync::mutex</a>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;m_lokd(<font class="syn_num">0</font>), m_mtx()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_XMTX_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MOLIST_FW<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#if !defined(<a href="../options/omni_chrono_auto_init_tick.html">OMNI_CHRONO_AUTO_INIT_TICK</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-chrono-monotonic-initialize.html">omni::chrono::monotonic::initialize</a>();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_XINIT_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-mutex_init.html">omni::sync::mutex_init</a>(<font class="syn_typ">this</font>-&gt;m_mtx);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_D5_FW(<font class="syn_str">&quot;created&quot;</font>);<br>
+}<br>
+<br>
+<a href="../classes/omni-sync-mutex-mutex.html">omni::sync::mutex::mutex</a>(<font class="syn_typ">bool</font> initialy_owned) : <br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CTOR_FW(<a href="../classes/omni-sync-mutex.html">omni::sync::mutex</a>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;m_lokd(<font class="syn_num">0</font>), m_mtx()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_XMTX_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MOLIST_FW<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#if !defined(<a href="../options/omni_chrono_auto_init_tick.html">OMNI_CHRONO_AUTO_INIT_TICK</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-chrono-monotonic-initialize.html">omni::chrono::monotonic::initialize</a>();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_XINIT_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-mutex_init.html">omni::sync::mutex_init</a>(<font class="syn_typ">this</font>-&gt;m_mtx);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_D5_FW(<font class="syn_str">&quot;created&quot;</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (initialy_owned) { <font class="syn_typ">this</font>-&gt;lock(); }<br>
+}<br>
+<br>
+<a href="../classes/omni-sync-mutex-@7Emutex.html">omni::sync::mutex::~mutex</a>()<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTOR_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font>-&gt;locked()) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">/* DEV_NOTE: the sync objects (mutex/semaphore/etc.) will not unlock on destruction<div class="syn_ex" id="cmnt2" name="cmnt2">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;since that would assume the user wants this. If they want an auto mutex, they can<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use the <a href="../classes/omni-sync-auto_lock.html">omni::sync::auto_lock</a> */</div><div></div></font>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_TERMINATE_FW(<font class="syn_str">&quot;mutex is locked on destruction&quot;</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_TRY_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-mutex_destroy.html">omni::sync::mutex_destroy</a>(<font class="syn_typ">this</font>-&gt;m_mtx);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CATCH_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_XDTOR_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_D5_FW(<font class="syn_str">&quot;destroyed&quot;</font>);<br>
+}<br>
+<br>
+<font class="syn_typ">const</font> <a href="../classes/omni-sync-mutex_t.html">omni::sync::mutex_t</a> <a href="../classes/omni-sync-mutex-handle.html">omni::sync::mutex::handle</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_XALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;m_mtx;<br>
+}<br>
+<br>
+<font class="syn_typ">bool</font> <a href="../classes/omni-sync-mutex-locked.html">omni::sync::mutex::locked</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_XALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_lokd &gt; <font class="syn_num">0</font>);<br>
+}<br>
+<br>
+<font class="syn_typ">void</font> <a href="../classes/omni-sync-mutex-lock.html">omni::sync::mutex::lock</a>()<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_D4_FW(<font class="syn_str">&quot;retrieving lock&quot;</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-mutex_lock.html">omni::sync::mutex_lock</a>(<font class="syn_typ">this</font>-&gt;m_mtx);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_XLOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MOGET_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;++<font class="syn_typ">this</font>-&gt;m_lokd;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_XUNLOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_D4_FW(<font class="syn_str">&quot;lock acquired&quot;</font>);<br>
+}<br>
+<br>
+<font class="syn_typ">bool</font> <a href="../classes/omni-sync-mutex-lock.html">omni::sync::mutex::lock</a>(<font class="syn_typ">uint32_t</font> timeout_ms)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (timeout_ms == <font class="syn_num">0</font>) { <font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;trylock(); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-chrono-tick_t.html">omni::chrono::tick_t</a> start = <a href="../classes/omni-chrono-monotonic_tick.html">omni::chrono::monotonic_tick</a>();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">while</font> (<a href="../classes/omni-chrono-elapsed_ms.html">omni::chrono::elapsed_ms</a>(start) &lt;= timeout_ms) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font>-&gt;trylock()) { <font class="syn_ins">return</font> <font class="syn_ins">true</font>; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+}<br>
+<br>
+<font class="syn_typ">void</font> <a href="../classes/omni-sync-mutex-unlock.html">omni::sync::mutex::unlock</a>()<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_XALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// undefined behaviour if unlock on non-locked system mutex</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font>-&gt;m_lokd &gt; <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// undefined if unlock not from owning thread</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MOCHK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_D4_FW(<font class="syn_str">&quot;unlocking&quot;</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-mutex_unlock.html">omni::sync::mutex_unlock</a>(<font class="syn_typ">this</font>-&gt;m_mtx);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--<font class="syn_typ">this</font>-&gt;m_lokd;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_D4_FW(<font class="syn_str">&quot;unlocked&quot;</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_FW(<font class="syn_str">&quot;mutex object is not locked&quot;</font>, <a href="../classes/omni-exceptions-mutex_unlock_exception.html">omni::exceptions::mutex_unlock_exception</a>())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+}<br>
+<br>
+<font class="syn_typ">bool</font> <a href="../classes/omni-sync-mutex-trylock.html">omni::sync::mutex::trylock</a>()<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<a href="../classes/omni-sync-mutex_trylock.html">omni::sync::mutex_trylock</a>(<font class="syn_typ">this</font>-&gt;m_mtx)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_XALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MOGET_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;++<font class="syn_typ">this</font>-&gt;m_lokd;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">true</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+}<br>
+<br>
+<font class="syn_typ">bool</font> omni::sync::mutex::<font class="syn_ins">operator</font>==(<font class="syn_typ">const</font> <a href="../classes/omni-sync-mutex.html">omni::sync::mutex</a> &amp;o) <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font> == &amp;o) { <font class="syn_ins">return</font> <font class="syn_ins">true</font>; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_XALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (&amp;<font class="syn_typ">this</font>-&gt;m_mtx == &amp;o.m_mtx &amp;&amp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_lokd == o.m_lokd)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_EQUAL_FW(o);<br>
+}<br>
+<br>
+<font class="syn_typ">bool</font> omni::sync::mutex::<font class="syn_ins">operator</font>!=(<font class="syn_typ">const</font> <a href="../classes/omni-sync-mutex.html">omni::sync::mutex</a> &amp;o) <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> !(*<font class="syn_typ">this</font> == o);<br>
+}<br>
+<!--end highlighted code-->
+</div></code><br>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS(); collapseAll('2', '../../');</script></body></html>

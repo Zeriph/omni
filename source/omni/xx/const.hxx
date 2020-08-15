@@ -19,8 +19,8 @@
  
 /* DEV_NOTE: this file is not intended to be used directly by any user code!
 
- i.e. don't #include <omni/xxx_impl.hxx> and don't compile this source directly.
- this file is #include'd directly in other source. 
+ i.e. do not #include <omni/xxx_impl.hxx> and do not compile this source directly.
+ this file is included directly in other source. 
  
  The idea is that omni::cconsts and omni::wconsts namespaces segregate the types
  for explicit calling; i.e. you can call omni::cconsts::X for a std:string type

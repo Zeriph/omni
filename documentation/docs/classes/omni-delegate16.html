@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - class: omni::delegate16</title>
+<link rel="stylesheet" type="text/css" href="../../content/main.css" /><link rel="icon" type="image/png" href="../../content/favicon.png" />
+<script type="text/javascript" src="../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="../htmlsrc/index.html">Source</a></li><li title="Library classes and namespaces">
+<a href="index.html" class="current">Class Index</a></li><li title="Download and view examples">
+<a href="../examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="../options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../api.html">System API</a></li><li title="Other Considerations">
+<a href="../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle">omni::delegate16</div><div class="content"><div>
+<div class="docdiv"><a name="nm"></a>
+<font class="docu">NAME</font><br><br>
+<code><a href="../htmlsrc/omni/delegate/16.hpp.html#omni::delegate16" class="chnm">
+    omni::delegate16
+    </a></code><br>
+<br>A class of <a href="omni.html" class="code">omni</a><br><br>
+    <code><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/delegate/16.hpp.html">omni/delegate/16.hpp</a>&gt;</font></code><br><code>class omni::delegate16</code><br>
+    <br>
+    <font class="docu">MEMBERS</font><br>
+    <br>
+    <code> <a href="../classes/omni-delegate16-delegate16.html">omni::delegate16::delegate16</a>()<br>
+     <a href="../classes/omni-delegate16-@7Edelegate16.html">omni::delegate16::~delegate16</a>()<br>
+    <font class="syn_ins">template</font> &lt; ret_t (*fnptr)(p1_t, p2_t, p3_t, p4_t, p5_t, p6_t, p7_t, p8_t, p9_t, p10_t, p11_t, p12_t, p13_t, p14_t, p15_t, p16_t) &gt; static delegate16 omni::delegate16::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a>()<br>
+    <font class="syn_ins">template</font> &lt; <font class="syn_typ">class</font> T, ret_t (T::*fnptr)(p1_t, p2_t, p3_t, p4_t, p5_t, p6_t, p7_t, p8_t, p9_t, p10_t, p11_t, p12_t, p13_t, p14_t, p15_t, p16_t) <font class="syn_typ">const</font> &gt; static delegate16 <a href="../classes/omni-delegate16-bind_const.html">omni::delegate16::bind_const</a>(<font class="syn_typ">const</font> T&amp; obj)<br>
+    <font class="syn_ins">inline</font> <font class="syn_typ">void</font> <a href="../classes/omni-delegate16-bond.html">omni::delegate16::bond</a>(function_ptr fnptr)<br>
+    <font class="syn_ins">template</font> &lt; <font class="syn_typ">class</font> T, ret_t (T::*fnptr)(p1_t, p2_t, p3_t, p4_t, p5_t, p6_t, p7_t, p8_t, p9_t, p10_t, p11_t, p12_t, p13_t, p14_t, p15_t, p16_t) <font class="syn_typ">const</font> &gt; <font class="syn_ins">inline</font> <font class="syn_typ">void</font> <a href="../classes/omni-delegate16-bond_const.html">omni::delegate16::bond_const</a>(<font class="syn_typ">const</font> T&amp; obj)<br>
+    <font class="syn_typ">const</font> function_ptr <a href="../classes/omni-delegate16-function.html">omni::delegate16::function</a>()<br>
+    ret_t <a href="../classes/omni-delegate16-invoke.html">omni::delegate16::invoke</a>(p1_t val1, p2_t val2, p3_t val3, p4_t val4, p5_t val5, p6_t val6, p7_t val7, p8_t val8, p9_t val9, p10_t val10, p11_t val11, p12_t val12, p13_t val13, p14_t val14, p15_t val15, p16_t val16)<br>
+    ret_t <a href="../classes/omni-delegate16-invoke_direct.html">omni::delegate16::invoke_direct</a>(p1_t val1, p2_t val2, p3_t val3, p4_t val4, p5_t val5, p6_t val6, p7_t val7, p8_t val8, p9_t val9, p10_t val10, p11_t val11, p12_t val12, p13_t val13, p14_t val14, p15_t val15, p16_t val16)<br>
+    <a href="../classes/omni-invoke_t.html">omni::invoke_t</a> <a href="../classes/omni-delegate16-invoke_type.html">omni::delegate16::invoke_type</a>()<br>
+    <font class="syn_typ">bool</font> <a href="../classes/omni-delegate16-is_bound.html">omni::delegate16::is_bound</a>()<br>
+    <font class="syn_typ">bool</font> <a href="../classes/omni-delegate16-is_member_bound.html">omni::delegate16::is_member_bound</a>()<br>
+    <font class="syn_typ">const</font> functor <a href="../classes/omni-delegate16-method.html">omni::delegate16::method</a>()<br>
+    <font class="syn_typ">void</font> <a href="../classes/omni-delegate16-swap.html">omni::delegate16::swap</a>(delegate16&lt; Ret PT1 PT2 PT3 PT4 PT5 PT6 PT7 PT8 PT9 PT10 PT11 PT12 PT13 PT14 PT15 PT16 &gt;&amp; d)<br>
+    <font class="syn_typ">void</font>* <a href="../classes/omni-delegate16-target.html">omni::delegate16::target</a>()<br>
+    <font class="syn_ins">inline</font> <font class="syn_typ">void</font> <a href="../classes/omni-delegate16-unbind.html">omni::delegate16::unbind</a>()<br>
+    <font class="syn_ins">template</font> &lt; <font class="syn_typ">class</font> T, ret_t (T::*fnptr)(p1_t, p2_t, p3_t, p4_t, p5_t, p6_t, p7_t, p8_t, p9_t, p10_t, p11_t, p12_t, p13_t, p14_t, p15_t, p16_t) &gt; <font class="syn_ins">inline</font> <font class="syn_typ">void</font> <a href="../classes/omni-delegate16-unsafe_set_method.html">omni::delegate16::unsafe_set_method</a>()<br>
+    <font class="syn_ins">template</font> &lt; <font class="syn_typ">class</font> T, ret_t (T::*fnptr)(p1_t, p2_t, p3_t, p4_t, p5_t, p6_t, p7_t, p8_t, p9_t, p10_t, p11_t, p12_t, p13_t, p14_t, p15_t, p16_t) <font class="syn_typ">const</font> &gt; <font class="syn_ins">inline</font> <font class="syn_typ">void</font> <a href="../classes/omni-delegate16-unsafe_set_method_const.html">omni::delegate16::unsafe_set_method_const</a>()<br>
+    <font class="syn_ins">template</font> &lt; <font class="syn_typ">class</font> T &gt; <font class="syn_ins">inline</font> <font class="syn_typ">void</font> <a href="../classes/omni-delegate16-unsafe_set_target.html">omni::delegate16::unsafe_set_target</a>(T&amp; obj)<br>
+    <font class="syn_typ">bool</font> <a href="../classes/omni-delegate16-valid.html">omni::delegate16::valid</a>()<br>
+    <font class="syn_ins">inline</font> ret_t omni::delegate16::<font class="syn_ins">operator</font>()<br>
+    <font class="syn_ins">inline</font> omni::delegate16::<font class="syn_ins">operator</font> <font class="syn_typ">bool</font>()<br>
+    <font class="syn_ins">inline</font> <font class="syn_typ">bool</font> omni::delegate16::<font class="syn_ins">operator</font>!()<br>
+    <font class="syn_typ">bool</font> omni::delegate16::<font class="syn_ins">operator</font>!=(<font class="syn_typ">const</font> delegate16&lt; Ret PT1 PT2 PT3 PT4 PT5 PT6 PT7 PT8 PT9 PT10 PT11 PT12 PT13 PT14 PT15 PT16 &gt;&amp; d)<br>
+    delegate16&lt; Ret, PT1, PT2, PT3, PT4, PT5, PT6, PT7, PT8, PT9, PT10, PT11, PT12, PT13, PT14, PT15, PT16 &gt;&amp; omni::delegate16::<font class="syn_ins">operator</font>=(<font class="syn_typ">const</font> delegate16&lt; Ret PT1 PT2 PT3 PT4 PT5 PT6 PT7 PT8 PT9 PT10 PT11 PT12 PT13 PT14 PT15 PT16 &gt;&amp; d)<br>
+    <font class="syn_typ">bool</font> omni::delegate16::<font class="syn_ins">operator</font>==(<font class="syn_typ">const</font> delegate16&lt; Ret PT1 PT2 PT3 PT4 PT5 PT6 PT7 PT8 PT9 PT10 PT11 PT12 PT13 PT14 PT15 PT16 &gt;&amp; d)<br>
+    <a href="../classes/omni-delegate16-@4028@402Afunction_ptr@4029.html">omni::delegate16::(*function_ptr)</a><br>
+    <a href="../classes/omni-delegate16-@4028@402Afunctor@4029.html">omni::delegate16::(*functor)</a><br>
+    <a href="../classes/omni-delegate16-p10_t.html">omni::delegate16::p10_t</a><br>
+    <a href="../classes/omni-delegate16-p11_t.html">omni::delegate16::p11_t</a><br>
+    <a href="../classes/omni-delegate16-p12_t.html">omni::delegate16::p12_t</a><br>
+    <a href="../classes/omni-delegate16-p13_t.html">omni::delegate16::p13_t</a><br>
+    <a href="../classes/omni-delegate16-p14_t.html">omni::delegate16::p14_t</a><br>
+    <a href="../classes/omni-delegate16-p15_t.html">omni::delegate16::p15_t</a><br>
+    <a href="../classes/omni-delegate16-p16_t.html">omni::delegate16::p16_t</a><br>
+    <a href="../classes/omni-delegate16-p1_t.html">omni::delegate16::p1_t</a><br>
+    <a href="../classes/omni-delegate16-p2_t.html">omni::delegate16::p2_t</a><br>
+    <a href="../classes/omni-delegate16-p3_t.html">omni::delegate16::p3_t</a><br>
+    <a href="../classes/omni-delegate16-p4_t.html">omni::delegate16::p4_t</a><br>
+    <a href="../classes/omni-delegate16-p5_t.html">omni::delegate16::p5_t</a><br>
+    <a href="../classes/omni-delegate16-p6_t.html">omni::delegate16::p6_t</a><br>
+    <a href="../classes/omni-delegate16-p7_t.html">omni::delegate16::p7_t</a><br>
+    <a href="../classes/omni-delegate16-p8_t.html">omni::delegate16::p8_t</a><br>
+    <a href="../classes/omni-delegate16-p9_t.html">omni::delegate16::p9_t</a><br>
+    <a href="../classes/omni-delegate16-ret_t.html">omni::delegate16::ret_t</a><br>
+    </code>
+</div><br>
+<div class="docdiv"><a name="syn"></a>
+<font class="docu">SYNOPSIS</font><br><br>
+No synopsis.
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<div class="docdiv"><a name="desc"></a>
+<font class="docu">DESCRIPTION</font><br><br>
+No description.
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+
+
+
+
+
+
+
+
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

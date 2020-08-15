@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - Cross Platform Support</title>
+<link rel="stylesheet" type="text/css" href="content/main.css" /><link rel="icon" type="image/png" href="content/favicon.png" />
+<script type="text/javascript" src="content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="xplat.html" class="current">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="docs/htmlsrc/index.html">Source</a></li><li title="Library classes and namespaces">
+<a href="docs/classes/index.html">Class Index</a></li><li title="Download and view examples">
+<a href="docs/examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="docs/build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="docs/options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="docs/api.html">System API</a></li><li title="Other Considerations">
+<a href="docs/consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="docs/codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="http://www.zeriph.com">Zeriph Enterprises, LLC</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle"><a name="omni_cross_platform_support"></a>Cross Platform Support</div><div class="content"><div>
+The Omni library can be compiled for many platforms including many Unix and Linux derivations and the Windows and Apple
+lines of OS. Omni makes use of many OS specific API as well as standards conforming API's (like those in the C++ standard
+library or in the POSIX.1c specification).<br><br>
+Omni on Windows makes use of the <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/ff818516%28v=vs.85%29.aspx">WinAPI</a>.
+For Unix and Linux variants, most API's used are <a href="https://en.wikipedia.org/wiki/POSIX#POSIX.1c">
+POSIX.1c</a> compliant and some are OS specific. For Apple platforms the POSIX.1c specification is used, as well as Unix
+specific API's and depending on the library function, Apple specific C/C++ library functions will be used. For more
+information on which API's are called throughout the library, visit the <a href="docs/api.html">API's</a> page.<br>
+<br>
+Part of the goal of the Omni library is to not have to guess what the function or class will do on different systems (i.e. we
+want to ensure predictable and deterministic behaviour regardless of platform). As the library has morphed into what it is today,
+there have been caveats and impasses down the road of cross platform compatibility. These issues affect certain design decisions and
+Omni must make use of certain system level capabilities depending on what is being used or called to ensure proper determinism.
+For instance, the <a href="docs/classes/omni@@sync@@mutex.html" class="code">omni::mutex</a> makes use of
+of the <code>CRITICAL_SECTION</code> type on Windows and the <code>pthread_mutex_t</code> type on other platforms.
+The mutex object (specifically the <code>CRITICAL_SECTION</code>) on a Windows platform is a recursive
+lock by design whereas the POSIX code for the mutex object has to explicitly define if the mutex is to be recursive, that is,
+code on POSIX systems will call <code>pthread_mutex_create</code> passing a <code>pthread_mutexattr_t</code> type with the
+<code>PTHREAD_MUTEX_RECURSIVE</code> defined so the underlying system mutex will be a recursive mutex. There are even certain
+portions of code that have to be explicitly enabled (via compile time flags) due to their non-portable nature; 
+<a href="docs/classes/omni@@system@@path.html" class="code">omni::system::path()</a> is an example of non-portable code.
+Any source specific items worth bringing to attention (the <code>omni::mutex</code>, for instance) will be documented
+and explained in the corresponding help and source documentation.<br><br>
+The current version has been tested and works with the following platforms:<br>
+<ul class="dot">
+    <li>Windows (Windows 2000 and above)</li>
+    <li>Apple OS X (kernel 10.4 and up)</li>
+    <li>Sun Solaris (10+)</li>
+    <li>Linux and Unix/BSD kernel bases:<br>
+        Ubuntu 10.04, Fedora core 17, RHEL/CentOS 6.3, 
+        Linux Mint 13, openSUSE 12.3, Slackware 14, 
+        Debian 6.0.7, NetBSD 5.1.2, FreeBSD 9.1, 
+        OpenBSD 5.1, PC-BSD 10, RoboLinux, QNX 6.4.0, 
+        TurboLinux, ArchLinux, CoreOS, Gentoo, PCLinuxOS, 
+        PuppyLinux, Mageia, Manjaro, ElementaryOS, Zorin
+    </li>
+</ul>
+This list is not an exhaustive list of compatible platforms, it is merely a list of platforms we have tested against
+due to their reasonable popularity as a distribution and due to time considerations (testing the compatibility of every
+fork of a specific Linux/Unix kernel is no longer feasible in todays
+<a href="https://en.wikipedia.org/wiki/List_of_Linux_distributions">cornucopia of distributions</a>). If you do not see
+your specific distribution in this list (or have an older version), there is still a very
+likely chance the library will compile and run as expected on your platform; as with any 3rd party library or source, you
+should always verify the tools being used against your needs.<br>
+<br>
+Please be aware if you are compiling for Windows in <a href="http://www.mingw.org/">MinGW/MSYS</a> or 
+<a href="http://www.cygwin.com/">Cygwin</a> your code will be treated and compiled as a <code>POSIX</code>
+platform and not as a Windows platform. It should be noted that the Windows pthread libraries are wrappers
+for the appropriate WinAPI calls and certain code will output as if it were compiled for a Windows platform.<br>
+<a class="toppg" href="#topopage">top</a><br><br>
+
+<a name="how_we_test"></a><font class="hdr">Platform Testing</font><br>
+To test a specific platform, a unit test was written utilizing the Omni library and it passed
+if 3 conditions were met:
+<ol>
+    <li>The unit test compiled successfully with the Omni source and needed libraries (<code>-pthread</code> or <code>-rt</code> for instance).
+    <li>The functionality of the unit test succeeds; the outcome of the test was as expected and without error.
+    <li>The functionality of the unit test did not change the expected results on the platform being tested.
+</ol>
+The 3rd item being the most important in determination of final test status. If a test
+was written and it compiled on all platforms and each platform successfully completed the test as
+per the functional requirements (i.e. a mutex lock call should only return if it gets the lock), the
+test is considered platform <i>safe</i>, meaning that the specific function can be compiled and used on
+that specific system. If the test changes in any unexpected ways on a specific platform, research
+is done to determine if that specific platform might need a tweak to the code (as can be the case with
+certain Linux and Unix derivations). If a small tweak to the code can give the support needed and all 
+tests have passed then the code is considered cross platform compatible. If the tests still fail or more
+than a small tweak is needed (like extra functions) for a specific platform, that portion of code is
+relegated to the <i>non-portable</i> section and annotated.<br>
+<br>
+Non-portable code does not necessarily mean that it will not work on your platform, it merely means that the output
+cannot be determined to be the same across all platforms tested.<br>
+<a class="toppg" href="#topopage">top</a><br><br>
+
+<a name="embedded_support"></a><font class="hdr">Embedded support</font><br>
+For Microsoft this is the WindowsCE and Windows Embedded line of OS, for Linux this includes any embedded Linux/Unix derivation.<br>
+<br>
+Embedded support cannot be guaranteed as not all system libraries are available among the many embedded environments. However
+that does not preclude one from using Omni in an embedded environment. For a Microsoft build, the basic WinAPI set need be
+available and a POSIX compliant environment for a Linux/Unix based build.
+
+<!--An IP stack and the appropriate libraries to build against
+will be needed if you intend on using the socket portions of the library.-->
+
+If your environment does not support exception
+handling (some Android platforms for example), you can specify the <a href="docs/options/omni_no_throw.html" class="code">OMNI_NO_THROW</a> 
+preprocessor flag.<br>
+<br>
+For other preprocessor flags that might be useful for your platform (embedded or not), visit the <a href="docs/options/index.html">options</a> page.<br>
+For system API calls that might affect your decision for using Omni in an embedded environment, see the <a href="docs/api.html">API's</a> page.<br>
+<br>
+Please note that the Omni library is an object oriented library; one of its priorities is to ensure as small a
+footprint as feasible. That being said the Omni library can still be heavy in certain classes simply due
+to object composition and inheritance. To this affect, there is the <a href="docs/options/omni_lite.html" class="code">OMNI_LITE</a> 
+preprocessor define (<a href="docs/options/index.html">among others</a>) that can help slim down the library considerably, albeit at the cost of reduced
+functionality in certain areas. Depending on your needs, reduced functionality may not actually inhibit your ability to take
+full advantage of the Omni library; visiting the specific help page from the <a href="docs/classes/index.html">classes</a> portal
+will give more information and other considerations to be taken.<br>
+<a class="toppg" href="#topopage">top</a><br><br>
+
+<a name="future_support"></a><font class="hdr">Future support</font><br>
+When Omni was started, the C++11 standard had not be fully defined. The 
+<a href="docs/classes/omni@@smart_ptr.html" class="code">omni::smart_ptr</a> is similar in function to the
+C++11 <code>std::unique_ptr</code> and the <a href="docs/classes/omni@@sync@@thread.html" class="code">omni::sync::thread</a> object
+could also make use of the <code>std::thread</code>, but because not all compilers and platforms support the new
+extensions, Omni can be compiled with C++11 support by specifying the 
+<a href="docs/options/omni_enable_cxx.html" class="code">OMNI_ENABLE_CXX</a> preprocessor flag.
+This flag enables certain language extensions to be used in the Omni library instead of system specific API calls
+as well it changes certain portions of code to handle the new extensions (like the `<code>= delete</code>` function modifier).<br>
+<br>
+The additional C++ specifications (14/17/20+) further extend/amend the C++11 standard, as such Omni aims to be a 
+statically fluid library by allowing users to take advantage of the new C++ features if their compilers support it
+via compile time flags. We chose to have a user specifically enable C++XX future support because the needs of everyone are 
+different, and sometimes <i>upgrade your compiler/library</i> is not an answer; we want Omni to work for the developer, 
+not the developer to work for Omni.<br>
+<br>
+It should be noted that only the functionality of the additional specifications that make sense to use in the library 
+will be added via the compile times flags; like template extensions for certain portions of the code to make it easier
+to utilize by the user. We will not add C++XX functionality to any internal code unless it can add a sufficient performance 
+improvement; for example, while adding lambda's might make some portions of the internal function code easier to read, 
+it does not improve the performance of said code.<br>
+<br>
+For specifics on the classes and examples on how to utilize the library, you can check out the
+individual <a href="docs/classes/index.html">class</a> sections as well as the 
+<a href="docs/examples/index.html">examples</a> section.<br><br>
+If you have questions, comments or concerns about the library or would like a further breakdown of a specific aspect
+please feel free to contact the <a href="mailto:omniqa@zeriph.com">Omni Q&amp;A email</a><br>
+<a class="toppg" href="#topopage">top</a><br><br>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

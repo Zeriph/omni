@@ -23,7 +23,7 @@
 #include <omni/delegate/1.hpp>
 #include <omni/argparser.hpp>
 #include <omni/exception.hpp>
-#include <omni/sync/threadpool.hpp> // #include <omni/thread.hpp>
+#include <omni/sync/threadpool.hpp>
 #include <string>
 #include <csignal>
 
@@ -43,7 +43,7 @@ namespace omni {
      * program completion.
      * 
      * @attention Certain functions within the @c application namespace make use
-     * of different platform specific API's; make sure to take note of any details in this
+     * of different platform specific APIs; make sure to take note of any details in this
      * section when targeting specific platforms if things are not as expected.
      */ 
     namespace application {
@@ -70,7 +70,7 @@ namespace omni {
          * which can handle other signals as well (such as the @c CTRL_LOGOFF_EVENT
          * or @c CTRL_SHUTDOWN_EVENT).
          * 
-         * @note Since the signals can be raised on different threads, it's important
+         * @note Since the signals can be raised on different threads, it is important
          * to take care of any multi-threaded issues that might arise when using any
          * of the signal handlers.
          */
@@ -92,7 +92,7 @@ namespace omni {
              * @details Attaching to the application signal handler will allow you to
              * listen for signals sent by the system. These can be signals like
              * @c SIGABRT, @c SIGSEGV, or @c SIGINT,
-             * but can also be user signals sent via the system's signal command
+             * but can also be user signals sent via the systems signal command
              * (some platforms can issue specific signals). When a delegate is attached
              * it will be invoked in the order it was attached.
              *
@@ -108,7 +108,7 @@ namespace omni {
              * control handler, which can handle other signals as well (such as the
              * @c CTRL_LOGOFF_EVENT or @c CTRL_SHUTDOWN_EVENT).
              * 
-             * @note Since the signals can be raised on different threads, it's important
+             * @note Since the signals can be raised on different threads, it is important
              * to take care of any multi-threaded issues that might arise when using any
              * of the signal handlers. Ensure the functions are re-entrant.
              * 
@@ -149,7 +149,7 @@ namespace omni {
              * called one of the omni::application::run functions to block the main
              * thread until program completion.
              * 
-             * @note Since the signals can be raised on different threads, it's important
+             * @note Since the signals can be raised on different threads, it is important
              * to take care of any multi-threaded issues that might arise when using any
              * of the signal handlers.
              * 
@@ -187,7 +187,7 @@ namespace omni {
              * the delegate will be invoked before the application terminates in the
              * order it was attached. 
              * 
-             * A static framework function is registered to the std::atexit library function 
+             * A static library function is registered to the std::atexit library function 
              * when omni::application::run is called; this underlying function is responsible
              * for invoking any delegates attached to the exit event handler in the order they
              * were attached.
@@ -462,7 +462,7 @@ namespace omni {
         omni::application::argparser& args();
         
         /**
-         * @brief Gets the current application's bit width (i.e. 32 or 64 bit)
+         * @brief Gets the current applications bit width (i.e. 32/64-bit)
          * 
          * @details Gets the current application context bit width by retrieving
          * the size of a pointer and multiplying by CHAR_BIT; returns the following
@@ -521,370 +521,672 @@ namespace omni {
         int last_signal();
         
         /**
-         * @brief          Brief description.
+         * @brief Starts the main application thread loop.
          * 
-         * @details        A more detailed description of the function.
+         * @details This function is part of the application framework that allows you to
+         * hook in to certain system level functionality, as well as have access to other
+         * long running application contexts. This function will pause the main application
+         * until one of either omni::application::exit or omni::application::stop are called,
+         * or an exception is thrown and not caught. Along with the other variants of the
+         * run function, you can simplify argument and main program loop handling for global
+         * and multi-threaded environments in a more simplified way.
          * 
-         * @return         [optional] A return value if any.
+         * @return The exit code set by omni::application::set_return_code, or 0 if none is set.
          * 
-         * @param [name]   [optional] Each parameter should be marked with this.
-         * @tparam [name]  [optional] Each template parameter should be marked with this.
+         * @exception Since run need only be called once, if it is called again after being called
+         * at program start, it will throw an omni::exceptions::invalid_application_state as calling
+         * run more than once will cause the system to get into an undefined state.
          * 
-         * @exception      [optional] Any errors (or error conditions) specific to this context.
+         * @warning You cannot utilize the signal or application handlers unless this or one of its
+         * variants are called in the main function of your code or library initialization routine.
          * 
-         * @warning        [optional] Any extra considerations to be aware of.
-         * 
-         * @attention      [optional] Any platform specific notes.
-         * 
-         * @note           [optional] Any notes to be aware of (like system calls, order of operations, etc.).
-         * 
-         * @invariant      [optional] This is the complexity of this function (e.g. O(1) for X conditions, etc.)
+         * @note If OMNI_NO_BASE_SETLOCALE is not defined, then the setlocale function is called
+         * with a category LC_ALL and an empty locale. If you wish to specify which category and
+         * locale to utilize, you can define OMNI_BASE_LOCALE_CATEGORY and OMNI_BASE_LOCALE
          */
         int run();
-        
+
         /**
-         * @brief          Brief description.
+         * @brief Starts the main application thread loop.
          * 
-         * @details        A more detailed description of the function.
+         * @details This function is part of the application framework that allows you to
+         * hook in to certain system level functionality, as well as have access to other
+         * long running application contexts. This function will pause the main application
+         * until one of either omni::application::exit or omni::application::stop are called,
+         * or an exception is thrown and not caught. Along with the other variants of the
+         * run function, you can simplify argument and main program loop handling for global
+         * and multi-threaded environments in a more simplified way.
          * 
-         * @return         [optional] A return value if any.
+         * @return The exit code set by omni::application::set_return_code, or 0 if none is set.
          * 
-         * @param [name]   [optional] Each parameter should be marked with this.
-         * @tparam [name]  [optional] Each template parameter should be marked with this.
+         * @exception Since run need only be called once, if it is called again after being called
+         * at program start, it will throw an omni::exceptions::invalid_application_state as calling
+         * run more than once will cause the system to get into an undefined state.
          * 
-         * @exception      [optional] Any errors (or error conditions) specific to this context.
+         * @warning You cannot utilize the signal or application handlers unless this or one of its
+         * variants are called in the main function of your code or library initialization routine.
          * 
-         * @warning        [optional] Any extra considerations to be aware of.
+         * @note If OMNI_NO_BASE_SETLOCALE is not defined, then the setlocale function is called
+         * with a category LC_ALL and an empty locale. If you wish to specify which category and
+         * locale to utilize, you can define OMNI_BASE_LOCALE_CATEGORY and OMNI_BASE_LOCALE
          * 
-         * @attention      [optional] Any platform specific notes.
-         * 
-         * @note           [optional] Any notes to be aware of (like system calls, order of operations, etc.).
-         * 
-         * @invariant      [optional] This is the complexity of this function (e.g. O(1) for X conditions, etc.)
-         */
-        int run(const omni::sync::parameterized_thread_start& start_func);
-        
-        /**
-         * @brief          Brief description.
-         * 
-         * @details        A more detailed description of the function.
-         * 
-         * @return         [optional] A return value if any.
-         * 
-         * @param [name]   [optional] Each parameter should be marked with this.
-         * @tparam [name]  [optional] Each template parameter should be marked with this.
-         * 
-         * @exception      [optional] Any errors (or error conditions) specific to this context.
-         * 
-         * @warning        [optional] Any extra considerations to be aware of.
-         * 
-         * @attention      [optional] Any platform specific notes.
-         * 
-         * @note           [optional] Any notes to be aware of (like system calls, order of operations, etc.).
-         * 
-         * @invariant      [optional] This is the complexity of this function (e.g. O(1) for X conditions, etc.)
-         */
-        int run(const omni::sync::parameterized_thread_start& start_func, omni::generic_ptr targs);
-        
-        /**
-         * @brief          Brief description.
-         * 
-         * @details        A more detailed description of the function.
-         * 
-         * @return         [optional] A return value if any.
-         * 
-         * @exception      [optional] Any exceptions that are thrown.
-         * 
-         * @warning        [optional] Any warnings to be aware of (like framework options, etc.).
-         * 
-         * @attention      [optional] Any platform specific notes.
-         * 
-         * @note           [optional] Any notes to be aware of (like system calls, order of operations, etc.).
-         * 
-         * @param [name]   [optional] Each parameter should be marked with this.
-         * @tparam [name]  [optional] Each template parameter should be marked with this.
-         */
-        int run(const omni::sync::parameterized_thread_start& start_func, omni::generic_ptr targs, bool exit_with_work_thread);
-        
-        /**
-         * @brief          Brief description.
-         * 
-         * @details        A more detailed description of the function.
-         * 
-         * @return         [optional] A return value if any.
-         * 
-         * @exception      [optional] Any exceptions that are thrown.
-         * 
-         * @warning        [optional] Any warnings to be aware of (like framework options, etc.).
-         * 
-         * @attention      [optional] Any platform specific notes.
-         * 
-         * @note           [optional] Any notes to be aware of (like system calls, order of operations, etc.).
-         * 
-         * @param [name]   [optional] Each parameter should be marked with this.
-         * @tparam [name]  [optional] Each template parameter should be marked with this.
-         */
-        int run(const omni::sync::parameterized_thread_start& start_func, omni::generic_ptr targs, bool exit_with_work_thread, bool kill_worker_on_signal);
-        
-        /**
-         * @brief          Brief description.
-         * 
-         * @details        A more detailed description of the function.
-         * 
-         * @return         [optional] A return value if any.
-         * 
-         * @exception      [optional] Any exceptions that are thrown.
-         * 
-         * @warning        [optional] Any warnings to be aware of (like framework options, etc.).
-         * 
-         * @attention      [optional] Any platform specific notes.
-         * 
-         * @note           [optional] Any notes to be aware of (like system calls, order of operations, etc.).
-         * 
-         * @param [name]   [optional] Each parameter should be marked with this.
-         * @tparam [name]  [optional] Each template parameter should be marked with this.
+         * @param argc                      Passes the argument count from the command line to the
+         *                                  underlying omni::application::argparser instance.
+         * @param argv                      Passes the argument array from the command line to the
+         *                                  underlying omni::application::argparser instance.
          */
         int run(const int& argc, const char** argv);
-        
+
         /**
-         * @brief          Brief description.
+         * @brief Starts the main application thread loop.
          * 
-         * @details        A more detailed description of the function.
+         * @details This function is part of the application framework that allows you to
+         * hook in to certain system level functionality, as well as have access to other
+         * long running application contexts. This function will pause the main application
+         * until one of either omni::application::exit or omni::application::stop are called,
+         * or an exception is thrown and not caught. Along with the other variants of the
+         * run function, you can simplify argument and main program loop handling for global
+         * and multi-threaded environments in a more simplified way.
          * 
-         * @return         [optional] A return value if any.
+         * @return The exit code set by omni::application::set_return_code, or 0 if none is set.
          * 
-         * @exception      [optional] Any exceptions that are thrown.
+         * @exception Since run need only be called once, if it is called again after being called
+         * at program start, it will throw an omni::exceptions::invalid_application_state as calling
+         * run more than once will cause the system to get into an undefined state.
          * 
-         * @warning        [optional] Any warnings to be aware of (like framework options, etc.).
+         * @warning You cannot utilize the signal or application handlers unless this or one of its
+         * variants are called in the main function of your code or library initialization routine.
          * 
-         * @attention      [optional] Any platform specific notes.
+         * @note If OMNI_NO_BASE_SETLOCALE is not defined, then the setlocale function is called
+         * with a category LC_ALL and an empty locale. If you wish to specify which category and
+         * locale to utilize, you can define OMNI_BASE_LOCALE_CATEGORY and OMNI_BASE_LOCALE
          * 
-         * @note           [optional] Any notes to be aware of (like system calls, order of operations, etc.).
-         * 
-         * @param [name]   [optional] Each parameter should be marked with this.
-         * @tparam [name]  [optional] Each template parameter should be marked with this.
-         */
-        int run(const int& argc, const char** argv, const omni::sync::parameterized_thread_start& start_func, omni::generic_ptr targs, bool exit_with_work_thread);
-        
-        /**
-         * @brief          Brief description.
-         * 
-         * @details        A more detailed description of the function.
-         * 
-         * @return         [optional] A return value if any.
-         * 
-         * @exception      [optional] Any exceptions that are thrown.
-         * 
-         * @warning        [optional] Any warnings to be aware of (like framework options, etc.).
-         * 
-         * @attention      [optional] Any platform specific notes.
-         * 
-         * @note           [optional] Any notes to be aware of (like system calls, order of operations, etc.).
-         * 
-         * @param [name]   [optional] Each parameter should be marked with this.
-         * @tparam [name]  [optional] Each template parameter should be marked with this.
-         */
-        int run(const int& argc, const char** argv, const omni::sync::parameterized_thread_start& start_func, omni::generic_ptr targs, bool exit_with_work_thread, bool kill_worker_on_signal);
-        
-        /**
-         * @brief          Brief description.
-         * 
-         * @details        A more detailed description of the function.
-         * 
-         * @return         [optional] A return value if any.
-         * 
-         * @exception      [optional] Any exceptions that are thrown.
-         * 
-         * @warning        [optional] Any warnings to be aware of (like framework options, etc.).
-         * 
-         * @attention      [optional] Any platform specific notes.
-         * 
-         * @note           [optional] Any notes to be aware of (like system calls, order of operations, etc.).
-         * 
-         * @param [name]   [optional] Each parameter should be marked with this.
-         * @tparam [name]  [optional] Each template parameter should be marked with this.
+         * @param argc                      Passes the argument count from the command line to the
+         *                                  underlying omni::application::argparser instance.
+         * @param argv                      Passes the argument array from the command line to the
+         *                                  underlying omni::application::argparser instance.
          */
         int run(const int& argc, const wchar_t** argv);
         
         /**
-         * @brief          Brief description.
+         * @brief Starts the main application thread loop.
          * 
-         * @details        A more detailed description of the function.
+         * @details This function is part of the application framework that allows you to
+         * hook in to certain system level functionality, as well as have access to other
+         * long running application contexts. This function will pause the main application
+         * until one of either omni::application::exit or omni::application::stop are called,
+         * or an exception is thrown and not caught. Along with the other variants of the
+         * run function, you can simplify argument and main program loop handling for global
+         * and multi-threaded environments in a more simplified way.
          * 
-         * @return         [optional] A return value if any.
+         * @return The exit code set by omni::application::set_return_code, or 0 if none is set.
          * 
-         * @exception      [optional] Any exceptions that are thrown.
+         * @exception Since run need only be called once, if it is called again after being called
+         * at program start, it will throw an omni::exceptions::invalid_application_state as calling
+         * run more than once will cause the system to get into an undefined state.
          * 
-         * @warning        [optional] Any warnings to be aware of (like framework options, etc.).
+         * @warning You cannot utilize the signal or application handlers unless this or one of its
+         * variants are called in the main function of your code or library initialization routine.
          * 
-         * @attention      [optional] Any platform specific notes.
+         * @note If OMNI_NO_BASE_SETLOCALE is not defined, then the setlocale function is called
+         * with a category LC_ALL and an empty locale. If you wish to specify which category and
+         * locale to utilize, you can define OMNI_BASE_LOCALE_CATEGORY and OMNI_BASE_LOCALE
          * 
-         * @note           [optional] Any notes to be aware of (like system calls, order of operations, etc.).
-         * 
-         * @param [name]   [optional] Each parameter should be marked with this.
-         * @tparam [name]  [optional] Each template parameter should be marked with this.
+         * @param start_func                An omni::sync::thread_start function object
+         *                                  that will be called after the application context has been
+         *                                  successfully created and started.
          */
-        int run(const int& argc, const wchar_t** argv, const omni::sync::parameterized_thread_start& start_func, omni::generic_ptr targs, bool exit_with_work_thread);
+        int run(const omni::sync::thread_start& start_func);
         
         /**
-         * @brief          Brief description.
+         * @brief Starts the main application thread loop.
          * 
-         * @details        A more detailed description of the function.
+         * @details This function is part of the application framework that allows you to
+         * hook in to certain system level functionality, as well as have access to other
+         * long running application contexts. This function will pause the main application
+         * until one of either omni::application::exit or omni::application::stop are called,
+         * or an exception is thrown and not caught. Along with the other variants of the
+         * run function, you can simplify argument and main program loop handling for global
+         * and multi-threaded environments in a more simplified way.
          * 
-         * @return         [optional] A return value if any.
+         * @return The exit code set by omni::application::set_return_code, or 0 if none is set.
          * 
-         * @exception      [optional] Any exceptions that are thrown.
+         * @exception Since run need only be called once, if it is called again after being called
+         * at program start, it will throw an omni::exceptions::invalid_application_state as calling
+         * run more than once will cause the system to get into an undefined state.
          * 
-         * @warning        [optional] Any warnings to be aware of (like framework options, etc.).
+         * @warning You cannot utilize the signal or application handlers unless this or one of its
+         * variants are called in the main function of your code or library initialization routine.
          * 
-         * @attention      [optional] Any platform specific notes.
+         * @note If OMNI_NO_BASE_SETLOCALE is not defined, then the setlocale function is called
+         * with a category LC_ALL and an empty locale. If you wish to specify which category and
+         * locale to utilize, you can define OMNI_BASE_LOCALE_CATEGORY and OMNI_BASE_LOCALE
          * 
-         * @note           [optional] Any notes to be aware of (like system calls, order of operations, etc.).
-         * 
-         * @param [name]   [optional] Each parameter should be marked with this.
-         * @tparam [name]  [optional] Each template parameter should be marked with this.
-         */
-        int run(const int& argc, const wchar_t** argv, const omni::sync::parameterized_thread_start& start_func, omni::generic_ptr targs, bool exit_with_work_thread, bool kill_worker_on_signal);
-        
-        /**
-         * @brief          Brief description.
-         * 
-         * @details        A more detailed description of the function.
-         * 
-         * @return         [optional] A return value if any.
-         * 
-         * @exception      [optional] Any exceptions that are thrown.
-         * 
-         * @warning        [optional] Any warnings to be aware of (like framework options, etc.).
-         * 
-         * @attention      [optional] Any platform specific notes.
-         * 
-         * @note           [optional] Any notes to be aware of (like system calls, order of operations, etc.).
-         * 
-         * @param [name]   [optional] Each parameter should be marked with this.
-         * @tparam [name]  [optional] Each template parameter should be marked with this.
-         */
-        int run(const int& argc, const char** argv, const omni::sync::thread_start& start_func, bool exit_with_work_thread);
-        
-        /**
-         * @brief          Brief description.
-         * 
-         * @details        A more detailed description of the function.
-         * 
-         * @return         [optional] A return value if any.
-         * 
-         * @exception      [optional] Any exceptions that are thrown.
-         * 
-         * @warning        [optional] Any warnings to be aware of (like framework options, etc.).
-         * 
-         * @attention      [optional] Any platform specific notes.
-         * 
-         * @note           [optional] Any notes to be aware of (like system calls, order of operations, etc.).
-         * 
-         * @param [name]   [optional] Each parameter should be marked with this.
-         * @tparam [name]  [optional] Each template parameter should be marked with this.
-         */
-        int run(const int& argc, const char** argv, const omni::sync::thread_start& start_func, bool exit_with_work_thread, bool kill_worker_on_signal);
-        
-        /**
-         * @brief          Brief description.
-         * 
-         * @details        A more detailed description of the function.
-         * 
-         * @return         [optional] A return value if any.
-         * 
-         * @exception      [optional] Any exceptions that are thrown.
-         * 
-         * @warning        [optional] Any warnings to be aware of (like framework options, etc.).
-         * 
-         * @attention      [optional] Any platform specific notes.
-         * 
-         * @note           [optional] Any notes to be aware of (like system calls, order of operations, etc.).
-         * 
-         * @param [name]   [optional] Each parameter should be marked with this.
-         * @tparam [name]  [optional] Each template parameter should be marked with this.
-         */
-        int run(const int& argc, const wchar_t** argv, const omni::sync::thread_start& start_func, bool exit_with_work_thread);
-        
-        /**
-         * @brief          Brief description.
-         * 
-         * @details        A more detailed description of the function.
-         * 
-         * @return         [optional] A return value if any.
-         * 
-         * @exception      [optional] Any exceptions that are thrown.
-         * 
-         * @warning        [optional] Any warnings to be aware of (like framework options, etc.).
-         * 
-         * @attention      [optional] Any platform specific notes.
-         * 
-         * @note           [optional] Any notes to be aware of (like system calls, order of operations, etc.).
-         * 
-         * @param [name]   [optional] Each parameter should be marked with this.
-         * @tparam [name]  [optional] Each template parameter should be marked with this.
-         */
-        int run(const int& argc, const wchar_t** argv, const omni::sync::thread_start& start_func, bool exit_with_work_thread, bool kill_worker_on_signal);
-        
-        /**
-         * @brief          Brief description.
-         * 
-         * @details        A more detailed description of the function.
-         * 
-         * @return         [optional] A return value if any.
-         * 
-         * @exception      [optional] Any exceptions that are thrown.
-         * 
-         * @warning        [optional] Any warnings to be aware of (like framework options, etc.).
-         * 
-         * @attention      [optional] Any platform specific notes.
-         * 
-         * @note           [optional] Any notes to be aware of (like system calls, order of operations, etc.).
-         * 
-         * @param [name]   [optional] Each parameter should be marked with this.
-         * @tparam [name]  [optional] Each template parameter should be marked with this.
+         * @param start_func                An omni::sync::thread_start function object
+         *                                  that will be called after the application context has been
+         *                                  successfully created and started.
+         * @param exit_with_work_thread     If this is @c true then the main application loop will exit
+         *                                  when the user function passed in has completed. If this
+         *                                  is @c false then the main application loop will not exit until
+         *                                  it is signaled via the system (i.e. SIGINT, etc.), or until
+         *                                  omni::application::exit or omni::application::stop are called.
          */
         int run(const omni::sync::thread_start& start_func, bool exit_with_work_thread);
         
         /**
-         * @brief          Brief description.
+         * @brief Starts the main application thread loop.
          * 
-         * @details        A more detailed description of the function.
+         * @details This function is part of the application framework that allows you to
+         * hook in to certain system level functionality, as well as have access to other
+         * long running application contexts. This function will pause the main application
+         * until one of either omni::application::exit or omni::application::stop are called,
+         * or an exception is thrown and not caught. Along with the other variants of the
+         * run function, you can simplify argument and main program loop handling for global
+         * and multi-threaded environments in a more simplified way.
          * 
-         * @return         [optional] A return value if any.
+         * @return The exit code set by omni::application::set_return_code, or 0 if none is set.
          * 
-         * @exception      [optional] Any exceptions that are thrown.
+         * @exception Since run need only be called once, if it is called again after being called
+         * at program start, it will throw an omni::exceptions::invalid_application_state as calling
+         * run more than once will cause the system to get into an undefined state.
          * 
-         * @warning        [optional] Any warnings to be aware of (like framework options, etc.).
+         * @warning You cannot utilize the signal or application handlers unless this or one of its
+         * variants are called in the main function of your code or library initialization routine.
          * 
-         * @attention      [optional] Any platform specific notes.
+         * @note If OMNI_NO_BASE_SETLOCALE is not defined, then the setlocale function is called
+         * with a category LC_ALL and an empty locale. If you wish to specify which category and
+         * locale to utilize, you can define OMNI_BASE_LOCALE_CATEGORY and OMNI_BASE_LOCALE
          * 
-         * @note           [optional] Any notes to be aware of (like system calls, order of operations, etc.).
-         * 
-         * @param [name]   [optional] Each parameter should be marked with this.
-         * @tparam [name]  [optional] Each template parameter should be marked with this.
+         * @param start_func                An omni::sync::thread_start function object
+         *                                  that will be called after the application context has been
+         *                                  successfully created and started.
+         * @param exit_with_work_thread     If this is @c true then the main application loop will exit
+         *                                  when the user function passed in has completed. If this
+         *                                  is @c false then the main application loop will not exit until
+         *                                  it is signaled via the system (i.e. SIGINT, etc.), or until
+         *                                  omni::application::exit or omni::application::stop are called.
+         * @param kill_worker_on_signal     If this is @c true and the background application thread is
+         *                                  still active when a signal is received, it is forcefully
+         *                                  killed. If this happens, the application will be in an
+         *                                  undefined state as forcefully killing a thread is not
+         *                                  guaranteed to stop the thread.
          */
         int run(const omni::sync::thread_start& start_func, bool exit_with_work_thread, bool kill_worker_on_signal);
+
+        /**
+         * @brief Starts the main application thread loop.
+         * 
+         * @details This function is part of the application framework that allows you to
+         * hook in to certain system level functionality, as well as have access to other
+         * long running application contexts. This function will pause the main application
+         * until one of either omni::application::exit or omni::application::stop are called,
+         * or an exception is thrown and not caught. Along with the other variants of the
+         * run function, you can simplify argument and main program loop handling for global
+         * and multi-threaded environments in a more simplified way.
+         * 
+         * @return The exit code set by omni::application::set_return_code, or 0 if none is set.
+         * 
+         * @exception Since run need only be called once, if it is called again after being called
+         * at program start, it will throw an omni::exceptions::invalid_application_state as calling
+         * run more than once will cause the system to get into an undefined state.
+         * 
+         * @warning You cannot utilize the signal or application handlers unless this or one of its
+         * variants are called in the main function of your code or library initialization routine.
+         * 
+         * @note If OMNI_NO_BASE_SETLOCALE is not defined, then the setlocale function is called
+         * with a category LC_ALL and an empty locale. If you wish to specify which category and
+         * locale to utilize, you can define OMNI_BASE_LOCALE_CATEGORY and OMNI_BASE_LOCALE
+         * 
+         * @param argc                      Passes the argument count from the command line to the
+         *                                  underlying omni::application::argparser instance.
+         * @param argv                      Passes the argument array from the command line to the
+         *                                  underlying omni::application::argparser instance.
+         * @param start_func                An omni::sync::thread_start function object
+         *                                  that will be called after the application context has been
+         *                                  successfully created and started.
+         * @param exit_with_work_thread     If this is @c true then the main application loop will exit
+         *                                  when the user function passed in has completed. If this
+         *                                  is @c false then the main application loop will not exit until
+         *                                  it is signaled via the system (i.e. SIGINT, etc.), or until
+         *                                  omni::application::exit or omni::application::stop are called.
+         */
+        int run(const int& argc, const char** argv, const omni::sync::thread_start& start_func, bool exit_with_work_thread);
         
         /**
-         * @brief Spawn a background thread and does not return until it was completed.
+         * @brief Starts the main application thread loop.
          * 
-         * @details        A more detailed description of the function.
+         * @details This function is part of the application framework that allows you to
+         * hook in to certain system level functionality, as well as have access to other
+         * long running application contexts. This function will pause the main application
+         * until one of either omni::application::exit or omni::application::stop are called,
+         * or an exception is thrown and not caught. Along with the other variants of the
+         * run function, you can simplify argument and main program loop handling for global
+         * and multi-threaded environments in a more simplified way.
          * 
-         * @return         [optional] A return value if any.
+         * @return The exit code set by omni::application::set_return_code, or 0 if none is set.
          * 
-         * @exception      [optional] Any exceptions that are thrown.
+         * @exception Since run need only be called once, if it is called again after being called
+         * at program start, it will throw an omni::exceptions::invalid_application_state as calling
+         * run more than once will cause the system to get into an undefined state.
          * 
-         * @warning        [optional] Any warnings to be aware of (like framework options, etc.).
+         * @warning You cannot utilize the signal or application handlers unless this or one of its
+         * variants are called in the main function of your code or library initialization routine.
          * 
-         * @attention      [optional] Any platform specific notes.
+         * @note If OMNI_NO_BASE_SETLOCALE is not defined, then the setlocale function is called
+         * with a category LC_ALL and an empty locale. If you wish to specify which category and
+         * locale to utilize, you can define OMNI_BASE_LOCALE_CATEGORY and OMNI_BASE_LOCALE
          * 
-         * @note           [optional] Any notes to be aware of (like system calls, order of operations, etc.).
-         * 
-         * @param [name]   [optional] Each parameter should be marked with this.
-         * @tparam [name]  [optional] Each template parameter should be marked with this.
+         * @param argc                      Passes the argument count from the command line to the
+         *                                  underlying omni::application::argparser instance.
+         * @param argv                      Passes the argument array from the command line to the
+         *                                  underlying omni::application::argparser instance.
+         * @param start_func                An omni::sync::thread_start function object
+         *                                  that will be called after the application context has been
+         *                                  successfully created and started.
+         * @param exit_with_work_thread     If this is @c true then the main application loop will exit
+         *                                  when the user function passed in has completed. If this
+         *                                  is @c false then the main application loop will not exit until
+         *                                  it is signaled via the system (i.e. SIGINT, etc.), or until
+         *                                  omni::application::exit or omni::application::stop are called.
+         * @param kill_worker_on_signal     If this is @c true and the background application thread is
+         *                                  still active when a signal is received, it is forcefully
+         *                                  killed. If this happens, the application will be in an
+         *                                  undefined state as forcefully killing a thread is not
+         *                                  guaranteed to stop the thread.
          */
-        int run(const omni::sync::thread_start& start_func);
+        int run(const int& argc, const char** argv, const omni::sync::thread_start& start_func, bool exit_with_work_thread, bool kill_worker_on_signal);
+        
+        /**
+         * @brief Starts the main application thread loop.
+         * 
+         * @details This function is part of the application framework that allows you to
+         * hook in to certain system level functionality, as well as have access to other
+         * long running application contexts. This function will pause the main application
+         * until one of either omni::application::exit or omni::application::stop are called,
+         * or an exception is thrown and not caught. Along with the other variants of the
+         * run function, you can simplify argument and main program loop handling for global
+         * and multi-threaded environments in a more simplified way.
+         * 
+         * @return The exit code set by omni::application::set_return_code, or 0 if none is set.
+         * 
+         * @exception Since run need only be called once, if it is called again after being called
+         * at program start, it will throw an omni::exceptions::invalid_application_state as calling
+         * run more than once will cause the system to get into an undefined state.
+         * 
+         * @warning You cannot utilize the signal or application handlers unless this or one of its
+         * variants are called in the main function of your code or library initialization routine.
+         * 
+         * @note If OMNI_NO_BASE_SETLOCALE is not defined, then the setlocale function is called
+         * with a category LC_ALL and an empty locale. If you wish to specify which category and
+         * locale to utilize, you can define OMNI_BASE_LOCALE_CATEGORY and OMNI_BASE_LOCALE
+         * 
+         * @param argc                      Passes the argument count from the command line to the
+         *                                  underlying omni::application::argparser instance.
+         * @param argv                      Passes the argument array from the command line to the
+         *                                  underlying omni::application::argparser instance.
+         * @param start_func                An omni::sync::thread_start function object
+         *                                  that will be called after the application context has been
+         *                                  successfully created and started.
+         * @param exit_with_work_thread     If this is @c true then the main application loop will exit
+         *                                  when the user function passed in has completed. If this
+         *                                  is @c false then the main application loop will not exit until
+         *                                  it is signaled via the system (i.e. SIGINT, etc.), or until
+         *                                  omni::application::exit or omni::application::stop are called.
+         */
+        int run(const int& argc, const wchar_t** argv, const omni::sync::thread_start& start_func, bool exit_with_work_thread);
+        
+        /**
+         * @brief Starts the main application thread loop.
+         * 
+         * @details This function is part of the application framework that allows you to
+         * hook in to certain system level functionality, as well as have access to other
+         * long running application contexts. This function will pause the main application
+         * until one of either omni::application::exit or omni::application::stop are called,
+         * or an exception is thrown and not caught. Along with the other variants of the
+         * run function, you can simplify argument and main program loop handling for global
+         * and multi-threaded environments in a more simplified way.
+         * 
+         * @return The exit code set by omni::application::set_return_code, or 0 if none is set.
+         * 
+         * @exception Since run need only be called once, if it is called again after being called
+         * at program start, it will throw an omni::exceptions::invalid_application_state as calling
+         * run more than once will cause the system to get into an undefined state.
+         * 
+         * @warning You cannot utilize the signal or application handlers unless this or one of its
+         * variants are called in the main function of your code or library initialization routine.
+         * 
+         * @note If OMNI_NO_BASE_SETLOCALE is not defined, then the setlocale function is called
+         * with a category LC_ALL and an empty locale. If you wish to specify which category and
+         * locale to utilize, you can define OMNI_BASE_LOCALE_CATEGORY and OMNI_BASE_LOCALE
+         * 
+         * @param argc                      Passes the argument count from the command line to the
+         *                                  underlying omni::application::argparser instance.
+         * @param argv                      Passes the argument array from the command line to the
+         *                                  underlying omni::application::argparser instance.
+         * @param start_func                An omni::sync::thread_start function object
+         *                                  that will be called after the application context has been
+         *                                  successfully created and started.
+         * @param exit_with_work_thread     If this is @c true then the main application loop will exit
+         *                                  when the user function passed in has completed. If this
+         *                                  is @c false then the main application loop will not exit until
+         *                                  it is signaled via the system (i.e. SIGINT, etc.), or until
+         *                                  omni::application::exit or omni::application::stop are called.
+         * @param kill_worker_on_signal     If this is @c true and the background application thread is
+         *                                  still active when a signal is received, it is forcefully
+         *                                  killed. If this happens, the application will be in an
+         *                                  undefined state as forcefully killing a thread is not
+         *                                  guaranteed to stop the thread.
+         */
+        int run(const int& argc, const wchar_t** argv, const omni::sync::thread_start& start_func, bool exit_with_work_thread, bool kill_worker_on_signal);
+
+        /**
+         * @brief Starts the main application thread loop.
+         * 
+         * @details This function is part of the application framework that allows you to
+         * hook in to certain system level functionality, as well as have access to other
+         * long running application contexts. This function will pause the main application
+         * until one of either omni::application::exit or omni::application::stop are called,
+         * or an exception is thrown and not caught. Along with the other variants of the
+         * run function, you can simplify argument and main program loop handling for global
+         * and multi-threaded environments in a more simplified way.
+         * 
+         * @return The exit code set by omni::application::set_return_code, or 0 if none is set.
+         * 
+         * @exception Since run need only be called once, if it is called again after being called
+         * at program start, it will throw an omni::exceptions::invalid_application_state as calling
+         * run more than once will cause the system to get into an undefined state.
+         * 
+         * @warning You cannot utilize the signal or application handlers unless this or one of its
+         * variants are called in the main function of your code or library initialization routine.
+         * 
+         * @note If OMNI_NO_BASE_SETLOCALE is not defined, then the setlocale function is called
+         * with a category LC_ALL and an empty locale. If you wish to specify which category and
+         * locale to utilize, you can define OMNI_BASE_LOCALE_CATEGORY and OMNI_BASE_LOCALE
+         * 
+         * @param start_func                An omni::sync::parameterized_thread_start function object
+         *                                  that will be called after the application context has been
+         *                                  successfully created and started. A null value will be passed
+         *                                  to the start function on invocation.
+         */
+        int run(const omni::sync::parameterized_thread_start& start_func);
+        
+        /**
+         * @brief Starts the main application thread loop.
+         * 
+         * @details This function is part of the application framework that allows you to
+         * hook in to certain system level functionality, as well as have access to other
+         * long running application contexts. This function will pause the main application
+         * until one of either omni::application::exit or omni::application::stop are called,
+         * or an exception is thrown and not caught. Along with the other variants of the
+         * run function, you can simplify argument and main program loop handling for global
+         * and multi-threaded environments in a more simplified way.
+         * 
+         * @return The exit code set by omni::application::set_return_code, or 0 if none is set.
+         * 
+         * @exception Since run need only be called once, if it is called again after being called
+         * at program start, it will throw an omni::exceptions::invalid_application_state as calling
+         * run more than once will cause the system to get into an undefined state.
+         * 
+         * @warning You cannot utilize the signal or application handlers unless this or one of its
+         * variants are called in the main function of your code or library initialization routine.
+         * 
+         * @note If OMNI_NO_BASE_SETLOCALE is not defined, then the setlocale function is called
+         * with a category LC_ALL and an empty locale. If you wish to specify which category and
+         * locale to utilize, you can define OMNI_BASE_LOCALE_CATEGORY and OMNI_BASE_LOCALE
+         * 
+         * @param start_func                An omni::sync::parameterized_thread_start function object
+         *                                  that will be called after the application context has been
+         *                                  successfully created and started.
+         * @param targs                     The arguments to pass to the thread start function.
+         */
+        int run(const omni::sync::parameterized_thread_start& start_func, omni::generic_ptr targs);
+        
+        /**
+         * @brief Starts the main application thread loop.
+         * 
+         * @details This function is part of the application framework that allows you to
+         * hook in to certain system level functionality, as well as have access to other
+         * long running application contexts. This function will pause the main application
+         * until one of either omni::application::exit or omni::application::stop are called,
+         * or an exception is thrown and not caught. Along with the other variants of the
+         * run function, you can simplify argument and main program loop handling for global
+         * and multi-threaded environments in a more simplified way.
+         * 
+         * @return The exit code set by omni::application::set_return_code, or 0 if none is set.
+         * 
+         * @exception Since run need only be called once, if it is called again after being called
+         * at program start, it will throw an omni::exceptions::invalid_application_state as calling
+         * run more than once will cause the system to get into an undefined state.
+         * 
+         * @warning You cannot utilize the signal or application handlers unless this or one of its
+         * variants are called in the main function of your code or library initialization routine.
+         * 
+         * @note If OMNI_NO_BASE_SETLOCALE is not defined, then the setlocale function is called
+         * with a category LC_ALL and an empty locale. If you wish to specify which category and
+         * locale to utilize, you can define OMNI_BASE_LOCALE_CATEGORY and OMNI_BASE_LOCALE
+         * 
+         * @param start_func                An omni::sync::parameterized_thread_start function object
+         *                                  that will be called after the application context has been
+         *                                  successfully created and started.
+         * @param targs                     The arguments to pass to the thread start function.
+         * @param exit_with_work_thread     If this is @c true then the main application loop will exit
+         *                                  when the user function passed in has completed. If this
+         *                                  is @c false then the main application loop will not exit until
+         *                                  it is signaled via the system (i.e. SIGINT, etc.), or until
+         *                                  omni::application::exit or omni::application::stop are called.
+         */
+        int run(const omni::sync::parameterized_thread_start& start_func, omni::generic_ptr targs, bool exit_with_work_thread);
+        
+        /**
+         * @brief Starts the main application thread loop.
+         * 
+         * @details This function is part of the application framework that allows you to
+         * hook in to certain system level functionality, as well as have access to other
+         * long running application contexts. This function will pause the main application
+         * until one of either omni::application::exit or omni::application::stop are called,
+         * or an exception is thrown and not caught. Along with the other variants of the
+         * run function, you can simplify argument and main program loop handling for global
+         * and multi-threaded environments in a more simplified way.
+         * 
+         * @return The exit code set by omni::application::set_return_code, or 0 if none is set.
+         * 
+         * @exception Since run need only be called once, if it is called again after being called
+         * at program start, it will throw an omni::exceptions::invalid_application_state as calling
+         * run more than once will cause the system to get into an undefined state.
+         * 
+         * @warning You cannot utilize the signal or application handlers unless this or one of its
+         * variants are called in the main function of your code or library initialization routine.
+         * 
+         * @note If OMNI_NO_BASE_SETLOCALE is not defined, then the setlocale function is called
+         * with a category LC_ALL and an empty locale. If you wish to specify which category and
+         * locale to utilize, you can define OMNI_BASE_LOCALE_CATEGORY and OMNI_BASE_LOCALE
+         * 
+         * @param start_func                An omni::sync::parameterized_thread_start function object
+         *                                  that will be called after the application context has been
+         *                                  successfully created and started.
+         * @param targs                     The arguments to pass to the thread start function.
+         * @param exit_with_work_thread     If this is @c true then the main application loop will exit
+         *                                  when the user function passed in has completed. If this
+         *                                  is @c false then the main application loop will not exit until
+         *                                  it is signaled via the system (i.e. SIGINT, etc.), or until
+         *                                  omni::application::exit or omni::application::stop are called.
+         * @param kill_worker_on_signal     If this is @c true and the background application thread is
+         *                                  still active when a signal is received, it is forcefully
+         *                                  killed. If this happens, the application will be in an
+         *                                  undefined state as forcefully killing a thread is not
+         *                                  guaranteed to stop the thread.
+         */
+        int run(const omni::sync::parameterized_thread_start& start_func, omni::generic_ptr targs, bool exit_with_work_thread, bool kill_worker_on_signal);
+        
+        /**
+         * @brief Starts the main application thread loop.
+         * 
+         * @details This function is part of the application framework that allows you to
+         * hook in to certain system level functionality, as well as have access to other
+         * long running application contexts. This function will pause the main application
+         * until one of either omni::application::exit or omni::application::stop are called,
+         * or an exception is thrown and not caught. Along with the other variants of the
+         * run function, you can simplify argument and main program loop handling for global
+         * and multi-threaded environments in a more simplified way.
+         * 
+         * @return The exit code set by omni::application::set_return_code, or 0 if none is set.
+         * 
+         * @exception Since run need only be called once, if it is called again after being called
+         * at program start, it will throw an omni::exceptions::invalid_application_state as calling
+         * run more than once will cause the system to get into an undefined state.
+         * 
+         * @warning You cannot utilize the signal or application handlers unless this or one of its
+         * variants are called in the main function of your code or library initialization routine.
+         * 
+         * @note If OMNI_NO_BASE_SETLOCALE is not defined, then the setlocale function is called
+         * with a category LC_ALL and an empty locale. If you wish to specify which category and
+         * locale to utilize, you can define OMNI_BASE_LOCALE_CATEGORY and OMNI_BASE_LOCALE
+         * 
+         * @param argc                      Passes the argument count from the command line to the
+         *                                  underlying omni::application::argparser instance.
+         * @param argv                      Passes the argument array from the command line to the
+         *                                  underlying omni::application::argparser instance.
+         * @param start_func                An omni::sync::parameterized_thread_start function object
+         *                                  that will be called after the application context has been
+         *                                  successfully created and started.
+         * @param targs                     The arguments to pass to the thread start function.
+         * @param exit_with_work_thread     If this is @c true then the main application loop will exit
+         *                                  when the user function passed in has completed. If this
+         *                                  is @c false then the main application loop will not exit until
+         *                                  it is signaled via the system (i.e. SIGINT, etc.), or until
+         *                                  omni::application::exit or omni::application::stop are called.
+         */
+        int run(const int& argc, const char** argv, const omni::sync::parameterized_thread_start& start_func, omni::generic_ptr targs, bool exit_with_work_thread);
+        
+        /**
+         * @brief Starts the main application thread loop.
+         * 
+         * @details This function is part of the application framework that allows you to
+         * hook in to certain system level functionality, as well as have access to other
+         * long running application contexts. This function will pause the main application
+         * until one of either omni::application::exit or omni::application::stop are called,
+         * or an exception is thrown and not caught. Along with the other variants of the
+         * run function, you can simplify argument and main program loop handling for global
+         * and multi-threaded environments in a more simplified way.
+         * 
+         * @return The exit code set by omni::application::set_return_code, or 0 if none is set.
+         * 
+         * @exception Since run need only be called once, if it is called again after being called
+         * at program start, it will throw an omni::exceptions::invalid_application_state as calling
+         * run more than once will cause the system to get into an undefined state.
+         * 
+         * @warning You cannot utilize the signal or application handlers unless this or one of its
+         * variants are called in the main function of your code or library initialization routine.
+         * 
+         * @note If OMNI_NO_BASE_SETLOCALE is not defined, then the setlocale function is called
+         * with a category LC_ALL and an empty locale. If you wish to specify which category and
+         * locale to utilize, you can define OMNI_BASE_LOCALE_CATEGORY and OMNI_BASE_LOCALE
+         * 
+         * @param argc                      Passes the argument count from the command line to the
+         *                                  underlying omni::application::argparser instance.
+         * @param argv                      Passes the argument array from the command line to the
+         *                                  underlying omni::application::argparser instance.
+         * @param start_func                An omni::sync::parameterized_thread_start function object
+         *                                  that will be called after the application context has been
+         *                                  successfully created and started.
+         * @param targs                     The arguments to pass to the thread start function.
+         * @param exit_with_work_thread     If this is @c true then the main application loop will exit
+         *                                  when the user function passed in has completed. If this
+         *                                  is @c false then the main application loop will not exit until
+         *                                  it is signaled via the system (i.e. SIGINT, etc.), or until
+         *                                  omni::application::exit or omni::application::stop are called.
+         * @param kill_worker_on_signal     If this is @c true and the background application thread is
+         *                                  still active when a signal is received, it is forcefully
+         *                                  killed. If this happens, the application will be in an
+         *                                  undefined state as forcefully killing a thread is not
+         *                                  guaranteed to stop the thread.
+         */
+        int run(const int& argc, const char** argv, const omni::sync::parameterized_thread_start& start_func, omni::generic_ptr targs, bool exit_with_work_thread, bool kill_worker_on_signal);
+        
+        /**
+         * @brief Starts the main application thread loop.
+         * 
+         * @details This function is part of the application framework that allows you to
+         * hook in to certain system level functionality, as well as have access to other
+         * long running application contexts. This function will pause the main application
+         * until one of either omni::application::exit or omni::application::stop are called,
+         * or an exception is thrown and not caught. Along with the other variants of the
+         * run function, you can simplify argument and main program loop handling for global
+         * and multi-threaded environments in a more simplified way.
+         * 
+         * @return The exit code set by omni::application::set_return_code, or 0 if none is set.
+         * 
+         * @exception Since run need only be called once, if it is called again after being called
+         * at program start, it will throw an omni::exceptions::invalid_application_state as calling
+         * run more than once will cause the system to get into an undefined state.
+         * 
+         * @warning You cannot utilize the signal or application handlers unless this or one of its
+         * variants are called in the main function of your code or library initialization routine.
+         * 
+         * @note If OMNI_NO_BASE_SETLOCALE is not defined, then the setlocale function is called
+         * with a category LC_ALL and an empty locale. If you wish to specify which category and
+         * locale to utilize, you can define OMNI_BASE_LOCALE_CATEGORY and OMNI_BASE_LOCALE
+         * 
+         * @param argc                      Passes the argument count from the command line to the
+         *                                  underlying omni::application::argparser instance.
+         * @param argv                      Passes the argument array from the command line to the
+         *                                  underlying omni::application::argparser instance.
+         * @param start_func                An omni::sync::parameterized_thread_start function object
+         *                                  that will be called after the application context has been
+         *                                  successfully created and started.
+         * @param targs                     The arguments to pass to the thread start function.
+         * @param exit_with_work_thread     If this is @c true then the main application loop will exit
+         *                                  when the user function passed in has completed. If this
+         *                                  is @c false then the main application loop will not exit until
+         *                                  it is signaled via the system (i.e. SIGINT, etc.), or until
+         *                                  omni::application::exit or omni::application::stop are called.
+         */
+        int run(const int& argc, const wchar_t** argv, const omni::sync::parameterized_thread_start& start_func, omni::generic_ptr targs, bool exit_with_work_thread);
+        
+        /**
+         * @brief Starts the main application thread loop.
+         * 
+         * @details This function is part of the application framework that allows you to
+         * hook in to certain system level functionality, as well as have access to other
+         * long running application contexts. This function will pause the main application
+         * until one of either omni::application::exit or omni::application::stop are called,
+         * or an exception is thrown and not caught. Along with the other variants of the
+         * run function, you can simplify argument and main program loop handling for global
+         * and multi-threaded environments in a more simplified way.
+         * 
+         * @return The exit code set by omni::application::set_return_code, or 0 if none is set.
+         * 
+         * @exception Since run need only be called once, if it is called again after being called
+         * at program start, it will throw an omni::exceptions::invalid_application_state as calling
+         * run more than once will cause the system to get into an undefined state.
+         * 
+         * @warning You cannot utilize the signal or application handlers unless this or one of its
+         * variants are called in the main function of your code or library initialization routine.
+         * 
+         * @note If OMNI_NO_BASE_SETLOCALE is not defined, then the setlocale function is called
+         * with a category LC_ALL and an empty locale. If you wish to specify which category and
+         * locale to utilize, you can define OMNI_BASE_LOCALE_CATEGORY and OMNI_BASE_LOCALE
+         * 
+         * @param argc                      Passes the argument count from the command line to the
+         *                                  underlying omni::application::argparser instance.
+         * @param argv                      Passes the argument array from the command line to the
+         *                                  underlying omni::application::argparser instance.
+         * @param start_func                An omni::sync::parameterized_thread_start function object
+         *                                  that will be called after the application context has been
+         *                                  successfully created and started.
+         * @param targs                     The arguments to pass to the thread start function.
+         * @param exit_with_work_thread     If this is @c true then the main application loop will exit
+         *                                  when the user function passed in has completed. If this
+         *                                  is @c false then the main application loop will not exit until
+         *                                  it is signaled via the system (i.e. SIGINT, etc.), or until
+         *                                  omni::application::exit or omni::application::stop are called.
+         * @param kill_worker_on_signal     If this is @c true and the background application thread is
+         *                                  still active when a signal is received, it is forcefully
+         *                                  killed. If this happens, the application will be in an
+         *                                  undefined state as forcefully killing a thread is not
+         *                                  guaranteed to stop the thread.
+         */
+        int run(const int& argc, const wchar_t** argv, const omni::sync::parameterized_thread_start& start_func, omni::generic_ptr targs, bool exit_with_work_thread, bool kill_worker_on_signal);
         
         /**
          * @brief Sets the value returned from an omni::application::run function
@@ -923,7 +1225,7 @@ namespace omni {
          * @param argv  A pointer to the array of @c char arguments passed to 
          *              application via command line.
          */
-        void set_args(const int& argc, const char** argv);
+        void set_args(int argc, const char** argv);
         
         /**
          * @brief Sets the command line arguments passed in to
@@ -946,7 +1248,7 @@ namespace omni {
          * @param argv  A pointer to the array of @c wchar_t arguments
          *              passed to application via command line.
          */
-        void set_args(const int& argc, const wchar_t** argv);
+        void set_args(int argc, const wchar_t** argv);
         
         /**
          * @brief Exits the main application with a return value specified

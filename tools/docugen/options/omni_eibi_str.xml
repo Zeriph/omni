@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_EIBI_STR</Name>
+  <Brief>"Exbibyte"</Brief>
+  <Considerations>No special considerations
+</Considerations>
+  <Description>If not already defined, defines the framework constant of:
+@code
+"Exbibyte"
+@code
+</Description>
+  <Notes>None.
+</Notes>
+  <PlatformSpecific>No platform specific notes.
+</PlatformSpecific>
+  <Synopsis>Defines a framework constant of:
+@code
+"Exbibyte"
+@code
+</Synopsis>
+  <IsHelper>true</IsHelper>
+  <IsConstant>true</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
+</MacroOp>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_STRW</Name>
+  <Brief>A shortened form of the OMNI_STR_WIDEN macro.</Brief>
+  <Considerations>No special consideration.</Considerations>
+  <Description>None.</Description>
+  <Notes>None.</Notes>
+  <PlatformSpecific>No special consideration.</PlatformSpecific>
+  <Synopsis>A shortened form of the OMNI_STR_WIDEN macro.</Synopsis>
+  <IsHelper>true</IsHelper>
+  <IsConstant>false</IsConstant>
+</MacroOp>

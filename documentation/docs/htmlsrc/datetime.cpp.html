@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - date_time.cpp</title>
+<link rel="stylesheet" type="text/css" href="../../content/main.css" /><link rel="icon" type="image/png" href="../../content/favicon.png" />
+<script type="text/javascript" src="../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="index.html" class="current">Source</a></li><li title="Library classes and namespaces">
+<a href="../classes/index.html">Class Index</a></li><li title="Download and view examples">
+<a href="../examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="../options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../api.html">System API</a></li><li title="Other Considerations">
+<a href="../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle"><a href="../../files/src/date_time.cpp" onclick="return popup('../../files/src/date_time.cpp')">date_time.cpp</a></div><div class="content"><div>
+<code><div class="cpphtmllines">
+<!--start line numbers-->
+00001:<br><div id="cmntl1" name="cmntl1">00002:<br>00003:<br>00004:<br>00005:<br>00006:<br>00007:<br>00008:<br>00009:<br>000010:<br>000011:<br>000012:<br>000013:<br>000014:<br>000015:<br>000016:<br>000017:<br>000018:<br></div>000019:<br>
+000020:<br>000021:<br>000022:<br>000023:<br>000024:<br>000025:<br>000026:<br>000027:<br>000028:<br>000029:<br>000030:<br>000031:<br>000032:<br>000033:<br>000034:<br>000035:<br><div id="cmntl2" name="cmntl2">000036:<br>000037:<br>000038:<br>000039:<br>
+000040:<br>000041:<br>000042:<br>000043:<br>000044:<br>000045:<br>000046:<br>000047:<br>000048:<br>000049:<br>000050:<br>000051:<br>000052:<br>000053:<br>000054:<br>000055:<br>000056:<br>000057:<br>000058:<br>000059:<br>
+000060:<br>000061:<br>000062:<br>000063:<br>000064:<br>000065:<br>000066:<br>000067:<br>000068:<br>000069:<br>000070:<br>000071:<br>000072:<br>000073:<br>000074:<br>000075:<br>000076:<br>000077:<br>000078:<br>000079:<br>
+000080:<br>000081:<br>000082:<br>000083:<br>000084:<br>000085:<br>000086:<br>000087:<br>000088:<br>000089:<br>000090:<br>000091:<br>000092:<br>000093:<br>000094:<br>000095:<br>000096:<br>000097:<br>000098:<br>000099:<br>
+0000100:<br>0000101:<br>0000102:<br>0000103:<br>0000104:<br>0000105:<br>0000106:<br>0000107:<br>0000108:<br>0000109:<br>0000110:<br>0000111:<br>0000112:<br>0000113:<br>0000114:<br>0000115:<br>0000116:<br>0000117:<br>0000118:<br>0000119:<br>
+0000120:<br>0000121:<br>0000122:<br>0000123:<br>0000124:<br>0000125:<br>0000126:<br>0000127:<br>0000128:<br>0000129:<br>0000130:<br>0000131:<br>0000132:<br>0000133:<br>0000134:<br>0000135:<br>0000136:<br>0000137:<br>0000138:<br>0000139:<br>
+0000140:<br>0000141:<br>0000142:<br>0000143:<br>0000144:<br>0000145:<br>0000146:<br>0000147:<br>0000148:<br>0000149:<br>0000150:<br>0000151:<br>0000152:<br>0000153:<br>0000154:<br>0000155:<br>0000156:<br>0000157:<br>0000158:<br>0000159:<br>
+0000160:<br>0000161:<br>0000162:<br>0000163:<br>0000164:<br>0000165:<br>0000166:<br>0000167:<br>0000168:<br>0000169:<br>0000170:<br>0000171:<br>0000172:<br>0000173:<br>0000174:<br>0000175:<br>0000176:<br>0000177:<br>0000178:<br>0000179:<br>
+0000180:<br>0000181:<br>0000182:<br>0000183:<br>0000184:<br>0000185:<br>0000186:<br>0000187:<br>0000188:<br>0000189:<br>0000190:<br>0000191:<br></div>0000192:<br>
+<!--end line numbers-->
+</div><div class="cpphtmlcmnt">
+<!--start collapse columns-->
+<img src="../../content/tree/min.gif" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><img src="../../content/tree/min.gif" id="cmnti2" name="cmnti2" onclick="collapse('2', '../../');" /><br><div id="cmnts2" name="cmnts2"><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<!--end collapse columns-->
+</div><div class="cpphtml" style="margin-left:3.75em;">
+<!--start highlighted code-->
+<font class="syn_cmt">/*<div class="syn_ex" id="cmnt1" name="cmnt1">
+ * Copyright (c), Zeriph Enterprises<br>
+ * All rights reserved.<br>
+ * <br>
+ * Contributor(s):<br>
+ * Zechariah Perez, omni (at) zeriph (dot) com<br>
+ * <br>
+ * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS &quot;AS IS&quot; AND ANY<br>
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED<br>
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE<br>
+ * DISCLAIMED. IN NO EVENT SHALL ZERIPH AND CONTRIBUTORS BE LIABLE FOR ANY<br>
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES<br>
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;<br>
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND<br>
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT<br>
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS<br>
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.<br>
+ */</div><div></div></font>
+<font class="syn_pre">#include &lt;<a href="omni/chrono/date_time.hpp.html">omni/chrono/date_time.hpp</a>&gt;</font><br>
+<br>
+<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../options/omni_safe_datetime.html">OMNI_SAFE_DATETIME</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_DTTMMTX_FW m_mtx(),</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_DTTM_ALOCK_FW&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-scoped_lock.html">omni::sync::scoped_lock</a>&lt;<a href="../classes/omni-sync-basic_lock.html">omni::sync::basic_lock</a>&gt; uuid12345(&amp;this-&gt;m_mtx);</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_DTTM_OLOCK_FW&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-scoped_lock.html">omni::sync::scoped_lock</a>&lt;<a href="../classes/omni-sync-basic_lock.html">omni::sync::basic_lock</a>&gt; uuid54321(&amp;this-&gt;m_mtx);</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_DTTM_MLOCK_FW&nbsp;&nbsp;&nbsp;&nbsp;this-&gt;m_mtx.lock();</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_DTTM_ULOCK_FW&nbsp;&nbsp;&nbsp;&nbsp;this-&gt;m_mtx.unlock();</font><br>
+<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_DTTMMTX_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_DTTM_ALOCK_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_DTTM_OLOCK_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_DTTM_MLOCK_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_DTTM_ULOCK_FW</font><br>
+<font class="syn_pre">#endif</font><br>
+<br>
+<font class="syn_cmt">/*<div class="syn_ex" id="cmnt2" name="cmnt2">
+// TODO: these are in the C# source, do these _need_ to be const or can the be hash-defined for the library??<br>
+const int32_t omni::chrono::datetime::DATE_PART_YEAR = 0;<br>
+const int32_t omni::chrono::datetime::DATE_PART_DAY_OF_YEAR = 1;<br>
+const int32_t omni::chrono::datetime::DATE_PART_MONTH = 2;<br>
+const int32_t omni::chrono::datetime::DATE_PART_DAY = 3;<br>
+const uint64_t omni::chrono::datetime::TICKS_MASK = 0X3FFFFFFFFFFFFFFF;<br>
+const uint64_t omni::chrono::datetime::FLAGS_MASK = 0XC000000000000000;<br>
+const uint64_t omni::chrono::datetime::LOCAL_MASK = 0X8000000000000000;<br>
+const int64_t omni::chrono::datetime::TICKS_CEILING = 0X4000000000000000;<br>
+const uint64_t omni::chrono::datetime::KIND_UNSPECIFIED = 0X0000000000000000;<br>
+const uint64_t omni::chrono::datetime::KIND_UTC = 0X4000000000000000;<br>
+const uint64_t omni::chrono::datetime::KIND_LOCAL = 0X8000000000000000;<br>
+const uint64_t omni::chrono::datetime::KIND_LOCAL_AMBIGUOUS_DST = 0XC000000000000000;<br>
+const int32_t omni::chrono::datetime::KIND_SHIFT = 62;<br>
+<br>
+<br>
+// Constructs a DateTime from a tick count. The ticks<br>
+// argument specifies the date as the number of 100-nanosecond intervals<br>
+// that have elapsed since 1/1/0001 12:00am.<br>
+//<br>
+public DateTime(long ticks) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if (ticks &lt; MinTicks || ticks &gt; MaxTicks)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new ArgumentOutOfRangeException(&quot;ticks&quot;, Environment.GetResourceString(&quot;ArgumentOutOfRange_DateTimeBadTicks&quot;));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Contract.EndContractBlock();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dateData = (UInt64)ticks;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <br>
+}<br>
+<br>
+private DateTime(UInt64 dateData) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;this.dateData = dateData;<br>
+}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+<br>
+public DateTime(long ticks, DateTimeKind kind) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if (ticks &lt; MinTicks || ticks &gt; MaxTicks) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new ArgumentOutOfRangeException(&quot;ticks&quot;, Environment.GetResourceString(&quot;ArgumentOutOfRange_DateTimeBadTicks&quot;));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if (kind &lt; DateTimeKind.Unspecified || kind &gt; DateTimeKind.Local) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new ArgumentException(Environment.GetResourceString(&quot;Argument_InvalidDateTimeKind&quot;), &quot;kind&quot;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Contract.EndContractBlock();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;this.dateData = ((UInt64)ticks | ((UInt64)kind &lt;&lt; KindShift));<br>
+}<br>
+<br>
+internal DateTime(long ticks, DateTimeKind kind, Boolean isAmbiguousDst) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if (ticks &lt; MinTicks || ticks &gt; MaxTicks) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new ArgumentOutOfRangeException(&quot;ticks&quot;, Environment.GetResourceString(&quot;ArgumentOutOfRange_DateTimeBadTicks&quot;));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Contract.Requires(kind == DateTimeKind.Local, &quot;Internal Constructor is for local times only&quot;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Contract.EndContractBlock();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dateData = ((UInt64)ticks | (isAmbiguousDst ? KindLocalAmbiguousDst : KindLocal));<br>
+}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+// Constructs a DateTime from a given year, month, and day. The<br>
+// time-of-day of the resulting DateTime is always midnight.<br>
+//<br>
+public DateTime(int year, int month, int day) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;this.dateData = (UInt64) DateToTicks(year, month, day);<br>
+}<br>
+<br>
+// Constructs a DateTime from a given year, month, and day for<br>
+// the specified calendar. The<br>
+// time-of-day of the resulting DateTime is always midnight.<br>
+//<br>
+public DateTime(int year, int month, int day, Calendar calendar) <br>
+&nbsp;&nbsp;&nbsp;&nbsp;: this(year, month, day, 0, 0, 0, calendar) {<br>
+}<br>
+<br>
+// Constructs a DateTime from a given year, month, day, hour,<br>
+// minute, and second.<br>
+//<br>
+public DateTime(int year, int month, int day, int hour, int minute, int second) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;this.dateData = (UInt64)(DateToTicks(year, month, day) + TimeToTicks(hour, minute, second));<br>
+}<br>
+<br>
+public DateTime(int year, int month, int day, int hour, int minute, int second, DateTimeKind kind) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if (kind &lt; DateTimeKind.Unspecified || kind &gt; DateTimeKind.Local) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new ArgumentException(Environment.GetResourceString(&quot;Argument_InvalidDateTimeKind&quot;), &quot;kind&quot;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Contract.EndContractBlock();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Int64 ticks = DateToTicks(year, month, day) + TimeToTicks(hour, minute, second);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;this.dateData = ((UInt64)ticks | ((UInt64)kind &lt;&lt; KindShift));<br>
+}<br>
+<br>
+// Constructs a DateTime from a given year, month, day, hour,<br>
+// minute, and second for the specified calendar.<br>
+//<br>
+public DateTime(int year, int month, int day, int hour, int minute, int second, Calendar calendar) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if (calendar == null)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new ArgumentNullException(&quot;calendar&quot;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Contract.EndContractBlock();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;this.dateData = (UInt64)calendar.ToDateTime(year, month, day, hour, minute, second, 0).Ticks;<br>
+}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+// Constructs a DateTime from a given year, month, day, hour,<br>
+// minute, and second.<br>
+//<br>
+public DateTime(int year, int month, int day, int hour, int minute, int second, int millisecond) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if (millisecond &lt; 0 || millisecond &gt;= MillisPerSecond) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new ArgumentOutOfRangeException(&quot;millisecond&quot;, Environment.GetResourceString(&quot;ArgumentOutOfRange_Range&quot;, 0, MillisPerSecond - 1));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Contract.EndContractBlock();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Int64 ticks = DateToTicks(year, month, day) + TimeToTicks(hour, minute, second);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ticks += millisecond * TicksPerMillisecond;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if (ticks &lt; MinTicks || ticks &gt; MaxTicks)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new ArgumentException(Environment.GetResourceString(&quot;Arg_DateTimeRange&quot;));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;this.dateData = (UInt64)ticks;<br>
+}<br>
+<br>
+public DateTime(int year, int month, int day, int hour, int minute, int second, int millisecond, DateTimeKind kind) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if (millisecond &lt; 0 || millisecond &gt;= MillisPerSecond) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new ArgumentOutOfRangeException(&quot;millisecond&quot;, Environment.GetResourceString(&quot;ArgumentOutOfRange_Range&quot;, 0, MillisPerSecond - 1));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if (kind &lt; DateTimeKind.Unspecified || kind &gt; DateTimeKind.Local) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new ArgumentException(Environment.GetResourceString(&quot;Argument_InvalidDateTimeKind&quot;), &quot;kind&quot;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Contract.EndContractBlock();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Int64 ticks = DateToTicks(year, month, day) + TimeToTicks(hour, minute, second);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ticks += millisecond * TicksPerMillisecond;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if (ticks &lt; MinTicks || ticks &gt; MaxTicks)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new ArgumentException(Environment.GetResourceString(&quot;Arg_DateTimeRange&quot;));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;this.dateData = ((UInt64)ticks | ((UInt64)kind &lt;&lt; KindShift));<br>
+}<br>
+<br>
+// Constructs a DateTime from a given year, month, day, hour,<br>
+// minute, and second for the specified calendar.<br>
+//<br>
+public DateTime(int year, int month, int day, int hour, int minute, int second, int millisecond, Calendar calendar) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if (calendar == null)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new ArgumentNullException(&quot;calendar&quot;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if (millisecond &lt; 0 || millisecond &gt;= MillisPerSecond) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new ArgumentOutOfRangeException(&quot;millisecond&quot;, Environment.GetResourceString(&quot;ArgumentOutOfRange_Range&quot;, 0, MillisPerSecond - 1));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Contract.EndContractBlock();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Int64 ticks = calendar.ToDateTime(year, month, day, hour, minute, second, 0).Ticks;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ticks += millisecond * TicksPerMillisecond;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if (ticks &lt; MinTicks || ticks &gt; MaxTicks)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new ArgumentException(Environment.GetResourceString(&quot;Arg_DateTimeRange&quot;));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;this.dateData = (UInt64)ticks;<br>
+}<br>
+<br>
+public DateTime(int year, int month, int day, int hour, int minute, int second, int millisecond, Calendar calendar, DateTimeKind kind) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if (calendar == null)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new ArgumentNullException(&quot;calendar&quot;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if (millisecond &lt; 0 || millisecond &gt;= MillisPerSecond) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new ArgumentOutOfRangeException(&quot;millisecond&quot;, Environment.GetResourceString(&quot;ArgumentOutOfRange_Range&quot;, 0, MillisPerSecond - 1));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if (kind &lt; DateTimeKind.Unspecified || kind &gt; DateTimeKind.Local) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new ArgumentException(Environment.GetResourceString(&quot;Argument_InvalidDateTimeKind&quot;), &quot;kind&quot;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Contract.EndContractBlock();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Int64 ticks = calendar.ToDateTime(year, month, day, hour, minute, second, 0).Ticks;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ticks += millisecond * TicksPerMillisecond;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if (ticks &lt; MinTicks || ticks &gt; MaxTicks)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new ArgumentException(Environment.GetResourceString(&quot;Arg_DateTimeRange&quot;));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;this.dateData = ((UInt64)ticks | ((UInt64)kind &lt;&lt; KindShift));<br>
+}<br>
+*/</div><div></div></font>
+<!--end highlighted code-->
+</div></code><br>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS(); collapseAll('2', '../../');</script></body></html>

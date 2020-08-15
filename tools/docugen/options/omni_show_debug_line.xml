@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_SHOW_DEBUG_LINE</Name>
+  <Brief>Displays the line number as part of the debug output.</Brief>
+  <Considerations>No special considerations.</Considerations>
+  <Description>When specified, all debug output will include the line number of where the debug output originated.</Description>
+  <Notes>OMNI_SHOW_DEBUG must be specified for this flag to work.</Notes>
+  <PlatformSpecific>No platform specific details.</PlatformSpecific>
+  <Synopsis>&lt;code&gt;#define OMNI_SHOW_DEBUG_LINE&lt;/code&gt;
+Signifies to format the debug output to display the line number in front of the output.</Synopsis>
+  <IsHelper>false</IsHelper>
+  <IsConstant>false</IsConstant>
+</MacroOp>

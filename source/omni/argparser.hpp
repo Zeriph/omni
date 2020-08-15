@@ -26,6 +26,13 @@
 
 namespace omni {
     namespace application {
+        /**
+         * @brief Brief description.
+         * 
+         * @details A more detailed description of the function.
+         * 
+         * @attention Any platform specific notes.
+         */
         class argparser
         {
             public:
@@ -46,17 +53,18 @@ namespace omni {
                 omni::string_t get_switch(const std::wstring& sw) const;
                 omni::string_t get_switch(const std::string& sw) const;
                 omni::seq::string_t get_switches(const omni::string_t& sw) const;
+                uint32_t get_switch_count(const omni::string_t& sw) const;
                 omni::seq::string_t get_range(std::size_t start, std::size_t end) const;
                 std::size_t size() const { return static_cast<std::size_t>(this->m_argc); }
                 void set(uint32_t ac, const char** av);
                 void set(uint32_t ac, const wchar_t** av);
                 void set(const omni::seq::string_t& av);
                 omni::string_t to_string_t() const;
-                omni::string_t to_string_t(bool includeArg1) const;
+                omni::string_t to_string_t(bool include_first_arg) const;
                 std::string to_string() const;
-                std::string to_string(bool includeArg1) const;
+                std::string to_string(bool include_first_arg) const;
                 std::wstring to_wstring() const;
-                std::wstring to_wstring(bool includeArg1) const;
+                std::wstring to_wstring(bool include_first_arg) const;
                 operator std::string() const { return this->to_string(false); }
                 operator std::wstring() const { return this->to_wstring(false); }
                 omni::string_t operator[](const std::string& sw) const;

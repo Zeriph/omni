@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_IFSTREAM_T</Name>
+  <Brief>Defines the underlying @c ifstream type.
+</Brief>
+  <Considerations>No special considerations.
+</Considerations>
+  <Description>None.
+</Description>
+  <Notes>None.
+</Notes>
+  <PlatformSpecific>No special consideration.
+</PlatformSpecific>
+  <Synopsis>Defines either the std::ifstream or std::wifstream type used internally.
+</Synopsis>
+  <IsHelper>true</IsHelper>
+  <IsConstant>false</IsConstant>
+  <IsFWHelp>true</IsFWHelp>
+</MacroOp>

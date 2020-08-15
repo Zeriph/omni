@@ -19,8 +19,8 @@
 
 /* DEV_NOTE: this file is not intended to be used directly by any user code!
 
- i.e. don't #include <omni/xxx_impl.hxx> and don't compile this source directly.
- this file is #include'd directly in other source.
+ i.e. do not #include <omni/xxx_impl.hxx> and do not compile this source directly.
+ this file is included directly in other source.
 */
 
 // so as not to accidentally build this file with the source this macro is defined in io.cpp
@@ -31,16 +31,16 @@
 #if defined(OMNI_IO_FILE_INTERNAL_FW)
     namespace omni {
     namespace io {
-    /** @internal framework helper */
+    /** @internal library helper */
     namespace file_internal {
 
     #if defined(OMNI_OS_WIN)
         /* DEV_NOTE: this code is Windows only .. it returns the short/long path name for a file
-        but that's largely irrelevant as it only returns an 8.3 short path name if it's enabled
+        but that is largely irrelevant as it only returns an 8.3 short path name if it is enabled
         in the registry for above Windows XP. Since this is a one-off type of thing and likely
         not largely used, this will not be exposed or documented beyond this file scope. */
 
-        /** @internal framework helper */
+        /** @internal library helper */
         std::string get_path_name(const std::string& file)
         {
             std::string name = "\\\\?\\";
@@ -61,7 +61,7 @@
             return name;
         }
 
-        /** @internal framework helper */
+        /** @internal library helper */
         std::wstring get_path_name(const std::wstring& file)
         {
             std::wstring name = L"\\\\?\\";
@@ -83,7 +83,7 @@
         }
     #endif
 
-    /** @internal framework helper */
+    /** @internal library helper */
     bool exists(const std::string& file)
     {
         if (file.empty()) { return false; }
@@ -115,7 +115,7 @@
             return false;
         #endif
     }
-    /** @internal framework helper */
+    /** @internal library helper */
     bool exists(const std::wstring& file)
     {
         if (file.empty()) { return false; }
@@ -148,7 +148,7 @@
         #endif
     }
     
-    /** @internal framework helper */
+    /** @internal library helper */
     template < typename STR, typename ISTREAM, typename OSTREAM >
     bool copy(const STR& file, const STR& new_name)
     {
@@ -166,7 +166,7 @@
         dst.close();
         return true;
     }
-    /** @internal framework helper */
+    /** @internal library helper */
     bool copy(const std::string& file, const std::string& new_name)
     {
         #if defined(OMNI_OS_WIN) && defined(OMNI_WIN_API)
@@ -180,7 +180,7 @@
             return omni::io::file_internal::copy<std::string, std::ifstream, std::ofstream>(file, new_name);
         #endif
     }
-    /** @internal framework helper */
+    /** @internal library helper */
     bool copy(const std::wstring& file, const std::wstring& new_name)
     {
         #if defined(OMNI_OS_WIN) && defined(OMNI_WIN_API)
@@ -196,7 +196,7 @@
         #endif
     }
 
-    /** @internal framework helper */
+    /** @internal library helper */
     template < typename STR, typename OSTREAM >
     bool create(const STR& file, bool create_path)
     {
@@ -210,7 +210,7 @@
         out.close(); // close/flush
         return omni::io::file_internal::exists(file);
     }
-    /** @internal framework helper */
+    /** @internal library helper */
     bool create(const std::string& file, bool create_path)
     {
         #if defined(OMNI_OS_WIN) && defined(OMNI_WIN_API)
@@ -225,12 +225,8 @@
             OMNI_FILE_CHECKA_FW(file, false)
             HANDLE hfile = ::CreateFileA(file.c_str(), GENERIC_WRITE, FILE_SHARE_READ|FILE_SHARE_WRITE, NULL,
                                                      CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL);
-            int ret = omni::system::last_error();
-            if (hfile == INVALID_HANDLE_VALUE || ret > 0) {
-                OMNI_DBGEV("error setting file length: ", ret)
-                if (hfile != INVALID_HANDLE_VALUE) {
-                    ::CloseHandle(hfile);
-                }
+            if (hfile == INVALID_HANDLE_VALUE) {
+                OMNI_DBGEV("error creating file: ", omni::system::last_error_str().c_str())
                 return false;
             }
             ::CloseHandle(hfile);
@@ -239,7 +235,7 @@
             return omni::io::file_internal::create<std::string, std::ofstream>(file, create_path);
         #endif
     }
-    /** @internal framework helper */
+    /** @internal library helper */
     bool create(const std::wstring& file, bool create_path)
     {
         #if defined(OMNI_OS_WIN) && defined(OMNI_WIN_API)
@@ -254,12 +250,8 @@
             std::wstring tf = OMNI_FILE_CHECKW_FW(file, false)
             HANDLE hfile = ::CreateFileW(tf.c_str(), GENERIC_WRITE, FILE_SHARE_READ|FILE_SHARE_WRITE, NULL,
                                                    CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL);
-            int ret = omni::system::last_error();
-            if (hfile == INVALID_HANDLE_VALUE || ret > 0) {
-                OMNI_DBGEV("error setting file length: ", ret)
-                if (hfile != INVALID_HANDLE_VALUE) {
-                    ::CloseHandle(hfile);
-                }
+            if (hfile == INVALID_HANDLE_VALUE) {
+                OMNI_DBGEV("error creating file: ", omni::system::last_error_str().c_str())
                 return false;
             }
             ::CloseHandle(hfile);
@@ -269,7 +261,7 @@
         #endif
     }
 
-    /** @internal framework helper */
+    /** @internal library helper */
     template < typename STR, typename ISTRM, typename SSTRM >
     STR get_contents(const STR& file)
     {
@@ -278,18 +270,18 @@
         buf << ifile.rdbuf();
         return buf.str();
     }
-    /** @internal framework helper */
+    /** @internal library helper */
     std::string get_contents(const std::string& file)
     {
         return get_contents<std::string, std::ifstream, std::stringstream>(file);
     }
-    /** @internal framework helper */
+    /** @internal library helper */
     std::wstring get_contents(const std::wstring& file)
     {
         return get_contents<std::wstring, std::wifstream, std::wstringstream>(file);
     }
 
-    /** @internal framework helper */
+    /** @internal library helper */
     uint64_t get_size(const std::string& file)
     {
         #if defined(OMNI_OS_WIN)
@@ -318,7 +310,7 @@
             return 0;
         #endif
     }
-    /** @internal framework helper */
+    /** @internal library helper */
     uint64_t get_size(const std::wstring& file)
     {
         #if defined(OMNI_OS_WIN)
@@ -348,7 +340,7 @@
         #endif
     }
 
-    /** @internal framework helper */
+    /** @internal library helper */
     bool mv(const std::string& file, const std::string& new_name, bool create_path)
     {
         std::string root = omni::io::cpath::get_parent_name(new_name);
@@ -369,7 +361,7 @@
                 OMNI_FILE_CHECKA_FW(new_name, false)
                 BOOL ret = ::MoveFileA(file.c_str(), new_name.c_str());
                 if (ret == 0) {
-                    OMNI_DV1_FW("error moving file: ", omni::string::to_string_t(omni::system::last_error_str()));
+                    OMNI_DV1_FW("error moving file: ", omni::system::last_error_str().c_str());
                     return false;
                 }
             #else
@@ -388,7 +380,7 @@
         #endif
         return omni::io::file_internal::exists(new_name);
     }
-    /** @internal framework helper */
+    /** @internal library helper */
     bool mv(const std::wstring& file, const std::wstring& new_name, bool create_path)
     {
         std::wstring root = omni::io::wpath::get_parent_name(new_name);
@@ -429,78 +421,95 @@
         return omni::io::file_internal::exists(new_name);
     }
 
-    /** @internal framework helper */
+    /** @internal library helper */
     template < typename STR, typename IFSTREAM, typename SEQ >
     uint64_t rd(const STR& file, SEQ& buffer)
     {
-        // DEV_NOTE: wifstream not take wchar_t[] filename since it's basic_ifstream<wchar_t>, which the constructors
+        // DEV_NOTE: wifstream not take wchar_t[] filename since it is basic_ifstream<wchar_t>, which the constructors
         // for basic_ifstream are only basic_ifstream(const char* file..) and basic_ifstream(const std::string& file...)
-        IFSTREAM ifile(omni::string::to_string(file), std::ios::binary);
+        IFSTREAM ifile(omni::string::to_string(file).c_str(), std::ios::binary);
         if (!ifile.is_open()) { return 0; }
         ifile.seekg(0, ifile.end);
         uint64_t length = static_cast<uint64_t>(ifile.tellg());
         ifile.seekg(0, ifile.beg);
-        // we can't assume the SEQ type will allow contiguous memory, so we have to loop :/
+        // we cannot assume the SEQ type will allow contiguous memory, so we have to loop :/
         typename STR::value_type* bf = new typename STR::value_type[length];
         ifile.read(bf, static_cast<std::streamsize>(length));
         length = static_cast<uint64_t>(ifile.gcount());
         ifile.close();
-        //for (auto i = 0; i < length; ++i) { buffer[i] = bf[i]; }
-        // TODO: verify .. also, is this really the most effeceint way??
-        std::copy(buffer.begin(), buffer.end(), bf);
+        buffer.resize(length);
+        std::copy(bf, bf+length, buffer.begin());
         delete[] bf;
         return length;
     }
-    /** @internal framework helper */
-    uint64_t read(const std::string& file, omni::seq::uchar_t& buffer)
-    {
-        return omni::io::file_internal::rd<std::string, std::ifstream, omni::seq::uchar_t>(file, buffer);
-    }
-    /** @internal framework helper */
-    uint64_t read(const std::wstring& file, omni::seq::uchar_t& buffer)
-    {
-        return omni::io::file_internal::rd<std::wstring, std::wifstream, omni::seq::uchar_t>(file, buffer);
-    }
-    /** @internal framework helper */
+    /** @internal library helper */
     uint64_t read(const std::string& file, omni::seq::char_t& buffer)
     {
         return omni::io::file_internal::rd<std::string, std::ifstream, omni::seq::char_t>(file, buffer);
     }
-    /** @internal framework helper */
+    /** @internal library helper */
     uint64_t read(const std::wstring& file, omni::seq::char_t& buffer)
     {
-        return omni::io::file_internal::rd<std::wstring, std::wifstream, omni::seq::char_t>(file, buffer);
+        return omni::io::file_internal::rd<std::string, std::ifstream, omni::seq::char_t>(omni::string::to_string(file), buffer);
+    }
+    /** @internal library helper */
+    uint64_t read(const std::string& file, omni::seq::wide_char_t& buffer)
+    {
+        return omni::io::file_internal::rd<std::wstring, std::wifstream, omni::seq::wide_char_t>(omni::string::to_wstring(file), buffer);
+    }
+    /** @internal library helper */
+    uint64_t read(const std::wstring& file, omni::seq::wide_char_t& buffer)
+    {
+        return omni::io::file_internal::rd<std::wstring, std::wifstream, omni::seq::wide_char_t>(file, buffer);
+    }
+    /** @internal library helper */
+    uint64_t read(const std::string& file, omni::seq::uint8_t& buffer)
+    {
+        return omni::io::file_internal::rd<std::string, std::ifstream, omni::seq::uint8_t>(file, buffer);
+    }
+    /** @internal library helper */
+    uint64_t read(const std::wstring& file, omni::seq::uint8_t& buffer)
+    {
+        return omni::io::file_internal::rd<std::string, std::ifstream, omni::seq::uint8_t>(omni::string::to_string(file), buffer);
+    }
+    /** @internal library helper */
+    uint64_t read(const std::string& file, omni::seq::int8_t& buffer)
+    {
+        return omni::io::file_internal::rd<std::string, std::ifstream, omni::seq::int8_t>(file, buffer);
+    }
+    /** @internal library helper */
+    uint64_t read(const std::wstring& file, omni::seq::int8_t& buffer)
+    {
+        return omni::io::file_internal::rd<std::string, std::ifstream, omni::seq::int8_t>(omni::string::to_string(file), buffer);
     }
 
-    /** @internal framework helper */
+    /** @internal library helper */
     template < typename STR, typename IFSTREAM >
     uint64_t rd_f(const STR& file, STR& buffer)
     {
         IFSTREAM ifile(omni::string::to_string(file).c_str(), std::ios::binary);
         if (!ifile.is_open()) { return 0; }
-        // TODO: verify std::streamsize will work on files larger than std::numeric_limits<long>::max() (~4GB)
         uint64_t length = static_cast<uint64_t>(ifile.tellg());
         ifile >> buffer;
         length = static_cast<uint64_t>(ifile.tellg()) - length;
         ifile.close();
         return length;
     }
-    /** @internal framework helper */
+    /** @internal library helper */
     uint64_t read(const std::string& file, std::string& buffer)
     {
         return omni::io::file_internal::rd_f<std::string, std::ifstream>(file, buffer);
     }
-    /** @internal framework helper */
+    /** @internal library helper */
     uint64_t read(const std::wstring& file, std::wstring& buffer)
     {
         return omni::io::file_internal::rd_f<std::wstring, std::wifstream>(file, buffer);
     }
 
-    /** @internal framework helper */
+    /** @internal library helper */
     template < typename STR, typename IFSTREAM, typename SEQ >
-    uint64_t rd_raw(const STR& file, SEQ* buffer, uint64_t blen)
+    uint64_t unsafe_rd(const STR& file, SEQ* buffer, uint64_t blen)
     {
-        // TODO: verify this functionality
         IFSTREAM ifile(omni::string::to_string(file).c_str(), std::ios::binary);
         if (!ifile.is_open()) { return 0; }
         ifile.seekg(0, ifile.end);
@@ -512,28 +521,48 @@
         ifile.close();
         return length;
     }
-    /** @internal framework helper */
-    uint64_t read_raw(const std::string& file, unsigned char* buffer, uint64_t length)
+    /** @internal library helper */
+    uint64_t unsafe_read(const std::string& file, char* buffer, uint64_t length)
     {
-        return omni::io::file_internal::rd_raw<std::string, std::ifstream, unsigned char>(file, buffer, length);
+        return omni::io::file_internal::unsafe_rd<std::string, std::ifstream, char>(file, buffer, length);
     }
-    /** @internal framework helper */
-    uint64_t read_raw(const std::wstring& file, unsigned char* buffer, uint64_t length)
+    /** @internal library helper */
+    uint64_t unsafe_read(const std::wstring& file, char* buffer, uint64_t length)
     {
-        return omni::io::file_internal::rd_raw<std::wstring, std::wifstream, unsigned char>(file, buffer, length);
+        return omni::io::file_internal::unsafe_rd<std::string, std::ifstream, char>(omni::string::to_string(file), buffer, length);
     }
-    /** @internal framework helper */
-    uint64_t read_raw(const std::string& file, char* buffer, uint64_t length)
+    /** @internal library helper */
+    uint64_t unsafe_read(const std::string& file, wchar_t* buffer, uint64_t length)
     {
-        return omni::io::file_internal::rd_raw<std::string, std::ifstream, char>(file, buffer, length);
+        return omni::io::file_internal::unsafe_rd<std::wstring, std::wifstream, wchar_t>(omni::string::to_wstring(file), buffer, length);
     }
-    /** @internal framework helper */
-    uint64_t read_raw(const std::wstring& file, char* buffer, uint64_t length)
+    /** @internal library helper */
+    uint64_t unsafe_read(const std::wstring& file, wchar_t* buffer, uint64_t length)
     {
-        return omni::io::file_internal::rd_raw<std::wstring, std::wifstream, char>(file, buffer, length);
+        return omni::io::file_internal::unsafe_rd<std::wstring, std::wifstream, wchar_t>(file, buffer, length);
+    }
+    /** @internal library helper */
+    uint64_t unsafe_read(const std::string& file, uint8_t* buffer, uint64_t length)
+    {
+        return omni::io::file_internal::unsafe_rd<std::string, std::ifstream, uint8_t>(file, buffer, length);
+    }
+    /** @internal library helper */
+    uint64_t unsafe_read(const std::wstring& file, uint8_t* buffer, uint64_t length)
+    {
+        return omni::io::file_internal::unsafe_rd<std::string, std::ifstream, uint8_t>(omni::string::to_string(file), buffer, length);
+    }
+    /** @internal library helper */
+    uint64_t unsafe_read(const std::string& file, int8_t* buffer, uint64_t length)
+    {
+        return omni::io::file_internal::unsafe_rd<std::string, std::ifstream, int8_t>(file, buffer, length);
+    }
+    /** @internal library helper */
+    uint64_t unsafe_read(const std::wstring& file, int8_t* buffer, uint64_t length)
+    {
+        return omni::io::file_internal::unsafe_rd<std::string, std::ifstream, int8_t>(omni::string::to_string(file), buffer, length);
     }
 
-    /** @internal framework helper */
+    /** @internal library helper */
     bool rem(const std::string& file)
     {
         #if defined(OMNI_OS_WIN)
@@ -557,7 +586,7 @@
         #endif
         return !omni::io::file::exists(file);
     }
-    /** @internal framework helper */
+    /** @internal library helper */
     bool rem(const std::wstring& file)
     {
         #if defined(OMNI_OS_WIN)
@@ -583,19 +612,15 @@
     }
 
     #if defined(OMNI_NON_PORTABLE)
-        /** @internal framework helper */
+        /** @internal library helper */
         bool set_size(const std::string& file, uint64_t size)
         {
             #if defined(OMNI_OS_WIN) && defined(OMNI_WIN_API)
                 OMNI_FILE_CHECKA_FW(file, false)
                 HANDLE hfile = ::CreateFileA(file.c_str(), GENERIC_WRITE, FILE_SHARE_READ|FILE_SHARE_WRITE, NULL,
                                                          CREATE_NEW|OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-                int ret = omni::system::last_error();
-                if (hfile == INVALID_HANDLE_VALUE || ret > 0) {
-                    OMNI_DBGEV("error setting file length: ", ret)
-                    if (hfile != INVALID_HANDLE_VALUE) {
-                        ::CloseHandle(hfile);
-                    }
+                if (hfile == INVALID_HANDLE_VALUE) {
+                    OMNI_DBGEV("error setting file length: ", omni::system::last_error_str().c_str())
                     return false;
                 }
                 ::SetFilePointer(hfile, size, 0, FILE_BEGIN);
@@ -605,12 +630,12 @@
                 #if defined(OMNI_OS_WIN)
                     int fd = ::_open(file.c_str(), O_RDWR);
                     if (fd == -1) {
-                        OMNI_DBGEV("Could not open file: ", omni::system::last_error())
+                        OMNI_DBGEV("Could not open file: ", omni::system::last_error_str().c_str())
                         return false;
                     }
                     errno_t ret = _chsize_s(fd, static_cast<__int64>(size));
                     if (ret != 0) {
-                        OMNI_DBGEV("error setting file length: ", ret)
+                        OMNI_DBGEV("error setting file length: ", oomni::system::last_error_str().c_str())
                         ::_close(fd);
                         return false;
                     }
@@ -638,19 +663,15 @@
             #endif
             return true;
         }
-        /** @internal framework helper */
+        /** @internal library helper */
         bool set_size(const std::wstring& file, uint64_t size)
         {
             #if defined(OMNI_OS_WIN)
                 std::wstring tf = OMNI_FILE_CHECKW_FW(file, false)
                 HANDLE hfile = ::CreateFileW(tf.c_str(), GENERIC_WRITE, FILE_SHARE_READ|FILE_SHARE_WRITE, NULL,
                                                        CREATE_NEW|OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-                int ret = omni::system::last_error();
-                if (hfile == INVALID_HANDLE_VALUE || ret > 0) {
-                    OMNI_DBGEV("error setting file length: ", ret)
-                    if (hfile != INVALID_HANDLE_VALUE) {
-                        ::CloseHandle(hfile);
-                    }
+                if (hfile == INVALID_HANDLE_VALUE) {
+                    OMNI_DBGEV("error setting file length: ", omni::system::last_error_str().c_str())
                     return false;
                 }
                 ::SetFilePointer(hfile, size, 0, FILE_BEGIN);
@@ -660,7 +681,7 @@
                 #if defined(OMNI_OS_WIN)
                     int fd = ::_wopen(file.c_str(), O_RDWR);
                     if (fd == -1) {
-                        OMNI_DBGEV("Could not open file: ", omni::system::last_error())
+                        OMNI_DBGEV("Could not open file: ", omni::system::last_error_str().c_str())
                         return false;
                     }
                     errno_t ret = _chsize_s(fd, static_cast<__int64>(size));
@@ -695,12 +716,11 @@
         }
     #endif
 
-    /** @internal framework helper */
+    /** @internal library helper */
     template < typename T, typename O >
     uint64_t write_fw(const std::string& file, const T& buffer, bool append)
     {
-        // TODO: verify functionality
-        O ofile(file.c_str(), (append ? (std::ios::binary | std::ios::app) : std::ios::binary));
+        O ofile(omni::string::to_string(file).c_str(), (append ? (std::ios::binary | std::ios::app) : std::ios::binary));
         uint64_t start = static_cast<uint64_t>(ofile.tellp());
         uint64_t end = start;
         ofile << buffer.c_str();
@@ -709,26 +729,25 @@
         ofile.close();
         return (end - start);
     }
-    /** @internal framework helper */
+    /** @internal library helper */
     uint64_t write(const std::string& file, const std::string& buffer, bool append)
     {
         return write_fw<std::string, std::ofstream>(file, buffer, append);
     }
-    /** @internal framework helper */
+    /** @internal library helper */
     uint64_t write(const std::wstring& file, const std::wstring& buffer, bool append)
     {
         return write_fw<std::wstring, std::wofstream>(omni::string::to_string(file), buffer, append);
     }
 
-    /** @internal framework helper */
-    template < typename T, typename O, typename S, typename ITR >
+    /** @internal library helper */
+    template < typename T, typename O, typename S >
     uint64_t write_buf_fw(const std::string& file, const S& buffer, bool append)
     {
-        // TODO: verify functionality
-        O ofile(file.c_str(), (append ? (std::ios::binary | std::ios::app) : std::ios::binary));
+        O ofile(omni::string::to_string(file).c_str(), (append ? (std::ios::binary | std::ios::app) : std::ios::binary));
         uint64_t start = static_cast<uint64_t>(ofile.tellp());
         uint64_t end = start;
-        for (ITR b = buffer.begin(); b != buffer.end(); ++b) {
+        for (typename S::const_iterator b = buffer.begin(); b != buffer.end(); ++b) {
             ofile << *b;
         }
         ofile.flush();
@@ -736,71 +755,110 @@
         ofile.close();
         return (end - start);
     }
-    /** @internal framework helper */
-    uint64_t write(const std::string& file, const omni::seq::uchar_t& buffer, bool append)
-    {
-        return write_buf_fw<std::string, std::ofstream, omni::seq::uchar_t, omni::seq::uchar_t::const_iterator>(file, buffer, append);
-    }
-    /** @internal framework helper */
-    uint64_t write(const std::wstring& file, const omni::seq::uchar_t& buffer, bool append)
-    {
-        return write_buf_fw<std::wstring, std::wofstream, omni::seq::uchar_t, omni::seq::uchar_t::const_iterator>(omni::string::to_string(file), buffer, append);
-    }
-    /** @internal framework helper */
+    /** @internal library helper */
     uint64_t write(const std::string& file, const omni::seq::char_t& buffer, bool append)
     {
-        return write_buf_fw<std::string, std::ofstream, omni::seq::char_t, omni::seq::char_t::const_iterator>(file, buffer, append);
+        return write_buf_fw<std::string, std::ofstream, omni::seq::char_t>(file, buffer, append);
     }
-    /** @internal framework helper */
+    /** @internal library helper */
     uint64_t write(const std::wstring& file, const omni::seq::char_t& buffer, bool append)
     {
-        return write_buf_fw<std::wstring, std::wofstream, omni::seq::char_t, omni::seq::char_t::const_iterator>(omni::string::to_string(file), buffer, append);
+        return write_buf_fw<std::string, std::ofstream, omni::seq::char_t>(omni::string::to_string(file), buffer, append);
+    }
+    /** @internal library helper */
+    uint64_t write(const std::string& file, const omni::seq::wide_char_t& buffer, bool append)
+    {
+        return write_buf_fw<std::wstring, std::wofstream, omni::seq::wide_char_t>(file, buffer, append);
+    }
+    /** @internal library helper */
+    uint64_t write(const std::wstring& file, const omni::seq::wide_char_t& buffer, bool append)
+    {
+        return write_buf_fw<std::wstring, std::wofstream, omni::seq::wide_char_t>(omni::string::to_string(file), buffer, append);
+    }
+    /** @internal library helper */
+    uint64_t write(const std::string& file, const omni::seq::uint8_t& buffer, bool append)
+    {
+        return write_buf_fw<std::string, std::ofstream, omni::seq::uint8_t>(file, buffer, append);
+    }
+    /** @internal library helper */
+    uint64_t write(const std::wstring& file, const omni::seq::uint8_t& buffer, bool append)
+    {
+        return write_buf_fw<std::string, std::ofstream, omni::seq::uint8_t>(omni::string::to_string(file), buffer, append);
+    }
+    /** @internal library helper */
+    uint64_t write(const std::string& file, const omni::seq::int8_t& buffer, bool append)
+    {
+        return write_buf_fw<std::string, std::ofstream, omni::seq::int8_t>(file, buffer, append);
+    }
+    /** @internal library helper */
+    uint64_t write(const std::wstring& file, const omni::seq::int8_t& buffer, bool append)
+    {
+        return write_buf_fw<std::string, std::ofstream, omni::seq::int8_t>(omni::string::to_string(file), buffer, append);
     }
 
-    /** @internal framework helper */
-    template < typename T >
-    uint64_t write_raw_fw(const std::string& file, T buffer, size_t sz, bool append)
+    /** @internal library helper */
+    template < typename STR, typename OFSTREAM, typename SEQ >
+    uint64_t unsafe_write_fw(const STR& file, const SEQ* buffer, uint64_t blen, bool append)
     {
-        // TODO: verify functionality
-        std::ofstream ofile(file.c_str(), (append ? (std::ios::binary | std::ios::app) : std::ios::binary));
+        OFSTREAM ofile(omni::string::to_string(file).c_str(), (append ? (std::ios::binary | std::ios::app) : std::ios::binary));
+        if (!ofile.is_open()) { return 0; }
         uint64_t start = static_cast<uint64_t>(ofile.tellp());
         uint64_t end = start;
-        ofile.write(reinterpret_cast<const char*>(buffer), static_cast<std::streamsize>(sz));
+        ofile.write(reinterpret_cast<const typename STR::value_type*>(buffer), static_cast<std::streamsize>(blen));
         ofile.flush();
         end = static_cast<uint64_t>(ofile.tellp());
         ofile.close();
         return (end - start);
     }
-    /** @internal framework helper */
-    uint64_t write_raw(const std::string& file, const unsigned char* buffer, size_t sz, bool append)
+    /** @internal library helper */
+    uint64_t unsafe_write(const std::string& file, const char* buffer, uint64_t length, bool append)
     {
-        return write_raw_fw<const unsigned char*>(file, buffer, sz, append);
+        return unsafe_write_fw<std::string, std::ofstream, char>(file, buffer, length, append);
     }
-    /** @internal framework helper */
-    uint64_t write_raw(const std::wstring& file, const unsigned char* buffer, size_t sz, bool append)
+    /** @internal library helper */
+    uint64_t unsafe_write(const std::wstring& file, const char* buffer, uint64_t length, bool append)
     {
-        return write_raw_fw<const unsigned char*>(omni::string::to_string(file), buffer, sz, append);
+        return unsafe_write_fw<std::string, std::ofstream, char>(omni::string::to_string(file), buffer, length, append);
     }
-    /** @internal framework helper */
-    uint64_t write_raw(const std::string& file, const char* buffer, size_t sz, bool append)
+    /** @internal library helper */
+    uint64_t unsafe_write(const std::string& file, const wchar_t* buffer, uint64_t length, bool append)
     {
-        return write_raw_fw<const char*>(file, buffer, sz, append);
+        return unsafe_write_fw<std::wstring, std::wofstream, wchar_t>(omni::string::to_wstring(file), buffer, length, append);
     }
-    /** @internal framework helper */
-    uint64_t write_raw(const std::wstring& file, const char* buffer, size_t sz, bool append)
+    /** @internal library helper */
+    uint64_t unsafe_write(const std::wstring& file, const wchar_t* buffer, uint64_t length, bool append)
     {
-        return write_raw_fw<const char*>(omni::string::to_string(file), buffer, sz, append);
+        return unsafe_write_fw<std::wstring, std::wofstream, wchar_t>(file, buffer, length, append);
     }
-
-    /** @internal framework helper */
-    template < typename T, typename O, typename S >
-    uint64_t write_line_buf_fw(const std::string& file, const S& buffer, bool append)
+    /** @internal library helper */
+    uint64_t unsafe_write(const std::string& file, const uint8_t* buffer, uint64_t length, bool append)
     {
-        // TODO: verify functionality
-        O ofile(file.c_str(), (append ? (std::ios::binary | std::ios::app) : std::ios::binary));
+        return unsafe_write_fw<std::string, std::ofstream, uint8_t>(file, buffer, length, append);
+    }
+    /** @internal library helper */
+    uint64_t unsafe_write(const std::wstring& file, const uint8_t* buffer, uint64_t length, bool append)
+    {
+        return unsafe_write_fw<std::string, std::ofstream, uint8_t>(omni::string::to_string(file), buffer, length, append);
+    }
+    /** @internal library helper */
+    uint64_t unsafe_write(const std::string& file, const int8_t* buffer, uint64_t length, bool append)
+    {
+        return unsafe_write_fw<std::string, std::ofstream, int8_t>(file, buffer, length, append);
+    }
+    /** @internal library helper */
+    uint64_t unsafe_write(const std::wstring& file, const int8_t* buffer, uint64_t length, bool append)
+    {
+        return unsafe_write_fw<std::string, std::ofstream, int8_t>(omni::string::to_string(file), buffer, length, append);
+    }
+    
+    /** @internal library helper */
+    template < typename STR, typename OFSTREAM, typename SEQ >
+    uint64_t write_line_buf_fw(const STR& file, const SEQ& buffer, bool append)
+    {
+        OFSTREAM ofile(omni::string::to_string(file).c_str(), (append ? (std::ios::binary | std::ios::app) : std::ios::binary));
         uint64_t start = static_cast<uint64_t>(ofile.tellp());
         uint64_t end = start;
-        for (typename S::const_iterator b = buffer.begin(); b != buffer.end(); ++b) {
+        for (typename SEQ::const_iterator b = buffer.begin(); b != buffer.end(); ++b) {
             ofile << *b;
         }
         ofile << std::endl;
@@ -809,33 +867,52 @@
         ofile.close();
         return (end - start);
     }
-    /** @internal framework helper */
-    uint64_t write_line(const std::string& file, const omni::seq::uchar_t& buffer, bool append)
-    {
-        return write_line_buf_fw<std::string, std::ofstream, omni::seq::uchar_t>(file, buffer, append);
-    }
-    /** @internal framework helper */
-    uint64_t write_line(const std::wstring& file, const omni::seq::uchar_t& buffer, bool append)
-    {
-        return write_line_buf_fw<std::wstring, std::wofstream, omni::seq::uchar_t>(omni::string::to_string(file), buffer, append);
-    }
-    /** @internal framework helper */
+    /** @internal library helper */
     uint64_t write_line(const std::string& file, const omni::seq::char_t& buffer, bool append)
     {
         return write_line_buf_fw<std::string, std::ofstream, omni::seq::char_t>(file, buffer, append);
     }
-    /** @internal framework helper */
+    /** @internal library helper */
     uint64_t write_line(const std::wstring& file, const omni::seq::char_t& buffer, bool append)
     {
-        return write_line_buf_fw<std::wstring, std::wofstream, omni::seq::char_t>(omni::string::to_string(file), buffer, append);
+        return write_line_buf_fw<std::string, std::ofstream, omni::seq::char_t>(omni::string::to_string(file), buffer, append);
     }
-
-    /** @internal framework helper */
-    template < typename T, typename O >
-    uint64_t write_line_fw(const std::string& file, const T& buffer, bool append)
+    /** @internal library helper */
+    uint64_t write_line(const std::string& file, const omni::seq::wide_char_t& buffer, bool append)
     {
-        // TODO: verify functionality
-        O ofile(file.c_str(), (append ? (std::ios::binary | std::ios::app) : std::ios::binary));
+        return write_line_buf_fw<std::wstring, std::wofstream, omni::seq::wide_char_t>(omni::string::to_wstring(file), buffer, append);
+    }
+    /** @internal library helper */
+    uint64_t write_line(const std::wstring& file, const omni::seq::wide_char_t& buffer, bool append)
+    {
+        return write_line_buf_fw<std::wstring, std::wofstream, omni::seq::wide_char_t>(file, buffer, append);
+    }
+    /** @internal library helper */
+    uint64_t write_line(const std::string& file, const omni::seq::uint8_t& buffer, bool append)
+    {
+        return write_line_buf_fw<std::string, std::ofstream, omni::seq::uint8_t>(file, buffer, append);
+    }
+    /** @internal library helper */
+    uint64_t write_line(const std::wstring& file, const omni::seq::uint8_t& buffer, bool append)
+    {
+        return write_line_buf_fw<std::string, std::ofstream, omni::seq::uint8_t>(omni::string::to_string(file), buffer, append);
+    }
+    /** @internal library helper */
+    uint64_t write_line(const std::string& file, const omni::seq::int8_t& buffer, bool append)
+    {
+        return write_line_buf_fw<std::string, std::ofstream, omni::seq::int8_t>(file, buffer, append);
+    }
+    /** @internal library helper */
+    uint64_t write_line(const std::wstring& file, const omni::seq::int8_t& buffer, bool append)
+    {
+        return write_line_buf_fw<std::string, std::ofstream, omni::seq::int8_t>(omni::string::to_string(file), buffer, append);
+    }
+    
+    /** @internal library helper */
+    template < typename STR, typename OFSTREAM >
+    uint64_t write_line_fw(const std::string& file, const STR& buffer, bool append)
+    {
+        OFSTREAM ofile(omni::string::to_string(file).c_str(), (append ? (std::ios::binary | std::ios::app) : std::ios::binary));
         uint64_t start = static_cast<uint64_t>(ofile.tellp());
         uint64_t end = start;
         ofile << buffer.c_str() << std::endl;
@@ -844,72 +921,127 @@
         ofile.close();
         return (end - start);
     }
-    /** @internal framework helper */
+    /** @internal library helper */
     uint64_t write_line(const std::string& file, const std::string& buffer, bool append)
     {
         return write_line_fw<std::string, std::ofstream>(file, buffer, append);
     }
-    /** @internal framework helper */
+    /** @internal library helper */
     uint64_t write_line(const std::wstring& file, const std::wstring& buffer, bool append)
     {
         return write_line_fw<std::wstring, std::wofstream>(omni::string::to_string(file), buffer, append);
     }
 
-    /** @internal framework helper */
-    template < typename T >
-    uint64_t write_line_raw_fw(const std::string& file, T buffer, size_t sz, bool append)
+    /** @internal library helper */
+    template < typename STR, typename OFSTREAM, typename SEQ >
+    uint64_t unsafe_write_line_fw(const STR& file, const SEQ* buffer, uint64_t length, bool append)
     {
-        // TODO: verify functionality
-        std::ofstream ofile(file.c_str(), (append ? (std::ios::binary | std::ios::app) : std::ios::binary));
+        OFSTREAM ofile(omni::string::to_string(file).c_str(), (append ? (std::ios::binary | std::ios::app) : std::ios::binary));
         uint64_t start = static_cast<uint64_t>(ofile.tellp());
         uint64_t end = start;
-        ofile.write(reinterpret_cast<const char*>(buffer), static_cast<std::streamsize>(sz));
+        ofile.write(reinterpret_cast<const typename STR::value_type*>(buffer), static_cast<std::streamsize>(length));
         ofile << std::endl;
         ofile.flush();
         end = static_cast<uint64_t>(ofile.tellp());
         ofile.close();
         return (end - start);
     }
-    /** @internal framework helper */
-    uint64_t write_line_raw(const std::string& file, const unsigned char* buffer, size_t sz, bool append)
+    /** @internal library helper */
+    uint64_t unsafe_write_line(const std::string& file, const char* buffer, uint64_t length, bool append)
     {
-        return write_line_raw_fw<const unsigned char*>(file, buffer, sz, append);
+        return unsafe_write_line_fw<std::string, std::ofstream, char>(file, buffer, length, append);
     }
-    /** @internal framework helper */
-    uint64_t write_line_raw(const std::wstring& file, const unsigned char* buffer, size_t sz, bool append)
+    /** @internal library helper */
+    uint64_t unsafe_write_line(const std::wstring& file, const char* buffer, uint64_t length, bool append)
     {
-        return write_line_raw_fw<const unsigned char*>(omni::string::to_string(file), buffer, sz, append);
+        return unsafe_write_line_fw<std::string, std::ofstream, char>(omni::string::to_string(file), buffer, length, append);
     }
-    /** @internal framework helper */
-    uint64_t write_line_raw(const std::string& file, const char* buffer, size_t sz, bool append)
+    uint64_t unsafe_write_line(const std::string& file, const wchar_t* buffer, uint64_t length, bool append)
     {
-        return write_line_raw_fw<const char*>(file, buffer, sz, append);
+        return unsafe_write_line_fw<std::wstring, std::wofstream, wchar_t>(omni::string::to_wstring(file), buffer, length, append);
     }
-    /** @internal framework helper */
-    uint64_t write_line_raw(const std::wstring& file, const char* buffer, size_t sz, bool append)
+    /** @internal library helper */
+    uint64_t unsafe_write_line(const std::wstring& file, const wchar_t* buffer, uint64_t length, bool append)
     {
-        return write_line_raw_fw<const char*>(omni::string::to_string(file), buffer, sz, append);
+        return unsafe_write_line_fw<std::wstring, std::wofstream, wchar_t>(file, buffer, length, append);
+    }
+    /** @internal library helper */
+    uint64_t unsafe_write_line(const std::string& file, const uint8_t* buffer, uint64_t length, bool append)
+    {
+        return unsafe_write_line_fw<std::string, std::ofstream, uint8_t>(file, buffer, length, append);
+    }
+    /** @internal library helper */
+    uint64_t unsafe_write_line(const std::wstring& file, const uint8_t* buffer, uint64_t length, bool append)
+    {
+        return unsafe_write_line_fw<std::string, std::ofstream, uint8_t>(omni::string::to_string(file), buffer, length, append);
+    }
+    /** @internal library helper */
+    uint64_t unsafe_write_line(const std::string& file, const int8_t* buffer, uint64_t length, bool append)
+    {
+        return unsafe_write_line_fw<std::string, std::ofstream, int8_t>(file, buffer, length, append);
+    }
+    /** @internal library helper */
+    uint64_t unsafe_write_line(const std::wstring& file, const int8_t* buffer, uint64_t length, bool append)
+    {
+        return unsafe_write_line_fw<std::string, std::ofstream, int8_t>(omni::string::to_string(file), buffer, length, append);
     }
 
     } } }
 #endif // OMNI_IO_FILE_INTERNAL_FW
 
 bool omni::io::OMNI_PATH_FW::copy(const OMNI_STRING_T_FW& file, const OMNI_STRING_T_FW& new_name) { return omni::io::OMNI_PATH_FW::copy(file, new_name, false); }
+bool omni::io::OMNI_PATH_FW::create(const OMNI_STRING_T_FW& file, bool create_path) { return omni::io::file_internal::create(file, create_path); }
 bool omni::io::OMNI_PATH_FW::create(const OMNI_STRING_T_FW& file) { return omni::io::OMNI_PATH_FW::create(file, true); }
+bool omni::io::OMNI_PATH_FW::exists(const OMNI_STRING_T_FW& file) { return omni::io::file_internal::exists(file); }
 bool omni::io::OMNI_PATH_FW::exist(const OMNI_STRING_T_FW& file) { return omni::io::OMNI_PATH_FW::exists(file); }
 bool omni::io::OMNI_PATH_FW::move(const OMNI_STRING_T_FW& file, const OMNI_STRING_T_FW& new_name) { return omni::io::OMNI_PATH_FW::move(file, new_name, false); }
 bool omni::io::OMNI_PATH_FW::rename(const OMNI_STRING_T_FW& file, const OMNI_STRING_T_FW& new_name, bool create_path) { return omni::io::OMNI_PATH_FW::move(file, new_name, create_path); }
 bool omni::io::OMNI_PATH_FW::rename(const OMNI_STRING_T_FW& file, const OMNI_STRING_T_FW& new_name) { return omni::io::OMNI_PATH_FW::rename(file, new_name, false); }
-uint64_t omni::io::OMNI_PATH_FW::write(const OMNI_STRING_T_FW& file, const omni::seq::uchar_t& buffer) { return omni::io::OMNI_PATH_FW::write(file, buffer, false); }
-uint64_t omni::io::OMNI_PATH_FW::write(const OMNI_STRING_T_FW& file, const omni::seq::char_t& buffer) { return omni::io::OMNI_PATH_FW::write(file, buffer, false); }
-uint64_t omni::io::OMNI_PATH_FW::write(const OMNI_STRING_T_FW& file, const OMNI_STRING_T_FW& buffer) { return omni::io::OMNI_PATH_FW::write(file, buffer, false); }
-uint64_t omni::io::OMNI_PATH_FW::write_raw(const OMNI_STRING_T_FW& file, const unsigned char* buffer, uint64_t length) { return omni::io::OMNI_PATH_FW::write_raw(file, buffer, length, false); }
-uint64_t omni::io::OMNI_PATH_FW::write_raw(const OMNI_STRING_T_FW& file, const char* buffer, uint64_t length) { return omni::io::OMNI_PATH_FW::write_raw(file, buffer, length, false); }
-uint64_t omni::io::OMNI_PATH_FW::write_line(const OMNI_STRING_T_FW& file, const omni::seq::uchar_t& buffer) { return omni::io::OMNI_PATH_FW::write_line(file, buffer, false); }
-uint64_t omni::io::OMNI_PATH_FW::write_line(const OMNI_STRING_T_FW& file, const omni::seq::char_t& buffer) { return omni::io::OMNI_PATH_FW::write_line(file, buffer, false); }
-uint64_t omni::io::OMNI_PATH_FW::write_line(const OMNI_STRING_T_FW& file, const OMNI_STRING_T_FW& buffer) { return omni::io::OMNI_PATH_FW::write_line(file, buffer, false); }
-uint64_t omni::io::OMNI_PATH_FW::write_line_raw(const OMNI_STRING_T_FW& file, const unsigned char* buffer, uint64_t length) { return omni::io::OMNI_PATH_FW::write_line_raw(file, buffer, length, false); }
-uint64_t omni::io::OMNI_PATH_FW::write_line_raw(const OMNI_STRING_T_FW& file, const char* buffer, uint64_t length) { return omni::io::OMNI_PATH_FW::write_line_raw(file, buffer, length, false); }
+uint64_t omni::io::OMNI_PATH_FW::read(const OMNI_STRING_T_FW& file, omni::seq::char_t& buffer) { return omni::io::file_internal::read(file, buffer); }
+uint64_t omni::io::OMNI_PATH_FW::read(const OMNI_STRING_T_FW& file, omni::seq::wide_char_t& buffer) { return omni::io::file_internal::read(file, buffer); }
+uint64_t omni::io::OMNI_PATH_FW::read(const OMNI_STRING_T_FW& file, omni::seq::uint8_t& buffer) { return omni::io::file_internal::read(file, buffer); }
+uint64_t omni::io::OMNI_PATH_FW::read(const OMNI_STRING_T_FW& file, omni::seq::int8_t& buffer) { return omni::io::file_internal::read(file, buffer); }
+uint64_t omni::io::OMNI_PATH_FW::read(const OMNI_STRING_T_FW& file, OMNI_STRING_T_FW& buffer) { return omni::io::file_internal::read(file, buffer); }
+uint64_t omni::io::OMNI_PATH_FW::unsafe_read(const OMNI_STRING_T_FW& file, char* buffer, uint64_t length) { return omni::io::file_internal::unsafe_read(file, buffer, length); }
+uint64_t omni::io::OMNI_PATH_FW::unsafe_read(const OMNI_STRING_T_FW& file, wchar_t* buffer, uint64_t length) { return omni::io::file_internal::unsafe_read(file, buffer, length); }
+uint64_t omni::io::OMNI_PATH_FW::unsafe_read(const OMNI_STRING_T_FW& file, uint8_t* buffer, uint64_t length) { return omni::io::file_internal::unsafe_read(file, buffer, length); }
+uint64_t omni::io::OMNI_PATH_FW::unsafe_read(const OMNI_STRING_T_FW& file, int8_t* buffer, uint64_t length) { return omni::io::file_internal::unsafe_read(file, buffer, length); }
+uint64_t omni::io::OMNI_PATH_FW::write(const OMNI_STRING_T_FW& file, const omni::seq::char_t& buffer) { return omni::io::file_internal::write(file, buffer, false); }
+uint64_t omni::io::OMNI_PATH_FW::write(const OMNI_STRING_T_FW& file, const omni::seq::wide_char_t& buffer) { return omni::io::file_internal::write(file, buffer, false); }
+uint64_t omni::io::OMNI_PATH_FW::write(const OMNI_STRING_T_FW& file, const omni::seq::uint8_t& buffer) { return omni::io::file_internal::write(file, buffer, false); }
+uint64_t omni::io::OMNI_PATH_FW::write(const OMNI_STRING_T_FW& file, const omni::seq::int8_t& buffer) { return omni::io::file_internal::write(file, buffer, false); }
+uint64_t omni::io::OMNI_PATH_FW::write(const OMNI_STRING_T_FW& file, const OMNI_STRING_T_FW& buffer) { return omni::io::file_internal::write(file, buffer, false); }
+uint64_t omni::io::OMNI_PATH_FW::unsafe_write(const OMNI_STRING_T_FW& file, const char* buffer, uint64_t length) { return omni::io::file_internal::unsafe_write(file, buffer, length, false); }
+uint64_t omni::io::OMNI_PATH_FW::unsafe_write(const OMNI_STRING_T_FW& file, const wchar_t* buffer, uint64_t length) { return omni::io::file_internal::unsafe_write(file, buffer, length, false); }
+uint64_t omni::io::OMNI_PATH_FW::unsafe_write(const OMNI_STRING_T_FW& file, const uint8_t* buffer, uint64_t length) { return omni::io::file_internal::unsafe_write(file, buffer, length, false); }
+uint64_t omni::io::OMNI_PATH_FW::unsafe_write(const OMNI_STRING_T_FW& file, const int8_t* buffer, uint64_t length) { return omni::io::file_internal::unsafe_write(file, buffer, length, false); }
+uint64_t omni::io::OMNI_PATH_FW::write_line(const OMNI_STRING_T_FW& file, const omni::seq::char_t& buffer) { return omni::io::file_internal::write_line(file, buffer, false); }
+uint64_t omni::io::OMNI_PATH_FW::write_line(const OMNI_STRING_T_FW& file, const omni::seq::wide_char_t& buffer) { return omni::io::file_internal::write_line(file, buffer, false); }
+uint64_t omni::io::OMNI_PATH_FW::write_line(const OMNI_STRING_T_FW& file, const omni::seq::uint8_t& buffer) { return omni::io::file_internal::write_line(file, buffer, false); }
+uint64_t omni::io::OMNI_PATH_FW::write_line(const OMNI_STRING_T_FW& file, const omni::seq::int8_t& buffer) { return omni::io::file_internal::write_line(file, buffer, false); }
+uint64_t omni::io::OMNI_PATH_FW::write_line(const OMNI_STRING_T_FW& file, const OMNI_STRING_T_FW& buffer) { return omni::io::file_internal::write_line(file, buffer, false); }
+uint64_t omni::io::OMNI_PATH_FW::unsafe_write_line(const OMNI_STRING_T_FW& file, const char* buffer, uint64_t length) { return omni::io::file_internal::unsafe_write_line(file, buffer, length, false); }
+uint64_t omni::io::OMNI_PATH_FW::unsafe_write_line(const OMNI_STRING_T_FW& file, const wchar_t* buffer, uint64_t length) { return omni::io::file_internal::unsafe_write_line(file, buffer, length, false); }
+uint64_t omni::io::OMNI_PATH_FW::unsafe_write_line(const OMNI_STRING_T_FW& file, const uint8_t* buffer, uint64_t length) { return omni::io::file_internal::unsafe_write_line(file, buffer, length, false); }
+uint64_t omni::io::OMNI_PATH_FW::unsafe_write_line(const OMNI_STRING_T_FW& file, const int8_t* buffer, uint64_t length) { return omni::io::file_internal::unsafe_write_line(file, buffer, length, false); }
+uint64_t omni::io::OMNI_PATH_FW::write(const OMNI_STRING_T_FW& file, const omni::seq::char_t& buffer, bool append) { return omni::io::file_internal::write(file, buffer, append); }
+uint64_t omni::io::OMNI_PATH_FW::write(const OMNI_STRING_T_FW& file, const omni::seq::wide_char_t& buffer, bool append) { return omni::io::file_internal::write(file, buffer, append); }
+uint64_t omni::io::OMNI_PATH_FW::write(const OMNI_STRING_T_FW& file, const omni::seq::uint8_t& buffer, bool append) { return omni::io::file_internal::write(file, buffer, append); }
+uint64_t omni::io::OMNI_PATH_FW::write(const OMNI_STRING_T_FW& file, const omni::seq::int8_t& buffer, bool append) { return omni::io::file_internal::write(file, buffer, append); }
+uint64_t omni::io::OMNI_PATH_FW::write(const OMNI_STRING_T_FW& file, const OMNI_STRING_T_FW& buffer, bool append) { return omni::io::file_internal::write(file, buffer, append); }
+uint64_t omni::io::OMNI_PATH_FW::unsafe_write(const OMNI_STRING_T_FW& file, const char* buffer, uint64_t length, bool append) { return omni::io::file_internal::unsafe_write(file, buffer, length, append); }
+uint64_t omni::io::OMNI_PATH_FW::unsafe_write(const OMNI_STRING_T_FW& file, const wchar_t* buffer, uint64_t length, bool append) { return omni::io::file_internal::unsafe_write(file, buffer, length, append); }
+uint64_t omni::io::OMNI_PATH_FW::unsafe_write(const OMNI_STRING_T_FW& file, const uint8_t* buffer, uint64_t length, bool append) { return omni::io::file_internal::unsafe_write(file, buffer, length, append); }
+uint64_t omni::io::OMNI_PATH_FW::unsafe_write(const OMNI_STRING_T_FW& file, const int8_t* buffer, uint64_t length, bool append) { return omni::io::file_internal::unsafe_write(file, buffer, length, append); }
+uint64_t omni::io::OMNI_PATH_FW::write_line(const OMNI_STRING_T_FW& file, const omni::seq::char_t& buffer, bool append) { return omni::io::file_internal::write_line(file, buffer, append); }
+uint64_t omni::io::OMNI_PATH_FW::write_line(const OMNI_STRING_T_FW& file, const omni::seq::wide_char_t& buffer, bool append) { return omni::io::file_internal::write_line(file, buffer, append); }
+uint64_t omni::io::OMNI_PATH_FW::write_line(const OMNI_STRING_T_FW& file, const omni::seq::uint8_t& buffer, bool append) { return omni::io::file_internal::write_line(file, buffer, append); }
+uint64_t omni::io::OMNI_PATH_FW::write_line(const OMNI_STRING_T_FW& file, const omni::seq::int8_t& buffer, bool append) { return omni::io::file_internal::write_line(file, buffer, append); }
+uint64_t omni::io::OMNI_PATH_FW::write_line(const OMNI_STRING_T_FW& file, const OMNI_STRING_T_FW& buffer, bool append) { return omni::io::file_internal::write_line(file, buffer, append); }
+uint64_t omni::io::OMNI_PATH_FW::unsafe_write_line(const OMNI_STRING_T_FW& file, const char* buffer, uint64_t length, bool append) { return omni::io::file_internal::unsafe_write_line(file, buffer, length, append); }
+uint64_t omni::io::OMNI_PATH_FW::unsafe_write_line(const OMNI_STRING_T_FW& file, const wchar_t* buffer, uint64_t length, bool append) { return omni::io::file_internal::unsafe_write_line(file, buffer, length, append); }
+uint64_t omni::io::OMNI_PATH_FW::unsafe_write_line(const OMNI_STRING_T_FW& file, const uint8_t* buffer, uint64_t length, bool append) { return omni::io::file_internal::unsafe_write_line(file, buffer, length, append); }
+uint64_t omni::io::OMNI_PATH_FW::unsafe_write_line(const OMNI_STRING_T_FW& file, const int8_t* buffer, uint64_t length, bool append) { return omni::io::file_internal::unsafe_write_line(file, buffer, length, append); }
 
 bool omni::io::OMNI_PATH_FW::copy(const OMNI_STRING_T_FW& file, const OMNI_STRING_T_FW& new_name, bool overwrite)
 {
@@ -931,16 +1063,6 @@ bool omni::io::OMNI_PATH_FW::copy(const OMNI_STRING_T_FW& file, const OMNI_STRIN
         return omni::io::file_internal::exists(new_name);
     }
     return false;
-}
-
-bool omni::io::OMNI_PATH_FW::create(const OMNI_STRING_T_FW& file, bool create_path)
-{
-    return omni::io::file_internal::create(file, create_path);
-}
-
-bool omni::io::OMNI_PATH_FW::exists(const OMNI_STRING_T_FW& file)
-{
-    return omni::io::file_internal::exists(file);
 }
 
 OMNI_STRING_T_FW omni::io::OMNI_PATH_FW::get_contents(const OMNI_STRING_T_FW& file)
@@ -970,31 +1092,6 @@ bool omni::io::OMNI_PATH_FW::move(const OMNI_STRING_T_FW& file, const OMNI_STRIN
     return omni::io::file_internal::mv(file, new_name, create_path);
 }
 
-uint64_t omni::io::OMNI_PATH_FW::read(const OMNI_STRING_T_FW& file, omni::seq::uchar_t& buffer)
-{
-    return omni::io::file_internal::read(file, buffer);
-}
-
-uint64_t omni::io::OMNI_PATH_FW::read(const OMNI_STRING_T_FW& file, omni::seq::char_t& buffer)
-{
-    return omni::io::file_internal::read(file, buffer);
-}
-
-uint64_t omni::io::OMNI_PATH_FW::read(const OMNI_STRING_T_FW& file, OMNI_STRING_T_FW& buffer)
-{
-    return omni::io::file_internal::read(file, buffer);
-}
-
-uint64_t omni::io::OMNI_PATH_FW::read_raw(const OMNI_STRING_T_FW& file, unsigned char* buffer, uint64_t length)
-{
-    return omni::io::file_internal::read_raw(file, buffer, length);
-}
-
-uint64_t omni::io::OMNI_PATH_FW::read_raw(const OMNI_STRING_T_FW& file, char* buffer, uint64_t length)
-{
-    return omni::io::file_internal::read_raw(file, buffer, length);
-}
-
 bool omni::io::OMNI_PATH_FW::remove(const OMNI_STRING_T_FW& file)
 {
     if (!omni::io::file_internal::exists(file)) {
@@ -1022,66 +1119,16 @@ bool omni::io::OMNI_PATH_FW::set_size(const OMNI_STRING_T_FW& file, uint64_t siz
     // This function CAN destroy data. This functions uses API to extend or shorten
     // a file. If data is in the file and you extend the file, the data will stay
     // in place and the file length will simple be extended. If you shorten the file
-    // the data at the end of the file will be freed (in other words, it won't be deleted
+    // the data at the end of the file will be freed (in other words, it will not be deleted
     // simply not associated with a file).
 
     // DEV_NOTE: It is possible, though uncommon, for an extended file to contain random
     // data where the file has been extended. This is typical of a sparse file. It is common
-    // in Unix/Linux but no so much in Windows. Note that the reason we don't just write out
-    // 'length' worth of null is because depending on 'length' this could take a long time.
-    // No pun intended. Using the API to create a 'sparse' file, it simply tells the FAT
-    // (file allocation table) that file 'X' is 'length' in size
+    // in Unix/Linux but no so much in Windows. Note that the reason we do not just write out
+    // length worth of null is because depending on length this could take a long time.
+    // No pun intended. Using the API to create a sparse file, it simply tells the FAT
+    // (file allocation table) that file X is length in size
     */
     return omni::io::OMNI_PATH_FW::get_size(file) == size;
 }
 #endif
-
-uint64_t omni::io::OMNI_PATH_FW::write(const OMNI_STRING_T_FW& file, const omni::seq::uchar_t& buffer, bool append)
-{
-    return omni::io::file_internal::write(file, buffer, append);
-}
-
-uint64_t omni::io::OMNI_PATH_FW::write(const OMNI_STRING_T_FW& file, const omni::seq::char_t& buffer, bool append)
-{
-    return omni::io::file_internal::write(file, buffer, append);
-}
-
-uint64_t omni::io::OMNI_PATH_FW::write(const OMNI_STRING_T_FW& file, const OMNI_STRING_T_FW& buffer, bool append)
-{
-    return omni::io::file_internal::write(file, buffer, append);
-}
-
-uint64_t omni::io::OMNI_PATH_FW::write_raw(const OMNI_STRING_T_FW& file, const unsigned char* buffer, uint64_t length, bool append)
-{
-    return omni::io::file_internal::write_raw(file, buffer, length, append);
-}
-
-uint64_t omni::io::OMNI_PATH_FW::write_raw(const OMNI_STRING_T_FW& file, const char* buffer, uint64_t length, bool append)
-{
-    return omni::io::file_internal::write_raw(file, buffer, length, append);
-}
-
-uint64_t omni::io::OMNI_PATH_FW::write_line(const OMNI_STRING_T_FW& file, const omni::seq::uchar_t& buffer, bool append)
-{
-    return omni::io::file_internal::write_line(file, buffer, append);
-}
-
-uint64_t omni::io::OMNI_PATH_FW::write_line(const OMNI_STRING_T_FW& file, const omni::seq::char_t& buffer, bool append)
-{
-    return omni::io::file_internal::write_line(file, buffer, append);
-}
-
-uint64_t omni::io::OMNI_PATH_FW::write_line(const OMNI_STRING_T_FW& file, const OMNI_STRING_T_FW& buffer, bool append)
-{
-    return omni::io::file_internal::write_line(file, buffer, append);
-}
-
-uint64_t omni::io::OMNI_PATH_FW::write_line_raw(const OMNI_STRING_T_FW& file, const unsigned char* buffer, uint64_t length, bool append)
-{
-    return omni::io::file_internal::write_line_raw(file, buffer, length, append);
-}
-
-uint64_t omni::io::OMNI_PATH_FW::write_line_raw(const OMNI_STRING_T_FW& file, const char* buffer, uint64_t length, bool append)
-{
-    return omni::io::file_internal::write_line_raw(file, buffer, length, append);
-}

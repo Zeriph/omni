@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - OMNI_STRING_T</title>
+<link rel="stylesheet" type="text/css" href="../../content/main.css" /><link rel="icon" type="image/png" href="../../content/favicon.png" />
+<script type="text/javascript" src="../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="index.html">Source</a></li><li title="Library classes and namespaces">
+<a href="../classes/index.html">Class Index</a></li><li title="Download and view examples">
+<a href="../examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="index.html" class="current">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../api.html">System API</a></li><li title="Other Considerations">
+<a href="../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle"><a name="omni_options"></a>OMNI_STRING_T</div><div class="content"><div>
+<div class="docdiv">
+    <font class="docu">MACRO</font><br><br>
+    <code><font style="font-size:16px;">
+    <code>OMNI_STRING_T</code> - Defines the underlying string type.
+    </font></code>
+</div><br>
+<div class="docdiv">
+    <font class="docu">SYNOPSIS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    Certain portions of the framework can be wide character aware by defining the <code><a href="omni_unicode.html">OMNI_UNICODE</a></code> macro, which in turn is defined if a UNICODE macro is defined.<br>
+<br>
+If <code><a href="omni_unicode.html">OMNI_UNICODE</a></code> is defined, then the <code><a href="http://www.cplusplus.com/reference/string/">std::wstring</a></code> type is used for certain framework functionality and <code><a href="../classes/omni-string_t.html">omni::string_t</a></code> is a std::wstring.<br>
+<br>
+If it is NOT defined, then the <code><a href="http://www.cplusplus.com/reference/string/">std::string</a></code> type is used and <code><a href="../classes/omni-string_t.html">omni::string_t</a></code> is a normal <code><a href="http://www.cplusplus.com/reference/string/">std::string</a></code> type.
+</div><br>
+<div class="docdiv">
+    <font class="docu">DESCRIPTION</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    To be deterministic (i.e. the same input/output across platforms), the <code><a href="omni_char_t.html">OMNI_CHAR_T</a></code> and OMNI_STRING_t types are defined based on the <code><a href="omni_unicode.html">OMNI_UNICODE</a></code> flag. Windows platforms/builds typically reference the wide character functions of the Windows API (i.e. the <code><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa364934%28v=vs.85%29.aspx">GetCurrentDirectory</a></code> function is a macro alias to either the <code>GetCurrentDirectoryW</code> or <code>GetCurrentDirectoryA</code> functions which operate on the <code>wchar_t</code> and <code>char</code> types respectively), as such, to not have the developer have to worry about what character type to use when using a certain Omni API on a specific platform, you can utilize the <code><a href="omni_char_t.html">OMNI_CHAR_T</a></code> and <code><a href="omni_string_t.html">OMNI_STRING_T</a></code> compile flags to ensure the proper type is used across platforms/builds.
+</div><br>
+<div class="docdiv">
+    <font class="docu">CONSIDERATIONS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    No special considerations
+</div><br>
+<div class="docdiv">
+    <font class="docu">PLATFORM SPECIFIC</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    Although this flag is used to help certain cross-platform issues, it does not have any platform specific notes.
+</div><br>
+<div class="docdiv">
+    <font class="docu">NOTES</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    None.
+</div><br>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

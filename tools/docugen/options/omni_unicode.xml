@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_UNICODE</Name>
+  <Brief>Defined if a Unicode build is detected.</Brief>
+  <Considerations>You will only need to be aware the default string and char types used in the framework are of the std::wstring and @c wchar_t types if this flag is defined, otherwise it will be the std::string and @c char types respectively.</Considerations>
+  <Description>If this flag is defined the Omni framework will enable wide character support on any system functions or API's and the omni::string_t and omni::char_t types will be defined as the std::wstring and @c wchar_t types. If this flag is not defined then the std::string and @c char types will be used and wide character support is only available if explicitly used; calling omni::string::util::to_wstring, for example, will always return a std::wstring type, but calling omni::string::util::to_string_t will return a std::string if OMNI_UNICODE is NOT defined, and will return a std::wstring if it &lt;b&gt;is&lt;/b&gt; defined.</Description>
+  <Notes>None.</Notes>
+  <PlatformSpecific>No special considerations.</PlatformSpecific>
+  <Synopsis>This flag is defined if one of the following compile flags is defined:
+
+@code
+#if defined(__UNICODE__) || defined(UNICODE) || defined(_UNICODE) || defined(__UNICODE)
+    #define OMNI_UNICODE
+#endif
+@code</Synopsis>
+  <IsHelper>true</IsHelper>
+  <IsConstant>false</IsConstant>
+</MacroOp>

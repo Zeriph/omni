@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - class: omni::sync::thread</title>
+<link rel="stylesheet" type="text/css" href="../../content/main.css" /><link rel="icon" type="image/png" href="../../content/favicon.png" />
+<script type="text/javascript" src="../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="../htmlsrc/index.html">Source</a></li><li title="Library classes and namespaces">
+<a href="index.html" class="current">Class Index</a></li><li title="Download and view examples">
+<a href="../examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="../options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../api.html">System API</a></li><li title="Other Considerations">
+<a href="../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle">omni::sync::thread</div><div class="content"><div>
+<div class="docdiv"><a name="nm"></a>
+<font class="docu">NAME</font><br><br>
+<code><a href="../htmlsrc/omni/sync/thread.hpp.html#omni::sync::thread" class="chnm">
+    omni::sync::thread
+    </a></code><br>
+<br>A class of <a href="omni-sync.html" class="code">omni::sync</a><br><br>
+    <code><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/sync/thread.hpp.html">omni/sync/thread.hpp</a>&gt;</font></code><br><code>class omni::sync::thread</code><br>
+    <br>
+    <font class="docu">MEMBERS</font><br>
+    <br>
+    <code> <a href="../classes/omni-sync-thread-thread.html">omni::sync::thread::thread</a>()<br>
+     <a href="../classes/omni-sync-thread-@7Ethread.html">omni::sync::thread::~thread</a>()<br>
+    <font class="syn_typ">void</font> <a href="../classes/omni-sync-thread-abort.html">omni::sync::thread::abort</a>()<br>
+    <font class="syn_typ">bool</font> <a href="../classes/omni-sync-thread-abort_join.html">omni::sync::thread::abort_join</a>()<br>
+    static <font class="syn_typ">bool</font> <a href="../classes/omni-sync-thread-abort_requested.html">omni::sync::thread::abort_requested</a>()<br>
+    <font class="syn_typ">bool</font> omni::sync::thread::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a>(<font class="syn_typ">const</font> <a href="../classes/omni-sync-parameterized_thread_start.html">omni::sync::parameterized_thread_start</a>&amp; mthd)<br>
+    <font class="syn_typ">void</font> <a href="../classes/omni-sync-thread-detach.html">omni::sync::thread::detach</a>()<br>
+    <font class="syn_typ">const</font> <a href="../classes/omni-sync-thread_union_t.html">omni::sync::thread_union_t</a> <a href="../classes/omni-sync-thread-get_option.html">omni::sync::thread::get_option</a>(<a href="../classes/omni-sync-thread_option-enum_t.html">omni::sync::thread_option::enum_t</a> op)<br>
+    <a href="../classes/omni-sync-thread_handle_t.html">omni::sync::thread_handle_t</a> <a href="../classes/omni-sync-thread-handle.html">omni::sync::thread::handle</a>()<br>
+    <font class="syn_typ">uint64_t</font> <a href="../classes/omni-sync-thread-hash.html">omni::sync::thread::hash</a>()<br>
+    <a href="../classes/omni-sync-thread_t.html">omni::sync::thread_t</a> <a href="../classes/omni-sync-thread-id.html">omni::sync::thread::id</a>()<br>
+    <font class="syn_typ">bool</font> <a href="../classes/omni-sync-thread-is_alive.html">omni::sync::thread::is_alive</a>()<br>
+    <font class="syn_typ">bool</font> <a href="../classes/omni-sync-thread-is_bound.html">omni::sync::thread::is_bound</a>()<br>
+    <font class="syn_typ">bool</font> <a href="../classes/omni-sync-thread-is_detached.html">omni::sync::thread::is_detached</a>()<br>
+    <font class="syn_typ">bool</font> <a href="../classes/omni-sync-thread-is_parameter_bound.html">omni::sync::thread::is_parameter_bound</a>()<br>
+    <font class="syn_typ">bool</font> <a href="../classes/omni-sync-thread-join.html">omni::sync::thread::join</a>()<br>
+    <font class="syn_typ">bool</font> <a href="../classes/omni-sync-thread-kill.html">omni::sync::thread::kill</a>()<br>
+    <a href="../classes/omni-sync-thread_flags.html">omni::sync::thread_flags</a> <a href="../classes/omni-sync-thread-options.html">omni::sync::thread::options</a>()<br>
+    <a href="../classes/omni-sync-thread_priority.html">omni::sync::thread_priority</a> <a href="../classes/omni-sync-thread-priority.html">omni::sync::thread::priority</a>()<br>
+    static <font class="syn_typ">void</font> <a href="../classes/omni-sync-thread-request_abort.html">omni::sync::thread::request_abort</a>(<a href="../classes/omni-sync-thread_t.html">omni::sync::thread_t</a> tid)<br>
+    <font class="syn_typ">bool</font> <a href="../classes/omni-sync-thread-reset.html">omni::sync::thread::reset</a>()<br>
+    <font class="syn_typ">bool</font> <a href="../classes/omni-sync-thread-restart.html">omni::sync::thread::restart</a>()<br>
+    <font class="syn_typ">void</font> <a href="../classes/omni-sync-thread-set_option.html">omni::sync::thread::set_option</a>(<a href="../classes/omni-sync-thread_option-enum_t.html">omni::sync::thread_option::enum_t</a> op, <a href="../classes/omni-sync-thread_union_t.html">omni::sync::thread_union_t</a> val)<br>
+    <font class="syn_typ">void</font> <a href="../classes/omni-sync-thread-set_options.html">omni::sync::thread::set_options</a>(<font class="syn_typ">unsigned</font> <font class="syn_typ">char</font> op, <font class="syn_typ">bool</font> val)<br>
+    <font class="syn_typ">void</font> <a href="../classes/omni-sync-thread-set_priority.html">omni::sync::thread::set_priority</a>(<a href="../classes/omni-sync-thread_priority-enum_t.html">omni::sync::thread_priority::enum_t</a> p)<br>
+    <a href="../classes/omni-sync-thread_t.html">omni::sync::thread_t</a> <a href="../classes/omni-sync-thread-start.html">omni::sync::thread::start</a>()<br>
+    <a href="../classes/omni-sync-thread_state.html">omni::sync::thread_state</a> <a href="../classes/omni-sync-thread-status.html">omni::sync::thread::status</a>()<br>
+    <font class="syn_typ">void</font> <a href="../classes/omni-sync-thread-swap.html">omni::sync::thread::swap</a>(<a href="../classes/omni-sync-thread.html">omni::sync::thread</a>&amp; other)<br>
+    <font class="syn_typ">uint64_t</font> <a href="../classes/omni-sync-thread-type.html">omni::sync::thread::type</a>()<br>
+    <font class="syn_typ">bool</font> <a href="../classes/omni-sync-thread-unbind.html">omni::sync::thread::unbind</a>()<br>
+    <font class="syn_typ">bool</font> omni::sync::thread::<font class="syn_ins">operator</font>!=(<font class="syn_typ">const</font> <a href="../classes/omni-sync-thread.html">omni::sync::thread</a>&amp; other)<br>
+    <a href="../classes/omni-sync-thread.html">omni::sync::thread</a>&amp; omni::sync::thread::<font class="syn_ins">operator</font>=(<font class="syn_typ">const</font> <a href="../classes/omni-sync-thread.html">omni::sync::thread</a>&amp; other)<br>
+    <font class="syn_typ">bool</font> omni::sync::thread::<font class="syn_ins">operator</font>==(<font class="syn_typ">const</font> <a href="../classes/omni-sync-thread.html">omni::sync::thread</a>&amp; other)<br>
+    <a href="../classes/omni-sync-thread-aborted.html">omni::sync::thread::aborted</a><br>
+    <a href="../classes/omni-sync-thread-completed.html">omni::sync::thread::completed</a><br>
+    <a href="../classes/omni-sync-thread-disposing.html">omni::sync::thread::disposing</a><br>
+    <a href="../classes/omni-sync-thread-name.html">omni::sync::thread::name</a><br>
+    <a href="../classes/omni-sync-thread-delegate.html">omni::sync::thread::delegate</a><br>
+    <a href="../classes/omni-sync-thread-event.html">omni::sync::thread::event</a><br>
+    </code>
+</div><br>
+<div class="docdiv"><a name="syn"></a>
+<font class="docu">SYNOPSIS</font><br><br>
+No synopsis.
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<div class="docdiv"><a name="desc"></a>
+<font class="docu">DESCRIPTION</font><br><br>
+No description.
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+
+
+
+
+
+
+
+
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

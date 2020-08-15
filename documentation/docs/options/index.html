@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - Library Options</title>
+<link rel="stylesheet" type="text/css" href="../../content/main.css" /><link rel="icon" type="image/png" href="../../content/favicon.png" />
+<script type="text/javascript" src="../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="../htmlsrc/index.html">Source</a></li><li title="Library classes and namespaces">
+<a href="../classes/index.html">Class Index</a></li><li title="Download and view examples">
+<a href="../examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="index.html" class="current">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../api.html">System API</a></li><li title="Other Considerations">
+<a href="../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<a name="omni_options"></a><div class="ptitle">Library Options</div><div class="content"><div>
+The Omni library has a compendium of macros and compiler options that are used both internally (helper macros)
+and externally (via compiler options). Certain macros and options will change how certain portions of the library
+will be used (underlying structures/logic, etc.), this granular control allows a developer to customize the library to
+better suit their developmental needs.<br><br>
+<a name="options"></a><div class="ops"><font>Compiler Options</font><br>
+The following is a list of compiler options that can effect how the library is built and/or operates.
+<input type="checkbox" name="comp_ops" id="comp_ops" /><label for="comp_ops"></label><ul name="ulo" id="ulo">
+    <li><code><a href="omni_180_pi_f.html">OMNI_180_PI_F</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_180_pi_l.html">OMNI_180_PI_L</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_allow_ub.html">OMNI_ALLOW_UB</a></code> - If defined, this allows the framework to compile with undefined behavior.</li>
+    <li><code><a href="omni_aplnl.html">OMNI_APLNL</a></code> - If defined, uses the \r new line instead of \n.</li>
+    <li><code><a href="omni_arch_amd64.html">OMNI_ARCH_AMD64</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_arch_arm.html">OMNI_ARCH_ARM</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_arch_arm64.html">OMNI_ARCH_ARM64</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_arch_blackfin.html">OMNI_ARCH_BLACKFIN</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_arch_convex.html">OMNI_ARCH_CONVEX</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_arch_dec_alpha.html">OMNI_ARCH_DEC_ALPHA</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_arch_epiphany.html">OMNI_ARCH_EPIPHANY</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_arch_hppa_risc.html">OMNI_ARCH_HPPA_RISC</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_arch_ignore.html">OMNI_ARCH_IGNORE</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_arch_intel_ia64.html">OMNI_ARCH_INTEL_IA64</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_arch_intel_x86.html">OMNI_ARCH_INTEL_X86</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_arch_mips.html">OMNI_ARCH_MIPS</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_arch_motorola_68k.html">OMNI_ARCH_MOTOROLA_68K</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_arch_power_pc.html">OMNI_ARCH_POWER_PC</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_arch_pyramid_9810.html">OMNI_ARCH_PYRAMID_9810</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_arch_rs600.html">OMNI_ARCH_RS600</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_arch_sparc.html">OMNI_ARCH_SPARC</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_arch_super_h.html">OMNI_ARCH_SUPER_H</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_arch_system_z.html">OMNI_ARCH_SYSTEM_Z</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_arch_tms320.html">OMNI_ARCH_TMS320</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_arch_tms470.html">OMNI_ARCH_TMS470</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_base_locale.html">OMNI_BASE_LOCALE</a></code> - Defines</li>
+    <li><code><a href="omni_base_locale_category.html">OMNI_BASE_LOCALE_CATEGORY</a></code> - Defines</li>
+    <li><code><a href="omni_build_unsafe.html">OMNI_BUILD_UNSAFE</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_check_arithmetic_overflow.html">OMNI_CHECK_ARITHMETIC_OVERFLOW</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_chrono_auto_init_tick.html">OMNI_CHRONO_AUTO_INIT_TICK</a></code> - If defined, <code><a href="../classes/omni-chrono-monotonic-tick.html">omni::chrono::monotonic::tick</a></code> will initialize on first call.</li>
+    <li><code><a href="omni_clock_getres_realtime.html">OMNI_CLOCK_GETRES_REALTIME</a></code> - Changes the behavior of the <code><a href="http://pubs.opengroup.org/onlinepubs/9699919799/functions/clock_getres.html">clock_getres</a></code></li>
+    <li><code><a href="omni_code_page.html">OMNI_CODE_PAGE</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_comma_wchar.html">OMNI_COMMA_WCHAR</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_dispose_event.html">OMNI_DISPOSE_EVENT</a></code> - If defined, classes within the framework will have a disposing event.</li>
+    <li><code><a href="omni_enable_cxx.html">OMNI_ENABLE_CXX</a></code> - Enable a set of C++11 features.</li>
+    <li><code><a href="omni_enum.html">OMNI_ENUM</a></code> - A</li>
+    <li><code><a href="omni_enum_assigned.html">OMNI_ENUM_ASSIGNED</a></code> - A</li>
+    <li><code><a href="omni_enum_assigned_parsers.html">OMNI_ENUM_ASSIGNED_PARSERS</a></code> - A</li>
+    <li><code><a href="omni_enum_default.html">OMNI_ENUM_DEFAULT</a></code> - Defines</li>
+    <li><code><a href="omni_enum_define.html">OMNI_ENUM_DEFINE</a></code> - A</li>
+    <li><code><a href="omni_enum_end.html">OMNI_ENUM_END</a></code> - Defines</li>
+    <li><code><a href="omni_enum_include_type.html">OMNI_ENUM_INCLUDE_TYPE</a></code> - If</li>
+    <li><code><a href="omni_env_wordexp.html">OMNI_ENV_WORDEXP</a></code> - If defined, <code><a href="http://pubs.opengroup.org/onlinepubs/9699919799/functions/wordexp.html">wordexp</a></code> functionality is used in <code><a href="../classes/omni-environment-expand_vars.html">omni::environment::expand_vars</a></code></li>
+    <li><code><a href="omni_err_base_str.html">OMNI_ERR_BASE_STR</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_err_parse_str.html">OMNI_ERR_PARSE_STR</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_err_range_str.html">OMNI_ERR_RANGE_STR</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_err_socket_str.html">OMNI_ERR_SOCKET_STR</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_exception_terminate.html">OMNI_EXCEPTION_TERMINATE</a></code> - The call made when an exception happens within an omni::execption.</li>
+    <li><code><a href="omni_fw_ver_use_time.html">OMNI_FW_VER_USE_TIME</a></code> - The framework will use the build time in framework version string.</li>
+    <li><code><a href="omni_heavy_object_compare.html">OMNI_HEAVY_OBJECT_COMPARE</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_invalid_delegate_invoke_str.html">OMNI_INVALID_DELEGATE_INVOKE_STR</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_invalid_enum.html">OMNI_INVALID_ENUM</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_invalid_socket.html">OMNI_INVALID_SOCKET</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_invalid_thread_owner.html">OMNI_INVALID_THREAD_OWNER</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_io_file_ftruncate_fn.html">OMNI_IO_FILE_FTRUNCATE_FN</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_io_file_truncate_fn.html">OMNI_IO_FILE_TRUNCATE_FN</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_io_use_truncate.html">OMNI_IO_USE_TRUNCATE</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_lite.html">OMNI_LITE</a></code> - Enables certain flags that trim portions of code.</li>
+    <li><code><a href="omni_macro_arg_count.html">OMNI_MACRO_ARG_COUNT</a></code> - A</li>
+    <li><code><a href="omni_minus_wchar.html">OMNI_MINUS_WCHAR</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_msg_eor.html">OMNI_MSG_EOR</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_mutex_owner.html">OMNI_MUTEX_OWNER</a></code> - Sets the <code><a href="../classes/omni-sync-mutex.html">omni::sync::mutex</a></code> to keep track of owning thread.</li>
+    <li><code><a href="omni_nan_err_str.html">OMNI_NAN_ERR_STR</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_nchar_wchar.html">OMNI_NCHAR_WCHAR</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_net_lib.html">OMNI_NET_LIB</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_non_portable.html">OMNI_NON_PORTABLE</a></code> - If defined, the framework will enable non-portable code.</li>
+    <li><code><a href="omni_no_base_setlocale.html">OMNI_NO_BASE_SETLOCALE</a></code> - Disables the setlocale function in the <code><a href="../classes/omni-application.html">omni::application</a></code></li>
+    <li><code><a href="omni_no_check_arithmetic_overflow.html">OMNI_NO_CHECK_ARITHMETIC_OVERFLOW</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_no_chrono_auto_init_tick.html">OMNI_NO_CHRONO_AUTO_INIT_TICK</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_no_clink.html">OMNI_NO_CLINK</a></code> - Does not link certain portions of the framework with <code>C</code> linkage</li>
+    <li><code><a href="omni_no_clock_getres_realtime.html">OMNI_NO_CLOCK_GETRES_REALTIME</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_no_cstdint.html">OMNI_NO_CSTDINT</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_no_dispose_event.html">OMNI_NO_DISPOSE_EVENT</a></code> - Disables the <code><a href="omni_dispose_event.html">OMNI_DISPOSE_EVENT</a></code> macro</li>
+    <li><code><a href="omni_no_env_wordexp.html">OMNI_NO_ENV_WORDEXP</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_no_except.html">OMNI_NO_EXCEPT</a></code> - Disables exception handling in the framework</li>
+    <li><code><a href="omni_no_extern_consts.html">OMNI_NO_EXTERN_CONSTS</a></code> - If defined, Omni constants will not have external linkage</li>
+    <li><code><a href="omni_no_fw_ver.html">OMNI_NO_FW_VER</a></code> - Disables the framework version header from being baked into the framework.</li>
+    <li><code><a href="omni_no_fw_ver_use_time.html">OMNI_NO_FW_VER_USE_TIME</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_no_heavy_object_compare.html">OMNI_NO_HEAVY_OBJECT_COMPARE</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_no_mutex_owner.html">OMNI_NO_MUTEX_OWNER</a></code> - Disables the <code><a href="omni_mutex_owner.html">OMNI_MUTEX_OWNER</a></code> macro</li>
+    <li><code><a href="omni_no_non_portable.html">OMNI_NO_NON_PORTABLE</a></code> - Disables the <code><a href="omni_non_portable.html">OMNI_NON_PORTABLE</a></code> macro</li>
+    <li><code><a href="omni_no_object_name.html">OMNI_NO_OBJECT_NAME</a></code> - Disables the <code><a href="omni_object_name.html">OMNI_OBJECT_NAME</a></code> macro</li>
+    <li><code><a href="omni_no_printl.html">OMNI_NO_PRINTL</a></code> - Disables the defined <code>println</code> macro.</li>
+    <li><code><a href="omni_no_proc_sys.html">OMNI_NO_PROC_SYS</a></code> - Does not use the <code>proc</code> file system for system path.</li>
+    <li><code><a href="omni_no_safe_application.html">OMNI_NO_SAFE_APPLICATION</a></code> - Disables the <code><a href="omni_safe_application.html">OMNI_SAFE_APPLICATION</a></code> macro</li>
+    <li><code><a href="omni_no_safe_async_timer.html">OMNI_NO_SAFE_ASYNC_TIMER</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_no_safe_basic_thread.html">OMNI_NO_SAFE_BASIC_THREAD</a></code> - Disables the <code><a href="omni_safe_basic_thread.html">OMNI_SAFE_BASIC_THREAD</a></code> macro</li>
+    <li><code><a href="omni_no_safe_chrono.html">OMNI_NO_SAFE_CHRONO</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_no_safe_color.html">OMNI_NO_SAFE_COLOR</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_no_safe_datetime.html">OMNI_NO_SAFE_DATETIME</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_no_safe_delegates.html">OMNI_NO_SAFE_DELEGATES</a></code> - Disables the <code><a href="omni_safe_delegates.html">OMNI_SAFE_DELEGATES</a></code> macro</li>
+    <li><code><a href="omni_no_safe_drop_timer.html">OMNI_NO_SAFE_DROP_TIMER</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_no_safe_events.html">OMNI_NO_SAFE_EVENTS</a></code> - Disables the <code><a href="omni_safe_events.html">OMNI_SAFE_EVENTS</a></code> macro</li>
+    <li><code><a href="omni_no_safe_geometry.html">OMNI_NO_SAFE_GEOMETRY</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_no_safe_geo_size.html">OMNI_NO_SAFE_GEO_SIZE</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_no_safe_library.html">OMNI_NO_SAFE_LIBRARY</a></code> - Disables the <code><a href="omni_safe_library.html">OMNI_SAFE_LIBRARY</a></code> macro</li>
+    <li><code><a href="omni_no_safe_locks.html">OMNI_NO_SAFE_LOCKS</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_no_safe_mutex.html">OMNI_NO_SAFE_MUTEX</a></code> - Disables the <code><a href="omni_safe_mutex.html">OMNI_SAFE_MUTEX</a></code> macro</li>
+    <li><code><a href="omni_no_safe_net.html">OMNI_NO_SAFE_NET</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_no_safe_point2d.html">OMNI_NO_SAFE_POINT2D</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_no_safe_point3d.html">OMNI_NO_SAFE_POINT3D</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_no_safe_prop.html">OMNI_NO_SAFE_PROP</a></code> - Disables the <code><a href="omni_safe_prop.html">OMNI_SAFE_PROP</a></code> macro</li>
+    <li><code><a href="omni_no_safe_queue_timer.html">OMNI_NO_SAFE_QUEUE_TIMER</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_no_safe_rectangle.html">OMNI_NO_SAFE_RECTANGLE</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_no_safe_runnable_thread.html">OMNI_NO_SAFE_RUNNABLE_THREAD</a></code> - Disables the <code><a href="omni_safe_runnable_thread.html">OMNI_SAFE_RUNNABLE_THREAD</a></code> macro</li>
+    <li><code><a href="omni_no_safe_semaphore.html">OMNI_NO_SAFE_SEMAPHORE</a></code> - Disables the <code><a href="omni_safe_semaphore.html">OMNI_SAFE_SEMAPHORE</a></code> macro</li>
+    <li><code><a href="omni_no_safe_socket.html">OMNI_NO_SAFE_SOCKET</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_no_safe_socket_ep.html">OMNI_NO_SAFE_SOCKET_EP</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_no_safe_span.html">OMNI_NO_SAFE_SPAN</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_no_safe_stopwatch.html">OMNI_NO_SAFE_STOPWATCH</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_no_safe_sync_timer.html">OMNI_NO_SAFE_SYNC_TIMER</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_no_safe_thread.html">OMNI_NO_SAFE_THREAD</a></code> - Disables the <code><a href="omni_safe_thread.html">OMNI_SAFE_THREAD</a></code> macro</li>
+    <li><code><a href="omni_no_safe_threads.html">OMNI_NO_SAFE_THREADS</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_no_safe_timers.html">OMNI_NO_SAFE_TIMERS</a></code> - Disables the <code><a href="omni_safe_timers.html">OMNI_SAFE_TIMERS</a></code> macro</li>
+    <li><code><a href="omni_no_safe_vector2.html">OMNI_NO_SAFE_VECTOR2</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_no_safe_vector3.html">OMNI_NO_SAFE_VECTOR3</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_no_show_debug.html">OMNI_NO_SHOW_DEBUG</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_no_single_file.html">OMNI_NO_SINGLE_FILE</a></code> - Disables the compilation of the library.cpp file</li>
+    <li><code><a href="omni_no_terminate.html">OMNI_NO_TERMINATE</a></code> - Disables the <code><a href="omni_terminate.html">OMNI_TERMINATE</a></code> macro</li>
+    <li><code><a href="omni_no_threadpool_use_seq_t.html">OMNI_NO_THREADPOOL_USE_SEQ_T</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_no_thread_args_raw_ptr.html">OMNI_NO_THREAD_ARGS_RAW_PTR</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_no_thread_cdecl.html">OMNI_NO_THREAD_CDECL</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_no_thread_fastcall.html">OMNI_NO_THREAD_FASTCALL</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_no_thread_stdcall.html">OMNI_NO_THREAD_STDCALL</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_no_throw.html">OMNI_NO_THROW</a></code> - Disables exceptions (throw keyword) in the framework.</li>
+    <li><code><a href="omni_no_type_info.html">OMNI_NO_TYPE_INFO</a></code> - Disables the <code><a href="omni_type_info.html">OMNI_TYPE_INFO</a></code> macro</li>
+    <li><code><a href="omni_no_win_api.html">OMNI_NO_WIN_API</a></code> - Use the Microsoft C Runtime Library where applicable.</li>
+    <li><code><a href="omni_no_win_lean.html">OMNI_NO_WIN_LEAN</a></code> - Does not enable the <code>WIN32_LEAN_AND_MEAN</code> macro</li>
+    <li><code><a href="omni_no_win_use_event_conditional.html">OMNI_NO_WIN_USE_EVENT_CONDITIONAL</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_null_macro.html">OMNI_NULL_MACRO</a></code> - Defines the NULL value type to use.</li>
+    <li><code><a href="omni_null_ptr.html">OMNI_NULL_PTR</a></code> - Defines the NULL value type to use.</li>
+    <li><code><a href="omni_object_name.html">OMNI_OBJECT_NAME</a></code> - If defined, adds a <code>name</code> string member to each object.</li>
+    <li><code><a href="omni_ofstream_t.html">OMNI_OFSTREAM_T</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_ostream_fn_operator.html">OMNI_OSTREAM_FN_OPERATOR</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_ostream_raw_operator.html">OMNI_OSTREAM_RAW_OPERATOR</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_os_plan9.html">OMNI_OS_PLAN9</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_os_vxworks.html">OMNI_OS_VXWORKS</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_overflow_str.html">OMNI_OVERFLOW_STR</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_path_empty.html">OMNI_PATH_EMPTY</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_path_error.html">OMNI_PATH_ERROR</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_path_separator.html">OMNI_PATH_SEPARATOR</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_period_wchar.html">OMNI_PERIOD_WCHAR</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_pi.html">OMNI_PI</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_pi_180.html">OMNI_PI_180</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_pi_f.html">OMNI_PI_F</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_pi_f_180.html">OMNI_PI_F_180</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_pi_l.html">OMNI_PI_L</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_pi_l_180.html">OMNI_PI_L_180</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_plus_wchar.html">OMNI_PLUS_WCHAR</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_print.html">OMNI_PRINT</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_printl.html">OMNI_PRINTL</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_safe_application.html">OMNI_SAFE_APPLICATION</a></code> - Signifies thread safe functions in <code><a href="../classes/omni-application.html">omni::application</a></code></li>
+    <li><code><a href="omni_safe_async_timer.html">OMNI_SAFE_ASYNC_TIMER</a></code> - Signifies thread safe functions in <code><a href="../classes/omni-chrono-async_timer.html">omni::chrono::async_timer</a></code></li>
+    <li><code><a href="omni_safe_basic_thread.html">OMNI_SAFE_BASIC_THREAD</a></code> - Signifies thread safe functions in omni::sync::basci_thread</li>
+    <li><code><a href="omni_safe_chrono.html">OMNI_SAFE_CHRONO</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_safe_color.html">OMNI_SAFE_COLOR</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_safe_datetime.html">OMNI_SAFE_DATETIME</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_safe_delegates.html">OMNI_SAFE_DELEGATES</a></code> - Signifies thread safe functions in the delegates</li>
+    <li><code><a href="omni_safe_drop_timer.html">OMNI_SAFE_DROP_TIMER</a></code> - Signifies thread safe functions in <code><a href="../classes/omni-chrono-drop_timer.html">omni::chrono::drop_timer</a></code></li>
+    <li><code><a href="omni_safe_events.html">OMNI_SAFE_EVENTS</a></code> - Signifies thread safe functions in the events</li>
+    <li><code><a href="omni_safe_geometry.html">OMNI_SAFE_GEOMETRY</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_safe_geo_size.html">OMNI_SAFE_GEO_SIZE</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_safe_library.html">OMNI_SAFE_LIBRARY</a></code> - Signifies thread safe functions in the framework</li>
+    <li><code><a href="omni_safe_locks.html">OMNI_SAFE_LOCKS</a></code> - Signifies thread safe functions in locking classes</li>
+    <li><code><a href="omni_safe_mutex.html">OMNI_SAFE_MUTEX</a></code> - Signifies thread safe functions in <code><a href="../classes/omni-sync-mutex.html">omni::sync::mutex</a></code></li>
+    <li><code><a href="omni_safe_net.html">OMNI_SAFE_NET</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_safe_point2d.html">OMNI_SAFE_POINT2D</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_safe_point3d.html">OMNI_SAFE_POINT3D</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_safe_prop.html">OMNI_SAFE_PROP</a></code> - Signifies thread safe functions in <code><a href="../classes/omni-property.html">omni::property</a></code></li>
+    <li><code><a href="omni_safe_queue_timer.html">OMNI_SAFE_QUEUE_TIMER</a></code> - Signifies thread safe functions in <code><a href="../classes/omni-chrono-queue_timer.html">omni::chrono::queue_timer</a></code></li>
+    <li><code><a href="omni_safe_rectangle.html">OMNI_SAFE_RECTANGLE</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_safe_runnable_thread.html">OMNI_SAFE_RUNNABLE_THREAD</a></code> - Signifies thread safe functions in <code><a href="../classes/omni-sync-runnable_thread.html">omni::sync::runnable_thread</a></code></li>
+    <li><code><a href="omni_safe_semaphore.html">OMNI_SAFE_SEMAPHORE</a></code> - Signifies thread safe functions in <code><a href="../classes/omni-sync-semaphore.html">omni::sync::semaphore</a></code></li>
+    <li><code><a href="omni_safe_socket.html">OMNI_SAFE_SOCKET</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_safe_socket_ep.html">OMNI_SAFE_SOCKET_EP</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_safe_span.html">OMNI_SAFE_SPAN</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_safe_stopwatch.html">OMNI_SAFE_STOPWATCH</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_safe_sync_timer.html">OMNI_SAFE_SYNC_TIMER</a></code> - Signifies thread safe functions in <code><a href="../classes/omni-chrono-sync_timer.html">omni::chrono::sync_timer</a></code></li>
+    <li><code><a href="omni_safe_thread.html">OMNI_SAFE_THREAD</a></code> - Signifies thread safe functions in <code><a href="../classes/omni-sync-thread.html">omni::sync::thread</a></code></li>
+    <li><code><a href="omni_safe_threads.html">OMNI_SAFE_THREADS</a></code> - Signifies thread safe functions in the threads</li>
+    <li><code><a href="omni_safe_timers.html">OMNI_SAFE_TIMERS</a></code> - Signifies thread safe functions in the timers</li>
+    <li><code><a href="omni_safe_vector2.html">OMNI_SAFE_VECTOR2</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_safe_vector3.html">OMNI_SAFE_VECTOR3</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_sequence_container_type.html">OMNI_SEQUENCE_CONTAINER_TYPE</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_show_debug.html">OMNI_SHOW_DEBUG</a></code> - Display framework debug output.</li>
+    <li><code><a href="omni_show_debug_err.html">OMNI_SHOW_DEBUG_ERR</a></code> - Displays errors as part of the debug output.</li>
+    <li><code><a href="omni_show_debug_file.html">OMNI_SHOW_DEBUG_FILE</a></code> - Displays the file as part of the debug output.</li>
+    <li><code><a href="omni_show_debug_func.html">OMNI_SHOW_DEBUG_FUNC</a></code> - Displays the function as part of the debug output.</li>
+    <li><code><a href="omni_show_debug_line.html">OMNI_SHOW_DEBUG_LINE</a></code> - Displays the line number as part of the debug output.</li>
+    <li><code><a href="omni_sigcall.html">OMNI_SIGCALL</a></code> - Defines the underlying signal call (e.g. __cdecl).</li>
+    <li><code><a href="omni_smart_ptr_size_t.html">OMNI_SMART_PTR_SIZE_T</a></code> - Defines the counter size of the <code><a href="../classes/omni-smart_ptr.html">omni::smart_ptr</a></code>, default of utin64_t</li>
+    <li><code><a href="omni_socket_default_backlog.html">OMNI_SOCKET_DEFAULT_BACKLOG</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_socket_default_get_host_port.html">OMNI_SOCKET_DEFAULT_GET_HOST_PORT</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_somaxconn.html">OMNI_SOMAXCONN</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_stream_fn_operators.html">OMNI_STREAM_FN_OPERATORS</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_stream_raw_operators.html">OMNI_STREAM_RAW_OPERATORS</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_string_invalid_binary_format_str.html">OMNI_STRING_INVALID_BINARY_FORMAT_STR</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_terminate.html">OMNI_TERMINATE</a></code> - Defines the underlying terminate function to call.</li>
+    <li><code><a href="omni_threadpool_use_seq_t.html">OMNI_THREADPOOL_USE_SEQ_T</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_thread_args_raw_ptr.html">OMNI_THREAD_ARGS_RAW_PTR</a></code> - If defined, thread parameters will be <code>void*</code> types.</li>
+    <li><code><a href="omni_thread_cdecl.html">OMNI_THREAD_CDECL</a></code> - Signifies to use <code>__cdecl</code> for the <code><a href="omni_thread_call_t.html">OMNI_THREAD_CALL_T</a></code></li>
+    <li><code><a href="omni_thread_fastcall.html">OMNI_THREAD_FASTCALL</a></code> - Signifies to use <code>__fastcall</code> for the <code><a href="omni_thread_call_t.html">OMNI_THREAD_CALL_T</a></code></li>
+    <li><code><a href="omni_thread_lib.html">OMNI_THREAD_LIB</a></code> - If defined will build only the threading files in library.cpp</li>
+    <li><code><a href="omni_thread_stdcall.html">OMNI_THREAD_STDCALL</a></code> - Signifies to use <code>__stdcall</code> for the <code><a href="omni_thread_call_t.html">OMNI_THREAD_CALL_T</a></code></li>
+    <li><code><a href="omni_throw.html">OMNI_THROW</a></code> - If defined, signifies to throw on exception.</li>
+    <li><code><a href="omni_timer_lib.html">OMNI_TIMER_LIB</a></code> - If defined will build only the timers in library.cpp</li>
+    <li><code><a href="omni_type_info.html">OMNI_TYPE_INFO</a></code> - Defines if the omni::type class should be used in other classes.</li>
+    <li><code><a href="omni_underflow_str.html">OMNI_UNDERFLOW_STR</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_use_m_pi.html">OMNI_USE_M_PI</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_use_m_pi_l.html">OMNI_USE_M_PI_L</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_winsock_high.html">OMNI_WINSOCK_HIGH</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_winsock_low.html">OMNI_WINSOCK_LOW</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_win_api.html">OMNI_WIN_API</a></code> - Defines whether to use straight Windows API or CRT functions</li>
+    <li><code><a href="omni_win_mono_tick_count.html">OMNI_WIN_MONO_TICK_COUNT</a></code> - Defines the underlying tick call.</li>
+    <li><code><a href="omni_win_mono_tick_count64.html">OMNI_WIN_MONO_TICK_COUNT64</a></code> - Defines the underlying tick call.</li>
+    <li><code><a href="omni_win_mono_tick_qpc.html">OMNI_WIN_MONO_TICK_QPC</a></code> - Defines the underlying tick call.</li>
+    <li><code><a href="omni_win_no_pragma_disable_4351.html">OMNI_WIN_NO_PRAGMA_DISABLE_4351</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_win_no_pragma_ws2_32_lib.html">OMNI_WIN_NO_PRAGMA_WS2_32_LIB</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_win_use_event_conditional.html">OMNI_WIN_USE_EVENT_CONDITIONAL</a></code> - Defines whether to use an event or condition type on Windows</li>
+    <li><code><a href="omni_wostream_fn_operator.html">OMNI_WOSTREAM_FN_OPERATOR</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_wostream_raw_operator.html">OMNI_WOSTREAM_RAW_OPERATOR</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_wprint.html">OMNI_WPRINT</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_wprintl.html">OMNI_WPRINTL</a></code> - A framework macro/option</li>
+
+</ul></div><br><a name="helper"></a><div class="ops"><font>Helper Macros</font><br>
+The following is a list of helper macros used by the library that can be utilized in user code.
+<input type="checkbox" name="help_ops" id="help_ops" /><label for="help_ops"></label><ul name="ulh" id="ulh">
+    <li><code><a href="omni_b2s.html">OMNI_B2S</a></code> - Converts a bool to string equivalent</li>
+    <li><code><a href="omni_b2ws.html">OMNI_B2WS</a></code> - Converts a bool to its wide string equivalent</li>
+    <li><code><a href="omni_bind.html">OMNI_BIND</a></code> - A helper macro for binding to the <code><a href="../classes/omni-delegate.html">omni::delegate</a></code></li>
+    <li><code><a href="omni_bind_const.html">OMNI_BIND_CONST</a></code> - A helper macro for binding the <code><a href="../classes/omni-delegate.html">omni::delegate</a></code> to const members</li>
+    <li><code><a href="omni_bind_const_ex.html">OMNI_BIND_CONST_EX</a></code> - A helper macro for binding the <code><a href="../classes/omni-delegate.html">omni::delegate</a></code> to const members</li>
+    <li><code><a href="omni_bind_ex.html">OMNI_BIND_EX</a></code> - A helper macro for binding the <code><a href="../classes/omni-delegate.html">omni::delegate</a></code></li>
+    <li><code><a href="omni_bool2str.html">OMNI_BOOL2STR</a></code> - Convert a bool value to a string.</li>
+    <li><code><a href="omni_bool2wstr.html">OMNI_BOOL2WSTR</a></code> - Convert a bool value to a wide string.</li>
+    <li><code><a href="omni_def2str.html">OMNI_DEF2STR</a></code> - String-izes the value passed in</li>
+    <li><code><a href="omni_defconcat.html">OMNI_DEFCONCAT</a></code> - Concatenate 2 #define values.</li>
+    <li><code><a href="omni_delegate.html">OMNI_DELEGATE</a></code> - A helper macro for defining an <code><a href="../classes/omni-delegate.html">omni::delegate</a></code></li>
+    <li><code><a href="omni_dwstr.html">OMNI_DWSTR</a></code> - Widens a string-ized macro</li>
+    <li><code><a href="omni_event.html">OMNI_EVENT</a></code> - A helper macro for defining an <code><a href="../classes/omni-event.html">omni::event</a></code></li>
+    <li><code><a href="omni_is_n_bit_set.html">OMNI_IS_N_BIT_SET</a></code> - Test if a specific bit is set in a value</li>
+    <li><code><a href="omni_new_line.html">OMNI_NEW_LINE</a></code> - Defines the new line constant used based on system.</li>
+    <li><code><a href="omni_no_use_cmath_consts.html">OMNI_NO_USE_CMATH_CONSTS</a></code> - Cancels <code><a href="omni_use_cmath_consts.html">OMNI_USE_CMATH_CONSTS</a></code></li>
+    <li><code><a href="omni_null.html">OMNI_NULL</a></code> - The NULL value used throughout the framework.</li>
+    <li><code><a href="omni_ostream_operator.html">OMNI_OSTREAM_OPERATOR</a></code> - A helper macro to implement the <code>operator&lt;&lt;</code> stream friend function</li>
+    <li><code><a href="omni_sequence_t.html">OMNI_SEQUENCE_T</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_seq_t.html">OMNI_SEQ_T</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_set_n_bit.html">OMNI_SET_N_BIT</a></code> - Sets a bit in a value</li>
+    <li><code><a href="omni_sizeof_bits.html">OMNI_SIZEOF_BITS</a></code> - Gets the <code>sizeof</code> a type in bits</li>
+    <li><code><a href="omni_sleep.html">OMNI_SLEEP</a></code> - A helper macro for millisecond sleeps</li>
+    <li><code><a href="omni_sleep1.html">OMNI_SLEEP1</a></code> - A helper macro for millisecond sleeps</li>
+    <li><code><a href="omni_sleep_init.html">OMNI_SLEEP_INIT</a></code> - A helper macro for initializing sleep variables</li>
+    <li><code><a href="omni_stream_operators.html">OMNI_STREAM_OPERATORS</a></code> - A helper macro to implement the <code>operator&lt;&lt;</code> stream friend functions.</li>
+    <li><code><a href="omni_strw.html">OMNI_STRW</a></code> - A shortened form of the <code><a href="omni_str_widen.html">OMNI_STR_WIDEN</a></code> macro.</li>
+    <li><code><a href="omni_str_widen.html">OMNI_STR_WIDEN</a></code> - A helper macro used to &#39;widen&#39; strings.</li>
+    <li><code><a href="omni_thread_yield.html">OMNI_THREAD_YIELD</a></code> - A helper macro calling the platform thread yield function.</li>
+    <li><code><a href="omni_unicode.html">OMNI_UNICODE</a></code> - Defined if a Unicode build is detected.</li>
+    <li><code><a href="omni_unset_n_bit.html">OMNI_UNSET_N_BIT</a></code> - Unsets a bit in a value</li>
+    <li><code><a href="omni_unused.html">OMNI_UNUSED</a></code> - Can be used to avoid &#39;unused&#39; warnings in user code.</li>
+    <li><code><a href="omni_val_has_flag_bit.html">OMNI_VAL_HAS_FLAG_BIT</a></code> - Determines if a flag bit is set in a value</li>
+    <li><code><a href="omni_val_set_flag_bit.html">OMNI_VAL_SET_FLAG_BIT</a></code> - Sets a flag bit in a value.</li>
+    <li><code><a href="omni_val_set_flag_bool.html">OMNI_VAL_SET_FLAG_BOOL</a></code> - Sets a flag bit in a value.</li>
+    <li><code><a href="omni_val_set_flag_bool_t.html">OMNI_VAL_SET_FLAG_BOOL_T</a></code> - Sets a flag bit in a value casting to a specified type.</li>
+    <li><code><a href="omni_val_unset_flag_bit.html">OMNI_VAL_UNSET_FLAG_BIT</a></code> - Unsets a flag bit in a value.</li>
+    <li><code><a href="omni_wincode.html">OMNI_WINCODE</a></code> - Defined when a Windows Unicode environment detected.</li>
+    <li><code><a href="omni_wostream_operator.html">OMNI_WOSTREAM_OPERATOR</a></code> - A helper macro to implement the <code>operator&lt;&lt;</code> wide stream friend function</li>
+    <li><code><a href="omni_wstr.html">OMNI_WSTR</a></code> - Widens an input string (defined as <code>L##v</code>)</li>
+    <li><code><a href="omni_xor_swap.html">OMNI_XOR_SWAP</a></code> - A helper macro defining an XOR swap</li>
+
+</ul></div><br><a name="fwhelp"></a><div class="ops"><font>Library Macros</font><br>
+The following is a list of macros used internally by the library.
+<input type="checkbox" name="fwhelp_ops" id="fwhelp_ops" /><label for="fwhelp_ops"></label><ul name="ulh" id="ulh">
+    <li><code><a href="omni_char_t.html">OMNI_CHAR_T</a></code> - Defines the underlying char type.</li>
+    <li><code><a href="omni_clock_freq_t.html">OMNI_CLOCK_FREQ_T</a></code> - Defines the underlying clock frequency variable type.</li>
+    <li><code><a href="omni_clock_tick_t.html">OMNI_CLOCK_TICK_T</a></code> - Defines the underlying clock tick type.</li>
+    <li><code><a href="omni_cond_t.html">OMNI_COND_T</a></code> - Defines the underlying condition variable type.</li>
+    <li><code><a href="omni_date.html">OMNI_DATE</a></code> - Defines the build date for the framework.</li>
+    <li><code><a href="omni_dbge.html">OMNI_DBGE</a></code> - A helper macro used for debug error output.</li>
+    <li><code><a href="omni_dbgev.html">OMNI_DBGEV</a></code> - A helper macro used for debug error output.</li>
+    <li><code><a href="omni_dbg_l1.html">OMNI_DBG_L1</a></code> - Defined when debug level &gt; 0.</li>
+    <li><code><a href="omni_dbg_l2.html">OMNI_DBG_L2</a></code> - Defined when debug level &gt; 1.</li>
+    <li><code><a href="omni_dbg_l3.html">OMNI_DBG_L3</a></code> - Defined when debug level &gt; 2.</li>
+    <li><code><a href="omni_dbg_l4.html">OMNI_DBG_L4</a></code> - Defined when debug level &gt; 3.</li>
+    <li><code><a href="omni_dbg_l5.html">OMNI_DBG_L5</a></code> - Defined when debug level &gt; 4.</li>
+    <li><code><a href="omni_debug.html">OMNI_DEBUG</a></code> - Defined when any debug values are defined.</li>
+    <li><code><a href="omni_dtor_no_throws.html">OMNI_DTOR_NO_THROWS</a></code> - Specifies</li>
+    <li><code><a href="omni_dtor_throws.html">OMNI_DTOR_THROWS</a></code> - Specifies</li>
+    <li><code><a href="omni_fstream_t.html">OMNI_FSTREAM_T</a></code> - Defines the underlying <code>fstream</code> type.</li>
+    <li><code><a href="omni_fw_ver_maj.html">OMNI_FW_VER_MAJ</a></code> - Defines the current framework major version.</li>
+    <li><code><a href="omni_fw_ver_min.html">OMNI_FW_VER_MIN</a></code> - Defines the current framework minor version.</li>
+    <li><code><a href="omni_fw_ver_str.html">OMNI_FW_VER_STR</a></code> - Defines the current framework full version string.</li>
+    <li><code><a href="omni_fw_ver_sub.html">OMNI_FW_VER_SUB</a></code> - Defines the current framework sub version.</li>
+    <li><code><a href="omni_gle.html">OMNI_GLE</a></code> - Defines the system &#39;get last error&#39; API used based on OS detected.</li>
+    <li><code><a href="omni_gle_prnt.html">OMNI_GLE_PRNT</a></code> - Can be used in print statements to output the last error code.</li>
+    <li><code><a href="omni_ifstream_t.html">OMNI_IFSTREAM_T</a></code> - Defines the underlying <code>ifstream</code> type.</li>
+    <li><code><a href="omni_istream_t.html">OMNI_ISTREAM_T</a></code> - Defines the underlying <code>istream</code> type.</li>
+    <li><code><a href="omni_mutex_t.html">OMNI_MUTEX_T</a></code> - Defines the underlying mutex handle type based on system.</li>
+    <li><code><a href="omni_ostream_t.html">OMNI_OSTREAM_T</a></code> - Defines the underlying <code>ostream</code> type.</li>
+    <li><code><a href="omni_os_aegis.html">OMNI_OS_AEGIS</a></code> - Defines Aegis environment was detected.</li>
+    <li><code><a href="omni_os_aix.html">OMNI_OS_AIX</a></code> - Defines AIX environment was detected.</li>
+    <li><code><a href="omni_os_amiga.html">OMNI_OS_AMIGA</a></code> - Defines Amiga environment was detected.</li>
+    <li><code><a href="omni_os_android.html">OMNI_OS_ANDROID</a></code> - Defines Android environment was detected.</li>
+    <li><code><a href="omni_os_apple.html">OMNI_OS_APPLE</a></code> - Defines Apple environment was detected.</li>
+    <li><code><a href="omni_os_appolo.html">OMNI_OS_APPOLO</a></code> - Defines Appolo environment was detected.</li>
+    <li><code><a href="omni_os_beos.html">OMNI_OS_BEOS</a></code> - Defines BeOS environment was detected.</li>
+    <li><code><a href="omni_os_bluegene.html">OMNI_OS_BLUEGENE</a></code> - Defines Blue Gene environment was detected.</li>
+    <li><code><a href="omni_os_bsd.html">OMNI_OS_BSD</a></code> - Defines BSD environment was detected.</li>
+    <li><code><a href="omni_os_bsdi.html">OMNI_OS_BSDI</a></code> - Defines BSD/OS environment was detected.</li>
+    <li><code><a href="omni_os_convex.html">OMNI_OS_CONVEX</a></code> - Defines ConvexOS environment was detected.</li>
+    <li><code><a href="omni_os_cray.html">OMNI_OS_CRAY</a></code> - Defines UNICOS/mp environment was detected.</li>
+    <li><code><a href="omni_os_cygwin.html">OMNI_OS_CYGWIN</a></code> - Defines Cygwin environment was detected.</li>
+    <li><code><a href="omni_os_dgux.html">OMNI_OS_DGUX</a></code> - Defines DG/UX environment was detected.</li>
+    <li><code><a href="omni_os_dragonflybsd.html">OMNI_OS_DRAGONFLYBSD</a></code> - Defines DragnFly BSD environment was detected.</li>
+    <li><code><a href="omni_os_dynix.html">OMNI_OS_DYNIX</a></code> - Defines DYNIX/ptx environment was detected.</li>
+    <li><code><a href="omni_os_ecos.html">OMNI_OS_ECOS</a></code> - Defines eCos environment was detected.</li>
+    <li><code><a href="omni_os_emx.html">OMNI_OS_EMX</a></code> - Defines EMX environment was detected.</li>
+    <li><code><a href="omni_os_freebsd.html">OMNI_OS_FREEBSD</a></code> - Defines FreeBSD environment was detected.</li>
+    <li><code><a href="omni_os_gnu_freebsd.html">OMNI_OS_GNU_FREEBSD</a></code> - Defines GNU/kFreeBSD environment was detected.</li>
+    <li><code><a href="omni_os_gnu_hurd.html">OMNI_OS_GNU_HURD</a></code> - Defines GNU aka GNU/Hurd environment was detected.</li>
+    <li><code><a href="omni_os_gnu_linux.html">OMNI_OS_GNU_LINUX</a></code> - Defines GNU/Linux environment was detected.</li>
+    <li><code><a href="omni_os_hiuxmpp.html">OMNI_OS_HIUXMPP</a></code> - Defines HI-UX MPP environment was detected.</li>
+    <li><code><a href="omni_os_hpux.html">OMNI_OS_HPUX</a></code> - Defines HP-UX environment was detected.</li>
+    <li><code><a href="omni_os_ignore.html">OMNI_OS_IGNORE</a></code> - Do not attempt to guess the OS type based on compiler macros.</li>
+    <li><code><a href="omni_os_integrity.html">OMNI_OS_INTEGRITY</a></code> - Defines INTEGRITY environment was detected.</li>
+    <li><code><a href="omni_os_interix.html">OMNI_OS_INTERIX</a></code> - Defines Interix environment was detected.</li>
+    <li><code><a href="omni_os_irix.html">OMNI_OS_IRIX</a></code> - Defines IRIX environment was detected.</li>
+    <li><code><a href="omni_os_linux.html">OMNI_OS_LINUX</a></code> - Defines Linux environment was detected.</li>
+    <li><code><a href="omni_os_lynxos.html">OMNI_OS_LYNXOS</a></code> - Defines LynxOS environment was detected.</li>
+    <li><code><a href="omni_os_macos.html">OMNI_OS_MACOS</a></code> - Defines Apple macOS environment was detected.</li>
+    <li><code><a href="omni_os_microware_os9.html">OMNI_OS_MICROWARE_OS9</a></code> - Defines Microware OS-9 environment was detected.</li>
+    <li><code><a href="omni_os_mingw.html">OMNI_OS_MINGW</a></code> - Defines a MinGW environment was detected.</li>
+    <li><code><a href="omni_os_minix.html">OMNI_OS_MINIX</a></code> - Defines MINIX environment was detected.</li>
+    <li><code><a href="omni_os_morphos.html">OMNI_OS_MORPHOS</a></code> - Defines MorphOS environment was detected.</li>
+    <li><code><a href="omni_os_mpeix.html">OMNI_OS_MPEIX</a></code> - Defines MPE/iX environment was detected.</li>
+    <li><code><a href="omni_os_msdos.html">OMNI_OS_MSDOS</a></code> - Defines MSDOS environment was detected.</li>
+    <li><code><a href="omni_os_netbsd.html">OMNI_OS_NETBSD</a></code> - Defines NetBSD environment was detected.</li>
+    <li><code><a href="omni_os_nonstop.html">OMNI_OS_NONSTOP</a></code> - Defines NonStop environment was detected.</li>
+    <li><code><a href="omni_os_nucleus.html">OMNI_OS_NUCLEUS</a></code> - Defines Nucleus RTOS environment was detected.</li>
+    <li><code><a href="omni_os_openbsd.html">OMNI_OS_OPENBSD</a></code> - Defines OpenBSD environment was detected.</li>
+    <li><code><a href="omni_os_os2.html">OMNI_OS_OS2</a></code> - Defines OS/2 environment was detected.</li>
+    <li><code><a href="omni_os_os400.html">OMNI_OS_OS400</a></code> - Defines IBM OS/400 environment was detected.</li>
+    <li><code><a href="omni_os_osf1.html">OMNI_OS_OSF1</a></code> - Defines Tru64 (OSF/1) environment was detected.</li>
+    <li><code><a href="omni_os_palmos.html">OMNI_OS_PALMOS</a></code> - Defines Palm OS environment was detected.</li>
+    <li><code><a href="omni_os_pyramid.html">OMNI_OS_PYRAMID</a></code> - Defines Pyramid DC/OSx environment was detected.</li>
+    <li><code><a href="omni_os_qnx.html">OMNI_OS_QNX</a></code> - Defines QNX environment was detected.</li>
+    <li><code><a href="omni_os_reliant_unix.html">OMNI_OS_RELIANT_UNIX</a></code> - Defines Reliant UNIX environment was detected.</li>
+    <li><code><a href="omni_os_sco_openserver.html">OMNI_OS_SCO_OPENSERVER</a></code> - Defines SCO OpenServer environment was detected.</li>
+    <li><code><a href="omni_os_solaris.html">OMNI_OS_SOLARIS</a></code> - Defines Solaris environment was detected.</li>
+    <li><code><a href="omni_os_sunos.html">OMNI_OS_SUNOS</a></code> - Defines SunOS environment was detected.</li>
+    <li><code><a href="omni_os_svr.html">OMNI_OS_SVR</a></code> - Defines SVR4 environment was detected.</li>
+    <li><code><a href="omni_os_syllable.html">OMNI_OS_SYLLABLE</a></code> - Defines Syllable environment was detected.</li>
+    <li><code><a href="omni_os_symbian.html">OMNI_OS_SYMBIAN</a></code> - Defines Symbian OS environment was detected.</li>
+    <li><code><a href="omni_os_ultrix.html">OMNI_OS_ULTRIX</a></code> - Defines Ultrix environment was detected.</li>
+    <li><code><a href="omni_os_unicos.html">OMNI_OS_UNICOS</a></code> - Defines UNICOS environment was detected.</li>
+    <li><code><a href="omni_os_unix.html">OMNI_OS_UNIX</a></code> - Defines Unix environment was detected.</li>
+    <li><code><a href="omni_os_unixware.html">OMNI_OS_UNIXWARE</a></code> - Defines UnixWare environment was detected.</li>
+    <li><code><a href="omni_os_uts.html">OMNI_OS_UTS</a></code> - Defines Amdahl UTS environment was detected.</li>
+    <li><code><a href="omni_os_uwin.html">OMNI_OS_UWIN</a></code> - Defines U/Win environment was detected.</li>
+    <li><code><a href="omni_os_vms.html">OMNI_OS_VMS</a></code> - Defines VMS environment was detected.</li>
+    <li><code><a href="omni_os_vos.html">OMNI_OS_VOS</a></code> - Defines Stratus VOS environment was detected.</li>
+    <li><code><a href="omni_os_win.html">OMNI_OS_WIN</a></code> - Defines Windows environment was detected.</li>
+    <li><code><a href="omni_os_win8.html">OMNI_OS_WIN8</a></code> - Defines that Windows 8 API headers should be used.</li>
+    <li><code><a href="omni_os_wince.html">OMNI_OS_WINCE</a></code> - Defines WindowsCE environment was detected.</li>
+    <li><code><a href="omni_os_windu.html">OMNI_OS_WINDU</a></code> - Defines Wind/U environment was detected.</li>
+    <li><code><a href="omni_os_zos.html">OMNI_OS_ZOS</a></code> - Defines z/OS environment was detected.</li>
+    <li><code><a href="omni_sem_t.html">OMNI_SEM_T</a></code> - Defines the underlying semaphore type based on system.</li>
+    <li><code><a href="omni_spin_lock_t.html">OMNI_SPIN_LOCK_T</a></code> - Defines the spin lock type used by the framework.</li>
+    <li><code><a href="omni_sstream_t.html">OMNI_SSTREAM_T</a></code> - Defines the underlying string stream type for the framework/types.</li>
+    <li><code><a href="omni_string_t.html">OMNI_STRING_T</a></code> - Defines the underlying string type.</li>
+    <li><code><a href="omni_thread_args_t.html">OMNI_THREAD_ARGS_T</a></code> - Defines the thread parameter argument type used by the framework.</li>
+    <li><code><a href="omni_thread_arg_null_t.html">OMNI_THREAD_ARG_NULL_T</a></code> - Defines the null thread parameter argument type used by the framework.</li>
+    <li><code><a href="omni_thread_call_t.html">OMNI_THREAD_CALL_T</a></code> - Defines the thread function call type.</li>
+    <li><code><a href="omni_thread_fnptr_t.html">OMNI_THREAD_FNPTR_T</a></code> - Defines the thread function pointer type used by the framework.</li>
+    <li><code><a href="omni_thread_handle_t.html">OMNI_THREAD_HANDLE_T</a></code> - Defines the thread handle type used by the framework.</li>
+    <li><code><a href="omni_thread_ret_t.html">OMNI_THREAD_RET_T</a></code> - Defines the thread function return type used by the framework.</li>
+    <li><code><a href="omni_thread_t.html">OMNI_THREAD_T</a></code> - Defines the thread type used by the framework.</li>
+    <li><code><a href="omni_time.html">OMNI_TIME</a></code> - The timestamp used for the framework version information.</li>
+
+</ul></div><br><a name="consts"></a><div class="ops"><font>Constant Macros</font><br>
+The following is a list of macro constants and options used by the library.
+<input type="checkbox" name="const_ops" id="const_ops" /><label for="const_ops"></label><ul name="ulh" id="ulh">
+    <li><code><a href="omni_180_pi.html">OMNI_180_PI</a></code> - Defined as the constant value of 180/Pi</li>
+    <li><code><a href="omni_app_running_str.html">OMNI_APP_RUNNING_STR</a></code> - &quot;An application context is already running&quot;</li>
+    <li><code><a href="omni_byte_str.html">OMNI_BYTE_STR</a></code> - &quot;Byte&quot;</li>
+    <li><code><a href="omni_b_str.html">OMNI_B_STR</a></code> - &quot;B&quot;</li>
+    <li><code><a href="omni_comma_char.html">OMNI_COMMA_CHAR</a></code> - &#39;,&#39;</li>
+    <li><code><a href="omni_e.html">OMNI_E</a></code> - Defines the mathematical constant e</li>
+    <li><code><a href="omni_eibi_str.html">OMNI_EIBI_STR</a></code> - &quot;Exbibyte&quot;</li>
+    <li><code><a href="omni_eib_str.html">OMNI_EIB_STR</a></code> - &quot;EiB&quot;</li>
+    <li><code><a href="omni_eob_str.html">OMNI_EOB_STR</a></code> - &quot;EB&quot;</li>
+    <li><code><a href="omni_eol_n.html">OMNI_EOL_N</a></code> - Defines the carriage return of &#39;n&#39;</li>
+    <li><code><a href="omni_eol_r.html">OMNI_EOL_R</a></code> - Defines the carriage return of &#39;r&#39;</li>
+    <li><code><a href="omni_eol_rn.html">OMNI_EOL_RN</a></code> - Defines the carriage return of &#39;rn&#39;</li>
+    <li><code><a href="omni_err_acquire_str.html">OMNI_ERR_ACQUIRE_STR</a></code> - &quot;Could not acquire thread&quot;</li>
+    <li><code><a href="omni_err_appex_str.html">OMNI_ERR_APPEX_STR</a></code> - &quot;An application exception occurred&quot;</li>
+    <li><code><a href="omni_err_cond_obj_str.html">OMNI_ERR_COND_OBJ_STR</a></code> - &quot;A system error occurred on the conditional object&quot;</li>
+    <li><code><a href="omni_err_envex_str.html">OMNI_ERR_ENVEX_STR</a></code> - &quot;An error occurred within the system environment&quot;</li>
+    <li><code><a href="omni_err_get_time_str.html">OMNI_ERR_GET_TIME_STR</a></code> - &quot;An error occurred getting the system clock time&quot;</li>
+    <li><code><a href="omni_err_malloc_str.html">OMNI_ERR_MALLOC_STR</a></code> - &quot;Error allocating memory&quot;</li>
+    <li><code><a href="omni_err_mtx_owner_str.html">OMNI_ERR_MTX_OWNER_STR</a></code> - &quot;Unlock called from non-owning thread&quot;</li>
+    <li><code><a href="omni_err_mtx_state_str.html">OMNI_ERR_MTX_STATE_STR</a></code> - &quot;The system mutex was left in an invalid state&quot;</li>
+    <li><code><a href="omni_err_mtx_unlocked_str.html">OMNI_ERR_MTX_UNLOCKED_STR</a></code> - &quot;An attempt was made to unlock a non locked mutex&quot;</li>
+    <li><code><a href="omni_err_mutex_str.html">OMNI_ERR_MUTEX_STR</a></code> - &quot;A system error occurred on the mutex object&quot;</li>
+    <li><code><a href="omni_err_name_str.html">OMNI_ERR_NAME_STR</a></code> - &quot;Name cannot be empty&quot;</li>
+    <li><code><a href="omni_err_pipe_str.html">OMNI_ERR_PIPE_STR</a></code> - &quot;Failed to open the pipe&quot;</li>
+    <li><code><a href="omni_err_proc_pri_str.html">OMNI_ERR_PROC_PRI_STR</a></code> - &quot;Error retrieving the process&#39; priority class&quot;</li>
+    <li><code><a href="omni_err_proc_str.html">OMNI_ERR_PROC_STR</a></code> - &quot;Error opening process&quot;</li>
+    <li><code><a href="omni_err_release_str.html">OMNI_ERR_RELEASE_STR</a></code> - &quot;An invalid release count was specified&quot;</li>
+    <li><code><a href="omni_err_semaphore_str.html">OMNI_ERR_SEMAPHORE_STR</a></code> - &quot;A system error occurred on the semaphore object&quot;</li>
+    <li><code><a href="omni_err_sem_state_str.html">OMNI_ERR_SEM_STATE_STR</a></code> - &quot;An attempt was made to release a semaphore in a non-wait state&quot;</li>
+    <li><code><a href="omni_err_set_pri_str.html">OMNI_ERR_SET_PRI_STR</a></code> - &quot;Error setting the thread&#39;s priority&quot;</li>
+    <li><code><a href="omni_err_size_str.html">OMNI_ERR_SIZE_STR</a></code> - &quot;Invalid size written&quot;</li>
+    <li><code><a href="omni_err_spin_obj_str.html">OMNI_ERR_SPIN_OBJ_STR</a></code> - &quot;A system error occurred on the spin lock object&quot;</li>
+    <li><code><a href="omni_err_state_str.html">OMNI_ERR_STATE_STR</a></code> - &quot;Internal state error&quot;</li>
+    <li><code><a href="omni_err_stopwatch_str.html">OMNI_ERR_STOPWATCH_STR</a></code> - &quot;An error occurred on the stopwatch object&quot;</li>
+    <li><code><a href="omni_err_strobj_str.html">OMNI_ERR_STROBJ_STR</a></code> - &quot;A general exception occurred on the string object&quot;</li>
+    <li><code><a href="omni_err_threadpool_str.html">OMNI_ERR_THREADPOOL_STR</a></code> - &quot;An error occurred on the threadpool&quot;</li>
+    <li><code><a href="omni_err_thread_str.html">OMNI_ERR_THREAD_STR</a></code> - &quot;An error occurred on the thread&quot;</li>
+    <li><code><a href="omni_err_wait_str.html">OMNI_ERR_WAIT_STR</a></code> - &quot;Active waits pending when disposing a lock object&quot;</li>
+    <li><code><a href="omni_exa_str.html">OMNI_EXA_STR</a></code> - &quot;Exabyte&quot;</li>
+    <li><code><a href="omni_e_f.html">OMNI_E_F</a></code> - Defines the mathematical constant e as a float</li>
+    <li><code><a href="omni_e_l.html">OMNI_E_L</a></code> - Defines the mathematical constant e long double</li>
+    <li><code><a href="omni_file_not_accessible_str.html">OMNI_FILE_NOT_ACCESSIBLE_STR</a></code> - &quot;File not accessible&quot;</li>
+    <li><code><a href="omni_file_not_found_str.html">OMNI_FILE_NOT_FOUND_STR</a></code> - &quot;File not found&quot;</li>
+    <li><code><a href="omni_gb_ival.html">OMNI_GB_IVAL</a></code> - 1000000000</li>
+    <li><code><a href="omni_general_exception_str.html">OMNI_GENERAL_EXCEPTION_STR</a></code> - &quot;General framework exception&quot;</li>
+    <li><code><a href="omni_gibi_str.html">OMNI_GIBI_STR</a></code> - &quot;Gibibyte&quot;</li>
+    <li><code><a href="omni_gib_ival.html">OMNI_GIB_IVAL</a></code> - 1073741824</li>
+    <li><code><a href="omni_gib_str.html">OMNI_GIB_STR</a></code> - &quot;GiB&quot;</li>
+    <li><code><a href="omni_giga_str.html">OMNI_GIGA_STR</a></code> - &quot;Gigabyte&quot;</li>
+    <li><code><a href="omni_gob_str.html">OMNI_GOB_STR</a></code> - &quot;GB&quot;</li>
+    <li><code><a href="omni_index_oor_str.html">OMNI_INDEX_OOR_STR</a></code> - &quot;Index out of range&quot;</li>
+    <li><code><a href="omni_infinite_timeout.html">OMNI_INFINITE_TIMEOUT</a></code> - Defines the infinite timeout value</li>
+    <li><code><a href="omni_invalid_base_str.html">OMNI_INVALID_BASE_STR</a></code> - &quot;Invalid base specified while converting to string&quot;</li>
+    <li><code><a href="omni_invalid_cast_str.html">OMNI_INVALID_CAST_STR</a></code> - &quot;Invalid type cast&quot;</li>
+    <li><code><a href="omni_invalid_char_str.html">OMNI_INVALID_CHAR_STR</a></code> - &quot;Invalid value specified for conversion to char&quot;</li>
+    <li><code><a href="omni_invalid_delegate_func_str.html">OMNI_INVALID_DELEGATE_FUNC_STR</a></code> - &quot;No valid function has been assigned to the delegate&quot;</li>
+    <li><code><a href="omni_invalid_delegate_str.html">OMNI_INVALID_DELEGATE_STR</a></code> - &quot;Invalid delegate&quot;</li>
+    <li><code><a href="omni_invalid_option_str.html">OMNI_INVALID_OPTION_STR</a></code> - &quot;An invalid thread option was specified&quot;</li>
+    <li><code><a href="omni_invalid_seek_dir_str.html">OMNI_INVALID_SEEK_DIR_STR</a></code> - &quot;Invalid seek direction&quot;</li>
+    <li><code><a href="omni_invalid_setting_str.html">OMNI_INVALID_SETTING_STR</a></code> - &quot;An invalid setting was specified&quot;</li>
+    <li><code><a href="omni_invalid_size_str.html">OMNI_INVALID_SIZE_STR</a></code> - &quot;Invalid size specified&quot;</li>
+    <li><code><a href="omni_invalid_template_str.html">OMNI_INVALID_TEMPLATE_STR</a></code> - &quot;Invalid template parameter&quot;</li>
+    <li><code><a href="omni_invalid_thread_handle_str.html">OMNI_INVALID_THREAD_HANDLE_STR</a></code> - &quot;Invalid thread handle&quot;</li>
+    <li><code><a href="omni_invalid_thread_priority_str.html">OMNI_INVALID_THREAD_PRIORITY_STR</a></code> - &quot;Invalid thread priority&quot;</li>
+    <li><code><a href="omni_invalid_thread_start_type_str.html">OMNI_INVALID_THREAD_START_TYPE_STR</a></code> - &quot;Invalid thread start type specified&quot;</li>
+    <li><code><a href="omni_invalid_thread_state_str.html">OMNI_INVALID_THREAD_STATE_STR</a></code> - &quot;An invalid thread state was specified for the thread&quot;</li>
+    <li><code><a href="omni_invalid_version_str.html">OMNI_INVALID_VERSION_STR</a></code> - &quot;Invalid version string specified&quot;</li>
+    <li><code><a href="omni_kb_ival.html">OMNI_KB_IVAL</a></code> - 1000</li>
+    <li><code><a href="omni_kibi_str.html">OMNI_KIBI_STR</a></code> - &quot;Kibibyte&quot;</li>
+    <li><code><a href="omni_kib_ival.html">OMNI_KIB_IVAL</a></code> - 1024</li>
+    <li><code><a href="omni_kib_str.html">OMNI_KIB_STR</a></code> - &quot;KiB&quot;</li>
+    <li><code><a href="omni_kilo_str.html">OMNI_KILO_STR</a></code> - &quot;Kilobyte&quot;</li>
+    <li><code><a href="omni_kob_str.html">OMNI_KOB_STR</a></code> - &quot;KB&quot;</li>
+    <li><code><a href="omni_mb_ival.html">OMNI_MB_IVAL</a></code> - 1000000</li>
+    <li><code><a href="omni_mega_str.html">OMNI_MEGA_STR</a></code> - &quot;Megabyte&quot;</li>
+    <li><code><a href="omni_mibi_str.html">OMNI_MIBI_STR</a></code> - &quot;Mebibyte&quot;</li>
+    <li><code><a href="omni_mib_ival.html">OMNI_MIB_IVAL</a></code> - 1048576</li>
+    <li><code><a href="omni_mib_str.html">OMNI_MIB_STR</a></code> - &quot;MiB&quot;</li>
+    <li><code><a href="omni_minus_char.html">OMNI_MINUS_CHAR</a></code> - &#39;-&#39;</li>
+    <li><code><a href="omni_mob_str.html">OMNI_MOB_STR</a></code> - &quot;MB&quot;</li>
+    <li><code><a href="omni_nchar_char.html">OMNI_NCHAR_CHAR</a></code> - &#39;\0&#39;</li>
+    <li><code><a href="omni_no_delegate_str.html">OMNI_NO_DELEGATE_STR</a></code> - &quot;Delegate not found&quot;</li>
+    <li><code><a href="omni_no_use_math_defs.html">OMNI_NO_USE_MATH_DEFS</a></code> - Cancels <code><a href="omni_use_math_defs.html">OMNI_USE_MATH_DEFS</a></code></li>
+    <li><code><a href="omni_no_use_m_e.html">OMNI_NO_USE_M_E</a></code> - Cancels <code><a href="omni_use_m_e.html">OMNI_USE_M_E</a></code></li>
+    <li><code><a href="omni_no_use_m_e_f.html">OMNI_NO_USE_M_E_F</a></code> - Cancels <code><a href="omni_use_m_e_f.html">OMNI_USE_M_E_F</a></code></li>
+    <li><code><a href="omni_no_use_m_e_l.html">OMNI_NO_USE_M_E_L</a></code> - Cancels <code><a href="omni_use_m_e_l.html">OMNI_USE_M_E_L</a></code></li>
+    <li><code><a href="omni_no_use_m_pi_f.html">OMNI_NO_USE_M_PI_F</a></code> - Cancels <code><a href="omni_use_m_pi_f.html">OMNI_USE_M_PI_F</a></code></li>
+    <li><code><a href="omni_null_ptr_str.html">OMNI_NULL_PTR_STR</a></code> - &quot;Null pointer specified&quot;</li>
+    <li><code><a href="omni_null_ref_str.html">OMNI_NULL_REF_STR</a></code> - &quot;A null pointer reference exception occurred&quot;</li>
+    <li><code><a href="omni_path_not_accessible_str.html">OMNI_PATH_NOT_ACCESSIBLE_STR</a></code> - &quot;Path not accessible&quot;</li>
+    <li><code><a href="omni_period_char.html">OMNI_PERIOD_CHAR</a></code> - &#39;.&#39;</li>
+    <li><code><a href="omni_peta_str.html">OMNI_PETA_STR</a></code> - &quot;Petabyte&quot;</li>
+    <li><code><a href="omni_pibi_str.html">OMNI_PIBI_STR</a></code> - &quot;Pebibyte&quot;</li>
+    <li><code><a href="omni_pib_str.html">OMNI_PIB_STR</a></code> - &quot;PiB&quot;</li>
+    <li><code><a href="omni_plus_char.html">OMNI_PLUS_CHAR</a></code> - &#39;+&#39;</li>
+    <li><code><a href="omni_pob_str.html">OMNI_POB_STR</a></code> - &quot;PB&quot;</li>
+    <li><code><a href="omni_set_pri_unsupported_str.html">OMNI_SET_PRI_UNSUPPORTED_STR</a></code> - &quot;Setting thread priority is not supported on this system&quot;</li>
+    <li><code><a href="omni_string_count_gt0_str.html">OMNI_STRING_COUNT_GT0_STR</a></code> - &quot;Count must be greater than 0&quot;</li>
+    <li><code><a href="omni_string_invalid_format_str.html">OMNI_STRING_INVALID_FORMAT_STR</a></code> - &quot;The specified string does not contain a valid binary number&quot;</li>
+    <li><code><a href="omni_string_invalid_size_str.html">OMNI_STRING_INVALID_SIZE_STR</a></code> - &quot;The binary string length is greater than sizeof conversion unit&quot;</li>
+    <li><code><a href="omni_string_not_numeric_str.html">OMNI_STRING_NOT_NUMERIC_STR</a></code> - &quot;The specified string is not a valid numeric value&quot;</li>
+    <li><code><a href="omni_success_str.html">OMNI_SUCCESS_STR</a></code> - &quot;Success&quot;</li>
+    <li><code><a href="omni_tera_str.html">OMNI_TERA_STR</a></code> - &quot;Terabyte&quot;</li>
+    <li><code><a href="omni_thread_started_str.html">OMNI_THREAD_STARTED_STR</a></code> - &quot;A thread has already been started&quot;</li>
+    <li><code><a href="omni_tibi_str.html">OMNI_TIBI_STR</a></code> - &quot;Tebibyte&quot;</li>
+    <li><code><a href="omni_tib_str.html">OMNI_TIB_STR</a></code> - &quot;TiB&quot;</li>
+    <li><code><a href="omni_tob_str.html">OMNI_TOB_STR</a></code> - &quot;TB&quot;</li>
+    <li><code><a href="omni_unknown_str.html">OMNI_UNKNOWN_STR</a></code> - &quot;Unknown&quot;</li>
+    <li><code><a href="omni_use_cmath_consts.html">OMNI_USE_CMATH_CONSTS</a></code> - A library macro/option</li>
+    <li><code><a href="omni_use_math_defs.html">OMNI_USE_MATH_DEFS</a></code> - A library macro/option</li>
+    <li><code><a href="omni_use_m_e.html">OMNI_USE_M_E</a></code> - Defines to use the math.h e</li>
+    <li><code><a href="omni_use_m_e_f.html">OMNI_USE_M_E_F</a></code> - Defines to use the math.h e float version</li>
+    <li><code><a href="omni_use_m_e_l.html">OMNI_USE_M_E_L</a></code> - Defines to use the math.h e long double version</li>
+    <li><code><a href="omni_use_m_pi_f.html">OMNI_USE_M_PI_F</a></code> - Defines to use the math.h Pi float version</li>
+    <li><code><a href="omni_yibi_str.html">OMNI_YIBI_STR</a></code> - &quot;Yobibyte&quot;</li>
+    <li><code><a href="omni_yib_str.html">OMNI_YIB_STR</a></code> - &quot;YiB&quot;</li>
+    <li><code><a href="omni_yob_str.html">OMNI_YOB_STR</a></code> - &quot;YB&quot;</li>
+    <li><code><a href="omni_yotta_str.html">OMNI_YOTTA_STR</a></code> - &quot;Yottabyte&quot;</li>
+    <li><code><a href="omni_zetta_str.html">OMNI_ZETTA_STR</a></code> - &quot;Zettabyte&quot;</li>
+    <li><code><a href="omni_zibi_str.html">OMNI_ZIBI_STR</a></code> - &quot;Zebibyte&quot;</li>
+    <li><code><a href="omni_zib_str.html">OMNI_ZIB_STR</a></code> - &quot;ZiB&quot;</li>
+    <li><code><a href="omni_zob_str.html">OMNI_ZOB_STR</a></code> - &quot;ZB&quot;</li>
+
+</ul></div>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

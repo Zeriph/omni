@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_SIGCALL</Name>
+  <Brief>Defines the underlying signal call (e.g. __cdecl).
+</Brief>
+  <Considerations>No special consideration.
+</Considerations>
+  <Description>None.
+</Description>
+  <Notes>None.
+</Notes>
+  <PlatformSpecific>No special consideration.
+</PlatformSpecific>
+  <Synopsis>Defines the underlying signal call (e.g. __cdecl) used by the omni::application::signal_handler functions.
+</Synopsis>
+  <IsHelper>false</IsHelper>
+  <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
+</MacroOp>

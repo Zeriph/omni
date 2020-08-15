@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - Library Examples</title>
+<link rel="stylesheet" type="text/css" href="../../content/main.css" /><link rel="icon" type="image/png" href="../../content/favicon.png" />
+<script type="text/javascript" src="../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="../htmlsrc/index.html">Source</a></li><li title="Library classes and namespaces">
+<a href="../classes/index.html">Class Index</a></li><li title="Download and view examples">
+<a href="index.html" class="current">Examples</a></li><li title="Download and view build examples">
+<a href="../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="../options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../api.html">System API</a></li><li title="Other Considerations">
+<a href="../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle"><a name="omni_examples"></a>Sockets</div><div class="content"><div>
+Socket communication covers a wide range of network topics, from various protocols like TCP and UDP to the various idioms within how to communicate, like data streams, broadcast messages and much more.<br>
+<br>
+Please note that due to the scope of networking concepts and the plethora of information available regarding sockets and networking, this example will &lt;i&gt;not&lt;/i&gt; cover what a socket &lt;b&gt;is&lt;/b&gt; and expects you to have a basic understanding of some of the underlying concepts of network communications. A few great resources include <a href="https://beej.us/guide/bgnet/">Beejs socket programming guide</a>, <a href="http://publib.boulder.ibm.com/infocenter/iseries/v7r1m0/index.jsp?topic=%2Frzab6%2Fhowdosockets.htm">IBMs how sockets work</a>, and the Wikipedia <a href="https://en.wikipedia.org/wiki/Network_socket">pages</a> on <a href="https://en.wikipedia.org/wiki/Berkeley_sockets">sockets</a>; these cover low level APIs as well as going into details about client/server communication and more.<br>
+<br>
+<font class="hdr">The Socket</font><br>
+<br>
+The <code><a href="../classes/omni-net.html">omni::net</a></code> namespace contains the various definitions for socket creation and communication. To create a basic IPv4 socket for communication, you can simply do the following:<br>
+<div class="sntx"><input type="checkbox" id="c0" name="c0" /><label for="c0">&nbsp;</label><pre><font class="syn_cmt">// Create a TCP socket</font>
+<a href="../classes/omni-net-socket.html">omni::net::socket</a> tcp_sock(<a href="../classes/omni-net-address_family-inet.html">omni::net::address_family::INET</a>,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <a href="../classes/omni-net-socket_type-stream.html">omni::net::socket_type::STREAM</a>,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <a href="../classes/omni-net-protocol_type-tcp.html">omni::net::protocol_type::TCP</a>);
+
+<font class="syn_cmt">// Create a UDP socket</font>
+<a href="../classes/omni-net-socket.html">omni::net::socket</a> udp_sock(<a href="../classes/omni-net-address_family-inet.html">omni::net::address_family::INET</a>,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <a href="../classes/omni-net-socket_type-dgram.html">omni::net::socket_type::DGRAM</a>,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <a href="../classes/omni-net-protocol_type-udp.html">omni::net::protocol_type::UDP</a>);
+
+<font class="syn_cmt">// Create a RAW socket</font>
+<a href="../classes/omni-net-socket.html">omni::net::socket</a> raw_sock(<a href="../classes/omni-net-address_family-inet.html">omni::net::address_family::INET</a>,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <a href="../classes/omni-net-socket_type-raw.html">omni::net::socket_type::RAW</a>,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <a href="../classes/omni-net-protocol_type-raw.html">omni::net::protocol_type::RAW</a>);</pre></div>The <code>socket</code> class does not have a default constructor since the address family, socket and protocol type must be specified before the socket can connect, in this way, you must create a <code><a href="../classes/omni-net-socket.html">omni::net::socket</a></code> object with the <code><a href="../classes/omni-net-address_family.html">omni::net::address_family</a></code>, <code><a href="../classes/omni-net-socket_type.html">omni::net::socket_type</a></code>, and <code><a href="../classes/omni-net-protocol_type.html">omni::net::protocol_type</a></code> specified. If you create a <code>socket</code> with out an <code>address_family</code> the <code>address_family</code> will be that of <code><a href="../classes/omni-net-address_family-unspecified.html">omni::net::address_family::UNSPECIFIED</a></code>.<br>
+<br>
+Since the default constructor is not accessible, this also means that you cannot have a list of reference socket types (i.e. <code><a href="http://www.cplusplus.com/reference/vector/vector/">std::vector</a>&lt;<a href="../classes/omni-net-socket.html">omni::net::socket</a>&gt;</code> would have to be <code><a href="http://www.cplusplus.com/reference/vector/vector/">std::vector</a>&lt;<a href="../classes/omni-net-socket.html">omni::net::socket</a>*&gt;</code>). This is by design since it does not make since to have two objects that contain a reference to the same socket channel, instead if you wanted two sockets of communication connected to the same end point, you would simply create two socket objects of the same time and connect both of them. This allows the OS to handle the underlying I/O in a more efficient manner.<br>
+<br>
+If there was an error creating the socket, the <code><a href="../classes/omni-net-socket-last_error.html">omni::net::socket::last_error</a></code> member function of the <code>socket</code> class will alert you to the specific problem on creation (possible errors include too many sockets already opened). Note that the <code>last_error</code> function returns the last socket error that happened on the <code>socket</code> object.<br>
+<br>
+After the socket has been created, you can now communicate through it by connecting to a listening host, or by having the socket object <code><a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/listen.html">listen</a></code> and accept connections.<br>
+<br>
+Note that you cannot have a client socket also be a server socket. That is to say that if a socket has been created and then <code>connect</code> or <code>connect_host</code> has been called, you cannot have the same socket object then call <code><a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a></code> or any of the other &quot;server&quot; like functions, as well, if you create a socket object and then <code><a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a></code> it, <code><a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/listen.html">listen</a></code> or accept, you cannot then call <code>connect</code> or <code>connect_host</code> as an error will be returned.<br>
+<br>
+If you have closed a socket and shut it down, you can reuse a socket and reset its family type as well as other socket functionality, however, this is only recommended if memory is a concern.<br>
+<br>
+<font class="hdr">Address Family, Protocol and Socket Type</font><br>
+<br>
+Note that the <code>last_error</code> function will be set to one of the address or protocol error flags if you try to specify a combination of address family, protocol and socket type that do not work. For instance, you cannot have a <code><a href="../classes/omni-net-socket_type-raw.html">omni::net::socket_type::RAW</a></code> socket type specified with a a protocol type of <code><a href="../classes/omni-net-protocol_type-tcp.html">omni::net::protocol_type::TCP</a></code>.<br>
+<br>
+If you create a socket with invalid parameters specified or if you wish to change one of them after having closed the socket, you can use the <code><a href="../classes/omni-net-socket-set_address_family.html">omni::net::socket::set_address_family</a></code>, <code><a href="../classes/omni-net-socket-set_protocol_type.html">omni::net::socket::set_protocol_type</a></code>, or <code>omni::net::socket::set_socket_type</code> function. Additionally, you can call one of the <code><a href="../classes/omni-net-socket-open.html">omni::net::socket::<a href="https://linux.die.net/man/2/open">open</a></a></code> functions specifying the socket, protocol and address family.<br>
+<br>
+<font class="hdr">Endian-ness</font><br>
+<br>
+No conversions are done to the data being sent or received, so if a server expects the client to <code><a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/send.html">send</a></code> data in a certain endian-ness, you will need to ensure to do the conversions in your code as no socket objects preform any conversions to the data being sent or received.<br>
+<br>
+<font class="hdr">Client Sockets</font><br>
+<br>
+After you have created your socket object, you can connect to a host with the <code><a href="../classes/omni-net-socket-connect.html">omni::net::socket::connect</a></code> function and specify a dotted-notation IP4 address and port to connect to. If you want to connect the socket to a specific host name and port, you can use the <code><a href="../classes/omni-net-socket-connect_host.html">omni::net::socket::connect_host</a></code> function which will resolve the address to connect to.<br>
+<br>
+Once a client socket has been connected, it can then be used to <code><a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/send.html">send</a></code> and receive data. The example at the bottom shows how to connect to a website (like zeriph.com) and <code><a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/send.html">send</a></code> a simple HTTP GET request then receiving the data; in the example below the request sent receives the main pages HTML (i.e. zeriph.com/index.html).<br>
+<br>
+<font class="hdr">Server Sockets</font><br>
+<br>
+Server sockets typically need to be bound and then set to <code><a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/listen.html">listen</a></code> in order to accept connections or data. Since server sockets can vary based on needs, this section will only cover basic TCP server socket.<br>
+<br>
+Just like a client socket, you specify the address family, protocol and socket type, like so:<br>
+<div class="sntx"><input type="checkbox" id="c1" name="c1" /><label for="c1">&nbsp;</label><pre><a href="../classes/omni-net-socket.html">omni::net::socket</a> server_sock(<a href="../classes/omni-net-address_family-inet.html">omni::net::address_family::INET</a>,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <a href="../classes/omni-net-socket_type-stream.html">omni::net::socket_type::STREAM</a>,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <a href="../classes/omni-net-protocol_type-tcp.html">omni::net::protocol_type::TCP</a>);</pre></div>After it is created, you then need to <code><a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/listen.html">listen</a></code> on the socket, but you cannot <code><a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/listen.html">listen</a></code> on an unbound socket, so you must call <code><a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a></code>, using either a port or IP/port combo to <code><a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a></code> to, then <code><a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/listen.html">listen</a></code> to have a client then connect, like so:<br>
+<div class="sntx"><input type="checkbox" id="c2" name="c2" /><label for="c2">&nbsp;</label><pre><font class="syn_ins">if</font> (server_sock.bind(<font class="syn_num">12345</font>) != <a href="../classes/omni-net-socket_error-success.html">omni::net::socket_error::SUCCESS</a>) {
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Error binding on socket: &quot;</font> &lt;&lt; server_sock.last_error() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+} <font class="syn_ins">else</font> {
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Bound to port &quot;</font> &lt;&lt; server_sock.bound_port() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (server_sock.listen() != <a href="../classes/omni-net-socket_error-success.html">omni::net::socket_error::SUCCESS</a>) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Error listening on socket: &quot;</font> &lt;&lt; server_sock.last_error() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Ready to accept connections&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// accept connections here</font>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+}</pre></div>To have a client connect, you will need to have an <code>endpoint_descriptor</code> that you communicate over, like so:<br>
+<div class="sntx"><input type="checkbox" id="c3" name="c3" /><label for="c3">&nbsp;</label><pre><a href="../classes/omni-net-endpoint_descriptor.html">omni::net::endpoint_descriptor</a> remote_ep;
+<font class="syn_ins">if</font> (server_sock.accept(remote_ep) != <a href="../classes/omni-net-socket_error-success.html">omni::net::socket_error::SUCCESS</a>) {
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Error accepting on socket: &quot;</font> &lt;&lt; server_sock.last_error() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+} <font class="syn_ins">else</font> {
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint32_t</font> xfr = <font class="syn_num">0</font>; <font class="syn_cmt">// how much actually sent/received</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">char</font> buff[<font class="syn_num">1024</font>] = {<font class="syn_num">0</font>}; <font class="syn_cmt">// data buffer to <a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/send.html">send</a>/receive</font>
+
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Client connected: &quot;</font> &lt;&lt; remote_ep &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// <a href="../classes/omni-net-endpoint_descriptor-to_string.html">omni::net::endpoint_descriptor::to_string</a> shows the IP:port of the client</font>
+
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// call send/receive on the endpoint_descriptor and _NOT_ the server_sock object</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (remote_ep.receive(buff, <font class="syn_num">1024</font>, xfr) != <a href="../classes/omni-net-socket_error-success.html">omni::net::socket_error::SUCCESS</a>) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Error receiving on socket: &quot;</font> &lt;&lt; remote_ep.last_error() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Received &quot;</font> &lt;&lt; xfr &lt;&lt; <font class="syn_str">&quot; bytes: [&quot;</font> &lt;&lt; buff &lt;&lt; <font class="syn_str">&quot;]&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Sending: WELCOME!\\r\\n&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (remote_ep.send(<font class="syn_str">&quot;WELCOME!\r\n&quot;</font>, <font class="syn_num">11</font>, xfr) != <a href="../classes/omni-net-socket_error-success.html">omni::net::socket_error::SUCCESS</a>) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Error sending on socket: &quot;</font> &lt;&lt; remote_ep.last_error() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Sent &quot;</font> &lt;&lt; xfr &lt;&lt; <font class="syn_str">&quot; bytes to client&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;}
+}</pre></div>The <code><a href="../classes/omni-net-endpoint_descriptor.html">omni::net::endpoint_descriptor</a></code> &lt;i&gt;does&lt;/i&gt; have a default and copy constructors to allow having a list of reference types so that you can have a server socket maintain a list of endpoints that can be communicated with, so if <code><a href="../options/omni_safe_socket_ep.html">OMNI_SAFE_SOCKET_EP</a></code> is &lt;i&gt;not&lt;/i&gt; defined, care must be taken not to cause a race condition on the <code>endpoint_descriptor</code> object. The <code>endpoint_descriptor</code> has some more simplistic socket communication interfaces as it is meant to be only a remote endpoint that has been accepted.<br>
+<br>
+<font class="hdr">Send and Receiving</font><br>
+<br>
+Since socket communication can have both string and binary data, the socket can <code><a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/send.html">send</a></code> and receive simplistic types of data, like the <code>int8_t*</code> the <code>uint8_t*</code> along with <code>char*</code> types.<br>
+<br>
+The <code><a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/send.html">send</a></code> and receive functions only accept raw pointer types due to how the underlying data is to be actually sent and received, as well as to allow the greatest efficiency and flexibility across platforms.<br>
+<br>
+Care must be taken not to cause a buffer under/over flow error by passing a buffer with an inappropriate size, for example:<br>
+<div class="sntx"><input type="checkbox" id="c4" name="c4" /><label for="c4">&nbsp;</label><pre><font class="syn_cmt">// WRONG</font>
+<font class="syn_typ">uint32_t</font> xfr = <font class="syn_num">0</font>;
+<font class="syn_typ">const</font> <font class="syn_typ">char</font> buff[] = <font class="syn_str">&quot;<font class="syn_num">1234</font>&quot;</font>;
+sock.send(buff, <font class="syn_num">6</font>, xfr); <font class="syn_cmt">// buffer overflow</font>
+
+<font class="syn_cmt">// CORRECT</font>
+<font class="syn_typ">uint32_t</font> xfr = <font class="syn_num">0</font>;
+<font class="syn_typ">const</font> <font class="syn_typ">char</font> buff[] = <font class="syn_str">&quot;<font class="syn_num">1234</font>&quot;</font>;
+sock.send(buff, <font class="syn_ins">sizeof</font>(buff), xfr);</pre></div>Omni follows a &quot;trust the programmer&quot; idiom in this context, so &lt;b&gt;please&lt;/b&gt; take care with handling the data sizes properly.<br>
+<br>
+<font class="hdr">Helper Functions</font><br>
+<br>
+In addition to the socket class, there are is other functionality in the <code><a href="../classes/omni-net-util.html">omni::net::util</a></code> namespace that allows you to handle other aspects of network programming, like getting a list of IPs associated with a host name or getting the host name of an IP, or validating an IP address or port.<br>
+<br>
+Example of getting the IPs of a host:<br>
+<div class="sntx"><input type="checkbox" id="c5" name="c5" /><label for="c5">&nbsp;</label><pre><a href="http://www.cplusplus.com/reference/deque/deque/">std::deque</a>&lt;<a href="http://www.cplusplus.com/reference/string/">std::string</a>&gt; ips;
+<a href="../classes/omni-net-socket_error.html">omni::net::socket_error</a> err = <a href="../classes/omni-net-util-get_ip.html">omni::net::util::get_ip</a>(<font class="syn_str">&quot;zeriph.com&quot;</font>, ips);
+<font class="syn_ins">if</font> (err != <a href="../classes/omni-net-socket_error-success.html">omni::net::socket_error::SUCCESS</a>) {
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Error getting IPs: &quot;</font> &lt;&lt; err &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+} <font class="syn_ins">else</font> {
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;IPs for zeriph.com:&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">for</font> (<a href="http://www.cplusplus.com/reference/deque/deque/">std::deque</a>&lt;<a href="http://www.cplusplus.com/reference/string/">std::string</a>&gt;::iterator it = ips.begin(); it != ips.end(); ++it) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; *it &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;}
+}</pre></div><font class="hdr">Socket Errors</font><br>
+<br>
+Exceptions in the library are kept for areas of code that were not validated by the user of the code (like invalid ranges or division by zero).<br>
+<br>
+Sockets are a special area of the library that only throw exceptions in a very few functions and instead, the design choice was made to return an <code><a href="../classes/omni-net-socket_error.html">omni::net::socket_error</a></code> for most of the functions defined in the <code>socket</code> class. This is due to the simple fact that sockets can fail in numerous and unexpected ways and throwing exceptions is not always the desired course of action, for various reasons.<br>
+<br>
+You will need to read the documentation for the individual functions in the socket class to verify which socket errors are possible since a call to <code><a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a></code> could result in different socket errors than a call to <code>send</code> or the others.<br><br><font class="hdr">Example</font><br><div class="sntx"><input type="checkbox" id="c6" name="c6" checked /><label for="c6">&nbsp;</label><pre><font class="syn_pre">#include &lt;<a href="../htmlsrc/omnilib.html">omnilib</a>&gt;</font>
+
+<font class="syn_pre">#define BUFFSZ 65535</font>
+
+<font class="syn_typ">int</font> main(<font class="syn_typ">int</font> argc, <font class="syn_typ">char</font>* argv[])
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-net-socket.html">omni::net::socket</a> sock(<a href="../classes/omni-net-address_family-inet.html">omni::net::address_family::INET</a>, <a href="../classes/omni-net-socket_type-stream.html">omni::net::socket_type::STREAM</a>, <a href="../classes/omni-net-protocol_type-tcp.html">omni::net::protocol_type::TCP</a>);
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (sock.connect_host(<font class="syn_str">&quot;zeriph.com&quot;</font>, <font class="syn_num">80</font>) != <a href="../classes/omni-net-socket_error-success.html">omni::net::socket_error::SUCCESS</a>) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Could not connect to host: &quot;</font> &lt;&lt; sock.last_error() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> -<font class="syn_num">1</font>;
+&nbsp;&nbsp;&nbsp;&nbsp;}
+
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint32_t</font> xfr = <font class="syn_num">0</font>;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a> req = <font class="syn_str">&quot;GET / HTTP/1.0\r\nHost: zeriph.com\r\n\r\n&quot;</font>;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Connected to &quot;</font> &lt;&lt; sock &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (sock.send(req.c_str(), req.size(), xfr) != <a href="../classes/omni-net-socket_error-success.html">omni::net::socket_error::SUCCESS</a>) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Could not send data: &quot;</font> &lt;&lt; sock.last_error() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> -<font class="syn_num">1</font>;
+&nbsp;&nbsp;&nbsp;&nbsp;}
+
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Sent &quot;</font> &lt;&lt; xfr &lt;&lt; <font class="syn_str">&quot; bytes&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">char</font>* data = <font class="syn_ins">new</font> <font class="syn_typ">char</font>[BUFFSZ];
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">while</font> (sock.receive(data, BUFFSZ, xfr) == <a href="../classes/omni-net-socket_error-success.html">omni::net::socket_error::SUCCESS</a>) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (xfr &gt; <font class="syn_num">0</font>) { <a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; data; }
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/cstring/memset/">std::memset</a>(data, <font class="syn_num">0</font>, BUFFSZ);
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">delete</font>[] data;
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (sock.last_error() != <a href="../classes/omni-net-socket_error-success.html">omni::net::socket_error::SUCCESS</a>) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a> &lt;&lt; <font class="syn_str">&quot;Last socket error: &quot;</font> &lt;&lt; sock.last_error() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;}
+
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// Strictly speaking this is not necessary here since `sock` is a local</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// object, so when it goes out of scope it will call close on destruction.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;sock.close();
+
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;
+}</pre></div>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_INVALID_SEEK_DIR_STR</Name>
+  <Brief>"Invalid seek direction"</Brief>
+  <Considerations>No special considerations
+</Considerations>
+  <Description>If not already defined, defines the framework constant of:
+@code
+"Invalid seek direction"
+@code
+</Description>
+  <Notes>None.
+</Notes>
+  <PlatformSpecific>No platform specific notes.
+</PlatformSpecific>
+  <Synopsis>Defines a framework constant of:
+@code
+"Invalid seek direction"
+@code
+</Synopsis>
+  <IsHelper>true</IsHelper>
+  <IsConstant>true</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
+</MacroOp>

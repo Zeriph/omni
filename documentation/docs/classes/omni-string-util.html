@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - namespace: omni::string::util</title>
+<link rel="stylesheet" type="text/css" href="../../content/main.css" /><link rel="icon" type="image/png" href="../../content/favicon.png" />
+<script type="text/javascript" src="../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="../htmlsrc/index.html">Source</a></li><li title="Library classes and namespaces">
+<a href="index.html" class="current">Class Index</a></li><li title="Download and view examples">
+<a href="../examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="../options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../api.html">System API</a></li><li title="Other Considerations">
+<a href="../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle">omni::string::util</div><div class="content"><div>
+<div class="docdiv"><a name="nm"></a>
+<font class="docu">NAME</font><br><br>
+<code><a href="../htmlsrc/omni/string/util.hpp.html#omni::string::util" class="chnm">
+    omni::string::util
+    </a></code><br>
+<br>A namespace of <a href="omni-string.html" class="code">omni::string</a><br><br>
+    <code><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/string/util.hpp.html">omni/string/util.hpp</a>&gt;</font></code><br><code>namespace omni::string::util</code><br>
+    <br>
+    <font class="docu">MEMBERS</font><br>
+    <br>
+    <code><a href="../classes/omni-string-util-binary.html">omni::string::util::binary</a><br>
+    <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> std_string_t &gt; <font class="syn_typ">bool</font> <a href="../classes/omni-string-util-contains.html">omni::string::util::contains</a>(<font class="syn_typ">const</font> std_string_t&amp; haystack, <font class="syn_typ">const</font> std_string_t&amp; needle, <font class="syn_typ">bool</font> ignore_case)<br>
+    <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> std_string_t &gt; <font class="syn_typ">bool</font> <a href="../classes/omni-string-util-ends_with.html">omni::string::util::ends_with</a>(<font class="syn_typ">const</font> std_string_t&amp; haystack, <font class="syn_typ">const</font> std_string_t&amp; needle, <font class="syn_typ">bool</font> ignore_case)<br>
+    <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> std_string_t &gt; <font class="syn_typ">bool</font> <a href="../classes/omni-string-util-is_numeric.html">omni::string::util::is_numeric</a>(<font class="syn_typ">const</font> std_string_t&amp; str, <font class="syn_typ">bool</font> ignore_period)<br>
+    <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> std_string_t, <font class="syn_ins">typename</font> T &gt; std_string_t <a href="../classes/omni-string-util-lexical_cast.html">omni::string::util::lexical_cast</a>(<font class="syn_typ">const</font> T&amp; val)<br>
+    <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> std_string_t &gt; std_string_t <a href="../classes/omni-string-util-pad_left.html">omni::string::util::pad_left</a>(std_string_t str, <font class="syn_ins">typename</font> std_string_t::value_type pad, <a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a> count)<br>
+    <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> std_string_t &gt; std_string_t <a href="../classes/omni-string-util-pad_right.html">omni::string::util::pad_right</a>(std_string_t str, <font class="syn_ins">typename</font> std_string_t::value_type pad, <a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a> count)<br>
+    <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> std_string_t &gt; std_string_t <a href="../classes/omni-string-util-replace.html">omni::string::util::replace</a>(std_string_t str, <font class="syn_typ">const</font> std_string_t&amp; fnd, <font class="syn_typ">const</font> std_string_t&amp; newstr, <a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a> pos, <font class="syn_typ">bool</font> ignore_case)<br>
+    <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> std_string_t &gt; std_string_t <a href="../classes/omni-string-util-replace_all.html">omni::string::util::replace_all</a>(std_string_t str, <font class="syn_typ">const</font> std_string_t&amp; fnd, <font class="syn_typ">const</font> std_string_t&amp; newstr, <a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a> pos, <font class="syn_typ">bool</font> ignore_case)<br>
+    <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> std_string_t &gt; std_string_t <a href="../classes/omni-string-util-reverse.html">omni::string::util::reverse</a>(std_string_t str)<br>
+    <font class="syn_ins">template</font> &lt; <font class="syn_ins">template</font> &lt; <font class="syn_typ">class</font>, <font class="syn_typ">class</font> &gt; <font class="syn_typ">class</font> std_seq_t, <font class="syn_typ">class</font> std_string_t, <font class="syn_typ">class</font> std_allocator_t &gt; std_seq_t&lt;std_string_t, std_allocator_t&gt; <a href="../classes/omni-string-util-split.html">omni::string::util::split</a>(std_string_t str, <font class="syn_typ">const</font> std_string_t&amp; delimeter, <a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a> max_val)<br>
+    <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> std_string_t &gt; <font class="syn_typ">bool</font> <a href="../classes/omni-string-util-starts_with.html">omni::string::util::starts_with</a>(<font class="syn_typ">const</font> std_string_t&amp; haystack, <font class="syn_typ">const</font> std_string_t&amp; needle, <font class="syn_typ">bool</font> ignore_case)<br>
+    <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> std_string_t &gt; std_string_t <a href="../classes/omni-string-util-to_lower.html">omni::string::util::to_lower</a>(std_string_t str)<br>
+    <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt; <font class="syn_ins">inline</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a> <a href="../classes/omni-string-util-to_string.html">omni::string::util::to_string</a>(<font class="syn_typ">const</font> T&amp; val)<br>
+    <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt; <font class="syn_ins">inline</font> <a href="../classes/omni-string_t.html">omni::string_t</a> <a href="../classes/omni-string-util-to_string_t.html">omni::string::util::to_string_t</a>(<font class="syn_typ">const</font> T&amp; val)<br>
+    <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt; <font class="syn_ins">inline</font> T <a href="../classes/omni-string-util-to_type.html">omni::string::util::to_type</a>(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; str)<br>
+    <font class="syn_ins">template</font> &lt;&gt; <font class="syn_ins">inline</font> <font class="syn_typ">bool</font> <a href="../classes/omni-string-util-to_type.html">omni::string::util::to_type</a>&lt;<font class="syn_typ">bool</font>&gt;(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; str)<br>
+    <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> std_string_t &gt; std_string_t <a href="../classes/omni-string-util-to_upper.html">omni::string::util::to_upper</a>(std_string_t str)<br>
+    <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt; <font class="syn_ins">inline</font> <a href="http://www.cplusplus.com/reference/string/">std::wstring</a> <a href="../classes/omni-string-util-to_wstring.html">omni::string::util::to_wstring</a>(<font class="syn_typ">const</font> T&amp; val)<br>
+    <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> std_string_t &gt; std_string_t <a href="../classes/omni-string-util-trim.html">omni::string::util::trim</a>(std_string_t str, std_string_t params)<br>
+    <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> std_string_t &gt; std_string_t <a href="../classes/omni-string-util-trim_end.html">omni::string::util::trim_end</a>(std_string_t str, std_string_t params)<br>
+    <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> std_string_t &gt; std_string_t <a href="../classes/omni-string-util-trim_end_syschars.html">omni::string::util::trim_end_syschars</a>(std_string_t str)<br>
+    <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> std_string_t &gt; std_string_t <a href="../classes/omni-string-util-trim_front.html">omni::string::util::trim_front</a>(std_string_t str, std_string_t params)<br>
+    <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> std_string_t &gt; std_string_t <a href="../classes/omni-string-util-trim_front_syschars.html">omni::string::util::trim_front_syschars</a>(std_string_t str)<br>
+    <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> std_string_t &gt; std_string_t <a href="../classes/omni-string-util-trim_syschars.html">omni::string::util::trim_syschars</a>(std_string_t str)<br>
+    </code>
+</div><br>
+<div class="docdiv"><a name="syn"></a>
+<font class="docu">SYNOPSIS</font><br><br>
+The util namespace is utilized by <code><a href="omni-cstring.html">omni::cstring</a></code> and <code><a href="omni-wstring.html">omni::wstring</a></code> directly. You can use the <code><a href="omni-string-util.html">omni::string::util</a></code> namespace directly in user code, but it is recommended you utilize the omni::(c|w)string namespace versions instead.
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<div class="docdiv"><a name="desc"></a>
+<font class="docu">DESCRIPTION</font><br><br>
+No description.
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+
+
+
+
+
+
+
+
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

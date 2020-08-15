@@ -20,22 +20,14 @@
 #define OMNI_MATH_T_HPP 1
 #include <omni/defs/global.hpp>
 #include <omni/defs/math_def.hpp>
-
-#if defined(OMNI_OS_WIN)
-    /* DEV_NOTE: MSVC emits warning 4351 about the dimensional class having it's array value
-    initialied in the member init list, e.g. `dimensional() : m_vals() {}`. This is considered
-    "new" behavior by MSVC but is perfectly fine behavior per the C++ standard, this 0-init's
-    the values in the array (as if memset were called). This is the behavior we want and since
-    we are targetting C++03 and above, this is a non-issue. Additionally, testing this behavior
-    against MSVC 2008 and above (and inspecting the asm) shows we get the results we want. */
-    #if !defined(OMNI_WIN_NO_PRAGMA_DISABLE_4351)
-        #pragma warning (disable:4351)
-    #endif
-#endif
+#include <functional>
 
 namespace omni {
     namespace math {
         #if !defined(OMNI_NO_EXTERN_CONSTS)
+            extern const double      E;
+            extern const long double E_L;
+            extern const float       E_F;
             extern const double      PI;
             extern const long double PI_L;
             extern const float       PI_F;
@@ -46,6 +38,9 @@ namespace omni {
             extern const double      RADS_SIN[361];
             extern const double      RADS_COS[361];
         #else
+            const double      E = OMNI_E;
+            const long double E_L = OMNI_E_L;
+            const float       E_F = OMNI_E_F;
             const double      PI = OMNI_PI;
             const long double PI_L = OMNI_PI_L;
             const float       PI_F = OMNI_PI_F;
@@ -57,7 +52,8 @@ namespace omni {
             #undef OMNI_MATH_RAD_MAP_FW
         #endif
 
-        class ordinal_name {
+        class ordinal_name
+        {
             public:
                 typedef enum enum_t {
                     Z_AXIS = -3,
@@ -171,6 +167,11 @@ namespace omni {
                     OMNI_D5_FW("destroyed");
                 }
 
+                unsigned short count() const
+                {
+                    return COUNT();
+                }
+
                 enum_t value() const
                 {
                     return this->m_val;
@@ -271,11 +272,6 @@ namespace omni {
                 operator enum_t() const
                 {
                     return this->m_val;
-                }
-
-                operator int32_t() const
-                {
-                    return static_cast<int32_t>(this->m_val);
                 }
 
                 operator std::string() const
@@ -413,14 +409,23 @@ namespace omni {
                 }
         };
 
-        class round_direction {
+        class midpoint_rounding
+        {
             public:
                 typedef enum enum_t {
-                    NONE,
-                    TO_EVEN,        // +/-0.75 and +/-0.85 -> +/-0.8
-                    AWAY_FROM_ZERO, // +/-0.75 -> +/-0.8 && +/-0.85 -> +/-0.9
-                    CEILING,        // +0.75 and +0.85 -> +1.0 && -0.75 && -0.85 -> 0
-                    FLOOR           // +0.75 and +0.85 -> 0 && -0.75 and -0.85 -> -1.0
+                    // When a number is halfway between two others, it is rounded toward the nearest even number.
+                    TO_EVEN = 0,
+                    // When a number is halfway between two others, it is rounded toward the nearest number that is away from zero.
+                    AWAY_FROM_ZERO = 1,
+                    // When a number is halfway between two others, it is rounded toward the result closest to and
+                    // no greater in magnitude than the infinitely precise result.
+                    TO_ZERO = 2,
+                    // When a number is halfway between two others, it is rounded toward the result closest to and
+                    // no greater than the infinitely precise result.
+                    TO_NEGATIVE_INFINITY = 3,
+                    // When a number is halfway between two others, it is rounded toward the result closest to and
+                    // no less than the infinitely precise result.
+                    TO_POSITIVE_INFINITY = 4
                 } enum_t;
                 
                 /** Defines the number of elements in the enum */
@@ -432,7 +437,7 @@ namespace omni {
                 /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
-                    return NONE;
+                    return TO_EVEN;
                 }
 
                 /** Converts the enum to its string representation */
@@ -472,13 +477,13 @@ namespace omni {
                 }
 
                 /** Tries parsing a string value into its enum representation */
-                static bool try_parse(const std::string& val, round_direction& out)
+                static bool try_parse(const std::string& val, midpoint_rounding& out)
                 {
                     return _try_parse(val, out);
                 }
 
                 /** Tries parsing a wide string value into its enum representation */
-                static bool try_parse(const std::wstring& val, round_direction& out)
+                static bool try_parse(const std::wstring& val, midpoint_rounding& out)
                 {
                     return _try_parse(val, out);
                 }
@@ -489,27 +494,32 @@ namespace omni {
                     return _valid(val);
                 }
                 
-                round_direction() :
-                    OMNI_CTOR_FW(omni::math::round_direction)
+                midpoint_rounding() :
+                    OMNI_CTOR_FW(omni::math::midpoint_rounding)
                     m_val(DEFAULT_VALUE())
                 { }
 
-                round_direction(const round_direction& cp) :
+                midpoint_rounding(const midpoint_rounding& cp) :
                     OMNI_CPCTOR_FW(cp)
                     m_val(cp.m_val)
                 { }
 
-                round_direction(enum_t val) : 
-                    OMNI_CTOR_FW(omni::math::round_direction)
+                midpoint_rounding(enum_t val) : 
+                    OMNI_CTOR_FW(omni::math::midpoint_rounding)
                     m_val(val)
                 { }
 
-                ~round_direction()
+                ~midpoint_rounding()
                 {
                     OMNI_TRY_FW
                     OMNI_DTOR_FW
                     OMNI_CATCH_FW
                     OMNI_D5_FW("destroyed");
+                }
+
+                unsigned short count() const
+                {
+                    return COUNT();
                 }
 
                 enum_t value() const
@@ -527,7 +537,7 @@ namespace omni {
                     return to_wstring(this->m_val);
                 }
 
-                bool operator!=(const round_direction& val) const
+                bool operator!=(const midpoint_rounding& val) const
                 {
                     return !(*this == val);
                 }
@@ -537,7 +547,7 @@ namespace omni {
                     return (this->m_val != val);
                 }
                 
-                round_direction& operator=(const round_direction& val)
+                midpoint_rounding& operator=(const midpoint_rounding& val)
                 {
                     if (this != &val) {
                         OMNI_ASSIGN_FW(val)
@@ -546,15 +556,15 @@ namespace omni {
                     return *this;
                 }
 
-                round_direction& operator=(enum_t val)
+                midpoint_rounding& operator=(enum_t val)
                 {
                     this->m_val = val;
                     return *this;
                 }
 
-                round_direction& operator=(int val)
+                midpoint_rounding& operator=(int val)
                 {
-                    if (!round_direction::is_valid(val)) {
+                    if (!midpoint_rounding::is_valid(val)) {
                         OMNI_ERR_RET_FW("Invalid enumeration value specified.", omni::exceptions::invalid_enum(val));
                     } else {
                         this->m_val = static_cast<enum_t>(val);
@@ -562,7 +572,7 @@ namespace omni {
                     return *this;
                 }
 
-                bool operator<(const round_direction& val) const
+                bool operator<(const midpoint_rounding& val) const
                 {
                     return this->m_val < val.m_val;
                 }
@@ -577,7 +587,7 @@ namespace omni {
                     return this->m_val < static_cast<enum_t>(val);
                 }
 
-                bool operator>(const round_direction& val) const
+                bool operator>(const midpoint_rounding& val) const
                 {
                     return this->m_val > val.m_val;
                 }
@@ -592,7 +602,7 @@ namespace omni {
                     return this->m_val > val;
                 }
 
-                bool operator==(const round_direction& val) const
+                bool operator==(const midpoint_rounding& val) const
                 {
                     if (this == &val) { return true; }
                     return this->m_val == val.m_val
@@ -614,11 +624,6 @@ namespace omni {
                     return this->m_val;
                 }
 
-                operator int32_t() const
-                {
-                    return static_cast<int32_t>(this->m_val);
-                }
-
                 operator std::string() const
                 {
                     return this->to_string();
@@ -629,9 +634,9 @@ namespace omni {
                     return this->to_wstring();
                 }
 
-                OMNI_MEMBERS_FW(omni::math::round_direction) // disposing,name,type(),hash()
+                OMNI_MEMBERS_FW(omni::math::midpoint_rounding) // disposing,name,type(),hash()
                 
-                OMNI_OSTREAM_FW(omni::math::round_direction)
+                OMNI_OSTREAM_FW(omni::math::midpoint_rounding)
                 OMNI_OSTREAM_FN_FW(enum_t)
 
             private:
@@ -653,7 +658,7 @@ namespace omni {
                 }
 
                 template < typename S >
-                static bool _try_parse(const S& val, round_direction& out)
+                static bool _try_parse(const S& val, midpoint_rounding& out)
                 {
                     enum_t tmp;
                     if (_try_parse(val, tmp)) {
@@ -671,11 +676,11 @@ namespace omni {
                 static bool _try_parse(const std::string& val, enum_t& out)
                 {
                     if (!val.empty()) {
-                        OMNI_S2E_FW(NONE)
                         OMNI_S2E_FW(TO_EVEN)
                         OMNI_S2E_FW(AWAY_FROM_ZERO)
-                        OMNI_S2E_FW(CEILING)
-                        OMNI_S2E_FW(FLOOR)
+                        OMNI_S2E_FW(TO_ZERO)
+                        OMNI_S2E_FW(TO_NEGATIVE_INFINITY)
+                        OMNI_S2E_FW(TO_POSITIVE_INFINITY)
                     }
                     return false;
                 }
@@ -685,11 +690,11 @@ namespace omni {
                 {
                     S ss;
                     switch (v) {
-                        OMNI_E2SS_FW(NONE);
                         OMNI_E2SS_FW(TO_EVEN);
                         OMNI_E2SS_FW(AWAY_FROM_ZERO);
-                        OMNI_E2SS_FW(CEILING);
-                        OMNI_E2SS_FW(FLOOR);
+                        OMNI_E2SS_FW(TO_ZERO);
+                        OMNI_E2SS_FW(TO_NEGATIVE_INFINITY);
+                        OMNI_E2SS_FW(TO_POSITIVE_INFINITY);
                         default:
                             ss << "UNKNOWN (" << static_cast<int>(v) << ")";
                             break;
@@ -700,11 +705,11 @@ namespace omni {
                 static bool _valid(int val)
                 {
                     return (val == 
-                        NONE || 
                         TO_EVEN || 
                         AWAY_FROM_ZERO || 
-                        CEILING || 
-                        FLOOR
+                        TO_ZERO || 
+                        TO_NEGATIVE_INFINITY || 
+                        TO_POSITIVE_INFINITY
                     );
                 }
         };

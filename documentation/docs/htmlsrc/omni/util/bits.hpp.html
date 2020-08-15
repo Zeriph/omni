@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - omni/util/bits.hpp</title>
+<link rel="stylesheet" type="text/css" href="../../../../content/main.css" /><link rel="icon" type="image/png" href="../../../../content/favicon.png" />
+<script type="text/javascript" src="../../../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="../../index.html" class="current">Source</a></li><li title="Library classes and namespaces">
+<a href="../../../classes/index.html">Class Index</a></li><li title="Download and view examples">
+<a href="../../../examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="../../../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="../../../options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../../../api.html">System API</a></li><li title="Other Considerations">
+<a href="../../../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../../../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle"><a href="../../../../files/src/omni/util/bits.hpp" onclick="return popup('../../../../files/src/omni/util/bits.hpp')">omni/util/bits.hpp</a></div><div class="content"><div>
+<code><div class="cpphtmllines">
+<!--start line numbers-->
+00001:<br><div id="cmntl1" name="cmntl1">00002:<br>00003:<br>00004:<br>00005:<br>00006:<br>00007:<br>00008:<br>00009:<br>000010:<br>000011:<br>000012:<br>000013:<br>000014:<br>000015:<br>000016:<br>000017:<br>000018:<br></div>000019:<br>
+000020:<br>000021:<br>000022:<br>000023:<br>000024:<br>000025:<br>000026:<br>000027:<br>000028:<br>000029:<br>000030:<br>000031:<br>000032:<br>000033:<br>000034:<br>000035:<br>000036:<br>000037:<br>000038:<br>000039:<br>
+000040:<br>000041:<br>000042:<br>000043:<br>000044:<br>000045:<br>000046:<br>000047:<br>000048:<br>000049:<br>000050:<br>000051:<br>000052:<br>000053:<br>000054:<br>000055:<br>000056:<br>000057:<br>000058:<br>000059:<br>
+000060:<br>000061:<br>000062:<br>000063:<br>000064:<br>000065:<br>000066:<br>000067:<br>000068:<br>000069:<br>000070:<br>000071:<br>000072:<br>000073:<br>000074:<br>000075:<br>000076:<br>000077:<br>000078:<br>000079:<br>
+000080:<br>000081:<br>000082:<br>000083:<br>000084:<br>000085:<br>000086:<br>000087:<br>000088:<br>000089:<br>000090:<br>000091:<br>000092:<br>000093:<br>000094:<br>000095:<br>000096:<br>000097:<br>000098:<br>000099:<br>
+0000100:<br>0000101:<br>0000102:<br>0000103:<br>0000104:<br>0000105:<br>0000106:<br>0000107:<br>0000108:<br>0000109:<br>0000110:<br>0000111:<br>0000112:<br>0000113:<br>0000114:<br>0000115:<br>0000116:<br>0000117:<br>0000118:<br>0000119:<br>
+0000120:<br>0000121:<br>0000122:<br>0000123:<br>0000124:<br>0000125:<br>0000126:<br>0000127:<br>0000128:<br>0000129:<br>0000130:<br>0000131:<br>0000132:<br>0000133:<br>0000134:<br>0000135:<br>0000136:<br>0000137:<br>0000138:<br>0000139:<br>
+0000140:<br>0000141:<br>0000142:<br>0000143:<br>0000144:<br>0000145:<br>0000146:<br>0000147:<br>0000148:<br>0000149:<br>0000150:<br>0000151:<br>0000152:<br>0000153:<br>0000154:<br>0000155:<br>0000156:<br>0000157:<br>0000158:<br>0000159:<br>
+0000160:<br>0000161:<br>0000162:<br>0000163:<br>0000164:<br>0000165:<br>0000166:<br>0000167:<br>0000168:<br>0000169:<br>0000170:<br>0000171:<br>0000172:<br>0000173:<br>0000174:<br>0000175:<br>0000176:<br>0000177:<br>0000178:<br>0000179:<br>
+0000180:<br>0000181:<br>0000182:<br>0000183:<br>0000184:<br>0000185:<br>0000186:<br>0000187:<br>0000188:<br>0000189:<br>0000190:<br>0000191:<br>0000192:<br>0000193:<br>0000194:<br>0000195:<br>0000196:<br>0000197:<br>0000198:<br>0000199:<br>
+0000200:<br>0000201:<br>0000202:<br>0000203:<br>0000204:<br>0000205:<br>0000206:<br>0000207:<br>0000208:<br>0000209:<br>0000210:<br>0000211:<br>0000212:<br>0000213:<br>0000214:<br>0000215:<br>0000216:<br>0000217:<br>0000218:<br>0000219:<br>
+0000220:<br>0000221:<br>0000222:<br>0000223:<br>0000224:<br>
+<!--end line numbers-->
+</div><div class="cpphtmlcmnt">
+<!--start collapse columns-->
+<img src="../../../../content/tree/min.gif" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br>
+<!--end collapse columns-->
+</div><div class="cpphtml" style="margin-left:3.75em;">
+<!--start highlighted code-->
+<font class="syn_cmt">/*<div class="syn_ex" id="cmnt1" name="cmnt1">
+ * Copyright (c), Zeriph Enterprises<br>
+ * All rights reserved.<br>
+ * <br>
+ * Contributor(s):<br>
+ * Zechariah Perez, omni (at) zeriph (dot) com<br>
+ * <br>
+ * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS &quot;AS IS&quot; AND ANY<br>
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED<br>
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE<br>
+ * DISCLAIMED. IN NO EVENT SHALL ZERIPH AND CONTRIBUTORS BE LIABLE FOR ANY<br>
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES<br>
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;<br>
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND<br>
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT<br>
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS<br>
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.<br>
+ */</div><div></div></font>
+<font class="syn_pre">#if !defined(OMNI_BITS_HPP)</font><br>
+<font class="syn_pre">#define OMNI_BITS_HPP 1</font><br>
+<font class="syn_pre">#include &lt;<a href="../../omni/defs/global.hpp.html">omni/defs/global.hpp</a>&gt;</font><br>
+<font class="syn_pre">#include &lt;climits&gt;</font><br>
+<br>
+<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../options/omni_check_arithmetic_overflow.html">OMNI_CHECK_ARITHMETIC_OVERFLOW</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// TODO: finish this </font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_BITS_WILL_ADD_OVER_FW if (<a href="../../../classes/omni-bits-will_addition_overflow.html">omni::bits::will_addition_overflow</a>(a,b)) { error }</font><br>
+<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_BITS_WILL_ADD_OVER_FW</font><br>
+<font class="syn_pre">#endif</font><br>
+<br>
+<font class="syn_pre">#define <a href="../../../options/omni_xor_swap.html">OMNI_XOR_SWAP</a>(a, b) a ^= b; b ^= a; a ^= b</font><br>
+<font class="syn_pre">#define <a href="../../../options/omni_val_has_flag_bit.html">OMNI_VAL_HAS_FLAG_BIT</a>(val, flag) ((val &amp; flag) == flag)</font><br>
+<font class="syn_pre">#define <a href="../../../options/omni_val_set_flag_bool.html">OMNI_VAL_SET_FLAG_BOOL</a>(val, flag, onoff) val = (onoff ? (val | flag) : ((val | flag) ^ flag))</font><br>
+<font class="syn_pre">#define <a href="../../../options/omni_val_set_flag_bool_t.html">OMNI_VAL_SET_FLAG_BOOL_T</a>(T, val, flag, onoff) val = static_cast&lt;T&gt;(onoff ? (val | flag) : ((val | flag) ^ flag))</font><br>
+<font class="syn_pre">#define <a href="../../../options/omni_val_set_flag_bit.html">OMNI_VAL_SET_FLAG_BIT</a>(val, flag) val = (val | flag)</font><br>
+<font class="syn_pre">#define <a href="../../../options/omni_val_unset_flag_bit.html">OMNI_VAL_UNSET_FLAG_BIT</a>(val, flag) val = ((val | flag) ^ flag)</font><br>
+<font class="syn_pre">#define <a href="../../../options/omni_is_n_bit_set.html">OMNI_IS_N_BIT_SET</a>(val, n) ((val &amp; (1 &lt;&lt; n)) == (1 &lt;&lt; n))</font><br>
+<font class="syn_pre">#define <a href="../../../options/omni_set_n_bit.html">OMNI_SET_N_BIT</a>(val, n) val = (val | (1 &lt;&lt; n))</font><br>
+<font class="syn_pre">#define <a href="../../../options/omni_unset_n_bit.html">OMNI_UNSET_N_BIT</a>(val, n) val = ((val | (1 &lt;&lt; n)) ^ (1 &lt;&lt; n))</font><br>
+<font class="syn_pre">#define <a href="../../../options/omni_sizeof_bits.html">OMNI_SIZEOF_BITS</a>(T) (sizeof(T) * CHAR_BIT)</font><br>
+<br>
+<font class="syn_ins">namespace</font> omni {<br>
+<a name="omni::bits"></a>&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">namespace</font> bits {<br>
+<a name="omni::bits::has_flag"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T, <font class="syn_ins">typename</font> F &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> has_flag(<font class="syn_typ">const</font> T&amp; t, F flag)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../../../options/omni_val_has_flag_bit.html">OMNI_VAL_HAS_FLAG_BIT</a>(t, flag);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+<a name="omni::bits::set_flag"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T, <font class="syn_ins">typename</font> F &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> T&amp; set_flag(T&amp; t, F flag, <font class="syn_typ">bool</font> set)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (set) { <font class="syn_ins">return</font> (<a href="../../../options/omni_val_set_flag_bit.html">OMNI_VAL_SET_FLAG_BIT</a>(t, flag)); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<a href="../../../options/omni_val_unset_flag_bit.html">OMNI_VAL_UNSET_FLAG_BIT</a>(t, flag));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T, <font class="syn_ins">typename</font> F &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> T&amp; set_flag(T&amp; t, F flag)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<a href="../../../options/omni_val_set_flag_bit.html">OMNI_VAL_SET_FLAG_BIT</a>(t, flag));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+<a name="omni::bits::unset_flag"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T, <font class="syn_ins">typename</font> F &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> T&amp; unset_flag(T&amp; t, F flag)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<a href="../../../options/omni_val_unset_flag_bit.html">OMNI_VAL_UNSET_FLAG_BIT</a>(t, flag));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+<a name="omni::bits::unsafe_is_set"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> unsafe_is_set(<font class="syn_typ">const</font> T&amp; t, <font class="syn_typ">unsigned</font> <font class="syn_typ">short</font> n)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../../../classes/omni-bits-has_flag.html">omni::bits::has_flag</a>(t, (<font class="syn_num">1</font> &lt;&lt; n));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+<a name="omni::bits::unsafe_set"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> T&amp; unsafe_set(T&amp; t, <font class="syn_typ">unsigned</font> <font class="syn_typ">short</font> n, <font class="syn_typ">bool</font> s)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (s) { <font class="syn_ins">return</font> <a href="../../../classes/omni-bits-set_flag.html">omni::bits::set_flag</a>(t, (<font class="syn_num">1</font> &lt;&lt; n)); } <font class="syn_cmt">// set</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../../../classes/omni-bits-unset_flag.html">omni::bits::unset_flag</a>(t, (<font class="syn_num">1</font> &lt;&lt; n));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> T&amp; unsafe_set(T&amp; t, <font class="syn_typ">unsigned</font> <font class="syn_typ">short</font> n)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../../../classes/omni-bits-set_flag.html">omni::bits::set_flag</a>(t, (<font class="syn_num">1</font> &lt;&lt; n));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+<a name="omni::bits::unsafe_unset"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> T&amp; unsafe_unset(T&amp; t, <font class="syn_typ">unsigned</font> <font class="syn_typ">short</font> n)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../../../classes/omni-bits-unset_flag.html">omni::bits::unset_flag</a>(t, (<font class="syn_num">1</font> &lt;&lt; n));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+<a name="omni::bits::is_set"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> is_set(<font class="syn_typ">const</font> T&amp; t, <font class="syn_typ">unsigned</font> <font class="syn_typ">short</font> n)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (n &gt; <a href="../../../options/omni_sizeof_bits.html">OMNI_SIZEOF_BITS</a>(T)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERRV_RETV_FW(n, <font class="syn_str">&quot; &gt; sizeof(T)&quot;</font>, <a href="../../../classes/omni-exceptions-index_out_of_range.html">omni::exceptions::index_out_of_range</a>(<font class="syn_str">&quot;Invalid bit&quot;</font>, n), <font class="syn_ins">false</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../../../classes/omni-bits-unsafe_is_set.html">omni::bits::unsafe_is_set</a>(t, n);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+<a name="omni::bits::set"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> T&amp; set(T&amp; t, <font class="syn_typ">unsigned</font> <font class="syn_typ">short</font> n, <font class="syn_typ">bool</font> s)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (n &gt; <a href="../../../options/omni_sizeof_bits.html">OMNI_SIZEOF_BITS</a>(T)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERRV_RETV_FW(n, <font class="syn_str">&quot; &gt; sizeof(T)&quot;</font>, <a href="../../../classes/omni-exceptions-index_out_of_range.html">omni::exceptions::index_out_of_range</a>(<font class="syn_str">&quot;Invalid bit&quot;</font>, n), <font class="syn_ins">false</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../../../classes/omni-bits-unsafe_set.html">omni::bits::unsafe_set</a>(t, n, s);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> T&amp; set(T&amp; t, <font class="syn_typ">unsigned</font> <font class="syn_typ">short</font> n)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (n &gt; <a href="../../../options/omni_sizeof_bits.html">OMNI_SIZEOF_BITS</a>(T)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERRV_RETV_FW(n, <font class="syn_str">&quot; &gt; sizeof(T)&quot;</font>, <a href="../../../classes/omni-exceptions-index_out_of_range.html">omni::exceptions::index_out_of_range</a>(<font class="syn_str">&quot;Invalid bit&quot;</font>, n), <font class="syn_ins">false</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../../../classes/omni-bits-unsafe_set.html">omni::bits::unsafe_set</a>(t, n);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+<a name="omni::bits::unset"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> T&amp; unset(T&amp; t, <font class="syn_typ">unsigned</font> <font class="syn_typ">short</font> n)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (n &gt; <a href="../../../options/omni_sizeof_bits.html">OMNI_SIZEOF_BITS</a>(T)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERRV_RETV_FW(n, <font class="syn_str">&quot; &gt; sizeof(T)&quot;</font>, <a href="../../../classes/omni-exceptions-index_out_of_range.html">omni::exceptions::index_out_of_range</a>(<font class="syn_str">&quot;Invalid bit&quot;</font>, n), <font class="syn_ins">false</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../../../classes/omni-bits-unsafe_unset.html">omni::bits::unsafe_unset</a>(t, n);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+<a name="omni::bits::xor_swap"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">void</font> xor_swap(T&amp; a, T&amp; b)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (a != b) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../options/omni_xor_swap.html">OMNI_XOR_SWAP</a>(a, b); <font class="syn_cmt">// a ^= b; b ^= a; a ^= b</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T1, <font class="syn_ins">typename</font> T2 &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">void</font> xor_swap(T1&amp; a, T2&amp; b)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (a != b) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../options/omni_xor_swap.html">OMNI_XOR_SWAP</a>(a, b); <font class="syn_cmt">// a ^= b; b ^= a; a ^= b</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+<a name="omni::bits::size"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a> size()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../../../options/omni_sizeof_bits.html">OMNI_SIZEOF_BITS</a>(T); <font class="syn_cmt">// (sizeof(T) * CHAR_BIT)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a> size(<font class="syn_typ">const</font> T&amp; obj)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../../../options/omni_sizeof_bits.html">OMNI_SIZEOF_BITS</a>(obj); <font class="syn_cmt">// (sizeof(obj) * CHAR_BIT)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+<a name="omni::bits::test_overflow"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> test_overflow(T a, T b, <font class="syn_typ">char</font> op)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">switch</font> (op) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">case</font> <font class="syn_chr">&#39;+&#39;</font>: <font class="syn_ins">return</font> ((b &gt; <font class="syn_num">0</font>) &amp;&amp; (a &gt; <a href="http://www.cplusplus.com/reference/limits/numeric_limits/">std::numeric_limits</a>&lt;T&gt;::max() - b));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">case</font> <font class="syn_chr">&#39;-&#39;</font>: <font class="syn_ins">return</font> ((b &lt; <font class="syn_num">0</font>) &amp;&amp; (a &gt; <a href="http://www.cplusplus.com/reference/limits/numeric_limits/">std::numeric_limits</a>&lt;T&gt;::max() + b));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">case</font> <font class="syn_chr">&#39;*&#39;</font>:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> ((a &gt; <a href="http://www.cplusplus.com/reference/limits/numeric_limits/">std::numeric_limits</a>&lt;T&gt;::max() / b) ||<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   ((a == -<font class="syn_num">1</font>) &amp;&amp; (b == <a href="http://www.cplusplus.com/reference/limits/numeric_limits/">std::numeric_limits</a>&lt;T&gt;::min())) ||<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   ((b == -<font class="syn_num">1</font>) &amp;&amp; (a == <a href="http://www.cplusplus.com/reference/limits/numeric_limits/">std::numeric_limits</a>&lt;T&gt;::min())));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">default</font>: <font class="syn_ins">break</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+<a name="omni::bits::test_underflow"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> test_underflow(T a, T b, <font class="syn_typ">char</font> op)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">switch</font> (op) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">case</font> <font class="syn_chr">&#39;+&#39;</font>: <font class="syn_ins">return</font> ((b &lt; <font class="syn_num">0</font>) &amp;&amp; (a &lt; <a href="http://www.cplusplus.com/reference/limits/numeric_limits/">std::numeric_limits</a>&lt;T&gt;::min() - b));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">case</font> <font class="syn_chr">&#39;-&#39;</font>: <font class="syn_ins">return</font> ((b &gt; <font class="syn_num">0</font>) &amp;&amp; (a &lt; <a href="http://www.cplusplus.com/reference/limits/numeric_limits/">std::numeric_limits</a>&lt;T&gt;::min() + b));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">case</font> <font class="syn_chr">&#39;*&#39;</font>: <font class="syn_ins">return</font> ((a &lt; <a href="http://www.cplusplus.com/reference/limits/numeric_limits/">std::numeric_limits</a>&lt;T&gt;::min() / b));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">default</font>: <font class="syn_ins">break</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+<a name="omni::bits::will_addition_overflow"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_addition_overflow(int8_t a, int8_t b) { <font class="syn_ins">return</font> test_overflow&lt;int8_t&gt;(a, b, <font class="syn_chr">&#39;+&#39;</font>); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_addition_overflow(int16_t a, int16_t b) { <font class="syn_ins">return</font> test_overflow&lt;int16_t&gt;(a, b, <font class="syn_chr">&#39;+&#39;</font>); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_addition_overflow(int32_t a, int32_t b) { <font class="syn_ins">return</font> test_overflow&lt;int32_t&gt;(a, b, <font class="syn_chr">&#39;+&#39;</font>); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_addition_overflow(int64_t a, int64_t b) { <font class="syn_ins">return</font> test_overflow&lt;int64_t&gt;(a, b, <font class="syn_chr">&#39;+&#39;</font>); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_addition_overflow(<font class="syn_typ">char</font> a, <font class="syn_typ">char</font> b) { <font class="syn_ins">return</font> test_overflow&lt;<font class="syn_typ">char</font>&gt;(a, b, <font class="syn_chr">&#39;+&#39;</font>); }<br>
+<br>
+<a name="omni::bits::will_addition_underflow"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_addition_underflow(int8_t a, int8_t b) { <font class="syn_ins">return</font> test_underflow&lt;int8_t&gt;(a, b, <font class="syn_chr">&#39;+&#39;</font>); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_addition_underflow(int16_t a, int16_t b) { <font class="syn_ins">return</font> test_underflow&lt;int16_t&gt;(a, b, <font class="syn_chr">&#39;+&#39;</font>); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_addition_underflow(int32_t a, int32_t b) { <font class="syn_ins">return</font> test_underflow&lt;int32_t&gt;(a, b, <font class="syn_chr">&#39;+&#39;</font>); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_addition_underflow(int64_t a, int64_t b) { <font class="syn_ins">return</font> test_underflow&lt;int64_t&gt;(a, b, <font class="syn_chr">&#39;+&#39;</font>); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_addition_underflow(<font class="syn_typ">char</font> a, <font class="syn_typ">char</font> b) { <font class="syn_ins">return</font> test_underflow&lt;<font class="syn_typ">char</font>&gt;(a, b, <font class="syn_chr">&#39;+&#39;</font>); }<br>
+<br>
+<a name="omni::bits::will_subtraction_overflow"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_subtraction_overflow(int8_t a, int8_t b) { <font class="syn_ins">return</font> test_overflow&lt;int8_t&gt;(a, b, <font class="syn_chr">&#39;-&#39;</font>); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_subtraction_overflow(int16_t a, int16_t b) { <font class="syn_ins">return</font> test_overflow&lt;int16_t&gt;(a, b, <font class="syn_chr">&#39;-&#39;</font>); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_subtraction_overflow(int32_t a, int32_t b) { <font class="syn_ins">return</font> test_overflow&lt;int32_t&gt;(a, b, <font class="syn_chr">&#39;-&#39;</font>); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_subtraction_overflow(int64_t a, int64_t b) { <font class="syn_ins">return</font> test_overflow&lt;int64_t&gt;(a, b, <font class="syn_chr">&#39;-&#39;</font>); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_subtraction_overflow(<font class="syn_typ">char</font> a, <font class="syn_typ">char</font> b) { <font class="syn_ins">return</font> test_overflow&lt;<font class="syn_typ">char</font>&gt;(a, b, <font class="syn_chr">&#39;-&#39;</font>); }<br>
+<br>
+<a name="omni::bits::will_subtraction_underflow"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_subtraction_underflow(int8_t a, int8_t b) { <font class="syn_ins">return</font> test_underflow&lt;int8_t&gt;(a, b, <font class="syn_chr">&#39;-&#39;</font>); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_subtraction_underflow(int16_t a, int16_t b) { <font class="syn_ins">return</font> test_underflow&lt;int16_t&gt;(a, b, <font class="syn_chr">&#39;-&#39;</font>); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_subtraction_underflow(int32_t a, int32_t b) { <font class="syn_ins">return</font> test_underflow&lt;int32_t&gt;(a, b, <font class="syn_chr">&#39;-&#39;</font>); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_subtraction_underflow(int64_t a, int64_t b) { <font class="syn_ins">return</font> test_underflow&lt;int64_t&gt;(a, b, <font class="syn_chr">&#39;-&#39;</font>); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_subtraction_underflow(<font class="syn_typ">char</font> a, <font class="syn_typ">char</font> b) { <font class="syn_ins">return</font> test_underflow&lt;<font class="syn_typ">char</font>&gt;(a, b, <font class="syn_chr">&#39;-&#39;</font>); }<br>
+<br>
+<a name="omni::bits::will_multiplication_overflow"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_multiplication_overflow(int8_t a, int8_t b) { <font class="syn_ins">return</font> test_overflow&lt;int8_t&gt;(a, b, <font class="syn_chr">&#39;*&#39;</font>); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_multiplication_overflow(int16_t a, int16_t b) { <font class="syn_ins">return</font> test_overflow&lt;int16_t&gt;(a, b, <font class="syn_chr">&#39;*&#39;</font>); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_multiplication_overflow(int32_t a, int32_t b) { <font class="syn_ins">return</font> test_overflow&lt;int32_t&gt;(a, b, <font class="syn_chr">&#39;*&#39;</font>); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_multiplication_overflow(int64_t a, int64_t b) { <font class="syn_ins">return</font> test_overflow&lt;int64_t&gt;(a, b, <font class="syn_chr">&#39;*&#39;</font>); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_multiplication_overflow(<font class="syn_typ">char</font> a, <font class="syn_typ">char</font> b) { <font class="syn_ins">return</font> test_overflow&lt;<font class="syn_typ">char</font>&gt;(a, b, <font class="syn_chr">&#39;*&#39;</font>); }<br>
+<br>
+<a name="omni::bits::will_multiplication_underflow"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_multiplication_underflow(int8_t a, int8_t b) { <font class="syn_ins">return</font> test_underflow&lt;int8_t&gt;(a, b, <font class="syn_chr">&#39;*&#39;</font>); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_multiplication_underflow(int16_t a, int16_t b) { <font class="syn_ins">return</font> test_underflow&lt;int16_t&gt;(a, b, <font class="syn_chr">&#39;*&#39;</font>); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_multiplication_underflow(int32_t a, int32_t b) { <font class="syn_ins">return</font> test_underflow&lt;int32_t&gt;(a, b, <font class="syn_chr">&#39;*&#39;</font>); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_multiplication_underflow(int64_t a, int64_t b) { <font class="syn_ins">return</font> test_underflow&lt;int64_t&gt;(a, b, <font class="syn_chr">&#39;*&#39;</font>); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_multiplication_underflow(<font class="syn_typ">char</font> a, <font class="syn_typ">char</font> b) { <font class="syn_ins">return</font> test_underflow&lt;<font class="syn_typ">char</font>&gt;(a, b, <font class="syn_chr">&#39;*&#39;</font>); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_cmt">// namespace bits</font><br>
+}<br>
+<br>
+<font class="syn_pre">#endif <font class="syn_cmt">// OMNI_BITS_HPP</font></font><br>
+<!--end highlighted code-->
+</div></code><br>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS(); collapseAll('1', '../../../../');</script></body></html>

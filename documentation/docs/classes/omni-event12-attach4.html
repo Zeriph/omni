@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - member function: omni::event12::attach</title>
+<link rel="stylesheet" type="text/css" href="../../content/main.css" /><link rel="icon" type="image/png" href="../../content/favicon.png" />
+<script type="text/javascript" src="../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="../htmlsrc/index.html">Source</a></li><li title="Library classes and namespaces">
+<a href="index.html" class="current">Class Index</a></li><li title="Download and view examples">
+<a href="../examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="../options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../api.html">System API</a></li><li title="Other Considerations">
+<a href="../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle">omni::event12::attach</div><div class="content"><div>
+<div class="docdiv"><a name="nm"></a>
+<font class="docu">NAME</font><br><br>
+<code><a href="../htmlsrc/omni/delegate/12.hpp.html#omni::event12::attach" class="chnm">
+    omni::event12::attach
+    </a></code><br>
+<br>A member function of <a href="omni-event12.html" class="code">omni::event12</a><br><br>
+    <code><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/delegate/12.hpp.html">omni/delegate/12.hpp</a>&gt;</font></code><br><code><font class="syn_ins">template</font> &lt; <font class="syn_typ">class</font> T, Ret (T::*fnptr)(PT1, PT2, PT3, PT4, PT5, PT6, PT7, PT8, PT9, PT10, PT11, PT12) &gt; <font class="syn_typ">void</font> omni::event12::attach(T&amp; obj)</code>
+</div><br>
+<div class="docdiv"><a name="syn"></a>
+<font class="docu">SYNOPSIS</font><br><br>
+Add (attach) a member function to this delegate.
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<div class="docdiv"><a name="desc"></a>
+<font class="docu">DESCRIPTION</font><br><br>
+Adds a delegate to the end of this instances invocation list. See the notes below about race conditions.
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+
+<div class="docdiv"><a name="param"></a>
+<font class="docu">PARAMETERS</font><br><br>
+<code>obj</code> - The instance of the class to reference in this delegate <code>T</code> - The type of class to associate with this delegate <code>fnptr</code> - The function to attach to the delegate 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
+
+<div class="docdiv"><a name="con"></a>
+<font class="docu">CONSIDERATIONS</font><br><br>
+If the OMNI_SAFE_EVENT defines are not enabled, it is undefined if this event is invoked and edited at the same time; i.e. a race condition can occur if you attach to an event from one thread while invoking from another. 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
+
+
+<div class="docdiv"><a name="complexity"></a>
+<font class="docu">COMPLEXITY</font><br><br>
+
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
+
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

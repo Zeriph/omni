@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<SysAPI xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>pthread_attr_getstacksize</Name>
+  <Link>http://pubs.opengroup.org/onlinepubs/009695399/functions/pthread_attr_getstacksize.html</Link>
+  <SysType>POSIX</SysType>
+</SysAPI>

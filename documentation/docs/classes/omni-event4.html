@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - class: omni::event4</title>
+<link rel="stylesheet" type="text/css" href="../../content/main.css" /><link rel="icon" type="image/png" href="../../content/favicon.png" />
+<script type="text/javascript" src="../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="../htmlsrc/index.html">Source</a></li><li title="Library classes and namespaces">
+<a href="index.html" class="current">Class Index</a></li><li title="Download and view examples">
+<a href="../examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="../options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../api.html">System API</a></li><li title="Other Considerations">
+<a href="../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle">omni::event4</div><div class="content"><div>
+<div class="docdiv"><a name="nm"></a>
+<font class="docu">NAME</font><br><br>
+<code><a href="../htmlsrc/omni/delegate/4.hpp.html#omni::event4" class="chnm">
+    omni::event4
+    </a></code><br>
+<br>A class of <a href="omni.html" class="code">omni</a><br><br>
+    <code><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/delegate/4.hpp.html">omni/delegate/4.hpp</a>&gt;</font></code><br><code>class omni::event4</code><br>
+    <br>
+    <font class="docu">MEMBERS</font><br>
+    <br>
+    <code> <a href="../classes/omni-event4-event4.html">omni::event4::event4</a>()<br>
+     <a href="../classes/omni-event4-@7Eevent4.html">omni::event4::~event4</a>()<br>
+    <font class="syn_typ">void</font> <a href="../classes/omni-event4-attach.html">omni::event4::attach</a>(<font class="syn_typ">const</font> <a href="../classes/omni-delegate4.html">omni::delegate4</a>&lt; Ret PT1 PT2 PT3 PT4 &gt;&amp; d)<br>
+    <font class="syn_ins">template</font> &lt; <font class="syn_typ">class</font> T, ret_t (T::*fnptr)(PT1, PT2, PT3, PT4) <font class="syn_typ">const</font> &gt; <font class="syn_typ">void</font> <a href="../classes/omni-event4-attach_const.html">omni::event4::attach_const</a>(<font class="syn_typ">const</font> T&amp; obj)<br>
+    <font class="syn_typ">void</font> <a href="../classes/omni-event4-clear.html">omni::event4::clear</a>()<br>
+    <font class="syn_typ">bool</font> <a href="../classes/omni-event4-contains.html">omni::event4::contains</a>(<font class="syn_typ">const</font> <a href="../classes/omni-delegate4.html">omni::delegate4</a>&lt; Ret PT1 PT2 PT3 PT4 &gt;&amp; d)<br>
+    <font class="syn_ins">template</font> &lt; <font class="syn_typ">class</font> T, ret_t (T::*fnptr)(PT1, PT2, PT3, PT4) <font class="syn_typ">const</font> &gt; <font class="syn_typ">bool</font> <a href="../classes/omni-event4-contains_const.html">omni::event4::contains_const</a>(<font class="syn_typ">const</font> T&amp; obj)<br>
+    <font class="syn_typ">void</font> <a href="../classes/omni-event4-detach.html">omni::event4::detach</a>(<font class="syn_typ">const</font> <a href="../classes/omni-delegate4.html">omni::delegate4</a>&lt; Ret PT1 PT2 PT3 PT4 &gt;&amp; d)<br>
+    <font class="syn_typ">void</font> <a href="../classes/omni-event4-detach_all.html">omni::event4::detach_all</a>(<font class="syn_typ">const</font> <a href="../classes/omni-delegate4.html">omni::delegate4</a>&lt; Ret PT1 PT2 PT3 PT4 &gt;&amp; d)<br>
+    <font class="syn_ins">template</font> &lt; <font class="syn_typ">class</font> T, ret_t (T::*fnptr)(PT1, PT2, PT3, PT4) <font class="syn_typ">const</font> &gt; <font class="syn_typ">void</font> <a href="../classes/omni-event4-detach_const.html">omni::event4::detach_const</a>(<font class="syn_typ">const</font> T&amp; obj)<br>
+    <font class="syn_typ">bool</font> <a href="../classes/omni-event4-empty.html">omni::event4::empty</a>()<br>
+    container_t <a href="../classes/omni-event4-invocation_list.html">omni::event4::invocation_list</a>()<br>
+    ret_t <a href="../classes/omni-event4-invoke.html">omni::event4::invoke</a>(p1_t val1, p2_t val2, p3_t val3, p4_t val4)<br>
+    ret_t <a href="../classes/omni-event4-invoke_direct.html">omni::event4::invoke_direct</a>(p1_t val1, p2_t val2, p3_t val3, p4_t val4)<br>
+    <font class="syn_typ">void</font> <a href="../classes/omni-event4-swap.html">omni::event4::swap</a>(event4&lt; Ret PT1 PT2 PT3 PT4 &gt;&amp; e)<br>
+    ret_t omni::event4::<font class="syn_ins">operator</font>()<br>
+     omni::event4::<font class="syn_ins">operator</font> <font class="syn_typ">bool</font>()<br>
+    <font class="syn_typ">bool</font> omni::event4::<font class="syn_ins">operator</font>!()<br>
+    <font class="syn_typ">bool</font> omni::event4::<font class="syn_ins">operator</font>!=(<font class="syn_typ">const</font> event4&lt; Ret PT1 PT2 PT3 PT4 &gt;&amp; e)<br>
+    event4&lt; Ret, PT1, PT2, PT3, PT4 &gt; omni::event4::<font class="syn_ins">operator</font>+(<font class="syn_typ">const</font> <a href="../classes/omni-delegate4.html">omni::delegate4</a>&lt; Ret PT1 PT2 PT3 PT4 &gt;&amp; d)<br>
+    event4&lt; Ret, PT1, PT2, PT3, PT4 &gt;&amp; omni::event4::<font class="syn_ins">operator</font>+=(<font class="syn_typ">const</font> <a href="../classes/omni-delegate4.html">omni::delegate4</a>&lt; Ret PT1 PT2 PT3 PT4 &gt;&amp; d)<br>
+    event4&lt; Ret, PT1, PT2, PT3, PT4 &gt; omni::event4::<font class="syn_ins">operator</font>-(<font class="syn_typ">const</font> <a href="../classes/omni-delegate4.html">omni::delegate4</a>&lt; Ret PT1 PT2 PT3 PT4 &gt;&amp; d)<br>
+    event4&lt; Ret, PT1, PT2, PT3, PT4 &gt;&amp; omni::event4::<font class="syn_ins">operator</font>-=(<font class="syn_typ">const</font> <a href="../classes/omni-delegate4.html">omni::delegate4</a>&lt; Ret PT1 PT2 PT3 PT4 &gt;&amp; d)<br>
+    event4&lt; Ret, PT1, PT2, PT3, PT4 &gt;&amp; omni::event4::<font class="syn_ins">operator</font>=(<font class="syn_typ">const</font> event4&lt; Ret PT1 PT2 PT3 PT4 &gt;&amp; e)<br>
+    <font class="syn_typ">bool</font> omni::event4::<font class="syn_ins">operator</font>==(<font class="syn_typ">const</font> event4&lt; Ret PT1 PT2 PT3 PT4 &gt;&amp; e)<br>
+    <a href="../classes/omni-delegate4.html">omni::delegate4</a>&lt; Ret, PT1, PT2, PT3, PT4 &gt;&amp; omni::event4::<font class="syn_ins">operator</font>[](<a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a> idx)<br>
+    <a href="../classes/omni-event4-const_iterator_t.html">omni::event4::const_iterator_t</a><br>
+    <a href="../classes/omni-event4-const_reverse_iterator_t.html">omni::event4::const_reverse_iterator_t</a><br>
+    <a href="../classes/omni-event4-container_t.html">omni::event4::container_t</a><br>
+    <a href="../classes/omni-event4-delegate_t.html">omni::event4::delegate_t</a><br>
+    <a href="../classes/omni-event4-iterator_t.html">omni::event4::iterator_t</a><br>
+    <a href="../classes/omni-event4-p1_t.html">omni::event4::p1_t</a><br>
+    <a href="../classes/omni-event4-p2_t.html">omni::event4::p2_t</a><br>
+    <a href="../classes/omni-event4-p3_t.html">omni::event4::p3_t</a><br>
+    <a href="../classes/omni-event4-p4_t.html">omni::event4::p4_t</a><br>
+    <a href="../classes/omni-event4-ret_t.html">omni::event4::ret_t</a><br>
+    <a href="../classes/omni-event4-reverse_iterator_t.html">omni::event4::reverse_iterator_t</a><br>
+    </code>
+</div><br>
+<div class="docdiv"><a name="syn"></a>
+<font class="docu">SYNOPSIS</font><br><br>
+No synopsis.
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<div class="docdiv"><a name="desc"></a>
+<font class="docu">DESCRIPTION</font><br><br>
+No description.
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+
+
+
+
+
+
+
+
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_WOSTREAM_OPERATOR</Name>
+  <Brief>A helper macro to implement the @c operator&lt;&lt; wide stream friend function
+</Brief>
+  <Considerations>No special considerations
+</Considerations>
+  <Description>This is a helper macro that can allow you to implement the &lt;code&gt;friend std::wostream&amp; operator&lt;&lt;&lt;/code&gt; function within a class to allow to print to a wide output stream.
+
+Example:
+
+@code
+#include &lt;omni/framework&gt;
+class MyClass
+{
+    public:
+        MyClass() : m_val(42) {}
+        OMNI_WOSTREAM_OPERATOR(MyClass, m_val)
+    private:
+        int m_val;
+};
+
+int main(int argc, char* argv[])
+{
+    MyClass val;
+    std::wstringstream ss;
+    ss &lt;&lt; val;
+    std::wcout &lt;&lt; "wstring stream, val = " &lt;&lt; ss.str() &lt;&lt; std::endl;
+    std::wcout &lt;&lt; "wostream operator, val = " &lt;&lt; val &lt;&lt; std::endl;
+    return 0;
+}
+@code
+</Description>
+  <Notes>None.
+</Notes>
+  <PlatformSpecific>No platform specific notes.
+</PlatformSpecific>
+  <Synopsis>This macro can be utilized to implement the &lt;code&gt;friend std::wostream&amp; operator&lt;&lt;&lt;/code&gt; function in a class.
+</Synopsis>
+  <IsHelper>true</IsHelper>
+  <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
+</MacroOp>

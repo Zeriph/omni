@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_BOOL2STR</Name>
+  <Brief>Convert a bool value to a string.
+</Brief>
+  <Considerations>No special consideration.
+</Considerations>
+  <Description>This macro is simply defined as the following:
+@code
+#define OMNI_BOOL2STR(b) (b ? "true" : "false")
+@code
+</Description>
+  <Notes>None.
+</Notes>
+  <PlatformSpecific>No special consideration.
+</PlatformSpecific>
+  <Synopsis>A simple helper macro that can take boolean types and convert them to a @c "true" or @c "false" value.
+</Synopsis>
+  <IsHelper>true</IsHelper>
+  <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
+</MacroOp>

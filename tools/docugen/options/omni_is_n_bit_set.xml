@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_IS_N_BIT_SET</Name>
+  <Brief>Test if a specific bit is set in a value
+</Brief>
+  <Considerations>No special considerations
+</Considerations>
+  <Description>A helper macro that utilizes bit shifts to test if a specific bit is set in the value passed in. Defined as the following:
+
+@code
+#define OMNI_IS_N_BIT_SET(val, n) ((val &amp; (1 &lt;&lt; n)) == (1 &lt;&lt; n))
+@code
+
+Where @c val is the numeric value and @c n is the bit position (0 based from the right) to test.
+
+Example:
+
+@code
+s
+@code
+</Description>
+  <Notes>None.
+</Notes>
+  <PlatformSpecific>No platform specific notes.
+</PlatformSpecific>
+  <Synopsis>A helper macro that utilizes bit shifts to test if a specific bit is set in the value passed in.
+</Synopsis>
+  <IsHelper>true</IsHelper>
+  <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
+</MacroOp>

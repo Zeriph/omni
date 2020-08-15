@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - namespace: omni</title>
+<link rel="stylesheet" type="text/css" href="../../content/main.css" /><link rel="icon" type="image/png" href="../../content/favicon.png" />
+<script type="text/javascript" src="../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="../htmlsrc/index.html">Source</a></li><li title="Library classes and namespaces">
+<a href="index.html" class="current">Class Index</a></li><li title="Download and view examples">
+<a href="../examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="../options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../api.html">System API</a></li><li title="Other Considerations">
+<a href="../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle">omni</div><div class="content"><div>
+<div class="docdiv"><a name="nm"></a>
+<font class="docu">NAME</font><br><br>
+<code><a href="../htmlsrc/omni/library.hpp.html#omni" class="chnm">
+    omni
+    </a></code><br>
+
+</div><br>
+<div class="docdiv"><a name="syn"></a>
+<font class="docu">SYNOPSIS</font><br><br>
+The root namespace for the Omni library.
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<div class="docdiv"><a name="desc"></a>
+<font class="docu">DESCRIPTION</font><br><br>
+The omni namespace is the root namespace for the Omni library. It consists of multiple classes, types and functions to aid a developer in many different aspects and idioms of Software Engineering and Development.<br>
+<br>
+As you&#39;re utilizing the library and help documentation, specific details about how to make use (i.e. what the expected input and output) of a function will be presented in this section with other detailed information below.
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<div class="docdiv"><a name="ret"></a>
+<font class="docu">RETURN VALUES</font><br><br>
+If a function has a return value, it will be noted in this section accordingly. 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
+<div class="docdiv"><a name="param"></a>
+<font class="docu">PARAMETERS</font><br><br>
+<code>If</code> - a function has any parameters, they will be noted in this section accordingly. <code>If</code> - a function has any template parameters, they will be noted in this section accordingly. 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
+<div class="docdiv"><a name="err"></a>
+<font class="docu">ERRORS</font><br><br>
+Any error conditions (NULL values, exception handling, etc.) a library item might have will be detailed in this area. 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
+<div class="docdiv"><a name="con"></a>
+<font class="docu">CONSIDERATIONS</font><br><br>
+Any special considerations (memory management, pointer arithmetic, etc.) a library item might have will be detailed in this area. 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
+<div class="docdiv"><a name="pspec"></a>
+<font class="docu">PLATFORM SPECIFIC</font><br><br>
+Different classes and functions within the library might have different underlying API&#39;s based on the platform being targeted. Information on what platform specific details you might need to consider when using a function will be detailed in this area.<br>
+<br>
+The Omni library makes use of the C++ STL utilizing the C++03 standard for templates. The C++11 standard was still in draft when Omni first started, but has since been finalized with future drafts in the works. Due to this, support can vary between platforms for different standards, but at a minimum the C++03 standard has been found to be the most ubiquitously supported; that is, certain implementations of some compilers can have spotty support (or none at all) for certain C++11/14/17 standards (to include the STL and standard libraries), while these same compilers will have very stable deterministic support for the C++98/03 standards. To this, \upgrading your compiler\ isn&#39;t always the best (or necessarily available) solution, and so we&#39;ve decided to stick with what we started in and add future support through compiler options as needed (e.g. like for the std::thread as an example). 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
+<div class="docdiv"><a name="notes"></a>
+<font class="docu">NOTES</font><br><br>
+Any additional notes or details that might need be explained will be presented in this section. 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
+
+<div class="docdiv"><a name="ex"></a>
+<font class="docu">EXAMPLE</font><br><br>
+<div class="sntx"><input type="checkbox" id="c0" name="c0" checked /><label for="c0"> example</label>
+<pre><font class="syn_cmt">/* main.cpp */</font>
+<font class="syn_pre">#include &lt;<a href="../htmlsrc/omnilib.html">omnilib</a>&gt;</font>
+
+<font class="syn_typ">class</font> MyClass {
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">public</font>:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MyClass() : m_lock(), m_i(<font class="syn_num">42</font>) { }
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MyClass(<font class="syn_typ">int</font> i) : m_lock(), m_i(i) { }
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> increment_loop()
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;entering thread &quot;</font> &lt;&lt; <a href="../classes/omni-sync-thread_id.html">omni::sync::thread_id</a>() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">while</font> (!<a href="../classes/omni-sync-thread-abort_requested.html">omni::sync::thread::abort_requested</a>()) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-sleep.html">omni::sync::sleep</a>(<font class="syn_num">100</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_lock.lock();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;++<font class="syn_typ">this</font>-&gt;m_i;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_lock.unlock();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;leaving thread &quot;</font> &lt;&lt; <a href="../classes/omni-sync-thread_id.html">omni::sync::thread_id</a>() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> increment_loop2(<a href="../classes/omni-sync-thread_arg_t.html">omni::sync::thread_arg_t</a> args)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font>* pval = <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">int</font>*&gt;(args);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;entering thread &quot;</font> &lt;&lt; <a href="../classes/omni-sync-thread_id.html">omni::sync::thread_id</a>() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">while</font> (!<a href="../classes/omni-sync-thread-abort_requested.html">omni::sync::thread::abort_requested</a>()) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-sleep.html">omni::sync::sleep</a>(<font class="syn_num">100</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;++(*pval);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_lock.lock();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;++<font class="syn_typ">this</font>-&gt;m_i;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_lock.unlock();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;leaving thread &quot;</font> &lt;&lt; <a href="../classes/omni-sync-thread_id.html">omni::sync::thread_id</a>() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> get_val() <font class="syn_typ">const</font>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-auto_lock.html">omni::sync::auto_lock</a>&lt;<a href="../classes/omni-sync-basic_lock.html">omni::sync::basic_lock</a>&gt; alock(&amp;<font class="syn_typ">this</font>-&gt;m_lock);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;m_i;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">operator</font> <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>() <font class="syn_typ">const</font>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-string-util-to_wstring.html">omni::string::util::to_wstring</a>(<font class="syn_typ">this</font>-&gt;get_val());
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../options/omni_stream_operators.html">OMNI_STREAM_OPERATORS</a>(MyClass, get_val())
+
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">private</font>:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">mutable</font> <a href="../classes/omni-sync-basic_lock.html">omni::sync::basic_lock</a> m_lock;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> m_i;
+};
+
+static <a href="../classes/omni-sync-thread.html">omni::sync::thread</a>* thread2;
+
+<font class="syn_cmt">// timer_delegate is typedefdd as <a href="../classes/omni-delegate2.html">omni::delegate2</a>&lt;void, <a href="../classes/omni-chrono-tick_t.html">omni::chrono::tick_t</a>, const <a href="../classes/omni-generic_ptr.html">omni::generic_ptr</a>&amp;&gt;</font>
+<font class="syn_typ">void</font> timer_tick(<a href="../classes/omni-chrono-tick_t.html">omni::chrono::tick_t</a> tick, <font class="syn_typ">const</font> <a href="../classes/omni-generic_ptr.html">omni::generic_ptr</a>&amp; sobj)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;static <font class="syn_typ">int</font> tval;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;tick# &quot;</font> &lt;&lt; tval &lt;&lt; <font class="syn_str">&quot;: val = &quot;</font> &lt;&lt; (*<font class="syn_ins">static_cast</font>&lt;MyClass*&gt;(sobj)) &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (++tval == <font class="syn_num">5</font>) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;requesting abort for thread &quot;</font> &lt;&lt; thread2-&gt;id() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-thread-request_abort.html">omni::sync::thread::request_abort</a>(thread2-&gt;id());
+&nbsp;&nbsp;&nbsp;&nbsp;}
+}
+
+<font class="syn_typ">void</font> user_thread_exception(<font class="syn_typ">const</font> <a href="../classes/omni-exception.html">omni::exception</a>&amp; ex)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;An exception occurred: &quot;</font> &lt;&lt; ex &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+}
+
+<font class="syn_typ">void</font> thread_exception()
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;An unknown error occurred.&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+}
+
+<font class="syn_typ">int</font> main(<font class="syn_typ">int</font> argc, <font class="syn_typ">char</font>* argv[])
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// Hook up to any unhandled thread exception</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-unhandled_thread_exception.html">omni::sync::unhandled_thread_exception</a> += &amp;thread_exception;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-user_thread_exception.html">omni::sync::user_thread_exception</a> += &amp;user_thread_exception;
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// Our objects</font>
+&nbsp;&nbsp;&nbsp;&nbsp;MyClass val(<font class="syn_num">20</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> ival = <font class="syn_num">50</font>;
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// Create a managed thread on the stack using the thread_start::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a> to attach to val</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-thread.html">omni::sync::thread</a> thread1(<a href="../classes/omni-sync-bind_param.html">omni::sync::bind_param</a>&lt;MyClass, &amp;MyClass::increment_loop2&gt;(val));
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// Create a managed thread on the heap using allocate_thread template function</font>
+&nbsp;&nbsp;&nbsp;&nbsp;thread2 = <a href="../classes/omni-sync-allocate_thread.html">omni::sync::allocate_thread</a>&lt;MyClass, &amp;MyClass::increment_loop&gt;(val, <a href="../classes/omni-sync-thread_option-auto_join.html">omni::sync::thread_option::AUTO_JOIN</a>, <font class="syn_ins">true</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// Async timer, tick every second (1000ms == 1s)</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-chrono-async_timer.html">omni::chrono::async_timer</a> timer(<font class="syn_num">1000</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// hook up the tick event and state object to use</font>
+&nbsp;&nbsp;&nbsp;&nbsp;timer.tick += &amp;timer_tick;
+&nbsp;&nbsp;&nbsp;&nbsp;timer.state_object = &amp;val;
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// stream operator</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;starting: val = &quot;</font> &lt;&lt; val &lt;&lt; <font class="syn_str">&quot;, ival = &quot;</font> &lt;&lt; ival &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>; <font class="syn_cmt">// output: 20</font>
+&nbsp;&nbsp;&nbsp;&nbsp;std::stringstream ss;
+&nbsp;&nbsp;&nbsp;&nbsp;ss &lt;&lt; val; <font class="syn_cmt">// stream operator</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;string stream val = &quot;</font> &lt;&lt; ss.str() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::string</a> str = <a href="../classes/omni-string-util-to_string.html">omni::string::util::to_string</a>(val); <font class="syn_cmt">// stream operator</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;string val = &quot;</font> &lt;&lt; str &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a> wstr = <font class="syn_ins">static_cast</font>&lt;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a>&gt;(val); <font class="syn_cmt">// operator <a href="http://www.cplusplus.com/reference/string/">std::wstring</a></font>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/wcout/">std::wcout</a> &lt;&lt; <font class="syn_str">&quot;wstring val = &quot;</font> &lt;&lt; wstr &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/wcout/">std::wcout</a> &lt;&lt; <font class="syn_str">&quot;wcout val = &quot;</font> &lt;&lt; val &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>; <font class="syn_cmt">// stream operator</font>
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// start the threads</font>
+&nbsp;&nbsp;&nbsp;&nbsp;timer.start();
+&nbsp;&nbsp;&nbsp;&nbsp;thread1.start(&amp;ival);
+&nbsp;&nbsp;&nbsp;&nbsp;thread2-&gt;start();
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// print IDs</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;thread1: &quot;</font> &lt;&lt; thread1.id() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;thread2: &quot;</font> &lt;&lt; thread2-&gt;id() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;after start: val = &quot;</font> &lt;&lt; val &lt;&lt; <font class="syn_str">&quot;, ival = &quot;</font> &lt;&lt; ival &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// auto_join = true, so thread2 will join on destruction</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">delete</font> thread2;
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// we wont get here until the timer has finished</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;after thread destroy: val = &quot;</font> &lt;&lt; val &lt;&lt; <font class="syn_str">&quot;, ival = &quot;</font> &lt;&lt; ival &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// abort the thread and wait for it to finish</font>
+&nbsp;&nbsp;&nbsp;&nbsp;thread1.abort_join();
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;ending val = &quot;</font> &lt;&lt; val &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;
+}</pre>
+</div>Visit the <a href="../examples/index.html">examples</a> page for more.
+
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

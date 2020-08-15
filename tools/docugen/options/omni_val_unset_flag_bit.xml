@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_VAL_UNSET_FLAG_BIT</Name>
+  <Brief>Unsets a flag bit in a value.
+</Brief>
+  <Considerations>No special considerations
+</Considerations>
+  <Description>You can utilize this macro if you wish to un-set specific bit flag within a specified numeric value.
+
+Example:
+
+@code
+typedef struct enum_vals {
+    typedef enum enum_t {
+        VAL1 = 1, // 0001
+        VAL2 = 2, // 0010
+        VAL3 = 4, // 0100
+        VAL4 = 8  // 1000
+    } enum_t;
+} enum_vals;
+
+int i = 42; // 0010 1010
+std::cout &lt;&lt; "VAL2 " &lt;&lt; (OMNI_VAL_HAS_FLAG_BIT(i, enum_vals::VAL2) ? "is" : "is NOT") &lt;&lt; " set" &lt;&lt; std::endl;
+std::cout &lt;&lt; "VAL3 " &lt;&lt; (OMNI_VAL_HAS_FLAG_BIT(i, enum_vals::VAL3) ? "is" : "is NOT") &lt;&lt; " set" &lt;&lt; std::endl;
+OMNI_VAL_UNSET_FLAG_BIT(i, enum_vals::VAL2);
+OMNI_VAL_SET_FLAG_BIT(i, enum_vals::VAL3);
+std::cout &lt;&lt; "VAL2 " &lt;&lt; (OMNI_VAL_HAS_FLAG_BIT(i, enum_vals::VAL2) ? "is" : "is NOT") &lt;&lt; " set" &lt;&lt; std::endl;
+std::cout &lt;&lt; "VAL3 " &lt;&lt; (OMNI_VAL_HAS_FLAG_BIT(i, enum_vals::VAL3) ? "is" : "is NOT") &lt;&lt; " set" &lt;&lt; std::endl;
+@code
+
+The output for this would be:
+
+@code
+VAL2 is set
+VAL3 is NOT set
+VAL2 is NOT set
+VAL3 is set
+@code
+
+
+</Description>
+  <Notes>None.
+</Notes>
+  <PlatformSpecific>No platform specific notes.
+</PlatformSpecific>
+  <Synopsis>A helper macro used to un-set a bit flag within a specified value.
+</Synopsis>
+  <IsHelper>true</IsHelper>
+  <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
+</MacroOp>

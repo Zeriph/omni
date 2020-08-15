@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - function: omni::application::args</title>
+<link rel="stylesheet" type="text/css" href="../../content/main.css" /><link rel="icon" type="image/png" href="../../content/favicon.png" />
+<script type="text/javascript" src="../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="../htmlsrc/index.html">Source</a></li><li title="Library classes and namespaces">
+<a href="index.html" class="current">Class Index</a></li><li title="Download and view examples">
+<a href="../examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="../options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../api.html">System API</a></li><li title="Other Considerations">
+<a href="../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle">omni::application::args</div><div class="content"><div>
+<div class="docdiv"><a name="nm"></a>
+<font class="docu">NAME</font><br><br>
+<code><a href="../htmlsrc/omni/application.hpp.html#omni::application::args" class="chnm">
+    omni::application::args
+    </a></code><br>
+<br>A function of <a href="omni-application.html" class="code">omni::application</a><br><br>
+    <code><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/application.hpp.html">omni/application.hpp</a>&gt;</font></code><br><code><a href="../classes/omni-application-argparser.html">omni::application::argparser</a>&amp; omni::application::args()</code>
+</div><br>
+<div class="docdiv"><a name="syn"></a>
+<font class="docu">SYNOPSIS</font><br><br>
+Gets the application wide argument parser set via either an <code><a href="omni-application-run.html">omni::application::run</a></code> context or directly via <code><a href="omni-application-set_args.html">omni::application::set_args</a></code>.
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<div class="docdiv"><a name="desc"></a>
+<font class="docu">DESCRIPTION</font><br><br>
+If <code><a href="omni-application-run.html">omni::application::run</a></code> or <code><a href="omni-application-set_args.html">omni::application::set_args</a></code> is called passing in the command line arguments from the main function, the reference returned has a copy of same arguments.
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<div class="docdiv"><a name="ret"></a>
+<font class="docu">RETURN VALUES</font><br><br>
+A reference to the application wide <code><a href="omni-application-argparser.html">omni::application::argparser</a></code> 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
+
+
+<div class="docdiv"><a name="con"></a>
+<font class="docu">CONSIDERATIONS</font><br><br>
+The value returned is a direct reference to the underlying <code>argparser</code> object, so any modifications done to the reference after it has be retrieved cannot be guaranteed to be thread safe. 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
+
+
+
+<div class="docdiv"><a name="ex"></a>
+<font class="docu">EXAMPLE</font><br><br>
+<div class="sntx"><input type="checkbox" id="c0" name="c0" checked /><label for="c0"> example</label>
+<pre><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/application.html">omni/application</a>&gt;</font>
+
+<font class="syn_typ">void</font> app_run()
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// get a reference</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-application-argparser.html">omni::application::argparser</a>&amp; args = <a href="../classes/omni-application-args.html">omni::application::args</a>();
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">for</font> (<font class="syn_typ">int</font> i = <font class="syn_num">0</font>; i &lt; args.size(); ++i) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;args[&quot;</font> &lt;&lt; i &lt;&lt; <font class="syn_str">&quot;]: &quot;</font> &lt;&lt; args[i] &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// alternatively</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;args = &quot;</font> &lt;&lt; args &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Leaving, waiting for CTRL+C&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+}
+
+<font class="syn_typ">int</font> main(<font class="syn_typ">int</font> argc, <font class="syn_typ">const</font> <font class="syn_typ">char</font>* argv[])
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-application-set_args.html">omni::application::set_args</a>(argc, argv);
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-application-run.html">omni::application::run</a>(&amp;app_run);
+}</pre>
+</div>Visit the <a href="../examples/index.html">examples</a> page for more.
+
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

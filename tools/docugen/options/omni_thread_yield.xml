@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_THREAD_YIELD</Name>
+  <Brief>A helper macro calling the platform thread yield function.
+</Brief>
+  <Considerations>No special considerations
+</Considerations>
+  <Description>Calling this macro will call the underlying function to yield the current thread to others based on the current thread schedule policy. This macro is called by the omni::sync::yield_thread function as well.
+</Description>
+  <Notes>None.
+</Notes>
+  <PlatformSpecific>Defined as &lt;code&gt;#define OMNI_THREAD_YIELD() ::SwitchToThread()&lt;/code&gt; on Windows platforms and &lt;code&gt;#define OMNI_THREAD_YIELD() ::sched_yield()&lt;/code&gt; on others.
+</PlatformSpecific>
+  <Synopsis>Calls the platform thread yield function to yield the current thread.
+</Synopsis>
+  <IsHelper>true</IsHelper>
+  <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
+</MacroOp>

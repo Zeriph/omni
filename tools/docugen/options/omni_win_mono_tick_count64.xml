@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_WIN_MONO_TICK_COUNT64</Name>
+  <Brief>Defines the underlying tick call.
+</Brief>
+  <Considerations>No special considerations
+</Considerations>
+  <Description>A framework macro/option that changes certain functionality
+</Description>
+  <Notes>None.
+</Notes>
+  <PlatformSpecific>This macro option only applies to Windows platforms and will have no effect if defined on a non Windows platform.
+</PlatformSpecific>
+  <Synopsis>If defined, the underlying tick call will be GetTickCount64
+</Synopsis>
+  <IsHelper>false</IsHelper>
+  <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
+</MacroOp>

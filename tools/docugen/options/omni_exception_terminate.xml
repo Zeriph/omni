@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_EXCEPTION_TERMINATE</Name>
+  <Brief>The call made when an exception happens within an omni::execption.
+</Brief>
+  <Considerations>You may define a different value for OMNI_EXCEPTION_TERMINATE, e.g. &lt;code&gt;-DOMNI_EXCEPTION_TERMINATE=std::abort();&lt;/code&gt; and std::abort will be called instead of std::terminate 
+
+</Considerations>
+  <Description>The default value of this macro is to call std::terminate() so if an exception happens within an omni::exception, this macro is called.
+
+An exception can happen in the omni::exception class if an invalid reference is specified when trying to add additional information to the exception. Example: &lt;code&gt;omni::exception e("some info", NULL);&lt;/code&gt; will cause an inner exception to happen, thus std::terminate is called, alerting the developer of what happened.
+</Description>
+  <Notes>None.
+</Notes>
+  <PlatformSpecific>No platform specific notes.
+</PlatformSpecific>
+  <Synopsis>If an error occurs within an actual omni::exception (such as a null pointer reference on a string value), then this macro defines what is to be done.
+</Synopsis>
+  <IsHelper>false</IsHelper>
+  <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
+</MacroOp>

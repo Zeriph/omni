@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_DBG_L5</Name>
+  <Brief>Defined when debug level &gt; 4.
+</Brief>
+  <Considerations>No special consideration.
+</Considerations>
+  <Description>If this macro is enabled it means that certain information will be output in the framework.
+</Description>
+  <Notes>None.
+</Notes>
+  <PlatformSpecific>No special consideration.
+</PlatformSpecific>
+  <Synopsis>A helper macro that can be used to determine if Omni debug is enabled and if it's greater than a certain threshold.
+</Synopsis>
+  <IsHelper>true</IsHelper>
+  <IsConstant>false</IsConstant>
+  <IsFWHelp>true</IsFWHelp>
+</MacroOp>

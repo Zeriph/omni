@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - omni/defs/math_def.hpp</title>
+<link rel="stylesheet" type="text/css" href="../../../../content/main.css" /><link rel="icon" type="image/png" href="../../../../content/favicon.png" />
+<script type="text/javascript" src="../../../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="../../index.html" class="current">Source</a></li><li title="Library classes and namespaces">
+<a href="../../../classes/index.html">Class Index</a></li><li title="Download and view examples">
+<a href="../../../examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="../../../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="../../../options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../../../api.html">System API</a></li><li title="Other Considerations">
+<a href="../../../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../../../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle"><a href="../../../../files/src/omni/defs/math_def.hpp" onclick="return popup('../../../../files/src/omni/defs/math_def.hpp')">omni/defs/math_def.hpp</a></div><div class="content"><div>
+<code><div class="cpphtmllines">
+<!--start line numbers-->
+00001:<br><div id="cmntl1" name="cmntl1">00002:<br>00003:<br>00004:<br>00005:<br>00006:<br>00007:<br>00008:<br>00009:<br>000010:<br>000011:<br>000012:<br>000013:<br>000014:<br>000015:<br>000016:<br>000017:<br>000018:<br></div>000019:<br>
+000020:<br>000021:<br>000022:<br>000023:<br>000024:<br>000025:<br>000026:<br>000027:<br>000028:<br>000029:<br>000030:<br>000031:<br>000032:<br>000033:<br>000034:<br>000035:<br>000036:<br>000037:<br>000038:<br>000039:<br>
+000040:<br>000041:<br>000042:<br>000043:<br>000044:<br>000045:<br>000046:<br>000047:<br>000048:<br>000049:<br>000050:<br>000051:<br>000052:<br>000053:<br>000054:<br>000055:<br>000056:<br>000057:<br>000058:<br>000059:<br>
+000060:<br>000061:<br>000062:<br>000063:<br>000064:<br>000065:<br>000066:<br>000067:<br>000068:<br>000069:<br>000070:<br>000071:<br>000072:<br>000073:<br>000074:<br>000075:<br>000076:<br>000077:<br>000078:<br>000079:<br>
+000080:<br>000081:<br>000082:<br>000083:<br>000084:<br>000085:<br>000086:<br>000087:<br>000088:<br>000089:<br>000090:<br>000091:<br>000092:<br>000093:<br>000094:<br>000095:<br>000096:<br>000097:<br>000098:<br>000099:<br>
+0000100:<br>0000101:<br>0000102:<br>0000103:<br>0000104:<br>
+<!--end line numbers-->
+</div><div class="cpphtmlcmnt">
+<!--start collapse columns-->
+<img src="../../../../content/tree/min.gif" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br>
+<!--end collapse columns-->
+</div><div class="cpphtml" style="margin-left:3.75em;">
+<!--start highlighted code-->
+<font class="syn_cmt">/*<div class="syn_ex" id="cmnt1" name="cmnt1">
+ * Copyright (c), Zeriph Enterprises<br>
+ * All rights reserved.<br>
+ * <br>
+ * Contributor(s):<br>
+ * Zechariah Perez, omni (at) zeriph (dot) com<br>
+ * <br>
+ * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS &quot;AS IS&quot; AND ANY<br>
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED<br>
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE<br>
+ * DISCLAIMED. IN NO EVENT SHALL ZERIPH AND CONTRIBUTORS BE LIABLE FOR ANY<br>
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES<br>
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;<br>
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND<br>
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT<br>
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS<br>
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.<br>
+ */</div><div></div></font>
+<font class="syn_pre">#if !defined(OMNI_MATH_DEF_HPP)</font><br>
+<font class="syn_pre">#define OMNI_MATH_DEF_HPP 1</font><br>
+<br>
+<font class="syn_pre">#define OMNI_MATH_MAX_ROUND_DIGITS_FW 15</font><br>
+<font class="syn_pre">#define OMNI_MATH_ROUND_LIMIT_FW 1e16</font><br>
+<br>
+<font class="syn_pre">#if !defined(<a href="../../../options/omni_e_f.html">OMNI_E_F</a>) <font class="syn_cmt">// float</font></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#if (defined(<a href="../../../options/omni_use_m_e_f.html">OMNI_USE_M_E_F</a>) || defined(<a href="../../../options/omni_use_math_defs.html">OMNI_USE_MATH_DEFS</a>)) &amp;&amp; defined(M_E)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_e_f.html">OMNI_E_F</a> static_cast&lt;float&gt;(M_E)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_e_f.html">OMNI_E_F</a> 2.7182818F</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+<font class="syn_pre">#endif</font><br>
+<br>
+<font class="syn_pre">#if !defined(<a href="../../../options/omni_e.html">OMNI_E</a>) <font class="syn_cmt">// double</font></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#if (defined(<a href="../../../options/omni_use_m_e.html">OMNI_USE_M_E</a>) || defined(<a href="../../../options/omni_use_math_defs.html">OMNI_USE_MATH_DEFS</a>)) &amp;&amp; defined(M_E)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_e.html">OMNI_E</a> M_E</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_e.html">OMNI_E</a> 2.71828182845904523536</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+<font class="syn_pre">#endif</font><br>
+<br>
+<font class="syn_pre">#if !defined(<a href="../../../options/omni_e_l.html">OMNI_E_L</a>) <font class="syn_cmt">// long double</font></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#if (defined(<a href="../../../options/omni_use_m_e_l.html">OMNI_USE_M_E_L</a>) || defined(<a href="../../../options/omni_use_math_defs.html">OMNI_USE_MATH_DEFS</a>)) &amp;&amp; defined(M_El)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_e_l.html">OMNI_E_L</a> M_El</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_e_l.html">OMNI_E_L</a> 2.71828182845904523536028747135266250L</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+<font class="syn_pre">#endif</font><br>
+<br>
+<font class="syn_pre">#if !defined(<a href="../../../options/omni_pi_f.html">OMNI_PI_F</a>) <font class="syn_cmt">// float</font></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#if (defined(<a href="../../../options/omni_use_m_pi_f.html">OMNI_USE_M_PI_F</a>) || defined(<a href="../../../options/omni_use_math_defs.html">OMNI_USE_MATH_DEFS</a>)) &amp;&amp; defined(M_PI)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_pi_f.html">OMNI_PI_F</a> static_cast&lt;float&gt;(M_PI)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_pi_f.html">OMNI_PI_F</a> 3.1415926F</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_pi_f_180.html">OMNI_PI_F_180</a> 0.0174533F</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_180_pi_f.html">OMNI_180_PI_F</a> 57.2957805F</font><br>
+<font class="syn_pre">#endif</font><br>
+<br>
+<font class="syn_pre">#if !defined(<a href="../../../options/omni_pi.html">OMNI_PI</a>) <font class="syn_cmt">// double</font></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#if (defined(<a href="../../../options/omni_use_m_pi.html">OMNI_USE_M_PI</a>) || defined(<a href="../../../options/omni_use_math_defs.html">OMNI_USE_MATH_DEFS</a>)) &amp;&amp; defined(M_PI)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_pi.html">OMNI_PI</a> M_PI</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_pi.html">OMNI_PI</a> 3.14159265358979323846</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_pi_180.html">OMNI_PI_180</a> 0.01745329251994329577</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_180_pi.html">OMNI_180_PI</a> 57.29577951308232087684</font><br>
+<font class="syn_pre">#endif</font><br>
+<br>
+<font class="syn_pre">#if !defined(<a href="../../../options/omni_pi_l.html">OMNI_PI_L</a>) <font class="syn_cmt">// long double</font></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#if (defined(<a href="../../../options/omni_use_m_pi_l.html">OMNI_USE_M_PI_L</a>) || defined(<a href="../../../options/omni_use_math_defs.html">OMNI_USE_MATH_DEFS</a>)) &amp;&amp; defined(M_PIl)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_pi_l.html">OMNI_PI_L</a> M_PIl</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_pi_l.html">OMNI_PI_L</a> 3.141592653589793238462643383279502884L</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_pi_l_180.html">OMNI_PI_L_180</a> 0.017453292519943295769236907684886127L</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_180_pi_l.html">OMNI_180_PI_L</a> 57.295779513082320876798154814105170336L</font><br>
+<font class="syn_pre">#endif</font><br>
+<br>
+<font class="syn_pre">#define OMNI_MATH_GET_POINT_X_FW(T, center_x, radius, angle) \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static_cast&lt;T&gt;((static_cast&lt;double&gt;(center_x) + (static_cast&lt;double&gt;(radius) * <a href="http://www.cplusplus.com/reference/cmath/cos/">std::cos</a>((static_cast&lt;double&gt;(angle) * <a href="../../../options/omni_pi_180.html">OMNI_PI_180</a>)))))</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+<font class="syn_pre">#define OMNI_MATH_GET_POINT_Y_FW(T, center_y, radius, angle) \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static_cast&lt;T&gt;((static_cast&lt;double&gt;(center_y) + (static_cast&lt;double&gt;(radius) * <a href="http://www.cplusplus.com/reference/cmath/sin/">std::sin</a>((static_cast&lt;double&gt;(angle) * <a href="../../../options/omni_pi_180.html">OMNI_PI_180</a>)))))</font><br>
+<br>
+<font class="syn_pre">#define OMNI_MATH_GET_POINT_X_INT_FW(T, center_x, radius, angle) \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static_cast&lt;T&gt;(<a href="http://www.cplusplus.com/reference/cmath/ceil/">std::ceil</a>((static_cast&lt;double&gt;(center_x) + (static_cast&lt;double&gt;(radius) * <a href="http://www.cplusplus.com/reference/cmath/cos/">std::cos</a>((static_cast&lt;double&gt;(angle) * <a href="../../../options/omni_pi_180.html">OMNI_PI_180</a>))))))</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+<font class="syn_pre">#define OMNI_MATH_GET_POINT_Y_INT_FW(T, center_y, radius, angle) \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static_cast&lt;T&gt;(<a href="http://www.cplusplus.com/reference/cmath/ceil/">std::ceil</a>((static_cast&lt;double&gt;(center_y) + (static_cast&lt;double&gt;(radius) * <a href="http://www.cplusplus.com/reference/cmath/sin/">std::sin</a>((static_cast&lt;double&gt;(angle) * <a href="../../../options/omni_pi_180.html">OMNI_PI_180</a>))))))</font><br>
+<br>
+<font class="syn_pre">#define OMNI_MATH_ANGLE_ERR_FW if (angle &gt; 360) { OMNI_ERR_FW(<font class="syn_str">&quot;angle cannot be greater than 360 degrees&quot;</font>, <a href="../../../classes/omni-exceptions-overflow_error.html">omni::exceptions::overflow_error</a>(<font class="syn_str">&quot;angle cannot be greater than 360 degrees&quot;</font>)) }</font><br>
+<br>
+<font class="syn_pre">#define OMNI_MATH_GET_POINT_FW(T, out_x, out_y, center_x, center_y, radius, angle) \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MATH_ANGLE_ERR_FW \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;out_x = OMNI_MATH_GET_POINT_X_FW(T, center_x, radius, angle); \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;out_y = OMNI_MATH_GET_POINT_Y_FW(T, center_y, radius, angle)</font><br>
+<br>
+<font class="syn_pre">#define OMNI_MATH_GET_POINT_INT_FW(T, out_x, out_y, center_x, center_y, radius, angle) \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MATH_ANGLE_ERR_FW \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;out_x = OMNI_MATH_GET_POINT_X_INT_FW(T, center_x, radius, angle); \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;out_y = OMNI_MATH_GET_POINT_Y_INT_FW(T, center_y, radius, angle)</font><br>
+<br>
+<font class="syn_pre">#endif <font class="syn_cmt">// OMNI_MATH_DEF_HPP</font></font><br>
+<!--end highlighted code-->
+</div></code><br>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS(); collapseAll('1', '../../../../');</script></body></html>

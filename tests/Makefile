@@ -5,14 +5,14 @@
 OMNI_DIR=/Code/omni
 OMNI_SDIR=$(OMNI_DIR)/source
 OMNI_ODIR=$(OMNI_DIR)/tests/build/obj
-# Omni framework source files
+# Omni library source files
 OMNI_SRC=application.cpp
 	argparser.cpp
 	async_timer.cpp
 	basic_thread.cpp
 	binary_semaphore.cpp
 	conditional.cpp
-	datetime.cpp
+	date_time.cpp
 	drop_timer.cpp
 	enpoint_descriptor.cpp
 	environment.cpp
@@ -42,7 +42,7 @@ OMNI_NOTHROW=-fno-exceptions -DOMNI_NO_THROW
 OMNI_UNICODE=-D_UNICODE -DUNICODE
 OMNI_DEBUG=-ggdb -DOMNI_SHOW_DEBUG_ERR -DOMNI_SHOW_DEBUG_FILE -DOMNI_SHOW_DEBUG_FUNC -DOMNI_SHOW_DEBUG_LINE -DOMNI_SHOW_DEBUG=1
 OMNI_HEAVY=-DOMNI_DISPOSE_EVENT -DOMNI_OBJECT_NAME -DOMNI_TYPE_INFO
-OMNI_SAFE=-DOMNI_SAFE_FRAMEWORK
+OMNI_SAFE=-DOMNI_SAFE_LIBRARY
 OMNI_NP=-DOMNI_NON_PORTABLE
 # generic default flags (pthread/execptions/unicode)
 OMNI_DEF=$(OMNI_FLAGS) $(OMNI_EX) $(OMNI_UNICODE)
@@ -52,7 +52,7 @@ OMNI_DEF_EX=$(OMNI_FLAGS) $(OMNI_UNICODE) $(OMNI_NOTHROW)
 # typically advised to build anything this way (i.e. $(MAKE) OMNI_FLAGS="$(OMNI_FLAGS) ..."),
 # it is portable enough and you (the user of this Makefile) can adjust as necessary.
 
-# These build targets are only a subset of the ways to build the Omni framework
+# These build targets are only a subset of the ways to build the Omni library
 # and a number of flags can be defined to customize the way Omni operates.
 
 # if make is called with no targets, then this is the default (base Omni with Unicode)
@@ -73,22 +73,22 @@ unicode:
 ansi:
 	$(MAKE) OMNI_FLAGS="$(OMNI_FLAGS) $(OMNI_EX)" libomni
 
-# a basic debug build of the Omni framework (debug level = 1)
+# a basic debug build of the Omni library (debug level = 1)
 debug:
 	$(MAKE) OMNI_FLAGS="$(OMNI_DEF) $(OMNI_DEBUG)" libomni
 
 debug_ansi:
 	$(MAKE) OMNI_FLAGS="$(OMNI_FLAGS) $(OMNI_EX) $(OMNI_DEBUG)" libomni
 
-# Classes in the framework will have additional helper members (hash/etc.)
+# Classes in the library will have additional helper members (hash/etc.)
 heavy:
 	$(MAKE) OMNI_FLAGS="$(OMNI_DEF) $(OMNI_HEAVY)" libomni
 
-# Classes in the framework will be thread safe
+# Classes in the library will be thread safe
 thread_safe:
 	$(MAKE) OMNI_FLAGS="$(OMNI_DEF) $(OMNI_SAFE)" libomni
 
-# Non-portable code (like thread::set_priority) will be enabled in the framework
+# Non-portable code (like thread::set_priority) will be enabled in the library
 nonportable:
 	$(MAKE) OMNI_FLAGS="$(OMNI_DEF) $(OMNI_NP)" libomni
 

@@ -15,6 +15,7 @@ class UT_CLASS_DEF
         
         void base_test()
         {
+            omni::out << "omni::system::architecture = " << omni::system::architecture() << std::endl;
             omni::out << "omni::system::cwd = " << omni::system::cwd() << std::endl;
             omni::out << "omni::system::is_big_endian() = " << OMNI_BOOL2STR(omni::system::is_big_endian()) << std::endl;
             omni::out << "omni::system::last_error() = " << omni::system::last_error() << std::endl;

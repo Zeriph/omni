@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - Getting Started With Omni</title>
+<link rel="stylesheet" type="text/css" href="content/main.css" /><link rel="icon" type="image/png" href="content/favicon.png" />
+<script type="text/javascript" src="content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="getstarted.html" class="current">Getting Started</a></li><li title="Cross platform support"><a href="xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="docs/htmlsrc/index.html">Source</a></li><li title="Library classes and namespaces">
+<a href="docs/classes/index.html">Class Index</a></li><li title="Download and view examples">
+<a href="docs/examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="docs/build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="docs/options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="docs/api.html">System API</a></li><li title="Other Considerations">
+<a href="docs/consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="docs/codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="http://www.zeriph.com">Zeriph Enterprises, LLC</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle"><a name="getting_started"></a>Getting Started With Omni</div><div class="content"><div>
+<a name="step1"></a><font class="hdr">Step 1 - What you will need</font><br>
+To get started using the Omni library, you will first need a tool chain (e.g. a compiler, system SDK, etc.) for the
+platforms you wish to deploy to and ensure you have set up your <a href="docs/build/index.html">build</a> environment properly.<br>
+<a class="toppg" href="#topopage">top</a><br><br>
+
+<a name="step2"></a><font class="hdr">Step 2 - Getting the source</font><br>
+You can grab the latest source <a href="files/src.zip">here</a> and the latest documentation
+<a href="files/help.zip">here</a>, you can also visit the <a href="docs/htmlsrc/index.html">source viewer</a>
+to walk through the code or visit the <a href="download.html">download</a> page to view other download options.<br>
+<a class="toppg" href="#topopage">top</a><br><br>
+
+<a name="step3"></a><font class="hdr">Step 3 - 'Installing' the source</font><br>
+After you have <a href="download.html">downloaded</a> the latest source, you simply extract the 
+<code><a href="files/src.zip">src.zip</a></code> file contents to where you want the Omni library code to reside.
+As an example, the <a href="docs/build/index.html">build files</a> reference the source at <code>C:\source\omni\</code>
+for Windows and <code>/source/omni</code> on other platforms.<br><br>
+After you have extracted the source to where you want, you can start developing with the library.<br>
+<a class="toppg" href="#topopage">top</a><br><br>
+
+<a name="step4"></a><font class="hdr">Step 4 - Using the source</font><br>
+Let's start with a very basic thread example, assuming the following code in a file called <code>main.cpp</code>:<br>
+
+<div class="sntx"><pre><font class="syn_cmt">/* main.cpp */</font>
+<font class="syn_pre">#include &lt;<a href="docs/htmlsrc/omnilib.html">omnilib</a>&gt;</font>
+
+<font class="syn_typ">void</font> thread_func()
+{
+    <a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;In thread ... sleeping <font class="syn_num">5</font> seconds&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+    <a href="docs/classes/omni@@sync@@sleep.html">omni::sync::sleep</a>(<font class="syn_num">5000</font>);
+}
+
+<font class="syn_typ">int</font> main(<font class="syn_typ">int</font> argc, <font class="syn_typ">char</font>* argv[])
+{
+    <a href="docs/classes/omni@@sync@@thread.html">omni::sync::thread</a> t(&amp;thread_func, <a href="docs/classes/omni@@sync@@thread_option.html">omni::sync::thread_option</a>::AUTO_JOIN, <font class="syn_ins">true</font>);
+    t.start();
+    <a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;returning from main, thread will automatically join on destruction&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+    <font class="syn_ins">return</font> <font class="syn_num">0</font>;
+}</pre></div>
+
+And then to build the above source (assuming you have extracted the Omni source to <code>C:\source\omni\</code> or
+<code>/source/omni</code>), you could do the following command-line build:<br><br>
+<b>Windows</b><sup><a href="#sone">1</a></sup>:<br>
+<code>cl main.cpp C:\source\omni\library.cpp /IC:\source\omni\ /EHa<sup><a href="#stwo">2</a></sup> /Feomni.exe</code><br><br>
+<b>Apple/Unix/Linux/POSIX</b><sup><a href="#sthree">3</a></sup></font>:<br>
+<code>g++ main.cpp /source/omni/library.cpp -I/source/omni -pthread<sup><a href="#sfour">4</a></sup> -o omni.bin</code><br><br>
+And when run, the output could<sup><a href="#sfive">5</a></sup> be:<br>
+<div class="code" style="border:1px solid #BCBCBC;margin-top:0.5em;margin-bottom:1em;width:40em;">
+In thread ... sleeping 5 seconds<br>
+returning from main, thread will automatically join on destruction<br>
+</div><div style="white-space:nowrap;">
+<font style="font-size:10px;">
+<a name="sone" id="sone">1.)</a> Command line build using Visual Studio's Command Line Build tools with the environment set for proper Windows SDK reference.<br>
+<a name="stwo" id="stwo">2.)</a> <code>/EHa</code> enables C++ exception handling; if your platform or library does not support exception handling, you can define the <code><a href="docs/options/omni_no_throw.html">OMNI_NO_THROW</a></code> compile flag.<br>
+<a name="sthree" id="sthree">3.)</a> Command line build using the GNU GCC compiler; options would be similar with other compilers.<br>
+<a name="sfour" id="sfour">4.)</a> The <code>-pthread</code> option is needed to link against the target <a href="https://en.wikipedia.org/wiki/POSIX#POSIX.1c">POSIX.1c</a> thread library.
+Some compilers will accept either <code>-pthread</code> or <code>-lpthread</code> and some might need <code>-lrt</code>.<br>
+<a name="sfive" id="sfive">5.)</a> In this context <i>could</i> is with regards to the order of the output, since the thread could request to print before or after the main thread.
+</font></div>
+<a class="toppg" href="#topopage">top</a><br><br>
+
+<a name="step5"></a><font class="hdr">Step 5 - May the source be with you</font><br>
+That's it! After you get your build environment set up, download and reference the source, you're ready to go!<br>
+<a class="toppg" href="#topopage">top</a><br><br>
+
+<a name="step6"></a><font class="hdr">But wait, there's more!</font><br>
+Omni is designed to be flexible for the various needs of a developer, as such, you can also build and work with the library 
+in your favorite IDE; for templates to build Omni as a static library with various IDE's (as well as via command line), you can
+visit the <a href="docs/build/index.html">build</a> help page, where you can download the various solution and project files.
+And if you need help with a specific class or function, you can visit the <a href="docs/classes/index.html">class index</a> 
+page where you can browse a hierarchical view of the library and get help and examples of the individual classes and members
+of the various namespaces. You can also view the <a href="docs/examples/index.html">examples</a> page to browse examples of how
+to use the features of Omni.<br><br>
+If you need to verify your platform is supported or have questions about platform support, you can visit the
+<a href="xplat.html">cross-platform</a> page for more information or visit the <a href="docs/api.html">system API</a> page
+which covers the API's called throughout the library. You can also visit the <a href="docs/options/index.html">options</a>
+page to view compile flags that affect the frameworks operation and helper macros that can be utilized in user code.<br>
+<a class="toppg" href="#topopage">top</a><br><br>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

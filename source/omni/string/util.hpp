@@ -47,10 +47,10 @@ namespace omni {
                 while (itr != str.end()) {
                     if (!omni::char_util::is_digit(*itr)) {
                         if (omni::char_util::helpers::is_de(*itr)) {
-                            /* if it's a period or comma and the flag is set then ignore it.
-                            The logic here is that we don't want this function to 'guess'
+                            /* if it is a period or comma and the flag is set then ignore it.
+                            The logic here is that we do not want this function to guess
                             how a specific number might be formatted, but that we can assume
-                            that if it is indeed a number, chances are good that it 'might'
+                            that if it is indeed a number, chances are good that it might
                             contain a period or comma, so ignore those. */
                             if (ignore_period) { ++itr; continue; }
                             // more than 1 period means non numeric (i.e. not decimal/whole)
@@ -76,10 +76,10 @@ namespace omni {
                 while (itr != str.end()) {
                     if (!omni::char_util::is_digit(*itr)) {
                         if (*itr == period_type) {
-                            /* if it's a period or comma and the flag is set then ignore it.
-                            The logic here is that we don't want this function to 'guess'
+                            /* if it is a period or comma and the flag is set then ignore it.
+                            The logic here is that we do not want this function to guess
                             how a specific number might be formatted, but that we can assume
-                            that if it is indeed a number, chances are good that it 'might'
+                            that if it is indeed a number, chances are good that it might
                             contain a period or comma, so ignore those. */
                             if (ignore_period) { ++itr; continue; }
                             // more than 1 period means non numeric (i.e. not decimal/whole)
@@ -253,17 +253,19 @@ namespace omni {
             {
                 return omni::string::util::to_upper(std::wstring(str));
             }
-            
+
             template < typename std_string_t >
             bool contains(const std_string_t& haystack, const std_string_t& needle, bool ignore_case)
             {   
-                if (haystack.empty() || needle.empty()) { return false; }
-                if (ignore_case) {
-                    std_string_t tmp = omni::string::util::to_lower(haystack);
-                    std_string_t tf = omni::string::util::to_lower(needle);
-                    return (tmp.find(tf) != std_string_t::npos);
+                if (haystack.length() >= needle.length()) {
+                    if (ignore_case) {
+                        std_string_t tmp = omni::string::util::to_lower(haystack);
+                        std_string_t tf = omni::string::util::to_lower(needle);
+                        return (tmp.find(tf) != std_string_t::npos);
+                    }
+                    return (haystack.find(needle) != std_string_t::npos);
                 }
-                return (haystack.find(needle) != std_string_t::npos);
+                return false;
             }
             
             template < typename std_string_t, std::size_t X >
@@ -275,14 +277,51 @@ namespace omni {
             template < typename std_string_t >
             inline bool contains(const std_string_t& haystack, const std_string_t& needle)
             {   
-                if (haystack.empty() || needle.empty()) { return false; }
-                return (haystack.find(needle) != std_string_t::npos);
+                if (haystack.length() >= needle.length()) {
+                    return (haystack.find(needle) != std_string_t::npos);
+                }
+                return false;
             }
             
             template < typename std_string_t, std::size_t X >
             inline bool contains(const std_string_t& haystack, const typename std_string_t::value_type (&needle)[X])
             {
                 return omni::string::util::contains(haystack, std_string_t(needle));
+            }
+
+            template < typename std_string_t >
+            bool ends_with(const std_string_t& haystack, const std_string_t& needle, bool ignore_case)
+            {
+                if (haystack.length() >= needle.length()) {
+                    if (ignore_case) {
+                        std_string_t tmp = omni::string::util::to_lower(haystack);
+                        std_string_t tf = omni::string::util::to_lower(needle);
+                        return (tmp.compare(tmp.length() - tf.length(), tf.length(), tf) == 0);
+                    }
+                    return (haystack.compare(haystack.length() - needle.length(), needle.length(), needle) == 0);
+                }
+                return false;
+            }
+            
+            template < typename std_string_t, std::size_t X >
+            bool ends_with(const std_string_t& haystack, const typename std_string_t::value_type (&needle)[X], bool ignore_case)
+            {
+                return omni::string::util::ends_with(haystack, std_string_t(needle), ignore_case);
+            }
+            
+            template < typename std_string_t >
+            inline bool ends_with(const std_string_t& haystack, const std_string_t& needle)
+            {
+                if (haystack.length() >= needle.length()) {
+                    return (haystack.compare(haystack.length() - needle.length(), needle.length(), needle) == 0);
+                }
+                return false;
+            }
+            
+            template < typename std_string_t, std::size_t X >
+            inline bool ends_with(const std_string_t& haystack, const typename std_string_t::value_type (&needle)[X])
+            {
+                return omni::string::util::ends_with(haystack, std_string_t(needle));
             }
             
             template < typename std_string_t, typename T >
@@ -342,6 +381,11 @@ namespace omni {
             template < typename std_string_t >
             std_string_t replace(std_string_t str, const std_string_t& fnd, const std_string_t& newstr, std::size_t pos, bool ignore_case)
             {
+                if (str.empty()) { return str; }
+                if (fnd.empty()) { return str; }
+                if (pos > str.size()) {
+                    OMNI_ERR_RETV_FW("Position cannot be greater than string length", omni::exceptions::invalid_size(), str)
+                }
                 std::size_t spos = std_string_t::npos;
                 if (ignore_case) {
                     spos = (omni::string::util::to_lower(str)).find(omni::string::util::to_lower(fnd), pos);
@@ -363,29 +407,35 @@ namespace omni {
             template < typename std_string_t >
             std_string_t replace_all(std_string_t str, const std_string_t& fnd, const std_string_t& newstr, std::size_t pos, bool ignore_case)
             {
+                if (str.empty()) { return str; }
+                if (fnd.empty()) { return str; }
+                if (pos > str.size()) {
+                    OMNI_ERR_RETV_FW("Position cannot be greater than string length", omni::exceptions::invalid_size(), str)
+                }
+                std::size_t nsz = newstr.size();
+                std::size_t fsz = fnd.size();
                 std::size_t spos = std_string_t::npos;
-                std::size_t fsz = fnd.length();
                 if (ignore_case) {
-                    std_string_t ret = omni::string::util::to_lower(str);
-                    std_string_t f = omni::string::util::to_lower(fnd);
-                    spos = ret.find(f, pos);
+                    std_string_t lstr = omni::string::util::to_lower(str);
+                    std_string_t lfnd = omni::string::util::to_lower(fnd);
+                    spos = lstr.find(lfnd, pos);
                     while (spos != std_string_t::npos) {
-                        str = str.replace(spos, fsz, newstr);
-                        ret = omni::string::util::to_lower(str);
-                        spos = ret.find(f, spos);
+                        str.replace(spos, fsz, newstr);
+                        lstr.replace(spos, fsz, newstr);
+                        spos = lstr.find(lfnd, spos + nsz);
                     }
                 } else {
                     spos = str.find(fnd, pos);
                     while (spos != std_string_t::npos) {
-                        str = str.replace(spos, fsz, newstr);
-                        spos = str.find(fnd, spos);
+                        str.replace(spos, fsz, newstr);
+                        spos = str.find(fnd, spos + nsz);
                     }
                 }
                 return str;
             }
             
             template < typename std_string_t, std::size_t X, std::size_t Y >
-            std_string_t replace_all(std_string_t str, const typename std_string_t::value_type (&fnd)[X], const typename std_string_t::value_type (&newstr)[Y], std::size_t pos, bool ignore_case)
+            std_string_t replace_all(const std_string_t& str, const typename std_string_t::value_type (&fnd)[X], const typename std_string_t::value_type (&newstr)[Y], std::size_t pos, bool ignore_case)
             {
                 return omni::string::util::replace_all(str, std_string_t(fnd), std_string_t(newstr), pos, ignore_case);
             }
@@ -410,10 +460,10 @@ namespace omni {
             }
             
             template < template < class, class > class std_seq_t, class std_string_t, class std_allocator_t >
-            std_seq_t<std_string_t, std_allocator_t> split(const std_string_t& str, const std_string_t& delimeter, std::size_t max_val)
+            std_seq_t<std_string_t, std_allocator_t> split(std_string_t str, const std_string_t& delimeter, std::size_t max_val)
             {
-                if (str.empty()) { return std_seq_t<std_string_t, std_allocator_t>(); }
                 std_seq_t<std_string_t, std_allocator_t> ret;
+                if (str.empty()) { return ret; }
                 if (max_val == 1) { // If max is 1, then they only want 1 substring, which means the string they sent in
                     ret.push_back(str);
                     return ret;
@@ -421,26 +471,27 @@ namespace omni {
                 if (delimeter.empty()) {
                     typename std_string_t::const_iterator citr = str.begin();
                     while (citr != str.end()) {
-                        ret.push_back(std_string_t(citr, citr));
-                        ++citr;
-                    }
-                } else {
-                    std::size_t p;
-                    std_string_t tmpchk(str);
-                    while (1) {
-                        p = tmpchk.find_first_of(delimeter.c_str());
-                        if (p != std::string::npos) {
-                            ret.push_back(tmpchk.substr(0, p));
-                            tmpchk = tmpchk.substr(p + 1);
-                            if ((max_val > 0) && (--max_val)) { 
-                                ret.push_back(tmpchk);
-                                break;
-                            }
-                        } else {
-                            ret.push_back(tmpchk);
+                        ret.push_back(std_string_t(citr, ++citr));
+                        if ((max_val > 0) && (--max_val)) {
+                            ret.push_back(std_string_t(citr, ++citr));
                             break;
                         }
                     }
+                    if (citr != str.end()) {
+                        typename std_string_t::const_iterator eitr = str.end();
+                        ret.push_back(std_string_t(citr, eitr));
+                    }
+                } else {
+                    std::size_t f = str.find(delimeter);
+                    while (f != std::string::npos) {
+                        ret.push_back(str.substr(0, f));
+                        str.erase(0, f+delimeter.size());
+                        f = str.find(delimeter);
+                        if ((max_val > 0) && (--max_val)) {
+                            break;
+                        }
+                    }
+                    ret.push_back(str);
                 }
                 return ret;
             }
@@ -505,6 +556,41 @@ namespace omni {
             inline omni_sequence_t<std::wstring> split(const wchar_t* str, const wchar_t* delimeter)
             {
                 return omni::string::util::split< omni_sequence_t >(std::wstring(str), std::wstring(delimeter), 0); 
+            }
+
+            template < typename std_string_t >
+            bool starts_with(const std_string_t& haystack, const std_string_t& needle, bool ignore_case)
+            {
+                if (haystack.length() >= needle.length()) {
+                    if (ignore_case) {
+                        std_string_t tmp = omni::string::util::to_lower(haystack);
+                        std_string_t tf = omni::string::util::to_lower(needle);
+                        return (tmp.find(tf) == 0);
+                    }
+                    return (haystack.find(needle) == 0);
+                }
+                return false;
+            }
+            
+            template < typename std_string_t, std::size_t X >
+            bool starts_with(const std_string_t& haystack, const typename std_string_t::value_type (&needle)[X], bool ignore_case)
+            {
+                return omni::string::util::starts_with(haystack, std_string_t(needle), ignore_case);
+            }
+            
+            template < typename std_string_t >
+            inline bool starts_with(const std_string_t& haystack, const std_string_t& needle)
+            {
+                if (haystack.length() >= needle.length()) {
+                    return (haystack.find(needle) == 0);
+                }
+                return false;
+            }
+            
+            template < typename std_string_t, std::size_t X >
+            inline bool starts_with(const std_string_t& haystack, const typename std_string_t::value_type (&needle)[X])
+            {
+                return omni::string::util::starts_with(haystack, std_string_t(needle));
             }
             
             template < typename T >
@@ -684,14 +770,19 @@ namespace omni {
             std_string_t trim_front_syschars(std_string_t str)
             {
                 if (str.empty()) { return str; }
-                typename std_string_t::const_iterator itr = str.begin();
-                std::size_t st = 0;
-                while (itr != str.end()) {
-                    // Trims characters below ASCII 32 (space) (these chars are control sequences)
-                    if (static_cast<std::size_t>(*itr) > 31) { break; }
-                    ++itr; ++st;
+                std::size_t end = std_string_t::npos;
+                for (std::size_t i = 0; i < str.length(); ++i) {
+                    end = i;
+                    if (static_cast<std::size_t>(str[i]) > 31) { break; }
+                    ++end;
                 }
-                return str.substr(st);
+                if (end > 0) { // if end == 0, that is the whole string, so only return if >0
+                    if (end == str.length()) { // if end == len, there is nothing left, return empty
+                        return std_string_t();
+                    }
+                    return str.substr(end);
+                }
+                return str;
             }
             
             template < typename std_string_t >
@@ -700,10 +791,10 @@ namespace omni {
                 if (str.empty() || params.empty()) { return str; }
                 std::size_t pos = str.find_first_not_of(params);
                 if (pos != std_string_t::npos) {
-                    str.erase(0, pos);
+                    return str.substr(pos);
                 }
                 return str;
-            }        
+            }
             
             template < typename std_string_t >
             std_string_t trim_front(std_string_t str)
@@ -738,12 +829,9 @@ namespace omni {
             std_string_t trim_end_syschars(std_string_t str)
             {
                 if (str.empty()) { return str; }
-                typename std_string_t::const_iterator itr = str.end();
                 std::size_t end = str.length();
-                while (itr != str.begin()) {
-                    // Trims characters below ASCII 32 (space) (these chars are control sequences)
-                    if (static_cast<std::size_t>(*itr) > 31) { break; }
-                    --itr; --end;
+                for (std::size_t i = end; i > 0; --i, --end) {
+                    if (static_cast<std::size_t>(str[i]) > 31) { break; }
                 }
                 if (++end < str.length()) { return str.substr(0, end); }
                 return str;
@@ -851,7 +939,7 @@ namespace omni {
                 template < typename std_string_t >
                 std_string_t from_ulong(unsigned long val, bool trim)
                 {
-                    /* DEV_NOTE: some older compilers complain about the to_string, the 'workaround' is
+                    /* DEV_NOTE: some older compilers complain about the to_string, the workaround is
                     to give the full to_string template parameters with the char type (for a std::string) */
                     std::string ret = std::bitset<OMNI_SIZEOF_BITS(unsigned long)>
                         (static_cast<uint64_t>(val)).

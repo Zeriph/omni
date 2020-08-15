@@ -19,7 +19,7 @@
 #if !defined(OMNI_INVOKE_T_HPP)
 #define OMNI_INVOKE_T_HPP 1
 
-// DEV_NOTE: this enum doesn't follow the rest of the enum types since this is specifically for delegates
+// DEV_NOTE: this enum does not follow the rest of the enum types since this is specifically for delegates
 
 namespace omni {
     /** Defines the values for the invocation type a delegate object will have */

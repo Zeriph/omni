@@ -72,7 +72,7 @@ fwsrc="${fwsrc} ${common}/async_timer.cpp"
 fwsrc="${fwsrc} ${common}/basic_thread.cpp"
 fwsrc="${fwsrc} ${common}/binary_semaphore.cpp"
 fwsrc="${fwsrc} ${common}/conditional.cpp"
-fwsrc="${fwsrc} ${common}/datetime.cpp"
+fwsrc="${fwsrc} ${common}/date_time.cpp"
 fwsrc="${fwsrc} ${common}/drop_timer.cpp"
 fwsrc="${fwsrc} ${common}/endpoint_descriptor.cpp"
 fwsrc="${fwsrc} ${common}/environment.cpp"
@@ -142,32 +142,32 @@ usage()
     echo
     echo "compile script options:"
 	echo "       -s [source] The main source file(s) to compile (files other than"
-	echo "                   the framework source). If this flag is not set, this"
+	echo "                   the library source). If this flag is not set, this"
 	echo "                   script will build Omni as a library."
 	echo "                   Specified source must be enclosed in quotes \"\" and"
 	echo "                   separated by spaces."
 	echo "                   Example:"
 	echo "                   compile -s \"file1.cpp file2.cpp file3.cpp\" -o main"
-    echo "       -fw [path]  The Omni Framework path (default of '${omni_lib_loc}')"
+    echo "       -fw [path]  The Omni Library path (default of '${omni_lib_loc}')"
     echo "       -out [path] The output build path to put the lib/bin/obj/asm files"
     echo "       -i [path]   Includes [path] in the compiler include path"
 	echo "       -o [name]   The file you wish to compile (without an extension)"
 	echo "       -c [opts]   Pass extra arguments to the compiler"
     echo "       -d [define] Pass extra defines to the compiler"
 	echo "       -u          Specifying this will clean up any .o files"
-    echo "       -single     Specifying this will build library.cpp (single file framework)"
+    echo "       -single     Specifying this will build library.cpp (single file library)"
     echo "       -lib        Specifying this will compile as a library instead of an executable"
     echo "       -log [log]  Write console output to a log file"
 	echo "       -elog [log] Write the error log to [log], default"
 	echo "       -v          Show verbose output (-v = 1, -vv = 2, -vvv = 3)"
 	echo "       -po         Parse the compile script only"
-    echo "       -oo [ops]   Enables framework features"
-    echo "       -dbg [ops]  Enables framework debug features"
+    echo "       -oo [ops]   Enables library features"
+    echo "       -dbg [ops]  Enables library debug features"
     echo "       -co [ops]   Enables compiler/linker features"
     echo "       -tc [tc]    specify the compiler/toolchain to use (default of '${toolchain}')"
     echo "       -lc [lc]    specify the library build system to use (default of '${libchain}')"
     echo
-    echo "framework options (-oo):"
+    echo "library options (-oo):"
 	echo "       lite        Defines the OMNI_LITE flag which trims down the code and gets rid"
 	echo "                   of some functionality"
     echo "       heavy       Defines the OMNI_DISPOSE_EVENT, OMNI_OBJECT_NAME and OMNI_TYPE_INFO macros"
@@ -175,7 +175,7 @@ usage()
     echo "                   compilation of 'non-portable' code"
     echo "       terr        Defines the OMNI_TERMINATE macro"
     echo "       safe [op]   Defines the macro OMNI_SAFE_[op] where [op] can be the lowercase 'fw' which"
-    echo "                   defines OMNI_SAFE_FRAMEWORK or you can specify the uppercase option, for"
+    echo "                   defines OMNI_SAFE_LIBRARY or you can specify the uppercase option, for"
     echo "                   example: 'safe APPLICATION' will define OMNI_SAFE_APPLICATION"
     echo "       no [op]     Defines one of the following for [op]:"
     echo "                   throw     Sets the OMNI_NO_THROW flag and the -fno-exceptions"
@@ -183,7 +183,7 @@ usage()
     echo "                   uni       Disables the UNICODE flags (does not build using unicode)"
     echo "                   extc      Defines the OMNI_NO_EXTERN_CONSTS macro"
     echo
-    echo "framework debug options (-dbg):"
+    echo "library debug options (-dbg):"
     echo "       1           Defines the OMNI_SHOW_DEBUG=1"
     echo "       2           Defines the OMNI_SHOW_DEBUG=2"
     echo "       3           Defines the OMNI_SHOW_DEBUG=3"
@@ -252,7 +252,7 @@ parse_args()
             "-po") parse_only=1 ;;
             "-?") usage; exit 0 ;;
             "-oo")
-                # framework options
+                # library options
                 case $2 in
                     "np") defines="${defines} -DOMNI_NON_PORTABLE" ;;
                     "terr") defines="${defines} -DOMNI_TERMINATE" ;;
@@ -260,7 +260,7 @@ parse_args()
                     "heavy") defines="${defines} -DOMNI_DISPOSE_EVENT -DOMNI_OBJECT_NAME -DOMNI_TYPE_INFO" ;;
                     "safe")
                         case $3 in
-                            "fw") defines="${defines} -DOMNI_SAFE_FRAMEWORK" ;;
+                            "fw") defines="${defines} -DOMNI_SAFE_LIBRARY" ;;
                             *) defines="${defines} -DOMNI_SAFE_${3}" ;;
                         esac
                         shift
@@ -270,21 +270,21 @@ parse_args()
                             "throw") defines="${defines} -DOMNI_NO_THROW"; fexcep="-fno-exceptions" ;;
                             "uni") useuni=0 ;;
                             "extc") defines="${defines} -DOMNI_NO_EXTERN_CONSTS" ;;
-                            *) echo "Unknown no-framework option $3"; usage ;;
+                            *) echo "Unknown no-library option $3"; usage ;;
                         esac
                         shift
                         ;;
-                    *) echo "Unknown framework option $2"; usage ;;
+                    *) echo "Unknown library option $2"; usage ;;
                 esac
                 shift
                 ;;
             "-dbg")
-                # framework debug options
+                # library debug options
                 has_debug=1
                 case $2 in
-                    ''|*[!0-9]*) echo "Unknown debug option $2"; usage ;;
                     "full") defines="${defines} -DOMNI_SHOW_DEBUG_FILE -DOMNI_SHOW_DEBUG_FUNC -DOMNI_SHOW_DEBUG_LINE" ;;
                     "err") defines="${defines} -DOMNI_SHOW_DEBUG_ERR" ;;
+                    ''|*[!0-9]*) echo "Unknown debug option $2"; usage ;;
                     *) defines="${defines} -DOMNI_SHOW_DEBUG=${2}" ;;
                 esac
                 shift

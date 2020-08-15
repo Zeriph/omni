@@ -34,10 +34,10 @@
         #define OMNI_EXCEPTION_TERMINATE OMNI_TERMINATE;
     #endif
     #define OMNI_ERR_APPEND_FW(val) std::stringstream cval; cval << val; this->m_what.append(cval.str())
-    /* DEV_NOTE: the exception specification for 'throw()' is an implicit 'noexcept(false)' */
+    /* DEV_NOTE: the exception specification for throw() is an implicit noexcept(false) */
     
     namespace omni {
-        /** exception is used to facilitate Omni Framework specific exceptions */
+        /** exception is used to facilitate Omni Library specific exceptions */
         class exception : virtual public std::exception
         {
             public:
@@ -181,7 +181,10 @@
                     OMNI_ERR_APPEND_FW(err);
                 }
                 
-                virtual ~exception() throw() {}
+                virtual ~exception() OMNI_DTOR_NO_THROWS
+                {
+
+                }
                 
                 virtual void append(const char* ex)
                 {
@@ -336,7 +339,7 @@
         };
     }
     
-    // include the omni::exceptions namespace and it's exceptions
+    // include the omni::exceptions namespace and it is exceptions
     #include <omni/xx/exceptions.hxx>
     #undef OMNI_ERR_APPEND_FW
 #endif // OMNI_NO_THROW

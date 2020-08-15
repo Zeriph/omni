@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_MUTEX_OWNER</Name>
+  <Brief>Sets the omni::sync::mutex to keep track of owning thread.
+</Brief>
+  <Considerations>No special considerations
+</Considerations>
+  <Description>It's is undefined behavior for a thread that does not own the mutex to unlock it. If an unlock is called in such a manner, the application is likely to crash; to be able to catch this, defining this macro will add an omni::sync::thread_t to the mutex object to keep track of which thread called it (i.e. which thread owns the lock). 
+</Description>
+  <Notes>None.
+</Notes>
+  <PlatformSpecific>No platform specific notes.
+</PlatformSpecific>
+  <Synopsis>If this macro is defined, the omni::sync::mutex will maintain track of the calling/owning thread.
+</Synopsis>
+  <IsHelper>false</IsHelper>
+  <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
+</MacroOp>

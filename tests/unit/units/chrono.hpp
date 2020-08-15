@@ -18,8 +18,8 @@ class UT_CLASS_DEF
         
         void info_test()
         {
-            print_info(omni::chrono::timespan);
-            print_info(omni::chrono::unsigned_timespan);
+            print_info(omni::chrono::span_t);
+            print_info(omni::chrono::unsigned_span_t);
             print_info(omni::chrono::tick_t);
         }
         

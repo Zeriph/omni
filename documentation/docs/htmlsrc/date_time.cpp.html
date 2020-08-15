@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - date_time.cpp</title>
+<link rel="stylesheet" type="text/css" href="../../content/main.css" /><link rel="icon" type="image/png" href="../../content/favicon.png" />
+<script type="text/javascript" src="../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="index.html" class="current">Source</a></li><li title="Library classes and namespaces">
+<a href="../classes/index.html">Class Index</a></li><li title="Download and view examples">
+<a href="../examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="../options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../api.html">System API</a></li><li title="Other Considerations">
+<a href="../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle"><a href="../../files/src/date_time.cpp" onclick="return popup('../../files/src/date_time.cpp')">date_time.cpp</a></div><div class="content"><div>
+<code><div class="cpphtmllines">
+<!--start line numbers-->
+000001:<br><div id="cmntl1" name="cmntl1">000002:<br>000003:<br>000004:<br>000005:<br>000006:<br>000007:<br>000008:<br>000009:<br>0000010:<br>0000011:<br>0000012:<br>0000013:<br>0000014:<br>0000015:<br>0000016:<br>0000017:<br>0000018:<br></div>0000019:<br>
+0000020:<br>0000021:<br>0000022:<br>0000023:<br>0000024:<br>0000025:<br>0000026:<br>0000027:<br>0000028:<br>0000029:<br>0000030:<br>0000031:<br>0000032:<br>0000033:<br>0000034:<br>0000035:<br>0000036:<br>0000037:<br>0000038:<br>0000039:<br>
+0000040:<br>0000041:<br>0000042:<br>0000043:<br>0000044:<br>0000045:<br>0000046:<br>0000047:<br>0000048:<br>0000049:<br>0000050:<br>0000051:<br>0000052:<br>0000053:<br>0000054:<br>0000055:<br>0000056:<br>0000057:<br>0000058:<br>0000059:<br>
+0000060:<br>0000061:<br>0000062:<br>0000063:<br>0000064:<br>0000065:<br>0000066:<br>0000067:<br>0000068:<br>0000069:<br>0000070:<br>0000071:<br>0000072:<br>0000073:<br>0000074:<br>0000075:<br>0000076:<br>0000077:<br>0000078:<br>0000079:<br>
+0000080:<br>0000081:<br>0000082:<br>0000083:<br>0000084:<br>0000085:<br>0000086:<br>0000087:<br>0000088:<br>0000089:<br>0000090:<br>0000091:<br>0000092:<br>0000093:<br>0000094:<br>0000095:<br>0000096:<br>0000097:<br>0000098:<br>0000099:<br>
+00000100:<br>00000101:<br>00000102:<br>00000103:<br>00000104:<br>00000105:<br>00000106:<br>00000107:<br>00000108:<br>00000109:<br>00000110:<br>00000111:<br>00000112:<br>00000113:<br>00000114:<br>00000115:<br>00000116:<br>00000117:<br>00000118:<br>00000119:<br>
+00000120:<br>00000121:<br>00000122:<br>00000123:<br>00000124:<br>00000125:<br>00000126:<br>00000127:<br>00000128:<br>00000129:<br>00000130:<br>00000131:<br>00000132:<br>00000133:<br>00000134:<br>00000135:<br>00000136:<br>00000137:<br>00000138:<br>00000139:<br>
+00000140:<br>00000141:<br>00000142:<br>00000143:<br>00000144:<br>00000145:<br>00000146:<br>00000147:<br>00000148:<br>00000149:<br>00000150:<br>00000151:<br>00000152:<br>00000153:<br>00000154:<br>00000155:<br>00000156:<br>00000157:<br>00000158:<br>00000159:<br>
+00000160:<br>00000161:<br>00000162:<br>00000163:<br>00000164:<br>00000165:<br>00000166:<br>00000167:<br>00000168:<br>00000169:<br>00000170:<br>00000171:<br>00000172:<br>00000173:<br>00000174:<br>00000175:<br>00000176:<br>00000177:<br>00000178:<br>00000179:<br>
+00000180:<br>00000181:<br>00000182:<br>00000183:<br>00000184:<br>00000185:<br>00000186:<br>00000187:<br>00000188:<br>00000189:<br>00000190:<br>00000191:<br>00000192:<br>00000193:<br>00000194:<br>00000195:<br>00000196:<br>00000197:<br>00000198:<br>00000199:<br>
+00000200:<br>00000201:<br>00000202:<br>00000203:<br>00000204:<br>00000205:<br>00000206:<br>00000207:<br>00000208:<br>00000209:<br>00000210:<br>00000211:<br>00000212:<br>00000213:<br>00000214:<br>00000215:<br>00000216:<br>00000217:<br>00000218:<br>00000219:<br>
+00000220:<br>00000221:<br>00000222:<br>00000223:<br>00000224:<br>00000225:<br>00000226:<br>00000227:<br>00000228:<br>00000229:<br>00000230:<br>00000231:<br>00000232:<br>00000233:<br>00000234:<br>00000235:<br>00000236:<br>00000237:<br>00000238:<br>00000239:<br>
+00000240:<br>00000241:<br>00000242:<br>00000243:<br>00000244:<br>00000245:<br>00000246:<br>00000247:<br>00000248:<br>00000249:<br>00000250:<br>00000251:<br>00000252:<br>00000253:<br>00000254:<br>00000255:<br>00000256:<br>00000257:<br>00000258:<br>00000259:<br>
+00000260:<br>00000261:<br>00000262:<br>00000263:<br>00000264:<br>00000265:<br>00000266:<br>00000267:<br>00000268:<br>00000269:<br>00000270:<br>00000271:<br>00000272:<br>00000273:<br>00000274:<br>00000275:<br>00000276:<br>00000277:<br>00000278:<br>00000279:<br>
+00000280:<br>00000281:<br>00000282:<br>00000283:<br>00000284:<br>00000285:<br>00000286:<br>00000287:<br>00000288:<br>00000289:<br>00000290:<br>00000291:<br>00000292:<br>00000293:<br>00000294:<br>00000295:<br>00000296:<br>00000297:<br>00000298:<br>00000299:<br>
+00000300:<br>00000301:<br>00000302:<br>00000303:<br>00000304:<br>00000305:<br>00000306:<br>00000307:<br>00000308:<br>00000309:<br>00000310:<br>00000311:<br>00000312:<br>00000313:<br>00000314:<br>00000315:<br>00000316:<br>00000317:<br>00000318:<br>00000319:<br>
+00000320:<br>00000321:<br>00000322:<br>00000323:<br>00000324:<br>00000325:<br>00000326:<br>00000327:<br>00000328:<br>00000329:<br>00000330:<br>00000331:<br>00000332:<br>00000333:<br>00000334:<br>00000335:<br>00000336:<br>00000337:<br>00000338:<br>00000339:<br>
+00000340:<br>00000341:<br>00000342:<br>00000343:<br>00000344:<br>00000345:<br>00000346:<br>00000347:<br>00000348:<br>00000349:<br>00000350:<br>00000351:<br>00000352:<br>00000353:<br>00000354:<br>00000355:<br>00000356:<br>00000357:<br>00000358:<br>00000359:<br>
+00000360:<br>00000361:<br>00000362:<br>00000363:<br>00000364:<br>00000365:<br>00000366:<br>00000367:<br>00000368:<br>00000369:<br>00000370:<br>00000371:<br>00000372:<br>00000373:<br>00000374:<br>00000375:<br>00000376:<br>00000377:<br>00000378:<br>00000379:<br>
+00000380:<br>00000381:<br>00000382:<br>00000383:<br>00000384:<br>00000385:<br>00000386:<br>00000387:<br>00000388:<br>00000389:<br>00000390:<br>00000391:<br>00000392:<br>00000393:<br>00000394:<br>00000395:<br>00000396:<br>00000397:<br>00000398:<br>00000399:<br>
+00000400:<br>00000401:<br>00000402:<br>00000403:<br>00000404:<br>00000405:<br>00000406:<br>00000407:<br>00000408:<br>00000409:<br>00000410:<br>00000411:<br>00000412:<br>00000413:<br>00000414:<br>00000415:<br>00000416:<br>00000417:<br>00000418:<br>00000419:<br>
+00000420:<br>00000421:<br>00000422:<br>00000423:<br>00000424:<br>00000425:<br>00000426:<br>00000427:<br>00000428:<br>00000429:<br>00000430:<br>00000431:<br>00000432:<br>00000433:<br>00000434:<br>00000435:<br>00000436:<br>00000437:<br>00000438:<br>00000439:<br>
+00000440:<br>00000441:<br>00000442:<br>00000443:<br>00000444:<br>00000445:<br>00000446:<br>00000447:<br>00000448:<br>00000449:<br>00000450:<br>00000451:<br>00000452:<br>00000453:<br>00000454:<br>00000455:<br>00000456:<br>00000457:<br>00000458:<br>00000459:<br>
+00000460:<br>00000461:<br>00000462:<br>00000463:<br>00000464:<br>00000465:<br>00000466:<br>00000467:<br>00000468:<br>00000469:<br>00000470:<br>00000471:<br>00000472:<br>00000473:<br>00000474:<br>00000475:<br>00000476:<br>00000477:<br>00000478:<br>00000479:<br>
+00000480:<br>00000481:<br>00000482:<br>00000483:<br>00000484:<br>00000485:<br>00000486:<br>00000487:<br>00000488:<br>00000489:<br>00000490:<br>00000491:<br>00000492:<br>00000493:<br>00000494:<br>00000495:<br>00000496:<br>00000497:<br>00000498:<br>00000499:<br>
+00000500:<br>00000501:<br>00000502:<br>00000503:<br>00000504:<br>00000505:<br>00000506:<br>00000507:<br>00000508:<br>00000509:<br>00000510:<br>00000511:<br>00000512:<br>00000513:<br>00000514:<br>00000515:<br>00000516:<br>00000517:<br>00000518:<br>00000519:<br>
+00000520:<br>00000521:<br>00000522:<br>00000523:<br>00000524:<br>00000525:<br>00000526:<br>00000527:<br>00000528:<br>00000529:<br>00000530:<br>00000531:<br>00000532:<br>00000533:<br>00000534:<br>00000535:<br>00000536:<br>00000537:<br>00000538:<br>00000539:<br>
+00000540:<br>00000541:<br>00000542:<br>00000543:<br>00000544:<br>00000545:<br>00000546:<br>00000547:<br>00000548:<br>00000549:<br>00000550:<br>00000551:<br>00000552:<br>00000553:<br>00000554:<br>00000555:<br>00000556:<br>00000557:<br>00000558:<br>00000559:<br>
+00000560:<br>00000561:<br>00000562:<br>00000563:<br>00000564:<br>00000565:<br>00000566:<br>00000567:<br>00000568:<br>00000569:<br>00000570:<br>00000571:<br>00000572:<br>00000573:<br>00000574:<br>00000575:<br>00000576:<br>00000577:<br>00000578:<br>00000579:<br>
+00000580:<br>00000581:<br>00000582:<br>00000583:<br>00000584:<br>00000585:<br>00000586:<br>00000587:<br>00000588:<br>00000589:<br>00000590:<br>00000591:<br>00000592:<br>00000593:<br>00000594:<br>00000595:<br>00000596:<br>00000597:<br>00000598:<br>00000599:<br>
+00000600:<br>00000601:<br>00000602:<br>00000603:<br>00000604:<br>00000605:<br>00000606:<br>00000607:<br>00000608:<br>00000609:<br>00000610:<br>00000611:<br>00000612:<br>00000613:<br>00000614:<br>00000615:<br>00000616:<br>00000617:<br>00000618:<br>00000619:<br>
+00000620:<br>00000621:<br>00000622:<br>00000623:<br>00000624:<br>00000625:<br>00000626:<br>00000627:<br>00000628:<br>00000629:<br>00000630:<br>00000631:<br>00000632:<br>00000633:<br>00000634:<br>00000635:<br>00000636:<br>00000637:<br>00000638:<br>00000639:<br>
+00000640:<br>00000641:<br>00000642:<br>00000643:<br>00000644:<br>00000645:<br>00000646:<br>00000647:<br>00000648:<br>00000649:<br>00000650:<br>00000651:<br>00000652:<br>00000653:<br>00000654:<br>00000655:<br>00000656:<br>00000657:<br>00000658:<br>00000659:<br>
+00000660:<br>00000661:<br>00000662:<br>00000663:<br>00000664:<br>00000665:<br>00000666:<br>00000667:<br>00000668:<br>00000669:<br>00000670:<br>00000671:<br>00000672:<br>00000673:<br>00000674:<br>00000675:<br>00000676:<br>00000677:<br>00000678:<br>00000679:<br>
+00000680:<br>00000681:<br>00000682:<br>00000683:<br>00000684:<br>00000685:<br>00000686:<br>00000687:<br>00000688:<br>00000689:<br>00000690:<br>00000691:<br>00000692:<br>00000693:<br>00000694:<br>00000695:<br>00000696:<br>00000697:<br>00000698:<br>00000699:<br>
+00000700:<br>00000701:<br>00000702:<br>00000703:<br>00000704:<br>00000705:<br>00000706:<br>00000707:<br>00000708:<br>00000709:<br>00000710:<br>00000711:<br>00000712:<br>00000713:<br>00000714:<br>00000715:<br>00000716:<br>00000717:<br>00000718:<br>00000719:<br>
+00000720:<br>00000721:<br>00000722:<br>00000723:<br>00000724:<br>00000725:<br>00000726:<br>00000727:<br>00000728:<br>00000729:<br>00000730:<br>00000731:<br>00000732:<br>00000733:<br>00000734:<br>00000735:<br>00000736:<br>00000737:<br>00000738:<br>00000739:<br>
+00000740:<br>00000741:<br>00000742:<br>00000743:<br>00000744:<br>00000745:<br>00000746:<br>00000747:<br>00000748:<br>00000749:<br>00000750:<br>00000751:<br>00000752:<br>00000753:<br>00000754:<br>00000755:<br>00000756:<br>00000757:<br>00000758:<br>00000759:<br>
+00000760:<br>00000761:<br>00000762:<br>00000763:<br>00000764:<br>00000765:<br>00000766:<br>00000767:<br>00000768:<br>00000769:<br>00000770:<br>00000771:<br>00000772:<br>00000773:<br>00000774:<br>00000775:<br>00000776:<br>00000777:<br>00000778:<br>00000779:<br>
+00000780:<br>00000781:<br>00000782:<br>00000783:<br>00000784:<br>00000785:<br>00000786:<br>00000787:<br>00000788:<br>00000789:<br>00000790:<br>00000791:<br>00000792:<br>00000793:<br>00000794:<br>00000795:<br>00000796:<br>00000797:<br>00000798:<br>00000799:<br>
+00000800:<br>00000801:<br>00000802:<br>00000803:<br>00000804:<br>00000805:<br>00000806:<br>00000807:<br>00000808:<br>00000809:<br>00000810:<br>00000811:<br>00000812:<br>00000813:<br>00000814:<br>00000815:<br>00000816:<br>00000817:<br>00000818:<br>00000819:<br>
+00000820:<br>00000821:<br>00000822:<br>00000823:<br>00000824:<br>00000825:<br>00000826:<br>00000827:<br>00000828:<br>00000829:<br>00000830:<br>00000831:<br>00000832:<br>00000833:<br>00000834:<br>00000835:<br>00000836:<br>00000837:<br>00000838:<br>00000839:<br>
+00000840:<br>00000841:<br><div id="cmntl2" name="cmntl2">00000842:<br>00000843:<br>00000844:<br>00000845:<br>00000846:<br>00000847:<br>00000848:<br>00000849:<br>00000850:<br>00000851:<br>00000852:<br>00000853:<br></div>00000854:<br>00000855:<br>00000856:<br>00000857:<br>00000858:<br>00000859:<br>
+00000860:<br>00000861:<br>00000862:<br>00000863:<br>00000864:<br>00000865:<br>00000866:<br>00000867:<br>00000868:<br>00000869:<br>00000870:<br>00000871:<br>00000872:<br>00000873:<br>00000874:<br>00000875:<br>00000876:<br>00000877:<br>00000878:<br>00000879:<br>
+00000880:<br>00000881:<br>00000882:<br>00000883:<br>00000884:<br>00000885:<br>00000886:<br>00000887:<br>00000888:<br>00000889:<br>00000890:<br>00000891:<br>00000892:<br>00000893:<br>00000894:<br>00000895:<br>00000896:<br>00000897:<br>00000898:<br>00000899:<br>
+00000900:<br>00000901:<br>00000902:<br>00000903:<br>00000904:<br>00000905:<br>00000906:<br>00000907:<br>00000908:<br>00000909:<br>00000910:<br>00000911:<br>00000912:<br>00000913:<br>00000914:<br>00000915:<br>00000916:<br>00000917:<br>00000918:<br>00000919:<br>
+00000920:<br><div id="cmntl3" name="cmntl3">00000921:<br>00000922:<br>00000923:<br>00000924:<br>00000925:<br>00000926:<br>00000927:<br>00000928:<br>00000929:<br>00000930:<br>00000931:<br>00000932:<br>00000933:<br>00000934:<br>00000935:<br>00000936:<br>00000937:<br>00000938:<br>00000939:<br>
+00000940:<br></div>00000941:<br>00000942:<br>00000943:<br>00000944:<br>00000945:<br>00000946:<br>00000947:<br>00000948:<br>00000949:<br>00000950:<br>00000951:<br>00000952:<br>00000953:<br>00000954:<br>00000955:<br>00000956:<br>00000957:<br>00000958:<br>00000959:<br>
+00000960:<br>00000961:<br>00000962:<br>00000963:<br>00000964:<br>00000965:<br>00000966:<br>00000967:<br>00000968:<br>00000969:<br>00000970:<br>00000971:<br>00000972:<br>00000973:<br>00000974:<br>00000975:<br>00000976:<br>00000977:<br>00000978:<br>00000979:<br>
+00000980:<br>00000981:<br><div id="cmntl4" name="cmntl4">00000982:<br>00000983:<br>00000984:<br>00000985:<br></div>00000986:<br>00000987:<br>00000988:<br>00000989:<br>00000990:<br>00000991:<br>00000992:<br>00000993:<br>00000994:<br>00000995:<br>00000996:<br>00000997:<br>00000998:<br>00000999:<br>
+000001000:<br>000001001:<br>000001002:<br>000001003:<br>000001004:<br>000001005:<br>000001006:<br>000001007:<br>000001008:<br>000001009:<br>000001010:<br>000001011:<br>000001012:<br>000001013:<br>000001014:<br>000001015:<br>000001016:<br>000001017:<br>000001018:<br>000001019:<br>
+000001020:<br>000001021:<br>000001022:<br>000001023:<br>000001024:<br>000001025:<br>000001026:<br>000001027:<br>000001028:<br>000001029:<br>000001030:<br>000001031:<br>000001032:<br>000001033:<br>000001034:<br>000001035:<br>000001036:<br>000001037:<br>000001038:<br>000001039:<br>
+000001040:<br>000001041:<br>000001042:<br>000001043:<br>000001044:<br>000001045:<br>000001046:<br>000001047:<br>000001048:<br>000001049:<br>000001050:<br>000001051:<br>000001052:<br>000001053:<br>000001054:<br>000001055:<br>000001056:<br>000001057:<br>000001058:<br>000001059:<br>
+000001060:<br>000001061:<br>000001062:<br>000001063:<br>000001064:<br>000001065:<br>000001066:<br>000001067:<br>000001068:<br>000001069:<br>000001070:<br>000001071:<br>000001072:<br>000001073:<br>000001074:<br>000001075:<br>000001076:<br>000001077:<br>000001078:<br>000001079:<br>
+000001080:<br>000001081:<br>000001082:<br>000001083:<br>000001084:<br>000001085:<br>000001086:<br>000001087:<br>000001088:<br>000001089:<br>000001090:<br>000001091:<br>000001092:<br>000001093:<br>000001094:<br>000001095:<br>000001096:<br>000001097:<br>000001098:<br>000001099:<br>
+000001100:<br>000001101:<br>000001102:<br>000001103:<br>000001104:<br>000001105:<br>000001106:<br>000001107:<br>000001108:<br>000001109:<br>000001110:<br>000001111:<br>000001112:<br>000001113:<br>000001114:<br>000001115:<br>000001116:<br>000001117:<br>000001118:<br>
+<!--end line numbers-->
+</div><div class="cpphtmlcmnt">
+<!--start collapse columns-->
+<img src="../../content/tree/min.gif" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><img src="../../content/tree/min.gif" id="cmnti2" name="cmnti2" onclick="collapse('2', '../../');" /><br><div id="cmnts2" name="cmnts2"><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<img src="../../content/tree/min.gif" id="cmnti3" name="cmnti3" onclick="collapse('3', '../../');" /><br><div id="cmnts3" name="cmnts3"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br></div><div></div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><img src="../../content/tree/min.gif" id="cmnti4" name="cmnti4" onclick="collapse('4', '../../');" /><br><div id="cmnts4" name="cmnts4"><br><br><br><br></div><div></div><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<!--end collapse columns-->
+</div><div class="cpphtml" style="margin-left:4.3em;">
+<!--start highlighted code-->
+<font class="syn_cmt">/*<div class="syn_ex" id="cmnt1" name="cmnt1">
+ * Copyright (c), Zeriph Enterprises<br>
+ * All rights reserved.<br>
+ * <br>
+ * Contributor(s):<br>
+ * Zechariah Perez, omni (at) zeriph (dot) com<br>
+ * <br>
+ * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS &quot;AS IS&quot; AND ANY<br>
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED<br>
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE<br>
+ * DISCLAIMED. IN NO EVENT SHALL ZERIPH AND CONTRIBUTORS BE LIABLE FOR ANY<br>
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES<br>
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;<br>
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND<br>
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT<br>
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS<br>
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.<br>
+ */</div><div></div></font>
+<font class="syn_pre">#include &lt;<a href="omni/chrono/date_time.hpp.html">omni/chrono/date_time.hpp</a>&gt;</font><br>
+<br>
+<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../options/omni_safe_datetime.html">OMNI_SAFE_DATETIME</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_DTTMMTX_FW ,m_mtx()</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_DTTM_ALOCK_FW&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-scoped_lock.html">omni::sync::scoped_lock</a>&lt;<a href="../classes/omni-sync-basic_lock.html">omni::sync::basic_lock</a>&gt; uuid12345(&amp;this-&gt;m_mtx);</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_DTTM_OLOCK_FW(o) <a href="../classes/omni-sync-scoped_lock.html">omni::sync::scoped_lock</a>&lt;<a href="../classes/omni-sync-basic_lock.html">omni::sync::basic_lock</a>&gt; uuid54321(&amp;o.m_mtx);</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_DTTM_MLOCK_FW&nbsp;&nbsp;&nbsp;&nbsp;this-&gt;m_mtx.lock();</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_DTTM_ULOCK_FW&nbsp;&nbsp;&nbsp;&nbsp;this-&gt;m_mtx.unlock();</font><br>
+<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_DTTMMTX_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_DTTM_ALOCK_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_DTTM_OLOCK_FW(o)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_DTTM_MLOCK_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_DTTM_ULOCK_FW</font><br>
+<font class="syn_pre">#endif</font><br>
+<br>
+<font class="syn_cmt">// These are local defines</font><br>
+<font class="syn_pre">#define OMNI_MAX_MILLIS_FW static_cast&lt;int64_t&gt;(<a href="../classes/omni-chrono-milliseconds_to_10000ad.html">omni::chrono::MILLISECONDS_TO_10000AD</a>)</font><br>
+<font class="syn_pre">#define OMNI_MAX_TICKS_FW <a href="../classes/omni-chrono-ticks_to_10000ad.html">omni::chrono::TICKS_TO_10000AD</a></font><br>
+<font class="syn_pre">#define OMNI_TS_NULL_OFF_FW omni::chrono::time_span::min_value()</font><br>
+<br>
+<font class="syn_cmt">///// start date_time_format code /////</font><br>
+<br>
+<br>
+<br>
+<font class="syn_cmt">/////  end date_time_format code  /////</font><br>
+<br>
+<font class="syn_cmt">// --- start private ctors ---</font><br>
+<br>
+<font class="syn_cmt">// not &#39;user&#39; accessable as it&#39;s used to construct empty (min) DT objects</font><br>
+<a href="../classes/omni-chrono-date_time-date_time.html">omni::chrono::date_time::date_time</a>() :<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CTOR_FW(<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;m_date(<font class="syn_num">0</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_DTTMMTX_FW<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_D5_FW(<font class="syn_str">&quot;created&quot;</font>);<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-date_time-date_time.html">omni::chrono::date_time::date_time</a>(<font class="syn_typ">bool</font> is_ambiguous_dst, <font class="syn_typ">const</font> <a href="../classes/omni-chrono-date_time_kind.html">omni::chrono::date_time_kind</a>&amp; kind, <font class="syn_typ">uint64_t</font> ticks, <font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; non_op) :<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CTOR_FW(<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;m_date(<font class="syn_num">0</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_DTTMMTX_FW<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (ticks &gt; OMNI_MAX_TICKS_FW) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_FW(<font class="syn_str">&quot;Invalid tick count specified&quot;</font>, <a href="../classes/omni-exceptions-invalid_range.html">omni::exceptions::invalid_range</a>())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (kind != <a href="../classes/omni-chrono-date_time_kind-local.html">omni::chrono::date_time_kind::LOCAL</a>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_FW(<font class="syn_str">&quot;Invalid enum specified for private constructor&quot;</font>, <a href="../classes/omni-exceptions-invalid_enum.html">omni::exceptions::invalid_enum</a>())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_date = (ticks | (is_ambiguous_dst ? OMNI_KIND_LOCAL_AMBIGUOUS_DST_FW : OMNI_KIND_LOCAL_FW));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_D5_FW(<font class="syn_str">&quot;created&quot;</font>);<br>
+}<br>
+<br>
+<font class="syn_cmt">// --- end private ctors ---</font><br>
+<br>
+<a href="../classes/omni-chrono-date_time-date_time.html">omni::chrono::date_time::date_time</a>(<font class="syn_typ">const</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; cp) :<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CPCTOR_FW(cp)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;m_date(cp.m_date)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_DTTMMTX_FW<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_D5_FW(<font class="syn_str">&quot;copied&quot;</font>);<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-date_time-date_time.html">omni::chrono::date_time::date_time</a>(<font class="syn_typ">uint64_t</font> ticks) :<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CTOR_FW(<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;m_date(<font class="syn_num">0</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_DTTMMTX_FW<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (ticks &gt; OMNI_MAX_TICKS_FW) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_FW(<font class="syn_str">&quot;Invalid tick count specified&quot;</font>, <a href="../classes/omni-exceptions-invalid_range.html">omni::exceptions::invalid_range</a>())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_date = ticks;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_D5_FW(<font class="syn_str">&quot;created&quot;</font>);<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-date_time-date_time.html">omni::chrono::date_time::date_time</a>(<font class="syn_typ">uint64_t</font> ticks, <font class="syn_typ">const</font> <a href="../classes/omni-chrono-date_time_kind.html">omni::chrono::date_time_kind</a>&amp; kind) :<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CTOR_FW(<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;m_date(<font class="syn_num">0</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_DTTMMTX_FW<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (ticks &gt; OMNI_MAX_TICKS_FW) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_FW(<font class="syn_str">&quot;Invalid tick count specified&quot;</font>, <a href="../classes/omni-exceptions-invalid_range.html">omni::exceptions::invalid_range</a>())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!<a href="../classes/omni-chrono-date_time_kind-is_valid.html">omni::chrono::date_time_kind::is_valid</a>(<font class="syn_ins">static_cast</font>&lt;int32_t&gt;(kind.value()))) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_FW(<font class="syn_str">&quot;Invalid date kind specified&quot;</font>, <a href="../classes/omni-exceptions-invalid_enum.html">omni::exceptions::invalid_enum</a>())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_date = (ticks | (<font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(kind.value()) &lt;&lt; OMNI_KIND_SHIFT_FW));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_D5_FW(<font class="syn_str">&quot;created&quot;</font>);<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-date_time-date_time.html">omni::chrono::date_time::date_time</a>(<font class="syn_typ">uint16_t</font> year, <font class="syn_typ">uint8_t</font> month, <font class="syn_typ">uint8_t</font> day) :<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CTOR_FW(<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;m_date(<font class="syn_num">0</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_DTTMMTX_FW<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_date = <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(<a href="../classes/omni-chrono-date_time-_date_to_ticks.html">omni::chrono::date_time::_date_to_ticks</a>(year, month, day));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_D5_FW(<font class="syn_str">&quot;created&quot;</font>);<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-date_time-date_time.html">omni::chrono::date_time::date_time</a>(<font class="syn_typ">uint16_t</font> year, <font class="syn_typ">uint8_t</font> month, <font class="syn_typ">uint8_t</font> day, <font class="syn_typ">uint8_t</font> hour, <font class="syn_typ">uint8_t</font> minute, <font class="syn_typ">uint8_t</font> second) :<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CTOR_FW(<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;m_date(<font class="syn_num">0</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_DTTMMTX_FW<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_date = <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(<a href="../classes/omni-chrono-date_time-_date_to_ticks.html">omni::chrono::date_time::_date_to_ticks</a>(year, month, day)) +<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(<a href="../classes/omni-chrono-date_time-_time_to_ticks.html">omni::chrono::date_time::_time_to_ticks</a>(hour, minute, second));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_D5_FW(<font class="syn_str">&quot;created&quot;</font>);<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-date_time-date_time.html">omni::chrono::date_time::date_time</a>(<font class="syn_typ">uint16_t</font> year, <font class="syn_typ">uint8_t</font> month, <font class="syn_typ">uint8_t</font> day, <font class="syn_typ">uint8_t</font> hour, <font class="syn_typ">uint8_t</font> minute, <font class="syn_typ">uint8_t</font> second, <font class="syn_typ">const</font> <a href="../classes/omni-chrono-date_time_kind.html">omni::chrono::date_time_kind</a>&amp; kind) :<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CTOR_FW(<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;m_date(<font class="syn_num">0</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_DTTMMTX_FW<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!<a href="../classes/omni-chrono-date_time_kind-is_valid.html">omni::chrono::date_time_kind::is_valid</a>(<font class="syn_ins">static_cast</font>&lt;int32_t&gt;(kind.value()))) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_FW(<font class="syn_str">&quot;Invalid date kind specified&quot;</font>, <a href="../classes/omni-exceptions-invalid_enum.html">omni::exceptions::invalid_enum</a>())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_date =<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(<a href="../classes/omni-chrono-date_time-_date_to_ticks.html">omni::chrono::date_time::_date_to_ticks</a>(year, month, day)) +<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(<a href="../classes/omni-chrono-date_time-_time_to_ticks.html">omni::chrono::date_time::_time_to_ticks</a>(hour, minute, second))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;) <font class="syn_cmt">// ticks</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <font class="syn_cmt">// OR&#39;d</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;( <font class="syn_cmt">// with kind</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(kind.value()) &lt;&lt; OMNI_KIND_SHIFT_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_D5_FW(<font class="syn_str">&quot;created&quot;</font>);<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-date_time-date_time.html">omni::chrono::date_time::date_time</a>(<font class="syn_typ">uint16_t</font> year, <font class="syn_typ">uint8_t</font> month, <font class="syn_typ">uint8_t</font> day, <font class="syn_typ">uint8_t</font> hour, <font class="syn_typ">uint8_t</font> minute, <font class="syn_typ">uint8_t</font> second, <font class="syn_typ">uint16_t</font> millisecond) :<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CTOR_FW(<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;m_date(<font class="syn_num">0</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_DTTMMTX_FW<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> ((millisecond &lt; <font class="syn_num">0</font>) || (millisecond &gt;= <a href="../classes/omni-chrono-milliseconds_per_second.html">omni::chrono::MILLISECONDS_PER_SECOND</a>)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_FW(<font class="syn_str">&quot;Invalid milliseconds specified&quot;</font>, <a href="../classes/omni-exceptions-invalid_range.html">omni::exceptions::invalid_range</a>())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> ticks = (<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(<a href="../classes/omni-chrono-date_time-_date_to_ticks.html">omni::chrono::date_time::_date_to_ticks</a>(year, month, day)) +<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(<a href="../classes/omni-chrono-date_time-_time_to_ticks.html">omni::chrono::date_time::_time_to_ticks</a>(hour, minute, second))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;) + (millisecond * <a href="../classes/omni-chrono-ticks_per_millisecond.html">omni::chrono::TICKS_PER_MILLISECOND</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (ticks &gt; OMNI_MAX_TICKS_FW) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_FW(<font class="syn_str">&quot;Invalid tick count specified&quot;</font>, <a href="../classes/omni-exceptions-invalid_range.html">omni::exceptions::invalid_range</a>())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_date = ticks;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_D5_FW(<font class="syn_str">&quot;created&quot;</font>);<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-date_time-date_time.html">omni::chrono::date_time::date_time</a>(<font class="syn_typ">uint16_t</font> year, <font class="syn_typ">uint8_t</font> month, <font class="syn_typ">uint8_t</font> day, <font class="syn_typ">uint8_t</font> hour, <font class="syn_typ">uint8_t</font> minute, <font class="syn_typ">uint8_t</font> second, <font class="syn_typ">uint16_t</font> millisecond, <font class="syn_typ">const</font> <a href="../classes/omni-chrono-date_time_kind.html">omni::chrono::date_time_kind</a>&amp; kind) :<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CTOR_FW(<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;m_date(<font class="syn_num">0</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_DTTMMTX_FW<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> ((millisecond &lt; <font class="syn_num">0</font>) || (millisecond &gt;= <a href="../classes/omni-chrono-milliseconds_per_second.html">omni::chrono::MILLISECONDS_PER_SECOND</a>)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_FW(<font class="syn_str">&quot;Invalid milliseconds specified&quot;</font>, <a href="../classes/omni-exceptions-invalid_range.html">omni::exceptions::invalid_range</a>())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!<a href="../classes/omni-chrono-date_time_kind-is_valid.html">omni::chrono::date_time_kind::is_valid</a>(<font class="syn_ins">static_cast</font>&lt;int32_t&gt;(kind.value()))) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_FW(<font class="syn_str">&quot;Invalid date kind specified&quot;</font>, <a href="../classes/omni-exceptions-invalid_enum.html">omni::exceptions::invalid_enum</a>())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> ticks = (<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(<a href="../classes/omni-chrono-date_time-_date_to_ticks.html">omni::chrono::date_time::_date_to_ticks</a>(year, month, day)) +<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(<a href="../classes/omni-chrono-date_time-_time_to_ticks.html">omni::chrono::date_time::_time_to_ticks</a>(hour, minute, second))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;) + (millisecond * <a href="../classes/omni-chrono-ticks_per_millisecond.html">omni::chrono::TICKS_PER_MILLISECOND</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (ticks &gt; OMNI_MAX_TICKS_FW) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_FW(<font class="syn_str">&quot;Invalid tick count specified&quot;</font>, <a href="../classes/omni-exceptions-invalid_range.html">omni::exceptions::invalid_range</a>())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_date = (ticks | (<font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(kind.value()) &lt;&lt; OMNI_KIND_SHIFT_FW));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_D5_FW(<font class="syn_str">&quot;created&quot;</font>);<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-date_time-@7Edate_time.html">omni::chrono::date_time::~date_time</a>()<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_TRY_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTOR_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CATCH_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_D5_FW(<font class="syn_str">&quot;destroyed&quot;</font>);<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> <a href="../classes/omni-chrono-date_time-add.html">omni::chrono::date_time::add</a>(<font class="syn_typ">const</font> <a href="../classes/omni-chrono-time_span.html">omni::chrono::time_span</a>&amp; value)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;add_ticks(value.ticks());<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> <a href="../classes/omni-chrono-date_time-add_days.html">omni::chrono::date_time::add_days</a>(<font class="syn_typ">double</font> value)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;_add(value, <a href="../classes/omni-chrono-milliseconds_per_day.html">omni::chrono::MILLISECONDS_PER_DAY</a>);<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> <a href="../classes/omni-chrono-date_time-add_hours.html">omni::chrono::date_time::add_hours</a>(<font class="syn_typ">double</font> value)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;_add(value, <a href="../classes/omni-chrono-milliseconds_per_hour.html">omni::chrono::MILLISECONDS_PER_HOUR</a>);<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> <a href="../classes/omni-chrono-date_time-add_milliseconds.html">omni::chrono::date_time::add_milliseconds</a>(<font class="syn_typ">double</font> value)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;_add(value, <font class="syn_num">1</font>);<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> <a href="../classes/omni-chrono-date_time-add_minutes.html">omni::chrono::date_time::add_minutes</a>(<font class="syn_typ">double</font> value)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;_add(value, <a href="../classes/omni-chrono-milliseconds_per_minute.html">omni::chrono::MILLISECONDS_PER_MINUTE</a>);<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> <a href="../classes/omni-chrono-date_time-add_months.html">omni::chrono::date_time::add_months</a>(<font class="syn_typ">uint32_t</font> months)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> ((months &lt; -<font class="syn_num">120000</font>) || (months &gt; <font class="syn_num">120000</font>)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_RETV_FW(<font class="syn_str">&quot;Invalid months specified&quot;</font>, <a href="../classes/omni-exceptions-invalid_range.html">omni::exceptions::invalid_range</a>(), <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;int64_t y = <a href="../classes/omni-chrono-date_time-_get_date_part.html">omni::chrono::date_time::_get_date_part</a>(OMNI_DATE_PART_YEAR_FW);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;int64_t m = <a href="../classes/omni-chrono-date_time-_get_date_part.html">omni::chrono::date_time::_get_date_part</a>(OMNI_DATE_PART_MONTH_FW);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;int64_t d = <a href="../classes/omni-chrono-date_time-_get_date_part.html">omni::chrono::date_time::_get_date_part</a>(OMNI_DATE_PART_DAY_FW);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;int64_t i = m - <font class="syn_num">1</font> + months;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (i &gt;= <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m = i % <font class="syn_num">12</font> + <font class="syn_num">1</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y = y + i / <font class="syn_num">12</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m = <font class="syn_num">12</font> + (i + <font class="syn_num">1</font>) % <font class="syn_num">12</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y = y + (i - <font class="syn_num">11</font>) / <font class="syn_num">12</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (y &lt; <font class="syn_num">1</font> || y &gt; <font class="syn_num">9999</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_RETV_FW(<font class="syn_str">&quot;Invalid months specified&quot;</font>, <a href="../classes/omni-exceptions-invalid_range.html">omni::exceptions::invalid_range</a>(), <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> days = <a href="../classes/omni-chrono-date_time-days_in_month.html">omni::chrono::date_time::days_in_month</a>(y, m);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (d &gt; days) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d = days;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(<a href="../classes/omni-chrono-date_time-_date_to_ticks.html">omni::chrono::date_time::_date_to_ticks</a>(y, m, d) + (<font class="syn_typ">this</font>-&gt;_ticks() % <a href="../classes/omni-chrono-ticks_per_day.html">omni::chrono::TICKS_PER_DAY</a>))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <font class="syn_typ">this</font>-&gt;_internal_kind()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;);<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> <a href="../classes/omni-chrono-date_time-add_seconds.html">omni::chrono::date_time::add_seconds</a>(<font class="syn_typ">double</font> value)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;_add(value, <a href="../classes/omni-chrono-milliseconds_per_second.html">omni::chrono::MILLISECONDS_PER_SECOND</a>);<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> <a href="../classes/omni-chrono-date_time-add_ticks.html">omni::chrono::date_time::add_ticks</a>(int64_t value)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;int64_t ticks = <font class="syn_typ">this</font>-&gt;_ticks();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> ((value &gt; (OMNI_MAX_TICKS_FW - ticks)) || (value &lt; (-ticks)) ) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_RETV_FW(<font class="syn_str">&quot;Invalid ticks specified&quot;</font>, <a href="../classes/omni-exceptions-invalid_range.html">omni::exceptions::invalid_range</a>(), <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>(<font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(ticks + value) | <font class="syn_typ">this</font>-&gt;_internal_kind());<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> <a href="../classes/omni-chrono-date_time-add_years.html">omni::chrono::date_time::add_years</a>(int16_t value)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> ((value &lt; -<font class="syn_num">10000</font>) || (value &gt; <font class="syn_num">10000</font>)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_RETV_FW(<font class="syn_str">&quot;Invalid years specified&quot;</font>, <a href="../classes/omni-exceptions-invalid_range.html">omni::exceptions::invalid_range</a>(), <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;add_months(value * <font class="syn_num">12</font>);<br>
+}<br>
+<br>
+<font class="syn_typ">bool</font> <a href="../classes/omni-chrono-date_time-is_dst.html">omni::chrono::date_time::is_dst</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font>-&gt;_kind() == <a href="../classes/omni-chrono-date_time_kind-utc.html">omni::chrono::date_time_kind::UTC</a>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// TOOD: more TimeZoneInfo that needs to be implemented</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">//return TimeZoneInfo.Local.IsDaylightSavingTime(this, TimeZoneInfoOptions.NoThrowOnInvalidTime);</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+}<br>
+<br>
+int64_t <a href="../classes/omni-chrono-date_time-to_binary.html">omni::chrono::date_time::to_binary</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font>-&gt;kind() == <a href="../classes/omni-chrono-date_time_kind-utc.html">omni::chrono::date_time_kind::UTC</a>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// Local times need to be adjusted as you move from one time zone to another, </font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// just as they are when serializing in text. As such the format for local times</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// changes to store the ticks of the UTC time, but with flags that look like a </font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// local date.</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// To match serialization in text we need to be able to handle cases where</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// the UTC value would be out of range. Unused parts of the ticks range are</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// used for this, so that values just past max value are stored just past the</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// end of the maximum range, and values just below minimum value are stored</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// at the end of the ticks area, just below 2^62.</font><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-chrono-time_span.html">omni::chrono::time_span</a> offset;<font class="syn_cmt">// TODO: = TimeZoneInfo.GetLocalUtcOffset(this, TimeZoneInfoOptions.NoThrowOnInvalidTime);</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int64_t ticks = <font class="syn_typ">this</font>-&gt;_ticks();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int64_t stored = ticks - offset.ticks();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (stored &lt; <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stored = OMNI_TICKS_CEILING_FW + stored;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> stored | <font class="syn_ins">static_cast</font>&lt;int64_t&gt;(OMNI_LOCAL_MASK_FW);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">static_cast</font>&lt;int64_t&gt;(<font class="syn_typ">this</font>-&gt;m_date);<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> <a href="../classes/omni-chrono-date_time-date.html">omni::chrono::date_time::date</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;int64_t ticks = <font class="syn_typ">this</font>-&gt;_ticks();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>(<font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(ticks - ticks % <a href="../classes/omni-chrono-ticks_per_day.html">omni::chrono::TICKS_PER_DAY</a>) | <font class="syn_typ">this</font>-&gt;_internal_kind());<br>
+}<br>
+<br>
+<font class="syn_cmt">// Returns the day-of-month part of this DateTime. The returned</font><br>
+<font class="syn_cmt">// value is an integer between 1 and 31.</font><br>
+<font class="syn_typ">uint8_t</font> <a href="../classes/omni-chrono-date_time-day.html">omni::chrono::date_time::day</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-chrono-date_time-_get_date_part.html">omni::chrono::date_time::_get_date_part</a>(OMNI_DATE_PART_DAY_FW);<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-day_of_week.html">omni::chrono::day_of_week</a> <a href="../classes/omni-chrono-date_time-day_of_week.html">omni::chrono::date_time::day_of_week</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-chrono-day_of_week.html">omni::chrono::day_of_week</a>(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">static_cast</font>&lt;<a href="../classes/omni-chrono-day_of_week-enum_t.html">omni::chrono::day_of_week::enum_t</a>&gt;((<font class="syn_typ">this</font>-&gt;_ticks() / <a href="../classes/omni-chrono-ticks_per_day.html">omni::chrono::TICKS_PER_DAY</a> + <font class="syn_num">1</font>) % <font class="syn_num">7</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;);<br>
+}<br>
+<br>
+<font class="syn_typ">uint16_t</font> <a href="../classes/omni-chrono-date_time-day_of_year.html">omni::chrono::date_time::day_of_year</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-chrono-date_time-_get_date_part.html">omni::chrono::date_time::_get_date_part</a>(OMNI_DATE_PART_DAY_OF_YEAR_FW);<br>
+}<br>
+<br>
+int32_t <a href="../classes/omni-chrono-date_time-hash_code.html">omni::chrono::date_time::hash_code</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;int64_t ticks = <font class="syn_typ">this</font>-&gt;_ticks();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">static_cast</font>&lt;int32_t&gt;(ticks) ^ <font class="syn_ins">static_cast</font>&lt;int32_t&gt;(ticks &gt;&gt; <font class="syn_num">32</font>);<br>
+}<br>
+<br>
+<font class="syn_typ">uint8_t</font> <a href="../classes/omni-chrono-date_time-hour.html">omni::chrono::date_time::hour</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint8_t</font>&gt;((<font class="syn_typ">this</font>-&gt;_ticks() / <a href="../classes/omni-chrono-ticks_per_hour.html">omni::chrono::TICKS_PER_HOUR</a>) % <font class="syn_num">24</font>);<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-date_time_kind.html">omni::chrono::date_time_kind</a> <a href="../classes/omni-chrono-date_time-kind.html">omni::chrono::date_time::kind</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;_kind();<br>
+}<br>
+<br>
+<font class="syn_typ">uint16_t</font> <a href="../classes/omni-chrono-date_time-millisecond.html">omni::chrono::date_time::millisecond</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint16_t</font>&gt;((<font class="syn_typ">this</font>-&gt;_ticks()/ <a href="../classes/omni-chrono-ticks_per_millisecond.html">omni::chrono::TICKS_PER_MILLISECOND</a>) % <font class="syn_num">1000</font>); <br>
+}<br>
+<br>
+<font class="syn_typ">uint8_t</font> <a href="../classes/omni-chrono-date_time-minute.html">omni::chrono::date_time::minute</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint16_t</font>&gt;((<font class="syn_typ">this</font>-&gt;_ticks()/ <a href="../classes/omni-chrono-ticks_per_minute.html">omni::chrono::TICKS_PER_MINUTE</a>) % <font class="syn_num">60</font>); <br>
+}<br>
+<br>
+<font class="syn_typ">uint8_t</font> <a href="../classes/omni-chrono-date_time-month.html">omni::chrono::date_time::month</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-chrono-date_time-_get_date_part.html">omni::chrono::date_time::_get_date_part</a>(OMNI_DATE_PART_MONTH_FW);<br>
+}<br>
+<br>
+<font class="syn_typ">uint8_t</font> <a href="../classes/omni-chrono-date_time-second.html">omni::chrono::date_time::second</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint16_t</font>&gt;((<font class="syn_typ">this</font>-&gt;_ticks()/ <a href="../classes/omni-chrono-ticks_per_second.html">omni::chrono::TICKS_PER_SECOND</a>) % <font class="syn_num">60</font>); <br>
+}<br>
+<br>
+<font class="syn_typ">uint64_t</font> <a href="../classes/omni-chrono-date_time-ticks.html">omni::chrono::date_time::ticks</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;_ticks();<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-time_span.html">omni::chrono::time_span</a> <a href="../classes/omni-chrono-date_time-time_of_day.html">omni::chrono::date_time::time_of_day</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-chrono-time_span.html">omni::chrono::time_span</a>(<font class="syn_typ">this</font>-&gt;_ticks() % <a href="../classes/omni-chrono-ticks_per_day.html">omni::chrono::TICKS_PER_DAY</a>); <br>
+}<br>
+<br>
+<font class="syn_typ">uint16_t</font> <a href="../classes/omni-chrono-date_time-year.html">omni::chrono::date_time::year</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-chrono-date_time-_get_date_part.html">omni::chrono::date_time::_get_date_part</a>(OMNI_DATE_PART_YEAR_FW);<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-time_span.html">omni::chrono::time_span</a> <a href="../classes/omni-chrono-date_time-subtract.html">omni::chrono::date_time::subtract</a>(<font class="syn_typ">const</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; value) <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-chrono-time_span.html">omni::chrono::time_span</a>(<font class="syn_typ">this</font>-&gt;_ticks() - value._ticks());<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> <a href="../classes/omni-chrono-date_time-subtract.html">omni::chrono::date_time::subtract</a>(<font class="syn_typ">const</font> <a href="../classes/omni-chrono-time_span.html">omni::chrono::time_span</a>&amp; value) <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;int64_t ticks = <font class="syn_typ">this</font>-&gt;_ticks();&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;int64_t vticks = value.ticks();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (ticks &lt; vticks || ticks - OMNI_MAX_TICKS_FW &gt; vticks) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_RETV_FW(<font class="syn_str">&quot;Invalid time span specified&quot;</font>, <a href="../classes/omni-exceptions-invalid_range.html">omni::exceptions::invalid_range</a>(), <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>(<font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(ticks - vticks) | <font class="syn_typ">this</font>-&gt;_internal_kind());<br>
+}<br>
+<br>
+<font class="syn_typ">double</font> <a href="../classes/omni-chrono-date_time-to_oa_date.html">omni::chrono::date_time::to_oa_date</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;_ticks_to_oa_date(<font class="syn_typ">this</font>-&gt;_ticks());<br>
+}<br>
+<br>
+<font class="syn_typ">uint64_t</font> <a href="../classes/omni-chrono-date_time-to_file_time.html">omni::chrono::date_time::to_file_time</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// Treats the input as local if it is not specified</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;to_universal_time().to_file_time_utc();<br>
+}<br>
+<br>
+<font class="syn_typ">uint64_t</font> <a href="../classes/omni-chrono-date_time-to_file_time_utc.html">omni::chrono::date_time::to_file_time_utc</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;int64_t ticks = (((<font class="syn_typ">this</font>-&gt;_internal_kind() &amp; OMNI_LOCAL_MASK_FW) != <font class="syn_num">0</font>) ?<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;to_universal_time()._ticks() :<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;_ticks()) -<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-chrono-file_time_offset.html">omni::chrono::FILE_TIME_OFFSET</a>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (ticks &lt; <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_RETV_FW(<font class="syn_str">&quot;Invalid file time specified&quot;</font>, <a href="../classes/omni-exceptions-invalid_range.html">omni::exceptions::invalid_range</a>(), <font class="syn_num">0</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> ticks;<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> <a href="../classes/omni-chrono-date_time-to_local_time.html">omni::chrono::date_time::to_local_time</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;_to_local_time(<font class="syn_ins">false</font>);<br>
+}<br>
+<br>
+<a href="http://www.cplusplus.com/reference/string/">std::string</a> <a href="../classes/omni-chrono-date_time-to_long_date_string.html">omni::chrono::date_time::to_long_date_string</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> date_time_format::format(*<font class="syn_typ">this</font>, <font class="syn_str">&quot;D&quot;</font>);<br>
+}<br>
+<br>
+<a href="http://www.cplusplus.com/reference/string/">std::wstring</a> <a href="../classes/omni-chrono-date_time-to_long_date_wstring.html">omni::chrono::date_time::to_long_date_wstring</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-string_util-to_wstring.html">omni::string_util::to_wstring</a>(date_time_format::format(*<font class="syn_typ">this</font>, <font class="syn_str">&quot;D&quot;</font>));<br>
+}<br>
+<br>
+<a href="http://www.cplusplus.com/reference/string/">std::string</a> <a href="../classes/omni-chrono-date_time-to_long_time_string.html">omni::chrono::date_time::to_long_time_string</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> date_time_format::format(*<font class="syn_typ">this</font>, <font class="syn_str">&quot;T&quot;</font>);<br>
+}<br>
+<br>
+<a href="http://www.cplusplus.com/reference/string/">std::wstring</a> <a href="../classes/omni-chrono-date_time-to_long_time_wstring.html">omni::chrono::date_time::to_long_time_wstring</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-string_util-to_wstring.html">omni::string_util::to_wstring</a>(date_time_format::format(*<font class="syn_typ">this</font>, <font class="syn_str">&quot;T&quot;</font>));<br>
+}<br>
+<br>
+<a href="http://www.cplusplus.com/reference/string/">std::string</a> <a href="../classes/omni-chrono-date_time-to_short_date_string.html">omni::chrono::date_time::to_short_date_string</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> date_time_format::format(*<font class="syn_typ">this</font>, <font class="syn_str">&quot;d&quot;</font>);<br>
+}<br>
+<br>
+<a href="http://www.cplusplus.com/reference/string/">std::wstring</a> <a href="../classes/omni-chrono-date_time-to_short_date_wstring.html">omni::chrono::date_time::to_short_date_wstring</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-string_util-to_wstring.html">omni::string_util::to_wstring</a>(date_time_format::format(*<font class="syn_typ">this</font>, <font class="syn_str">&quot;d&quot;</font>));<br>
+}<br>
+<br>
+<a href="http://www.cplusplus.com/reference/string/">std::string</a> <a href="../classes/omni-chrono-date_time-to_short_time_string.html">omni::chrono::date_time::to_short_time_string</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> date_time_format::format(*<font class="syn_typ">this</font>, <font class="syn_str">&quot;t&quot;</font>);<br>
+}<br>
+<br>
+<a href="http://www.cplusplus.com/reference/string/">std::wstring</a> <a href="../classes/omni-chrono-date_time-to_short_time_wstring.html">omni::chrono::date_time::to_short_time_wstring</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-string_util-to_wstring.html">omni::string_util::to_wstring</a>(date_time_format::format(*<font class="syn_typ">this</font>, <font class="syn_str">&quot;t&quot;</font>));<br>
+}<br>
+<br>
+<a href="http://www.cplusplus.com/reference/string/">std::string</a> <a href="../classes/omni-chrono-date_time-to_string.html">omni::chrono::date_time::to_string</a>(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; format) <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> date_time_format::format(*<font class="syn_typ">this</font>, format);<br>
+}<br>
+<br>
+<a href="http://www.cplusplus.com/reference/string/">std::wstring</a> <a href="../classes/omni-chrono-date_time-to_wstring.html">omni::chrono::date_time::to_wstring</a>(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>&amp; format) <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-string_util-to_wstring.html">omni::string_util::to_wstring</a>(date_time_format::format(*<font class="syn_typ">this</font>, <a href="../classes/omni-string_util-to_string.html">omni::string_util::to_string</a>(format)));<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> <a href="../classes/omni-chrono-date_time-to_universal_time.html">omni::chrono::date_time::to_universal_time</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font>-&gt;kind() == <a href="../classes/omni-chrono-date_time_kind-utc.html">omni::chrono::date_time_kind::UTC</a>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>(*<font class="syn_typ">this</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// TODO: finish this</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">//return TimeZoneInfo.ConvertTimeToUtc(this, TimeZoneInfoOptions.NoThrowOnInvalidTime);</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>(*<font class="syn_typ">this</font>);<br>
+}<br>
+<br>
+<a href="../classes/omni-sequence-string_t.html">omni::sequence::string_t</a> omni::chrono::date_time::get_date_time_formats() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// TODO: finish</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// return (GetDateTimeFormats(CultureInfo.CurrentCulture));</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-sequence-string_t.html">omni::sequence::string_t</a>();<br>
+}<br>
+<br>
+<a href="../classes/omni-sequence-string_t.html">omni::sequence::string_t</a> omni::chrono::date_time::get_date_time_formats(<font class="syn_typ">char</font> format) <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// TODO: finish</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// return (GetDateTimeFormats(format, CultureInfo.CurrentCulture));</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-sequence-string_t.html">omni::sequence::string_t</a>();<br>
+}<br>
+<br>
+<font class="syn_typ">void</font> <a href="../classes/omni-chrono-date_time-swap.html">omni::chrono::date_time::swap</a>(<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; other)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_OLOCK_FW(other)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../options/omni_xor_swap.html">OMNI_XOR_SWAP</a>(<font class="syn_typ">this</font>-&gt;m_date, other.m_date);<br>
+}<br>
+<br>
+<a href="../classes/omni-string_t.html">omni::string_t</a> <a href="../classes/omni-chrono-date_time-to_string_t.html">omni::chrono::date_time::to_string_t</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../options/omni_unicode.html">OMNI_UNICODE</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;to_wstring();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;to_string();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+}<br>
+<br>
+<a href="http://www.cplusplus.com/reference/string/">std::string</a> <a href="../classes/omni-chrono-date_time-to_string.html">omni::chrono::date_time::to_string</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;to_string(<a href="http://www.cplusplus.com/reference/string/">std::string</a>());<br>
+}<br>
+<br>
+<a href="http://www.cplusplus.com/reference/string/">std::wstring</a> <a href="../classes/omni-chrono-date_time-to_wstring.html">omni::chrono::date_time::to_wstring</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;to_wstring(<a href="http://www.cplusplus.com/reference/string/">std::wstring</a>());<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; omni::chrono::date_time::<font class="syn_ins">operator</font>=(<font class="syn_typ">const</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; ap)<br>
+{<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font> != &amp;ap) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_OLOCK_FW(ap)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ASSIGN_FW(ap)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_date = ap.m_date;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> *<font class="syn_typ">this</font>;<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> omni::chrono::date_time::<font class="syn_ins">operator</font>+(<font class="syn_typ">const</font> <a href="../classes/omni-chrono-time_span.html">omni::chrono::time_span</a>&amp; t)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;int64_t ticks = <font class="syn_typ">this</font>-&gt;_ticks();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;int64_t vticks = t.ticks();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> ((vticks &gt; (OMNI_MAX_TICKS_FW - ticks)) || (vticks &lt; (<font class="syn_num">0</font> - ticks))) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_RETV_FW(<font class="syn_str">&quot;Invalid OLE date specified&quot;</font>, <a href="../classes/omni-exceptions-invalid_range.html">omni::exceptions::invalid_range</a>(), *<font class="syn_typ">this</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>(<font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(ticks + vticks) | <font class="syn_typ">this</font>-&gt;_internal_kind());<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> omni::chrono::date_time::<font class="syn_ins">operator</font>-(<font class="syn_typ">const</font> <a href="../classes/omni-chrono-time_span.html">omni::chrono::time_span</a>&amp; t)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;int64_t ticks = <font class="syn_typ">this</font>-&gt;_ticks();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;int64_t vticks = t.ticks();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> ((ticks &lt; vticks) || ((ticks - OMNI_MAX_TICKS_FW) &gt; vticks)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_RETV_FW(<font class="syn_str">&quot;Invalid OLE date specified&quot;</font>, <a href="../classes/omni-exceptions-invalid_range.html">omni::exceptions::invalid_range</a>(), *<font class="syn_typ">this</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>(<font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(ticks - vticks) | <font class="syn_typ">this</font>-&gt;_internal_kind());<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; omni::chrono::date_time::<font class="syn_ins">operator</font>+=(<font class="syn_typ">const</font> <a href="../classes/omni-chrono-time_span.html">omni::chrono::time_span</a>&amp; t)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;int64_t ticks = <font class="syn_typ">this</font>-&gt;_ticks();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;int64_t vticks = t.ticks();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> ((vticks &gt; (OMNI_MAX_TICKS_FW - ticks)) || (vticks &lt; (<font class="syn_num">0</font> - ticks))) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_RETV_FW(<font class="syn_str">&quot;Invalid OLE date specified&quot;</font>, <a href="../classes/omni-exceptions-invalid_range.html">omni::exceptions::invalid_range</a>(), *<font class="syn_typ">this</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_date = (<font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(ticks + vticks) | <font class="syn_typ">this</font>-&gt;_internal_kind());<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> *<font class="syn_typ">this</font>;<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; omni::chrono::date_time::<font class="syn_ins">operator</font>-=(<font class="syn_typ">const</font> <a href="../classes/omni-chrono-time_span.html">omni::chrono::time_span</a>&amp; t)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;int64_t ticks = <font class="syn_typ">this</font>-&gt;_ticks();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;int64_t vticks = t.ticks();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> ((ticks &lt; vticks) || ((ticks - OMNI_MAX_TICKS_FW) &gt; vticks)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_RETV_FW(<font class="syn_str">&quot;Invalid OLE date specified&quot;</font>, <a href="../classes/omni-exceptions-invalid_range.html">omni::exceptions::invalid_range</a>(), *<font class="syn_typ">this</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_date = (<font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(ticks - vticks) | <font class="syn_typ">this</font>-&gt;_internal_kind());<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> *<font class="syn_typ">this</font>;<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-time_span.html">omni::chrono::time_span</a> omni::chrono::date_time::<font class="syn_ins">operator</font>-(<font class="syn_typ">const</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; d2)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-chrono-time_span.html">omni::chrono::time_span</a>(<font class="syn_typ">this</font>-&gt;_ticks() - d2.ticks());<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-time_span.html">omni::chrono::time_span</a> omni::chrono::date_time::<font class="syn_ins">operator</font>+(<font class="syn_typ">const</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; d2)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-chrono-time_span.html">omni::chrono::time_span</a>(<font class="syn_typ">this</font>-&gt;_ticks() + d2.ticks());<br>
+}<br>
+<br>
+<font class="syn_typ">bool</font> omni::chrono::date_time::<font class="syn_ins">operator</font>==(<font class="syn_typ">const</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; d2) <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font> == &amp;d2) { <font class="syn_ins">return</font> <font class="syn_ins">true</font>; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_OLOCK_FW(d2)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_date == d2.m_date<br>
+&nbsp;&nbsp;&nbsp;&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_EQUAL_FW(d2);<br>
+}<br>
+<br>
+<font class="syn_typ">bool</font> omni::chrono::date_time::<font class="syn_ins">operator</font>!=(<font class="syn_typ">const</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; d2) <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> !(*<font class="syn_typ">this</font> == d2);<br>
+}<br>
+<br>
+<font class="syn_typ">bool</font> omni::chrono::date_time::<font class="syn_ins">operator</font>&lt;(<font class="syn_typ">const</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; d2) <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font> == &amp;d2) { <font class="syn_ins">return</font> <font class="syn_ins">false</font>; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_OLOCK_FW(d2)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_date &lt; d2.m_date);<br>
+}<br>
+<br>
+<font class="syn_typ">bool</font> omni::chrono::date_time::<font class="syn_ins">operator</font>&lt;=(<font class="syn_typ">const</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; d2) <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font> == &amp;d2) { <font class="syn_ins">return</font> <font class="syn_ins">true</font>; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_OLOCK_FW(d2)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_date &lt;= d2.m_date);<br>
+}<br>
+<br>
+<font class="syn_typ">bool</font> omni::chrono::date_time::<font class="syn_ins">operator</font>&gt;(<font class="syn_typ">const</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; d2) <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font> == &amp;d2) { <font class="syn_ins">return</font> <font class="syn_ins">false</font>; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_OLOCK_FW(d2)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_date &gt; d2.m_date);<br>
+}<br>
+<br>
+<font class="syn_typ">bool</font> omni::chrono::date_time::<font class="syn_ins">operator</font>&gt;=(<font class="syn_typ">const</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; d2) <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font> == &amp;d2) { <font class="syn_ins">return</font> <font class="syn_ins">true</font>; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_OLOCK_FW(d2)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_date &gt;= d2.m_date);<br>
+}<br>
+<br>
+<font class="syn_cmt">// -- start private methods --</font><br>
+<br>
+<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> <a href="../classes/omni-chrono-date_time-_add.html">omni::chrono::date_time::_add</a>(<font class="syn_typ">double</font> value, int64_t scale)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;int64_t millis = <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;((value * scale) + (value &gt;= <font class="syn_num">0</font>.<font class="syn_num">0</font> ? <font class="syn_num">0</font>.<font class="syn_num">5</font> : -<font class="syn_num">0</font>.<font class="syn_num">5</font>));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (millis &lt;= -OMNI_MAX_MILLIS_FW || millis &gt;= OMNI_MAX_MILLIS_FW) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_RETV_FW(<font class="syn_str">&quot;Invalid value/scale specified&quot;</font>, <a href="../classes/omni-exceptions-invalid_range.html">omni::exceptions::invalid_range</a>(), <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;add_ticks(millis * <a href="../classes/omni-chrono-ticks_per_millisecond.html">omni::chrono::TICKS_PER_MILLISECOND</a>);<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-date_time_kind.html">omni::chrono::date_time_kind</a> <a href="../classes/omni-chrono-date_time-_kind.html">omni::chrono::date_time::_kind</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">switch</font> (<font class="syn_typ">this</font>-&gt;_internal_kind()) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">case</font> OMNI_KIND_UNSPECIFIED_FW:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-chrono-date_time_kind-unspecified.html">omni::chrono::date_time_kind::UNSPECIFIED</a>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">case</font> OMNI_KIND_UTC_FW:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-chrono-date_time_kind-utc.html">omni::chrono::date_time_kind::UTC</a>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">default</font>:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-chrono-date_time_kind-local.html">omni::chrono::date_time_kind::LOCAL</a>;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+}<br>
+<br>
+int64_t <a href="../classes/omni-chrono-date_time-_to_binary_raw.html">omni::chrono::date_time::_to_binary_raw</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">static_cast</font>&lt;int64_t&gt;(<font class="syn_typ">this</font>-&gt;m_date);<br>
+}<br>
+<br>
+int64_t <a href="../classes/omni-chrono-date_time-_get_date_part.html">omni::chrono::date_time::_get_date_part</a>(<font class="syn_typ">uint8_t</font> part) <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">const</font> int32_t* days = <a href="../options/omni_null.html">OMNI_NULL</a>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;int64_t n, y400, y100, y4, y1, m;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;int64_t ticks = <font class="syn_typ">this</font>-&gt;_ticks();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// n = number of days since 1/1/0001</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;n = (ticks / <a href="../classes/omni-chrono-ticks_per_day.html">omni::chrono::TICKS_PER_DAY</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// y400 = number of whole 400-year periods since 1/1/0001</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;y400 = n / <a href="../classes/omni-chrono-days_per_400_years.html">omni::chrono::DAYS_PER_400_YEARS</a>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// n = day number within 400-year period</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;n -= y400 * <a href="../classes/omni-chrono-days_per_400_years.html">omni::chrono::DAYS_PER_400_YEARS</a>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// y100 = number of whole 100-year periods within 400-year period</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;y100 = n / <a href="../classes/omni-chrono-days_per_100_years.html">omni::chrono::DAYS_PER_100_YEARS</a>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// Last 100-year period has an extra day, so decrement result if 4</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (y100 == <font class="syn_num">4</font>) { y100 = <font class="syn_num">3</font>; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// n = day number within 100-year period</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;n -= y100 * <a href="../classes/omni-chrono-days_per_100_years.html">omni::chrono::DAYS_PER_100_YEARS</a>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// y4 = number of whole 4-year periods within 100-year period</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;y4 = n / <a href="../classes/omni-chrono-days_per_4_years.html">omni::chrono::DAYS_PER_4_YEARS</a>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// n = day number within 4-year period</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;n -= y4 * <a href="../classes/omni-chrono-days_per_4_years.html">omni::chrono::DAYS_PER_4_YEARS</a>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// y1 = number of whole years within 4-year period</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;y1 = n / <a href="../classes/omni-chrono-days_per_year.html">omni::chrono::DAYS_PER_YEAR</a>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// Last year has an extra day, so decrement result if 4</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (y1 == <font class="syn_num">4</font>) y1 = <font class="syn_num">3</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// If year was requested, compute and return it</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (part == OMNI_DATE_PART_YEAR_FW) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> y400 * <font class="syn_num">400</font> + y100 * <font class="syn_num">100</font> + y4 * <font class="syn_num">4</font> + y1 + <font class="syn_num">1</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// n = day number within year</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;n -= y1 * <a href="../classes/omni-chrono-days_per_year.html">omni::chrono::DAYS_PER_YEAR</a>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// If day-of-year was requested, return it</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (part == OMNI_DATE_PART_YEAR_FW) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> n + <font class="syn_num">1</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// Leap year calculation looks different from IsLeapYear since y1, y4,</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// and y100 are relative to year 1, not year 0</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;m = (n &gt;&gt; <font class="syn_num">5</font>) + <font class="syn_num">1</font>;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// All months have less than 32 days, so n &gt;&gt; 5 is a good conservative</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// estimate for the month</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// m = 1-based month number</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> ((y1 == <font class="syn_num">3</font>) &amp;&amp; (y4 != <font class="syn_num">24</font> || y100 == <font class="syn_num">3</font>)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;days = &amp;<a href="../classes/omni-chrono-days_to_month_366.html">omni::chrono::DAYS_TO_MONTH_366</a>[<font class="syn_num">0</font>];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;days = &amp;<a href="../classes/omni-chrono-days_to_month_365.html">omni::chrono::DAYS_TO_MONTH_365</a>[<font class="syn_num">0</font>];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">while</font> (n &gt;= days[m]) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m++;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// If month was requested, return it</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (part == OMNI_DATE_PART_MONTH_FW) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> m;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// Return 1-based day-of-month</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> n - days[m - <font class="syn_num">1</font>] + <font class="syn_num">1</font>;<br>
+}<br>
+<br>
+<font class="syn_typ">bool</font> <a href="../classes/omni-chrono-date_time-_is_ambiguous_daylight_saving_time.html">omni::chrono::date_time::_is_ambiguous_daylight_saving_time</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTTM_ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;_internal_kind() == OMNI_KIND_LOCAL_AMBIGUOUS_DST_FW);<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> <a href="../classes/omni-chrono-date_time-_to_local_time.html">omni::chrono::date_time::_to_local_time</a>(<font class="syn_typ">bool</font> throw_on_overflow) <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">//OMNI_DTTM_ALOCK_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font>-&gt;kind() == <a href="../classes/omni-chrono-date_time_kind-local.html">omni::chrono::date_time_kind::LOCAL</a>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>(*<font class="syn_typ">this</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> isDaylightSavings = <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> isAmbiguousLocalDst = <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;int64_t offset = <font class="syn_num">0</font>; <font class="syn_cmt">// TODO: finish -&gt; TimeZoneInfo.GetUtcOffsetFromUtc(this, TimeZoneInfo.Local, out isDaylightSavings, out isAmbiguousLocalDst).Ticks;</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;int64_t tick = <font class="syn_typ">this</font>-&gt;_ticks() + offset;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (tick &gt; OMNI_MAX_TICKS_FW) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (throw_on_overflow) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_RETV_FW(<font class="syn_str">&quot;Invalid ticks for local time&quot;</font>, <a href="../classes/omni-exceptions-invalid_range.html">omni::exceptions::invalid_range</a>(), <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>(OMNI_MAX_TICKS_FW, <a href="../classes/omni-chrono-date_time_kind-local.html">omni::chrono::date_time_kind::LOCAL</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (tick &lt; <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (throw_on_overflow) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_RETV_FW(<font class="syn_str">&quot;Invalid local time&quot;</font>, <a href="../classes/omni-exceptions-invalid_range.html">omni::exceptions::invalid_range</a>(), <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>(<font class="syn_num">0</font>, <a href="../classes/omni-chrono-date_time_kind-local.html">omni::chrono::date_time_kind::LOCAL</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>(isAmbiguousLocalDst, <a href="../classes/omni-chrono-date_time_kind-local.html">omni::chrono::date_time_kind::LOCAL</a>, <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(tick), <a href="http://www.cplusplus.com/reference/string/">std::string</a>(<font class="syn_str">&quot;&quot;</font>));<br>
+}<br>
+<br>
+<font class="syn_cmt">// -- start static methods --</font><br>
+<br>
+<font class="syn_typ">uint16_t</font> <a href="../classes/omni-chrono-date_time-days_in_month.html">omni::chrono::date_time::days_in_month</a>(<font class="syn_typ">uint16_t</font> year, <font class="syn_typ">uint8_t</font> month)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> ((month &lt; <font class="syn_num">1</font>) || (month &gt; <font class="syn_num">12</font>)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_RETV_FW(<font class="syn_str">&quot;Invalid month specified&quot;</font>, <a href="../classes/omni-exceptions-invalid_range.html">omni::exceptions::invalid_range</a>(), <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<a href="../classes/omni-chrono-is_leap_year.html">omni::chrono::is_leap_year</a>(year)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// check the year argument</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-chrono-days_to_month_366.html">omni::chrono::DAYS_TO_MONTH_366</a>[month] - <a href="../classes/omni-chrono-days_to_month_366.html">omni::chrono::DAYS_TO_MONTH_366</a>[month - <font class="syn_num">1</font>];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-chrono-days_to_month_365.html">omni::chrono::DAYS_TO_MONTH_365</a>[month] - <a href="../classes/omni-chrono-days_to_month_365.html">omni::chrono::DAYS_TO_MONTH_365</a>[month - <font class="syn_num">1</font>];<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> <a href="../classes/omni-chrono-date_time-from_binary.html">omni::chrono::date_time::from_binary</a>(int64_t date_data)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> ((date_data &amp; <font class="syn_ins">static_cast</font>&lt;int64_t&gt;(OMNI_LOCAL_MASK_FW)) != <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// Local times need to be adjusted as you move from one time zone to another, </font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// just as they are when serializing in text. As such the format for local times</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// changes to store the ticks of the UTC time, but with flags that look like a </font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// local date.</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> ambig_dst = <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int64_t offset = <font class="syn_num">0</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int64_t ticks = (date_data &amp; <font class="syn_ins">static_cast</font>&lt;int64_t&gt;(OMNI_TICKS_MASK_FW));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// Negative ticks are stored in the top part of the range and should be converted back into a negative number</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (ticks &gt; OMNI_TICKS_CEILING_FW - <a href="../classes/omni-chrono-ticks_per_day.html">omni::chrono::TICKS_PER_DAY</a>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ticks = ticks - OMNI_TICKS_CEILING_FW;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// Convert the ticks back to local. If the UTC ticks are out of range, we need to default to</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// the UTC offset from MinValue and MaxValue to be consistent with Parse. </font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// TODO: need to work on TimeZoneInfo</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">/*<div class="syn_ex" id="cmnt2" name="cmnt2">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (ticks &lt; 0) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;offset = TimeZoneInfo.GetLocalUtcOffset(<a href="../classes/omni-chrono-date_time-min_value.html">omni::chrono::date_time::min_value</a>(), TimeZoneInfoOptions.NoThrowOnInvalidTime).Ticks;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else if (ticks &gt; OMNI_MAX_TICKS_FW) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;offset = TimeZoneInfo.GetLocalUtcOffset(<a href="../classes/omni-chrono-date_time-max_value.html">omni::chrono::date_time::max_value</a>(), TimeZoneInfoOptions.NoThrowOnInvalidTime).Ticks;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Because the ticks conversion between UTC and local is lossy, we need to capture whether the <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// time is in a repeated hour so that it can be passed to the DateTime constructor.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> utcDt(ticks, <a href="../classes/omni-chrono-date_time_kind-utc.html">omni::chrono::date_time_kind::UTC</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool isDaylightSavings = false;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;offset = TimeZoneInfo.GetUtcOffsetFromUtc(utcDt, TimeZoneInfo.Local, out isDaylightSavings, out ambig_dst).Ticks;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</div><div></div></font>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ticks += offset;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// Another behaviour of parsing is to cause small times to wrap around, so that they can be used</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// to compare times of day</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (ticks &lt; <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ticks += <a href="../classes/omni-chrono-ticks_per_day.html">omni::chrono::TICKS_PER_DAY</a>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (ticks &lt; <font class="syn_num">0</font> || ticks &gt; OMNI_MAX_TICKS_FW) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_RETV_FW(<font class="syn_str">&quot;Invalid binary tick count specified&quot;</font>, <a href="../classes/omni-exceptions-invalid_range.html">omni::exceptions::invalid_range</a>(), <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>(ambig_dst, <a href="../classes/omni-chrono-date_time_kind-local.html">omni::chrono::date_time_kind::LOCAL</a>, <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(ticks), <a href="http://www.cplusplus.com/reference/string/">std::string</a>(<font class="syn_str">&quot;&quot;</font>));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-chrono-date_time-_from_binary_raw.html">omni::chrono::date_time::_from_binary_raw</a>(date_data);<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> <a href="../classes/omni-chrono-date_time-from_file_time.html">omni::chrono::date_time::from_file_time</a>(int64_t file_time)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-chrono-date_time-from_file_time_utc.html">omni::chrono::date_time::from_file_time_utc</a>(file_time).to_local_time();<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> <a href="../classes/omni-chrono-date_time-from_file_time_utc.html">omni::chrono::date_time::from_file_time_utc</a>(int64_t file_time)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (file_time &lt; <font class="syn_num">0</font> || file_time &gt; OMNI_MAX_TICKS_FW - <a href="../classes/omni-chrono-file_time_offset.html">omni::chrono::FILE_TIME_OFFSET</a>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_RETV_FW(<font class="syn_str">&quot;Invalid file time specified&quot;</font>, <a href="../classes/omni-exceptions-invalid_range.html">omni::exceptions::invalid_range</a>(), <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// This is the ticks in Universal time for this file_time.</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;int64_t uticks = file_time + <a href="../classes/omni-chrono-file_time_offset.html">omni::chrono::FILE_TIME_OFFSET</a>;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>(<font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(uticks), <a href="../classes/omni-chrono-date_time_kind-utc.html">omni::chrono::date_time_kind::UTC</a>);<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> <a href="../classes/omni-chrono-date_time-from_oa_date.html">omni::chrono::date_time::from_oa_date</a>(<font class="syn_typ">double</font> d)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>(<a href="../classes/omni-chrono-date_time-_double_date_to_ticks.html">omni::chrono::date_time::_double_date_to_ticks</a>(d), <a href="../classes/omni-chrono-date_time_kind-unspecified.html">omni::chrono::date_time_kind::UNSPECIFIED</a>);<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> <a href="../classes/omni-chrono-date_time-specify_kind.html">omni::chrono::date_time::specify_kind</a>(<font class="syn_typ">const</font> date_time&amp; value, <font class="syn_typ">const</font> <a href="../classes/omni-chrono-date_time_kind.html">omni::chrono::date_time_kind</a>&amp; kind)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>(value._ticks(), kind);<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> <a href="../classes/omni-chrono-date_time-now.html">omni::chrono::date_time::now</a>()<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> utc = <a href="../classes/omni-chrono-date_time-utc_now.html">omni::chrono::date_time::utc_now</a>(); <br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> isAmbiguousLocalDst = <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;int64_t offset = <font class="syn_num">0</font>; <font class="syn_cmt">// TODO: finish -&gt; TimeZoneInfo.GetDateTimeNowUtcOffsetFromUtc(utc, out isAmbiguousLocalDst).Ticks;</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;int64_t tick = utc.ticks() + offset;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (tick &gt; OMNI_MAX_TICKS_FW) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>(OMNI_MAX_TICKS_FW, <a href="../classes/omni-chrono-date_time_kind-local.html">omni::chrono::date_time_kind::LOCAL</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (tick &lt; <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>(<font class="syn_num">0</font>, <a href="../classes/omni-chrono-date_time_kind-local.html">omni::chrono::date_time_kind::LOCAL</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>(isAmbiguousLocalDst, <a href="../classes/omni-chrono-date_time_kind-local.html">omni::chrono::date_time_kind::LOCAL</a>, <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(tick), <a href="http://www.cplusplus.com/reference/string/">std::string</a>(<font class="syn_str">&quot;&quot;</font>));<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> <a href="../classes/omni-chrono-date_time-utc_now.html">omni::chrono::date_time::utc_now</a>()<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// following code is tuned for speed. Don&#39;t change it without running benchmark.</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;int64_t ticks = <font class="syn_num">0</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../options/omni_os_win.html">OMNI_OS_WIN</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FILETIME ft;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ticks = ::GetSystemTimeAsFileTime(&amp;ft);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ULARGE_INTEGER tm;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tm.LowPart = ft.dwLowDateTime;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tm.HighPart = ft.dwHighDateTime;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ticks = <font class="syn_ins">static_cast</font>&lt;int64_t&gt;(tm.QuadPart);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">/*<div class="syn_ex" id="cmnt3" name="cmnt3">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DEV_NOTE: this is from the .NET source, but mathematically doesn&#39;t make sense ...<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (CompatibilitySwitches.IsAppEarlierThanWindowsPhone8) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Windows Phone 7.0/7.1 return the ticks up to millisecond, not up to the 100th nanosecond.<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long ticksms = ticks / TicksPerMillisecond; &lt;- here .. ticksms now == (ticks / TicksPerMillisecond)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ticks = ticksms * TicksPerMillisecond;&nbsp;&nbsp;&nbsp;&nbsp;  &lt;- so right here, doing ticks = ticksms * TicksPerMillisecond<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;that code is like saying this:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ticks = (ticks / TicksPerMillisecond) * TicksPerMillisecond;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and since the multiplication cancels out the division, it&#39;s<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;just doing this:<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ticks = ticks;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;huh??<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</div><div></div></font>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ticks += <a href="../classes/omni-chrono-file_time_offset.html">omni::chrono::FILE_TIME_OFFSET</a>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../options/omni_os_apple.html">OMNI_OS_APPLE</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">struct</font> timeval tv;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (::<a href="http://pubs.opengroup.org/onlinepubs/009695399/functions/gettimeofday.html">gettimeofday</a>(&amp;tv, <font class="syn_typ">NULL</font>) != <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERRV_RETV_FW(<font class="syn_str">&quot;An error occurred getting the clock time: &quot;</font>, errno, <a href="../classes/omni-exceptions-clock_exception.html">omni::exceptions::clock_exception</a>(errno), <font class="syn_ins">false</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ticks = (tv.tv_sec * <a href="../classes/omni-chrono-ticks_per_second.html">omni::chrono::TICKS_PER_SECOND</a>) + (tv.tv_usec * <a href="../classes/omni-chrono-ticks_per_microsecond.html">omni::chrono::TICKS_PER_MICROSECOND</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">struct</font> timespec tm;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (::<a href="http://pubs.opengroup.org/onlinepubs/9699919799/functions/clock_getres.html">clock_gettime</a>(CLOCK_REALTIME, &amp;tm) != <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERRV_RETV_FW(<font class="syn_str">&quot;An error occurred getting the clock time: &quot;</font>, errno, <a href="../classes/omni-exceptions-clock_exception.html">omni::exceptions::clock_exception</a>(errno), <font class="syn_ins">false</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ticks = (tv.tv_sec * <a href="../classes/omni-chrono-ticks_per_second.html">omni::chrono::TICKS_PER_SECOND</a>) + (tv.tv_nsec * omni::chrono::TICKS_PER_NANOSECOND);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ticks += <a href="../classes/omni-chrono-epoch_offset.html">omni::chrono::EPOCH_OFFSET</a>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>(<font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(ticks) | OMNI_KIND_UTC_FW);<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> <a href="../classes/omni-chrono-date_time-today.html">omni::chrono::date_time::today</a>()<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-chrono-date_time-now.html">omni::chrono::date_time::now</a>().date();<br>
+}<br>
+<br>
+<font class="syn_typ">bool</font> <a href="../classes/omni-chrono-date_time-is_leap_year.html">omni::chrono::date_time::is_leap_year</a>(<font class="syn_typ">uint16_t</font> year)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> ((year &lt; <font class="syn_num">1</font>) || (year &gt; <font class="syn_num">9999</font>)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_RETV_FW(<font class="syn_str">&quot;Invalid year specified&quot;</font>, <a href="../classes/omni-exceptions-invalid_range.html">omni::exceptions::invalid_range</a>(), <font class="syn_ins">false</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (year % <font class="syn_num">4</font> == <font class="syn_num">0</font>) &amp;&amp; ((year % <font class="syn_num">100</font> != <font class="syn_num">0</font>) || (year % <font class="syn_num">400</font> == <font class="syn_num">0</font>));<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> <a href="../classes/omni-chrono-date_time-parse.html">omni::chrono::date_time::parse</a>(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; s)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> date_time_format::DateTimeParse::Parse(s,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;date_time_format::DateTimeFormatInfo::CurrentInfo,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;omni::chrono::date_time_styles::NONE);<br>
+}<br>
+<br>
+<font class="syn_cmt">/*<div class="syn_ex" id="cmnt4" name="cmnt4">
+&nbsp;&nbsp;&nbsp;&nbsp;Constructs a DateTime from a string. The string must specify a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;date and optionally a time in a culture-specific or universal format.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Leading and trailing whitespace characters are allowed.<br>
+*/</div><div></div></font>
+<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> <a href="../classes/omni-chrono-date_time-parse_exact.html">omni::chrono::date_time::parse_exact</a>(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; s, <font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; format)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;date_time_format::DateTimeFormatInfo dtfi(date_time_format::DateTimeFormatInfo::GetInstance(<font class="syn_cmt">/*provider*/</font>));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> date_time_format::DateTimeParse::ParseExact(s, format,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dtfi,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;omni::chrono::date_time_styles::NONE);<br>
+}<br>
+<br>
+<font class="syn_typ">bool</font> <a href="../classes/omni-chrono-date_time-try_parse.html">omni::chrono::date_time::try_parse</a>(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; s, <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; result)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> date_time_format::DateTimeParse::TryParse(s,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;date_time_format::DateTimeFormatInfo::CurrentInfo,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;omni::chrono::date_time_styles::NONE, result);<br>
+}<br>
+<br>
+<font class="syn_typ">bool</font> <a href="../classes/omni-chrono-date_time-try_parse_exact.html">omni::chrono::date_time::try_parse_exact</a>(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; s, <font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; format, <font class="syn_typ">const</font> omni::chrono::date_time_styles&amp; style, <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; result)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;date_time_format::DateTimeFormatInfo dtfi(date_time_format::DateTimeFormatInfo::GetInstance(<font class="syn_cmt">/*provider*/</font>));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> date_time_format::DateTimeParse::TryParseExact(s, format, dtfi, style, result);<br>
+}<br>
+<br>
+<font class="syn_cmt">// -- start private static methods --</font><br>
+<br>
+int64_t <a href="../classes/omni-chrono-date_time-_date_to_ticks.html">omni::chrono::date_time::_date_to_ticks</a>(<font class="syn_typ">uint16_t</font> year, <font class="syn_typ">uint8_t</font> month, <font class="syn_typ">uint8_t</font> day)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> ((year &gt;= <font class="syn_num">1</font>) &amp;&amp; (year &lt;= <font class="syn_num">9999</font>) &amp;&amp; (month &gt;= <font class="syn_num">1</font>) &amp;&amp; (month &lt;= <font class="syn_num">12</font>)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">const</font> int32_t* days = <a href="../classes/omni-chrono-is_leap_year.html">omni::chrono::is_leap_year</a>(year) ?<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;<a href="../classes/omni-chrono-days_to_month_365.html">omni::chrono::DAYS_TO_MONTH_365</a>[<font class="syn_num">0</font>]:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;<a href="../classes/omni-chrono-days_to_month_366.html">omni::chrono::DAYS_TO_MONTH_366</a>[<font class="syn_num">0</font>];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> ((day &gt;= <font class="syn_num">1</font>) &amp;&amp; (day &lt;= (days[month] - days[month - <font class="syn_num">1</font>]))) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int32_t y = year - <font class="syn_num">1</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> ((y * <font class="syn_num">365</font>) + (y / <font class="syn_num">4</font>) - (y / <font class="syn_num">100</font>) + (y / <font class="syn_num">400</font>) + days[month - <font class="syn_num">1</font>] + day - <font class="syn_num">1</font>) * <a href="../classes/omni-chrono-ticks_per_day.html">omni::chrono::TICKS_PER_DAY</a>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_RETV_FW(<font class="syn_str">&quot;Invalid year/month/day specified&quot;</font>, <a href="../classes/omni-exceptions-invalid_range.html">omni::exceptions::invalid_range</a>(), <font class="syn_num">0</font>)<br>
+}<br>
+<br>
+int64_t <a href="../classes/omni-chrono-date_time-_time_to_ticks.html">omni::chrono::date_time::_time_to_ticks</a>(<font class="syn_typ">uint8_t</font> hour, <font class="syn_typ">uint8_t</font> minute, <font class="syn_typ">uint8_t</font> second)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">//<a href="../classes/omni-chrono-time_span.html">omni::chrono::time_span</a>.TimeToTicks is a family access function which does no error checking, so</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">//we need to put some error checking out here.</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> ((hour &gt;= <font class="syn_num">0</font>) &amp;&amp; (hour &lt; <font class="syn_num">24</font>) &amp;&amp; (minute &gt;= <font class="syn_num">0</font>) &amp;&amp; (minute &lt; <font class="syn_num">60</font>) &amp;&amp; (second &gt;=<font class="syn_num">0</font>) &amp;&amp; (second &lt; <font class="syn_num">60</font>)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> omni::chrono::time_span::from_time(hour, minute, second).ticks();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_RETV_FW(<font class="syn_str">&quot;Invalid hour/minute/second specified&quot;</font>, <a href="../classes/omni-exceptions-invalid_range.html">omni::exceptions::invalid_range</a>(), <font class="syn_num">0</font>)<br>
+}<br>
+<br>
+int64_t <a href="../classes/omni-chrono-date_time-_double_date_to_ticks.html">omni::chrono::date_time::_double_date_to_ticks</a>(<font class="syn_typ">double</font> value)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// DEV_NOTE: the comments are from the .NET source .. thanks to you whomever you were</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// The check done this way will take care of NaN</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!(value &lt; omni::chrono::OA_DATE_MAX_AS_DOUBLE) || !(value &gt; omni::chrono::OA_DATE_MIN_AS_DOUBLE)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_RETV_FW(<font class="syn_str">&quot;Invalid OLE date specified&quot;</font>, <a href="../classes/omni-exceptions-invalid_range.html">omni::exceptions::invalid_range</a>(), <font class="syn_num">0</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// Conversion to long will not cause an overflow here, as at this point the &quot;value&quot; is in between OADateMinAsDouble and OADateMaxAsDouble</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;int64_t millis = <font class="syn_ins">static_cast</font>&lt;int64_t&gt;(value * <a href="../classes/omni-chrono-milliseconds_per_day.html">omni::chrono::MILLISECONDS_PER_DAY</a> + (value &gt;= <font class="syn_num">0</font>? <font class="syn_num">0</font>.<font class="syn_num">5</font>: -<font class="syn_num">0</font>.<font class="syn_num">5</font>));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// The interesting thing here is when you have a value like 12.5 it all positive 12 days and 12 hours from 01/01/1899</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// However if you a value of -12.25 it is minus 12 days but still positive 6 hours, almost as though you meant -11.75 all negative</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// This line below fixes up the millis in the negative case</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (millis &lt; <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;millis -= (millis % <a href="../classes/omni-chrono-milliseconds_per_day.html">omni::chrono::MILLISECONDS_PER_DAY</a>) * <font class="syn_num">2</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;millis += <a href="../classes/omni-chrono-double_date_offset.html">omni::chrono::DOUBLE_DATE_OFFSET</a> / <a href="../classes/omni-chrono-ticks_per_millisecond.html">omni::chrono::TICKS_PER_MILLISECOND</a>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (millis &lt; <font class="syn_num">0</font> || millis &gt;= OMNI_MAX_MILLIS_FW) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_RETV_FW(<font class="syn_str">&quot;Invalid OLE milliseconds specified&quot;</font>, <a href="../classes/omni-exceptions-invalid_range.html">omni::exceptions::invalid_range</a>(), <font class="syn_num">0</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> millis * <a href="../classes/omni-chrono-ticks_per_millisecond.html">omni::chrono::TICKS_PER_MILLISECOND</a>;<br>
+}<br>
+<br>
+<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> <a href="../classes/omni-chrono-date_time-_from_binary_raw.html">omni::chrono::date_time::_from_binary_raw</a>(int64_t date_data)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;int64_t ticks = (date_data &amp; <font class="syn_ins">static_cast</font>&lt;int64_t&gt;(OMNI_TICKS_MASK_FW));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (ticks &lt; <font class="syn_num">0</font> || ticks &gt; OMNI_MAX_TICKS_FW) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_RETV_FW(<font class="syn_str">&quot;Invalid binary tick value&quot;</font>, <a href="../classes/omni-exceptions-invalid_range.html">omni::exceptions::invalid_range</a>(), <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>(<font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(date_data));<br>
+}<br>
+<br>
+<font class="syn_typ">double</font> <a href="../classes/omni-chrono-date_time-_ticks_to_oa_date.html">omni::chrono::date_time::_ticks_to_oa_date</a>(int64_t value)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// DEV_NOTE: the notes are from the .NET source code</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (value == <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>.<font class="syn_num">0</font>;  <font class="syn_cmt">// Returns OleAut&#39;s zero&#39;ed date value.</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (value &lt; <a href="../classes/omni-chrono-ticks_per_day.html">omni::chrono::TICKS_PER_DAY</a>) { <font class="syn_cmt">// This is a fix for VB. They want the default day to be 1/1/0001 rather then 12/30/1899.</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value += <a href="../classes/omni-chrono-double_date_offset.html">omni::chrono::DOUBLE_DATE_OFFSET</a>; <font class="syn_cmt">// We could have moved this fix down but we would like to keep the bounds check.</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (value &lt; <a href="../classes/omni-chrono-oa_date_min_as_ticks.html">omni::chrono::OA_DATE_MIN_AS_TICKS</a>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_RETV_FW(<font class="syn_str">&quot;Invalid OLE date specified&quot;</font>, <a href="../classes/omni-exceptions-invalid_range.html">omni::exceptions::invalid_range</a>(), <font class="syn_num">0</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// Currently, our max date == OA&#39;s max date (12/31/9999), so we don&#39;t </font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// need an overflow check in that direction.</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;int64_t ms = (value  - <a href="../classes/omni-chrono-double_date_offset.html">omni::chrono::DOUBLE_DATE_OFFSET</a>) / <a href="../classes/omni-chrono-ticks_per_millisecond.html">omni::chrono::TICKS_PER_MILLISECOND</a>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (ms &lt; <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int64_t frac = ms % <a href="../classes/omni-chrono-milliseconds_per_day.html">omni::chrono::MILLISECONDS_PER_DAY</a>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (frac != <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ms -= (<a href="../classes/omni-chrono-milliseconds_per_day.html">omni::chrono::MILLISECONDS_PER_DAY</a> + frac) * <font class="syn_num">2</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">double</font>&gt;(ms) / <a href="../classes/omni-chrono-milliseconds_per_day.html">omni::chrono::MILLISECONDS_PER_DAY</a>;<br>
+}<br>
+<br>
+<font class="syn_typ">bool</font> <a href="../classes/omni-chrono-date_time-_try_create.html">omni::chrono::date_time::_try_create</a>(<font class="syn_typ">uint16_t</font> year, <font class="syn_typ">uint8_t</font> month, <font class="syn_typ">uint8_t</font> day, <font class="syn_typ">uint8_t</font> hour, <font class="syn_typ">uint8_t</font> minute, <font class="syn_typ">uint8_t</font> second, <font class="syn_typ">uint16_t</font> millisecond, <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; result)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result = <a href="../classes/omni-chrono-date_time-min_value.html">omni::chrono::date_time::min_value</a>();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (year &lt; <font class="syn_num">1</font> || year &gt; <font class="syn_num">9999</font> || month &lt; <font class="syn_num">1</font> || month &gt; <font class="syn_num">12</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<a href="../classes/omni-chrono-date_time-is_leap_year.html">omni::chrono::date_time::is_leap_year</a>(year)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (day &lt; <font class="syn_num">1</font> || day &gt; <a href="../classes/omni-chrono-days_to_month_366.html">omni::chrono::DAYS_TO_MONTH_366</a>[month] - <a href="../classes/omni-chrono-days_to_month_366.html">omni::chrono::DAYS_TO_MONTH_366</a>[month - <font class="syn_num">1</font>]) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (day &lt; <font class="syn_num">1</font> || day &gt; <a href="../classes/omni-chrono-days_to_month_365.html">omni::chrono::DAYS_TO_MONTH_365</a>[month] - <a href="../classes/omni-chrono-days_to_month_365.html">omni::chrono::DAYS_TO_MONTH_365</a>[month - <font class="syn_num">1</font>]) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (hour &lt; <font class="syn_num">0</font> || hour &gt;= <font class="syn_num">24</font> || minute &lt; <font class="syn_num">0</font> || minute &gt;= <font class="syn_num">60</font> || second &lt; <font class="syn_num">0</font> || second &gt;= <font class="syn_num">60</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (millisecond &lt; <font class="syn_num">0</font> || millisecond &gt;= <a href="../classes/omni-chrono-milliseconds_per_second.html">omni::chrono::MILLISECONDS_PER_SECOND</a>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;int64_t ticks = <a href="../classes/omni-chrono-date_time-_date_to_ticks.html">omni::chrono::date_time::_date_to_ticks</a>(year, month, day) + <a href="../classes/omni-chrono-date_time-_time_to_ticks.html">omni::chrono::date_time::_time_to_ticks</a>(hour, minute, second);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ticks += millisecond * <a href="../classes/omni-chrono-ticks_per_millisecond.html">omni::chrono::TICKS_PER_MILLISECOND</a>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (ticks &lt; <font class="syn_num">0</font> || ticks &gt; OMNI_MAX_TICKS_FW) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result = <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>(ticks, <a href="../classes/omni-chrono-date_time_kind-unspecified.html">omni::chrono::date_time_kind::UNSPECIFIED</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">true</font>;<br>
+}<br>
+<!--end highlighted code-->
+</div></code><br>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS(); collapseAll('4', '../../');</script></body></html>

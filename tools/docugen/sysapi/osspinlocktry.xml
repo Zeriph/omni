@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<SysAPI xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OSSpinLockTry</Name>
+  <Link>https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man3/spinlock.3.html</Link>
+  <SysType>Apple</SysType>
+</SysAPI>

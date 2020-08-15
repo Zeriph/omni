@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_MUTEX_T</Name>
+  <Brief>Defines the underlying mutex handle type based on system.
+</Brief>
+  <Considerations>No special consideration.
+</Considerations>
+  <Description>None.
+</Description>
+  <Notes>None.
+</Notes>
+  <PlatformSpecific>No special consideration.
+</PlatformSpecific>
+  <Synopsis>For more information on it, see @h omni/types/lock_t.hpp @h and @h omni/types/thread_t.hpp @h
+
+</Synopsis>
+  <IsHelper>true</IsHelper>
+  <IsConstant>false</IsConstant>
+  <IsFWHelp>true</IsFWHelp>
+</MacroOp>

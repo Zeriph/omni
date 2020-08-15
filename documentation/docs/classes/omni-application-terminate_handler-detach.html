@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - function: omni::application::terminate_handler::detach</title>
+<link rel="stylesheet" type="text/css" href="../../content/main.css" /><link rel="icon" type="image/png" href="../../content/favicon.png" />
+<script type="text/javascript" src="../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="../htmlsrc/index.html">Source</a></li><li title="Library classes and namespaces">
+<a href="index.html" class="current">Class Index</a></li><li title="Download and view examples">
+<a href="../examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="../options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../api.html">System API</a></li><li title="Other Considerations">
+<a href="../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle">omni::application::terminate_handler::detach</div><div class="content"><div>
+<div class="docdiv"><a name="nm"></a>
+<font class="docu">NAME</font><br><br>
+<code><a href="../htmlsrc/omni/application.hpp.html#omni::application::terminate_handler::detach" class="chnm">
+    omni::application::terminate_handler::detach
+    </a></code><br>
+<br>A function of <a href="omni-application-terminate_handler.html" class="code">omni::application::terminate_handler</a><br><br>
+    <code><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/application.hpp.html">omni/application.hpp</a>&gt;</font></code><br><code><font class="syn_typ">void</font> omni::application::terminate_handler::detach(<font class="syn_typ">const</font> <a href="../classes/omni-callback.html">omni::callback</a>&amp; terminate_func)</code>
+</div><br>
+<div class="docdiv"><a name="syn"></a>
+<font class="docu">SYNOPSIS</font><br><br>
+Detach a delegate function from the terminate handler event.
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<div class="docdiv"><a name="desc"></a>
+<font class="docu">DESCRIPTION</font><br><br>
+Detaches a delegate function from the terminate handler event. Detaching a delegate that has not been initially attached has no effect.<br>
+<br>
+Since the terminate handler deals specifically with handling the invocation of <code><a href="http://www.cplusplus.com/reference/exception/terminate/">std::terminate</a></code>, a call to <code>attach</code> can be made before or after the <code>run</code> context has been invoked and the handlers will be called accordingly.
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+
+<div class="docdiv"><a name="param"></a>
+<font class="docu">PARAMETERS</font><br><br>
+<code>terminate_func</code> - The <code><a href="omni-callback.html">omni::callback</a></code> delegate function to attach. 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
+
+<div class="docdiv"><a name="con"></a>
+<font class="docu">CONSIDERATIONS</font><br><br>
+This function will only have an effect if you have explicitly called one of the <code><a href="omni-application-run.html">omni::application::run</a></code> functions to block the main thread until program completion. 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
+
+
+
+
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

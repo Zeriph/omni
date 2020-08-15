@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_OS_CONVEX</Name>
+  <Brief>Defines ConvexOS environment was detected.</Brief>
+  <Considerations>OS detection via preprocessor flags is not always guaranteed as they can be explicitly defined by a user. Take care when relying on these macros to determine platform specifics.</Considerations>
+  <Description>None.</Description>
+  <Notes>None.</Notes>
+  <PlatformSpecific>No special consideration.</PlatformSpecific>
+  <Synopsis>If compilation happens on a platform (or with a compiler) with certain preprocessor flags, this macro is defined.
+
+See @h omni/defs/os.hpp @h for which flags enable this option.</Synopsis>
+  <IsHelper>true</IsHelper>
+  <IsConstant>false</IsConstant>
+  <IsFWHelp>true</IsFWHelp>
+</MacroOp>

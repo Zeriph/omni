@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - System API and Library calls</title>
+<link rel="stylesheet" type="text/css" href="../content/main.css" /><link rel="icon" type="image/png" href="../content/favicon.png" />
+<script type="text/javascript" src="../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="htmlsrc/index.html">Source</a></li><li title="Library classes and namespaces">
+<a href="classes/index.html">Class Index</a></li><li title="Download and view examples">
+<a href="examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="api.html" class="current">System API</a></li><li title="Other Considerations">
+<a href="consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle"><a name="system_api_calls"></a>System API and Library Calls</div><div class="content"><div>
+Ensuring you can build a code base for a platform requires validating the API's and any linked libraries are available
+for your targets. To this, we have compiled a chart broken down by platform or standard library that has the functions
+called throughout the library and where each call is referenced; this is in an effort to help you determine if you can
+deploy the functions of Omni you wish to use for the targets you want to target.<br><br>
+It should be noted that depending on how you build the library (i.e. what <a href="options/index.html">options</a>
+you use to compile Omni), can affect which functions are called. For example, if you compile Omni on a Windows
+platform with the <code><a href="options/omni_no_win_api.html">OMNI_NO_WIN_API</a></code> flag defined, the
+<code>_beginthreadex</code> API will be used instead of the <code>CreateThread</code> API; for more
+information on what compile options are available and what effects they have on the library, please see the
+<a href="options/index.html">compile options</a> documentation.<br><br>
+Also, please note that these lists do <i><b>not</b></i> include the specific types used throughout the library; for example,
+the C++ list does not contain <code>std::string</code> nor does the POSIX list contain <code>pthread_t</code>.
+If you wish to see which types are used, since certain types will vary based on platform, you can visit the
+<a href="classes/index.html">class index</a> and browse for any classes, struct's, or typedef's that
+end in <code>_t</code>. Alternatively, you can <a href="htmlsrc/index.html">view</a> the individual headers that are
+included with the <code><a href="htmlsrc/omni/base_types.hpp.html">base_types</a></code> header, which includes the
+various types used and defined throughout the library.<br><br>
+<div class="apilist"><ol name="exoldiv" id="exoldiv">
+
+<li><input type="checkbox" id="win_api" name="win_api" /><label for="win_api">
+<a name="system_api_win"></a><span>Windows</span><span>WinAPI and CRT functions called on Windows platforms.
+</span></label><ul class="code" name="ulwin" id="ulwin">
+<!-- INSERT GENERATED WIN API CODE -->
+</ul></li>
+
+<li><input type="checkbox" id="apple_api" name="apple_api" /><label for="apple_api">
+<a name="system_api_apple"></a><span>Apple OS</span><span>MacOS and iOS functions called on Apple platforms.
+</span></label><ul class="code" name="ulapl" id="ulapl">
+<!-- INSERT GENERATED APPLE API CODE -->
+</ul></li>
+
+<li><input type="checkbox" id="linux_api" name="linux_api" /><label for="linux_api">
+<a name="system_api_linux"></a><span>Linux</span><span>Functions that might not be available on some Unix and BSD variants.
+</span></label><ul class="code" name="ulnix" id="ulnix">
+<!-- INSERT GENERATED LINUX API CODE -->
+</ul></li>
+
+<li><input type="checkbox" id="unix_api" name="unix_api" /><label for="unix_api">
+<a name="system_api_unix"></a><span>Unix</span><span>Non-Windows and non-POSIX system API functions called.
+</span></label><ul class="code" name="uluni" id="uluni">
+<!-- INSERT GENERATED UNIX API CODE -->
+</ul></li>
+
+<li><input type="checkbox" id="posix_api" name="posix_api" /><label for="posix_api">
+<a name="system_api_posix"></a><span>POSIX</span><span>POSIX library functions called (multi-platform).
+</span></label><ul class="code" name="ulpos" id="ulpos">
+<!-- INSERT GENERATED POSIX API CODE -->
+</ul></li>
+
+<li><input type="checkbox" id="std_api" name="std_api" /><label for="std_api">
+<a name="system_api_std"></a><span>C++</span><span>STL and <code>std</code> namespace functions called via the standard libraries (multi-platform).
+</span></label><ul class="code" name="ulcpp" id="ulcpp">
+<!-- INSERT GENERATED STD API CODE -->
+</ul></li>
+
+</ol></div>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

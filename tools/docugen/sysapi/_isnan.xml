@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<SysAPI xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>_isnan</Name>
+  <Link>https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/isnan-isnan-isnanf?view=vs-2019</Link>
+  <SysType>Windows</SysType>
+</SysAPI>

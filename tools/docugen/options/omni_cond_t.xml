@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_COND_T</Name>
+  <Brief>Defines the underlying condition variable type.</Brief>
+  <Considerations>While there are no special considerations for this specific flag, there are considerations for the underlying type it defines, to which please see the other sections for notes about this flag.</Considerations>
+  <Description>Depending on platform being built against, this macro will expand to the proper condition variable type needed by the platforms implementation.</Description>
+  <Notes>None.</Notes>
+  <PlatformSpecific>This value will be different based on platform being targeted, see the documentation for OMNI_WIN_USE_EVENT_CONDITIONAL for other platform specific notes on the condition variable type.</PlatformSpecific>
+  <Synopsis>This macro option is defined based on the platform being built against. For more information on it, see @h omni/sync/conditional.hpp @h and @h omni/types/thread_t.hpp @h</Synopsis>
+  <IsHelper>false</IsHelper>
+  <IsConstant>false</IsConstant>
+  <IsFWHelp>true</IsFWHelp>
+</MacroOp>

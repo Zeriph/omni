@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_CLOCK_TICK_T</Name>
+  <Brief>Defines the underlying clock tick type.
+</Brief>
+  <Considerations>No special considerations.
+</Considerations>
+  <Description>Depending on platform being built against, this macro will expand to the proper clock tick type needed by the platforms implementation.
+</Description>
+  <Notes>None.
+</Notes>
+  <PlatformSpecific>This value will be different based on platform being targeted.
+</PlatformSpecific>
+  <Synopsis>This macro option is defined based on the platform being built against. For more information on it, see @h omni/chrono/tick.hpp @h and @h omni/types/tick_t.hpp @h
+</Synopsis>
+  <IsHelper>false</IsHelper>
+  <IsConstant>false</IsConstant>
+  <IsFWHelp>true</IsFWHelp>
+</MacroOp>

@@ -192,7 +192,7 @@ int main(int argc, char* argv[])
     }
 
     // [ws][-]{ d | [d.]hh:mm[:ss[.ff]] }[ws]
-    /*num_test("2");
+    / *num_test("2");
     num_test("2.4");
 
     do_parse("10", "10.00:00:00.0");
@@ -213,6 +213,7 @@ int main(int argc, char* argv[])
 //#include <omnilib>
 //#include <vector>
 
+/*
 class server {
     public:
         server() :
@@ -289,13 +290,30 @@ class server {
             this->m_sock.disconnect(false); // shutdown and don't reuse socket
         }
 };
+*/
 
 int main(int argc, const char* argv[])
 {
-    server srv;
+    /*server srv;
     if (srv) {
         omni::application::signal_handler::attach(omni::application::signal_handler::callback::bind<server, &server::signal>(&srv));
         return omni::application::run(argc, argv, omni::sync::bind<server, &server::run>(&srv), true, true);
     }
-    return -1;
+    return -1;*/
+    //omni::net::connection_option conops = omni::net::connection_option::CONNECTED;
+    //printl("conops = " << conops);
+
+    double v, e, a; //, z, n, p;
+    int dec = 2;
+    double vals[] = { 123.341, 123.344, 123.345, 123.351, 123.354, 123.355,
+                      0.5,
+                      -123.341, -123.344, -123.345, -123.351, -123.354, -123.355 };
+    for (int i = 0; i < sizeof(vals) / sizeof(double); ++i) {
+        v = vals[i];
+        e = omni::math::round(v, dec, omni::math::midpoint_rounding::TO_EVEN);
+        a = omni::math::round(v, dec, omni::math::midpoint_rounding::AWAY_FROM_ZERO);
+        printl("v: " << v << " e: " << e << " a: " << a);
+    }
+    
+    return 0;
 }

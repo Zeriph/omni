@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<SysAPI xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>std::size_t</Name>
+  <Link>http://www.cplusplus.com/reference/cstring/size_t/</Link>
+  <SysType>STD</SysType>
+</SysAPI>

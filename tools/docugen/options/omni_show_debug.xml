@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_SHOW_DEBUG</Name>
+  <Brief>Display framework debug output.</Brief>
+  <Considerations>All debug information is sent to the standard output, the more information displayed, the more has to be written to the standard out which can take time away from processing other tasks. Be aware of how much debug output you want/need.</Considerations>
+  <Description>By specifying the OMNI_SHOW_DEBUG preprocessor flag, the framework will display debug output up to the level specified. &lt;code&gt;/D OMNI_SHOW_DEBUG=3&lt;/code&gt; would define debug level 3 output.
+Levels range from 1 to 5; the higher the number the more framework output is displayed.</Description>
+  <Notes>None.</Notes>
+  <PlatformSpecific>No platform specific details.</PlatformSpecific>
+  <Synopsis>&lt;code&gt;#define OMNI_SHOW_DEBUG&lt;/code&gt;
+Signifies to display framework debug output.</Synopsis>
+  <IsHelper>false</IsHelper>
+  <IsConstant>false</IsConstant>
+</MacroOp>

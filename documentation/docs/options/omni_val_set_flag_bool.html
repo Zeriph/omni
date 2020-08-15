@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - OMNI_VAL_SET_FLAG_BOOL</title>
+<link rel="stylesheet" type="text/css" href="../../content/main.css" /><link rel="icon" type="image/png" href="../../content/favicon.png" />
+<script type="text/javascript" src="../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="index.html">Source</a></li><li title="Library classes and namespaces">
+<a href="../classes/index.html">Class Index</a></li><li title="Download and view examples">
+<a href="../examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="index.html" class="current">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../api.html">System API</a></li><li title="Other Considerations">
+<a href="../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle"><a name="omni_options"></a>OMNI_VAL_SET_FLAG_BOOL</div><div class="content"><div>
+<div class="docdiv">
+    <font class="docu">MACRO</font><br><br>
+    <code><font style="font-size:16px;">
+    <code>OMNI_VAL_SET_FLAG_BOOL</code> - Sets a flag bit in a value.
+    </font></code>
+</div><br>
+<div class="docdiv">
+    <font class="docu">SYNOPSIS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    A helper macro used to set a bit flag within a specified value.
+</div><br>
+<div class="docdiv">
+    <font class="docu">DESCRIPTION</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    You can utilize this macro if you wish to set specific bit flag within a specified numeric value.<br>
+<br>
+Example:<br>
+<div class="sntx"><input type="checkbox" id="c0" name="c0" checked /><label for="c0">&nbsp;</label><pre><font class="syn_ins">typedef</font> <font class="syn_typ">struct</font> enum_vals {
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">typedef</font> <font class="syn_typ">enum</font> enum_t {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VAL1 = <font class="syn_num">1</font>, <font class="syn_cmt">// 0001</font>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VAL2 = <font class="syn_num">2</font>, <font class="syn_cmt">// 0010</font>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VAL3 = <font class="syn_num">4</font>, <font class="syn_cmt">// 0100</font>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VAL4 = <font class="syn_num">8</font>  <font class="syn_cmt">// 1000</font>
+&nbsp;&nbsp;&nbsp;&nbsp;} enum_t;
+} enum_vals;
+
+<font class="syn_typ">int</font> i = <font class="syn_num">42</font>; <font class="syn_cmt">// 0010 1010</font>
+<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;VAL2 &quot;</font> &lt;&lt; (<a href="../options/omni_val_has_flag_bit.html">OMNI_VAL_HAS_FLAG_BIT</a>(i, enum_vals::VAL2) ? <font class="syn_str">&quot;is&quot;</font> : <font class="syn_str">&quot;is NOT&quot;</font>) &lt;&lt; <font class="syn_str">&quot; set&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;VAL3 &quot;</font> &lt;&lt; (<a href="../options/omni_val_has_flag_bit.html">OMNI_VAL_HAS_FLAG_BIT</a>(i, enum_vals::VAL3) ? <font class="syn_str">&quot;is&quot;</font> : <font class="syn_str">&quot;is NOT&quot;</font>) &lt;&lt; <font class="syn_str">&quot; set&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+<a href="../options/omni_val_set_flag_bool.html">OMNI_VAL_SET_FLAG_BOOL</a>(i, enum_vals::VAL2, <font class="syn_ins">false</font>);
+<a href="../options/omni_val_set_flag_bool.html">OMNI_VAL_SET_FLAG_BOOL</a>(i, enum_vals::VAL3, <font class="syn_ins">true</font>);
+<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;VAL2 &quot;</font> &lt;&lt; (<a href="../options/omni_val_has_flag_bit.html">OMNI_VAL_HAS_FLAG_BIT</a>(i, enum_vals::VAL2) ? <font class="syn_str">&quot;is&quot;</font> : <font class="syn_str">&quot;is NOT&quot;</font>) &lt;&lt; <font class="syn_str">&quot; set&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;VAL3 &quot;</font> &lt;&lt; (<a href="../options/omni_val_has_flag_bit.html">OMNI_VAL_HAS_FLAG_BIT</a>(i, enum_vals::VAL3) ? <font class="syn_str">&quot;is&quot;</font> : <font class="syn_str">&quot;is NOT&quot;</font>) &lt;&lt; <font class="syn_str">&quot; set&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;</pre></div>The output for this would be:<br>
+<div class="sntx"><input type="checkbox" id="c1" name="c1" checked /><label for="c1">&nbsp;</label><pre>VAL2 is set
+VAL3 is NOT set
+VAL2 is NOT set
+VAL3 is set</pre></div>
+</div><br>
+<div class="docdiv">
+    <font class="docu">CONSIDERATIONS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    No special considerations
+</div><br>
+<div class="docdiv">
+    <font class="docu">PLATFORM SPECIFIC</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    No platform specific notes.
+</div><br>
+<div class="docdiv">
+    <font class="docu">NOTES</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    None.
+</div><br>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

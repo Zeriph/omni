@@ -88,8 +88,8 @@ class UT_CLASS_DEF
             print_info(omni::sync::spin_wait);
             print_info(omni::sync::safe_spin_wait);
             print_info(omni::sync::conditional);
-            print_info(omni::chrono::timespan);
-            print_info(omni::chrono::unsigned_timespan);
+            print_info(omni::chrono::span_t);
+            print_info(omni::chrono::unsigned_span_t);
             print_info(omni::chrono::async_timer);
             print_info(omni::chrono::sync_timer);
             print_info(omni::chrono::queue_timer);
@@ -97,27 +97,27 @@ class UT_CLASS_DEF
             print_info(omni::geometry::point_t);
             print_info(omni::geometry::point64_t);
             print_info(omni::geometry::pointF_t);
-            print_info(omni::geometry::raw_point_t);
-            print_info(omni::geometry::raw_point64_t);
-            print_info(omni::geometry::raw_pointF_t);
+            print_info(omni::geometry::unsafe_point_t);
+            print_info(omni::geometry::unsafe_point64_t);
+            print_info(omni::geometry::unsafe_pointF_t);
             print_info(omni::geometry::point_3d_t);
             print_info(omni::geometry::point64_3d_t);
             print_info(omni::geometry::pointF_3d_t);
-            print_info(omni::geometry::raw_point_3d_t);
-            print_info(omni::geometry::raw_point64_3d_t);
-            print_info(omni::geometry::raw_pointF_3d_t);
+            print_info(omni::geometry::unsafe_point_3d_t);
+            print_info(omni::geometry::unsafe_point64_3d_t);
+            print_info(omni::geometry::unsafe_pointF_3d_t);
             print_info(omni::geometry::size_t);
             print_info(omni::geometry::size64_t);
             print_info(omni::geometry::sizeF_t);
-            print_info(omni::geometry::raw_size_t);
-            print_info(omni::geometry::raw_size64_t);
-            print_info(omni::geometry::raw_sizeF_t);
+            print_info(omni::geometry::unsafe_size_t);
+            print_info(omni::geometry::unsafe_size64_t);
+            print_info(omni::geometry::unsafe_sizeF_t);
             print_info(omni::geometry::rectangle_t);
             print_info(omni::geometry::rectangle64_t);
             print_info(omni::geometry::rectangleF_t);
-            print_info(omni::geometry::raw_rectangle_t);
-            print_info(omni::geometry::raw_rectangle64_t);
-            print_info(omni::geometry::raw_rectangleF_t);
+            print_info(omni::geometry::unsafe_rectangle_t);
+            print_info(omni::geometry::unsafe_rectangle64_t);
+            print_info(omni::geometry::unsafe_rectangleF_t);
             print_info(omni::drawing::color_t);
             print_info(omni::drawing::color64_t);
             print_info(omni::net::socket);
@@ -138,11 +138,13 @@ class UT_CLASS_DEF
                     sizeof(omni::chrono::DAYS_PER_100_YEARS) +
                     sizeof(omni::chrono::DAYS_PER_400_YEARS) +
                     sizeof(omni::chrono::DAYS_TO_1601AD) +
+                    sizeof(omni::chrono::DAYS_TO_EPOCH) +
                     sizeof(omni::chrono::DAYS_TO_1899AD) +
                     sizeof(omni::chrono::DAYS_TO_10000AD) +
                     sizeof(omni::chrono::TICKS_TO_10000AD) +
                     sizeof(omni::chrono::MILLISECONDS_TO_10000AD) +
                     sizeof(omni::chrono::FILE_TIME_OFFSET) +
+                    sizeof(omni::chrono::EPOCH_OFFSET) +
                     sizeof(omni::chrono::DOUBLE_DATE_OFFSET) +
                     sizeof(omni::chrono::OA_DATE_MIN_AS_TICKS) +
                     sizeof(omni::chrono::OA_DATE_MIN_AS_DOUBLE) +

@@ -21,12 +21,14 @@
 #include <omni/defs/global.hpp>
 #include <omni/defs/class_macros.hpp>
 #include <omni/defs/net_def.hpp>
+#include <omni/util/bits.hpp>
+#include <omni/stack_buffer.hpp>
 
 /*
     DEV_NOTE: There are numerous socket functions that are standard, while there are also numerous socket functions
     that are OS/implementation specific. Since there are _too_ many variations on what a socket can do, as well as
     what a socket _might_ be able to do, there are various enum types for the `net` namespace that do not have what
-    could potentially be 'all' types. Instead, the user can simply utilize the values they need for the platform they
+    could potentially be all types. Instead, the user can simply utilize the values they need for the platform they
     are targetting.
 */
 
@@ -34,7 +36,8 @@ namespace omni {
     /** The net namespace is used to facilitate certain networking operations and handling */
     namespace net {
         /** address_family defines enum values for the addressing scheme that an instance of the omni::net::socket class can use. */
-        class address_family {
+        class address_family
+        {
             public:
                 typedef enum enum_t {
                     UNSPECIFIED = AF_UNSPEC,
@@ -135,6 +138,11 @@ namespace omni {
                     OMNI_DTOR_FW
                     OMNI_CATCH_FW
                     OMNI_D5_FW("destroyed");
+                }
+
+                unsigned short count() const
+                {
+                    return COUNT();
                 }
 
                 enum_t value() const
@@ -239,11 +247,6 @@ namespace omni {
                     return this->m_val;
                 }
 
-                operator int32_t() const
-                {
-                    return static_cast<int32_t>(this->m_val);
-                }
-
                 operator std::string() const
                 {
                     return this->to_string();
@@ -345,9 +348,308 @@ namespace omni {
                     );
                 }
         };
+
+        /** connection_option defines enum values for the type of socket that an instance of the omni::net::socket::socket class represents. */
+        class connection_option
+        {
+            public:
+                typedef enum enum_t {
+                    CONNECTED,
+                    BOUND,
+                    OPEN,
+                    SHUT,
+                    LISTEN
+                } enum_t;
+                
+                /** Defines the number of elements in the enum */
+                static inline unsigned short COUNT()
+                {
+                    return 5;
+                }
+
+                /** The default value for this enum instance */
+                static inline enum_t DEFAULT_VALUE()
+                {
+                    return CONNECTED;
+                }
+
+                /** Converts the enum to its string representation */
+                static std::string to_string(enum_t v)
+                {
+                    return _to_val<std::stringstream>(v);
+                }
+            
+                /** Converts the enum to its wide string representation */
+                static std::wstring to_wstring(enum_t v)
+                {
+                    return _to_val<std::wstringstream>(v);
+                }
+
+                /** Parsing a string value into its enum representation */
+                static enum_t parse(const std::string& val)
+                {
+                    return _parse(val);
+                }
+
+                /** Parsing a wide string value into its enum representation */
+                static enum_t parse(const std::wstring& val)
+                {
+                    return _parse(val);
+                }
+
+                /** Tries parsing a string value into its enum representation */
+                static bool try_parse(const std::string& val, enum_t& out)
+                {
+                    return _try_parse(val, out);
+                }
+
+                /** Tries parsing a wide string value into its enum representation */
+                static bool try_parse(const std::wstring& val, enum_t& out)
+                {
+                    return _try_parse(val, out);
+                }
+
+                /** Tries parsing a string value into its enum representation */
+                static bool try_parse(const std::string& val, connection_option& out)
+                {
+                    return _try_parse(val, out);
+                }
+
+                /** Tries parsing a wide string value into its enum representation */
+                static bool try_parse(const std::wstring& val, connection_option& out)
+                {
+                    return _try_parse(val, out);
+                }
+
+                /** Returns true if the integer value specified is a valid enum value */
+                static bool is_valid(int val)
+                {
+                    return _valid(val);
+                }
+
+                connection_option() :
+                    OMNI_CTOR_FW(omni::net::connection_option)
+                    m_val(DEFAULT_VALUE())
+                { }
+
+                connection_option(const connection_option& cp) :
+                    OMNI_CPCTOR_FW(cp)
+                    m_val(cp.m_val)
+                { }
+
+                connection_option(enum_t val) : 
+                    OMNI_CTOR_FW(omni::net::connection_option)
+                    m_val(val)
+                { }
+
+                ~connection_option()
+                {
+                    OMNI_TRY_FW
+                    OMNI_DTOR_FW
+                    OMNI_CATCH_FW
+                    OMNI_D5_FW("destroyed");
+                }
+
+                unsigned short count() const
+                {
+                    return COUNT();
+                }
+
+                enum_t value() const
+                {
+                    return this->m_val;
+                }
+
+                std::string to_string() const
+                {
+                    return to_string(this->m_val);
+                }
+
+                std::wstring to_wstring() const
+                {
+                    return to_wstring(this->m_val);
+                }
+
+                bool operator!=(const connection_option& val) const
+                {
+                    return !(*this == val);
+                }
+                
+                bool operator!=(enum_t val) const
+                {
+                    return (this->m_val != val);
+                }
+                
+                connection_option& operator=(const connection_option& val)
+                {
+                    if (this != &val) {
+                        OMNI_ASSIGN_FW(val)
+                        this->m_val = val.m_val;
+                    }
+                    return *this;
+                }
+
+                connection_option& operator=(enum_t val)
+                {
+                    this->m_val = val;
+                    return *this;
+                }
+
+                connection_option& operator=(int val)
+                {
+                    if (!connection_option::is_valid(val)) {
+                        OMNI_ERR_RET_FW("Invalid enumeration value specified.", omni::exceptions::invalid_enum(val));
+                    } else {
+                        this->m_val = static_cast<enum_t>(val);
+                    }
+                    return *this;
+                }
+
+                bool operator<(const connection_option& val) const
+                {
+                    return this->m_val < val.m_val;
+                }
+
+                bool operator<(enum_t val) const
+                {
+                    return this->m_val < val;
+                }
+
+                bool operator<(int val) const
+                {
+                    return this->m_val < static_cast<enum_t>(val);
+                }
+
+                bool operator>(const connection_option& val) const
+                {
+                    return this->m_val > val.m_val;
+                }
+
+                bool operator>(enum_t val) const
+                {
+                    return this->m_val > val;
+                }
+
+                bool operator>(int val) const
+                {
+                    return this->m_val > val;
+                }
+
+                bool operator==(const connection_option& val) const
+                {
+                    if (this == &val) { return true; }
+                    return this->m_val == val.m_val
+                            OMNI_EQUAL_FW(val);
+                }
+
+                bool operator==(enum_t val) const
+                {
+                    return this->m_val == val;
+                }
+
+                bool operator==(int val) const
+                {
+                    return this->m_val == val;
+                }
+
+                operator enum_t() const
+                {
+                    return this->m_val;
+                }
+
+                operator std::string() const
+                {
+                    return this->to_string();
+                }
+
+                operator std::wstring() const
+                {
+                    return this->to_wstring();
+                }
+
+                OMNI_MEMBERS_FW(omni::net::connection_option) // disposing,name,type(),hash()
+
+                OMNI_OSTREAM_FW(omni::net::connection_option)
+                OMNI_OSTREAM_FN_FW(enum_t)
+
+            private:
+                enum_t m_val;
+                
+                template < typename S >
+                static enum_t _parse(const S& val)
+                {
+                    enum_t ret;
+                    if (_try_parse(val, ret)) { return ret; }
+                    OMNI_ERR_FW("invalid enum parse", omni::exceptions::invalid_enum())
+                    return DEFAULT_VALUE();
+                }
+
+                template < typename S >
+                static bool _try_parse(const S& str, enum_t& out)
+                {
+                    return _try_parse(omni::string::util::to_upper(str), out);
+                }
+
+                template < typename S >
+                static bool _try_parse(const S& val, connection_option& out)
+                {
+                    enum_t tmp;
+                    if (_try_parse(val, tmp)) {
+                        out.m_val = tmp;
+                        return true;
+                    }
+                    return false;
+                }
+
+                static bool _try_parse(const std::wstring& val, enum_t& out)
+                {
+                    return _try_parse(omni::string::util::to_string(val), out);
+                }
+
+                static bool _try_parse(const std::string& val, enum_t& out)
+                {
+                    if (!val.empty()) {
+                        OMNI_S2E_FW(CONNECTED)
+                        OMNI_S2E_FW(BOUND)
+                        OMNI_S2E_FW(OPEN)
+                        OMNI_S2E_FW(SHUT)
+                        OMNI_S2E_FW(LISTEN)
+                    }
+                    return false;
+                }
+
+                template < typename S >
+                static std::basic_string< typename S::char_type > _to_val(enum_t v)
+                {
+                    S ss;
+                    switch (v) {
+                        OMNI_E2SS_FW(CONNECTED);
+                        OMNI_E2SS_FW(BOUND);
+                        OMNI_E2SS_FW(OPEN);
+                        OMNI_E2SS_FW(SHUT);
+                        OMNI_E2SS_FW(LISTEN);
+                        default:
+                            ss << "UNKNOWN (" << static_cast<int>(v) << ")";
+                            break;
+                    }
+                    return ss.str();
+                }
+
+                static bool _valid(int val)
+                {
+                    return (val == 
+                        CONNECTED ||
+                        BOUND ||
+                        OPEN ||
+                        SHUT ||
+                        LISTEN
+                    );
+                }
+        };
         
         /** protocol_type defines enum values for the protocols that the omni::net::socket class supports. */
-        class protocol_type {
+        class protocol_type
+        {
             public:
                 typedef enum enum_t {
                     UNKNOWN = -1,
@@ -453,6 +755,11 @@ namespace omni {
                     OMNI_D5_FW("destroyed");
                 }
 
+                unsigned short count() const
+                {
+                    return COUNT();
+                }
+
                 enum_t value() const
                 {
                     return this->m_val;
@@ -553,11 +860,6 @@ namespace omni {
                 operator enum_t() const
                 {
                     return this->m_val;
-                }
-
-                operator int32_t() const
-                {
-                    return static_cast<int32_t>(this->m_val);
                 }
 
                 operator std::string() const
@@ -672,7 +974,8 @@ namespace omni {
         };
 
         /** socket_error defines enum values for socket errors codes */
-        class socket_error {
+        class socket_error
+        {
             public:
                 typedef enum enum_t {
                     UNSPECIFIED = -1,
@@ -813,6 +1116,11 @@ namespace omni {
                     OMNI_D5_FW("destroyed");
                 }
 
+                unsigned short count() const
+                {
+                    return COUNT();
+                }
+
                 enum_t value() const
                 {
                     return this->m_val;
@@ -913,11 +1221,6 @@ namespace omni {
                 operator enum_t() const
                 {
                     return this->m_val;
-                }
-
-                operator int32_t() const
-                {
-                    return static_cast<int32_t>(this->m_val);
                 }
 
                 operator std::string() const
@@ -1137,7 +1440,8 @@ namespace omni {
         };
         
         /** socket_flags defines enum values for socket send and receive behaviors. */
-        class socket_flags {
+        class socket_flags
+        {
             public:
                 typedef enum enum_t {
                     NONE = 0,
@@ -1234,6 +1538,11 @@ namespace omni {
                     OMNI_DTOR_FW
                     OMNI_CATCH_FW
                     OMNI_D5_FW("destroyed");
+                }
+
+                unsigned short count() const
+                {
+                    return COUNT();
                 }
 
                 enum_t value() const
@@ -1338,11 +1647,6 @@ namespace omni {
                     return this->m_val;
                 }
 
-                operator int32_t() const
-                {
-                    return static_cast<int32_t>(this->m_val);
-                }
-
                 operator std::string() const
                 {
                     return this->to_string();
@@ -1434,7 +1738,8 @@ namespace omni {
         };
 
         /** select_mode defines enum values for the polling modes for the omni::net::socket::poll method. */
-        class select_mode {
+        class select_mode
+        {
             public:
                 typedef enum enum_t {
                     NONE = -1,
@@ -1530,6 +1835,11 @@ namespace omni {
                     OMNI_DTOR_FW
                     OMNI_CATCH_FW
                     OMNI_D5_FW("destroyed");
+                }
+
+                unsigned short count() const
+                {
+                    return COUNT();
                 }
 
                 enum_t value() const
@@ -1634,11 +1944,6 @@ namespace omni {
                     return this->m_val;
                 }
 
-                operator int32_t() const
-                {
-                    return static_cast<int32_t>(this->m_val);
-                }
-
                 operator std::string() const
                 {
                     return this->to_string();
@@ -1727,7 +2032,8 @@ namespace omni {
         };
 
         /** socket_option_level defines enum values for socket option levels for the setsocketoption and getsocketoption methods. */
-        class socket_option_level {
+        class socket_option_level
+        {
             public:
                 typedef enum enum_t {
                     UNSPECIFIED = -1,
@@ -1825,6 +2131,11 @@ namespace omni {
                     OMNI_DTOR_FW
                     OMNI_CATCH_FW
                     OMNI_D5_FW("destroyed");
+                }
+
+                unsigned short count() const
+                {
+                    return COUNT();
                 }
 
                 enum_t value() const
@@ -1929,11 +2240,6 @@ namespace omni {
                     return this->m_val;
                 }
 
-                operator int32_t() const
-                {
-                    return static_cast<int32_t>(this->m_val);
-                }
-
                 operator std::string() const
                 {
                     return this->to_string();
@@ -2028,7 +2334,8 @@ namespace omni {
         };
         
         /** socket_option defines enum values for configuration option names. */
-        class socket_option {
+        class socket_option
+        {
             public:
                 typedef enum enum_t {
                     DONT_LINGER = -129,
@@ -2140,6 +2447,11 @@ namespace omni {
                     OMNI_D5_FW("destroyed");
                 }
 
+                unsigned short count() const
+                {
+                    return COUNT();
+                }
+
                 enum_t value() const
                 {
                     return this->m_val;
@@ -2240,11 +2552,6 @@ namespace omni {
                 operator enum_t() const
                 {
                     return this->m_val;
-                }
-
-                operator int32_t() const
-                {
-                    return static_cast<int32_t>(this->m_val);
                 }
 
                 operator std::string() const
@@ -2377,7 +2684,8 @@ namespace omni {
         };
 
         /** tcp_option defines enum values for configuration option names. */
-        class tcp_option {
+        class tcp_option
+        {
             public:
                 typedef enum enum_t {
                     UNSPECIFIED = -1,
@@ -2476,6 +2784,11 @@ namespace omni {
                     OMNI_DTOR_FW
                     OMNI_CATCH_FW
                     OMNI_D5_FW("destroyed");
+                }
+
+                unsigned short count() const
+                {
+                    return COUNT();
                 }
 
                 enum_t value() const
@@ -2580,11 +2893,6 @@ namespace omni {
                     return this->m_val;
                 }
 
-                operator int32_t() const
-                {
-                    return static_cast<int32_t>(this->m_val);
-                }
-
                 operator std::string() const
                 {
                     return this->to_string();
@@ -2670,7 +2978,8 @@ namespace omni {
         };
 
         /** socket_shutdown defines enum values for constants that are used by the omni::net::socket::shutdown method. */
-        class socket_shutdown {
+        class socket_shutdown
+        {
             public:
                 typedef enum enum_t {
                     UNSPECIFIED = -1,
@@ -2766,6 +3075,11 @@ namespace omni {
                     OMNI_DTOR_FW
                     OMNI_CATCH_FW
                     OMNI_D5_FW("destroyed");
+                }
+
+                unsigned short count() const
+                {
+                    return COUNT();
                 }
 
                 enum_t value() const
@@ -2870,11 +3184,6 @@ namespace omni {
                     return this->m_val;
                 }
 
-                operator int32_t() const
-                {
-                    return static_cast<int32_t>(this->m_val);
-                }
-
                 operator std::string() const
                 {
                     return this->to_string();
@@ -2963,7 +3272,8 @@ namespace omni {
         };
         
         /** socket_type defines enum values for the type of socket that an instance of the omni::net::socket::socket class represents. */
-        class socket_type {
+        class socket_type
+        {
             public:
                 typedef enum enum_t {
                     UNKNOWN = -1,
@@ -3061,6 +3371,11 @@ namespace omni {
                     OMNI_DTOR_FW
                     OMNI_CATCH_FW
                     OMNI_D5_FW("destroyed");
+                }
+
+                unsigned short count() const
+                {
+                    return COUNT();
                 }
 
                 enum_t value() const
@@ -3163,11 +3478,6 @@ namespace omni {
                 operator enum_t() const
                 {
                     return this->m_val;
-                }
-
-                operator int32_t() const
-                {
-                    return static_cast<int32_t>(this->m_val);
                 }
 
                 operator std::string() const

@@ -76,7 +76,7 @@ if not "%1"=="" (
 		goto showusage
     ) else if "%1"=="-list" (
         goto list_tests
-    REM framework options
+    REM library options
     ) else if "%1"=="-lite" (
         set eopts=%eopts% -oo lite
     ) else if "%1"=="-heavy" (
@@ -93,7 +93,7 @@ if not "%1"=="" (
         set eopts=%eopts% -oo np
     ) else if "%1"=="-terr" (
         set eopts=%eopts% -oo terr
-    REM framework debug options
+    REM library debug options
     ) else if "%1"=="-d1" (
         set eopts=%eopts% -dbg 1
     ) else if "%1"=="-d2" (
@@ -216,18 +216,18 @@ echo        -lib         Builds omni.lib then links against it for the unit test
 echo        -log         Log the output to the logs folder
 echo        -po          Parse the compile script only
 echo.
-echo framework options:
+echo library options:
 echo        -lite       Sets the OMNI_LITE macro definition
 echo        -heavy      Sets the heavy object flag
 echo        -no [op]    Passes along a 'no-flag' to the compile script
-echo        -safe       Sets the OMNI_SAFE_FRAMEWORK macro definition
+echo        -safe       Sets the OMNI_SAFE_LIBRARY macro definition
 echo        -sfw [op]   Set the OMNI_SAFE_[op] macro definition
 echo        -np         Sets the OMNI_NON_PORTABLE compiler flag and enables
 echo                    compilation of 'non-portable' code
 echo        -nouni      Disables the UNICODE flags (does not build unicode)
 echo        -terr       Sets the OMNI_TERMINATE macro
 echo.
-echo framework debug options:
+echo library debug options:
 echo        -d1         Sets the OMNI_SHOW_DEBUG=1
 echo        -d2         Sets the OMNI_SHOW_DEBUG=2
 echo        -d3         Sets the OMNI_SHOW_DEBUG=3

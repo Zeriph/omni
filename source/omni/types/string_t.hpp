@@ -18,7 +18,7 @@
  */
 #if !defined(OMNI_STRING_T_HPP)
 #define OMNI_STRING_T_HPP 1
-/** @internal_file framework helper */
+/** @internal_file library helper */
 #include <omni/defs/global.hpp>
 #include <omni/types/char_t.hpp>
 #include <string>
@@ -44,9 +44,9 @@ namespace omni {
     
     typedef OMNI_SSTREAM_T sstream_t;
 
-    /** @internal framework helper */
+    /** @internal library helper */
     namespace string_util {
-        /** @internal framework helper */
+        /** @internal library helper */
         template < typename T >
         inline std::string to_string(const T& val)
         {
@@ -55,13 +55,13 @@ namespace omni {
             return o.str();
         }
 
-        /** @internal framework helper */
+        /** @internal library helper */
         inline std::string to_string(bool val)
         {
             return (val ? "true" : "false");
         }
 
-        /** @internal framework helper */
+        /** @internal library helper */
         inline std::string to_string(const std::wstring& str, int code_page)
         {
             if (str.empty()) { return std::string(); }
@@ -95,27 +95,27 @@ namespace omni {
             #endif
         }
 
-        /** @internal framework helper */
+        /** @internal library helper */
         inline std::string to_string(const std::wstring& str)
         {
             return omni::string_util::to_string(str, OMNI_CODE_PAGE);
         }
 
-        /** @internal framework helper */
+        /** @internal library helper */
         inline std::string to_string(const wchar_t* str, int code_page)
         {
             if (str) { return omni::string_util::to_string(std::wstring(str), code_page); }
             OMNI_ERR_RETV_FW("Null pointer specified", omni::exceptions::null_pointer_exception(), std::string())
         }
 
-        /** @internal framework helper */
+        /** @internal library helper */
         template < std::size_t X >
         inline std::string to_string(const wchar_t (&str)[X], int code_page)
         {
             return omni::string_util::to_string(std::wstring(str), code_page);
         }
 
-        /** @internal framework helper */
+        /** @internal library helper */
         inline std::string to_string(const char* str, int code_page)
         {
             OMNI_UNUSED(code_page);
@@ -123,7 +123,7 @@ namespace omni {
             OMNI_ERR_RETV_FW("Null pointer specified", omni::exceptions::null_pointer_exception(), std::string())
         }
 
-        /** @internal framework helper */
+        /** @internal library helper */
         template < std::size_t X >
         inline std::string to_string(const char (&str)[X], int code_page)
         {
@@ -131,48 +131,48 @@ namespace omni {
             return std::string(str);
         }
 
-        /** @internal framework helper */
+        /** @internal library helper */
         inline std::string to_string(const std::string& str, int code_page)
         {
             OMNI_UNUSED(code_page);
             return str;
         }
 
-        /** @internal framework helper */
+        /** @internal library helper */
         inline std::string to_string(const wchar_t* str)
         {
             if (str) { return omni::string_util::to_string(std::wstring(str)); }
             OMNI_ERR_RETV_FW("Null pointer specified", omni::exceptions::null_pointer_exception(), std::string())
         }
 
-        /** @internal framework helper */
+        /** @internal library helper */
         template < std::size_t X >
         inline std::string to_string(const wchar_t (&str)[X])
         {
             return omni::string_util::to_string(std::wstring(str));
         }
 
-        /** @internal framework helper */
+        /** @internal library helper */
         inline std::string to_string(const char* str)
         {
             if (str) { return std::string(str); }
             OMNI_ERR_RETV_FW("Null pointer specified", omni::exceptions::null_pointer_exception(), std::string())
         }
 
-        /** @internal framework helper */
+        /** @internal library helper */
         template < std::size_t X >
         inline std::string to_string(const char (&str)[X])
         {
             return std::string(str);
         }
 
-        /** @internal framework helper */
+        /** @internal library helper */
         inline std::string to_string(const std::string& str)
         {
             return str;
         }
 
-        /** @internal framework helper */
+        /** @internal library helper */
         template < typename T >
         inline std::wstring to_wstring(const T& val)
         {
@@ -181,13 +181,13 @@ namespace omni {
             return o.str();
         }
 
-        /** @internal framework helper */
+        /** @internal library helper */
         inline std::wstring to_wstring(bool val)
         {
             return (val ? OMNI_WSTR("true") : OMNI_WSTR("false"));
         }
 
-        /** @internal framework helper */
+        /** @internal library helper */
         inline std::wstring to_wstring(const std::string& str, int code_page)
         {
             if (str.empty()) { return std::wstring(); }
@@ -221,27 +221,27 @@ namespace omni {
             #endif
         }
 
-        /** @internal framework helper */
+        /** @internal library helper */
         inline std::wstring to_wstring(const std::string& str)
         {
             return omni::string_util::to_wstring(str, OMNI_CODE_PAGE);
         }
 
-        /** @internal framework helper */
+        /** @internal library helper */
         inline std::wstring to_wstring(const char* str, int code_page)
         {
             if (str) { return omni::string_util::to_wstring(std::string(str), code_page); }
             OMNI_ERR_RETV_FW("Null pointer specified", omni::exceptions::null_pointer_exception(), std::wstring())
         }
 
-        /** @internal framework helper */
+        /** @internal library helper */
         template < std::size_t X >
         inline std::wstring to_wstring(const char (&str)[X], int code_page)
         {
             return omni::string_util::to_wstring(std::string(str), code_page);
         }
 
-        /** @internal framework helper */
+        /** @internal library helper */
         inline std::wstring to_wstring(const wchar_t* str, int code_page)
         {
             OMNI_UNUSED(code_page);
@@ -249,7 +249,7 @@ namespace omni {
             OMNI_ERR_RETV_FW("Null pointer specified", omni::exceptions::null_pointer_exception(), std::wstring())
         }
 
-        /** @internal framework helper */
+        /** @internal library helper */
         template < std::size_t X >
         inline std::wstring to_wstring(const wchar_t (&str)[X], int code_page)
         {
@@ -257,48 +257,48 @@ namespace omni {
             return std::wstring(str);
         }
 
-        /** @internal framework helper */
+        /** @internal library helper */
         inline std::wstring to_wstring(const std::wstring& str, int code_page)
         {
             OMNI_UNUSED(code_page);
             return str;
         }
 
-        /** @internal framework helper */
+        /** @internal library helper */
         inline std::wstring to_wstring(const char* str)
         {
             if (str) { return omni::string_util::to_wstring(std::string(str)); }
             OMNI_ERR_RETV_FW("Null pointer specified", omni::exceptions::null_pointer_exception(), std::wstring())
         }
 
-        /** @internal framework helper */
+        /** @internal library helper */
         template < std::size_t X >
         inline std::wstring to_wstring(const char (&str)[X])
         {
             return omni::string_util::to_wstring(std::string(str));
         }
 
-        /** @internal framework helper */
+        /** @internal library helper */
         inline std::wstring to_wstring(const wchar_t* str)
         {
             if (str) { return std::wstring(str); }
             OMNI_ERR_RETV_FW("Null pointer specified", omni::exceptions::null_pointer_exception(), std::wstring())
         }
 
-        /** @internal framework helper */
+        /** @internal library helper */
         template < std::size_t X >
         inline std::wstring to_wstring(const wchar_t (&str)[X])
         {
             return std::wstring(str);
         }
 
-        /** @internal framework helper */
+        /** @internal library helper */
         inline std::wstring to_wstring(const std::wstring& str)
         {
             return str;
         }
 
-        /** @internal framework helper */
+        /** @internal library helper */
         template < typename T >
         inline omni::string_t to_string_t(const T& val)
         {
@@ -307,7 +307,7 @@ namespace omni {
             return o.str();
         }
 
-        /** @internal framework helper */
+        /** @internal library helper */
         inline omni::string_t to_string_t(bool val)
         {
             #if defined(OMNI_UNICODE)
@@ -317,7 +317,7 @@ namespace omni {
             #endif
         }
 
-        /** @internal framework helper */
+        /** @internal library helper */
         inline omni::string_t to_string_t(const std::wstring& str)
         {
             #if defined(OMNI_UNICODE)
@@ -327,14 +327,14 @@ namespace omni {
             #endif
         }
 
-        /** @internal framework helper */
+        /** @internal library helper */
         inline omni::string_t to_string_t(const wchar_t* str)
         {
             if (str) { return omni::string_util::to_string_t(std::wstring(str)); }
             OMNI_ERR_RETV_FW("Null pointer specified", omni::exceptions::null_pointer_exception(), omni::string_t())
         }
 
-        /** @internal framework helper */
+        /** @internal library helper */
         template < std::size_t X >
         inline omni::string_t to_string_t(const wchar_t (&str)[X])
         {
@@ -345,7 +345,7 @@ namespace omni {
             #endif
         }
 
-        /** @internal framework helper */
+        /** @internal library helper */
         inline omni::string_t to_string_t(const std::string& str)
         {
             #if defined(OMNI_UNICODE)
@@ -355,14 +355,14 @@ namespace omni {
             #endif
         }
 
-        /** @internal framework helper */
+        /** @internal library helper */
         inline omni::string_t to_string_t(const char* str)
         {
             if (str) { return omni::string_util::to_string_t(std::string(str)); }
             OMNI_ERR_RETV_FW("Null pointer specified", omni::exceptions::null_pointer_exception(), omni::string_t())
         }
 
-        /** @internal framework helper */
+        /** @internal library helper */
         template < std::size_t X >
         inline omni::string_t to_string_t(const char (&str)[X])
         {
@@ -373,7 +373,7 @@ namespace omni {
             #endif
         }
         
-        /** @internal framework helper */
+        /** @internal library helper */
         template < typename std_string_t >
         class omni_internal
         {
@@ -385,7 +385,7 @@ namespace omni {
                 }
         };
 
-        /** @internal framework helper */
+        /** @internal library helper */
         template <>
         class omni_internal<std::wstring>
         {
@@ -397,7 +397,7 @@ namespace omni {
                 }
         };
 
-        /** @internal framework helper */
+        /** @internal library helper */
         template <>
         class omni_internal<std::string>
         {

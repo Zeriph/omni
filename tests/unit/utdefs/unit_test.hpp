@@ -6,8 +6,8 @@
 #define OMNI_UTDBGOUT omni::out
 
 #define b2s(b) ((b) ? "true" : "false")
-#define print(m) OMNI_UTDBGOUT << m
-#define printl(m) OMNI_UTDBGOUT << m << std::endl
+#define print(...) OMNI_UTDBGOUT << __VA_ARGS__
+#define printl(...) OMNI_UTDBGOUT << __VA_ARGS__ << std::endl
 #define printv(m, v) OMNI_UTDBGOUT << m << v << std::endl
 #define printsw(v) case v: printl(#v); break
 #define printswe(v, e) case v: OMNI_UTDBGOUT << e << #v << std::endl; break
@@ -22,19 +22,27 @@
 #define wprintv(m, v) std::wcout << m << v << std::endl
 
 #if defined(OMNI_TYPE_INFO)
-    #define print_info(cls) printl("sizeof("OMNI_DEF2STR(cls)") = " << sizeof(cls) << ", hash: " << omni::type_id<cls>())
+    #define print_info(...) printl("sizeof("OMNI_DEF2STR( __VA_ARGS__ )") = " << sizeof( __VA_ARGS__ ) << ", hash: " << omni::type_id< __VA_ARGS__ >())
 #else
-    #define print_info(cls) printl("sizeof("OMNI_DEF2STR(cls)") = " << sizeof(cls))
+    #define print_info(...) printl("sizeof("OMNI_DEF2STR( __VA_ARGS__ )") = " << sizeof( __VA_ARGS__ ))
 #endif
-#define print_sizeof(cls) printl("sizeof("OMNI_DEF2STR(cls)") = " << sizeof(cls))
+#define print_sizeof(...) printl("sizeof("OMNI_DEF2STR( __VA_ARGS__ )") = " << sizeof( __VA_ARGS__ ))
 
 #define cpfunc1(func, arg1) std::cout << OMNI_DEF2STR(func) << "(\"" << arg1 << "\") = " << func(arg1) << std::endl
 #define cpfunc2(func, arg1, arg2) std::cout << OMNI_DEF2STR(func) << "(\"" << arg1 << "\", \"" << arg2 << "\") = " << func(arg1, arg2) << std::endl
 #define cpfunc3(func, arg1, arg2, arg3) std::cout << OMNI_DEF2STR(func) << "(\"" << arg1 << "\", \"" << arg2 << "\", \"" << arg3 << "\") = " << func(arg1, arg2, arg3) << std::endl
 
+#define cpfuncex1(func, arg1, expected) std::cout << OMNI_DEF2STR(func) << "(\"" << arg1 << "\") = " << func(arg1) << " ~~ expected result = " << expected << " ~~ " << ((func(arg1) == expected) ? "PASS" : "FAIL") << std::endl
+#define cpfuncex2(func, arg1, arg2, expected) std::cout << OMNI_DEF2STR(func) << "(\"" << arg1 << "\", \"" << arg2 << "\") = " << func(arg1, arg2) << " ~~ expected result = " << expected << " ~~ " << ((func(arg1, arg2) == expected) ? "PASS" : "FAIL") << std::endl
+#define cpfuncex3(func, arg1, arg2, arg3, expected) std::cout << OMNI_DEF2STR(func) << "(\"" << arg1 << "\", \"" << arg2 << "\", \"" << arg3 << "\") = " << func(arg1, arg2, arg3) << " ~~ expected result = " << expected << " ~~ " << ((func(arg1, arg2, arg3) == expected) ? "PASS" : "FAIL") << std::endl
+
 #define wpfunc1(func, arg1) std::wcout << OMNI_DEF2STR(func) << "(\"" << arg1 << "\") = " << func(arg1) << std::endl
 #define wpfunc2(func, arg1, arg2) std::wcout << OMNI_DEF2STR(func) << "(\"" << arg1 << "\", \"" << arg2 << "\") = " << func(arg1, arg2) << std::endl
 #define wpfunc3(func, arg1, arg2, arg3) std::wcout << OMNI_DEF2STR(func) << "(\"" << arg1 << "\", \"" << arg2 << "\", \"" << arg3 << "\") = " << func(arg1, arg2, arg3) << std::endl
+
+#define wpfuncex1(func, arg1, expected) std::wcout << OMNI_DEF2STR(func) << "(\"" << arg1 << "\") = " << func(arg1) << " ~~ expected result = " << expected << " ~~ " << ((func(arg1) == expected) ? "PASS" : "FAIL") << std::endl
+#define wpfuncex2(func, arg1, arg2, expected) std::wcout << OMNI_DEF2STR(func) << "(\"" << arg1 << "\", \"" << arg2 << "\") = " << func(arg1, arg2) << " ~~ expected result = " << expected << " ~~ " << ((func(arg1, arg2) == expected) ? "PASS" : "FAIL") << std::endl
+#define wpfuncex3(func, arg1, arg2, arg3, expected) std::wcout << OMNI_DEF2STR(func) << "(\"" << arg1 << "\", \"" << arg2 << "\", \"" << arg3 << "\") = " << func(arg1, arg2, arg3) << " ~~ expected result = " << expected << " ~~ " << ((func(arg1, arg2, arg3) == expected) ? "PASS" : "FAIL") << std::endl
 
 #define B2S(b) (b ? "true" : "false")
 

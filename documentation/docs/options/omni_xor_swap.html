@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - OMNI_XOR_SWAP</title>
+<link rel="stylesheet" type="text/css" href="../../content/main.css" /><link rel="icon" type="image/png" href="../../content/favicon.png" />
+<script type="text/javascript" src="../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="index.html">Source</a></li><li title="Library classes and namespaces">
+<a href="../classes/index.html">Class Index</a></li><li title="Download and view examples">
+<a href="../examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="index.html" class="current">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../api.html">System API</a></li><li title="Other Considerations">
+<a href="../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle"><a name="omni_options"></a>OMNI_XOR_SWAP</div><div class="content"><div>
+<div class="docdiv">
+    <font class="docu">MACRO</font><br><br>
+    <code><font style="font-size:16px;">
+    <code>OMNI_XOR_SWAP</code> - A helper macro defining an XOR swap
+    </font></code>
+</div><br>
+<div class="docdiv">
+    <font class="docu">SYNOPSIS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    A simple helper macro to swap 2 objects via an XOR swap.
+</div><br>
+<div class="docdiv">
+    <font class="docu">DESCRIPTION</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    Swap two objects via an XOR swap, defined as such:<br>
+<div class="sntx"><input type="checkbox" id="c0" name="c0" checked /><label for="c0">&nbsp;</label><pre><font class="syn_pre">#define <a href="../options/omni_xor_swap.html">OMNI_XOR_SWAP</a>(a, b) a ^= b; b ^= a; a ^= b</font></pre></div>Can be used as such:<br>
+<div class="sntx"><input type="checkbox" id="c1" name="c1" checked /><label for="c1">&nbsp;</label><pre><font class="syn_typ">int</font> x = <font class="syn_num">10</font>;
+<font class="syn_typ">int</font> y = <font class="syn_num">255</font>;
+<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; x &lt;&lt; <font class="syn_str">&quot;,&quot;</font> &lt;&lt; y &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+<a href="../options/omni_xor_swap.html">OMNI_XOR_SWAP</a>(x, y);
+<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; x &lt;&lt; <font class="syn_str">&quot;,&quot;</font> &lt;&lt; y &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;</pre></div>The output would be:<br>
+<div class="sntx"><input type="checkbox" id="c2" name="c2" checked /><label for="c2">&nbsp;</label><pre><font class="syn_num">10</font>, <font class="syn_num">255</font>
+<font class="syn_num">255</font>, <font class="syn_num">10</font></pre></div>
+</div><br>
+<div class="docdiv">
+    <font class="docu">CONSIDERATIONS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    This macro does not check if <code>a == b</code>
+</div><br>
+<div class="docdiv">
+    <font class="docu">PLATFORM SPECIFIC</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    No platform specific notes.
+</div><br>
+<div class="docdiv">
+    <font class="docu">NOTES</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    An XOR swap might be efficient on memory since it does not utilize temporaries, but it might not be as fast in CPU time as one might initially expect, especially for different types or types that do not fall on a clean word boundary. Test your swaps in a tight loop to verify if an XOR swap is any faster than a <code><a href="http://www.cplusplus.com/reference/algorithm/swap/">std::swap</a></code> or copy-swap.
+</div><br>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

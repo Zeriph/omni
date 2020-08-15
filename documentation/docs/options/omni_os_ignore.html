@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - OMNI_OS_IGNORE</title>
+<link rel="stylesheet" type="text/css" href="../../content/main.css" /><link rel="icon" type="image/png" href="../../content/favicon.png" />
+<script type="text/javascript" src="../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="index.html">Source</a></li><li title="Library classes and namespaces">
+<a href="../classes/index.html">Class Index</a></li><li title="Download and view examples">
+<a href="../examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="index.html" class="current">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../api.html">System API</a></li><li title="Other Considerations">
+<a href="../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle"><a name="omni_options"></a>OMNI_OS_IGNORE</div><div class="content"><div>
+<div class="docdiv">
+    <font class="docu">MACRO</font><br><br>
+    <code><font style="font-size:16px;">
+    <code>OMNI_OS_IGNORE</code> - Do not attempt to guess the OS type based on compiler macros.
+    </font></code>
+</div><br>
+<div class="docdiv">
+    <font class="docu">SYNOPSIS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    <code>#define <a href="omni_os_ignore.html">OMNI_OS_IGNORE</a></code><br>
+<br>
+Signifies to not use preprocessor macros to attempt to discover what OS is being compiled for.
+</div><br>
+<div class="docdiv">
+    <font class="docu">DESCRIPTION</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    By specifying the <code><a href="omni_os_ignore.html">OMNI_OS_IGNORE</a></code> preprocessor flag, the framework will not attempt to detect what OS is being compiled against via certain preprocessor flags and instead the user can specify what OS to compile for (useful for cross platform compilation).<br>
+<br>
+Current values used by the framework to determine which sections of code to use are as follows:<br>
+<br>
+<code><a href="omni_os_win.html">OMNI_OS_WIN</a></code><br>
+<code><a href="omni_os_apple.html">OMNI_OS_APPLE</a></code><br>
+<code><a href="omni_os_freebsd.html">OMNI_OS_FREEBSD</a></code><br>
+<code><a href="omni_os_solaris.html">OMNI_OS_SOLARIS</a></code><br>
+<code><a href="omni_os_bsd.html">OMNI_OS_BSD</a></code><br>
+<br>
+Defining one of the above will also result in the framework being compiled as if it were being compiled on that platform.<br>
+<br>
+If one of the values is not specified the system defaults to a POSIX based platform.
+</div><br>
+<div class="docdiv">
+    <font class="docu">CONSIDERATIONS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    If you explicitly define one of the OMNI_OS_ flags (such as <code><a href="omni_os_bsd.html">OMNI_OS_BSD</a></code>), you must take note of which API are being referenced and built against.
+</div><br>
+<div class="docdiv">
+    <font class="docu">PLATFORM SPECIFIC</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    This flag is not platform specific but can be used to determine what platform to be compiled for (default POSIX if <code><a href="omni_os_ignore.html">OMNI_OS_IGNORE</a></code> is defined and no other platforms defined).
+</div><br>
+<div class="docdiv">
+    <font class="docu">NOTES</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    None.
+</div><br>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_WIN_USE_EVENT_CONDITIONAL</Name>
+  <Brief>Defines whether to use an event or condition type on Windows</Brief>
+  <Considerations>The omni::sync::conditional class has the ability to @c wait for a specific event to occur, at which point you can call @c signal on the conditional object and the first thread to receive the signal event will wake. If you wish to wake multiple threads that are waiting on the conditional, you can use the @c broadcast function on the object. If the omni::cond_t is a HANDLE (i.e. OMNI_WIN_USE_EVENT_CONDITIONAL is defined), then when a broadcast happens, the underlying code differs in that it aims to emulate what a conditional variable does on broadcast. The underlying event types are auto-reset events (to prevent multiple threads from waking up when @c signal is called vs. @c broadcast ), so when a broadcast is called, the code will iterate X number of times to reset the underlying event (where X is the number of times @c wait was requested before a call to broadcast).
+
+This has the potential to introduce a race condition on any threads waiting and signaling the event (which is why this macro is NOT defined by default).
+
+For more details on this please see the documentation for omni::sync::conditional.</Considerations>
+  <Description>The omni::sync::conditional class uses the @c CONDITION_VARIABLE type on Windows platforms, which uses the InitializeConditionVariable set of API's. If you wish to use the CreateEvent set of API's (which takes an 'event' type which is defined as a @c HANDLE ), you will need to specify this macro option. Read the considerations in this help section as well as the documentation for the omni::sync::conditional class to understand what effects this will have on your code.</Description>
+  <Notes>See the omni::sync::conditional documentation for more information on this flag and it's effects.</Notes>
+  <PlatformSpecific>This macro option only applies to Windows platforms and will have no effect if defined on a non Windows platform.</PlatformSpecific>
+  <Synopsis>Not every project/platform has the exact same needs, as such, you might want to use the event type instead of the CONDITION_VARIABLE type when targeting the Windows platforms. Defining this flag will set the omni::cond_t type as a @c HANDLE on Windows platforms instead of it being the @c CONDITION_VARIABLE type.
+
+The default is that this flag is NOT defined.</Synopsis>
+  <IsHelper>false</IsHelper>
+  <IsConstant>false</IsConstant>
+</MacroOp>

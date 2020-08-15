@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - function: omni::application::bit_width</title>
+<link rel="stylesheet" type="text/css" href="../../content/main.css" /><link rel="icon" type="image/png" href="../../content/favicon.png" />
+<script type="text/javascript" src="../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="../htmlsrc/index.html">Source</a></li><li title="Library classes and namespaces">
+<a href="index.html" class="current">Class Index</a></li><li title="Download and view examples">
+<a href="../examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="../options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../api.html">System API</a></li><li title="Other Considerations">
+<a href="../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle">omni::application::bit_width</div><div class="content"><div>
+<div class="docdiv"><a name="nm"></a>
+<font class="docu">NAME</font><br><br>
+<code><a href="../htmlsrc/omni/application.hpp.html#omni::application::bit_width" class="chnm">
+    omni::application::bit_width
+    </a></code><br>
+<br>A function of <a href="omni-application.html" class="code">omni::application</a><br><br>
+    <code><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/application.hpp.html">omni/application.hpp</a>&gt;</font></code><br><code><font class="syn_ins">inline</font> <font class="syn_typ">uint32_t</font> omni::application::bit_width()</code>
+</div><br>
+<div class="docdiv"><a name="syn"></a>
+<font class="docu">SYNOPSIS</font><br><br>
+Gets the current applications bit width (i.e. 32/64-bit)
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<div class="docdiv"><a name="desc"></a>
+<font class="docu">DESCRIPTION</font><br><br>
+Gets the current application context bit width by retrieving the size of a pointer and multiplying by CHAR_BIT; returns the following code <code>(sizeof(char*) * CHAR_BIT)</code>. This does not affirm if a processor type is a specific bit width, e.g. a 32-bit application calling this function would return 32 even if run on a 64-bit machine.
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<div class="docdiv"><a name="ret"></a>
+<font class="docu">RETURN VALUES</font><br><br>
+An unsigned integer value of the current bit width. 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
+
+
+
+
+
+
+<div class="docdiv"><a name="ex"></a>
+<font class="docu">EXAMPLE</font><br><br>
+<div class="sntx"><input type="checkbox" id="c0" name="c0" checked /><label for="c0"> example</label>
+<pre><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/application.html">omni/application</a>&gt;</font>
+
+<font class="syn_typ">int</font> main(<font class="syn_typ">int</font> argc, <font class="syn_typ">char</font>** argv)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Application bit-size: &quot;</font> &lt;&lt; <a href="../classes/omni-application-bit_width.html">omni::application::bit_width</a>() &lt;&lt; std::endl;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;
+}</pre>
+</div>Visit the <a href="../examples/index.html">examples</a> page for more.
+
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

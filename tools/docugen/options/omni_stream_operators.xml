@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_STREAM_OPERATORS</Name>
+  <Brief>A helper macro to implement the @c operator&lt;&lt; stream friend functions.
+</Brief>
+  <Considerations>No special considerations
+</Considerations>
+  <Description>Implements the OMNI_OSTREAM_OPERATOR and OMNI_WOSTREAM_OPERATOR macros
+</Description>
+  <Notes>None.
+</Notes>
+  <PlatformSpecific>No platform specific notes.
+</PlatformSpecific>
+  <Synopsis>This macro can be utilized to implement the &lt;code&gt;friend std::ostream&amp; operator&lt;&lt;&lt;/code&gt; functions in a class.
+</Synopsis>
+  <IsHelper>true</IsHelper>
+  <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
+</MacroOp>

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_CHRONO_AUTO_INIT_TICK</Name>
+  <Brief>If defined, omni::chrono::monotonic::tick will initialize on first call.
+</Brief>
+  <Considerations>This macro is defined by default within the framework. If you wish to avoid the function call each time a call to omni::chrono::monotonic::tick is made, you can define OMNI_NO_CHRONO_AUTO_INIT_TICK and call omni::chrono::monotonic::initialize in your own initialization code.
+</Considerations>
+  <Description>When a call is made to omni::chrono::monotonic::tick to retrieve the current clock, the underlying structures to the performance timers for the system clock need to be initialized so as to be returned for the current clock time.
+
+If this macro is defined, the omni::chrono::monotonic::initialize function will be called automatically so user code need not call it.
+
+</Description>
+  <Notes>None.
+</Notes>
+  <PlatformSpecific>No platform specific notes.
+</PlatformSpecific>
+  <Synopsis>When omni::chrono::monotonic::tick is first called, the underlying structures to the performance timers for the system clock are initialized.
+</Synopsis>
+  <IsHelper>false</IsHelper>
+  <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
+</MacroOp>

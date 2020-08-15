@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_OBJECT_NAME</Name>
+  <Brief>If defined, adds a @c name string member to each object.
+</Brief>
+  <Considerations>No special considerations
+</Considerations>
+  <Description>If this macro is defined, then any classes in the Omni framework that can be instantiated (e.g. non-abstract classes and non-POD types) will have an omni::string_t member called @c name that can be used to name an object.
+</Description>
+  <Notes>None.
+</Notes>
+  <PlatformSpecific>No platform specific notes.
+</PlatformSpecific>
+  <Synopsis>Defining this macro will add an extra member to each object.
+</Synopsis>
+  <IsHelper>false</IsHelper>
+  <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
+</MacroOp>

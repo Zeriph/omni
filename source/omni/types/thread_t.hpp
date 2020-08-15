@@ -34,7 +34,8 @@
 namespace omni {
     namespace sync {
         /** The priority structure defines enum values for the scheduling priority of a process or thread. */
-        class thread_priority {
+        class thread_priority
+        {
             public:
                 /** The underlying enum type exposed via the parent priority structure */
                 typedef enum enum_t {
@@ -143,6 +144,11 @@ namespace omni {
                     OMNI_D5_FW("destroyed");
                 }
 
+                unsigned short count() const
+                {
+                    return COUNT();
+                }
+
                 enum_t value() const
                 {
                     return this->m_val;
@@ -245,11 +251,6 @@ namespace omni {
                     return this->m_val;
                 }
 
-                operator int32_t() const
-                {
-                    return static_cast<int32_t>(this->m_val);
-                }
-
                 operator std::string() const
                 {
                     return this->to_string();
@@ -347,7 +348,8 @@ namespace omni {
         };
         
         /** The thread start type (immediate or user) */
-        class thread_start_type {
+        class thread_start_type
+        {
             public:
                 /** The underlying enum type expected */
                 typedef enum enum_t {
@@ -444,6 +446,11 @@ namespace omni {
                     OMNI_DTOR_FW
                     OMNI_CATCH_FW
                     OMNI_D5_FW("destroyed");
+                }
+
+                unsigned short count() const
+                {
+                    return COUNT();
                 }
 
                 enum_t value() const
@@ -548,11 +555,6 @@ namespace omni {
                     return this->m_val;
                 }
 
-                operator int32_t() const
-                {
-                    return static_cast<int32_t>(this->m_val);
-                }
-
                 operator std::string() const
                 {
                     return this->to_string();
@@ -635,7 +637,8 @@ namespace omni {
         };
         
         /** The state structure defines enum values for the execution status of thread types */
-        class thread_state {
+        class thread_state
+        {
             public:
                 /** The underlying enum type exposed via the parent state structure */
                 typedef enum enum_t {
@@ -748,6 +751,11 @@ namespace omni {
                     OMNI_D5_FW("destroyed");
                 }
 
+                unsigned short count() const
+                {
+                    return COUNT();
+                }
+
                 enum_t value() const
                 {
                     return this->m_val;
@@ -848,11 +856,6 @@ namespace omni {
                 operator enum_t() const
                 {
                     return this->m_val;
-                }
-
-                operator int32_t() const
-                {
-                    return static_cast<int32_t>(this->m_val);
                 }
 
                 operator std::string() const
@@ -958,7 +961,8 @@ namespace omni {
         };
         
         /** Defines the thread options structure allowing finer control of a thread object */
-        class thread_option {
+        class thread_option
+        {
             public:
                 /** The underlying enum type exposed via the parent thread_option structure */
                 typedef enum enum_t {
@@ -1068,6 +1072,11 @@ namespace omni {
                     OMNI_D5_FW("destroyed");
                 }
 
+                unsigned short count() const
+                {
+                    return COUNT();
+                }
+
                 enum_t value() const
                 {
                     return this->m_val;
@@ -1168,11 +1177,6 @@ namespace omni {
                 operator enum_t() const
                 {
                     return this->m_val;
-                }
-
-                operator int32_t() const
-                {
-                    return static_cast<int32_t>(this->m_val);
                 }
 
                 operator std::string() const
@@ -1284,7 +1288,8 @@ namespace omni {
         };
         
         /** Defines the thread option flag structure allowing finer control of a thread object */
-        class thread_flags {
+        class thread_flags
+        {
             public:
                 /** The default constructor */
                 thread_flags() : m_stack(0), m_timeout(0), m_flags(0) { }
@@ -1620,8 +1625,8 @@ namespace omni {
                 ;
             #else
                 /* There is not a portable mechanism with pthreads to wait on a specific thread without
-                implementing a timed_wait condition variable. We don't want the user to have to implement
-                a seperate variable based on system, so we implement a 'timeout' loop*/
+                implementing a timed_wait condition variable. We do not want the user to have to implement
+                a seperate variable based on system, so we implement a timeout loop*/
                 if (timeout != omni::sync::INFINITE_TIMEOUT) {
                     #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
                         omni::chrono::monotonic::initialize();

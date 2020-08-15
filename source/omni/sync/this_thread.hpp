@@ -50,7 +50,7 @@ namespace omni {
          * stop the current thread, it merely calls the OS to have
          * its thread scheduler move the current thread to a new
          * thread schedule. If the current thread is of higher priority
-         * (or 'real time') this call might not have an effect.
+         * (or real time) this call might not have an effect.
          */
         inline bool yield_thread()
         {

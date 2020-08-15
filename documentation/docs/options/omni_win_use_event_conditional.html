@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - OMNI_WIN_USE_EVENT_CONDITIONAL</title>
+<link rel="stylesheet" type="text/css" href="../../content/main.css" /><link rel="icon" type="image/png" href="../../content/favicon.png" />
+<script type="text/javascript" src="../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="index.html">Source</a></li><li title="Library classes and namespaces">
+<a href="../classes/index.html">Class Index</a></li><li title="Download and view examples">
+<a href="../examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="index.html" class="current">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../api.html">System API</a></li><li title="Other Considerations">
+<a href="../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle"><a name="omni_options"></a>OMNI_WIN_USE_EVENT_CONDITIONAL</div><div class="content"><div>
+<div class="docdiv">
+    <font class="docu">MACRO</font><br><br>
+    <code><font style="font-size:16px;">
+    <code>OMNI_WIN_USE_EVENT_CONDITIONAL</code> - Defines whether to use an event or condition type on Windows
+    </font></code>
+</div><br>
+<div class="docdiv">
+    <font class="docu">SYNOPSIS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    Not every project/platform has the exact same needs, as such, you might want to use the event type instead of the CONDITION_VARIABLE type when targeting the Windows platforms. Defining this flag will set the omni::cond_t type as a <code>HANDLE</code> on Windows platforms instead of it being the <code>CONDITION_VARIABLE</code> type.<br>
+<br>
+The default is that this flag is NOT defined.
+</div><br>
+<div class="docdiv">
+    <font class="docu">DESCRIPTION</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    The <code><a href="../classes/omni-sync-conditional.html">omni::sync::conditional</a></code> class uses the <code>CONDITION_VARIABLE</code> type on Windows platforms, which uses the <code><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms683469%28v=vs.85%29.aspx">InitializeConditionVariable</a></code> set of API&#39;s. If you wish to use the <code><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms682396%28v=vs.85%29.aspx">CreateEvent</a></code> set of API&#39;s (which takes an &#39;event&#39; type which is defined as a <code>HANDLE</code> ), you will need to specify this macro option. Read the considerations in this help section as well as the documentation for the <code><a href="../classes/omni-sync-conditional.html">omni::sync::conditional</a></code> class to understand what effects this will have on your code.
+</div><br>
+<div class="docdiv">
+    <font class="docu">CONSIDERATIONS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    The <code><a href="../classes/omni-sync-conditional.html">omni::sync::conditional</a></code> class has the ability to <code>wait</code> for a specific event to occur, at which point you can call <code>signal</code> on the conditional object and the first thread to receive the signal event will wake. If you wish to wake multiple threads that are waiting on the conditional, you can use the <code>broadcast</code> function on the object. If the omni::cond_t is a HANDLE (i.e. <code><a href="omni_win_use_event_conditional.html">OMNI_WIN_USE_EVENT_CONDITIONAL</a></code> is defined), then when a broadcast happens, the underlying code differs in that it aims to emulate what a conditional variable does on broadcast. The underlying event types are auto-reset events (to prevent multiple threads from waking up when <code>signal</code> is called vs. <code>broadcast</code> ), so when a broadcast is called, the code will iterate X number of times to reset the underlying event (where X is the number of times <code>wait</code> was requested before a call to broadcast).<br>
+<br>
+This has the potential to introduce a race condition on any threads waiting and signaling the event (which is why this macro is NOT defined by default).<br>
+<br>
+For more details on this please see the documentation for <code><a href="../classes/omni-sync-conditional.html">omni::sync::conditional</a></code>.
+</div><br>
+<div class="docdiv">
+    <font class="docu">PLATFORM SPECIFIC</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    This macro option only applies to Windows platforms and will have no effect if defined on a non Windows platform.
+</div><br>
+<div class="docdiv">
+    <font class="docu">NOTES</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    See the <code><a href="../classes/omni-sync-conditional.html">omni::sync::conditional</a></code> documentation for more information on this flag and it&#39;s effects.
+</div><br>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

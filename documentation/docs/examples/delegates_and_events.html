@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - Library Examples</title>
+<link rel="stylesheet" type="text/css" href="../../content/main.css" /><link rel="icon" type="image/png" href="../../content/favicon.png" />
+<script type="text/javascript" src="../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="../htmlsrc/index.html">Source</a></li><li title="Library classes and namespaces">
+<a href="../classes/index.html">Class Index</a></li><li title="Download and view examples">
+<a href="index.html" class="current">Examples</a></li><li title="Download and view build examples">
+<a href="../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="../options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../api.html">System API</a></li><li title="Other Considerations">
+<a href="../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle"><a name="omni_examples"></a>Delegates and Events</div><div class="content"><div>
+One of the key features of Omni and its ability to emulate certain programming idioms is the delegate class; it is the underlying function pointer object (a.k.a. functor) that enables many aspects of the library to operate. The <code><a href="../classes/omni-delegate.html">omni::delegate</a></code> and <code><a href="../classes/omni-event.html">omni::event</a></code> classes allow you to invoke object instances and functions from other areas of code similar to that of a function pointer or callback. Similar to the <a href="https://msdn.microsoft.com/en-us/library/aa288459%28v=vs.71%29.aspx">C# delegate</a> the <code><a href="../classes/omni-delegate.html">omni::delegate</a></code> allows a programmer to encapsulate either a method, for static or non-member functions, or a an object and a method giving greater flexibility than simple function pointers. <br>
+<br>
+<font class="hdr">Function Pointers</font><br>
+One of the more powerful features of C and C++ is the function pointer. As the name implies, a function pointer allows signature compatible functions to be called indirectly via a pointer to the function address. Example:<br>
+<div class="sntx"><input type="checkbox" id="c0" name="c0" /><label for="c0">&nbsp;</label><pre><font class="syn_pre">#include &lt;iostream&gt;</font>
+
+<font class="syn_pre">#define printit(v) <a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; #v &lt;&lt; <font class="syn_str">&quot; = &quot;</font> &lt;&lt; v &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a></font>
+
+<font class="syn_typ">int</font> add(<font class="syn_typ">int</font> a, <font class="syn_typ">int</font> b) { <font class="syn_ins">return</font> a+b; }
+<font class="syn_typ">int</font> multi(<font class="syn_typ">int</font> a, <font class="syn_typ">int</font> b) { <font class="syn_ins">return</font> a*b; }
+<font class="syn_typ">int</font> shift(<font class="syn_typ">int</font> a, <font class="syn_typ">int</font> b) { <font class="syn_ins">return</font> a&lt;&lt;b; }
+
+<font class="syn_typ">int</font> main(<font class="syn_typ">int</font> argc, <font class="syn_typ">char</font>* argv[])
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// function pointer to the function add</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> (*fn_ptr)(<font class="syn_typ">int</font>, <font class="syn_typ">int</font>) = &amp;add;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// list of function pointers</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> (*fn_ptr_arr[])(<font class="syn_typ">int</font>, <font class="syn_typ">int</font>) = { &amp;add, &amp;multi, &amp;shift };
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> a = <font class="syn_num">1</font>;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> b = <font class="syn_num">2</font>;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> c = add(a, b); <font class="syn_cmt">// call directly</font>
+&nbsp;&nbsp;&nbsp;&nbsp;printit(c); <font class="syn_cmt">// c = 3</font>
+&nbsp;&nbsp;&nbsp;&nbsp;c = fn_ptr(b, c); <font class="syn_cmt">// call indirectly</font>
+&nbsp;&nbsp;&nbsp;&nbsp;printit(c); <font class="syn_cmt">// c = 5</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">for</font> (<font class="syn_typ">int</font> i = <font class="syn_num">0</font>; i &lt; <font class="syn_num">3</font>; ++i) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c = fn_ptr_arr[i](c, b);
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;printit(c); <font class="syn_cmt">// c = 56</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;
+}</pre></div>Since C++ allows for member functions within <code>struct</code> types and classes as well as allowing for polymorphic types (i.e. class inheritance), the function pointer is very essential to the underlying language constructs.<br>
+<br>
+If you wish to get a function pointer to a member function of a class, you will need to ensure the member function is a <code>static</code> function. In this way you can grab a function pointer to member function or <code>namespace</code> function similar to how you grab a global scope function. Example:<br>
+<div class="sntx"><input type="checkbox" id="c1" name="c1" /><label for="c1">&nbsp;</label><pre><font class="syn_pre">#include &lt;iostream&gt;</font>
+
+<font class="syn_pre">#define printit(v) <a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; #v &lt;&lt; <font class="syn_str">&quot; = &quot;</font> &lt;&lt; v &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a></font>
+<font class="syn_pre">#define printfn(v) <a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; #v &lt;&lt; <font class="syn_str">&quot;::&quot;</font> &lt;&lt; __FUNCTION__ &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a></font>
+
+<font class="syn_ins">namespace</font> MyNamespace {
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> add(<font class="syn_typ">int</font> a, <font class="syn_typ">int</font> b) { printfn(MyNamespace); <font class="syn_ins">return</font> a+b; }
+}
+
+<font class="syn_typ">class</font> MyClass {
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">public</font>:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static <font class="syn_typ">int</font> multi(<font class="syn_typ">int</font> a, <font class="syn_typ">int</font> b) { printfn(MyClass); <font class="syn_ins">return</font> a*b; }
+};
+
+<font class="syn_ins">typedef</font> <font class="syn_typ">struct</font> MyStruct {
+&nbsp;&nbsp;&nbsp;&nbsp;static <font class="syn_typ">int</font> shift(<font class="syn_typ">int</font> a, <font class="syn_typ">int</font> b) { printfn(MyStruct); <font class="syn_ins">return</font> a&lt;&lt;b; }
+} MyStruct;
+
+<font class="syn_typ">int</font> main(<font class="syn_typ">int</font> argc, <font class="syn_typ">char</font>* argv[])
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// function pointer to the function add</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> (*fn_ptr)(<font class="syn_typ">int</font>, <font class="syn_typ">int</font>) = &amp;MyNamespace::add;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// list of function pointers</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> (*fn_ptr_arr[])(<font class="syn_typ">int</font>, <font class="syn_typ">int</font>) = { &amp;MyNamespace::add, &amp;MyClass::multi, &amp;MyStruct::shift };
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> a = <font class="syn_num">1</font>;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> b = <font class="syn_num">2</font>;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> c = MyNamespace::add(a, b); <font class="syn_cmt">// call directly</font>
+&nbsp;&nbsp;&nbsp;&nbsp;printit(c); <font class="syn_cmt">// = 3</font>
+&nbsp;&nbsp;&nbsp;&nbsp;c = fn_ptr(b, c); <font class="syn_cmt">// call indirectly</font>
+&nbsp;&nbsp;&nbsp;&nbsp;printit(c); <font class="syn_cmt">// = 5</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">for</font> (<font class="syn_typ">int</font> i = <font class="syn_num">0</font>; i &lt; <font class="syn_num">3</font>; ++i) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c = fn_ptr_arr[i](c, b); <font class="syn_cmt">// call function pointer</font>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printit(c);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">switch</font> (i) { <font class="syn_cmt">// call directly</font>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">case</font> <font class="syn_num">0</font>: c = MyNamespace::add(c, b); <font class="syn_ins">break</font>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">case</font> <font class="syn_num">1</font>: c = MyClass::multi(c, b); <font class="syn_ins">break</font>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">case</font> <font class="syn_num">2</font>: c = MyStruct::shift(c, b); <font class="syn_ins">break</font>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printit(c);
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;
+}</pre></div>Function pointers can allow for more dynamic code and, as stated earlier, are an essential part of the C++ language with idioms like <code>virtual</code> functions and class inheritance. <br>
+<br>
+While extremely powerful and useful tools, they do have certain limitations. For example, you cannot grab a pointer to a non-static member function directly and to do so requires some extra semantics in your code that can make it more verbose and/or less clear to its full intention. Example:<br>
+<div class="sntx"><input type="checkbox" id="c2" name="c2" /><label for="c2">&nbsp;</label><pre><font class="syn_pre">#include &lt;iostream&gt;</font>
+
+<font class="syn_pre">#define printit(v) <a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; #v &lt;&lt; <font class="syn_str">&quot; = &quot;</font> &lt;&lt; v &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a></font>
+
+<font class="syn_typ">class</font> MyClass {
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">public</font>:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MyClass() : m_val() {}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MyClass(<font class="syn_typ">int</font> val) : m_val(val) {}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> add(<font class="syn_typ">int</font> a, <font class="syn_typ">int</font> b) { <font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;m_val+a+b; }
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> multi(<font class="syn_typ">int</font> a, <font class="syn_typ">int</font> b) { <font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;m_val*a*b; }
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> shift(<font class="syn_typ">int</font> a, <font class="syn_typ">int</font> b) { <font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;m_val + (a&lt;&lt;b); }
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">private</font>:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> m_val;
+};
+
+<font class="syn_typ">int</font> main(<font class="syn_typ">int</font> argc, <font class="syn_typ">char</font>* argv[])
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> (MyClass::*fn_ptr)(<font class="syn_typ">int</font>, <font class="syn_typ">int</font>) = &amp;MyClass::add;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> (MyClass::*fn_ptr_arr[])(<font class="syn_typ">int</font>, <font class="syn_typ">int</font>) = { &amp;MyClass::add, &amp;MyClass::multi, &amp;MyClass::shift };
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> a = <font class="syn_num">1</font>;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> b = <font class="syn_num">2</font>;
+&nbsp;&nbsp;&nbsp;&nbsp;MyClass mc0;
+&nbsp;&nbsp;&nbsp;&nbsp;MyClass mc2(<font class="syn_num">2</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> c = mc0.add(a, b); <font class="syn_cmt">// cant call directly, must use object</font>
+&nbsp;&nbsp;&nbsp;&nbsp;printit(c); <font class="syn_cmt">// = 3</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// we cant call directly via c = fn_ptr(b, c);</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// error: must use .* or -&gt;* to call pointer-to-member function in fn_ptr (...)</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// so then we need to use a pointer-to-member function call&nbsp;&nbsp;&nbsp;&nbsp;</font>
+&nbsp;&nbsp;&nbsp;&nbsp;c = ((&amp;mc0)-&gt;*(fn_ptr))(b, c);
+&nbsp;&nbsp;&nbsp;&nbsp;printit(c); <font class="syn_cmt">// = 5</font>
+&nbsp;&nbsp;&nbsp;&nbsp;c = ((&amp;mc2)-&gt;*(fn_ptr))(b, c);
+&nbsp;&nbsp;&nbsp;&nbsp;printit(c); <font class="syn_cmt">// = 9</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">for</font> (<font class="syn_typ">int</font> i = <font class="syn_num">0</font>; i &lt; <font class="syn_num">3</font>; ++i) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c = ((&amp;mc0)-&gt;*(fn_ptr_arr[i]))(c, b);
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;printit(c); <font class="syn_cmt">// 0 (mc0 has m_val = 0)</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">for</font> (<font class="syn_typ">int</font> i = <font class="syn_num">0</font>; i &lt; <font class="syn_num">3</font>; ++i) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c = ((&amp;mc2)-&gt;*(fn_ptr_arr[i]))(c, b);
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;printit(c); <font class="syn_cmt">// 66</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;
+}</pre></div>This caveat to the language constructs limits how you can specifically design your classes, or rather, you need to shoe-horn your class into the language, which inhibits your design decisions and forces you to think twice about how to design your code. As an  example, in Java there is no notion of a function pointer or delegate (like there is in <a href="https://msdn.microsoft.com/en-us/library/ms173171.aspx">C#</a>), to this, if you wanted to create a thread on a class instance, you need to inherit from the <a href="https://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.html" class="code">Runnable</a> Java class to then create a <a href="https://docs.oracle.com/javase/7/docs/api/java/lang/Thread.html" class="code">Thread</a> that takes a class that is a <code>Runnable</code> type (vs. C# where you simply pass in the <code>object.method</code> to a <a href="https://msdn.microsoft.com/en-us/library/system.threading.thread%28v=vs.110%29.aspx" class="code">System.Threading.Thread</a> constructor). Inheriting like this adds extra layers to your code and can cause innocuous bugs to occur if not handled properly (e.g. the diamond problem).<br>
+<br>
+To help alleviate the design constraints of this and to allow cleaner code, the <code><a href="../classes/omni-delegate.html">omni::delegate</a></code> allows you to <code><a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a></code> a signature compatible member function or static function to a compile-time type-safe functor type.<br>
+<br>
+<font class="hdr">The Delegate</font><br>
+The <code><a href="../classes/omni-delegate.html">omni::delegate</a></code> is a <code>template</code> class that wraps a function pointer and object instance so that you can use the <code>delegate</code> class just like a function pointer and can be invoked just as if you were to call the function itself, example:<br>
+<div class="sntx"><input type="checkbox" id="c3" name="c3" /><label for="c3">&nbsp;</label><pre><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/library.html">omni/library</a>&gt;</font>
+
+<font class="syn_typ">bool</font> some_function(<font class="syn_typ">int</font> val)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Hello from a delegate! val = &quot;</font> &lt;&lt; val &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (val &gt; <font class="syn_num">0</font>);
+}
+
+<font class="syn_typ">int</font> main(<font class="syn_typ">int</font> argc, <font class="syn_typ">char</font>* argv[])
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// signify a delegate function that returns bool and takes 1 int param</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-delegate1.html">omni::delegate1</a>&lt;<font class="syn_typ">bool</font>, <font class="syn_typ">int</font>&gt; dval = &amp;some_function;
+&nbsp;&nbsp;&nbsp;&nbsp;dval(<font class="syn_num">42</font>); <font class="syn_cmt">// call like a function</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (dval(-<font class="syn_num">1</font>) ? -<font class="syn_num">1</font> : <font class="syn_num">0</font>);
+}</pre></div>The first template parameter is the return type of the function, so an <code><a href="../classes/omni-delegate.html">omni::delegate</a></code>&lt;void&gt; <code>can</code> only <code><a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a></code> to functions that have a <code>void</code> return type, any additional template parameters are the parameters the function itself takes, so <code><a href="../classes/omni-delegate1.html">omni::delegate1</a></code>&lt;void, int&gt; defines a delegate type that can only <code><a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a></code> to functions that have a <code>void</code> return type and take a single <code>int</code> parameters.<br>
+<br>
+For normal function pointers, like in the example above, a <code>typedef</code> function pointer might prove more efficient for your specific needs (e.g. <code>typedef bool (*function_ptr_t)(int);</code>), and while the <code><a href="../classes/omni-delegate.html">omni::delegate</a></code> can wrap a non-member function pointer, its intent is to delegate function handling of member instances, for example:<br>
+<div class="sntx"><input type="checkbox" id="c4" name="c4" /><label for="c4">&nbsp;</label><pre><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/library.html">omni/library</a>&gt;</font>
+
+<font class="syn_typ">class</font> Object
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">public</font>:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Object() : m_val(<font class="syn_num">42</font>) {}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Object(<font class="syn_typ">int</font> val) : m_val(val) {}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> get() { <font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;m_val; }
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> set(<font class="syn_typ">int</font> val) { <font class="syn_typ">this</font>-&gt;m_val = val; }
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">private</font>:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> m_val;
+};
+
+<font class="syn_ins">typedef</font> <a href="../classes/omni-delegate.html">omni::delegate</a>&lt;<font class="syn_typ">int</font>&gt; get_delegate_t;
+<font class="syn_ins">typedef</font> <a href="../classes/omni-delegate1.html">omni::delegate1</a>&lt;<font class="syn_typ">void</font>, <font class="syn_typ">int</font>&gt; set_delegate_t;
+
+<font class="syn_pre">#define printit(v) <a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; #v &lt;&lt; <font class="syn_str">&quot; = &quot;</font> &lt;&lt; v.get() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;</font>
+
+<font class="syn_typ">int</font> main(<font class="syn_typ">int</font> argc, <font class="syn_typ">char</font>* argv[])
+{
+&nbsp;&nbsp;&nbsp;&nbsp;Object o1;
+&nbsp;&nbsp;&nbsp;&nbsp;Object o2(<font class="syn_num">100</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;get_delegate_t getter = get_delegate_t::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a>&lt;Object, &amp;Object::get&gt;(o1);
+&nbsp;&nbsp;&nbsp;&nbsp;set_delegate_t setter = set_delegate_t::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a>&lt;Object, &amp;Object::set&gt;(o1);
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;printit(o1); <font class="syn_cmt">// 42</font>
+&nbsp;&nbsp;&nbsp;&nbsp;printit(o2); <font class="syn_cmt">// 100</font>
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;setter(o2.get() + <font class="syn_num">10</font>); <font class="syn_cmt">// same as o1.set(o2.get() + 10)</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o2.set(getter()); <font class="syn_cmt">// same as o2.set(o1.get())</font>
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;printit(o1); <font class="syn_cmt">// 110</font>
+&nbsp;&nbsp;&nbsp;&nbsp;printit(o2); <font class="syn_cmt">// 110</font>
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// set the getter to a different target but keep the function the same</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// this is unsafe since the target types can be unrelated to the function pointer itself</font>
+&nbsp;&nbsp;&nbsp;&nbsp;getter.unsafe_set_target(o2);
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;setter(o2.get() + <font class="syn_num">10</font>); <font class="syn_cmt">// same as o1.set(o2.get() + 10)</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o2.set(getter()); <font class="syn_cmt">// same as o2.set(o2.get())</font>
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;printit(o1); <font class="syn_cmt">// 120</font>
+&nbsp;&nbsp;&nbsp;&nbsp;printit(o2); <font class="syn_cmt">// 110</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;
+}</pre></div>The delegate class is able to <code><a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a></code> to a specific object and call a non-static member function of that instance, additionally being able to change the target being invoked while <i>not</i> changing the underlying function pointer itself allowing for a more dynamic programming environment.<br>
+<br>
+This ability to <code><a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a></code> to either a normal function pointer or to a non-static member function allows you to focus on building more robust, extensible and maintainable code; for example, looking at the Java and C# thread reference from above, being able to <code><a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a></code> to a specific object with a thread also allows more fluid code to be designed and utilized:<br>
+<div class="sntx"><input type="checkbox" id="c5" name="c5" /><label for="c5">&nbsp;</label><pre><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/library.html">omni/library</a>&gt;</font>
+
+<font class="syn_pre">#define printit(v) <a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;(&quot;</font> &lt;&lt; <a href="../classes/omni-sync-thread_id.html">omni::sync::thread_id</a>() &lt;&lt; <font class="syn_str">&quot;): &quot;</font> &lt;&lt; #v &lt;&lt; <font class="syn_str">&quot; = &quot;</font> &lt;&lt; v.get() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;</font>
+
+<font class="syn_typ">class</font> Object
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">public</font>:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Object() : m_val(<font class="syn_num">42</font>), m_mtx() {}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Object(<font class="syn_typ">int</font> val) : m_val(val), m_mtx() {}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> get()
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-auto_basic_lock.html">omni::sync::auto_basic_lock</a> alock(&amp;<font class="syn_typ">this</font>-&gt;m_mtx);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;m_val;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> set(<font class="syn_typ">int</font> val)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-auto_basic_lock.html">omni::sync::auto_basic_lock</a> alock(&amp;<font class="syn_typ">this</font>-&gt;m_mtx);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_val = val;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> thread_func()
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> i = <font class="syn_typ">this</font>-&gt;get();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printit((*<font class="syn_typ">this</font>));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">for</font> (; i &lt; <font class="syn_num">1000</font>; i = <font class="syn_typ">this</font>-&gt;get()) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;set(i + <font class="syn_num">1</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-yield_thread.html">omni::sync::yield_thread</a>();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printit((*<font class="syn_typ">this</font>));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">private</font>:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> m_val;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-basic_lock.html">omni::sync::basic_lock</a> m_mtx;
+};
+
+<font class="syn_typ">int</font> main(<font class="syn_typ">int</font> argc, <font class="syn_typ">char</font>* argv[])
+{
+&nbsp;&nbsp;&nbsp;&nbsp;Object o1;
+&nbsp;&nbsp;&nbsp;&nbsp;Object o2(<font class="syn_num">100</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-thread_start.html">omni::sync::thread_start</a> ts = omni::sync::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a>&lt;Object, &amp;Object::thread_func&gt;(o1);
+&nbsp;&nbsp;&nbsp;&nbsp;printit(o1); <font class="syn_cmt">// 42</font>
+&nbsp;&nbsp;&nbsp;&nbsp;printit(o2); <font class="syn_cmt">// 100</font>
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-basic_thread.html">omni::sync::basic_thread</a> t1(ts);
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-basic_thread.html">omni::sync::basic_thread</a> t2(ts);
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;printit(o1);
+&nbsp;&nbsp;&nbsp;&nbsp;printit(o2);
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;ts.unsafe_set_target(o2);
+&nbsp;&nbsp;&nbsp;&nbsp;printit(o1);
+&nbsp;&nbsp;&nbsp;&nbsp;printit(o2);
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// re-attach to o2 and restart</font>
+&nbsp;&nbsp;&nbsp;&nbsp;t1.detach(); t2.detach();
+&nbsp;&nbsp;&nbsp;&nbsp;t1.bind(ts); t2.bind(ts);
+&nbsp;&nbsp;&nbsp;&nbsp;t1.start();  t2.start();
+&nbsp;&nbsp;&nbsp;&nbsp;t1.join();   t2.join();
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;printit(o1); <font class="syn_cmt">// 1000</font>
+&nbsp;&nbsp;&nbsp;&nbsp;printit(o2); <font class="syn_cmt">// 1000</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;
+}</pre></div>Additionally, you may have noticed that for non-member functions we have simply used the <code>function-pointer</code> syntax to assign the function to the delegate, e.g.<br>
+<code><br>
+<a href="../classes/omni-delegate.html">omni::delegate</a>&lt;void&gt; dval = some_function;<br>
+// or<br>
+<a href="../classes/omni-delegate.html">omni::delegate</a>&lt;void&gt; dval = &amp;some_function;<br>
+</code><br>
+This is because the <code>delegate</code> class has an <code>implicit</code> constructor that allow you to create an <code><a href="../classes/omni-delegate.html">omni::delegate</a></code> from a non-member function (to allow for less verbose code), example:<br>
+<div class="sntx"><input type="checkbox" id="c6" name="c6" /><label for="c6">&nbsp;</label><pre><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/library.html">omni/library</a>&gt;</font>
+
+<font class="syn_typ">void</font> some_function()
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Hello&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+}
+
+<font class="syn_typ">void</font> run_function(<font class="syn_typ">const</font> <a href="../classes/omni-delegate.html">omni::delegate</a>&lt;<font class="syn_typ">void</font>&gt;&amp; dval)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;dval();
+}
+
+<font class="syn_typ">int</font> main(<font class="syn_typ">int</font> argc, <font class="syn_typ">char</font>* argv[])
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// implicit creation of an <a href="../classes/omni-delegate.html">omni::delegate</a></font>
+&nbsp;&nbsp;&nbsp;&nbsp;run_function(&amp;some_function);
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;
+}</pre></div>In this manner you are able to design your classes and functions without the need for extra semantics cluttering your code while still expressing the intent of the code.<br>
+<br>
+It should be noted, however, that function overload and name resolution rules still apply. So if you defined 2 versions of <code>run_function</code> where 1 takes an <code><a href="../classes/omni-delegate.html">omni::delegate</a>&lt;void&gt;</code> and the other takes an <code><a href="../classes/omni-delegate1.html">omni::delegate1</a>&lt;void, int&gt;</code> as its parameters, the compiler will not be able to disambiguate between the two, this is true if you replaced the <code><a href="../classes/omni-delegate.html">omni::delegate</a></code> with a raw function pointers as well, as an example:<br>
+<div class="sntx"><input type="checkbox" id="c7" name="c7" /><label for="c7">&nbsp;</label><pre><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/library.html">omni/library</a>&gt;</font>
+
+<font class="syn_typ">void</font> some_function()
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Hello from void&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+}
+
+<font class="syn_typ">void</font> some_function(<font class="syn_typ">int</font> val)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Hello with &quot;</font> &lt;&lt; val &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+}
+
+<font class="syn_typ">void</font> run_function(<font class="syn_typ">const</font> <a href="../classes/omni-delegate.html">omni::delegate</a>&lt;<font class="syn_typ">void</font>&gt;&amp; dval) { dval(); }
+<font class="syn_typ">void</font> run_function(<font class="syn_typ">const</font> <a href="../classes/omni-delegate1.html">omni::delegate1</a>&lt;<font class="syn_typ">void</font>, <font class="syn_typ">int</font>&gt;&amp; dval) { dval(<font class="syn_num">42</font>); }
+
+<font class="syn_typ">void</font> raw_function(<font class="syn_typ">void</font> (*dval)()) { dval(); }
+<font class="syn_typ">void</font> raw_function(<font class="syn_typ">void</font> (*dval)(<font class="syn_typ">int</font>)) { dval(<font class="syn_num">42</font>); }
+
+<font class="syn_typ">int</font> main(<font class="syn_typ">int</font> argc, <font class="syn_typ">char</font>* argv[])
+{
+&nbsp;&nbsp;&nbsp;&nbsp;run_function(&amp;some_function); <font class="syn_cmt">// error: ambiguous call</font>
+&nbsp;&nbsp;&nbsp;&nbsp;raw_function(&amp;some_function); <font class="syn_cmt">// error: ambiguous call</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;
+}</pre></div><b>NOTE: this code will <i>not</i> compile because of the ambiguity error.</b><br>
+<br>
+To fix it such that it is unambiguous to the compiler you must explicitly create the delegate from the function pointer, example:<br>
+<div class="sntx"><input type="checkbox" id="c8" name="c8" /><label for="c8">&nbsp;</label><pre><font class="syn_typ">int</font> main(<font class="syn_typ">int</font> argc, <font class="syn_typ">char</font>* argv[])
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-delegate.html">omni::delegate</a>&lt;<font class="syn_typ">void</font>&gt; nval = &amp;some_function;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-delegate1.html">omni::delegate1</a>&lt;<font class="syn_typ">void</font>, <font class="syn_typ">int</font>&gt; ival = &amp;some_function;
+&nbsp;&nbsp;&nbsp;&nbsp;run_function(ival); <font class="syn_cmt">// unambiguous</font>
+&nbsp;&nbsp;&nbsp;&nbsp;run_function(nval); <font class="syn_cmt">// unambiguous</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;
+}</pre></div>The <code><a href="../classes/omni-delegate.html">omni::delegate</a></code> aims to be similar in functionality to that of the C# delegate while being as light as possible on CPU and memory consumption, as such, the class only maintains 2 pointers and an invocation of the delegate incurs only a couple of extra <code>JMP</code> (to invoke the actual function). To this, the <code>delegate</code> is not thread safe by design so calling <code>unbind</code> and <code><a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a></code> on 2 separate threads will yield undefined behavior if there are no synchronization primitives around the calls. If you would like the delegate classes to be thread safe when accessing any of the members, you will need to define <code><a href="../options/omni_safe_delegates.html">OMNI_SAFE_DELEGATES</a></code> when compiling, which adds an <code><a href="../classes/omni-sync-mutex_t.html">omni::sync::mutex_t</a></code> to the <code>delegate</code> class to protect the underlying data (thus adding computational time to the invocation of the delegates).<br>
+<br>
+One caveat to the <code><a href="../classes/omni-delegate.html">omni::delegate</a></code> with compilers that do not support variadic templates, is that when you wish to <code><a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a></code> to a function that has multiple parameters to it you must use the appropriate <code><a href="../classes/omni-delegate.html">omni::delegate</a></code> class that has the same number of template parameters defined for it. For example, the <code><a href="../classes/omni-delegate.html">omni::delegate</a></code> has only 1 template parameter and this defines the return type of the function that can be bound to, to bind to a function that takes 1 parameter, you would use the <code><a href="../classes/omni-delegate1.html">omni::delegate1</a></code> where the first template parameter is the function return type and the second template parameter is the single parameter the function takes. The <code><a href="../classes/omni-delegate2.html">omni::delegate2</a></code> has 3 template parameters, 1 for function return type, 2 for the function parameters, <code><a href="../classes/omni-delegate3.html">omni::delegate3</a></code> has 4, and so on up to the <code><a href="../classes/omni-delegate16.html">omni::delegate16</a></code>. Note that we use a custom generation tool that can build an <code>omni::delegateN</code> class but we have only built up to the <code><a href="../classes/omni-delegate16.html">omni::delegate16</a></code> because, generally speaking, a function with more than a few parameters might be better served (and more efficient on a low level) by passing in a P.O.D. <code>struct</code> type with your variables.<br>
+<br>
+While it might be a caveat it can also be useful in the fact that specifying the explicit type (over using variadic templates) expresses the intent of the code more clearly, for example <code><a href="../classes/omni-delegate3.html">omni::delegate3</a>&lt;void, int, int, int&gt; my_delegate;</code> is clear to its type and parameters, while <code><a href="../classes/omni-delegate.html">omni::delegate</a>&lt;void, ...&gt; my_delegate;</code> might be vague to an initial reader of the code.<br>
+<br>
+There does exists a helper macro, within the library, to define a delegate of any size and return type: <code><a href="../options/omni_delegate.html">OMNI_DELEGATE</a></code> or its lowercase helper omni_delegate can both be used as a helper to create (not <code><a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a></code>) a delegate.<br>
+<div class="sntx"><input type="checkbox" id="c9" name="c9" /><label for="c9">&nbsp;</label><pre><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/library.html">omni/library</a>&gt;</font>
+
+<font class="syn_typ">int</font> function0()
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">42</font>;
+}
+
+<font class="syn_typ">int</font> function3(<font class="syn_typ">int</font> x, <font class="syn_typ">int</font> y, <font class="syn_typ">int</font> z)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (x * y) / z;
+}
+
+<font class="syn_typ">void</font> function1(<font class="syn_typ">int</font> a)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; a &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+}
+
+<font class="syn_typ">int</font> main(<font class="syn_typ">int</font> argc, <font class="syn_typ">char</font>* argv[])
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// <a href="../classes/omni-delegate.html">omni::delegate</a>&lt;int&gt; f0 = &amp;function0;</font>
+&nbsp;&nbsp;&nbsp;&nbsp;omni_delegate(<font class="syn_typ">int</font>) f0 = &amp;function0;
+
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// <a href="../classes/omni-delegate3.html">omni::delegate3</a>&lt;int, int, int, int&gt; f3 = &amp;function3;</font>
+&nbsp;&nbsp;&nbsp;&nbsp;omni_delegate(<font class="syn_typ">int</font>, <font class="syn_typ">int</font>, <font class="syn_typ">int</font>, <font class="syn_typ">int</font>) f3 = &amp;function3;
+
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// <a href="../classes/omni-delegate1.html">omni::delegate1</a>&lt;void, int&gt; f1 = &amp;function1;</font>
+&nbsp;&nbsp;&nbsp;&nbsp;omni_delegate(<font class="syn_typ">void</font>, <font class="syn_typ">int</font>) f1 = &amp;function1;
+
+&nbsp;&nbsp;&nbsp;&nbsp;f1(f3(f0(), f0(), f0()));
+
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;
+}</pre></div>There too exists a helper macro that can be utilized within user code, to make binding to a delegate less verbose as well, the <code><a href="../options/omni_bind.html">OMNI_BIND</a></code> helper macro and its lowercase equivalent <code>omni_bind</code> can be used much like the <code><a href="../options/omni_delegate.html">OMNI_DELEGATE</a></code> macro to help <code><a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a></code> to class objects and their member functions:<br>
+<div class="sntx"><input type="checkbox" id="c10" name="c10" /><label for="c10">&nbsp;</label><pre><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/library.html">omni/library</a>&gt;</font>
+
+<font class="syn_typ">class</font> MyClass
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">public</font>:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MyClass() : m_val(<font class="syn_num">42</font>) {}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MyClass(<font class="syn_typ">int</font> v) : m_val(v) {}
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> get()
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;m_val;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> set(<font class="syn_typ">int</font> x, <font class="syn_typ">int</font> y)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_val = x + y;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> print()
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_typ">this</font>-&gt;m_val &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">private</font>:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> m_val;
+};
+
+<font class="syn_typ">int</font> main(<font class="syn_typ">int</font> argc, <font class="syn_typ">char</font>* argv[])
+{
+&nbsp;&nbsp;&nbsp;&nbsp;MyClass obj(<font class="syn_num">42</font>);
+
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// <a href="../classes/omni-delegate.html">omni::delegate</a>&lt;int&gt; pv = <a href="../classes/omni-delegate.html">omni::delegate</a>&lt;void&gt;::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a>&lt;MyClass, &amp;MyClass::print&gt;(obj);</font>
+&nbsp;&nbsp;&nbsp;&nbsp;omni_delegate(<font class="syn_typ">void</font>) pv = omni_bind(<font class="syn_typ">void</font>, MyClass, print, obj);
+
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// <a href="../classes/omni-delegate2.html">omni::delegate2</a>&lt;void, int, int&gt; sv = <a href="../classes/omni-delegate2.html">omni::delegate2</a>&lt;void, int, int&gt;::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a>&lt;MyClass, &amp;MyClass::set&gt;(obj);</font>
+&nbsp;&nbsp;&nbsp;&nbsp;omni_delegate(<font class="syn_typ">void</font>, <font class="syn_typ">int</font>, <font class="syn_typ">int</font>) sv = omni_bind(<font class="syn_typ">void</font>, <font class="syn_typ">int</font>, <font class="syn_typ">int</font>, MyClass, set, obj);
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// NOTE: you can use the <a href="../options/omni_delegate.html">OMNI_DELEGATE</a> macro to <a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a> as well</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// <a href="../classes/omni-delegate2.html">omni::delegate2</a>&lt;void, int, int&gt; sv = <a href="../classes/omni-delegate2.html">omni::delegate2</a>&lt;void, int, int&gt;::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a>&lt;MyClass, &amp;MyClass::set&gt;(obj);</font>
+&nbsp;&nbsp;&nbsp;&nbsp;omni_delegate(<font class="syn_typ">void</font>, <font class="syn_typ">int</font>, <font class="syn_typ">int</font>) sv2 = omni_delegate(<font class="syn_typ">void</font>, <font class="syn_typ">int</font>, <font class="syn_typ">int</font>)::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a>&lt;MyClass, &amp;MyClass::set&gt;(obj);
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// <a href="../classes/omni-delegate.html">omni::delegate</a>&lt;int&gt; gv = <a href="../classes/omni-delegate.html">omni::delegate</a>&lt;int&gt;::bind&lt;MyClass, &amp;MyClass::get&gt;(obj);</font>
+&nbsp;&nbsp;&nbsp;&nbsp;omni_delegate(<font class="syn_typ">int</font>) gv = omni_bind(<font class="syn_typ">int</font>, MyClass, get, obj);
+
+&nbsp;&nbsp;&nbsp;&nbsp;obj.print();
+&nbsp;&nbsp;&nbsp;&nbsp;pv();
+&nbsp;&nbsp;&nbsp;&nbsp;sv(<font class="syn_num">10</font>, <font class="syn_num">20</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;obj.print();
+&nbsp;&nbsp;&nbsp;&nbsp;pv();
+&nbsp;&nbsp;&nbsp;&nbsp;sv2(<font class="syn_num">30</font>, <font class="syn_num">10</font>);
+
+&nbsp;&nbsp;&nbsp;&nbsp;obj.print();
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; gv() &lt;&lt; std::endl;
+
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;
+}</pre></div>The <code><a href="../classes/omni-delegate.html">omni::delegate</a></code> classes are expressly for binding to functions and are more akin to a callback by design (which is why each <code>delegate</code> has a generic <code>typedef</code> of <code>typedef <a href="../classes/omni-delegate.html">omni::delegate</a>&lt;void&gt; callback</code>). One functionality of the C# delegate that those whom are familiar with is the event system, or a multicast delegate. The multicast delegate allows you to <code><a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a></code>, or attach, multiple delegates to a single <code>delegate</code> instance, utilizing the <code>+=</code> and <code>-=</code> operators, that can then all be invoked like an event. This is <i>not</i> true of the <code><a href="../classes/omni-delegate.html">omni::delegate</a></code> as its intention is not to be a list of delegates, but a specific delegate that represents a specific object and/or method.<br>
+<br>
+To this, the <code><a href="../classes/omni-event.html">omni::event</a></code> is designed to emulate the behavior of a C# multicast delegate/event with the overloaded <code>+=</code> and <code>-=</code> operators to attach/detach.<br>
+<br>
+<font class="hdr">The Event</font><br>
+While the delegate allows you to <code><a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a></code> to specific functions and objects, the <code><a href="../classes/omni-event.html">omni::event</a></code> is a way to call a list of delegates that are function signature compatible to the underlying delegate type. The event system of the library allows you to concern yourself with the details of your classes and functions and less with the library implementation details.<br>
+<br>
+The <code><a href="../classes/omni-event.html">omni::event</a></code> class is a template class that allows you to <code><a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a></code> multiple delegates to a single event, regardless of the underlying type. The <code><a href="../classes/omni-event.html">omni::event</a></code> and <code><a href="../classes/omni-delegate.html">omni::delegate</a></code> classes do not care about the underlying class type and instead only that the function being attached to matches the <code>delegate</code> signature. This flexibility allows you to attach multiple object types to a single event.<br>
+<br>
+As an example, the <code><a href="../classes/omni-chrono-async_timer.html">omni::chrono::async_timer</a></code> and other timer classes have an underlying <code><a href="../classes/omni-sync-basic_thread.html">omni::sync::basic_thread</a></code> that sits in a loop and, after a specified time, raises the <code><a href="../classes/omni-chrono-async_timer-tick.html">omni::chrono::async_timer::tick</a></code> event:<br>
+<div class="sntx"><input type="checkbox" id="c11" name="c11" /><label for="c11">&nbsp;</label><pre><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/library.html">omni/library</a>&gt;</font>
+
+<font class="syn_pre">#define printit(v) <a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;(&quot;</font> &lt;&lt; <a href="../classes/omni-sync-thread_id.html">omni::sync::thread_id</a>() &lt;&lt; <font class="syn_str">&quot;): &quot;</font> &lt;&lt; #v &lt;&lt; <font class="syn_str">&quot; = &quot;</font> &lt;&lt; v &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;</font>
+
+<font class="syn_typ">class</font> Type1
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">public</font>:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type1() : m_val(<font class="syn_num">42</font>) {}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// tick event is defined: <a href="../classes/omni-delegate2.html">omni::delegate2</a>&lt;<a href="../classes/omni-chrono-tick_t.html">omni::chrono::tick_t</a>, const <a href="../classes/omni-generic_ptr.html">omni::generic_ptr</a>&amp;&gt;</font>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> timer_ticked(<a href="../classes/omni-chrono-tick_t.html">omni::chrono::tick_t</a> time, <font class="syn_typ">const</font> <a href="../classes/omni-generic_ptr.html">omni::generic_ptr</a>&amp; state_object)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_val += <font class="syn_num">10</font>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printit((*<font class="syn_typ">this</font>));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">friend</font> <a href="http://www.cplusplus.com/reference/ostream/ostream/">std::ostream</a>&amp; <font class="syn_ins">operator</font>&lt;&lt;(<a href="http://www.cplusplus.com/reference/ostream/ostream/">std::ostream</a>&amp; os, <font class="syn_typ">const</font> Type1&amp; t)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;os &lt;&lt; <font class="syn_str">&quot;Type1: &quot;</font> &lt;&lt; t.m_val;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> os;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">private</font>:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> m_val;
+};
+
+<font class="syn_typ">class</font> Type2
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">public</font>:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type2() : m_val(<font class="syn_num">2</font>) {}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> timer_ticked(<a href="../classes/omni-chrono-tick_t.html">omni::chrono::tick_t</a> time, <font class="syn_typ">const</font> <a href="../classes/omni-generic_ptr.html">omni::generic_ptr</a>&amp; state_object)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_val += <font class="syn_num">10</font>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printit((*<font class="syn_typ">this</font>));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">friend</font> <a href="http://www.cplusplus.com/reference/ostream/ostream/">std::ostream</a>&amp; <font class="syn_ins">operator</font>&lt;&lt;(<a href="http://www.cplusplus.com/reference/ostream/ostream/">std::ostream</a>&amp; os, <font class="syn_typ">const</font> Type2&amp; t)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;os &lt;&lt; <font class="syn_str">&quot;Type2: &quot;</font> &lt;&lt; t.m_val;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> os;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">private</font>:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> m_val;
+};
+
+<font class="syn_typ">void</font> timer_ticked(<a href="../classes/omni-chrono-tick_t.html">omni::chrono::tick_t</a> time, <font class="syn_typ">const</font> <a href="../classes/omni-generic_ptr.html">omni::generic_ptr</a>&amp; state_object)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;printit(<a href="../classes/omni-chrono-elapsed_ms.html">omni::chrono::elapsed_ms</a>(time));
+}
+
+<font class="syn_typ">int</font> main(<font class="syn_typ">int</font> argc, <font class="syn_typ">char</font>* argv[])
+{
+&nbsp;&nbsp;&nbsp;&nbsp;Type1 o1;
+&nbsp;&nbsp;&nbsp;&nbsp;Type2 o2;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-chrono-async_timer.html">omni::chrono::async_timer</a> tobj(<font class="syn_num">1000</font>); <font class="syn_cmt">// 1 second interval</font>
+&nbsp;&nbsp;&nbsp;&nbsp;printit(o1);
+&nbsp;&nbsp;&nbsp;&nbsp;printit(o2);
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// to attach to an event, simply call the += operator and attach a delegate</font>
+&nbsp;&nbsp;&nbsp;&nbsp;tobj.tick += &amp;timer_ticked; <font class="syn_cmt">// implicit construction of a delegate with timer_ticked as the function</font>
+&nbsp;&nbsp;&nbsp;&nbsp;tobj.tick += omni::chrono::timer_delegate::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a>&lt;Type1, &amp;Type1::timer_ticked&gt;(o1);
+&nbsp;&nbsp;&nbsp;&nbsp;tobj.tick += omni::chrono::timer_delegate::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a>&lt;Type2, &amp;Type2::timer_ticked&gt;(o2);
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;tobj.start();
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-sleep.html">omni::sync::sleep</a>(<font class="syn_num">5000</font>); <font class="syn_cmt">// will do 4 ticks</font>
+&nbsp;&nbsp;&nbsp;&nbsp;tobj.stop();
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;printit(o1);
+&nbsp;&nbsp;&nbsp;&nbsp;printit(o2);
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;
+}</pre></div>Notice how there is only 1 timer object yet 3 functions are called (since there are 3 delegates attached), each on the same thread.<br>
+<br>
+Similar to the C# event structures, to attach an <code><a href="../classes/omni-delegate.html">omni::delegate</a></code> to an event, the <code><a href="../classes/omni-event.html">omni::event</a></code> class overloads the <code>+=</code> operator as well as provides the <code><a href="../classes/omni-event-attach.html">omni::event::attach</a></code> function to add a signature compatible delegate to the underlying list. Detaching a delegate is just as simple, calling the overloaded <code>-=</code> operator or the <code><a href="../classes/omni-event-detach.html">omni::event::detach</a></code> function, for example:<br>
+<div class="sntx"><input type="checkbox" id="c12" name="c12" /><label for="c12">&nbsp;</label><pre><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/library.html">omni/library</a>&gt;</font>
+
+<font class="syn_pre">#define printv(v) <a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; v &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a></font>
+
+<font class="syn_typ">volatile</font> <font class="syn_typ">bool</font> do_run;
+<a href="../classes/omni-event1.html">omni::event1</a>&lt;<font class="syn_typ">void</font>, <font class="syn_typ">int</font>&gt; signal_event;
+
+<font class="syn_typ">void</font> got_signal2(<font class="syn_typ">int</font> sig)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;printv(<font class="syn_str">&quot;This function will never be called!&quot;</font>);
+}
+
+<font class="syn_typ">void</font> got_signal1(<font class="syn_typ">int</font> sig)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;printv(<font class="syn_str">&quot;Signal 1, detaching&quot;</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;signal_event -= &amp;got_signal2;
+&nbsp;&nbsp;&nbsp;&nbsp;printv(<font class="syn_str">&quot;Signal 1, leaving&quot;</font>);
+}
+
+<font class="syn_typ">void</font> signalled(<font class="syn_typ">int</font> sig)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;calling attached delegates with signal &quot;</font> &lt;&lt; sig &lt;&lt; std::endl;
+&nbsp;&nbsp;&nbsp;&nbsp;signal_event(sig);
+&nbsp;&nbsp;&nbsp;&nbsp;printv(<font class="syn_str">&quot;stopping&quot;</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;do_run = <font class="syn_ins">false</font>;
+}
+
+<font class="syn_typ">int</font> main(<font class="syn_typ">int</font> argc, <font class="syn_typ">char</font>* argv[])
+{
+&nbsp;&nbsp;&nbsp;&nbsp;signal_event += got_signal1;
+&nbsp;&nbsp;&nbsp;&nbsp;signal_event += got_signal2;
+&nbsp;&nbsp;&nbsp;&nbsp;signal(SIGINT, &amp;signalled);
+&nbsp;&nbsp;&nbsp;&nbsp;do_run = <font class="syn_ins">true</font>;
+&nbsp;&nbsp;&nbsp;&nbsp;printv(<font class="syn_str">&quot;Waiting for SIGINT...&quot;</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">while</font> (do_run) { <a href="../classes/omni-sync-sleep.html">omni::sync::sleep</a>(<font class="syn_num">50</font>); }
+&nbsp;&nbsp;&nbsp;&nbsp;printv(<font class="syn_str">&quot;Leaving...&quot;</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;
+}</pre></div>Any delegates attached are invoked in the order they are attached as many times as they are attached, as such you can detach a delegate that has not yet been invoked (as in the example above). Detaching a delegate removes the <i><b>last</b></i> instance of that delegate from the list and thus that delegate that was detached will not be invoked. If the delegate is attached multiple times, the last instance is still the only one removed; to detach all instance you will need to explicitly call the <code><a href="../classes/omni-event-detach_all.html">omni::event::detach_all</a></code> function, example:<br>
+<div class="sntx"><input type="checkbox" id="c13" name="c13" /><label for="c13">&nbsp;</label><pre><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/library.html">omni/library</a>&gt;</font>
+
+<font class="syn_pre">#define printv(v) <a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; v &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a></font>
+
+<font class="syn_typ">void</font> function<font class="syn_num">1</font>() { <a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a>&lt;&lt;<font class="syn_str">&quot;1 &quot;</font>; }
+<font class="syn_typ">void</font> function<font class="syn_num">2</font>() { <a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a>&lt;&lt;<font class="syn_str">&quot;2 &quot;</font>; }
+<font class="syn_typ">void</font> function<font class="syn_num">3</font>() { <a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a>&lt;&lt;<font class="syn_str">&quot;3 &quot;</font>; }
+<font class="syn_typ">void</font> end() { <a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a>&lt;&lt;<a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>; }
+
+<font class="syn_typ">int</font> main(<font class="syn_typ">int</font> argc, <font class="syn_typ">char</font>* argv[])
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// <a href="../classes/omni-action.html">omni::action</a> is a typedef of <a href="../classes/omni-event.html">omni::event</a>&lt;void&gt;</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-action.html">omni::action</a> events;
+&nbsp;&nbsp;&nbsp;&nbsp;events += function3;
+&nbsp;&nbsp;&nbsp;&nbsp;events += function1;
+&nbsp;&nbsp;&nbsp;&nbsp;events += function2;
+&nbsp;&nbsp;&nbsp;&nbsp;events += function3;
+&nbsp;&nbsp;&nbsp;&nbsp;events += function2;
+&nbsp;&nbsp;&nbsp;&nbsp;events += function1;
+&nbsp;&nbsp;&nbsp;&nbsp;events += end; <font class="syn_cmt">// for endl;</font>
+&nbsp;&nbsp;&nbsp;&nbsp;events(); <font class="syn_cmt">// 3 1 2 3 2 1</font>
+&nbsp;&nbsp;&nbsp;&nbsp;printv(<font class="syn_str">&quot;removing <font class="syn_num">3</font>&quot;</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;events -= function3;
+&nbsp;&nbsp;&nbsp;&nbsp;events(); <font class="syn_cmt">// 3 1 2 2 1</font>
+&nbsp;&nbsp;&nbsp;&nbsp;printv(<font class="syn_str">&quot;removing <font class="syn_num">1</font>&quot;</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;events -= function1;
+&nbsp;&nbsp;&nbsp;&nbsp;events(); <font class="syn_cmt">// 3 1 2 2</font>
+&nbsp;&nbsp;&nbsp;&nbsp;printv(<font class="syn_str">&quot;removing all <font class="syn_num">2</font>&quot;</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;events.detach_all(function2);
+&nbsp;&nbsp;&nbsp;&nbsp;events(); <font class="syn_cmt">// 3 1</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;
+}</pre></div>If you detach a delegate that has already been invoked, or is the current one being invoked, since that delegate has already been called it is merely removed from the underlying list. <b>Note:</b> removing a delegate that has not been attached or removing one from an event with an empty invocation list will <i>not</i> produce an error.<br>
+<br>
+Since delegates can return values, in the case of an event with multiple delegates attached, the value returned is from the last attached delegate in the invocation list. If you detach a delegate that happens to be the last one in the list while the 2nd to last delegate is being invoked (as in the example above), it is undefined as to the value being returned and thus an exception is thrown, for example:<br>
+<div class="sntx"><input type="checkbox" id="c14" name="c14" /><label for="c14">&nbsp;</label><pre><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/library.html">omni/library</a>&gt;</font>
+
+<font class="syn_pre">#define printv(v) <a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; v &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a></font>
+
+<a href="../classes/omni-event1.html">omni::event1</a>&lt;<font class="syn_typ">int</font>, <font class="syn_typ">int</font>&gt; events;
+
+<font class="syn_typ">int</font> some_function3(<font class="syn_typ">int</font> val)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Function 3, returning &quot;</font> &lt;&lt; (val + <font class="syn_num">30</font>) &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (val + <font class="syn_num">30</font>);
+}
+
+<font class="syn_typ">int</font> some_function2(<font class="syn_typ">int</font> val)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;This function will never be called!&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Function 2, returning &quot;</font> &lt;&lt; (val + <font class="syn_num">42</font>) &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (val + <font class="syn_num">42</font>);
+}
+
+<font class="syn_typ">int</font> some_function1(<font class="syn_typ">int</font> val)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;printv(<font class="syn_str">&quot;Function 1, detaching&quot;</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;events -= &amp;some_function2; <font class="syn_cmt">// <a href="https://linux.die.net/man/3/remove">remove</a> the last instance</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Function 1, returning &quot;</font> &lt;&lt; (val + <font class="syn_num">10</font>) &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (val + <font class="syn_num">10</font>);
+}
+
+<font class="syn_typ">int</font> main(<font class="syn_typ">int</font> argc, <font class="syn_typ">char</font>* argv[])
+{
+&nbsp;&nbsp;&nbsp;&nbsp;events += some_function1;
+&nbsp;&nbsp;&nbsp;&nbsp;events += some_function2;
+&nbsp;&nbsp;&nbsp;&nbsp;printv(<font class="syn_str">&quot;Invoking...&quot;</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> retval = <font class="syn_num">0</font>;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">try</font> {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;retval = events(<font class="syn_num">42</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">/* some_function2 is the last on the list, so retval should be 84 since
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the last function in the event list is the one to return a value. But
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;since we detached it in some_function1 with -= &amp;some_function2 the
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value returned will actually be undefined, and thus an exception is thrown */</font>
+&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">catch</font> (<a href="../classes/omni-exceptions-invalid_delegate_invoke.html">omni::exceptions::invalid_delegate_invoke</a> e) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Exception caught: &quot;</font> &lt;&lt; e &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;retval = &quot;</font> &lt;&lt; retval &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// attach some_function1&amp;3 to show it is the last function invoked that returns</font>
+&nbsp;&nbsp;&nbsp;&nbsp;events += some_function1;
+&nbsp;&nbsp;&nbsp;&nbsp;events += some_function3;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">/* we can call it again here and no error will occur since
+&nbsp;&nbsp;&nbsp;&nbsp;the some_function2 delegate has already been removed */</font>
+&nbsp;&nbsp;&nbsp;&nbsp;retval = events(<font class="syn_num">42</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;retval = &quot;</font> &lt;&lt; retval &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;
+}</pre></div>The reason for this being how the underlying list iteration and invocation happens on an event, additionally, to void additional memory or stack/registers being utilized, a temporary object is not used when returning from the underlying invoked delegates in the list, it is the value directly returned by the user supplied function.<br>
+<br>
+As with the <code><a href="../classes/omni-delegate.html">omni::delegate</a></code> class, the <code><a href="../classes/omni-event.html">omni::event</a></code> is not inherently thread safe, thus a call to <code>attach</code> and <code>detach</code> on 2 separate threads can result in <i>undefined behavior</i> if the list is modified while being read. Defining the <code><a href="../options/omni_safe_events.html">OMNI_SAFE_EVENTS</a></code> when compiling adds an <code><a href="../classes/omni-sync-mutex_t.html">omni::sync::mutex_t</a></code> to the <code>event</code> class to protect the underlying data (thus adding computational time to the invocation of the event and delegates). Defining <code><a href="../options/omni_safe_events.html">OMNI_SAFE_EVENTS</a></code> does <b><i>not</i></b> define the <code><a href="../options/omni_safe_delegates.html">OMNI_SAFE_DELEGATES</a></code> flag, so while an <code><a href="../classes/omni-event.html">omni::event</a></code> might be thread safe, unless you specify that delegates are too, they will not be.<br>
+<br>
+Additionally, like the <code><a href="../classes/omni-delegate.html">omni::delegate</a></code> that has a <code>typedef</code> for an <code><a href="../classes/omni-callback.html">omni::callback</a></code> the <code><a href="../classes/omni-event.html">omni::event</a></code> has a <code>typedef</code> for a default action event, example:<br>
+<div class="sntx"><input type="checkbox" id="c15" name="c15" /><label for="c15">&nbsp;</label><pre><font class="syn_ins">namespace</font> omni {
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">typedef</font> <a href="../classes/omni-delegate.html">omni::delegate</a>&lt;<font class="syn_typ">void</font>&gt; callback;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">typedef</font> <a href="../classes/omni-event.html">omni::event</a>&lt;<font class="syn_typ">void</font>&gt; action;
+}
+
+<font class="syn_typ">void</font> some_function() { }
+
+<a href="../classes/omni-callback.html">omni::callback</a> cb = &amp;some_function;
+<a href="../classes/omni-action.html">omni::action</a> act;
+act += cb;
+act += &amp;some_function;</pre></div>Also, like the <code><a href="../classes/omni-delegate.html">omni::delegate</a></code>, there exists a helper macro that can be utilized within user code to make attaching a delegate less verbose as well, the <code><a href="../options/omni_event.html">OMNI_EVENT</a></code> macro and its lowercase equivalent <code>omni_event.</code><br>
+<br>
+Each type of the delegate and event system is defined within its own header, so the <code><a href="../classes/omni-delegate.html">omni::delegate</a></code>, <code><a href="../classes/omni-callback.html">omni::callback</a></code>, <code><a href="../classes/omni-event.html">omni::event</a></code> and <code><a href="../classes/omni-action.html">omni::action</a></code> are all defined in <a href="../htmlsrc/omni/delegate/0.hpp.html" class="code">omni/delegate/0.hpp</a> while the <code><a href="../classes/omni-delegate1.html">omni::delegate1</a></code>, <code><a href="../classes/omni-event1.html">omni::event1</a></code>, etc. are defined in <a href="../htmlsrc/omni/delegate/1.hpp.html" class="code">omni/delegate/1.hpp</a> and so on in this fashion.<br>
+<br>
+Including <a href="../htmlsrc/omni/delegates.hpp.html" class="code">omni/delegates.hpp</a> will include all of the delegate and event types.<br><br><font class="hdr">Example</font><br><div class="sntx"><input type="checkbox" id="c16" name="c16" checked /><label for="c16">&nbsp;</label><pre><font class="syn_pre">#include &lt;<a href="../htmlsrc/omnilib.html">omnilib</a>&gt;</font>
+
+<font class="syn_typ">class</font> Obj1 {
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">public</font>:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Obj1() : m_val(<font class="syn_num">42</font>) {}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Obj1(<font class="syn_typ">int</font> val) : m_val(val) {}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> get_val() { <font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;m_val; }
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> print_val() { <a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;object val: &quot;</font> &lt;&lt; <font class="syn_typ">this</font>-&gt;m_val &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>; }
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> set_val(<font class="syn_typ">int</font> val)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_val = val;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;m_val;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> timer_ticked(<a href="../classes/omni-chrono-tick_t.html">omni::chrono::tick_t</a> time, <font class="syn_typ">const</font> <a href="../classes/omni-generic_ptr.html">omni::generic_ptr</a>&amp; sobj)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;timer ticked, new val: &quot;</font> &lt;&lt; ++<font class="syn_typ">this</font>-&gt;m_val &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">private</font>:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> m_val;
+};
+
+<font class="syn_typ">int</font> main(<font class="syn_typ">int</font> argc, <font class="syn_typ">char</font>* argv[])
+{
+&nbsp;&nbsp;&nbsp;&nbsp;Obj1 obj1(<font class="syn_num">255</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-callback.html">omni::callback</a> cb = omni::callback::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a>&lt;Obj1, &amp;Obj1::print_val&gt;(obj1);
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-delegate.html">omni::delegate</a>&lt;<font class="syn_typ">int</font>&gt; di = <a href="../classes/omni-delegate.html">omni::delegate</a>&lt;<font class="syn_typ">int</font>&gt;::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a>&lt;Obj1, &amp;Obj1::get_val&gt;(obj1);
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-delegate1.html">omni::delegate1</a>&lt;<font class="syn_typ">int</font>, <font class="syn_typ">int</font>&gt; ri = <a href="../classes/omni-delegate1.html">omni::delegate1</a>&lt;<font class="syn_typ">int</font>, <font class="syn_typ">int</font>&gt;::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a>&lt;Obj1, &amp;Obj1::set_val&gt;(obj1);
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-chrono-async_timer.html">omni::chrono::async_timer</a> timer(<font class="syn_num">1000</font>); <font class="syn_cmt">// tick every 1 second</font>
+&nbsp;&nbsp;&nbsp;&nbsp;timer.tick += omni::chrono::timer_delegate::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a>&lt;Obj1, &amp;Obj1::timer_ticked&gt;(obj1);
+&nbsp;&nbsp;&nbsp;&nbsp;timer.start();
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> x = obj1.get_val();
+&nbsp;&nbsp;&nbsp;&nbsp;obj1.print_val();
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;x = &quot;</font> &lt;&lt; x &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-sleep.html">omni::sync::sleep</a>(<font class="syn_num">2000</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;cb();&nbsp;&nbsp;&nbsp;&nbsp; <font class="syn_cmt">// calls obj1.print_val</font>
+&nbsp;&nbsp;&nbsp;&nbsp;x = di(); <font class="syn_cmt">// calls obj1.get_val</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;x = &quot;</font> &lt;&lt; x &lt;&lt; <font class="syn_str">&quot;, di = &quot;</font> &lt;&lt; di() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-sleep.html">omni::sync::sleep</a>(<font class="syn_num">2000</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> y = ri(x * <font class="syn_num">2</font>); <font class="syn_cmt">// calls obj1.set_val</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;y = &quot;</font> &lt;&lt; y &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;obj1.print_val();
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-sleep.html">omni::sync::sleep</a>(<font class="syn_num">2000</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;timer.stop();
+&nbsp;&nbsp;&nbsp;&nbsp;obj1.print_val();
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;
+}</pre></div>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

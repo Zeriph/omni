@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_NO_THROW</Name>
+  <Brief>Disables exceptions (throw keyword) in the framework.
+</Brief>
+  <Considerations>By specifying this flag, the framework will have no way of alerting the user if an error happened. You can specify the OMNI_TERMINATE_ON_ERR flag and the std::terminate function will be called on error. If neither flag is specified and an error is detected the framework will either return from the function or proceed as normal, both could have unintended consequences if not handled properly; in other words, undefined behavior could result.
+</Considerations>
+  <Description>By specifying the OMNI_NO_THROW preprocessor flag, the framework will not throw any exceptions specific to the framework.
+</Description>
+  <Notes>None.
+</Notes>
+  <PlatformSpecific>No platform specific details.
+</PlatformSpecific>
+  <Synopsis>&lt;code&gt;#define OMNI_NO_THROW&lt;/code&gt;
+
+Signifies to the framework to not throw any exceptions.
+</Synopsis>
+  <IsHelper>false</IsHelper>
+  <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
+</MacroOp>

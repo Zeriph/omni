@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_CLOCK_FREQ_T</Name>
+  <Brief>Defines the underlying clock frequency variable type.
+</Brief>
+  <Considerations>No special considerations.
+</Considerations>
+  <Description>Depending on platform being built against, this macro will expand to the proper frequency type needed by the platforms implementation.
+</Description>
+  <Notes>None.
+</Notes>
+  <PlatformSpecific>This value will be different based on platform being targeted.
+</PlatformSpecific>
+  <Synopsis>The clock frequency variable is used by the omni::chrono::monotonic::tick function to get the proper tick frequency to determine monotonic time. For more information on it, see @h omni/chrono/tick.hpp @h and @h omni/types/tick_t.hpp @h
+
+</Synopsis>
+  <IsHelper>false</IsHelper>
+  <IsConstant>false</IsConstant>
+  <IsFWHelp>true</IsFWHelp>
+</MacroOp>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - io.cpp</title>
+<link rel="stylesheet" type="text/css" href="../../content/main.css" /><link rel="icon" type="image/png" href="../../content/favicon.png" />
+<script type="text/javascript" src="../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="index.html" class="current">Source</a></li><li title="Library classes and namespaces">
+<a href="../classes/index.html">Class Index</a></li><li title="Download and view examples">
+<a href="../examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="../options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../api.html">System API</a></li><li title="Other Considerations">
+<a href="../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle"><a href="../../files/src/io.cpp" onclick="return popup('../../files/src/io.cpp')">io.cpp</a></div><div class="content"><div>
+<code><div class="cpphtmllines">
+<!--start line numbers-->
+00001:<br><div id="cmntl1" name="cmntl1">00002:<br>00003:<br>00004:<br>00005:<br>00006:<br>00007:<br>00008:<br>00009:<br>000010:<br>000011:<br>000012:<br>000013:<br>000014:<br>000015:<br>000016:<br>000017:<br>000018:<br></div>000019:<br>
+000020:<br>000021:<br>000022:<br>000023:<br>000024:<br>000025:<br>000026:<br>000027:<br>000028:<br>000029:<br>000030:<br>000031:<br>000032:<br>000033:<br>000034:<br>000035:<br>000036:<br>000037:<br>000038:<br>000039:<br>
+000040:<br>000041:<br>000042:<br>000043:<br>000044:<br>000045:<br>000046:<br>000047:<br>000048:<br>000049:<br>000050:<br>000051:<br>000052:<br>000053:<br>000054:<br>000055:<br>000056:<br>000057:<br>000058:<br>000059:<br>
+000060:<br>000061:<br>000062:<br>000063:<br>000064:<br>000065:<br>000066:<br>000067:<br>000068:<br>000069:<br>000070:<br>000071:<br>000072:<br>000073:<br>000074:<br>000075:<br>000076:<br>000077:<br>000078:<br>000079:<br>
+000080:<br>000081:<br>000082:<br>000083:<br>000084:<br>000085:<br>000086:<br>000087:<br>000088:<br>000089:<br>000090:<br>000091:<br>000092:<br>000093:<br>000094:<br>000095:<br>000096:<br>000097:<br>000098:<br>000099:<br>
+0000100:<br>0000101:<br>0000102:<br>0000103:<br>0000104:<br>0000105:<br>0000106:<br>0000107:<br>0000108:<br>0000109:<br>0000110:<br>0000111:<br>0000112:<br>0000113:<br>0000114:<br>0000115:<br>0000116:<br>0000117:<br>0000118:<br>0000119:<br>
+0000120:<br>0000121:<br>0000122:<br>0000123:<br>0000124:<br>0000125:<br>0000126:<br>0000127:<br>0000128:<br>
+<!--end line numbers-->
+</div><div class="cpphtmlcmnt">
+<!--start collapse columns-->
+<img src="../../content/tree/min.gif" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br>
+<!--end collapse columns-->
+</div><div class="cpphtml" style="margin-left:3.75em;">
+<!--start highlighted code-->
+<font class="syn_cmt">/*<div class="syn_ex" id="cmnt1" name="cmnt1">
+ * Copyright (c), Zeriph Enterprises<br>
+ * All rights reserved.<br>
+ * <br>
+ * Contributor(s):<br>
+ * Zechariah Perez, omni (at) zeriph (dot) com<br>
+ * <br>
+ * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS &quot;AS IS&quot; AND ANY<br>
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED<br>
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE<br>
+ * DISCLAIMED. IN NO EVENT SHALL ZERIPH AND CONTRIBUTORS BE LIABLE FOR ANY<br>
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES<br>
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;<br>
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND<br>
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT<br>
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS<br>
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.<br>
+ */</div><div></div></font>
+<br>
+<font class="syn_pre">#include &lt;<a href="omni/io.hpp.html">omni/io.hpp</a>&gt;</font><br>
+<font class="syn_pre">#include &lt;<a href="omni/defs/thread_def.hpp.html">omni/defs/thread_def.hpp</a>&gt;</font><br>
+<font class="syn_pre">#include &lt;<a href="omni/system.hpp.html">omni/system.hpp</a>&gt;</font><br>
+<font class="syn_pre">#include &lt;<a href="omni/environment.hpp.html">omni/environment.hpp</a>&gt;</font><br>
+<font class="syn_pre">#include &lt;<a href="omni/exception.hpp.html">omni/exception.hpp</a>&gt;</font><br>
+<font class="syn_pre">#include &lt;sys/stat.h&gt;</font><br>
+<font class="syn_pre">#include &lt;sys/types.h&gt;</font><br>
+<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../options/omni_os_win.html">OMNI_OS_WIN</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;windows.h&gt;</font><br>
+<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;dirent.h&gt; <font class="syn_cmt">// for *Nix directory access</font></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;unistd.h&gt;</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;sys/time.h&gt;</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;fcntl.h&gt;</font><br>
+<font class="syn_pre">#endif</font><br>
+<font class="syn_pre">#include &lt;cstdarg&gt;</font><br>
+<br>
+<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../options/omni_os_win.html">OMNI_OS_WIN</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// Because we are using Windows we need to convert the name to 8.3 format otherwise, it is possible to get</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// an INVALID_HANDLE_VALUE returned from a valid file. </font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// Example: _C:\Develop\C++\file.txt_ could exist and there is nothing in the name more than 8 characters</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// long, but because the folder _C++_ has invalid 8.3 characters in it, it will fail. _C++_ in 8.3 format is _C__~1_</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// CreateFile also needs a _\\?\_ in front of the file to <a href="https://linux.die.net/man/2/open">open</a> an actual file handle (_\\.\_ for a device)&nbsp;&nbsp;&nbsp;&nbsp;</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_FILE_CHECKA_FW(file, ret) if (file.length() &gt; MAX_PATH) { OMNI_ERRV_RETV_FW(<font class="syn_str">&quot;file name exceeds maximum path length: &quot;</font>, MAX_PATH, <a href="../classes/omni-exceptions-path_exception.html">omni::exceptions::path_exception</a>(omni::string::to_string(file)), ret) }</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_FILE_CHECKW_FW(file, ret) file; \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (tf.length() &gt; 4 &amp;&amp; tf.substr(0, 4) != L<font class="syn_str">&quot;\\\\?\\&quot;</font>) { tf = <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>(L<font class="syn_str">&quot;\\\\?\\&quot;</font>) + tf; } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (tf.length() &gt;= OMNI_MAX_PATH_FW) { OMNI_ERRV_RETV_FW(<font class="syn_str">&quot;file name exceeds maximum path length: &quot;</font>, OMNI_MAX_PATH_FW, <a href="../classes/omni-exceptions-path_exception.html">omni::exceptions::path_exception</a>(omni::string::to_string(file)), ret) }</font><br>
+<font class="syn_pre">#endif</font><br>
+<br>
+<font class="syn_pre">#if !defined(<a href="../options/omni_io_file_truncate_fn.html">OMNI_IO_FILE_TRUNCATE_FN</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../options/omni_io_file_truncate_fn.html">OMNI_IO_FILE_TRUNCATE_FN</a> ::<a href="https://linux.die.net/man/3/truncate">truncate</a></font><br>
+<font class="syn_pre">#endif</font><br>
+<font class="syn_pre">#if !defined(<a href="../options/omni_io_file_ftruncate_fn.html">OMNI_IO_FILE_FTRUNCATE_FN</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../options/omni_io_file_ftruncate_fn.html">OMNI_IO_FILE_FTRUNCATE_FN</a> ::<a href="https://linux.die.net/man/3/ftruncate">ftruncate</a></font><br>
+<font class="syn_pre">#endif</font><br>
+<br>
+<font class="syn_pre">#define OMNI_IO_FILE_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_IO_FILE_INTERNAL_FW 1</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_PATH_FW cfile</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_L_FW(v) v</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_STRING_T_FW <a href="http://www.cplusplus.com/reference/string/">std::string</a></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;<a href="omni/xx/io_file.hxx.html">omni/xx/io_file.hxx</a>&gt;</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#undef OMNI_PATH_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#undef OMNI_L_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#undef OMNI_STRING_T_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#undef OMNI_IO_FILE_INTERNAL_FW</font><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_PATH_FW wfile</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_L_FW(v) L##v</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_STRING_T_FW <a href="http://www.cplusplus.com/reference/string/">std::wstring</a></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;<a href="omni/xx/io_file.hxx.html">omni/xx/io_file.hxx</a>&gt;</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#undef OMNI_PATH_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#undef OMNI_L_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#undef OMNI_STRING_T_FW</font><br>
+<font class="syn_pre">#undef OMNI_IO_FILE_FW</font><br>
+<br>
+<font class="syn_pre">#define OMNI_IO_DIR_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_IO_DIR_INTERNAL_FW 1</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_PATH_FW cdirectory</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_CHAR_T_FW std_string_t</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_L_FW(v) v</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_STRING_T_FW <a href="http://www.cplusplus.com/reference/string/">std::string</a></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;<a href="omni/xx/io_dir.hxx.html">omni/xx/io_dir.hxx</a>&gt;</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#undef OMNI_PATH_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#undef OMNI_CHAR_T_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#undef OMNI_L_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#undef OMNI_STRING_T_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#undef OMNI_IO_DIR_INTERNAL_FW</font><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_PATH_FW wdirectory</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_CHAR_T_FW std_wstring_t</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_L_FW(v) L##v</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_STRING_T_FW <a href="http://www.cplusplus.com/reference/string/">std::wstring</a></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;<a href="omni/xx/io_dir.hxx.html">omni/xx/io_dir.hxx</a>&gt;</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#undef OMNI_PATH_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#undef OMNI_CHAR_T_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#undef OMNI_L_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#undef OMNI_STRING_T_FW</font><br>
+<font class="syn_pre">#undef OMNI_IO_DIR_FW</font><br>
+<br>
+<font class="syn_pre">#define OMNI_IO_PATH_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_IO_PATH_INTERNAL_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_PATH_FW cpath</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_CHAR_T_FW char_t</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_L_FW(v) v</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_STRING_T_FW <a href="http://www.cplusplus.com/reference/string/">std::string</a></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;<a href="omni/xx/io_path.hxx.html">omni/xx/io_path.hxx</a>&gt;</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#undef OMNI_PATH_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#undef OMNI_CHAR_T_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#undef OMNI_L_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#undef OMNI_STRING_T_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#undef OMNI_IO_PATH_INTERNAL_FW</font><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_PATH_FW wpath</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_CHAR_T_FW wide_char_t</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_L_FW(v) L##v</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_STRING_T_FW <a href="http://www.cplusplus.com/reference/string/">std::wstring</a></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;<a href="omni/xx/io_path.hxx.html">omni/xx/io_path.hxx</a>&gt;</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#undef OMNI_PATH_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#undef OMNI_CHAR_T_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#undef OMNI_L_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#undef OMNI_STRING_T_FW</font><br>
+<font class="syn_pre">#undef OMNI_IO_PATH_FW</font><br>
+<br>
+<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../options/omni_os_win.html">OMNI_OS_WIN</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#undef OMNI_FILE_CHECKA_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#undef OMNI_FILE_CHECKW_FW</font><br>
+<font class="syn_pre">#endif</font><br>
+<!--end highlighted code-->
+</div></code><br>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS(); collapseAll('1', '../../');</script></body></html>

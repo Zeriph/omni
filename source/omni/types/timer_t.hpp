@@ -26,7 +26,8 @@
 
 namespace omni {
     namespace chrono {
-        class timer_sync_type {
+        class timer_sync_type
+        {
             public:
                 typedef enum enum_t {
                     /**
@@ -151,6 +152,11 @@ namespace omni {
                     OMNI_D5_FW("destroyed");
                 }
 
+                unsigned short count() const
+                {
+                    return COUNT();
+                }
+
                 enum_t value() const
                 {
                     return this->m_val;
@@ -251,11 +257,6 @@ namespace omni {
                 operator enum_t() const
                 {
                     return this->m_val;
-                }
-
-                operator int32_t() const
-                {
-                    return static_cast<int32_t>(this->m_val);
                 }
 
                 operator std::string() const

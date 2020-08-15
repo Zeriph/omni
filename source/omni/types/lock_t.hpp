@@ -23,7 +23,7 @@
 #if defined(OMNI_OS_WIN)
     #define OMNI_SPIN_LOCK_T volatile long 
     #define OMNI_SEM_T HANDLE
-    // Critical sections don't enter the kernel
+    // Critical sections do not enter the kernel
     // CreateMutex is for "named" mutexes, crit_sec is for thread safe code
     #define OMNI_MUTEX_T    CRITICAL_SECTION
     #if defined(OMNI_WIN_USE_EVENT_CONDITIONAL)

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_CHAR_T</Name>
+  <Brief>Defines the underlying char type.
+</Brief>
+  <Considerations>No special consideration.
+</Considerations>
+  <Description>To be deterministic (i.e. the same input/output across platforms), the OMNI_CHAR_T and OMNI_STRING_T types are defined based on the OMNI_UNICODE flag. Windows platforms/builds typically reference the wide character functions of the Windows API (i.e. the GetCurrentDirectory function is a macro alias to either the @c GetCurrentDirectoryW or @c GetCurrentDirectoryA functions which operate on the @c wchar_t and @c char types respectively), as such, to not have the developer worry about what character type to use when using a certain Omni API on a specific platform, you can utilize the OMNI_CHAR_T and OMNI_STRING_T compile flags to ensure the proper type is used across platforms/builds.
+</Description>
+  <Notes>None.
+</Notes>
+  <PlatformSpecific>Although this flag is used to help certain cross-platform issues, it does not have any platform specific notes.
+</PlatformSpecific>
+  <Synopsis>Certain portions of the framework can be wide character aware by defining the OMNI_UNICODE macro, which in turn is defined if a @c UNICODE macro is defined.
+
+If OMNI_UNICODE is defined, then the @c wchar_t type is used for certain framework functionality and omni::char_t is a @c wchar_t type.
+
+If OMNI_UNICODE is not defined, then the @c char type is used and omni::char_t is a normal @c char type.
+</Synopsis>
+  <IsHelper>false</IsHelper>
+  <IsConstant>false</IsConstant>
+  <IsFWHelp>true</IsFWHelp>
+</MacroOp>

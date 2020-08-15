@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - OMNI_DELEGATE</title>
+<link rel="stylesheet" type="text/css" href="../../content/main.css" /><link rel="icon" type="image/png" href="../../content/favicon.png" />
+<script type="text/javascript" src="../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="index.html">Source</a></li><li title="Library classes and namespaces">
+<a href="../classes/index.html">Class Index</a></li><li title="Download and view examples">
+<a href="../examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="index.html" class="current">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../api.html">System API</a></li><li title="Other Considerations">
+<a href="../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle"><a name="omni_options"></a>OMNI_DELEGATE</div><div class="content"><div>
+<div class="docdiv">
+    <font class="docu">MACRO</font><br><br>
+    <code><font style="font-size:16px;">
+    <code>OMNI_DELEGATE</code> - A helper macro for defining an <code><a href="../classes/omni-delegate.html">omni::delegate</a></code>
+    </font></code>
+</div><br>
+<div class="docdiv">
+    <font class="docu">SYNOPSIS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    Creating and defining <code><a href="../classes/omni-delegate.html">omni::delegate</a></code> types can get quite verbose when dealing with a function with multiple parameters. To alleviate this, you can use this helper macro to define an <code><a href="../classes/omni-delegate.html">omni::delegate</a></code> with a number of parameters and a specific return type:<br>
+<div class="sntx"><input type="checkbox" id="c0" name="c0" checked /><label for="c0">&nbsp;</label><pre><font class="syn_typ">int</font> function0()
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">42</font>;
+}
+
+<font class="syn_typ">int</font> function3(<font class="syn_typ">int</font> x, <font class="syn_typ">int</font> y, <font class="syn_typ">int</font> z)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (x * y) / z;
+}
+
+<font class="syn_typ">int</font> main(<font class="syn_typ">int</font> argc, <font class="syn_typ">char</font>* argv[])
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// <a href="../classes/omni-delegate.html">omni::delegate</a>&lt;int&gt; f0 = &amp;function0;</font>
+&nbsp;&nbsp;&nbsp;&nbsp;omni_delegate(<font class="syn_typ">int</font>) f0 = &amp;function0;
+
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// <a href="../classes/omni-delegate3.html">omni::delegate3</a>&lt;int, int, int, int&gt; f3 = &amp;function3;</font>
+&nbsp;&nbsp;&nbsp;&nbsp;omni_delegate(<font class="syn_typ">int</font>, <font class="syn_typ">int</font>, <font class="syn_typ">int</font>, <font class="syn_typ">int</font>) f3 = &amp;function3;
+
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; f3(f0(), f0(), f0()) &lt;&lt; std::endl;
+
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;
+}</pre></div>
+</div><br>
+<div class="docdiv">
+    <font class="docu">DESCRIPTION</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    This helper macro allows you to define an <code><a href="../classes/omni-delegate.html">omni::delegate</a></code> of any parameter length without having to specify the specific <code><a href="../classes/omni-delegate.html">omni::delegate</a></code> type. In other words, usually one would have to define an <code><a href="../classes/omni-delegate.html">omni::delegate</a></code> with 2 parameter types by declaring it as such <code><a href="../classes/omni-delegate2.html">omni::delegate2</a></code>&lt;void, int, int&gt; additionally, one would have to define an <code><a href="../classes/omni-delegate.html">omni::delegate</a></code> that takes 1 parameter as such <code><a href="../classes/omni-delegate1.html">omni::delegate1</a></code>&lt;void, int&gt; this is true for any of the <code><a href="../classes/omni-delegate.html">omni::delegate</a></code> types up to 16 parameters.<br>
+<br>
+So that you do not have to specify the specific delegate type, you can use the omni_delegate helper macro to define the correct <code><a href="../classes/omni-delegate.html">omni::delegate</a></code> type without having to be specific each time, reducing code and confusion.<br>
+<div class="sntx"><input type="checkbox" id="c1" name="c1" checked /><label for="c1">&nbsp;</label><pre><font class="syn_typ">int</font> function0()
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">42</font>;
+}
+
+<font class="syn_typ">int</font> function3(<font class="syn_typ">int</font> x, <font class="syn_typ">int</font> y, <font class="syn_typ">int</font> z)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (x * y) / z;
+}
+
+<font class="syn_typ">int</font> main(<font class="syn_typ">int</font> argc, <font class="syn_typ">char</font>* argv[])
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// <a href="../classes/omni-delegate.html">omni::delegate</a>&lt;int&gt; f0 = &amp;function0;</font>
+&nbsp;&nbsp;&nbsp;&nbsp;omni_delegate(<font class="syn_typ">int</font>) f0 = &amp;function0;
+
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// <a href="../classes/omni-delegate3.html">omni::delegate3</a>&lt;int, int, int, int&gt; f3 = &amp;function3;</font>
+&nbsp;&nbsp;&nbsp;&nbsp;omni_delegate(<font class="syn_typ">int</font>, <font class="syn_typ">int</font>, <font class="syn_typ">int</font>, <font class="syn_typ">int</font>) f3 = &amp;function3;
+
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; f3(f0(), f0(), f0()) &lt;&lt; std::endl;
+
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;
+}</pre></div>You can even use the macro in <code>typedef</code> definitions:<br>
+<div class="sntx"><input type="checkbox" id="c2" name="c2" checked /><label for="c2">&nbsp;</label><pre><font class="syn_ins">typedef</font> omni_delegate(<font class="syn_typ">int</font>, <font class="syn_typ">int</font>, <font class="syn_typ">int</font>, <font class="syn_typ">int</font>) functor3;
+<font class="syn_ins">typedef</font> omni_delegate(<font class="syn_typ">int</font>) functor1;
+
+<font class="syn_typ">int</font> function0()
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">42</font>;
+}
+
+<font class="syn_typ">int</font> function3(<font class="syn_typ">int</font> x, <font class="syn_typ">int</font> y, <font class="syn_typ">int</font> z)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (x * y) / z;
+}
+
+<font class="syn_typ">int</font> main(<font class="syn_typ">int</font> argc, <font class="syn_typ">char</font>* argv[])
+{
+&nbsp;&nbsp;&nbsp;&nbsp;functor1 f1 = &amp;function1;
+&nbsp;&nbsp;&nbsp;&nbsp;functor3 f3 = &amp;function3;
+
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; f3(f1(), f1(), f1()) &lt;&lt; std::endl;
+
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;
+}</pre></div>
+</div><br>
+<div class="docdiv">
+    <font class="docu">CONSIDERATIONS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    No special considerations.
+</div><br>
+<div class="docdiv">
+    <font class="docu">PLATFORM SPECIFIC</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    No platform specific notes.
+</div><br>
+<div class="docdiv">
+    <font class="docu">NOTES</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    None.
+</div><br>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

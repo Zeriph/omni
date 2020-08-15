@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_BIND</Name>
+  <Brief>A helper macro for binding to the omni::delegate
+</Brief>
+  <Considerations>This macro is only applicable to binding of non-static member functions (namespace functions are not non-static member functions and can be addressed the same as a non-member function).
+
+Example:
+
+@code
+class my_class {
+    public:
+        void some_function(int p) { /* code */ }
+};
+
+namespace my_ns {
+    void some_function(int p) { /* code */ }
+}
+
+void some_function(int p) { /* code */ }
+
+my_class obj;
+omni::delegate1&lt;void, int&gt; d1 = omni_bind(void, int, my_class, some_function, obj); // OK
+omni::delegate1&lt;void, int&gt; d2 = omni_bind(void, int, my_ns, some_function, obj); // FAIL (my_ns is not a class)
+omni::delegate1&lt;void, int&gt; d3 = omni_bind(void, int, my_class, &amp;some_function, obj); // FAIL (expands &amp;my_class::&amp;some_function)
+
+// d2 and d3 could simply be written as such:
+
+omni::delegate1&lt;void, int&gt; d2 = &amp;my_ns::some_function;
+omni::delegate1&lt;void, int&gt; d3 = &amp;::some_funciton;
+@code
+</Considerations>
+  <Description>When binding a function to an omni::delegate (or an omni::event), you can use the static bind function of the delegate class to attach a non-static class member function by specifying the full delegate signature and the class, it's function and the associated instance to bind to; as an example, using the omni::delegate1 which takes one parameter in the function signature:
+
+@code
+my_class obj;
+omni::delegate1&lt;void, int&gt; my_delegate = omni::delegate1&lt;void, int&gt;::bind&lt;my_class, &amp;my_class::class_function&gt;(obj);
+my_event += my_delegate;
+// or 
+omni::event1&lt;void, int&gt; my_event;
+my_event += omni::delegate1&lt;void, int&gt;::bind&lt;my_class, &amp;my_class::class_function&gt;(obj);
+// or
+typedef omni::event1&lt;void, int&gt; event_t;
+event_t my_event;
+my_event += event_t::delegate_t::bind&lt;my_class, &amp;my_class::class_function&gt;(obj);
+@code
+
+As you can see, this can get very verbose when working with more complex function signatures and class types. To help alleviate some of this verbosity in the code you could instead elect to use this helper macro, example (using code from above):
+
+@code
+my_class obj;
+omni::event1&lt;void, int&gt; my_event;
+my_event += omni_bind(void, int, my_class, class_function, obj);
+// or 
+omni::delegate1&lt;void, int&gt; my_delegate = omni_bind(void, int, my_class, class_function, obj);
+my_event += my_delegate;
+@code
+
+Since this is just a helper macro, it's intended use is mostly to help the verbosity of binding a member function. You could alternatively typedef a more complex delegate type and perform similar functionality, example:
+
+@code
+typedef omni::event1&lt;void, int&gt; event_t;
+typedef event_t::delegate_t delegate_t;
+// or typedef omni::delegate1&lt;void, int&gt; delegate_t;
+my_class obj;
+event_t my_event;
+my_event += delegate_t::bind&lt;my_class, &amp;my_class::class_function&gt;(obj);
+// or 
+delegate_t my_delegate = delegate_t::bind&lt;my_class, &amp;my_class::class_function&gt;(obj);
+my_event += my_delegate;
+@code
+</Description>
+  <Notes>None.
+</Notes>
+  <PlatformSpecific>No platform specific notes.
+</PlatformSpecific>
+  <Synopsis>This macro is a framework helper macro. It's purpose is to make binding to an omni::delegate less verbose when needing to bind to a non-static class member function.
+
+This macro is only for non-static class members (i.e. a class/struct member function) since binding to a static function is already less verbose (e.g. you can simply say &lt;code&gt;omni::delegate d = &amp;some_function&lt;/code&gt;);
+
+The macro is a variadic macro that expands to one of the defined @c OMNI_BIND macros where each helper macro is defined as such:
+
+@code
+#define OMNI_BIND0(Ret, Class, Function, Obj) omni::delegate&lt;Ret&gt;::bind&lt;Class, &amp;Class::Function&gt;(Obj)
+@code
+
+Where @c Ret is the function return type, @c Class is the class type, @c Function is the member function of the @c Class specified (only the function name, not the full scope as the macro will expand this), and lastly @c Obj is the instance object needing to be passed in.
+
+For each omni::delegate type there is an associated OMNI_BIND macro. The omni::delegate1 type would be @c OMNI_BIND1, for omni::delegate2 @c OMNI_BIND2 and so on, where the additional parameters are a part of the macro. So @c OMNI_BIND1 is defined as the following:
+
+@code
+#define OMNI_BIND1(Ret, PT1, Class, Function, Obj) omni::delegate1&lt;Ret, PT1&gt;::bind&lt;Class, &amp;Class::Function&gt;(Obj)
+@code
+
+The @c Ret, @c Class, @c Function and @c Obj macro parameters are the same as the OMNI_BIND macro; @c PT1 is the 1st function parameter type, if you used @c OMNI_BIND2, etc., additional function parameter types will be specified in the macro parameters as well (e.g. @c PT2 for @c OMNI_BIND2, @c PT2 and @c PT3 for @c OMNI_BIND3 and so on).
+</Synopsis>
+  <IsHelper>true</IsHelper>
+  <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
+</MacroOp>

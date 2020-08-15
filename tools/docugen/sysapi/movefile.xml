@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<SysAPI xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>MoveFile</Name>
+  <Link>https://msdn.microsoft.com/en-us/library/windows/desktop/aa365239(v=vs.85).aspx</Link>
+  <SysType>Windows</SysType>
+</SysAPI>

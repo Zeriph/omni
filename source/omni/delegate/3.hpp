@@ -23,11 +23,12 @@
 
 namespace omni {
     /**
-     * The delegate is a powerful function pointer object that
-     * encapsulates both an object instance and a method. The delegate is
-     * agnostic to the type or method it encapsulates; all that matters is that
-     * the method be signature compatible with the delegate. This allows for 
-     * 'anonymous' invocation by users of the delegate.
+     * @brief The delegate is a powerful function pointer object
+     * that encapsulates both an object instance and a method.
+     * 
+     * @details The delegate is agnostic to the type or method it encapsulates;
+     * all that matters is that the method be signature compatible with the delegate.
+     * This allows for anonymous invocation by users of the delegate.
      * 
      * @tparam Ret     Specifies the return type of the function the delegate is to attach to
      * @tparam PT1     Specifies the 1st parameter type passed to the function delegate
@@ -53,7 +54,7 @@ namespace omni {
             typedef ret_t (*function_ptr)(p1_t val1, p2_t val2, p3_t val3);
             
             /**
-             * The default constructor; constructs a default delegate
+             * @brief The default constructor; constructs a default delegate
              * object with no function or member attached.
              */
             delegate3() :
@@ -66,7 +67,7 @@ namespace omni {
             }
             
             /**
-             * The copy constructor; copies another delegates target and method.
+             * @brief The copy constructor; copies another delegates target and method.
              * The delegate being copied must be of the same signature.
              *
              * @param cp    The other delegate to copy
@@ -81,7 +82,7 @@ namespace omni {
             }
             
             /**
-             * Creates a new instance from a non-member or static member function pointer.
+             * @brief Creates a new instance from a non-member or static member function pointer.
              * 
              * @param fnptr   The function pointer to attach
              */
@@ -95,10 +96,11 @@ namespace omni {
             }
             
             /**
-             * Creates a new instance from a functor and object.
+             * @brief Creates a new instance from a functor and object.
              * 
              * @param obj   The instance of the object to use with this delegate
-             * @param mthd  The functor of the object to attach to this delegate for invocation
+             * @param mthd  The omni::delegate3::functor of the object to attach
+             *              to this delegate for invocation
              */
             delegate3(void* obj, functor mthd) :
                 OMNI_SAFE_DGATE_MILST_FW
@@ -109,8 +111,15 @@ namespace omni {
                 OMNI_D5_FW("created delegate with target and method");
             }
             
-            /** The default destructor, detaches this instance from its target and method */
-            ~delegate3()
+            /**
+             * @brief The destructor detaches this instance from its target and method
+             * 
+             * @warning If the function is still running when this delegate instance is
+             * being destroyed, the function will continue to live in an undefined state.
+             * The function will not stop upon destruction and will likely have a corrupted
+             * stack pointer.
+             */
+            ~delegate3() OMNI_DTOR_THROWS
             {
                 OMNI_TRY_FW
                 this->unbind();
@@ -120,9 +129,14 @@ namespace omni {
             }
 
             /**
-             * Attach a static member or non-member function to this delegate.
+             * @brief Attach a static member or non-member function to this delegate.
              * 
              * @param fnptr The function taking 3 parameters to attach to the delegate
+             * 
+             * @warning If there is a function currently attached and still running when
+             * this call is made to rebind, the attached function will continue to live
+             * in an undefined state. It will not stop upon unbinding and will likely have
+             * a corrupted stack pointer.
              */
             inline void bond(function_ptr fnptr)
             {
@@ -130,9 +144,14 @@ namespace omni {
             }
             
             /**
-             * Attach a static member or non-member function to this delegate.
+             * @brief Attach a static member or non-member function to this delegate.
              * 
              * @tparam fnptr The function taking 3 parameters to attach to the delegate
+             * 
+             * @warning If there is a function currently attached and still running when
+             * this call is made to rebind, the attached function will continue to live
+             * in an undefined state. It will not stop upon unbinding and will likely have
+             * a corrupted stack pointer.
              */
             template < ret_t (*fnptr)(p1_t, p2_t, p3_t) >
             inline void bond()
@@ -141,11 +160,16 @@ namespace omni {
             }
             
             /**
-             * Attach a member function to this delegate.
+             * @brief Attach a member function to this delegate.
              * 
              * @tparam T             The type of class to associate with this delegate
              * @tparam fnptr         The function to attach to the delegate
              * @param obj            The instance of the class to reference in this delegate
+             * 
+             * @warning If there is a function currently attached and still running when
+             * this call is made to rebind, the attached function will continue to live
+             * in an undefined state. It will not stop upon unbinding and will likely have
+             * a corrupted stack pointer.
              */
             template < class T, ret_t (T::*fnptr)(p1_t, p2_t, p3_t) >
             inline void bond(T& obj)
@@ -154,11 +178,16 @@ namespace omni {
             }
 
             /**
-             * Attach a member function to this delegate.
+             * @brief Attach a member function to this delegate.
              * 
              * @tparam T             The type of class to associate with this delegate
              * @tparam fnptr         The function to attach to the delegate
              * @param obj            The instance of the class to reference in this delegate
+             * 
+             * @warning If there is a function currently attached and still running when
+             * this call is made to rebind, the attached function will continue to live
+             * in an undefined state. It will not stop upon unbinding and will likely have
+             * a corrupted stack pointer.
              */
             template < class T, ret_t (T::*fnptr)(p1_t, p2_t, p3_t) >
             inline void bond(const T& obj)
@@ -167,11 +196,16 @@ namespace omni {
             }
             
             /**
-             * Attach a member function to this delegate.
+             * @brief Attach a member function to this delegate.
              * 
              * @tparam T             The type of class to associate with this delegate
              * @tparam fnptr         The function to attach to the delegate
              * @param obj            The instance of the class to reference in this delegate
+             * 
+             * @warning If there is a function currently attached and still running when
+             * this call is made to rebind, the attached function will continue to live
+             * in an undefined state. It will not stop upon unbinding and will likely have
+             * a corrupted stack pointer.
              */
             template < class T, ret_t (T::*fnptr)(p1_t, p2_t, p3_t) >
             inline void bond(const T *const obj)
@@ -180,11 +214,16 @@ namespace omni {
             }
 
             /**
-             * Attach a const member function to this delegate.
+             * @brief Attach a const member function to this delegate.
              * 
              * @tparam T             The type of class to associate with this delegate
              * @tparam fnptr         The const function to attach to the delegate
              * @param obj            The instance of the class to reference in this delegate
+             * 
+             * @warning If there is a function currently attached and still running when
+             * this call is made to rebind, the attached function will continue to live
+             * in an undefined state. It will not stop upon unbinding and will likely have
+             * a corrupted stack pointer.
              */
             template < class T, ret_t (T::*fnptr)(p1_t, p2_t, p3_t) const >
             inline void bond_const(const T& obj)
@@ -193,11 +232,16 @@ namespace omni {
             }
             
             /**
-             * Attach a const member function to this delegate.
+             * @brief Attach a const member function to this delegate.
              * 
              * @tparam T             The type of class to associate with this delegate
              * @tparam fnptr         The function to attach to the delegate
              * @param obj            The instance of the class to reference in this delegate
+             * 
+             * @warning If there is a function currently attached and still running when
+             * this call is made to rebind, the attached function will continue to live
+             * in an undefined state. It will not stop upon unbinding and will likely have
+             * a corrupted stack pointer.
              */
             template < class T, ret_t (T::*fnptr)(p1_t, p2_t, p3_t) const >
             inline void bond_const(const T *const obj)
@@ -206,9 +250,14 @@ namespace omni {
             }
             
             /**
-             * Attach a static member or non-member function to this delegate.
+             * @brief Attach a static member or non-member function to this delegate.
              * 
              * @tparam fnptr The function taking 3 parameters to attach to the delegate
+             * 
+             * @warning If there is a function currently attached and still running when
+             * this call is made to rebind, the attached function will continue to live
+             * in an undefined state. It will not stop upon unbinding and will likely have
+             * a corrupted stack pointer.
              */
             template < ret_t (*fnptr)(p1_t, p2_t, p3_t) >
             static delegate3 bind()
@@ -217,11 +266,16 @@ namespace omni {
             }
             
             /**
-             * Attach a parametrized member function to this delegate.
+             * @brief Attach a parameterized member function to this delegate.
              * 
              * @tparam T             The type of class to associate with this delegate
-             * @tparam fnptr         The parametrized function to attach to the delegate
+             * @tparam fnptr         The parameterized function to attach to the delegate
              * @param obj            The instance of the class to reference in this delegate
+             * 
+             * @warning If there is a function currently attached and still running when
+             * this call is made to rebind, the attached function will continue to live
+             * in an undefined state. It will not stop upon unbinding and will likely have
+             * a corrupted stack pointer.
              */
             template < class T, ret_t (T::*fnptr)(p1_t, p2_t, p3_t) >
             static delegate3 bind(T& obj)
@@ -230,11 +284,16 @@ namespace omni {
             }
             
             /**
-             * Attach a parametrized member function to this delegate.
+             * @brief Attach a parameterized member function to this delegate.
              * 
              * @tparam T             The type of class to associate with this delegate
-             * @tparam fnptr         The parametrized function to attach to the delegate
+             * @tparam fnptr         The parameterized function to attach to the delegate
              * @param obj            The instance of the class to reference in this delegate
+             * 
+             * @warning If there is a function currently attached and still running when
+             * this call is made to rebind, the attached function will continue to live
+             * in an undefined state. It will not stop upon unbinding and will likely have
+             * a corrupted stack pointer.
              */
             template < class T, ret_t (T::*fnptr)(p1_t, p2_t, p3_t) >
             static delegate3 bind(const T& obj)
@@ -243,11 +302,16 @@ namespace omni {
             }
             
             /**
-             * Attach a parametrized member function to this delegate.
+             * @brief Attach a parameterized member function to this delegate.
              * 
              * @tparam T             The type of class to associate with this delegate
-             * @tparam fnptr         The parametrized function to attach to the delegate
+             * @tparam fnptr         The parameterized function to attach to the delegate
              * @param obj            The instance of the class to reference in this delegate
+             * 
+             * @warning If there is a function currently attached and still running when
+             * this call is made to rebind, the attached function will continue to live
+             * in an undefined state. It will not stop upon unbinding and will likely have
+             * a corrupted stack pointer.
              */
             template < class T, ret_t (T::*fnptr)(p1_t, p2_t, p3_t) >
             static delegate3 bind(const T *const obj)
@@ -256,11 +320,16 @@ namespace omni {
             }
 
             /**
-             * Attach a const parametrized member function to this delegate.
+             * @brief Attach a const parameterized member function to this delegate.
              * 
              * @tparam T           The type of class to associate with this delegate
-             * @tparam fnptr       The parametrized function to attach to the delegate
+             * @tparam fnptr       The parameterized function to attach to the delegate
              * @param obj          The instance of the class to reference in this delegate
+             * 
+             * @warning If there is a function currently attached and still running when
+             * this call is made to rebind, the attached function will continue to live
+             * in an undefined state. It will not stop upon unbinding and will likely have
+             * a corrupted stack pointer.
              */
             template < class T, ret_t (T::*fnptr)(p1_t, p2_t, p3_t) const >
             static delegate3 bind_const(const T& obj)
@@ -269,11 +338,16 @@ namespace omni {
             }
             
             /**
-             * Attach a parametrized member function to this delegate.
+             * @brief Attach a parameterized member function to this delegate.
              * 
              * @tparam T           The type of class to associate with this delegate
-             * @tparam fnptr       The parametrized function to attach to the delegate
+             * @tparam fnptr       The parameterized function to attach to the delegate
              * @param obj          The instance of the class to reference in this delegate
+             * 
+             * @warning If there is a function currently attached and still running when
+             * this call is made to rebind, the attached function will continue to live
+             * in an undefined state. It will not stop upon unbinding and will likely have
+             * a corrupted stack pointer.
              */
             template < class T, ret_t (T::*fnptr)(p1_t, p2_t, p3_t) const >
             static delegate3 bind_const(const T *const obj)
@@ -282,7 +356,7 @@ namespace omni {
             }
             
             /**
-             * Gets if this instance is bound to a method
+             * @brief Gets if this instance is bound to a method
              *
              * @return True if this instance is currently bound
              */
@@ -293,7 +367,7 @@ namespace omni {
             }
             
             /**
-             * Gets if this instance is bound to a member method
+             * @brief Gets if this instance is bound to a member method
              *
              * @return True if this instance is currently bound to a target and method
              */
@@ -304,7 +378,7 @@ namespace omni {
             }
             
             /**
-             * Invoke the function bound to this delegate instance
+             * @brief Invoke the function bound to this delegate instance
              * 
              * @return  This function returns whatever is returned
              *          (if anything) from the invoked function
@@ -338,10 +412,10 @@ namespace omni {
             }
             
             /**
-             * Invoke the function bound to this delegate instance.
-             * This method does not preform any safety checks on the
-             * method or object instance and directly calls the method
-             * for invocation (if bound).
+             * @brief Directly invoke the function bound to this delegate instance.
+             * 
+             * @details This method does not preform any safety checks on the method
+             * object instance and directly calls the method for invocation (if bound).
              * 
              * @return  This function returns whatever is returned
              *          (if anything) from the invoked function
@@ -355,7 +429,7 @@ namespace omni {
             }
             
             /**
-             * Gets the invocation type this delegate represents
+             * @brief Gets the invocation type this delegate represents
              * 
              * @return The delegates omni::invoke_type::enum_t 
              */
@@ -369,7 +443,7 @@ namespace omni {
             }
             
             /**
-             * Gets the underlying functor called when this method is invoked.
+             * @brief Gets the underlying functor called when this method is invoked.
              * 
              * @return The underlying functor method
              */
@@ -380,10 +454,10 @@ namespace omni {
             }
             
             /**
-             * Gets the underlying function pointer called when this method is invoked.
+             * @brief Gets the underlying function pointer called when this method is invoked.
              * 
              * @return The underlying function pointer, or an OMNI_NULL value if the
-             * object instance is null;
+             * object instance is null (in the case of a static or non-member function).
              */
             const function_ptr function() const
             {
@@ -393,7 +467,7 @@ namespace omni {
             }
             
             /**
-             * Swaps the invocation method and target of 2 delegates
+             * @brief Swaps the invocation method and target of 2 delegates
              */
             void swap(delegate3< Ret, PT1, PT2, PT3 >& d)
             {
@@ -409,7 +483,7 @@ namespace omni {
             }
             
             /**
-             * Gets the underlying target (if any) used when invoking this method.
+             * @brief Gets the underlying target (if any) used when invoking this method.
              * 
              * @return A pointer to the underlying target object (if any)
              */
@@ -420,7 +494,12 @@ namespace omni {
             }
             
             /**
-             * Detaches the target and method from this instance
+             * @brief Detaches the target and method from this instance
+             * 
+             * @warning If there is a function currently attached and still running when
+             * this call is made to unbind, the attached function will continue to live
+             * in an undefined state. It will not stop upon unbinding and will likely have
+             * a corrupted stack pointer.
              */
             inline void unbind()
             {
@@ -429,9 +508,16 @@ namespace omni {
             }
             
             /**
-             * Sets the underlying method; this method is marked unsafe
-             * since it manipulates the underlying pointers. This method
-             * assumes the user understands all implications with this.
+             * @brief Sets the underlying method.
+             * 
+             * @details This method is marked unsafe since it manipulates
+             * the underlying pointers. This method assumes the user understands
+             * all implications with this.
+             * 
+             * @warning If there is a function currently attached and still running when
+             * this call is made to rebind, the attached function will continue to live
+             * in an undefined state. It will not stop upon unbinding and will likely have
+             * a corrupted stack pointer.
              */
             template < class T, ret_t (T::*fnptr)(p1_t, p2_t, p3_t) >
             inline void unsafe_set_method()
@@ -440,9 +526,16 @@ namespace omni {
             }
 
             /**
-             * Sets the underlying method; this method is marked unsafe
-             * since it manipulates the underlying pointers. This method
-             * assumes the user understands all implications with this.
+             * @brief Sets the underlying method.
+             * 
+             * @details This method is marked unsafe since it manipulates
+             * the underlying pointers. This method assumes the user understands
+             * all implications with this.
+             * 
+             * @warning If there is a function currently attached and still running when
+             * this call is made to rebind, the attached function will continue to live
+             * in an undefined state. It will not stop upon unbinding and will likely have
+             * a corrupted stack pointer.
              */
             template < class T, ret_t (T::*fnptr)(p1_t, p2_t, p3_t) const >
             inline void unsafe_set_method_const()
@@ -451,9 +544,16 @@ namespace omni {
             }
             
             /**
-             * Sets the underlying target; this method is marked unsafe
-             * since it manipulates the underlying pointers. This method
-             * assumes the user understands all implications with this.
+             * @brief Sets the underlying target.
+             * 
+             * @details This method is marked unsafe since it manipulates
+             * the underlying pointers. This method assumes the user understands
+             * all implications with this.
+             * 
+             * @warning If there is a function currently attached and still running when
+             * this call is made to rebind, the attached function will continue to live
+             * in an undefined state. It will not stop upon unbinding and will likely have
+             * a corrupted stack pointer.
              */
             template < class T >
             inline void unsafe_set_target(T& obj)
@@ -462,9 +562,16 @@ namespace omni {
             }
 
             /**
-             * Sets the underlying target; this method is marked unsafe
-             * since it manipulates the underlying pointers. This method
-             * assumes the user understands all implications with this.
+             * @brief Sets the underlying target.
+             * 
+             * @details This method is marked unsafe since it manipulates
+             * the underlying pointers. This method assumes the user understands
+             * all implications with this.
+             * 
+             * @warning If there is a function currently attached and still running when
+             * this call is made to rebind, the attached function will continue to live
+             * in an undefined state. It will not stop upon unbinding and will likely have
+             * a corrupted stack pointer.
              */
             template < class T >
             inline void unsafe_set_target(const T& obj)
@@ -473,9 +580,16 @@ namespace omni {
             }
             
             /**
-             * Sets the underlying target; this method is marked unsafe
-             * since it manipulates the underlying pointers. This method
-             * assumes the user understands all implications with this.
+             * @brief Sets the underlying target.
+             * 
+             * @details This method is marked unsafe since it manipulates
+             * the underlying pointers. This method assumes the user understands
+             * all implications with this.
+             * 
+             * @warning If there is a function currently attached and still running when
+             * this call is made to rebind, the attached function will continue to live
+             * in an undefined state. It will not stop upon unbinding and will likely have
+             * a corrupted stack pointer.
              */
             template < class T >
             inline void unsafe_set_target(const T *const obj)
@@ -484,7 +598,11 @@ namespace omni {
             }
             
             /**
-             * Checks if the current delegate instance is valid
+             * @brief Checks if the current delegate instance is valid.
+             * 
+             * @details This only checks to see if there is a method attached
+             * to this instance that can be invoked, and does not check if
+             * the object attached is valid. 
              * 
              * @return True if the instance has a method attached, false if not
              */
@@ -495,10 +613,11 @@ namespace omni {
             }
             
             /**
-             * Has the same effect as calling the invoke method.
-             * Overloading this operator makes it such that you can
-             * use the delegate as if it were a function.
-             *
+             * @brief Has the same effect as calling the invoke method.
+             * 
+             * @details Overloading this operator makes it such that you can
+             * use the delegate as if it were a function, for example:
+             * 
              * delegate<int> d = &some_func;
              * printf("value = %d", d());
              * 
@@ -510,8 +629,11 @@ namespace omni {
             }
             
             /**
-             * The boolean operator allows you to check for validity as if
+             * @brief Calls this instances valid() function
+             * 
+             * @details The boolean operator allows you to check for validity as if
              * the delegate were a function pointer, example:
+             * 
              * delegate<int> d;
              * if (d) { d(); } // fails check because d is not attached
              * d = &some_func;
@@ -525,7 +647,7 @@ namespace omni {
             }
             
             /**
-             * The negated boolean () operator is used to check negation of the boolean () operator
+             * @brief The negated boolean () operator is used to check negation of the boolean () operator
              */
             inline bool operator!() const
             {
@@ -533,12 +655,17 @@ namespace omni {
             }
             
             /**
-             * The assignment operator is used to set the target and method
+             * @brief The assignment operator is used to set the target and method
              * of another delegate to this one.
              * 
              * @param d        The right most operand which to assign to
              *
              * @return A reference to the current instance
+             * 
+             * @warning If there is a function currently attached and still running when
+             * this call is made to rebind, the attached function will continue to live
+             * in an undefined state. It will not stop upon unbinding and will likely have
+             * a corrupted stack pointer.
              */
             delegate3< Ret, PT1, PT2, PT3 >& operator=(const delegate3< Ret, PT1, PT2, PT3 >& d)
             {
@@ -555,12 +682,17 @@ namespace omni {
             }
             
             /**
-             * Allows for assignment to anonymous (non-member) functions
+             * @brief Allows for assignment to anonymous (non-member) functions
              * by saying = &func_name
              * 
              * @param fp   The function pointer to assign
              *
              * @return A reference to the current instance
+             * 
+             * @warning If there is a function currently attached and still running when
+             * this call is made to rebind, the attached function will continue to live
+             * in an undefined state. It will not stop upon unbinding and will likely have
+             * a corrupted stack pointer.
              */
             delegate3< Ret, PT1, PT2, PT3 >& operator=(function_ptr fnptr)
             {
@@ -569,7 +701,7 @@ namespace omni {
             }
             
             /**
-             * The equality operator test the target and method against the other
+             * @brief The equality operator test the target and method against the other
              * 
              * @param d        The right most operand which to compare to
              *
@@ -587,7 +719,7 @@ namespace omni {
             }
             
             /**
-             * The != operator is used for comparison results (negates the == operator)
+             * @brief The != operator is used for comparison results (negates the == operator)
              * 
              * @param d        The right most operand which to compare to
              *
@@ -606,7 +738,7 @@ namespace omni {
             void* m_target;
             
             /**
-             * The internal binding function that sets the underlying method and target
+             * @brief The internal binding function that sets the underlying method and target
              * 
              * @param obj  The target to set
              * @param mthd The method to set
@@ -621,7 +753,7 @@ namespace omni {
             }
             
             /**
-             * Sets the underlying target object
+             * @brief Sets the underlying target object
              */
             void _set_target(void* obj)
             {
@@ -631,7 +763,7 @@ namespace omni {
             }
             
             /**
-             * Sets the underlying target function
+             * @brief Sets the underlying target function
              */
             void _set_method(functor mthd)
             {
@@ -641,7 +773,7 @@ namespace omni {
             }
             
             /**
-             * Gets the parametrized non member (static/anonymous) function to use
+             * @brief Gets the parameterized non member (static/anonymous) function to use
              * 
              * @tparam fnptr         The method to assign
              */
@@ -652,10 +784,10 @@ namespace omni {
             }
             
             /**
-             * Get the parametrized member function to use
+             * @brief Get the parameterized member function to use
              * 
              * @tparam T           The class type
-             * @tparam fnptr       The parametrized member method to use
+             * @tparam fnptr       The parameterized member method to use
              * @param obj          The instance object associated with the member method
              * 
              * @return             The functor
@@ -667,10 +799,10 @@ namespace omni {
             }
             
             /**
-             * Get the const parametrized member function to use
+             * @brief Get the const parameterized member function to use
              * 
              * @tparam T           The class type
-             * @tparam fnptr       The parametrized member method to use
+             * @tparam fnptr       The parameterized member method to use
              * @param obj          The instance object associated with the member method
              * 
              * @return             The functor
@@ -682,15 +814,21 @@ namespace omni {
             }
     };
     
-    /** A generic delegate that has 3 parameters and does not return a value. */
+    /**
+     * @brief A generic delegate that has 3 parameters and does not return a value.
+     */
     typedef omni::delegate3<void, void*, void*, void*> callback3;
     
     /**
-     * The templated event allows client code to attach multiple delegates
-     * and invoke them, providing notification to attached code (i.e. event handlers).
+     * @brief The event class is a type of multicast delegate.
+     *
+     * @details Events are a type of multi-cast delegate that allows client code to attach
+     * multiple handlers of various classes, structs and anonymous functions, to a single
+     * event handler. As long as each target method is signature compatable with the underlying
+     * delegate type, classes and structs of various types can be attached to the same event object.
      * 
-     * Invoking an event will invoke each attached handler (delegate) in the order
-     * they have been attached.
+     * Invoking an event will invoke each attached handler (delegate) in the order they have been
+     * attached.
      * 
      * @tparam Ret      Specifies the return type of the delegates to be attached
      * @tparam 3     Specifies the parameter types passed to the delegate
@@ -721,7 +859,11 @@ namespace omni {
             typedef PT3 p3_t;
 
 
-            /** The default constructor */
+            /**
+             * @brief The default constructor
+             * 
+             * @details Constructs a default empty event handler
+             */
             event3() : 
                 OMNI_SAFE_EVENT_MILST_FW
                 m_list()
@@ -731,8 +873,10 @@ namespace omni {
             }
             
             /**
-             * The copy constructor copies the elements from the
-             * event passed in.
+             * @brief The copy constructor copies the elements from the other event passed in.
+             *
+             * @details Constructs a copy of the event passed in, copying each of the underyling
+             * delegates to this instances list.
              *
              * @param cp    The event to copy
              */
@@ -745,7 +889,10 @@ namespace omni {
             }
             
             /**
-             * Creates an event with a signature compatible delegate attached
+             * @brief Creates an event with a signature compatible delegate attached
+             *
+             * @details Constructs an event with a single signature compatible delegate
+             * added to its invocation list.
              *
              * @param d     The signature compatible delegate to add to the invocation list
              */
@@ -759,8 +906,15 @@ namespace omni {
             }
 
             /**
-             * The default destructor; clears the underlying list,
-             * calling the destructor for each attached delegate
+             * @brief Destructs the event clearing the underlying list.
+             * 
+             * @details Destroys the event object and clears out the underlying list,
+             * calling each of the attached delegates destructors.
+             *
+             * @warning If the function is still running when this delegate instance is
+             * being destroyed, the function will continue to live in an undefined state.
+             * The function will not stop upon destruction and will likely have a corrupted
+             * stack pointer.
              */
             ~event3()
             {
@@ -772,21 +926,42 @@ namespace omni {
             }
             
             /**
-             * Add (attach) a member delegate to this event instance
+             * @brief Add (attach) a member delegate to this event instance
              * 
-             * @param d        The member delegate to attach
+             * @details Adds a delegate to the end of this instances invocation list.
+             * See the notes below about race conditions.
+             * 
+             * @warning If the OMNI_SAFE_EVENT defines are not enabled, it is undefined
+             * if this event is invoked and edited at the same time; i.e. a race condition
+             * can occur if you attach to an event from one thread while invoking from
+             * another.
+             * 
+             * @invariant   O(1)
+             * 
+             * @param d     The member delegate to attach
              */
             void attach(const omni::delegate3< Ret, PT1, PT2, PT3 >& d)
             {
-                /* DEV_NOTE: don't check if 'd' doesn't have a valid function reference
-                since on invoke 'd' would fail if it didn't have a valid fnptr */
+                /* DEV_NOTE: do not check if d does not have a valid function reference
+                since on invoke d would fail if it did not have a valid fnptr */
                 OMNI_SAFE_EVENT_ALOCK_FW
                 OMNI_D5_FW("attaching delegate");
                 this->m_list.push_back(d);
             }
             
             /**
-             * Add (attach) a range of delegates to this event instance
+             * @brief Add (attach) a range of delegates to this event instance
+             * 
+             * @details Adds a range of delegates from an InputIterator template type.
+             * Each of the elements is added to the end of this instances invocation list.
+             * See the notes below about race conditions.
+             * 
+             * @warning If the OMNI_SAFE_EVENT defines are not enabled, it is undefined
+             * if this event is invoked and edited at the same time; i.e. a race condition
+             * can occur if you attach to an event from one thread while invoking from
+             * another.
+             * 
+             * @invariant   O(n) where n is the number of elements to attach.
              * 
              * @param begin     The input iterator pointing to the initial position in the sequence to add
              * @param end       The input iterator pointing to the last position in the sequence to add
@@ -803,8 +978,20 @@ namespace omni {
             }
             
             /**
-             * Add (attach) another events invocation list to this instance
-             *    
+             * @brief Add (attach) another events invocation list to this instance
+             * 
+             * @details Adds a range of delegates from another event element with the
+             * same signature. Each of the elements is added to the end of this instances
+             * invocation list. See the notes below about race conditions.
+             * 
+             * @warning If the OMNI_SAFE_EVENT defines are not enabled, it is undefined
+             * if this event is invoked and edited at the same time; i.e. a race condition
+             * can occur if you attach to an event from one thread while invoking from
+             * another.
+             * 
+             * @invariant   O(n) where n is the number of elements in the other events
+             * list being attached.
+             * 
              * @param e        The other event to add invocation list
              */
             void attach(const event3< Ret, PT1, PT2, PT3 >& e)
@@ -819,7 +1006,17 @@ namespace omni {
             }
             
             /**
-             * Attach a an anonymous/non-member or static member function to this delegate.
+             * @brief Add (attach) an anonymous/non-member or static member function to this delegate.
+             * 
+             * @details Adds a delegate to the end of this instances invocation list.
+             * See the notes below about race conditions.
+             * 
+             * @warning If the OMNI_SAFE_EVENT defines are not enabled, it is undefined
+             * if this event is invoked and edited at the same time; i.e. a race condition
+             * can occur if you attach to an event from one thread while invoking from
+             * another.
+             * 
+             * @invariant   O(1)
              * 
              * @tparam fnptr         The function to attach to the delegate
              */
@@ -830,7 +1027,17 @@ namespace omni {
             }
             
             /**
-             * Attach a member function to this delegate.
+             * @brief Add (attach) a member function to this delegate.
+             * 
+             * @details Adds a delegate to the end of this instances invocation list.
+             * See the notes below about race conditions.
+             * 
+             * @warning If the OMNI_SAFE_EVENT defines are not enabled, it is undefined
+             * if this event is invoked and edited at the same time; i.e. a race condition
+             * can occur if you attach to an event from one thread while invoking from
+             * another.
+             * 
+             * @invariant   O(1)
              * 
              * @tparam T             The type of class to associate with this delegate
              * @tparam fnptr         The function to attach to the delegate
@@ -843,7 +1050,17 @@ namespace omni {
             }
             
             /**
-             * Attach a member function to this delegate.
+             * @brief Add (attach) a member function to this delegate.
+             * 
+             * @details Adds a delegate to the end of this instances invocation list.
+             * See the notes below about race conditions.
+             * 
+             * @warning If the OMNI_SAFE_EVENT defines are not enabled, it is undefined
+             * if this event is invoked and edited at the same time; i.e. a race condition
+             * can occur if you attach to an event from one thread while invoking from
+             * another.
+             * 
+             * @invariant   O(1)
              * 
              * @tparam T             The type of class to associate with this delegate
              * @tparam fnptr         The function to attach to the delegate
@@ -856,7 +1073,17 @@ namespace omni {
             }
             
             /**
-             * Attach a member function to this delegate.
+             * @brief Add (attach) a member function to this delegate.
+             * 
+             * @details Adds a delegate to the end of this instances invocation list.
+             * See the notes below about race conditions.
+             * 
+             * @warning If the OMNI_SAFE_EVENT defines are not enabled, it is undefined
+             * if this event is invoked and edited at the same time; i.e. a race condition
+             * can occur if you attach to an event from one thread while invoking from
+             * another.
+             * 
+             * @invariant   O(1)
              * 
              * @tparam T             The type of class to associate with this delegate
              * @tparam fnptr         The function to attach to the delegate
@@ -869,7 +1096,17 @@ namespace omni {
             }
             
             /**
-             * Attach a const member function to this delegate.
+             * @brief Add (attach) a const member function to this delegate.
+             * 
+             * @details Adds a delegate to the end of this instances invocation list.
+             * See the notes below about race conditions.
+             * 
+             * @warning If the OMNI_SAFE_EVENT defines are not enabled, it is undefined
+             * if this event is invoked and edited at the same time; i.e. a race condition
+             * can occur if you attach to an event from one thread while invoking from
+             * another.
+             * 
+             * @invariant   O(1)
              * 
              * @tparam T             The type of class to associate with this delegate
              * @tparam fnptr         The function to attach to the delegate
@@ -882,7 +1119,17 @@ namespace omni {
             }
             
             /**
-             * Attach a const member function to this delegate.
+             * @brief Add (attach) a const member function to this delegate.
+             * 
+             * @details Adds a delegate to the end of this instances invocation list.
+             * See the notes below about race conditions.
+             * 
+             * @warning If the OMNI_SAFE_EVENT defines are not enabled, it is undefined
+             * if this event is invoked and edited at the same time; i.e. a race condition
+             * can occur if you attach to an event from one thread while invoking from
+             * another.
+             * 
+             * @invariant   O(1)
              * 
              * @tparam T             The type of class to associate with this delegate
              * @tparam fnptr         The function to attach to the delegate
@@ -895,7 +1142,19 @@ namespace omni {
             }
             
             /**
-             * Clears the underlying invocation list
+             * @brief Clears the underlying invocation list
+             * 
+             * @details Clears the underlying list of the attached delegates,
+             * subsequently calling each delegates destructor.
+             * 
+             * @warning If the OMNI_SAFE_EVENT defines are not enabled, it is undefined
+             * if this event is invoked and edited at the same time; i.e. a race condition
+             * can occur if you attach to an event from one thread while invoking from
+             * another.
+             * 
+             * @note See the notes on omni::delegate::~delegate about the implications
+             * regarding destruction of the delegate class while a bound function is
+             * still running.
              */
             void clear()
             {
@@ -906,7 +1165,7 @@ namespace omni {
             }
             
             /**
-             * Tests if a specified member delegate is in this event instance.
+             * @brief Tests if a specified member delegate is in this event instance.
              * 
              * @param d        The member delegate to search for
              * 
@@ -919,7 +1178,7 @@ namespace omni {
             }
             
             /**
-             * Tests if a specified member delegate is in this event instance.
+             * @brief Tests if a specified member delegate is in this event instance.
              * 
              * @tparam fnptr         The function to attach to the delegate
              * 
@@ -932,7 +1191,7 @@ namespace omni {
             }
             
             /**
-             * Tests if a specified member delegate is in this event instance.
+             * @brief Tests if a specified member delegate is in this event instance.
              * 
              * @tparam T             The type of class to associate with this delegate
              * @tparam fnptr         The function to attach to the delegate
@@ -947,7 +1206,7 @@ namespace omni {
             }
             
             /**
-             * Tests if a specified member delegate is in this event instance.
+             * @brief Tests if a specified member delegate is in this event instance.
              * 
              * @tparam T             The type of class to associate with this delegate
              * @tparam fnptr         The function to attach to the delegate
@@ -962,7 +1221,7 @@ namespace omni {
             }
             
             /**
-             * Tests if a specified member delegate is in this event instance.
+             * @brief Tests if a specified member delegate is in this event instance.
              * 
              * @tparam T             The type of class to associate with this delegate
              * @tparam fnptr         The function to attach to the delegate
@@ -977,7 +1236,7 @@ namespace omni {
             }
             
             /**
-             * Tests if a specified member delegate is in this event instance.
+             * @brief Tests if a specified member delegate is in this event instance.
              * 
              * @tparam T             The type of class to associate with this delegate
              * @tparam fnptr         The function to attach to the delegate
@@ -992,7 +1251,7 @@ namespace omni {
             }
             
             /**
-             * Tests if a specified member delegate is in this event instance.
+             * @brief Tests if a specified member delegate is in this event instance.
              * 
              * @tparam T             The type of class to associate with this delegate
              * @tparam fnptr         The function to attach to the delegate
@@ -1007,9 +1266,23 @@ namespace omni {
             }
             
             /**
-             * Detach the last attached delegate from this event instance that matches
+             * @brief Detach the last attached delegate that matches.
              * 
-             * @param d        The member delegate to detach
+             * @details Removes the last attached delegate that matches the
+             * signature, method and object of the delegate being passed in,
+             * subsequently calling that delegates destructor. If there is no
+             * match, nothing happens and no errors are thrown.
+             * 
+             * @param d        The member delegate to search for and detach
+             * 
+             * @warning If the OMNI_SAFE_EVENT defines are not enabled, it is undefined
+             * if this event is invoked and edited at the same time; i.e. a race condition
+             * can occur if you detach to an event from one thread while invoking from
+             * another.
+             * 
+             * @note See the notes on omni::delegate::~delegate about the implications
+             * regarding destruction of the delegate class while a bound function is
+             * still running.
              */
             void detach(const omni::delegate3< Ret, PT1, PT2, PT3 >& d)
             {
@@ -1018,10 +1291,24 @@ namespace omni {
             }
             
             /**
-             * Detach a range of delegates from this event instance
+             * @brief Detach the last matched delegates from a range
+             * 
+             * @details Removes the last attached delegate that matches the
+             * signature, method and object of the range being passed in,
+             * subsequently calling that delegates destructor. If there is no
+             * match, nothing happens and no errors are thrown.
              * 
              * @param begin     The input iterator pointing to the initial position in the sequence to remove
              * @param end       The input iterator pointing to the last position in the sequence to remove
+             * 
+             * @warning If the OMNI_SAFE_EVENT defines are not enabled, it is undefined
+             * if this event is invoked and edited at the same time; i.e. a race condition
+             * can occur if you detach to an event from one thread while invoking from
+             * another.
+             * 
+             * @note See the notes on omni::delegate::~delegate about the implications
+             * regarding destruction of the delegate class while a bound function is
+             * still running.
              */
             template < class InputIterator >
             void detach(InputIterator begin, InputIterator end)
@@ -1035,9 +1322,24 @@ namespace omni {
             }
             
             /**
-             * Detaches another events invocation list from this instance
+             * @brief Detach the last matched delegates from another event
              * 
-             * @param e        The event to detach invocation list of
+             * @details Removes the last attached delegate that matches the
+             * signature, method and object of the range being passed in,
+             * subsequently calling that delegates destructor. If there is no
+             * match, nothing happens and no errors are thrown.
+             * 
+             * @param begin     The input iterator pointing to the initial position in the sequence to remove
+             * @param end       The input iterator pointing to the last position in the sequence to remove
+             * 
+             * @warning If the OMNI_SAFE_EVENT defines are not enabled, it is undefined
+             * if this event is invoked and edited at the same time; i.e. a race condition
+             * can occur if you detach to an event from one thread while invoking from
+             * another.
+             * 
+             * @note See the notes on omni::delegate::~delegate about the implications
+             * regarding destruction of the delegate class while a bound function is
+             * still running.
              */
             void detach(const event3< Ret, PT1, PT2, PT3 >& e)
             {
@@ -1051,9 +1353,23 @@ namespace omni {
             }
             
             /**
-             * Detaches all delegates from this event instance that match
+             * @brief Detach all attached delegate that match.
              * 
-             * @param d        The member delegate to detach
+             * @details Removes all attached delegate that matches the
+             * signature, method and object of the delegate being passed in,
+             * subsequently calling those delegates destructor. If there is no
+             * match, nothing happens and no errors are thrown.
+             * 
+             * @param d        The member delegate to search for and detach
+             * 
+             * @warning If the OMNI_SAFE_EVENT defines are not enabled, it is undefined
+             * if this event is invoked and edited at the same time; i.e. a race condition
+             * can occur if you detach to an event from one thread while invoking from
+             * another.
+             * 
+             * @note See the notes on omni::delegate::~delegate about the implications
+             * regarding destruction of the delegate class while a bound function is
+             * still running.
              */
             void detach_all(const omni::delegate3< Ret, PT1, PT2, PT3 >& d)
             {
@@ -1062,9 +1378,55 @@ namespace omni {
             }
             
             /**
-             * Detaches another events invocation list from this instance
+             * @brief Detach all matched delegates from a range
              * 
-             * @param e        The event to detach invocation list of
+             * @details Removes all attached delegates that matches the
+             * signature, method and object of the range being passed in,
+             * subsequently calling that delegates destructor. If there is no
+             * match, nothing happens and no errors are thrown.
+             * 
+             * @param begin     The input iterator pointing to the initial position in the sequence to remove
+             * @param end       The input iterator pointing to the last position in the sequence to remove
+             * 
+             * @warning If the OMNI_SAFE_EVENT defines are not enabled, it is undefined
+             * if this event is invoked and edited at the same time; i.e. a race condition
+             * can occur if you detach to an event from one thread while invoking from
+             * another.
+             * 
+             * @note See the notes on omni::delegate::~delegate about the implications
+             * regarding destruction of the delegate class while a bound function is
+             * still running.
+             */
+            template < class InputIterator >
+            void detach_all(InputIterator begin, InputIterator end)
+            {
+                OMNI_SAFE_EVENT_ALOCK_FW
+                OMNI_D5_FW("detaching iterators");
+                while (begin != end) {
+                    this->_rem(*begin, true);
+                    ++begin;
+                }
+            }
+
+            /**
+             * @brief Detach all matched delegates from another event
+             * 
+             * @details Removes all attached delegate that matches the
+             * signature, method and object of the range being passed in,
+             * subsequently calling that delegates destructor. If there is no
+             * match, nothing happens and no errors are thrown.
+             * 
+             * @param begin     The input iterator pointing to the initial position in the sequence to remove
+             * @param end       The input iterator pointing to the last position in the sequence to remove
+             * 
+             * @warning If the OMNI_SAFE_EVENT defines are not enabled, it is undefined
+             * if this event is invoked and edited at the same time; i.e. a race condition
+             * can occur if you detach to an event from one thread while invoking from
+             * another.
+             * 
+             * @note See the notes on omni::delegate::~delegate about the implications
+             * regarding destruction of the delegate class while a bound function is
+             * still running.
              */
             void detach_all(const event3< Ret, PT1, PT2, PT3 >& e)
             {
@@ -1081,26 +1443,23 @@ namespace omni {
             }
             
             /**
-             * Detach a range of delegates from this event instance
+             * @brief Detach an anonymous/non-member or static member function from this event.
              * 
-             * @param begin     The input iterator pointing to the initial position in the sequence to remove
-             * @param end       The input iterator pointing to the last position in the sequence to remove
-             */
-            template < class InputIterator >
-            void detach_all(InputIterator begin, InputIterator end)
-            {
-                OMNI_SAFE_EVENT_ALOCK_FW
-                OMNI_D5_FW("detaching iterators");
-                while (begin != end) {
-                    this->_rem(*begin, true);
-                    ++begin;
-                }
-            }
-            
-            /**
-             * Detach an anonymous/non-member or static member function from this event.
+             * @details Removes the last attached function that matches the
+             * signature of the delegate being passed in, subsequently calling
+             * that delegates destructor. If there is no match, nothing happens
+             * and no errors are thrown.
              * 
              * @tparam fnptr         The function to detach
+             * 
+             * @warning If the OMNI_SAFE_EVENT defines are not enabled, it is undefined
+             * if this event is invoked and edited at the same time; i.e. a race condition
+             * can occur if you detach to an event from one thread while invoking from
+             * another.
+             * 
+             * @note See the notes on omni::delegate::~delegate about the implications
+             * regarding destruction of the delegate class while a bound function is
+             * still running.
              */
             template < ret_t (*fnptr)(PT1, PT2, PT3) >
             void detach()
@@ -1109,11 +1468,25 @@ namespace omni {
             }
             
             /**
-             * Detach a member function from this event.
+             * @brief Detach the last attached member function that matches.
+             * 
+             * @details Removes the last attached delegate that matches the
+             * signature, method and object of the delegate being passed in,
+             * subsequently calling that delegates destructor. If there is no
+             * match, nothing happens and no errors are thrown.
              * 
              * @tparam T             The type of class to associate with the delegate
              * @tparam fnptr         The function to detach
              * @param obj            The instance of the class to reference
+             * 
+             * @warning If the OMNI_SAFE_EVENT defines are not enabled, it is undefined
+             * if this event is invoked and edited at the same time; i.e. a race condition
+             * can occur if you detach to an event from one thread while invoking from
+             * another.
+             * 
+             * @note See the notes on omni::delegate::~delegate about the implications
+             * regarding destruction of the delegate class while a bound function is
+             * still running.
              */
             template < class T, Ret (T::*fnptr)(PT1, PT2, PT3) >
             void detach(T& obj)
@@ -1122,11 +1495,25 @@ namespace omni {
             }
             
             /**
-             * Detach a member function from this event.
+             * @brief Detach the last attached member function that matches.
+             * 
+             * @details Removes the last attached delegate that matches the
+             * signature, method and object of the delegate being passed in,
+             * subsequently calling that delegates destructor. If there is no
+             * match, nothing happens and no errors are thrown.
              * 
              * @tparam T             The type of class to associate with the delegate
              * @tparam fnptr         The function to detach
              * @param obj            The instance of the class to reference
+             * 
+             * @warning If the OMNI_SAFE_EVENT defines are not enabled, it is undefined
+             * if this event is invoked and edited at the same time; i.e. a race condition
+             * can occur if you detach to an event from one thread while invoking from
+             * another.
+             * 
+             * @note See the notes on omni::delegate::~delegate about the implications
+             * regarding destruction of the delegate class while a bound function is
+             * still running.
              */
             template < class T, Ret (T::*fnptr)(PT1, PT2, PT3) >
             void detach(const T& obj)
@@ -1135,11 +1522,25 @@ namespace omni {
             }
             
             /**
-             * Detach a member function from this event.
+             * @brief Detach the last attached member function that matches.
+             * 
+             * @details Removes the last attached delegate that matches the
+             * signature, method and object of the delegate being passed in,
+             * subsequently calling that delegates destructor. If there is no
+             * match, nothing happens and no errors are thrown.
              * 
              * @tparam T             The type of class to associate with the delegate
              * @tparam fnptr         The function to detach
              * @param obj            The instance of the class to reference
+             * 
+             * @warning If the OMNI_SAFE_EVENT defines are not enabled, it is undefined
+             * if this event is invoked and edited at the same time; i.e. a race condition
+             * can occur if you detach to an event from one thread while invoking from
+             * another.
+             * 
+             * @note See the notes on omni::delegate::~delegate about the implications
+             * regarding destruction of the delegate class while a bound function is
+             * still running.
              */
             template < class T, Ret (T::*fnptr)(PT1, PT2, PT3) >
             void detach(const T *const obj)
@@ -1148,11 +1549,25 @@ namespace omni {
             }
             
             /**
-             * Detach a const member function from this event.
+             * @brief Detach the last attached member function that matches.
+             * 
+             * @details Removes the last attached delegate that matches the
+             * signature, method and object of the delegate being passed in,
+             * subsequently calling that delegates destructor. If there is no
+             * match, nothing happens and no errors are thrown.
              * 
              * @tparam T             The type of class to associate with the delegate
              * @tparam fnptr         The function to detach
              * @param obj            The instance of the class to reference
+             * 
+             * @warning If the OMNI_SAFE_EVENT defines are not enabled, it is undefined
+             * if this event is invoked and edited at the same time; i.e. a race condition
+             * can occur if you detach to an event from one thread while invoking from
+             * another.
+             * 
+             * @note See the notes on omni::delegate::~delegate about the implications
+             * regarding destruction of the delegate class while a bound function is
+             * still running.
              */
             template < class T, ret_t (T::*fnptr)(PT1, PT2, PT3) const >
             void detach_const(const T& obj)
@@ -1161,11 +1576,25 @@ namespace omni {
             }
             
             /**
-             * Detach a const member function from this event.
+             * @brief Detach the last attached const member function that matches.
+             * 
+             * @details Removes the last attached delegate that matches the
+             * signature, method and object of the delegate being passed in,
+             * subsequently calling that delegates destructor. If there is no
+             * match, nothing happens and no errors are thrown.
              * 
              * @tparam T             The type of class to associate with the delegate
              * @tparam fnptr         The function to detach
              * @param obj            The instance of the class to reference
+             * 
+             * @warning If the OMNI_SAFE_EVENT defines are not enabled, it is undefined
+             * if this event is invoked and edited at the same time; i.e. a race condition
+             * can occur if you detach to an event from one thread while invoking from
+             * another.
+             * 
+             * @note See the notes on omni::delegate::~delegate about the implications
+             * regarding destruction of the delegate class while a bound function is
+             * still running.
              */
             template < class T, ret_t (T::*fnptr)(PT1, PT2, PT3) const >
             void detach_const(const T *const obj)
@@ -1174,7 +1603,7 @@ namespace omni {
             }
             
             /**
-             * Checks if the current event instance has any attached methods
+             * @brief Checks if the current event instance has any attached methods
              * 
              * @return True if the instance has a method or methods attached, false if not
              */
@@ -1185,7 +1614,7 @@ namespace omni {
             }
             
             /**
-             * Gets the invocation list used to call the delegate objects on event invocation
+             * @brief Gets the invocation list used to call the delegate objects on event invocation
              * 
              * @return The underlying container variable
              */
@@ -1196,7 +1625,7 @@ namespace omni {
             }
             
             /**
-             * Invoke the functions bound to this event instance
+             * @brief Invoke the functions bound to this event instance
              * 
              * @return The return type specified at compile time
              */
@@ -1222,7 +1651,7 @@ namespace omni {
             }
             
             /**
-             * Calls the functions bound to this event instance in a non-safe manner.
+             * @brief Calls the functions bound to this event instance in a non-safe manner.
              * delegate::invoke_direct does not perform certain checks.
              * 
              * @return The return type specified at compile time
@@ -1248,6 +1677,9 @@ namespace omni {
                 OMNI_ERR_RETV_FW(OMNI_INVALID_DELEGATE_INVOKE_STR, omni::exceptions::invalid_delegate_invoke(), ret_t())
             }
             
+            /**
+             * @brief Swaps the underlying lists between the two events
+             */
             void swap(event3< Ret, PT1, PT2, PT3 >& e)
             {
                 OMNI_SAFE_EVENT_ALOCK_FW
@@ -1258,7 +1690,7 @@ namespace omni {
             }
             
             /**
-             * The () operator can be used to call the functions bound to this event instance
+             * @brief The () operator can be used to call the functions bound to this event instance
              * 
              * @return The return type specified at compile time
              */
@@ -1268,7 +1700,9 @@ namespace omni {
             }
             
             /**
-             * The boolean () operator can be used to check if this delegate is valid (has a valid function assigned)
+             * @brief Checks if this event has any attached delegates.
+             * 
+             * @returns True if the list is not empty, false otherwise
              */
             operator bool() const
             {
@@ -1276,7 +1710,9 @@ namespace omni {
             }
             
             /**
-             * The negated boolean () operator is used to check negation of the boolean () operator
+             * @brief Checks if this event has any attached delegates.
+             * 
+             * @returns True if the list is empty, false otherwise
              */
             bool operator!() const
             {
@@ -1284,9 +1720,16 @@ namespace omni {
             }
 
             /**
-             * The = operator is used to assign one event invocation to another
+             * @brief The assignment operator copies the list from another event
              * 
              * @param e        The right most operand event to assign
+             * 
+             * @warning If the OMNI_SAFE_EVENT defines are not enabled, it is undefined
+             * if this event is invoked and edited at the same time; i.e. a race condition
+             * can occur if you detach to an event from one thread while invoking from
+             * another.
+             * 
+             * @returns     A refernce to this
              */
             event3< Ret, PT1, PT2, PT3 >& operator=(const event3< Ret, PT1, PT2, PT3 >& e)
             {
@@ -1303,8 +1746,18 @@ namespace omni {
             }
             
             /**
-             * The [int] operator can be used to access a specific delegate in the
+             * @brief Access a delegate directly by index.
+             * 
+             * @details The [int] operator can be used to access a specific delegate in the
              * invocation list directly.
+             * 
+             * @exception An omni::exceptions::index_out_of_range will be thrown if the index
+             * requested is outside the range of this instance
+             * 
+             * @warning If the OMNI_SAFE_EVENT defines are not enabled, it is undefined
+             * if this event is invoked and edited at the same time; i.e. a race condition
+             * can occur if you detach to an event from one thread while invoking from
+             * another.
              * 
              * @return A reference to the delegate instance at the specified index
              */
@@ -1318,9 +1771,19 @@ namespace omni {
             }
             
             /**
-             * The += operator is used to add delegates to this event instance
+             * @brief The += operator is used to add delegates to this event instance
+             * 
+             * @details This is similar to calling the attach method on this instance.
+             * Each delegate is added to the end of the list and called in that order.
              * 
              * @param d        The right most operand delegate to add
+             * 
+             * @warning If the OMNI_SAFE_EVENT defines are not enabled, it is undefined
+             * if this event is invoked and edited at the same time; i.e. a race condition
+             * can occur if you detach to an event from one thread while invoking from
+             * another.
+             * 
+             * @returns A reference to this
              */
             event3< Ret, PT1, PT2, PT3 >& operator+=(const omni::delegate3< Ret, PT1, PT2, PT3 >& d)
             {
@@ -1329,9 +1792,20 @@ namespace omni {
             }
             
             /**
-             * The += operator is used to add delegates to this event instance
+             * @brief The += operator is used to add a list of delegates to this event instance
+             * 
+             * @details This is similar to calling the attach method on this instance.
+             * Each delegate from the other event is added to the end of the list and
+             * called in that order.
              * 
              * @param e        The right most operand event to add
+             * 
+             * @warning If the OMNI_SAFE_EVENT defines are not enabled, it is undefined
+             * if this event is invoked and edited at the same time; i.e. a race condition
+             * can occur if you detach to an event from one thread while invoking from
+             * another.
+             * 
+             * @returns A reference to this
              */
             event3< Ret, PT1, PT2, PT3 >& operator+=(const event3< Ret, PT1, PT2, PT3 >& e)
             {
@@ -1340,9 +1814,18 @@ namespace omni {
             }
             
             /**
-             * The -= operator is used to remove delegates from this event instance
+             * @brief The -= operator is used to remove delegates from this event instance
              * 
-             * @param d        The right most operand delegate to remove
+             * @details This is similar to calling the detach method on this instance.
+             * 
+             * @param d        The right most operand delegate to add
+             * 
+             * @warning If the OMNI_SAFE_EVENT defines are not enabled, it is undefined
+             * if this event is invoked and edited at the same time; i.e. a race condition
+             * can occur if you detach to an event from one thread while invoking from
+             * another.
+             * 
+             * @returns A reference to this
              */
             event3< Ret, PT1, PT2, PT3 >& operator-=(const omni::delegate3< Ret, PT1, PT2, PT3 >& d)
             {
@@ -1351,9 +1834,18 @@ namespace omni {
             }
             
             /**
-             * The -= operator is used to remove delegates from this event instance
+             * @brief The -= operator is used to remove a list of delegates to this event instance
              * 
-             * @param e        The right most operand event to remove
+             * @details This is similar to calling the detach method on this instance.
+             * 
+             * @param e        The right most operand event to add
+             * 
+             * @warning If the OMNI_SAFE_EVENT defines are not enabled, it is undefined
+             * if this event is invoked and edited at the same time; i.e. a race condition
+             * can occur if you detach to an event from one thread while invoking from
+             * another.
+             * 
+             * @returns A reference to this
              */
             event3< Ret, PT1, PT2, PT3 >& operator-=(const event3< Ret, PT1, PT2, PT3 >& e)
             {
@@ -1362,9 +1854,16 @@ namespace omni {
             }
             
             /**
-             * The + operator adds delegate to the event instance and returns the combined list.
+             * @brief The + operator adds delegate to the event instance and returns the combined list.
              * 
              * @param d        The right most operand delegate to add
+             * 
+             * @warning If the OMNI_SAFE_EVENT defines are not enabled, it is undefined
+             * if this event is invoked and edited at the same time; i.e. a race condition
+             * can occur if you detach to an event from one thread while invoking from
+             * another.
+             * 
+             * @returns A reference to this
              */
             event3< Ret, PT1, PT2, PT3 > operator+(const omni::delegate3< Ret, PT1, PT2, PT3 >& d)
             {
@@ -1374,9 +1873,16 @@ namespace omni {
             }
             
             /**
-             * The + operator adds the event instance to another and returns the combined list.
+             * @brief The + operator adds the event instance to another and returns the combined list.
              * 
              * @param e        The right most operand event to add
+             * 
+             * @warning If the OMNI_SAFE_EVENT defines are not enabled, it is undefined
+             * if this event is invoked and edited at the same time; i.e. a race condition
+             * can occur if you detach to an event from one thread while invoking from
+             * another.
+             * 
+             * @returns A reference to this
              */
             event3< Ret, PT1, PT2, PT3 > operator+(const event3< Ret, PT1, PT2, PT3 >& e)
             {
@@ -1386,9 +1892,16 @@ namespace omni {
             }
             
             /**
-             * The - operator removes a delegate from the event instance and returns the new list.
+             * @brief The - operator removes a delegate from the event instance and returns the new list.
              * 
              * @param d        The right most operand delegate to remove
+             * 
+             * @warning If the OMNI_SAFE_EVENT defines are not enabled, it is undefined
+             * if this event is invoked and edited at the same time; i.e. a race condition
+             * can occur if you detach to an event from one thread while invoking from
+             * another.
+             * 
+             * @returns A reference to this
              */
             event3< Ret, PT1, PT2, PT3 > operator-(const omni::delegate3< Ret, PT1, PT2, PT3 >& d)
             {
@@ -1398,9 +1911,16 @@ namespace omni {
             }
             
             /**
-             * The - operator removes an event instance from another and returns the new list.
+             * @brief The - operator removes an event instance from another and returns the new list.
              * 
              * @param e        The right most operand event to remove
+             * 
+             * @warning If the OMNI_SAFE_EVENT defines are not enabled, it is undefined
+             * if this event is invoked and edited at the same time; i.e. a race condition
+             * can occur if you detach to an event from one thread while invoking from
+             * another.
+             * 
+             * @returns A reference to this
              */
             event3< Ret, PT1, PT2, PT3 > operator-(const event3< Ret, PT1, PT2, PT3 >& e)
             {
@@ -1410,9 +1930,11 @@ namespace omni {
             }
             
             /**
-             * The == operator is used for comparison results
+             * @brief Compares to events and tests the equality of their lists
              * 
-             * @param d        The right most operand which to compare to
+             * @param e        The right most event which to compare to
+             * 
+             * @returns True if the events are equal, false otherwise
              */
             bool operator==(const event3< Ret, PT1, PT2, PT3 >& e) const
             {
@@ -1434,9 +1956,11 @@ namespace omni {
             }
             
             /**
-             * The != operator is used for comparison results (negates the == operator)
+             * @brief Negates the comparison operator
              * 
-             * @param d        The right most operand which to compare to
+             * @param e        The right most event which to compare to
+             * 
+             * @returns True if the events are not equal, false otherwise
              */
             bool operator!=(const event3< Ret, PT1, PT2, PT3 >& e) const
             {
@@ -1449,7 +1973,7 @@ namespace omni {
             container_t m_list;
 
             /**
-             * Find a specified member delegate in this event instance.
+             * @brief Find a specified member delegate in this event instance.
              * 
              * @param d        The member delegate to search for
              * 
@@ -1457,7 +1981,7 @@ namespace omni {
              */
             iterator_t _find(const omni::delegate3< Ret, PT1, PT2, PT3 >& d)
             {
-                // don't use any locks here as calling code does the lock
+                // do not use any locks here as calling code does the lock
                 if (this->m_list.empty()) { return this->m_list.end(); }
                 iterator_t itr = this->m_list.end();
                 while (itr != this->m_list.begin()) {

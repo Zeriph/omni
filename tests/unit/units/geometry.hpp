@@ -19,14 +19,17 @@ class UT_CLASS_DEF
         void info_test()
         {
             print_info(omni::geometry::point_t);
-            print_info(omni::geometry::raw_point_t);
+            print_info(omni::geometry::unsafe_point_t);
             print_info(omni::geometry::point_3d_t);
-            print_info(omni::geometry::raw_point_3d_t);
+            print_info(omni::geometry::unsafe_point_3d_t);
             print_info(omni::geometry::rectangle_t);
-            print_info(omni::geometry::raw_rectangle_t);
+            print_info(omni::geometry::unsafe_rectangle_t);
             print_info(omni::geometry::size_t);
-            print_info(omni::geometry::raw_size_t);
-            print_info(omni::geometry::vector2);
+            print_info(omni::geometry::unsafe_size_t);
+            print_info(omni::geometry::vector2<double>);
+            print_info(omni::geometry::vector2<int32_t>);
+            print_info(omni::geometry::vector3<double>);
+            print_info(omni::geometry::vector3<int32_t>);
         }
         
         void base_test()

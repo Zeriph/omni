@@ -21,6 +21,13 @@
 #include <omni/defs/global.hpp>
 #include <climits>
 
+#if defined(OMNI_CHECK_ARITHMETIC_OVERFLOW)
+    // TODO: finish this 
+    #define OMNI_BITS_WILL_ADD_OVER_FW if (omni::bits::will_addition_overflow(a,b)) { error }
+#else
+    #define OMNI_BITS_WILL_ADD_OVER_FW
+#endif
+
 #define OMNI_XOR_SWAP(a, b) a ^= b; b ^= a; a ^= b
 #define OMNI_VAL_HAS_FLAG_BIT(val, flag) ((val & flag) == flag)
 #define OMNI_VAL_SET_FLAG_BOOL(val, flag, onoff) val = (onoff ? (val | flag) : ((val | flag) ^ flag))
@@ -81,31 +88,28 @@ namespace omni {
         }
         
         template < typename T >
-        inline bool is_set_nc(const T& t, unsigned short n)
+        inline bool unsafe_is_set(const T& t, unsigned short n)
         {
-            std::size_t v = (1 << n);
-            return ((t & v) == v);
+            return omni::bits::has_flag(t, (1 << n));
         }
         
         template < typename T >
-        inline T& set_nc(T& t, unsigned short n, bool s)
+        inline T& unsafe_set(T& t, unsigned short n, bool s)
         {
-            std::size_t v = (1 << n);
-            if (s) { return (t = (t | v)); } // set
-            return (t = ((t | v) ^ v)); // unset
+            if (s) { return omni::bits::set_flag(t, (1 << n)); } // set
+            return omni::bits::unset_flag(t, (1 << n));
         }
         
         template < typename T >
-        inline T& set_nc(T& t, unsigned short n)
+        inline T& unsafe_set(T& t, unsigned short n)
         {
-            return (t = (t | (1 << n)));
+            return omni::bits::set_flag(t, (1 << n));
         }
         
         template < typename T >
-        inline T& unset_nc(T& t, unsigned short n)
+        inline T& unsafe_unset(T& t, unsigned short n)
         {
-            std::size_t v = (1 << n);
-            return (t = ((t | v) ^ v));
+            return omni::bits::unset_flag(t, (1 << n));
         }
         
         template < typename T >
@@ -114,8 +118,7 @@ namespace omni {
             if (n > OMNI_SIZEOF_BITS(T)) {
                 OMNI_ERRV_RETV_FW(n, " > sizeof(T)", omni::exceptions::index_out_of_range("Invalid bit", n), false)
             }
-            std::size_t v = (1 << n);
-            return ((t & v) == v);
+            return omni::bits::unsafe_is_set(t, n);
         }
         
         template < typename T >
@@ -124,9 +127,7 @@ namespace omni {
             if (n > OMNI_SIZEOF_BITS(T)) {
                 OMNI_ERRV_RETV_FW(n, " > sizeof(T)", omni::exceptions::index_out_of_range("Invalid bit", n), false)
             }
-            std::size_t v = (1 << n);
-            if (s) {  return (t = (t | v)); }
-            return (t = ((t | v) ^ v));
+            return omni::bits::unsafe_set(t, n, s);
         }
         
         template < typename T >
@@ -135,7 +136,7 @@ namespace omni {
             if (n > OMNI_SIZEOF_BITS(T)) {
                 OMNI_ERRV_RETV_FW(n, " > sizeof(T)", omni::exceptions::index_out_of_range("Invalid bit", n), false)
             }
-            return (t = (t | (1 << n)));
+            return omni::bits::unsafe_set(t, n);
         }
         
         template < typename T >
@@ -144,8 +145,7 @@ namespace omni {
             if (n > OMNI_SIZEOF_BITS(T)) {
                 OMNI_ERRV_RETV_FW(n, " > sizeof(T)", omni::exceptions::index_out_of_range("Invalid bit", n), false)
             }
-            std::size_t v = (1 << n);
-            return (t = ((t | v) ^ v));
+            return omni::bits::unsafe_unset(t, n);
         }
         
         template < typename T >

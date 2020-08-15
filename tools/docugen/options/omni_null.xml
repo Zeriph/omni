@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_NULL</Name>
+  <Brief>The NULL value used throughout the framework.
+</Brief>
+  <Considerations>The @c NULL macro is implementation defined and not all compilers will support the @c nullptr keyword.
+</Considerations>
+  <Description>As the @c NULL macro is implementation defined and not all compilers will support the @c nullptr keyword, the default for null pointer values is to zeroize them, that is, the preferred way to initialize pointer types to the null value is to set them to the @c 0 address over setting to @c NULL or @c nullptr.
+
+Example:
+
+@code
+int* val = 0;       &lt;- preferred way
+int* val = NULL;    &lt;- OK, but NULL could be anything, so not really 'safe'
+int* val = nullptr; &lt;- OK and expresses intent better, but not all compilers support this
+@code
+
+We don't want to overuse macro's through the framework, but in this scenario, it's also preferable to avoid being able to do something like this:
+
+@code
+static const int nullptr = 0;
+int* val = &amp;nullptr;
+@code
+
+@c '&amp;nullptr' is not allowed in C++11 and additional checks would need to be in place to avoid this in C++11 compilers and not in previous editions; as well &lt;code&gt;int* val = nullptr&lt;/code&gt; could have an implicit cast since you are referencing a named variable (@c nullptr ), this isn't the case in C++11 with the @c nullptr keyword. 
+
+To avoid all of this, this macro gives the user the option to choose (or define) their null pointer value. Defining OMNI_USE_NULLPTR sets the C++11 @c nullptr keyword while OMNI_USE_NULL will use the implementation defined @c NULL macro, and if nothing is defined to specify which null value to use, the default is to use the @c 0 address. While the macro name OMNI_NULL is more verbose than @c 0/NULL/nullptr it does express the intent better than just plain @c 0 (which on a cursory glance of the code, one might think @c 0 is an @c int instead of a null value).
+</Description>
+  <Notes>None.
+</Notes>
+  <PlatformSpecific>No platform specific notes.
+</PlatformSpecific>
+  <Synopsis>This is a helper macro used throughout the framework to signify a NULL value used.
+</Synopsis>
+  <IsHelper>true</IsHelper>
+  <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
+</MacroOp>

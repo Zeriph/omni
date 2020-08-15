@@ -28,7 +28,7 @@
 namespace omni {
     /**
      * omni::object is a base type containing generic data that allows any children
-     * to inherit certain feature sets, like a 'tag' and a 'name' property, as well as 
+     * to inherit certain feature sets, like a tag and a name property, as well as 
      * an event to alert any subscribers of when the object is being disposed (destroyed)
      */
     class object
@@ -132,14 +132,24 @@ namespace omni {
                 return !(*this == o);
             }
 
-            OMNI_OSTREAM_STR_FW(omni::object)
-            
             /** Called when the instance is being destroyed (destructor is called) */
             omni::action disposing;
             /** A property that allows you to assign a name to this object */
             omni::string_t name;
             /** A property allowing assignment of various objects and types. */
             omni::generic_ptr tag;
+
+            friend std::ostream& operator<<(std::ostream& s, const omni::object& c)
+            {
+                s << c.name.c_str();
+                return s;
+            }
+
+            friend std::wostream& operator<<(std::wostream& s, const omni::object& c)
+            {
+                s << c.name.c_str();
+                return s;
+            }
             
         protected:
             object(std::string nm) : 

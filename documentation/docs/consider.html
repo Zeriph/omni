@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - Other Considerations</title>
+<link rel="stylesheet" type="text/css" href="../content/main.css" /><link rel="icon" type="image/png" href="../content/favicon.png" />
+<script type="text/javascript" src="../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../download.html">Downloads</a></li>
+</ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="htmlsrc/index.html">Source</a></li><li title="Library classes and namespaces">
+<a href="classes/index.html">Class Index</a></li><li title="Download and view examples">
+<a href="examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="api.html">System API</a></li><li title="Other Considerations">
+<a href="consider.html" class="current">Considerations</a></li><li title="Coding style and best practices">
+<a href="codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="http://www.zeriph.com">Zeriph Enterprises, LLC</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle"><a name="considerations"></a>Considerations and Notes</div><div class="content"><div>
+While building, deploying, and working with Omni you might experience certain issues that would initially appear
+to be a bug with the library code, when it is actually either an erroneous compiler error message or you might not have 
+<a href="build/index.html">built</a> and referenced Omni in the same way (as examples). To help with any errors or issues you
+might run into, we've compiled a quasi Q&amp;A of developer notes and issues to consider when using the library.
+This list is not a comprehensive list of known issues and does not cover topics that might be in the
+<a href="classes/index.html">class documentation</a>, this list is meant more as a developer commentary on issues or
+other considerations to take note of while using Omni.<br><br>
+If you feel an issue is indeed a bug, please <a href="mailto:omniqa@zeriph.com">email</a> or
+<a href="https://zeriph.com/contact.php">contact us</a> to let us know so we can resolve the issue.<br><br>
+<font class="hdr">Developer Notes</font><br><br>
+
+<div class="consider"><input type="checkbox" id="issue_vthunk" name="issue_vthunk" />
+<label class="code" for="issue_vthunk"> details</label><table class="code"><tr>
+<td>Issue</td><td>
+Virtual thunk error/crash
+</td></tr><tr><td>Description</td><td>
+A virtual thunk has to do with how the underlying class pointers are built.
+A virtual thunk can occur when you build the library as a static or dynamic library to link against
+(e.g. <code>.lib</code>/<code>.a</code>) with an option such as <a href="options/omni_type_info.html">OMNI_TYPE_INFO</a>,
+and then build your project, referencing the library and associated headers, <i><b>without</b></i> using OMNI_TYPE_INFO.
+The error occurs because the library source will have the extra members built into it, but the headers referenced in your
+source will not, thus causing incongruities between your source binary and the library binary.
+</td></tr><tr><td>Resolution</td><td>
+Ensure you build your projects with the same build parameters as you supplied to build the library
+</td></tr></table></div>
+
+<div class="consider"><input type="checkbox" id="issue_siof" name="issue_siof" />
+<label class="code" for="issue_siof"> details</label><table class="code"><tr>
+<td>Issue</td><td>
+Static initialization order fiasco
+</td></tr><tr><td>Description</td><td>
+Some functionality of the library would fall pray to the initialization of static objects before
+other static objects were properly initialized, or what is commonly refered to as the <i>static initialization
+order fiasco</i>. To this, a few areas of the code will claim heap memory (like the thread management functions)
+for their static objects via the <code>new</code> keyword. However, they do <i>not</i> call <code>delete</code>
+since they are not reference-aware types and do not need to be freed unless the program ends, thus these objects
+will remain for the lifetime of the program. This would be true even if new/delete were not called, so there is
+not a memory leak in the sense that there is no <code>delete</code> for a call to <code>new</code>.
+</td></tr><tr><td>Resolution</td><td>
+None, just be aware that some areas of code had to be designed a certain way to overcome certain constructs within
+the C++ language; while some of these limitations are not necessarily an issue in newer versions of the C++
+language, Omni does aim to be compatible with C++03 and above, so this must be taken into consideration for older
+platforms or compilers.
+</td></tr></table></div>
+
+<div class="consider"><input type="checkbox" id="issue_smartptr" name="issue_smartptr" />
+<label class="code" for="issue_smartptr"> details</label><table class="code"><tr>
+<td>Issue</td><td>
+Use of any <code>smart_ptr</code> types to any array pointer will not call <code>delete[]</code>
+</td></tr><tr><td>Description</td><td>
+The use of any <code>omni::smart_ptr</code> types that are templated to an array pointer will not call
+<code>delete[]</code>. In other words, if you create an <code>omni::smart_ptr&lt;obj[]&gt;</code>, when the underlying
+object held by the <code>smart_ptr</code> is no longer needed, it will call the non-array <code>delete</code> on
+the object and not all objects in the array will be properly freed. Instead you will need to use a
+<code>smart_ptr&lt;obj*&gt;</code>. If you want a smart pointer type that references a contiguous array type, you
+will need to use an STL container instead, like a <code>std::vector&lt;obj&gt;</code> or <code>std::deque&lt;obj&gt;</code>;
+for example: <code>omni::smart_prt&lt;std::vector&lt;obj&gt;&gt;</code>.
+</td></tr><tr><td>Resolution</td><td>
+Ensure you do not use improper array types when using a smart pointer type and read the documentation to ensure
+the limitations and use cases of the Omni library type being used.
+</td></tr></table></div>
+
+<div class="consider"><input type="checkbox" id="issue_exlibs" name="issue_exlibs" />
+<label class="code" for="issue_exlibs"> details</label><table class="code"><tr>
+<td>Issue</td><td>
+External system libraries
+</td></tr><tr><td>Description</td><td>
+Some systems might need external system libraries to link properly. For instance, when compiling on certain
+BSD based systems, <i>-pthread</i> had to be passed to all of the platforms to make use of the threading facilities
+in the library (via the POSIX thread library), while <i>-rt</i> only had to be passed to some to make use of the
+real-time system libraries for the timer facilities of the library.
+</td></tr><tr><td>Resolution</td><td>
+Ensure you link against the correct system libraries when building.
+</td></tr></table></div>
+
+<div class="consider"><input type="checkbox" id="issue_wordexp" name="issue_wordexp" />
+<label class="code" for="issue_wordexp"> details</label><table class="code"><tr>
+<td>Issue</td><td>
+GLIBC wordexp
+</td></tr><tr><td>Description</td><td>
+Some platforms do not implement the GLIBC wordexp (like OpenBSD) for many security reasons.
+As such, it is not really a good idea to call the
+<a href="classes/omni@5Fenvironment@5Fexpand@405Fvars.html">omni::environment::expand_vars</a> function
+without validating the user input; it is there for a convenience function. You can define
+the <a href="options/omni_env_wordexp.html">OMNI_ENV_WORDEXP</a> compile flag to use wordexp
+on systems that support it, but it is still generally a good idea to validate user input.
+</td></tr><tr><td>Resolution</td><td>
+This is not a bug but could potentially lead to unintended consequences.
+</td></tr></table></div>
+
+<div class="consider"><input type="checkbox" id="issue_compwarn" name="issue_compwarn" />
+<label class="code" for="issue_compwarn"> details</label><table class="code"><tr>
+<td>Issue</td><td>
+Compiler warnings
+</td></tr><tr><td>Description</td><td>
+As with any code, it is generally not a good idea to ignore any warnings generated by your compiler.
+There are some, however, that can be safely ignored once you deduce their true meaning. To this, you
+might see some warning about old-style casts, or unused references; it is important to note <i>where</i>
+these warnings are coming from, that is, is the warning coming from the library source itself, or a
+system header used on a particular platform.<br>
+<br>
+As an example, when compiling on certain systems, you might get a warning about an old-style cast
+in application.cpp with reference to SIG_ERR. This is because SIG_ERR might be<br><br>
+#define SIG_ERR (void (*)(int))-1
+<br><br>
+Which <i>is</i> an old-style cast, though not an explicit error to be necessarily concerned with.
+</td></tr><tr><td>Resolution</td><td>
+None; compiler warnings should always be investigated.
+</td></tr></table></div>
+
+<div class="consider"><input type="checkbox" id="issue_compwarnx" name="issue_compwarnx" />
+<label class="code" for="issue_compwarnx"> details</label><table class="code"><tr>
+<td>Issue</td><td>
+Compiler warnings continued
+</td></tr><tr><td>Description</td><td>
+Enabling certain compiler warnings might yield a warning similar to the following:<br><br>
+'b_val' should be initialized in the member initialization list<br><br>
+However, it is an error to initialize multiple members of a union:<br><br>
+error: initializations for multiple members<br>
+</td></tr><tr><td>Resolution</td><td>
+Heed the error and ignore the warning.
+</td></tr></table></div>
+
+<div class="consider"><input type="checkbox" id="issue_nonport" name="issue_nonport" />
+<label class="code" for="issue_nonport"> details</label><table class="code"><tr>
+<td>Issue</td><td>
+<a href="options/omni_non_portable.html">OMNI_NON_PORTABLE</a>
+</td></tr><tr><td>Description</td><td>
+Use of non-portable code can not be portably guaranteed. What that means is that the function
+used within a block of OMNI_NON_PORTABLE code might not work on all systems, or if it does work
+you might get varied results from the different platforms. 
+</td></tr><tr><td>Resolution</td><td>
+None, just be aware of what the OMNI_NON_PORTABLE flag is.
+</td></tr></table></div>
+
+<div class="consider"><input type="checkbox" id="issue_winapi" name="issue_winapi" />
+<label class="code" for="issue_winapi"> details</label><table class="code"><tr>
+<td>Issue</td><td>
+<a href="options/omni_no_win_api.html">OMNI_NO_WIN_API</a>
+</td></tr><tr><td>Description</td><td>
+As detailed in other sections of the help documentation, if the <a href="options/omni_win_api.html">OMNI_WIN_API</a> flag
+is not enabled, that is, you are electing to use the CRT vs. Windows API calls, some
+functionality will remain as WinAPI calls.<br><br>
+For instance, there is no CRT equivalent to the WinAPI GetModuleFileName and thus OMNI_NO_WIN_API is not applicable.
+</td></tr><tr><td>Resolution</td><td>
+None. This is not a bug but an implementation detail.
+</td></tr></table></div>
+
+<div class="consider"><input type="checkbox" id="issue_oseqt" name="issue_oseqt" />
+<label class="code" for="issue_oseqt"> details</label><table class="code"><tr>
+<td>Issue</td><td>
+<a href="options/omni_seq_t.html">OMNI_SEQ_T</a>
+</td></tr><tr><td>Description</td><td>
+This <code>#define</code> value is a helper function used throughout the library
+in place of using a specific C++ sequence container (like the <code>std::vector</code> or the <code>std::deque</code>).<br>
+<br>
+As explained in the help docs, this helper macro is designed to allow a developer the choice of
+which STL sequence container they might want the library to use. Since it is an STL container, we
+could not use a simple typedef to define a new type, and we can not use the C++11 using directive (without
+the <a href="options/omni_enable_cxx.html">OMNI_ENABLE_CXX</a>) to alias the types due to the
+varying compiler support. To avoid the use/overuse of macros we had considered giving an interface to
+the defined STL via an overridden class, example:
+<pre>
+namespace omni {
+    template &lt;typename T&gt;
+    public class seq_t : public virtual OMNI_SEQ_T&lt;T&gt; {};
+}
+</pre>
+But this presented another set of issues and challenges to be aware of. To this, we have decided
+to keep this functionality at the macro level for simplicities sake (and because there are not
+a lot of areas in the code that make use of this feature).
+</td></tr><tr><td>Resolution</td><td>
+This is not a bug, but something to be aware of when using the library; considerations
+are being made for other variations on this issue, should something more clear come along.
+</td></tr></table></div>
+
+<div class="consider"><input type="checkbox" id="issue_devnote" name="issue_devnote" />
+<label class="code" for="issue_devnote"> details</label><table class="code"><tr>
+<td>Issue</td><td>
+DEV_NOTE
+</td></tr><tr><td>Description</td><td>
+Throughout the code you might see a comment with a <i>DEV_NOTE</i> tag to it. These notes are
+specific to that area of code and are reminders as to why a section of code is
+the way it is or as a note of platform issues to be aware of.
+</td></tr><tr><td>Resolution</td><td>
+None, these are developer notes throughout the source.
+</td></tr></table></div>
+
+<div class="consider"><input type="checkbox" id="issue_xxfiles" name="issue_xxfiles" />
+<label class="code" for="issue_xxfiles"> details</label><table class="code"><tr>
+<td>Issue</td><td>
+.hxx/.cxx files
+</td></tr><tr><td>Description</td><td>
+The library has certain files that contain implementation code for certain classes.
+The code is separated this way for easier reading and debugging but the files are not meant to be included
+directly in any user code nor are they intended to be compiled directly, otherwise erroneous errors
+might appear during compilation.
+</td></tr><tr><td>Resolution</td><td>
+This is not a bug, but be aware the source files ending in .cxx or .hxx are not meant to be included
+or compiled directly by any user code.
+</td></tr></table></div>
+
+<div class="consider"><input type="checkbox" id="issue_honly" name="issue_honly" />
+<label class="code" for="issue_honly"> details</label><table class="code"><tr>
+<td>Issue</td><td>
+No header only library
+</td></tr><tr><td>Description</td><td>
+The Omni library contains header files and translation units (.cpp files) which must be built in to object files and
+subsequently assembled into a library file that can be linked against (or compiled into your binary). This is by design,
+that is, it is a design decision to have Omni <i>not</i> be a header only library for many reasons (name collision, static
+instances and extern members to name a few).
+</td></tr><tr><td>Resolution</td><td>
+Portions of the library are indeed header only, like some of the chrono features, as such these portions of code
+do not need to be compiled separately as long as there are not extra dependencies on code that does need to be
+compiled separately.<br><br>
+The library <i>is</i>, however, designed to be compiled via one translation unit. So to build the entire
+library in one file, you could simply build <a href="htmlsrc/library.cpp.html">library.cpp</a> while referencing
+the source path as an include path, example:<br><br>
+Apple/*nix (using g++): g++ /source/your_code.cpp /source/omni/library.cpp -I/source/omni<br>
+Windows (using VS): cl C:\source\your_code.cpp C:\source\omni\library.cpp /IC:\source\omni<br><br>
+That will build your_code.cpp along with the Omni library as one executable binary.
+</td></tr></table></div>
+
+<div class="consider"><input type="checkbox" id="issue_stdswap" name="v" />
+<label class="code" for="issue_stdswap"> details</label><table class="code"><tr>
+<td>Issue</td><td>
+std::swap
+</td></tr><tr><td>Description</td><td>
+Certain classes throughout the library allow you to swap 2 objects and their underlying data via that classes <code>swap</code>
+method. Each of these classes will have a local swap method specific to the class, as well as override std::swap 
+(in the header that defines the class) to call the classes swap method.<br><br>
+Overriding std::swap, while providing a class method swap as well, allows a developer to worry less that the proper swap
+is called if they simply did <i>swap(t1, t2)</i> or if they indeed chose to explicitly call <i>std::swap(t1, t2)</i>
+(where t1 and t2 are types from the library).
+</td></tr><tr><td>Resolution</td><td>
+None, just be aware that if a class provides a swap method, calling std::swap <i>will</i> call that method.
+</td></tr></table></div>
+
+<div class="consider"><input type="checkbox" id="issue_stdtypes" name="issue_stdtypes" />
+<label class="code" for="issue_stdtypes"> details</label><table class="code"><tr>
+<td>Issue</td><td>
+Standard integer types used through out the library
+</td></tr><tr><td>Description</td><td>
+The library will use standard integer types (e.g. int32_t) in any and all places that make sense. However there are a
+few exceptions, like omni::application::run, that take or return a non-standarized type (like a plain <i>int</i> or
+<i>long</i>). This is becuase those portions are intended to be utilized with standards compliant functions (like
+<i>int main(int argc, char* argv[])</i>) or make use of specific platform API's that take non-standardized types
+for their input (e.g. a WinAPI taking a DWORD).
+</td></tr><tr><td>Resolution</td><td>
+None, just be sure to read the documenation and be aware of the few spots in the library that take or return
+a non-standardized integer type.
+</td></tr></table></div>
+
+<div class="consider"><input type="checkbox" id="issue_exverbose" name="issue_exverbose" />
+<label class="code" for="issue_exverbose"> details</label><table class="code"><tr>
+<td>Issue</td><td>
+Examples are verbose
+</td></tr><tr><td>Description</td><td>
+Some examples throughout the documentation might, in some cases, be somewhat verbose in their content.
+For example, one might see a line like the following:<br><br>
+<code>std::cout &lt;&lt; &quot;val[&quot; &lt;&lt; x &lt;&lt; &quot;]: &quot; &lt;&lt; val[x] &lt;&lt; std::endl;</code><br><br>
+and while this line most certainly can be <code>auto</code>'d or put in a macro or function, the point of the examples
+is to showcase how to utilize certain functionality of the library. To that, making some of the examples less verbose
+by adding macros or certain functions might actually add more confusion to the example itself and defeat the purpose
+of said example.<br>
+</td></tr><tr><td>Resolution</td><td>
+Read the examples carefully to understand how to utilize a certain function, then adjust the example to fit your needs.
+</td></tr></table></div>
+
+<div class="consider"><input type="checkbox" id="issue_ie" name="issue_ie" />
+<label class="code" for="issue_ie"> details</label><table class="code"><tr>
+<td>Issue</td><td>
+IE compatibility mode
+</td></tr><tr><td>Description</td><td>
+If you are viewing this off of your hard drive or intranet, and using Internet Explorer in compatibility mode, the CSS tree views will not work properly.
+</td></tr><tr><td>Resolution</td><td>
+Go to 'Tools->Compatibility View Settings' and uncheck 'Display intranet sites in Compatibility View'.
+</td></tr></table></div>
+
+<div class="consider"><input type="checkbox" id="issue_lic" name="issue_lic" />
+<label class="code" for="issue_lic"> details</label><table class="code"><tr>
+<td>Issue</td><td>
+Licensing
+</td></tr><tr><td>Description</td><td>
+Omni has a <a href="license.txt">permissive free license</a> that allows you to make derivative works or use
+Omni how you see fit without worry of license issues.
+</td></tr><tr><td>Resolution</td><td>
+None; the license is setup such that those who use the licensed software can do anything with it,
+except claim it is their work or that Zeriph or its contributors support the new/derived software in any way.
+</td></tr></table></div>
+
+<!--
+<div class="consider"><input type="checkbox" id="issue_XX" name="issue_XX" />
+<label class="code" for="issue_XX"> details</label><table class="code"><tr>
+<td>Issue</td><td>
+XXX
+</td></tr><tr><td>Description</td><td>
+XXX
+</td></tr><tr><td>Resolution</td><td>
+XXX
+</td></tr></table></div>
+-->
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

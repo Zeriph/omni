@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - Library Examples</title>
+<link rel="stylesheet" type="text/css" href="../../content/main.css" /><link rel="icon" type="image/png" href="../../content/favicon.png" />
+<script type="text/javascript" src="../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="../htmlsrc/index.html">Source</a></li><li title="Library classes and namespaces">
+<a href="../classes/index.html">Class Index</a></li><li title="Download and view examples">
+<a href="index.html" class="current">Examples</a></li><li title="Download and view build examples">
+<a href="../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="../options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../api.html">System API</a></li><li title="Other Considerations">
+<a href="../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle"><a name="omni_examples"></a>Synchronization Locks</div><div class="content"><div>
+When adding multiple threads to a program, care must be taken to ensure any shared data amongst the threads is synchronized properly; without the synchronization, it is possible for a data race to occur. A data race is a condition in which multiple threads try and read and write the same memory location (i.e. variable) at the same time.<br>
+<br>
+To allow a greater amount of flexibility with your code and the library, there are a few synchronization classes each serving a different purpose with different idioms:<br>
+<br>
+<code><a href="../classes/omni-sync-basic_lock.html">omni::sync::basic_lock</a></code><br>
+<code><a href="../classes/omni-sync-mutex.html">omni::sync::mutex</a></code><br>
+<code><a href="../classes/omni-sync-binary_semaphore.html">omni::sync::binary_semaphore</a></code><br>
+<code><a href="../classes/omni-sync-conditional.html">omni::sync::conditional</a></code><br>
+<code><a href="../classes/omni-sync-semaphore.html">omni::sync::semaphore</a></code><br>
+<code><a href="../classes/omni-sync-spin_lock.html">omni::sync::spin_lock</a></code><br>
+<code><a href="../classes/omni-sync-spin_wait.html">omni::sync::spin_wait</a></code><br>
+<code><a href="../classes/omni-sync-safe_spin_wait.html">omni::sync::safe_spin_wait</a></code><br>
+<code><a href="../classes/omni-sync-auto_lock.html">omni::sync::auto_lock</a>&lt;T&gt;</code><br>
+<code><a href="../classes/omni-sync-scoped_lock.html">omni::sync::scoped_lock</a>&lt;T&gt;</code><br>
+<br>
+It should be noted that most of the lock types are inherently thread safe (except where noted below). This is simply due to the locking nature of the classes and how they have been designed.<br>
+<br>
+<font class="hdr">Basic Locks (Mutex)</font><br>
+The first type is the <code><a href="../classes/omni-sync-basic_lock.html">omni::sync::basic_lock</a></code> which is a basic wrapper class for an <code><a href="../classes/omni-sync-mutex_t.html">omni::sync::mutex_t</a></code> and maintains a simple lock count to keep track if the underlying mutex is still locked on destruction . The <code>basic_lock</code> is, as the name implies, a basic synchronization locking mechanism that allows multi-threaded code to act on data in a thread-safe manner. The <code>basic_lock</code> does not maintain thread ownership or anything beyond if it is still in a locked state on destruction (which would signal a dead-lock condition occurred).<br>
+<br>
+The <code><a href="../classes/omni-sync-mutex.html">omni::sync::mutex</a></code> class is similar to the <code>basic_lock</code> in that it wraps an <code><a href="../classes/omni-sync-mutex_t.html">omni::sync::mutex_t</a></code> and maintains a lock count for dead-lock conditions, if the <code><a href="../options/omni_safe_mutex.html">OMNI_SAFE_MUTEX</a></code> is defined, it maintains another internal <code>mutex_t</code> to give thread-safe access to the underlying lock count and handles. Additionally, and most importantly, the <code>mutex</code> class can maintain thread ownership if <code><a href="../options/omni_mutex_owner.html">OMNI_MUTEX_OWNER</a></code> is defined; it is <b><i>undefined behavior</i></b> if <code>unlock</code> is called on a mutex from a thread that does not own the mutex handle, for example:<br>
+<div class="sntx"><input type="checkbox" id="c0" name="c0" /><label for="c0">&nbsp;</label><pre><a href="../classes/omni-sync-mutex.html">omni::sync::mutex</a> mtx;
+<a href="../classes/omni-sync-basic_lock.html">omni::sync::basic_lock</a> block;
+
+<font class="syn_typ">void</font> thread1()
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">/* this is undefined since no ownership is maintained,
+&nbsp;&nbsp;&nbsp;&nbsp;so this call might succeed but it is implementation defined
+&nbsp;&nbsp;&nbsp;&nbsp;as to what actually &quot;happens&quot; (i.e. success or crash) */</font>
+&nbsp;&nbsp;&nbsp;&nbsp;block.unlock();
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// this will generate an error because of the undefined nature</font>
+&nbsp;&nbsp;&nbsp;&nbsp;mtx.unlock();
+}
+
+<font class="syn_typ">int</font> main()
+{
+&nbsp;&nbsp;&nbsp;&nbsp;mtx.lock(); <font class="syn_cmt">// main thread &quot;owns&quot; the mutex</font>
+&nbsp;&nbsp;&nbsp;&nbsp;block.lock(); <font class="syn_cmt">// main thread &quot;owns&quot; the lock</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-thread.html">omni::sync::thread</a> t1(&amp;thread1);
+&nbsp;&nbsp;&nbsp;&nbsp;t1.start();
+&nbsp;&nbsp;&nbsp;&nbsp;t1.join();
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;
+}</pre></div>It should be noted that both the <code><a href="../classes/omni-sync-basic_lock.html">omni::sync::basic_lock</a></code> and <code><a href="../classes/omni-sync-mutex.html">omni::sync::mutex</a></code> are recursive locks, so a thread that calls <code>lock</code> twice without calling <code>unlock</code> will not result in an immediate dead-lock; care should be taken, however, as a dead-lock situation can still arise if <code>unlock</code> is <i>not</i> called an equal number of times as <code>lock</code> is.<br>
+<br>
+<font class="hdr">Semaphores</font><br>
+<br>
+Semaphore objects in Omni differ from mutex types in that they are not recursive, additionally semaphores can have multiple locks on them (i.e. multiple &quot;owners&quot;) but none of the locking types (mutex or semaphore) will &quot;auto&quot; unlock on destruction. As with the mutex, semaphore types cannot have active waits on destruction, in other words, you cannot call <code>lock</code> without <i>also</i> calling <code>unlock</code> on any synchronization type.<br>
+<br>
+The <code><a href="../classes/omni-sync-semaphore.html">omni::sync::semaphore</a></code> is a non-recursive lock that allows multiple waits to call the object. As with a mutex, the &quot;owner&quot; of the lock will be allowed to execute and those waiting for the lock will block until said lock is free. With a mutex you can only have 1 owner, and thus only 1 lock on the object at a time, but with a semaphore, you can have multiple &quot;owners&quot; and thus multiple lines of code executing while others wait.  <br>
+<br>
+The <code><a href="../classes/omni-sync-binary_semaphore.html">omni::sync::binary_semaphore</a></code> is a non-recursive lock and is similar to a mutex in that only 1 &quot;owner&quot; can have the lock at any given time (vs. a normal <code><a href="../classes/omni-sync-semaphore.html">omni::sync::semaphore</a></code> which can have multiple).<br>
+<br>
+A recursive lock allows a thread to call <code>lock</code> on an object multiple times without causing a dead-lock, for example:<br>
+<div class="sntx"><input type="checkbox" id="c1" name="c1" /><label for="c1">&nbsp;</label><pre><a href="../classes/omni-sync-mutex.html">omni::sync::mutex</a> mtx;
+
+<font class="syn_typ">int</font> main()
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// wont dead-lock</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">for</font> (<font class="syn_typ">int</font> i = <font class="syn_num">0</font>; i &lt; <font class="syn_num">10</font>; ++i) { mtx.lock(); }
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;here!&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// but must call unlock as many times as we have called locked</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">for</font> (<font class="syn_typ">int</font> i = <font class="syn_num">0</font>; i &lt; <font class="syn_num">10</font>; ++i) { mtx.unlock(); }
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;
+}</pre></div>A non-recursive lock <b><i>will</i></b> cause a dead-lock in a situation where one can happen, for example:<br>
+<div class="sntx"><input type="checkbox" id="c2" name="c2" /><label for="c2">&nbsp;</label><pre><a href="../classes/omni-sync-binary_semaphore.html">omni::sync::binary_semaphore</a> binsem; <font class="syn_cmt">// 1 owner</font>
+<a href="../classes/omni-sync-semaphore.html">omni::sync::semaphore</a> sem; <font class="syn_cmt">// default of 5 &quot;owners&quot;</font>
+
+<font class="syn_typ">int</font> main()
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// main thread &quot;owns&quot; the binary lock</font>
+&nbsp;&nbsp;&nbsp;&nbsp;binsem.wait();
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// main thread &quot;owns&quot; all available wait slots</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">for</font> (<font class="syn_typ">int</font> i = <font class="syn_num">0</font>; i &lt; <font class="syn_num">5</font>; ++i) { sem.wait(); }
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;binsem.wait(); <font class="syn_cmt">// dead-lock!</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// or</font>
+&nbsp;&nbsp;&nbsp;&nbsp;sem.wait(); <font class="syn_cmt">// dead-lock!</font>
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;This will never display&quot;</font> &lt;&lt; std::endl;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;
+}</pre></div>In this code, <code>wait</code> is called twice on the <code>binary_semaphore</code> without <code>release</code> ever being called. This causes a dead-lock since the <code>binary_semaphore</code> is not recursive. As well, the <code>semaphore</code> has a default wait slot of 5, so in this code all available slots are taken in the for loop causing any additional calls to <code>wait</code> on the semaphore to dead-lock since <code>release</code> was never called at least 1 time on the semaphore.<br>
+<br>
+<font class="hdr">Spin Locks and Waits</font><br>
+<br>
+Mutex and Semaphore objects can be quite complex and add additional computational time that might not always be ideal. Sometimes small waits are all that are needed and to this Omni has 3 types of <code>spin</code> wait types.<br>
+<br>
+The <code><a href="../classes/omni-sync-spin_lock.html">omni::sync::spin_lock</a></code> is a basic interlocked exchange type that calls the platform specific API for a spin lock type (which are usually kernel objects that are efficiently designed for this type of wait).<br>
+<br>
+The <code><a href="../classes/omni-sync-spin_wait.html">omni::sync::spin_wait</a></code> is a basic boolean check in a tight loop with a <code><a href="../options/omni_thread_yield.html">OMNI_THREAD_YIELD</a></code> call to not consume 100% CPU. Since this is a basic boolean check, it is not thread-safe and cannot be guaranteed in a multi-threaded environment to yield accurately, that is, if you call one of the wait functions on the <code>spin_wait</code> object and happen to check if it <code>signalled</code> on another thread at the &quot;same&quot; time, it cannot be guaranteed that the result returned was not over-written by the other thread.<br>
+<br>
+The <code><a href="../classes/omni-sync-safe_spin_wait.html">omni::sync::safe_spin_wait</a></code> is the same as a <code><a href="../classes/omni-sync-spin_wait.html">omni::sync::spin_wait</a></code> except it has a <code><a href="../classes/omni-sync-mutex_t.html">omni::sync::mutex_t</a></code> object to keep the underlying boolean lock thread-safe, guaranteeing its results.<br>
+<br>
+Each spin lock/wait does not care about thread ownership or if it is <code>locked</code> on destruction as that is not what they are intended for. These types of synchronization primitives are intended for a small waits and thus need to be used accordingly. Spin locks and waits are similar to a &quot;flood gate&quot; type of scenario where all threads that have called one of the <code>wait</code> functions will block until <code>signal</code> is called, in which case all threads will continue and non will block on the spin object until it is <code>reset</code> accordingly.<br>
+<br>
+Dead-locks can occur on spin locks but not in the same way as they can with a <code>binary_semaphore</code> type. For example:<br>
+<div class="sntx"><input type="checkbox" id="c3" name="c3" /><label for="c3">&nbsp;</label><pre><a href="../classes/omni-sync-spin_wait.html">omni::sync::spin_wait</a> obj;
+
+<font class="syn_cmt">// thread 1</font>
+obj.wait();
+obj.wait();
+
+<font class="syn_cmt">// thread 2</font>
+obj.signal();</pre></div>In this code, <code>thread 1</code> will wait until the object is signalled, then after it is signalled, it will call wait again, but depending on the spin lock type and if it is reset or not, the thread will just continue (i.e. <i>not</i> wait). If the spin object had been reset and never signalled again, then a dead-lock condition would occur.<br>
+<br>
+<font class="hdr">The Conditional</font><br>
+<br>
+The <code><a href="../classes/omni-sync-conditional.html">omni::sync::conditional</a></code> is a locking type that allows an event based locking mechanism to occur. When a <code>conditional</code> is utilized, all threads that have called <code>wait</code> on the object will block until either <code>signal</code> or <code>broadcast</code> is called. If <code>broadcast</code> is called, all threads that have blocked until that time will be released and signal is reset. If <code>signal</code> is called, vs. the <code>broadcast</code> function, only a single thread will be released according to the thread scheduling policy of the platform (usually in the order called to wait).<br>
+<br>
+As with the <code>mutex</code> and <code>semaphore</code> objects, a <code>conditional</code> type cannot have active waits when the object is being destroyed or an exception occurs. And like the <code>spin</code> lock/wait types, a dead-lock can occur if <code>wait</code> is called multiple times in a row without being signalled and/or reset.<br>
+<br>
+<font class="hdr">Scoped Locks</font><br>
+<br>
+None of the locking types mentioned allow for an &quot;auto&quot; unlock, that is, when an object goes out of scope it does not automatically unlock/release the object. To this, if you wish automatically lock and unlock the different types of objects, you can use one of the auto locking/scoped lock template classes to achieve this.<br>
+<br>
+Both the <code><a href="../classes/omni-sync-auto_lock.html">omni::sync::auto_lock</a></code> and the <code><a href="../classes/omni-sync-scoped_lock.html">omni::sync::scoped_lock</a></code> operate on types that have member functions of <code>lock</code> and <code>unlock</code> to which they call <code>lock</code> when the auto lock object is created and call <code>unlock</code> when the object is destroyed, effectively giving a scoped locking mechanism.<br>
+<br>
+The difference between the 2 classes is that <code>auto_lock</code> validates the handle pointer passed in and will throw an exception if the pointer is invalid and the <code>scoped_lock</code> does no such checks and instead just directly calls <code>lock</code> and <code>unlock</code> on the underlying handle.<br>
+<br>
+Since these are template functions, types that have member functions of <code>lock</code> and <code>unlock</code> (like the <code>std::mutex</code> in C++11) will work with these functions.<br><br><font class="hdr">Example</font><br><div class="sntx"><input type="checkbox" id="c4" name="c4" checked /><label for="c4">&nbsp;</label><pre><font class="syn_pre">#include &lt;<a href="../htmlsrc/omnilib.html">omnilib</a>&gt;</font>
+
+static <a href="../classes/omni-sync-semaphore.html">omni::sync::semaphore</a> sem; <font class="syn_cmt">// default 5 owners max</font>
+static <a href="../classes/omni-sync-spin_wait.html">omni::sync::spin_wait</a> spin;
+static <a href="../classes/omni-sync-basic_lock.html">omni::sync::basic_lock</a> block;
+static <a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a> count;
+
+static <font class="syn_typ">void</font> increment()
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-scoped_lock.html">omni::sync::scoped_lock</a>&lt;<a href="../classes/omni-sync-basic_lock.html">omni::sync::basic_lock</a>&gt; alock(&amp;block);
+&nbsp;&nbsp;&nbsp;&nbsp;++count;
+}
+
+static <font class="syn_typ">void</font> decrement()
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-scoped_lock.html">omni::sync::scoped_lock</a>&lt;<a href="../classes/omni-sync-basic_lock.html">omni::sync::basic_lock</a>&gt; alock(&amp;block);
+&nbsp;&nbsp;&nbsp;&nbsp;--count;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (count == <font class="syn_num">0</font>) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;spin.signal();
+&nbsp;&nbsp;&nbsp;&nbsp;}
+}
+
+<font class="syn_typ">class</font> Obj1 {
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">public</font>:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Obj1() : m_val(<font class="syn_num">42</font>), m_mtx(), m_cond() {}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Obj1(<font class="syn_typ">int</font> val) : m_val(val), m_mtx(), m_cond() {}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> get_val()
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-scoped_lock.html">omni::sync::scoped_lock</a>&lt;<a href="../classes/omni-sync-mutex.html">omni::sync::mutex</a>&gt; alock(&amp;<font class="syn_typ">this</font>-&gt;m_mtx);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;m_val;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> print_val()
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_mtx.lock();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_typ">this</font>-&gt;m_val &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_mtx.unlock();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> set_val(<font class="syn_typ">int</font> val)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-scoped_lock.html">omni::sync::scoped_lock</a>&lt;<a href="../classes/omni-sync-mutex.html">omni::sync::mutex</a>&gt; alock(&amp;<font class="syn_typ">this</font>-&gt;m_mtx);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_val = val;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;m_val;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> thread_func()
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;increment();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sem.wait();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_cond.wait();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;print_val();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sem.release();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;decrement();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> thread_func2()
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;increment();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sem.wait();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_cond.wait();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;set_val(<font class="syn_num">10</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;print_val();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sem.release();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;decrement();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> signal_all()
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_cond.broadcast();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">private</font>:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> m_val;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-mutex.html">omni::sync::mutex</a> m_mtx;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-conditional.html">omni::sync::conditional</a> m_cond;
+};
+
+
+<font class="syn_typ">int</font> main(<font class="syn_typ">int</font> argc, <font class="syn_typ">char</font>* argv[])
+{
+&nbsp;&nbsp;&nbsp;&nbsp;Obj1 obj1(<font class="syn_num">100</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-thread.html">omni::sync::thread</a> t1(omni::sync::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a>&lt;Obj1, &amp;Obj1::thread_func2&gt;(obj1));
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-thread.html">omni::sync::thread</a> t2(omni::sync::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a>&lt;Obj1, &amp;Obj1::thread_func2&gt;(obj1));
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">for</font> (<font class="syn_typ">int</font> i = <font class="syn_num">0</font>; i &lt; <font class="syn_num">10</font>; ++i) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-create_basic_thread.html">omni::sync::create_basic_thread</a>&lt;Obj1, &amp;Obj1::thread_func&gt;(obj1);
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;t1.start();
+&nbsp;&nbsp;&nbsp;&nbsp;t2.start();
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;obj1.set_val(obj1.get_val() + <font class="syn_num">10</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-sleep.html">omni::sync::sleep</a>(<font class="syn_num">1000</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;obj1.signal_all();
+
+&nbsp;&nbsp;&nbsp;&nbsp;spin.sleep_wait();
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;t1.join();
+&nbsp;&nbsp;&nbsp;&nbsp;t2.join();
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;leaving&quot;</font> &lt;&lt; std::endl;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;
+}</pre></div>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

@@ -2,7 +2,7 @@
 #include <omnilib>
 #include "tests.hpp"
 
-#define print_fw_info() omni::out << "Omni C++ cross platform framework (v" << OMNI_FW_VER_STR << ") unit test" << std::endl
+#define print_fw_info() omni::out << "Omni C++ cross platform library (v" << OMNI_FW_VER_STR << ") unit test" << std::endl
 #define invalid_unit(fval) omni::out << "Invalid unit specified: " << fval << std::endl
 #define invalid_test(tval) omni::out << "Invalid test specified: " << tval.c_str() << std::endl
 #define print_unit(i, itr) omni::out << ((i<9) ? "0" : "") << (i+1) << " - " << itr->name() << " - " << itr->description() << std::endl

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - OMNI_BIND_EX</title>
+<link rel="stylesheet" type="text/css" href="../../content/main.css" /><link rel="icon" type="image/png" href="../../content/favicon.png" />
+<script type="text/javascript" src="../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="index.html">Source</a></li><li title="Library classes and namespaces">
+<a href="../classes/index.html">Class Index</a></li><li title="Download and view examples">
+<a href="../examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="index.html" class="current">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../api.html">System API</a></li><li title="Other Considerations">
+<a href="../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle"><a name="omni_options"></a>OMNI_BIND_EX</div><div class="content"><div>
+<div class="docdiv">
+    <font class="docu">MACRO</font><br><br>
+    <code><font style="font-size:16px;">
+    <code>OMNI_BIND_EX</code> - A helper macro for binding the <code><a href="../classes/omni-delegate.html">omni::delegate</a></code>
+    </font></code>
+</div><br>
+<div class="docdiv">
+    <font class="docu">SYNOPSIS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    This macro is a framework helper macro. It&#39;s purpose is to make binding to an <code><a href="../classes/omni-delegate.html">omni::delegate</a></code> less verbose when needing to <code><a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a></code> to a non-static class member function.<br>
+<br>
+This macro is similar to the <code><a href="omni_bind.html">OMNI_BIND</a></code> macro except that it allows you to specify a delegate type (either an explicit delegate type or a typedef&#39;d delegate)<br>
+<br>
+This macro is only for non-static class members (i.e. a class/struct member function) since binding to a static function is already less verbose (e.g. you can simply say <code><a href="../classes/omni-delegate.html">omni::delegate</a> d = &amp;some_function</code>);<br>
+<br>
+The macro is defined as such:<br>
+<div class="sntx"><input type="checkbox" id="c0" name="c0" checked /><label for="c0">&nbsp;</label><pre><font class="syn_pre">#define <a href="../options/omni_bind_ex.html">OMNI_BIND_EX</a>(DelegateType, Class, Function, Obj) DelegateType::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a>&lt;Class, &amp;Class::Function&gt;(Obj)</font></pre></div>Where <code>DelegateType</code> is the delegate type to use, <code>Class</code> is the class type, <code>Function</code> is the member function of the <code>Class</code> specified (only the function name, not the full scope as the macro will expand this), and lastly <code>Obj</code> is the instance object needing to be passed in.<br>
+<br>
+Since <code><a href="omni_bind_ex.html">OMNI_BIND_EX</a></code> takes a delegate type as it&#39;s first parameter, there are no <code>OMNI_BINDn_EX,</code> that is to say, there is no <code>OMNI_BIND1_EX</code> or <code>OMNI_BIND2_EX</code> and so on.
+</div><br>
+<div class="docdiv">
+    <font class="docu">DESCRIPTION</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    When binding a function to an <code><a href="../classes/omni-delegate.html">omni::delegate</a></code> (or an <code><a href="../classes/omni-event.html">omni::event</a></code>), you can use the static <code><a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a></code> function of the delegate class to attach a non-static class member function by specifying the full delegate signature and the class, it&#39;s function and the associated instance to bind to; as an example, using the <code><a href="../classes/omni-delegate1.html">omni::delegate1</a></code> which takes one parameter in the function signature:<br>
+<div class="sntx"><input type="checkbox" id="c1" name="c1" checked /><label for="c1">&nbsp;</label><pre>my_class obj;
+<a href="../classes/omni-event1.html">omni::event1</a>&lt;<font class="syn_typ">void</font>, <font class="syn_typ">int</font>&gt; my_event;
+my_event += <a href="../classes/omni-delegate1.html">omni::delegate1</a>&lt;<font class="syn_typ">void</font>, <font class="syn_typ">int</font>&gt;::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a>&lt;my_class, &amp;my_class::class_function&gt;(obj);
+<font class="syn_cmt">// or </font>
+<a href="../classes/omni-delegate1.html">omni::delegate1</a>&lt;<font class="syn_typ">void</font>, <font class="syn_typ">int</font>&gt; my_delegate = <a href="../classes/omni-delegate1.html">omni::delegate1</a>&lt;<font class="syn_typ">void</font>, <font class="syn_typ">int</font>&gt;::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a>&lt;my_class, &amp;my_class::class_function&gt;(obj);
+my_event += my_delegate;</pre></div>As you can see, this can get very verbose when working with more complex function signatures and class types. To help alleviate some of this verbosity in the code you could elect to use the <code><a href="omni_bind.html">OMNI_BIND</a></code> helper macro.<br>
+<br>
+Example:<br>
+<div class="sntx"><input type="checkbox" id="c2" name="c2" checked /><label for="c2">&nbsp;</label><pre>my_class obj;
+<a href="../classes/omni-event1.html">omni::event1</a>&lt;<font class="syn_typ">void</font>, <font class="syn_typ">int</font>&gt; my_event;
+my_event += omni_bind(<font class="syn_typ">void</font>, <font class="syn_typ">int</font>, my_class, class_function, obj);
+<font class="syn_cmt">// or </font>
+<a href="../classes/omni-delegate1.html">omni::delegate1</a>&lt;<font class="syn_typ">void</font>, <font class="syn_typ">int</font>&gt; my_delegate = omni_bind(<font class="syn_typ">void</font>, <font class="syn_typ">int</font>, my_class, class_function, obj);
+my_event += my_delegate;</pre></div>Since this is just a helper macro, it&#39;s intended use is mostly to help the verbosity of binding a member function. You could alternatively typedef a more complex delegate type and perform similar functionality.<br>
+<br>
+Example:<br>
+<div class="sntx"><input type="checkbox" id="c3" name="c3" checked /><label for="c3">&nbsp;</label><pre><font class="syn_ins">typedef</font> <a href="../classes/omni-delegate1.html">omni::delegate1</a>&lt;<font class="syn_typ">void</font>, <font class="syn_typ">int</font>&gt; delegate_t;
+<font class="syn_ins">typedef</font> <a href="../classes/omni-event1.html">omni::event1</a>&lt;<font class="syn_typ">void</font>, <font class="syn_typ">int</font>&gt; event_t;
+my_class obj;
+event_t my_event;
+my_event += delegate_t::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a>&lt;my_class, &amp;my_class::class_function&gt;(obj);
+<font class="syn_cmt">// or </font>
+delegate_t my_delegate = delegate_t::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a>&lt;my_class, &amp;my_class::class_function&gt;(obj);
+my_event += my_delegate;</pre></div>In this case you could also use the <code><a href="omni_bind_ex.html">OMNI_BIND_EX</a></code> macro to specify the <code>delegate_t</code> delegate type as the specific binding delegate.<br>
+<br>
+Example:<br>
+<div class="sntx"><input type="checkbox" id="c4" name="c4" checked /><label for="c4">&nbsp;</label><pre><font class="syn_ins">typedef</font> <a href="../classes/omni-event1.html">omni::event1</a>&lt;<font class="syn_typ">void</font>, <font class="syn_typ">int</font>&gt; event_t;
+<font class="syn_ins">typedef</font> <a href="../classes/omni-delegate1.html">omni::delegate1</a>&lt;<font class="syn_typ">void</font>, <font class="syn_typ">int</font>&gt; delegate_t;
+<font class="syn_cmt">// or typedef event_t::delegate_t delegate_t;</font>
+
+my_class obj;
+event_t my_event;
+my_event += <a href="../options/omni_bind_ex.html">OMNI_BIND_EX</a>(delegate_t, my_class, class_function, obj);
+<font class="syn_cmt">// or </font>
+delegate_t my_delegate = <a href="../options/omni_bind_ex.html">OMNI_BIND_EX</a>(delegate_t, my_class, class_function, obj);
+my_event += my_delegate;</pre></div>
+</div><br>
+<div class="docdiv">
+    <font class="docu">CONSIDERATIONS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    This macro is only applicable to binding of non-static member functions (namespace functions are not non-static member functions and can be addressed the same as a non-member function).
+</div><br>
+<div class="docdiv">
+    <font class="docu">PLATFORM SPECIFIC</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    No platform specific notes.
+</div><br>
+<div class="docdiv">
+    <font class="docu">NOTES</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    None.
+</div><br>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

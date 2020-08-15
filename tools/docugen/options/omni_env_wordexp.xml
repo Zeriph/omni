@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_ENV_WORDEXP</Name>
+  <Brief>If defined, wordexp functionality is used in omni::environment::expand_vars</Brief>
+  <Considerations>As this only applies to the omni::environment::expand_vars functions, it's advised to use these functions with caution as it can open your program up to certain attack vectors (similar to the idea of a SQL injection attack).
+</Considerations>
+  <Description>Some platforms do not implement the GLIBC wordexp (like OpenBSD)
+ for many security reasons, but to implement a workaround to ensure cross-platform compatibility, a pipe is opened and the environment variables echo'd out. This as well can introduce security issues to your program and care must be taken to validate user input before using omni::environment::expand_vars functions (regardless if this macro is defined or not).</Description>
+  <Notes>None.</Notes>
+  <PlatformSpecific>This only applies to non-Windows systems. </PlatformSpecific>
+  <Synopsis>The wordexp library functionality is not implemented on some systems and thus cannot be used on all, so to enable use of the wordexp functions, this flag must be enabled.</Synopsis>
+  <IsHelper>false</IsHelper>
+  <IsConstant>false</IsConstant>
+</MacroOp>

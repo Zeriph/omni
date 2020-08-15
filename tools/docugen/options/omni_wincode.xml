@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_WINCODE</Name>
+  <Brief>Defined when a Windows Unicode environment detected.</Brief>
+  <Considerations>No special consideration.</Considerations>
+  <Description>This macro is a simple helper macro that is used in certain portions of the framework to determine if both the OMNI_OS_WIN and OMNI_UNICODE macro options are defined.</Description>
+  <Notes>None.</Notes>
+  <PlatformSpecific>This flag only applies to Windows platforms and is only defined on a Windows platform with the OMNI_UNICODE flag defined.</PlatformSpecific>
+  <Synopsis>If the Windows platform is detected on compilation and a Unicode compile flag is defined, then the OMNI_OS_WIN and OMNI_UNICODE flags will be defined, if both of these macros are defined then the OMNI_WINCODE macro is defined as well.</Synopsis>
+  <IsHelper>true</IsHelper>
+  <IsConstant>false</IsConstant>
+</MacroOp>

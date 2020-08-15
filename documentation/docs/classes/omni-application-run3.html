@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - function: omni::application::run</title>
+<link rel="stylesheet" type="text/css" href="../../content/main.css" /><link rel="icon" type="image/png" href="../../content/favicon.png" />
+<script type="text/javascript" src="../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="../htmlsrc/index.html">Source</a></li><li title="Library classes and namespaces">
+<a href="index.html" class="current">Class Index</a></li><li title="Download and view examples">
+<a href="../examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="../options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../api.html">System API</a></li><li title="Other Considerations">
+<a href="../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle">omni::application::run</div><div class="content"><div>
+<div class="docdiv"><a name="nm"></a>
+<font class="docu">NAME</font><br><br>
+<code><a href="../htmlsrc/omni/application.hpp.html#omni::application::run" class="chnm">
+    omni::application::run
+    </a></code><br>
+<br>A function of <a href="omni-application.html" class="code">omni::application</a><br><br>
+    <code><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/application.hpp.html">omni/application.hpp</a>&gt;</font></code><br><code><font class="syn_typ">int</font> omni::application::run(<font class="syn_typ">const</font> <a href="../classes/omni-sync-thread_start.html">omni::sync::thread_start</a>&amp; start_func)</code>
+</div><br>
+<div class="docdiv"><a name="syn"></a>
+<font class="docu">SYNOPSIS</font><br><br>
+Starts the main application thread loop.
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<div class="docdiv"><a name="desc"></a>
+<font class="docu">DESCRIPTION</font><br><br>
+This function is part of the application framework that allows you to hook in to certain system level functionality, as well as have access to other long running application contexts. This function will pause the main application until one of either <code><a href="omni-application-exit.html">omni::application::exit</a></code> or <code><a href="omni-application-stop.html">omni::application::stop</a></code> are called, or an exception is thrown and not caught. Along with the other variants of the run function, you can simplify argument and main program loop handling for global and multi-threaded environments in a more simplified way.
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<div class="docdiv"><a name="ret"></a>
+<font class="docu">RETURN VALUES</font><br><br>
+The exit code set by <code><a href="omni-application-set_return_code.html">omni::application::set_return_code</a></code>, or 0 if none is set. 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
+<div class="docdiv"><a name="param"></a>
+<font class="docu">PARAMETERS</font><br><br>
+<code>start_func</code> - An <code><a href="omni-sync-thread_start.html">omni::sync::thread_start</a></code> function object that will be called after the application context has been successfully created and started. 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
+<div class="docdiv"><a name="err"></a>
+<font class="docu">ERRORS</font><br><br>
+Since run need only be called once, if it is called again after being called at program start, it will throw an <code><a href="omni-exceptions-invalid_application_state.html">omni::exceptions::invalid_application_state</a></code> as calling run more than once will cause the system to get into an undefined state. 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
+<div class="docdiv"><a name="con"></a>
+<font class="docu">CONSIDERATIONS</font><br><br>
+You cannot utilize the signal or application handlers unless this or one of its variants are called in the main function of your code or library initialization routine. 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
+
+<div class="docdiv"><a name="notes"></a>
+<font class="docu">NOTES</font><br><br>
+If <code><a href="../options/omni_no_base_setlocale.html">OMNI_NO_BASE_SETLOCALE</a></code> is not defined, then the setlocale function is called with a category LC_ALL and an empty locale. If you wish to specify which category and locale to utilize, you can define <code><a href="../options/omni_base_locale_category.html">OMNI_BASE_LOCALE_CATEGORY</a></code> and <code><a href="../options/omni_base_locale.html">OMNI_BASE_LOCALE</a></code> 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
+
+<div class="docdiv"><a name="ex"></a>
+<font class="docu">EXAMPLE</font><br><br>
+<div class="sntx"><input type="checkbox" id="c0" name="c0" checked /><label for="c0"> example</label>
+<pre><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/application.html">omni/application</a>&gt;</font>
+
+<font class="syn_typ">void</font> app_exit()
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;app_exit!&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+}
+
+<font class="syn_typ">void</font> app_run()
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;In non-member function app_run&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Leaving app_run and waiting for CTRL+C&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+}
+
+<font class="syn_typ">class</font> app {
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">public</font>:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;app() : m_val(<font class="syn_num">42</font>) { <a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;app constructing value = &quot;</font> &lt;&lt; <font class="syn_typ">this</font>-&gt;m_val &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>; }
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~app() { <a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;app deconstructing value = &quot;</font> &lt;&lt; <font class="syn_typ">this</font>-&gt;m_val &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>; }
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> run()
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;In member function app::run value = &quot;</font> &lt;&lt; <font class="syn_typ">this</font>-&gt;m_val &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;++<font class="syn_typ">this</font>-&gt;m_val;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Increased value by 1, leaving app::run and waiting for CTRL+C&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static <font class="syn_typ">void</font> exit()
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;app::exit!&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">private</font>:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int32_t m_val;
+};
+
+<font class="syn_typ">int</font> main(<font class="syn_typ">int</font> argc, <font class="syn_typ">const</font> <font class="syn_typ">char</font>* argv[])
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-application-exit_handler-attach.html">omni::application::exit_handler::attach</a>(&amp;app_exit);
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-application-exit_handler-attach.html">omni::application::exit_handler::attach</a>(&amp;app::exit);
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (argc &gt; <font class="syn_num">1</font>) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;app mainapp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// DEV_NOTE: you cant <a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a> member functions to the exit handler in this way</font>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// you have to create a reference type that will be deconstructed in a static</font>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// handler, otherwise, the object can be deconstructed before the exit handler</font>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// is called, causing undefined behavior because of the reference after free.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-application-run.html">omni::application::run</a>(omni::sync::thread_start::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a>&lt;app, &amp;app::run&gt;(mainapp));
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-application-run.html">omni::application::run</a>(&amp;app_run);
+}</pre>
+</div>Visit the <a href="../examples/index.html">examples</a> page for more.
+
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

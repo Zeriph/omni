@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - function: omni::application::shutdown_handler::attach</title>
+<link rel="stylesheet" type="text/css" href="../../content/main.css" /><link rel="icon" type="image/png" href="../../content/favicon.png" />
+<script type="text/javascript" src="../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="../htmlsrc/index.html">Source</a></li><li title="Library classes and namespaces">
+<a href="index.html" class="current">Class Index</a></li><li title="Download and view examples">
+<a href="../examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="../options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../api.html">System API</a></li><li title="Other Considerations">
+<a href="../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle">omni::application::shutdown_handler::attach</div><div class="content"><div>
+<div class="docdiv"><a name="nm"></a>
+<font class="docu">NAME</font><br><br>
+<code><a href="../htmlsrc/omni/application.hpp.html#omni::application::shutdown_handler::attach" class="chnm">
+    omni::application::shutdown_handler::attach
+    </a></code><br>
+<br>A function of <a href="omni-application-shutdown_handler.html" class="code">omni::application::shutdown_handler</a><br><br>
+    <code><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/application.hpp.html">omni/application.hpp</a>&gt;</font></code><br><code><font class="syn_typ">void</font> omni::application::shutdown_handler::attach(<font class="syn_typ">const</font> <a href="../classes/omni-callback.html">omni::callback</a>&amp; shutdown_func)</code>
+</div><br>
+<div class="docdiv"><a name="syn"></a>
+<font class="docu">SYNOPSIS</font><br><br>
+Attach an <code><a href="omni-callback.html">omni::callback</a></code> delegate to the application <code><a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/shutdown.html">shutdown</a></code> event.
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<div class="docdiv"><a name="desc"></a>
+<font class="docu">DESCRIPTION</font><br><br>
+When a delegate is attached to the underlying shutdown handler, the delegate will be invoked before the <code><a href="omni-application-run.html">omni::application::run</a></code> function returns in the order it was attached.<br>
+<br>
+Calling this function after an <code><a href="omni-application-run.html">omni::application::run</a></code> context has returned will have no effect since the <code>run</code> function will have already returned thus calling the delegates.
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+
+<div class="docdiv"><a name="param"></a>
+<font class="docu">PARAMETERS</font><br><br>
+<code>shutdown_func</code> - The <code><a href="omni-callback.html">omni::callback</a></code> delegate function to attach. 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
+<div class="docdiv"><a name="err"></a>
+<font class="docu">ERRORS</font><br><br>
+If an exception occurs on an attached delegate, it will be handled according to <code><a href="omni-sync-user_thread_exception.html">omni::sync::user_thread_exception</a></code> and <code><a href="omni-sync-unhandled_thread_exception.html">omni::sync::unhandled_thread_exception</a></code>. 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
+<div class="docdiv"><a name="con"></a>
+<font class="docu">CONSIDERATIONS</font><br><br>
+This function will only have an effect if you have explicitly called one of the <code><a href="omni-application-run.html">omni::application::run</a></code> functions to block the main thread until program completion. 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
+
+<div class="docdiv"><a name="notes"></a>
+<font class="docu">NOTES</font><br><br>
+Be aware that the <code><a href="http://www.cplusplus.com/reference/cstdlib/atexit/">std::atexit</a></code> function will call any functions in the reverse order registered. So if <code><a href="omni-application-run.html">omni::application::run</a></code> is called after any other calls to register a function with <code><a href="http://www.cplusplus.com/reference/cstdlib/atexit/">std::atexit</a></code> in user code, then the underlying exit handler event will be called accordingly in order attached; in other words, if you were to call <code><a href="http://www.cplusplus.com/reference/cstdlib/atexit/">std::atexit</a></code>(&amp;some_function) then <code>shutdown_handler::attach(&amp;some_func)</code> and call <code><a href="omni-application-run.html">omni::application::run</a></code>, the Omni exit handler will be called first, then <code>some_function</code> last. Calling this function after the <code><a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/shutdown.html">shutdown</a></code> handler has been called will have no effect on the handler since it will have already been called. 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
+
+<div class="docdiv"><a name="ex"></a>
+<font class="docu">EXAMPLE</font><br><br>
+<div class="sntx"><input type="checkbox" id="c0" name="c0" checked /><label for="c0"> example</label>
+<pre><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/application.html">omni/application</a>&gt;</font>
+
+<font class="syn_typ">void</font> app_exit()
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Application exiting&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+}
+
+<font class="syn_typ">void</font> app_shutdown()
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Application shutting down&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+}
+
+<font class="syn_typ">void</font> app_run()
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Leaving, waiting for CTRL+C&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+}
+
+<font class="syn_typ">int</font> main(<font class="syn_typ">int</font> argc, <font class="syn_typ">const</font> <font class="syn_typ">char</font>* argv[])
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-application-exit_handler-attach.html">omni::application::exit_handler::attach</a>(&amp;app_exit);
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-application-shutdown_handler-attach.html">omni::application::shutdown_handler::attach</a>(&amp;app_shutdown);
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-application-run.html">omni::application::run</a>(&amp;app_run);
+}</pre>
+</div>Visit the <a href="../examples/index.html">examples</a> page for more.
+
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_THREAD_CALL_T</Name>
+  <Brief>Defines the thread function call type.
+</Brief>
+  <Considerations>No special consideration.
+</Considerations>
+  <Description>Defining OMNI_THREAD_STDCALL, OMNI_THREAD_FASTCALL, or OMNI_THREAD_CDECL modifies the calling type.
+</Description>
+  <Notes>None.
+</Notes>
+  <PlatformSpecific>No special consideration.
+</PlatformSpecific>
+  <Synopsis>Defines the underlying thread call type, @c __stdcall or @c __cdecl for example.
+</Synopsis>
+  <IsHelper>true</IsHelper>
+  <IsConstant>false</IsConstant>
+  <IsFWHelp>true</IsFWHelp>
+</MacroOp>

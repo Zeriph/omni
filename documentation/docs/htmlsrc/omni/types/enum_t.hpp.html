@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - omni/types/enum_t.hpp</title>
+<link rel="stylesheet" type="text/css" href="../../../../content/main.css" /><link rel="icon" type="image/png" href="../../../../content/favicon.png" />
+<script type="text/javascript" src="../../../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="../../index.html" class="current">Source</a></li><li title="Library classes and namespaces">
+<a href="../../../classes/index.html">Class Index</a></li><li title="Download and view examples">
+<a href="../../../examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="../../../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="../../../options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../../../api.html">System API</a></li><li title="Other Considerations">
+<a href="../../../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../../../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle"><a href="../../../../files/src/omni/types/enum_t.hpp" onclick="return popup('../../../../files/src/omni/types/enum_t.hpp')">omni/types/enum_t.hpp</a></div><div class="content"><div>
+<code><div class="cpphtmllines">
+<!--start line numbers-->
+00001:<br><div id="cmntl1" name="cmntl1">00002:<br>00003:<br>00004:<br>00005:<br>00006:<br>00007:<br>00008:<br>00009:<br>000010:<br>000011:<br>000012:<br>000013:<br>000014:<br>000015:<br>000016:<br>000017:<br>000018:<br></div>000019:<br>
+000020:<br>000021:<br>000022:<br>000023:<br>000024:<br>000025:<br>000026:<br>000027:<br>000028:<br>000029:<br>000030:<br>000031:<br>000032:<br>000033:<br>000034:<br>000035:<br>000036:<br>000037:<br>000038:<br>000039:<br>
+000040:<br>000041:<br>000042:<br>000043:<br>000044:<br>000045:<br>000046:<br>000047:<br>000048:<br>000049:<br>000050:<br>000051:<br>000052:<br>000053:<br>000054:<br>000055:<br>000056:<br>000057:<br>000058:<br>000059:<br>
+000060:<br>000061:<br>000062:<br>000063:<br>000064:<br>000065:<br>000066:<br>000067:<br>000068:<br>000069:<br>000070:<br>000071:<br>000072:<br>000073:<br>000074:<br>000075:<br>000076:<br>000077:<br>000078:<br>000079:<br>
+000080:<br>000081:<br>000082:<br>000083:<br>000084:<br>000085:<br>000086:<br>000087:<br>000088:<br>000089:<br>000090:<br>000091:<br>000092:<br>000093:<br>000094:<br>000095:<br>000096:<br>000097:<br>000098:<br>000099:<br>
+0000100:<br>0000101:<br>0000102:<br>0000103:<br>0000104:<br>0000105:<br>
+<!--end line numbers-->
+</div><div class="cpphtmlcmnt">
+<!--start collapse columns-->
+<img src="../../../../content/tree/min.gif" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br>
+<!--end collapse columns-->
+</div><div class="cpphtml" style="margin-left:3.75em;">
+<!--start highlighted code-->
+<font class="syn_cmt">/*<div class="syn_ex" id="cmnt1" name="cmnt1">
+ * Copyright (c), Zeriph Enterprises<br>
+ * All rights reserved.<br>
+ * <br>
+ * Contributor(s):<br>
+ * Zechariah Perez, omni (at) zeriph (dot) com<br>
+ * <br>
+ * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS &quot;AS IS&quot; AND ANY<br>
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED<br>
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE<br>
+ * DISCLAIMED. IN NO EVENT SHALL ZERIPH AND CONTRIBUTORS BE LIABLE FOR ANY<br>
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES<br>
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;<br>
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND<br>
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT<br>
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS<br>
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.<br>
+ */</div><div></div></font>
+<font class="syn_pre">#if !defined(OMNI_ENUM_T_HPP)</font><br>
+<font class="syn_pre">#define OMNI_ENUM_T_HPP 1</font><br>
+<font class="syn_pre">#include &lt;<a href="../../omni/defs/enum_def.hpp.html">omni/defs/enum_def.hpp</a>&gt;</font><br>
+<br>
+<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../options/omni_enum_include_type.html">OMNI_ENUM_INCLUDE_TYPE</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_ENUM_TYPE_FW(class_name) uint64_t type() const { return <a href="../../../classes/omni-type_id.html">omni::type_id</a>&lt;class_name&gt;(); }</font><br>
+<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_ENUM_TYPE_FW(class_name) </font><br>
+<font class="syn_pre">#endif</font><br>
+<br>
+<font class="syn_pre">#define <a href="../../../options/omni_enum_assigned.html">OMNI_ENUM_ASSIGNED</a>(class_name, ...) class class_name { \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;private: \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;template &lt; typename S &gt; static bool _try_parse(const S&amp; val, class_name&amp; out) { enum_t tmp; if (_try_parse(val, tmp)) { out.m_val = tmp; return true; } return false; } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;public: \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;typedef enum enum_t { __VA_ARGS__ } enum_t; \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static inline unsigned short COUNT() { return OMNI_EXPAND_FW( <a href="../../../options/omni_macro_arg_count.html">OMNI_MACRO_ARG_COUNT</a>( __VA_ARGS__ ) ) ; } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class_name() : m_val(DEFAULT_VALUE()) { } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class_name(const class_name&amp; cp) : m_val(cp.m_val) { } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class_name(enum_t val) : m_val(val) { } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~class_name() { } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static bool try_parse(const <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; val, class_name&amp; out) { return _try_parse(val, out); } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static bool try_parse(const <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>&amp; val, class_name&amp; out) { return _try_parse(val, out); } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool operator!=(const class_name&amp; val) const { return !(*this == val); } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class_name&amp; operator=(const class_name&amp; val) { if (this != &amp;val) { this-&gt;m_val = val.m_val; } return *this; } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class_name&amp; operator=(enum_t val) { this-&gt;m_val = val; return *this; } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class_name&amp; operator=(int32_t val) { if (!class_name::is_valid(val)) { OMNI_ERR_RET_FW(<font class="syn_str">&quot;Invalid enumeration value specified.&quot;</font>, <a href="../../../classes/omni-exceptions-invalid_enum.html">omni::exceptions::invalid_enum</a>(val)); } else { this-&gt;m_val = static_cast&lt;enum_t&gt;(val); } return *this; } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool operator&lt;(const class_name&amp; val) const { return this-&gt;m_val &lt; val.m_val; } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool operator&gt;(const class_name&amp; val) const { return this-&gt;m_val &gt; val.m_val; } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool operator==(const class_name&amp; val) const { if (this == &amp;val) { return true; } return this-&gt;m_val == val.m_val; } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static <a href="http://www.cplusplus.com/reference/string/">std::string</a> to_string(enum_t v) { return _to_val&lt;std::stringstream&gt;(v); } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static <a href="http://www.cplusplus.com/reference/string/">std::wstring</a> to_wstring(enum_t v) { return _to_val&lt;std::wstringstream&gt;(v); } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static enum_t parse(const <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; val) { return _parse(val); } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static enum_t parse(const <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>&amp; val) { return _parse(val); } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static bool try_parse(const <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; val, enum_t&amp; out) { return _try_parse(val, out); } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static bool try_parse(const <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>&amp; val, enum_t&amp; out) { return _try_parse(val, out); } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static bool is_valid(int32_t val) { return _valid(val); } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned short count() const { return COUNT(); } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;enum_t value() const { return this-&gt;m_val; } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::string</a> to_string() const { return to_string(this-&gt;m_val); } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a> to_wstring() const { return to_wstring(this-&gt;m_val); } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool operator!=(enum_t val) const { return (this-&gt;m_val != val); } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool operator&lt;(enum_t val) const { return this-&gt;m_val &lt; val; } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool operator&lt;(int32_t val) const { return this-&gt;m_val &lt; static_cast&lt;enum_t&gt;(val); } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool operator&gt;(enum_t val) const { return this-&gt;m_val &gt; val; } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool operator&gt;(int32_t val) const { return this-&gt;m_val &gt; val; } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool operator==(enum_t val) const { return this-&gt;m_val == val; } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool operator==(int32_t val) const { return this-&gt;m_val == val; } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;operator enum_t() const { return this-&gt;m_val; } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;operator <a href="http://www.cplusplus.com/reference/string/">std::string</a>() const { return this-&gt;to_string(); } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;operator <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>() const { return this-&gt;to_wstring(); } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64_t hash() const { return reinterpret_cast&lt;uint64_t&gt;(this); } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;friend <a href="http://www.cplusplus.com/reference/ostream/ostream/">std::ostream</a>&amp; operator&lt;&lt;(<a href="http://www.cplusplus.com/reference/ostream/ostream/">std::ostream</a>&amp; s, const enum_t&amp; c) { s &lt;&lt; to_string(c); return s; } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;friend <a href="http://www.cplusplus.com/reference/ostream/wostream/">std::wostream</a>&amp; operator&lt;&lt;(<a href="http://www.cplusplus.com/reference/ostream/wostream/">std::wostream</a>&amp; s, const enum_t&amp; c) { s &lt;&lt; to_wstring(c); return s; } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_OSTREAM_FW(class_name) \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ENUM_TYPE_FW(class_name)</font><br>
+<br>
+<font class="syn_pre">#define <a href="../../../options/omni_enum_assigned_parsers.html">OMNI_ENUM_ASSIGNED_PARSERS</a>(...) private: \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;enum_t m_val; \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;template &lt; typename S &gt; static enum_t _parse(const S&amp; val) { enum_t ret; if (_try_parse(val, ret)) { return ret; } OMNI_ERRV_FW(<font class="syn_str">&quot;invalid enum parse: &quot;</font>, val, <a href="../../../classes/omni-exceptions-invalid_enum.html">omni::exceptions::invalid_enum</a>()) return DEFAULT_VALUE(); } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;template &lt; typename S &gt; static bool _try_parse(const S&amp; str, enum_t&amp; out) { return _try_parse(<a href="../../../classes/omni-string-util-to_upper.html">omni::string::util::to_upper</a>(str), out); } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static bool _try_parse(const <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>&amp; val, enum_t&amp; out) { return _try_parse(<a href="../../../classes/omni-string-util-to_string.html">omni::string::util::to_string</a>(val), out); } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static bool _try_parse(const <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; val, enum_t&amp; out) { if (!val.empty()) { \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_EXPAND_FW( OMNI_EN_S2E_FW(__VA_ARGS__) ) \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;} return false; } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;template &lt; typename S &gt; static <a href="http://www.cplusplus.com/reference/string/basic_string/">std::basic_string</a>&lt; typename S::char_type &gt; _to_val(enum_t v) { S ss; switch (v) { \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_EXPAND_FW( OMNI_EN_E2SS_FW(__VA_ARGS__) ) \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default: ss &lt;&lt; <font class="syn_str">&quot;UNKNOWN (&quot;</font> &lt;&lt; static_cast&lt;int&gt;(v) &lt;&lt; <font class="syn_str">&quot;)&quot;</font>; break; } return ss.str(); } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static bool _valid(int32_t val) { return (val ==  \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_EXPAND_FW( OMNI_EN_OR_FW(__VA_ARGS__) ) \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;); }</font><br>
+<br>
+<font class="syn_pre">#define <a href="../../../options/omni_enum_end.html">OMNI_ENUM_END</a> };</font><br>
+<br>
+<font class="syn_pre">#define <a href="../../../options/omni_enum_default.html">OMNI_ENUM_DEFAULT</a>(default_val) public: static inline enum_t DEFAULT_VALUE() { return default_val; }</font><br>
+<br>
+<font class="syn_pre">#define <a href="../../../options/omni_enum_define.html">OMNI_ENUM_DEFINE</a>(class_name, ...) \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_EXPAND_FW( <a href="../../../options/omni_enum_assigned.html">OMNI_ENUM_ASSIGNED</a>(class_name, __VA_ARGS__ ) ) \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_EXPAND_FW( <a href="../../../options/omni_enum_assigned_parsers.html">OMNI_ENUM_ASSIGNED_PARSERS</a>( __VA_ARGS__ ) )</font><br>
+<br>
+<font class="syn_pre">#define <a href="../../../options/omni_enum.html">OMNI_ENUM</a>(class_name, default_val, ...) \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_EXPAND_FW( <a href="../../../options/omni_enum_assigned.html">OMNI_ENUM_ASSIGNED</a>(class_name, __VA_ARGS__ ) ) \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_EXPAND_FW( <a href="../../../options/omni_enum_default.html">OMNI_ENUM_DEFAULT</a>(default_val) ) \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_EXPAND_FW( <a href="../../../options/omni_enum_assigned_parsers.html">OMNI_ENUM_ASSIGNED_PARSERS</a>( __VA_ARGS__ ) ) \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../options/omni_enum_end.html">OMNI_ENUM_END</a></font><br>
+<br>
+<font class="syn_pre">#endif <font class="syn_cmt">// OMNI_ENUM_T_HPP</font></font><br>
+<!--end highlighted code-->
+</div></code><br>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS(); collapseAll('1', '../../../../');</script></body></html>

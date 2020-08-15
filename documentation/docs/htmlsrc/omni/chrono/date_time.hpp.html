@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - omni/chrono/date_time.hpp</title>
+<link rel="stylesheet" type="text/css" href="../../../../content/main.css" /><link rel="icon" type="image/png" href="../../../../content/favicon.png" />
+<script type="text/javascript" src="../../../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="../../index.html" class="current">Source</a></li><li title="Library classes and namespaces">
+<a href="../../../classes/index.html">Class Index</a></li><li title="Download and view examples">
+<a href="../../../examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="../../../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="../../../options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../../../api.html">System API</a></li><li title="Other Considerations">
+<a href="../../../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../../../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle"><a href="../../../../files/src/omni/chrono/date_time.hpp" onclick="return popup('../../../../files/src/omni/chrono/date_time.hpp')">omni/chrono/date_time.hpp</a></div><div class="content"><div>
+<code><div class="cpphtmllines">
+<!--start line numbers-->
+00001:<br><div id="cmntl1" name="cmntl1">00002:<br>00003:<br>00004:<br>00005:<br>00006:<br>00007:<br>00008:<br>00009:<br>000010:<br>000011:<br>000012:<br>000013:<br>000014:<br>000015:<br>000016:<br>000017:<br>000018:<br></div>000019:<br>
+000020:<br>000021:<br>000022:<br>000023:<br>000024:<br>000025:<br>000026:<br>000027:<br>000028:<br>000029:<br>000030:<br><div id="cmntl2" name="cmntl2">000031:<br>000032:<br>000033:<br>000034:<br>000035:<br>000036:<br>000037:<br>000038:<br>000039:<br>
+000040:<br>000041:<br>000042:<br>000043:<br>000044:<br>000045:<br>000046:<br>000047:<br>000048:<br>000049:<br>000050:<br>000051:<br>000052:<br>000053:<br></div>000054:<br>000055:<br>000056:<br>000057:<br>000058:<br>000059:<br>
+000060:<br>000061:<br>000062:<br>000063:<br>000064:<br>000065:<br>000066:<br>000067:<br>000068:<br>000069:<br>000070:<br>000071:<br>000072:<br>000073:<br>000074:<br>000075:<br>000076:<br>000077:<br>000078:<br>000079:<br>
+000080:<br>000081:<br>000082:<br>000083:<br>000084:<br>000085:<br>000086:<br>000087:<br>000088:<br>000089:<br>000090:<br>000091:<br>000092:<br>000093:<br>000094:<br>000095:<br>000096:<br>000097:<br>000098:<br>000099:<br>
+0000100:<br>0000101:<br>0000102:<br>0000103:<br>0000104:<br>0000105:<br>0000106:<br>0000107:<br>0000108:<br>0000109:<br>0000110:<br>0000111:<br>0000112:<br>0000113:<br>0000114:<br>0000115:<br>0000116:<br>0000117:<br>0000118:<br>0000119:<br>
+0000120:<br>0000121:<br>0000122:<br>0000123:<br>0000124:<br>0000125:<br>0000126:<br>0000127:<br>0000128:<br>0000129:<br>0000130:<br>0000131:<br>0000132:<br>0000133:<br>0000134:<br>0000135:<br>0000136:<br>0000137:<br>0000138:<br>0000139:<br>
+0000140:<br>0000141:<br>0000142:<br>0000143:<br>0000144:<br>0000145:<br>0000146:<br>0000147:<br>0000148:<br>0000149:<br>0000150:<br>0000151:<br>0000152:<br>0000153:<br>0000154:<br>0000155:<br>0000156:<br>0000157:<br>0000158:<br>0000159:<br>
+0000160:<br>0000161:<br>0000162:<br>0000163:<br>0000164:<br>0000165:<br>0000166:<br>0000167:<br>0000168:<br>0000169:<br>0000170:<br>0000171:<br>0000172:<br>0000173:<br>0000174:<br>0000175:<br>0000176:<br>0000177:<br>0000178:<br>0000179:<br>
+0000180:<br>0000181:<br>0000182:<br>0000183:<br>0000184:<br>0000185:<br>0000186:<br>0000187:<br>0000188:<br>0000189:<br>0000190:<br>0000191:<br>0000192:<br>0000193:<br>0000194:<br>0000195:<br>0000196:<br>0000197:<br>0000198:<br>0000199:<br>
+0000200:<br>0000201:<br>0000202:<br>0000203:<br>0000204:<br>0000205:<br>0000206:<br>0000207:<br>0000208:<br>0000209:<br>0000210:<br>0000211:<br>0000212:<br>0000213:<br>0000214:<br>0000215:<br>0000216:<br>0000217:<br>0000218:<br>0000219:<br>
+0000220:<br>0000221:<br>0000222:<br>0000223:<br>0000224:<br>0000225:<br>0000226:<br>0000227:<br>0000228:<br>0000229:<br>0000230:<br>0000231:<br>0000232:<br>0000233:<br>0000234:<br>0000235:<br>0000236:<br>0000237:<br>0000238:<br>0000239:<br>
+0000240:<br>0000241:<br>0000242:<br>0000243:<br>0000244:<br>0000245:<br>0000246:<br>0000247:<br>0000248:<br>0000249:<br>0000250:<br>0000251:<br>0000252:<br>0000253:<br>0000254:<br>0000255:<br>0000256:<br>0000257:<br>0000258:<br>0000259:<br>
+0000260:<br>0000261:<br>0000262:<br>0000263:<br>0000264:<br>0000265:<br>
+<!--end line numbers-->
+</div><div class="cpphtmlcmnt">
+<!--start collapse columns-->
+<img src="../../../../content/tree/min.gif" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<br><br><br><br><br><br><br><br><br><br><img src="../../../../content/tree/min.gif" id="cmnti2" name="cmnti2" onclick="collapse('2', '../../../../');" /><br><div id="cmnts2" name="cmnts2"><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br>
+<!--end collapse columns-->
+</div><div class="cpphtml" style="margin-left:3.75em;">
+<!--start highlighted code-->
+<font class="syn_cmt">/*<div class="syn_ex" id="cmnt1" name="cmnt1">
+ * Copyright (c), Zeriph Enterprises<br>
+ * All rights reserved.<br>
+ * <br>
+ * Contributor(s):<br>
+ * Zechariah Perez, omni (at) zeriph (dot) com<br>
+ * <br>
+ * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS &quot;AS IS&quot; AND ANY<br>
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED<br>
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE<br>
+ * DISCLAIMED. IN NO EVENT SHALL ZERIPH AND CONTRIBUTORS BE LIABLE FOR ANY<br>
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES<br>
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;<br>
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND<br>
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT<br>
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS<br>
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.<br>
+ */</div><div></div></font>
+<font class="syn_pre">#if !defined(OMNI_DATETIME_HPP)</font><br>
+<font class="syn_pre">#define OMNI_DATETIME_HPP 1</font><br>
+<font class="syn_pre">#include &lt;<a href="../../omni/defs/class_macros.hpp.html">omni/defs/class_macros.hpp</a>&gt;</font><br>
+<font class="syn_pre">#include &lt;<a href="../../omni/types/date_t.hpp.html">omni/types/date_t.hpp</a>&gt;</font><br>
+<font class="syn_pre">#include &lt;<a href="../../omni/sequence.hpp.html">omni/sequence.hpp</a>&gt;</font><br>
+<font class="syn_pre">#include &lt;<a href="../../omni/ostream.hpp.html">omni/ostream.hpp</a>&gt;</font><br>
+<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../options/omni_safe_datetime.html">OMNI_SAFE_DATETIME</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;<a href="../../omni/sync/basic_lock.hpp.html">omni/sync/basic_lock.hpp</a>&gt;</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;<a href="../../omni/sync/scoped_lock.hpp.html">omni/sync/scoped_lock.hpp</a>&gt;</font><br>
+<font class="syn_pre">#endif</font><br>
+<br>
+<font class="syn_cmt">/*<div class="syn_ex" id="cmnt2" name="cmnt2">
+&nbsp;&nbsp;&nbsp;&nbsp;TODO: need to add these once the Calendar class is built<br>
+&nbsp;&nbsp;&nbsp;&nbsp;date_time(uint16_t year, uint8_t month, uint8_t day, Calendar calendar);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;date_time(uint16_t year, uint8_t month, uint8_t day, uint8_t hour, uint8_t minute, uint8_t second, Calendar calendar);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;date_time(uint16_t year, uint8_t month, uint8_t day, uint8_t hour, uint8_t minute, uint8_t second, uint32_t millisecond, Calendar calendar);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;date_time(uint16_t year, uint8_t month, uint8_t day, uint8_t hour, uint8_t minute, uint8_t second, uint32_t millisecond, Calendar calendar, const <a href="../../../classes/omni-chrono-date_time_kind.html">omni::chrono::date_time_kind</a>&amp; kind);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;TODO: add these when IFormatProvider is ever completed (not important for this release)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;std::string to_string(std::string format, IFormatProvider provider);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;std::string[] GetDateTimeFormats(IFormatProvider provider);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;std::string[] GetDateTimeFormats(char format, IFormatProvider provider);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static date_time Parse(const std::string&amp; s, IFormatProvider provider);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static date_time Parse(const std::string&amp; s, IFormatProvider provider, DateTimeStyles styles);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static date_time ParseExact(const std::string&amp; s, std::string format, IFormatProvider provider);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static date_time ParseExact(const std::string&amp; s, std::string format, IFormatProvider provider, DateTimeStyles style);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static date_time ParseExact(const std::string&amp; s, std::string[] formats, IFormatProvider provider, DateTimeStyles style);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static bool TryParse(const std::string&amp; s, IFormatProvider provider, DateTimeStyles styles, out date_time result);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static bool TryParseExact(const std::string&amp; s, const std::string&amp; format, IFormatProvider provider, DateTimeStyles style, date_time&amp; result);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static bool TryParseExact(const std::string&amp; s, const std::string&amp; formats[], IFormatProvider provider, DateTimeStyles style, date_time&amp; result);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;TODO: do these make sense to add??<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static int Compare(date_time t1, date_time t2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static bool Equals(date_time t1, date_time t2);<br>
+*/</div><div></div></font>
+<br>
+<font class="syn_ins">namespace</font> omni {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">namespace</font> chrono {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">class</font> date_time<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">public</font>:<br>
+<a name="omni::chrono::date_time::date_time"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;date_time(<font class="syn_typ">const</font> <a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; cp);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">explicit</font> date_time(<font class="syn_typ">uint64_t</font> ticks);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;date_time(<font class="syn_typ">uint64_t</font> ticks, <font class="syn_typ">const</font> <a href="../../../classes/omni-chrono-date_time_kind.html">omni::chrono::date_time_kind</a>&amp; kind);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;date_time(<font class="syn_typ">uint16_t</font> year, <font class="syn_typ">uint8_t</font> month, <font class="syn_typ">uint8_t</font> day);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;date_time(<font class="syn_typ">uint16_t</font> year, <font class="syn_typ">uint8_t</font> month, <font class="syn_typ">uint8_t</font> day, <font class="syn_typ">uint8_t</font> hour, <font class="syn_typ">uint8_t</font> minute, <font class="syn_typ">uint8_t</font> second);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;date_time(<font class="syn_typ">uint16_t</font> year, <font class="syn_typ">uint8_t</font> month, <font class="syn_typ">uint8_t</font> day, <font class="syn_typ">uint8_t</font> hour, <font class="syn_typ">uint8_t</font> minute, <font class="syn_typ">uint8_t</font> second, <font class="syn_typ">const</font> <a href="../../../classes/omni-chrono-date_time_kind.html">omni::chrono::date_time_kind</a>&amp; kind);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;date_time(<font class="syn_typ">uint16_t</font> year, <font class="syn_typ">uint8_t</font> month, <font class="syn_typ">uint8_t</font> day, <font class="syn_typ">uint8_t</font> hour, <font class="syn_typ">uint8_t</font> minute, <font class="syn_typ">uint8_t</font> second, <font class="syn_typ">uint16_t</font> millisecond);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;date_time(<font class="syn_typ">uint16_t</font> year, <font class="syn_typ">uint8_t</font> month, <font class="syn_typ">uint8_t</font> day, <font class="syn_typ">uint8_t</font> hour, <font class="syn_typ">uint8_t</font> minute, <font class="syn_typ">uint8_t</font> second, <font class="syn_typ">uint16_t</font> millisecond, <font class="syn_typ">const</font> <a href="../../../classes/omni-chrono-date_time_kind.html">omni::chrono::date_time_kind</a>&amp; kind);<br>
+<a name="omni::chrono::date_time::~date_time"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~date_time();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+<a name="omni::chrono::date_time::add"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> add(<font class="syn_typ">const</font> <a href="../../../classes/omni-chrono-time_span.html">omni::chrono::time_span</a>&amp; value);<br>
+<a name="omni::chrono::date_time::add_days"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> add_days(<font class="syn_typ">double</font> value);<br>
+<a name="omni::chrono::date_time::add_hours"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> add_hours(<font class="syn_typ">double</font> value);<br>
+<a name="omni::chrono::date_time::add_milliseconds"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> add_milliseconds(<font class="syn_typ">double</font> value);<br>
+<a name="omni::chrono::date_time::add_minutes"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> add_minutes(<font class="syn_typ">double</font> value);<br>
+<a name="omni::chrono::date_time::add_months"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> add_months(<font class="syn_typ">uint32_t</font> months);<br>
+<a name="omni::chrono::date_time::add_seconds"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> add_seconds(<font class="syn_typ">double</font> value);<br>
+<a name="omni::chrono::date_time::add_ticks"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> add_ticks(int64_t value);<br>
+<a name="omni::chrono::date_time::add_years"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> add_years(int16_t value);<br>
+<a name="omni::chrono::date_time::is_dst"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> is_dst() <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::is_daylight_saving_time"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> is_daylight_saving_time() <font class="syn_typ">const</font> { <font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;is_dst(); }<br>
+<a name="omni::chrono::date_time::to_binary"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int64_t to_binary() <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::date"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> date() <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::day"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint8_t</font> day() <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::day_of_week"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-chrono-day_of_week.html">omni::chrono::day_of_week</a> day_of_week() <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::day_of_year"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint16_t</font> day_of_year() <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::hash_code"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int32_t hash_code() <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::hour"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint8_t</font> hour() <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::kind"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-chrono-date_time_kind.html">omni::chrono::date_time_kind</a> kind() <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::millisecond"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint16_t</font> millisecond() <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::minute"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint8_t</font> minute() <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::month"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint8_t</font> month() <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::second"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint8_t</font> second() <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::ticks"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> ticks() <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::time_of_day"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-chrono-time_span.html">omni::chrono::time_span</a> time_of_day() <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::year"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint16_t</font> year() <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::subtract"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-chrono-time_span.html">omni::chrono::time_span</a> subtract(<font class="syn_typ">const</font> <a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; value) <font class="syn_typ">const</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> subtract(<font class="syn_typ">const</font> <a href="../../../classes/omni-chrono-time_span.html">omni::chrono::time_span</a>&amp; value) <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::to_oa_date"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">double</font> to_oa_date() <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::to_file_time"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> to_file_time() <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::to_file_time_utc"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> to_file_time_utc() <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::to_local_time"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> to_local_time() <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::to_long_date_string"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::string</a> to_long_date_string() <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::to_long_date_wstring"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a> to_long_date_wstring() <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::to_long_time_string"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::string</a> to_long_time_string() <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::to_long_time_wstring"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a> to_long_time_wstring() <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::to_short_date_string"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::string</a> to_short_date_string() <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::to_short_date_wstring"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a> to_short_date_wstring() <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::to_short_time_string"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::string</a> to_short_time_string() <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::to_short_time_wstring"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a> to_short_time_wstring() <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::to_string"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::string</a> to_string(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; format) <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::to_wstring"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a> to_wstring(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>&amp; format) <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::to_universal_time"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> to_universal_time() <font class="syn_typ">const</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-sequence-string_t.html">omni::sequence::string_t</a> get_date_time_formats() <font class="syn_typ">const</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-sequence-string_t.html">omni::sequence::string_t</a> get_date_time_formats(<font class="syn_typ">char</font> format) <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::swap"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> swap(<a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; other);<br>
+<a name="omni::chrono::date_time::to_string_t"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-string_t.html">omni::string_t</a> to_string_t() <font class="syn_typ">const</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::string</a> to_string() <font class="syn_typ">const</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a> to_wstring() <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::operator="></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; <font class="syn_ins">operator</font>=(<font class="syn_typ">const</font> <a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; ap);<br>
+<a name="omni::chrono::date_time::operator+"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> <font class="syn_ins">operator</font>+(<font class="syn_typ">const</font> <a href="../../../classes/omni-chrono-time_span.html">omni::chrono::time_span</a>&amp; t);<br>
+<a name="omni::chrono::date_time::operator-"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> <font class="syn_ins">operator</font>-(<font class="syn_typ">const</font> <a href="../../../classes/omni-chrono-time_span.html">omni::chrono::time_span</a>&amp; t);<br>
+<a name="omni::chrono::date_time::operator+="></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; <font class="syn_ins">operator</font>+=(<font class="syn_typ">const</font> <a href="../../../classes/omni-chrono-time_span.html">omni::chrono::time_span</a>&amp; t);<br>
+<a name="omni::chrono::date_time::operator-="></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; <font class="syn_ins">operator</font>-=(<font class="syn_typ">const</font> <a href="../../../classes/omni-chrono-time_span.html">omni::chrono::time_span</a>&amp; t);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-chrono-time_span.html">omni::chrono::time_span</a> <font class="syn_ins">operator</font>+(<font class="syn_typ">const</font> <a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; d2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-chrono-time_span.html">omni::chrono::time_span</a> <font class="syn_ins">operator</font>-(<font class="syn_typ">const</font> <a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; d2);<br>
+<br>
+<a name="omni::chrono::date_time::operator=="></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> <font class="syn_ins">operator</font>==(<font class="syn_typ">const</font> <a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; d2) <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::operator!="></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> <font class="syn_ins">operator</font>!=(<font class="syn_typ">const</font> <a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; d2) <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::operator<"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> <font class="syn_ins">operator</font>&lt;(<font class="syn_typ">const</font> <a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; d2) <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::operator<="></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> <font class="syn_ins">operator</font>&lt;=(<font class="syn_typ">const</font> <a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; d2) <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::operator>"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> <font class="syn_ins">operator</font>&gt;(<font class="syn_typ">const</font> <a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; d2) <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::operator>="></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> <font class="syn_ins">operator</font>&gt;=(<font class="syn_typ">const</font> <a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; d2) <font class="syn_typ">const</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+<a name="omni::chrono::date_time::operator std::string"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">operator</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>() <font class="syn_typ">const</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;to_string();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+<a name="omni::chrono::date_time::operator std::wstring"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">operator</font> <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>() <font class="syn_typ">const</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;to_wstring();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MEMBERS_FW(<a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>) <font class="syn_cmt">// disposing,name,type(),hash()</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_OSTREAM_FW(<a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>)<br>
+<br>
+<a name="omni::chrono::date_time::min_value"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static <font class="syn_ins">inline</font> date_time min_value()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> date_time();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+<a name="omni::chrono::date_time::max_value"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static <font class="syn_ins">inline</font> date_time max_value()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> date_time(<a href="../../../classes/omni-chrono-ticks_to_10000ad.html">omni::chrono::TICKS_TO_10000AD</a>, <a href="../../../classes/omni-chrono-date_time_kind-unspecified.html">omni::chrono::date_time_kind::UNSPECIFIED</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+<a name="omni::chrono::date_time::days_in_month"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static <font class="syn_typ">uint16_t</font> days_in_month(<font class="syn_typ">uint16_t</font> year, <font class="syn_typ">uint8_t</font> month);<br>
+<a name="omni::chrono::date_time::from_binary"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static <a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> from_binary(int64_t date_data);<br>
+<a name="omni::chrono::date_time::from_file_time"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static <a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> from_file_time(int64_t file_time);<br>
+<a name="omni::chrono::date_time::from_file_time_utc"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static <a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> from_file_time_utc(int64_t file_time);<br>
+<a name="omni::chrono::date_time::from_oa_date"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static <a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> from_oa_date(<font class="syn_typ">double</font> d);<br>
+<a name="omni::chrono::date_time::specify_kind"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static <a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> specify_kind(<font class="syn_typ">const</font> date_time&amp; value, <font class="syn_typ">const</font> <a href="../../../classes/omni-chrono-date_time_kind.html">omni::chrono::date_time_kind</a>&amp; kind);<br>
+<a name="omni::chrono::date_time::now"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static <a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> now();<br>
+<a name="omni::chrono::date_time::utc_now"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static <a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> utc_now();<br>
+<a name="omni::chrono::date_time::today"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static <a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> today();<br>
+<a name="omni::chrono::date_time::is_leap_year"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static <font class="syn_typ">bool</font> is_leap_year(<font class="syn_typ">uint16_t</font> year);<br>
+<a name="omni::chrono::date_time::parse"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static <a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> parse(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; s);<br>
+<a name="omni::chrono::date_time::parse_exact"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static <a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> parse_exact(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; s, <font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; format);<br>
+<a name="omni::chrono::date_time::try_parse"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static <font class="syn_typ">bool</font> try_parse(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; s, <a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; result);<br>
+<a name="omni::chrono::date_time::try_parse_exact"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static <font class="syn_typ">bool</font> try_parse_exact(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; s, <font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; format, <font class="syn_typ">const</font> omni::chrono::date_time_styles&amp; style, <a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; result);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">private</font>:<br>
+<a name="omni::chrono::date_time::m_date"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> m_date;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../options/omni_safe_datetime.html">OMNI_SAFE_DATETIME</a>)</font><br>
+<a name="omni::chrono::date_time::m_mtx"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">mutable</font> <a href="../../../classes/omni-sync-basic_lock.html">omni::sync::basic_lock</a> m_mtx;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;date_time(); <font class="syn_cmt">// not &#39;user&#39; accessable as it&#39;s used to construct empty (min) DT objects</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;date_time(<font class="syn_typ">bool</font> is_ambiguous_dst, <font class="syn_typ">const</font> <a href="../../../classes/omni-chrono-date_time_kind.html">omni::chrono::date_time_kind</a>&amp; kind, <font class="syn_typ">uint64_t</font> ticks, <font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; non_op);<br>
+<a name="omni::chrono::date_time::_add"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> _add(<font class="syn_typ">double</font> value, int64_t scale);<br>
+<a name="omni::chrono::date_time::_kind"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-chrono-date_time_kind.html">omni::chrono::date_time_kind</a> _kind() <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::_to_binary_raw"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int64_t _to_binary_raw() <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::_get_date_part"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int64_t _get_date_part(<font class="syn_typ">uint8_t</font> part) <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::_is_ambiguous_daylight_saving_time"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> _is_ambiguous_daylight_saving_time() <font class="syn_typ">const</font>;<br>
+<a name="omni::chrono::date_time::_to_local_time"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> _to_local_time(<font class="syn_typ">bool</font> throw_on_overflow) <font class="syn_typ">const</font>;<br>
+<br>
+<a name="omni::chrono::date_time::_ticks"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> int64_t _ticks() <font class="syn_typ">const</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">static_cast</font>&lt;int64_t&gt;(<font class="syn_typ">this</font>-&gt;m_date &amp; OMNI_TICKS_MASK_FW);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+<a name="omni::chrono::date_time::_internal_kind"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">uint64_t</font> _internal_kind() <font class="syn_typ">const</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_date &amp; OMNI_FLAGS_MASK_FW);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+<a name="omni::chrono::date_time::_date_to_ticks"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static int64_t _date_to_ticks(<font class="syn_typ">uint16_t</font> year, <font class="syn_typ">uint8_t</font> month, <font class="syn_typ">uint8_t</font> day);<br>
+<a name="omni::chrono::date_time::_time_to_ticks"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static int64_t _time_to_ticks(<font class="syn_typ">uint8_t</font> hour, <font class="syn_typ">uint8_t</font> minute, <font class="syn_typ">uint8_t</font> second);<br>
+<a name="omni::chrono::date_time::_double_date_to_ticks"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static int64_t _double_date_to_ticks(<font class="syn_typ">double</font> value);<br>
+<a name="omni::chrono::date_time::_from_binary_raw"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static <a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> _from_binary_raw(int64_t date_data);<br>
+<a name="omni::chrono::date_time::_ticks_to_oa_date"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static <font class="syn_typ">double</font> _ticks_to_oa_date(int64_t value);<br>
+<a name="omni::chrono::date_time::_try_create"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static <font class="syn_typ">bool</font> _try_create(<font class="syn_typ">uint16_t</font> year, <font class="syn_typ">uint8_t</font> month, <font class="syn_typ">uint8_t</font> day, <font class="syn_typ">uint8_t</font> hour, <font class="syn_typ">uint8_t</font> minute, <font class="syn_typ">uint8_t</font> second, <font class="syn_typ">uint16_t</font> millisecond, <a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; result);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};<br>
+<br>
+<a name="omni::chrono::days_in_month"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">uint16_t</font> days_in_month(<font class="syn_typ">uint16_t</font> year, <font class="syn_typ">uint8_t</font> month)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../../../classes/omni-chrono-date_time-days_in_month.html">omni::chrono::date_time::days_in_month</a>(year, month);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+<a name="omni::chrono::from_binary"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> from_binary(int64_t date_data)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../../../classes/omni-chrono-date_time-from_binary.html">omni::chrono::date_time::from_binary</a>(date_data);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+<a name="omni::chrono::from_file_time"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> from_file_time(int64_t file_time)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../../../classes/omni-chrono-date_time-from_file_time.html">omni::chrono::date_time::from_file_time</a>(file_time);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+<a name="omni::chrono::from_file_time_utc"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> from_file_time_utc(int64_t file_time)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../../../classes/omni-chrono-date_time-from_file_time_utc.html">omni::chrono::date_time::from_file_time_utc</a>(file_time);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+<a name="omni::chrono::from_oa_date"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> from_oa_date(<font class="syn_typ">double</font> d)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../../../classes/omni-chrono-date_time-from_oa_date.html">omni::chrono::date_time::from_oa_date</a>(d);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+<a name="omni::chrono::specify_kind"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> specify_kind(<font class="syn_typ">const</font> <a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; value, <font class="syn_typ">const</font> <a href="../../../classes/omni-chrono-date_time_kind.html">omni::chrono::date_time_kind</a>&amp; kind)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../../../classes/omni-chrono-date_time-specify_kind.html">omni::chrono::date_time::specify_kind</a>(value, kind);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+<a name="omni::chrono::now"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> now()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../../../classes/omni-chrono-date_time-now.html">omni::chrono::date_time::now</a>();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+<a name="omni::chrono::utc_now"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> utc_now()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../../../classes/omni-chrono-date_time-utc_now.html">omni::chrono::date_time::utc_now</a>();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+<a name="omni::chrono::today"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> today()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../../../classes/omni-chrono-date_time-today.html">omni::chrono::date_time::today</a>();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+<a name="omni::chrono::is_leap_year"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> is_leap_year(<font class="syn_typ">uint16_t</font> year)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../../../classes/omni-chrono-date_time-is_leap_year.html">omni::chrono::date_time::is_leap_year</a>(year);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_cmt">// namespace chrono</font><br>
+} <font class="syn_cmt">// namespace omni</font><br>
+<br>
+<font class="syn_ins">namespace</font> std {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">void</font> swap(<a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; o1, <a href="../../../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; o2)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;o1.swap(o2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+}<br>
+<br>
+<font class="syn_pre">#endif <font class="syn_cmt">// OMNI_TIME_HPP</font></font><br>
+<!--end highlighted code-->
+</div></code><br>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS(); collapseAll('2', '../../../../');</script></body></html>

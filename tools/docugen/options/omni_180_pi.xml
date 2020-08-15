@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_180_PI</Name>
+  <Brief>Defined as the constant value of 180/Pi
+</Brief>
+  <Considerations>No special considerations
+</Considerations>
+  <Description>A framework macro/option that changes certain functionality
+</Description>
+  <Notes>None.
+</Notes>
+  <PlatformSpecific>No platform specific notes.
+</PlatformSpecific>
+  <Synopsis>A framework macro/option
+</Synopsis>
+  <IsHelper>true</IsHelper>
+  <IsConstant>true</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
+</MacroOp>

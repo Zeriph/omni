@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - OMNI_SIZEOF_BITS</title>
+<link rel="stylesheet" type="text/css" href="../../content/main.css" /><link rel="icon" type="image/png" href="../../content/favicon.png" />
+<script type="text/javascript" src="../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="index.html">Source</a></li><li title="Library classes and namespaces">
+<a href="../classes/index.html">Class Index</a></li><li title="Download and view examples">
+<a href="../examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="index.html" class="current">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../api.html">System API</a></li><li title="Other Considerations">
+<a href="../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle"><a name="omni_options"></a>OMNI_SIZEOF_BITS</div><div class="content"><div>
+<div class="docdiv">
+    <font class="docu">MACRO</font><br><br>
+    <code><font style="font-size:16px;">
+    <code>OMNI_SIZEOF_BITS</code> - Gets the <code>sizeof</code> a type in bits
+    </font></code>
+</div><br>
+<div class="docdiv">
+    <font class="docu">SYNOPSIS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    This macro can be utilized to get the size of an object in bits.
+</div><br>
+<div class="docdiv">
+    <font class="docu">DESCRIPTION</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    This macro is defined as the following:<br>
+<div class="sntx"><input type="checkbox" id="c0" name="c0" checked /><label for="c0">&nbsp;</label><pre><font class="syn_pre">#define <a href="../options/omni_sizeof_bits.html">OMNI_SIZEOF_BITS</a>(T) (sizeof(T) * CHAR_BIT)</font></pre></div>Where <code>T</code> is the type to get the size of.<br>
+<br>
+Example:<br>
+<div class="sntx"><input type="checkbox" id="c1" name="c1" checked /><label for="c1">&nbsp;</label><pre><font class="syn_pre">#define printv(v) <a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; #v &lt;&lt; <font class="syn_str">&quot; = &quot;</font> &lt;&lt; v &lt;&lt; std::endl</font>
+printv(<a href="../options/omni_sizeof_bits.html">OMNI_SIZEOF_BITS</a>(<font class="syn_typ">char</font>*));
+printv(<a href="../options/omni_sizeof_bits.html">OMNI_SIZEOF_BITS</a>(<font class="syn_typ">unsigned</font> <font class="syn_typ">int</font>));
+printv(<a href="../options/omni_sizeof_bits.html">OMNI_SIZEOF_BITS</a>(<font class="syn_typ">unsigned</font> <font class="syn_typ">long</font>));
+printv(<a href="../options/omni_sizeof_bits.html">OMNI_SIZEOF_BITS</a>(<font class="syn_typ">double</font>));</pre></div>Output on a 32-bit x86 system:<br>
+<code><br>
+<a href="omni_sizeof_bits.html">OMNI_SIZEOF_BITS</a>(char*) = 32<br>
+<a href="omni_sizeof_bits.html">OMNI_SIZEOF_BITS</a>(unsigned int) = 32<br>
+<a href="omni_sizeof_bits.html">OMNI_SIZEOF_BITS</a>(unsigned long) = 32<br>
+<a href="omni_sizeof_bits.html">OMNI_SIZEOF_BITS</a>(double) = 64<br>
+</code><br>
+Output on a 64-bit x86 system:<br>
+<code><br>
+<a href="omni_sizeof_bits.html">OMNI_SIZEOF_BITS</a>(char*) = 64<br>
+<a href="omni_sizeof_bits.html">OMNI_SIZEOF_BITS</a>(unsigned int) = 32<br>
+<a href="omni_sizeof_bits.html">OMNI_SIZEOF_BITS</a>(unsigned long) = 32<br>
+<a href="omni_sizeof_bits.html">OMNI_SIZEOF_BITS</a>(double) = 64<br>
+</code>
+</div><br>
+<div class="docdiv">
+    <font class="docu">CONSIDERATIONS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    This macro is not affected by the platform architecture (i.e. <code>x86</code> vs. <code>x86_64</code> etc.)
+</div><br>
+<div class="docdiv">
+    <font class="docu">PLATFORM SPECIFIC</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    The size of the type is multiplied by <code>CHAR_BIT</code> to get the number of bits representative of a byte on the specific platform (usually <code>CHAR_BIT</code> is 8). If you rely on the size of the bits to be a specific size, you will need to take note of this.
+</div><br>
+<div class="docdiv">
+    <font class="docu">NOTES</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    None.
+</div><br>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

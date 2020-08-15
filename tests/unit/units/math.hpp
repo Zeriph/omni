@@ -2,6 +2,8 @@
 
 #define UT_ROOT_NS math
 #define UT_NAME math
+#define UT_ISNS true
+#define UT_DESC "Tests the various functionality of the omni::math namespace"
 #include <utdefs/unit_test.hpp>
 
 class UT_CLASS_DEF
@@ -15,6 +17,9 @@ class UT_CLASS_DEF
         
         void info_test()
         {
+            printv("omni::math::PI = ", omni::math::E);
+            printv("omni::math::PI_L = ", omni::math::E_L);
+            printv("omni::math::PI_F = ", omni::math::E_F);
             printv("omni::math::PI = ", omni::math::PI);
             printv("omni::math::PI_L = ", omni::math::PI_L);
             printv("omni::math::PI_F = ", omni::math::PI_F);
@@ -32,22 +37,30 @@ class UT_CLASS_DEF
         {
             //double rad_to_deg(double rad)
             printve("rad_to_deg(1.01) = ", omni::math::rad_to_deg(1.01), (57.868758));
+            
             //double deg_to_rad(double deg)
             printve("deg_to_rad(57.868758) = ", omni::math::deg_to_rad(57.868758), (1.01));
+            
             //template < typename T > T delta(const T& a, const T& b)
             printve("delta(2.2,1.2) = ", omni::math::delta(2.2, 1.2), (1.0));
             printve("delta(2,1) = ", omni::math::delta(2, 1), 1);
+            
             //template < typename T > T delta_squared(const T& a, const T& b)
             printve("delta_squared(4.2,1.2) = ", omni::math::delta_squared(4.2, 1.2), (9.0));
             printve("delta_squared(4,1) = ", omni::math::delta_squared(4, 1), (9));
+            
             //template < typename T > double area_of_circle(T radius)
             printve("area_of_circle(3) = ", omni::math::area_of_circle(3), (28.27));
+            
             //template < typename T > double area_circle_sector(T radius, T degrees)
             printv("area_circle_sector(3, 192) = ", omni::math::area_circle_sector(3, 192));
+            
             //template < typename T > double radius_from_area(T area)
             printve("radius_from_area(28.27) = ", omni::math::radius_from_area(28.27), (3));
+            
             //template < typename T > double distance_between_2_points(T start_x, T start_y, T end_x, T end_y)
             printve("distance_between_2_points(3,2,9,7) = ", omni::math::distance_between_2_points(3,2,9,7), (7.8102));
+            
             //template < typename T > double lerp_y(T x1, T y1, T x2, T y2, T x)
             printv("lerp_y(3,2,9,7,4) = ", omni::math::lerp_y(3,2,9,7,4));
             //template < typename T > double lerp_x(T x1, T y1, T x2, T y2, T y)
@@ -59,6 +72,7 @@ class UT_CLASS_DEF
             printve("are_equal(4, 4) = ", b2s(omni::math::are_equal(4, 4)), "true");
             printve("are_equal(4.001, 4.001) = ", b2s(omni::math::are_equal(4.001, 4.001)), "true");
             printve("are_equal(-2, -2) = ", b2s(omni::math::are_equal(-2, -2)), "true");
+            
             //template < typename T > inline double distance_between_2_points(T start_x, T start_y, T start_z, T end_x, T end_y, T end_z)
             printve("distance_between_2_points(8,2,6,3,5,7) = ", omni::math::distance_between_2_points(8,2,6,3,5,7), (5.9));
             //template < typename T > inline double distance_between_2_points(const omni::math::dimensional<T, 2>& start, const omni::math::dimensional<T, 2>& end)
@@ -73,6 +87,7 @@ class UT_CLASS_DEF
             xx1[0] = 3; xx1[1] = 2; xx1[2] = 1;
             xx2[0] = 9; xx2[1] = 7; xx2[2] = 1;
             printve("distance_between_2_points(x1{3,2,1},x2{9,7,1}) = ", omni::math::distance_between_2_points(xx1, xx2), (7.8102));
+            
             //template < typename T > inline double liner_interpolation_y(T x1, T y1, T x2, T y2, T x)
             printv("liner_interpolation_y(3.0,2.0,9.0,7.0,4.0) = ", omni::math::liner_interpolation_y(3.0,2.0,9.0,7.0,4.0));
             //template < typename T > inline double liner_interpolation_y(const omni::math::dimensional<T, 2>& start, const omni::math::dimensional<T, 2>& end, T x)
@@ -85,6 +100,20 @@ class UT_CLASS_DEF
             printv("liner_interpolation_x(3,2,9,7,2) = ", omni::math::liner_interpolation_x(x1, x2, 2));
             //template < typename T > inline double lerp_x(const omni::math::dimensional<T, 2>& start, const omni::math::dimensional<T, 2>& end, T y)
             printv("lerp_x(3,2,9,7,2) = ", omni::math::lerp_x(x1, x2, 2));
+
+            //template < typename T > inline void calculate_point(T start_x, T start_y, T end_x, T end_y, T len, T& out_x, T& out_y)
+            double pt_x = 0.0;
+            double pt_y = 0.0;
+            double plen = 0.4;
+            omni::math::calculate_point(6.4, 3.0, -10.7, 4.0, plen, pt_x, pt_y);
+            printve("calculate_point(6.4,3,-10.7,4,0.4) = {", pt_x << "," << pt_y << "}", ("{-?, ?}"));
+
+            // template < typename T > inline omni::math::dimensional<T, 2> calculate_point(T start_x, T start_y, T end_x, T end_y, T len)
+            omni::math::dimensional<double, 2> ptcalc_d = omni::math::calculate_point(3.0, 2.0, 9.0, 7.0, 0.5);
+            printv("midpoint(3.0,2.0,9.0,7.0,0.5) = ", ptcalc_d);
+            omni::math::dimensional<int, 2> ptcalc_i = omni::math::calculate_point(3, 2, 9, 7, 2);
+            printv("midpoint(3,2,9,7,2) = ", ptcalc_i);
+
             //template < typename T > inline void midpoint(T start_x, T start_y, T end_x, T end_y, T& mid_x, T& mid_y)
             double mid_x = 0.0;
             double mid_y = 0.0;
@@ -106,6 +135,7 @@ class UT_CLASS_DEF
             //template < typename T > inline omni::math::dimensional<T, 3> midpoint(const omni::math::dimensional<T, 3>& start, const omni::math::dimensional<T, 3>& end)
             omni::math::dimensional<int, 3> mm2 = omni::math::midpoint3d(xx1, xx2);
             printv("midpoint(3,2,1,9,7,1) = ", mm2);
+
             //template < typename T > inline omni::math::ordinal_name octant(T x, T y, T z)
             printv("octant(1,1,1) = ", omni::math::octant(1,1,1));
             printv("octant(-1,1,1) = ", omni::math::octant(-1,1,1));
@@ -120,6 +150,7 @@ class UT_CLASS_DEF
             printv("octant(0,0,1) = ", omni::math::octant(0,0,1));
             //template < typename T > inline omni::math::ordinal_name octant(const omni::math::dimensional<T, 3>& point)
             printv("octant(2,2,2) = ", omni::math::octant(xx1));
+
             //template < typename T > inline omni::math::ordinal_name quadrant(T x, T y)
             printv("quadrant(1,1) = ", omni::math::quadrant(1,1));
             printv("quadrant(-1,1) = ", omni::math::quadrant(-1,1));
@@ -130,26 +161,70 @@ class UT_CLASS_DEF
             printv("quadrant(0,0) = ", omni::math::quadrant(0,0));
             //template < typename T > inline omni::math::ordinal_name quadrant(const omni::math::dimensional<T, 2>& point)
             printv("quadrant(2,2) = ", omni::math::quadrant(x1));
+
             //template < typename T > inline void quadratic(T a, T b, T c, T& x_plus, T& x_minus)
             double xp = 0.0;
             double xm = 0.0;
             omni::math::quadratic(5.0, 6.0, 1.0, xp, xm);
             printve("quad(5,6,1) = {", xp << "," << xm << "}", "[-0.2|-1]");
+            
             //template < typename T > inline omni::math::dimensional<T, 2> quadratic(T a, T b, T c)
             omni::math::dimensional<double, 2> q = omni::math::quadratic(5.0, 6.0, 1.0);
             printve("quad(5,6,1) = {", q[0] << "," << q[1] << "}", "[-0.2|-1]");
+            
             //template < typename T > inline double slope(T start_x, T start_y, T end_x, T end_y)
             printve("slope(1,2,4,3) = ", omni::math::slope(1,2,4,3), "1/3");
             //template < typename T > inline double slope(const omni::math::dimensional<T, 2>& start, const omni::math::dimensional<T, 2>& end)
             printv("slope(3,2,9,7) = ", omni::math::slope(x1, x2));
+            
             //template < typename T > inline T summation(T index, T end, const omni::delegate1<T, T>& sum)
             omni::delegate1<int, int> d = &summer;
             printv("summation(2,7,(2k+3)) = ", omni::math::summation(2, 7, d));
+            //inline T summation(T index, T end, const omni::delegate1<T, T>& sum, const omni::delegate1<bool, T>& break_cond)
+            omni::delegate1<bool, int> b = &break_summer;
+            printv("summation(2,7,(2k+3)) = ", omni::math::summation(2, 7, d, b));
+            
+            printve("is_nan(4.0) = ", b2s(omni::math::is_nan(4.0)), "false");
+            printve("is_nan(NAN) = ", b2s(omni::math::is_nan(NAN)), "true");
+            printve("is_nan(std::sqrt(-1)) = ", b2s(omni::math::is_nan(std::sqrt(-1))), "true");
+
+            //inline double round(double val, uint8_t digits, const omni::math::midpoint_rounding& direction)
+            printve("omni::math::round(3.14159, 3, omni::math::midpoint_rounding::TO_EVEN) = ", omni::math::round(3.14159, 3, omni::math::midpoint_rounding::TO_EVEN), "3.142");
+            printve("omni::math::round(3.14159, 3, omni::math::midpoint_rounding::AWAY_FROM_ZERO) = ", omni::math::round(3.14159, 3, omni::math::midpoint_rounding::AWAY_FROM_ZERO), "3.142");
+            printve("omni::math::round(3.14159, 3, omni::math::midpoint_rounding::TO_ZERO) = ", omni::math::round(3.14159, 3, omni::math::midpoint_rounding::TO_ZERO), "3.142");
+            printve("omni::math::round(3.14159, 3, omni::math::midpoint_rounding::TO_NEGATIVE_INFINITY) = ", omni::math::round(3.14159, 3, omni::math::midpoint_rounding::TO_NEGATIVE_INFINITY), "3.142");
+            printve("omni::math::round(3.14159, 3, omni::math::midpoint_rounding::TO_POSITIVE_INFINITY) = ", omni::math::round(3.14159, 3, omni::math::midpoint_rounding::TO_POSITIVE_INFINITY), "3.142");
+            //inline double round(double val, uint8_t digits, std::float_round_style direction)
+            printve("omni::math::round(3.14159, 3, std::round_to_nearest) = ", omni::math::round(3.14159, 3, std::round_to_nearest), "3.142");
+            printve("omni::math::round(3.14159, 3, std::round_indeterminate) = ", omni::math::round(3.14159, 3, std::round_indeterminate), "3.142");
+            printve("omni::math::round(3.14159, 3, std::round_toward_zero) = ", omni::math::round(3.14159, 3, std::round_toward_zero), "3.142");
+            printve("omni::math::round(3.14159, 3, std::round_toward_neg_infinity) = ", omni::math::round(3.14159, 3, std::round_toward_neg_infinity), "3.142");
+            printve("omni::math::round(3.14159, 3, std::round_toward_infinity) = ", omni::math::round(3.14159, 3, std::round_toward_infinity), "3.142");
+            //inline double round(double val, uint8_t digits)
+            printve("round(3.14159, 4) = ", omni::math::round(3.14159, 4), "3.1416");
+            printve("round(3.14159, 3) = ", omni::math::round(3.14159, 3), "3.142");
+            printve("round(3.14159, 2) = ", omni::math::round(3.14159, 2), "3.14");
+            printve("round(3.14159, 1) = ", omni::math::round(3.14159, 1), "3.1");
+            //inline double round(double val)
+            printve("round(3.14159) = ", omni::math::round(3.14159), "3");
+            printve("round(3.90001) = ", omni::math::round(3.90001), "4");
+
+            printve("sign(3.14159) = ", omni::math::sign(3.14159), "1");
+            printve("sign(-3.14159) = ", omni::math::sign(-3.14159), "-1");
+            printve("sign(0.0) = ", omni::math::sign(0.0), "0");
+
+            printve("truncate(3.14159) = ", omni::math::truncate(3.14159), "3");
+            printve("trunc(3.14159) = ", omni::math::trunc(3.14159), "3");
         }
     private:
         static int summer(int val)
         {
             return (2*val) + 3;
+        }
+
+        static bool break_summer(int val)
+        {
+            return val > 10;
         }
 };
 

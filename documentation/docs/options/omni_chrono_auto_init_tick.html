@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - OMNI_CHRONO_AUTO_INIT_TICK</title>
+<link rel="stylesheet" type="text/css" href="../../content/main.css" /><link rel="icon" type="image/png" href="../../content/favicon.png" />
+<script type="text/javascript" src="../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="index.html">Source</a></li><li title="Library classes and namespaces">
+<a href="../classes/index.html">Class Index</a></li><li title="Download and view examples">
+<a href="../examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="index.html" class="current">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../api.html">System API</a></li><li title="Other Considerations">
+<a href="../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle"><a name="omni_options"></a>OMNI_CHRONO_AUTO_INIT_TICK</div><div class="content"><div>
+<div class="docdiv">
+    <font class="docu">MACRO</font><br><br>
+    <code><font style="font-size:16px;">
+    <code>OMNI_CHRONO_AUTO_INIT_TICK</code> - If defined, <code><a href="../classes/omni-chrono-monotonic-tick.html">omni::chrono::monotonic::tick</a></code> will initialize on first call.
+    </font></code>
+</div><br>
+<div class="docdiv">
+    <font class="docu">SYNOPSIS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    When <code><a href="../classes/omni-chrono-monotonic-tick.html">omni::chrono::monotonic::tick</a></code> is first called, the underlying structures to the performance timers for the system clock are initialized.
+</div><br>
+<div class="docdiv">
+    <font class="docu">DESCRIPTION</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    When a call is made to <code><a href="../classes/omni-chrono-monotonic-tick.html">omni::chrono::monotonic::tick</a></code> to retrieve the current clock, the underlying structures to the performance timers for the system clock need to be initialized so as to be returned for the current clock time.<br>
+<br>
+If this macro is defined, the <code><a href="../classes/omni-chrono-monotonic-initialize.html">omni::chrono::monotonic::initialize</a></code> function will be called automatically so user code need not call it.
+</div><br>
+<div class="docdiv">
+    <font class="docu">CONSIDERATIONS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    This macro is defined by default within the framework. If you wish to avoid the function call each time a call to <code><a href="../classes/omni-chrono-monotonic-tick.html">omni::chrono::monotonic::tick</a></code> is made, you can define <code><a href="omni_no_chrono_auto_init_tick.html">OMNI_NO_CHRONO_AUTO_INIT_TICK</a></code> and call <code><a href="../classes/omni-chrono-monotonic-initialize.html">omni::chrono::monotonic::initialize</a></code> in your own initialization code.
+</div><br>
+<div class="docdiv">
+    <font class="docu">PLATFORM SPECIFIC</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    No platform specific notes.
+</div><br>
+<div class="docdiv">
+    <font class="docu">NOTES</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
+    None.
+</div><br>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

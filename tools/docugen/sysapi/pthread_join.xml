@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<SysAPI xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>pthread_join</Name>
+  <Link>http://pubs.opengroup.org/onlinepubs/9699919799/functions/pthread_join.html</Link>
+  <SysType>POSIX</SysType>
+</SysAPI>

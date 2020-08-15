@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_NO_EXTERN_CONSTS</Name>
+  <Brief>If defined, Omni constants will not have external linkage</Brief>
+  <Considerations>Know that you are changing the linkage from static to extern with regards to the constant values in the Omni framework.</Considerations>
+  <Description>The constant string values in the framework are marked @c extern as their default linkage. To change this behavior to have all string constants be marked as @c static instead of @c extern you can define this macro option, there's no additional files to exclude as this flag disables portions of the code that pertain to the extern values.</Description>
+  <Notes>The extern'd values reside in @h framework.cpp @h (which is always built with the framework, but if the macro is enabled, the extern portions are not compiled in).</Notes>
+  <PlatformSpecific>No platform specific notes.</PlatformSpecific>
+  <Synopsis>If this macro is defined, the constants within the Omni framework will not be extern'd and instead will exist as const values in the headers to be included.</Synopsis>
+  <IsHelper>false</IsHelper>
+  <IsConstant>false</IsConstant>
+</MacroOp>

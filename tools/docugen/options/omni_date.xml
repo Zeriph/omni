@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_DATE</Name>
+  <Brief>Defines the build date for the framework.
+</Brief>
+  <Considerations>No special consideration.
+</Considerations>
+  <Description>None.
+</Description>
+  <Notes>None.
+</Notes>
+  <PlatformSpecific>No special consideration.
+</PlatformSpecific>
+  <Synopsis>This is a helper macro that is used by the OMNI_FW_VER_STR helper macro to append the build date to the version macro string.
+
+Defined as the following:
+
+@code
+#define OMNI_DATE Jan 1 1970
+@code
+
+If the @c __DATE__ macro is defined, then OMNI_DATE is an alias to this macro.
+</Synopsis>
+  <IsHelper>true</IsHelper>
+  <IsConstant>false</IsConstant>
+  <IsFWHelp>true</IsFWHelp>
+</MacroOp>

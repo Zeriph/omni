@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<SysAPI xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>clock_getres</Name>
+  <Link>http://pubs.opengroup.org/onlinepubs/9699919799/functions/clock_getres.html</Link>
+  <SysType>Unix</SysType>
+</SysAPI>

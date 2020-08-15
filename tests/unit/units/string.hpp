@@ -30,7 +30,10 @@ class UT_CLASS_DEF
             omni::out << "char test: " << c << std::endl;
             
             /*
-            
+            TODO: add the following
+            ->inline bool ends_with(const OMNI_STRING_T_FW& chk, const OMNI_STRING_T_FW& fnd, bool ignore_case)
+            ->inline bool starts_with(const OMNI_STRING_T_FW& chk, const OMNI_STRING_T_FW& fnd, bool ignore_case)
+
             omni::string::contains(const std::string& chk, const std::string& fnd, bool ignoreCase);
             omni::string::is_numeric(const std::string& str, bool ignorePeriod);
             omni::string::pad_left(std::string str, char pad, size_t count);

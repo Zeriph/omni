@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_DEFCONCAT</Name>
+  <Brief>Concatenate 2 #define values.
+</Brief>
+  <Considerations>No special considerations
+</Considerations>
+  <Description>OMNI_DEFCONCAT concatenates the values passed to the macro into a single string value.
+
+Example:
+
+@code
+#define MY_DEF(val1, val2) std::string(OMNI_DEF2STR(OMNI_DEFCONCAT(val1, val2)))
+
+std::string h = MY_DEF(hello, world);
+std::cout &lt;&lt; h &lt;&lt; std::endl;
+@code
+
+The output will be @c 'helloworld' on the standard output (note no space).
+
+</Description>
+  <Notes>None.
+</Notes>
+  <PlatformSpecific>No platform specific notes.
+</PlatformSpecific>
+  <Synopsis>A helper macro that concatenates @c #defined macro values into a single string literal.
+</Synopsis>
+  <IsHelper>true</IsHelper>
+  <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
+</MacroOp>

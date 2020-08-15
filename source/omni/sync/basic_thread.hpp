@@ -88,8 +88,8 @@ namespace omni {
                 bool is_threadpool_thread() const;
                 bool join(); // default of infinite timeout
                 bool join(uint32_t timeout);
-                bool join(const omni::chrono::unsigned_timespan& span);
-                bool kill(); // Terminate 'immediately'
+                bool join(const omni::chrono::unsigned_span_t& span);
+                bool kill(); // Terminate immediately
                 omni::sync::thread_state status() const;
                 omni::sync::thread_t start();
                 omni::sync::thread_t start(omni::sync::thread_arg_t args);
@@ -153,19 +153,19 @@ namespace omni {
                     /** The threads priority */
                     omni::sync::thread_priority m_priority;
                 #endif
-                /** If join has been called, don't detach */
+                /** If join has been called, do not detach */
                 volatile bool m_isjoined;
                 /** If parameterized start function */
                 volatile bool m_ispmthd;
-                /** True if it's a thread pool thread */
+                /** True if it is a thread pool thread */
                 volatile bool m_istpool;
                 
                 static OMNI_THREAD_FNPTR_T OMNI_THREAD_CALL_T _start(void* param);
                 
                 /**
                  * This class is an internal thread manager not intended to be used anywhere but here.
-                 * It's used to avoid the static init order fiasco (via the static instance function).
-                 * It's private to avoid external use as well to allow it access to the private functions.
+                 * it is used to avoid the static init order fiasco (via the static instance function).
+                 * it is private to avoid external use as well to allow it access to the private functions.
                  */
                 class manager
                 {

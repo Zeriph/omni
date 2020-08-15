@@ -145,7 +145,7 @@ set fwsrc=!fwsrc! !common!\async_timer.cpp
 set fwsrc=!fwsrc! !common!\basic_thread.cpp
 set fwsrc=!fwsrc! !common!\binary_semaphore.cpp
 set fwsrc=!fwsrc! !common!\conditional.cpp
-set fwsrc=!fwsrc! !common!\datetime.cpp
+set fwsrc=!fwsrc! !common!\date_time.cpp
 set fwsrc=!fwsrc! !common!\drop_timer.cpp
 set fwsrc=!fwsrc! !common!\endpoint_descriptor.cpp
 set fwsrc=!fwsrc! !common!\environment.cpp
@@ -249,7 +249,7 @@ if not "%1"=="" (
     ) else if "%1"=="-?" (
         goto showusage
     ) else if "%1"=="-oo" (
-        REM framework options
+        REM library options
         REM set fexcep=/EHs
         if "%2"=="np" (
             set defines=!defines! /D OMNI_NON_PORTABLE
@@ -261,7 +261,7 @@ if not "%1"=="" (
             set defines=!defines! /D OMNI_DISPOSE_EVENT /D OMNI_OBJECT_NAME /D OMNI_TYPE_INFO
         ) else if "%2"=="safe" (
             if "%3"=="fw" (
-                set defines=!defines! /D OMNI_SAFE_FRAMEWORK
+                set defines=!defines! /D OMNI_SAFE_LIBRARY
             ) else (
                 set defines=!defines! /D OMNI_SAFE_%3
             )
@@ -273,16 +273,16 @@ if not "%1"=="" (
             ) else if "%2"=="extc" (
                 set defines=!defines! /D OMNI_NO_EXTERN_CONSTS 
             ) else (
-                echo Unknown no-framework option %3
+                echo Unknown no-library option %3
                 goto showusage
             )
         ) else (
-            echo Unknown framework option %2
+            echo Unknown library option %2
             goto showusage
         )
         shift
     ) else if "%1"=="-dbg" (
-        REM framework debug options
+        REM library debug options
         set usedbg=1
         if "%2"=="err" (
             set defines=!defines! /D OMNI_SHOW_DEBUG_ERR    
@@ -291,7 +291,7 @@ if not "%1"=="" (
         ) else (
             SET "ivar="&for /f "delims=0123456789" %%i in ("%2") do set ivar=%%i
             if defined ivar (
-                echo Unknown framework debug option %2
+                echo Unknown library debug option %2
                 goto showusage
             ) else (
                 set defines=!defines! /D OMNI_SHOW_DEBUG=%2
@@ -957,13 +957,13 @@ echo.
 echo OPTIONS:
 echo compile script options:
 echo        -s [source] The main source file(s) to compile (files other than
-echo                    the framework source). If this flag is not set, this
+echo                    the library source). If this flag is not set, this
 echo                    script will build Omni as a library.
 echo                    Specified source must be enclosed in quotes \"\" and
 echo                    seperated by spaces.
 echo                    Example:
 echo                    compile -s \"file1.cpp file2.cpp file3.cpp\" -o main
-echo        -fw [path]  The Omni Framework path (default of '%omni_lib_loc%')
+echo        -fw [path]  The Omni Library path (default of '%omni_lib_loc%')
 echo        -out [path] The output build path to put the obj/asm files
 echo        -i [path]   Includes [path] in the compiler include path
 echo        -o [name]   The file you wish to compile (without an extension)
@@ -971,17 +971,17 @@ echo        -c [opts]   Pass extra arguments to the compiler
 echo        -d [define] Pass extra defines to the compiler
 echo        -l          Use extra libs (%extralibs%)
 echo        -u          Specifying this will clean up any .o files
-echo        -single     Specifying this will build library.cpp (single file framework)
+echo        -single     Specifying this will build library.cpp (single file library)
 echo        -lib        Specifying this will compile as a library instead of an executable
 echo        -log [log]  Write console output to a log file
 echo        -elog [log] Write the error log to [log], default
 echo        -v          Show verbose output (-v = 1, -vv = 2, -vvv = 3)
 echo        -po         Parse the compile script only
-echo        -oo [ops]   Enables framework features
-echo        -dbg [ops]  Enables framework debug features
+echo        -oo [ops]   Enables library features
+echo        -dbg [ops]  Enables library debug features
 echo        -co [ops]   Enables compiler/linker features
 echo.
-echo framework options (-oo):
+echo library options (-oo):
 echo        lite        Defines the OMNI_LITE flag which trims down the code and gets rid
 echo                    of some functionality
 echo        heavy       Defines the OMNI_DISPOSE_EVENT, OMNI_OBJECT_NAME and OMNI_TYPE_INFO macros
@@ -989,7 +989,7 @@ echo        np          Sets the OMNI_NON_PORTABLE compiler flag and enables
 echo                    compilation of 'non-portable' code
 echo        terr        Defines the OMNI_TERMINATE macro
 echo        safe [op]   Defines the macro OMNI_SAFE_[op] where [op] can be the lowercase 'fw' which
-echo                    defines OMNI_SAFE_FRAMEWORK or you can specify the uppercase option, for
+echo                    defines OMNI_SAFE_LIBRARY or you can specify the uppercase option, for
 echo                    example: 'safe APPLICATION' will define OMNI_SAFE_APPLICATION
 echo        no [op]     Defines one of the following for [op]:
 echo                    throw     Sets the OMNI_NO_THROW flag and the -fno-exceptions
@@ -997,7 +997,7 @@ echo                              compiler and linker flag
 echo                    uni       Disables the UNICODE flags (does not build using unicode)
 echo                    extc      Defines the OMNI_NO_EXTERN_CONSTS macro
 echo.
-echo framework debug options (-dbg):
+echo library debug options (-dbg):
 echo        1           Defines the OMNI_SHOW_DEBUG=1
 echo        2           Defines the OMNI_SHOW_DEBUG=2
 echo        3           Defines the OMNI_SHOW_DEBUG=3

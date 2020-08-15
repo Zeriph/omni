@@ -24,6 +24,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <csignal>
+// DEV_NOTE: used for buffers in the socket classes regardless of what the default omni_seq_t is
+#include <vector>
 #if defined(OMNI_OS_WIN)
     #include <io.h>
     #include <ws2tcpip.h>
@@ -113,26 +115,27 @@
 
 namespace omni {
     namespace net {
-        /** @internal framework helper */
+        /** @internal library helper */
         inline int wsa_init()
         {
             WSADATA sdata;
             int err = ::WSAStartup(MAKEWORD(OMNI_WINSOCK_HIGH, OMNI_WINSOCK_LOW), &sdata);
             if (err != 0) {
-                // Could not get the winsock dll, fail since can't create socket
+                // Could not get the winsock dll, fail since cannot create socket
                 OMNI_DBGEV("a system error occurred in WSAStartUp: ", err)
             }
             return err;
         }
 
-        /** @internal framework helper */
+        /** @internal library helper */
         inline void wsa_close()
         {
             ::WSACleanup();
         }
 
-        /** @internal framework helper */
-        class wsa_info {
+        /** @internal library helper */
+        class wsa_info
+        {
             public:
                 wsa_info() : m_err(-1)
                 { this->open(); }

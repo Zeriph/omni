@@ -12,7 +12,7 @@ class UT_CLASS_DEF
         UT_CLASS_CTOR()
         {
             M_LIST_ADD(misc_test, "tests misc stuff");
-            M_LIST_ADD(consts_test, "tests the constants of the Omni Framework");
+            M_LIST_ADD(consts_test, "tests the constants of the Omni Library");
         }
         
         UT_CLASS_DTOR() {}
@@ -160,12 +160,13 @@ class UT_CLASS_DEF
                 myclass(const myclass& cp) : myint(cp.myint) {}
                 myclass(int i) : myint(i) {}
                 
-                static myclass get1(int i) // doesn't require object reference: called via myclass::get1(int)
+                static myclass get1(int i)
                 {
-                    //myclass m(i); // create's auto variable on stack
-                    // static myclass ms(i); // create's variable on heap
-                    //return m; // return temp reference var
-                    // return ms; // reutrn reference to heap variable
+                    // normally do this:
+                    //static myclass ms(i); // create's variable on heap
+                    //return ms; // reutrn reference to heap variable
+
+                    // what does this do?
                     return static myclass(i);
                 }
                 

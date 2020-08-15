@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_NEW_LINE</Name>
+  <Brief>Defines the new line constant used based on system.
+</Brief>
+  <Considerations>No special consideration.
+</Considerations>
+  <Description>Defines the new line constant (@c "\n" or @c "\r\n" ) used based on platform/OS detected.
+
+By default, on Windows based platforms the new line constant is @c "\r\n" and on other platforms it is @c "\n" (which can be changed via the OMNI_APLNL macro).
+</Description>
+  <Notes>None.
+</Notes>
+  <PlatformSpecific>By default, the newline constant is @c "\r\n" for Windows platforms and @c "\n" for other platforms. If you wish to have the default for Apple platforms be the @c "\r" (the default for older Apple systems), you'll need to define the OMNI_APLNL macro.
+</PlatformSpecific>
+  <Synopsis>Defines the new line constant (@c "\n" or @c "\r\n" ) used based on system.
+</Synopsis>
+  <IsHelper>true</IsHelper>
+  <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
+</MacroOp>

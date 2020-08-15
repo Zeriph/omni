@@ -46,6 +46,58 @@ namespace omni {
         
         inline bool is_digit(wchar_t c)
         { return (std::iswdigit(c) != 0); }
+
+        inline bool is_punct(char c)
+        { return (std::ispunct(c) != 0); }
+
+        inline bool is_punct(wchar_t c)
+        { return (std::iswpunct(c) != 0); }
+
+        inline bool is_alpha_digit(char c)
+        {
+            return omni::char_util::is_alpha(c) ||
+                   omni::char_util::is_digit(c);
+        }
+
+        inline bool is_alpha_digit(wchar_t c)
+        {
+            return omni::char_util::is_alpha(c) ||
+                   omni::char_util::is_digit(c);
+        }
+
+        inline bool is_alpha_digit_punct(char c)
+        {
+            return omni::char_util::is_alpha(c) ||
+                   omni::char_util::is_digit(c) ||
+                   omni::char_util::is_punct(c);
+        }
+
+        inline bool is_alpha_digit_punct(wchar_t c)
+        {
+            return omni::char_util::is_alpha(c) ||
+                   omni::char_util::is_digit(c) ||
+                   omni::char_util::is_punct(c); 
+        }
+
+        inline bool is_alpha_num(char c)
+        {
+            return omni::char_util::is_alpha_digit(c);
+        }
+
+        inline bool is_alpha_num(wchar_t c)
+        {
+            return omni::char_util::is_alpha_digit(c);
+        }
+
+        inline bool is_alpha_num_punct(char c)
+        {
+            return omni::char_util::is_alpha_digit_punct(c);
+        }
+
+        inline bool is_alpha_num_punct(wchar_t c)
+        {
+            return omni::char_util::is_alpha_digit_punct(c);
+        }
         
         inline bool is_hex(char c)
         {
@@ -102,6 +154,12 @@ namespace omni {
             }
             return false;
         }
+
+        inline bool is_white_space(char c)
+        { return (std::isspace(c) != 0); }
+
+        inline bool is_white_space(wchar_t c)
+        { return (std::iswspace(c) != 0); }
 
         inline char to_char(wchar_t wc, int code_page)
         {
@@ -230,61 +288,61 @@ namespace omni {
             return static_cast<Cx>(c);
         }
 
-        template<>
-        inline char to_char_t<char, wchar_t>(wchar_t c)
+        template <>
+        inline char to_char_t<char,wchar_t>(wchar_t c)
         {
             return omni::char_util::to_char(c);
         }
 
-        template<>
-        inline char to_char_t<char, char>(char c)
+        template <>
+        inline char to_char_t<char,char>(char c)
         {
             return c;
         }
 
-        template<>
-        inline wchar_t to_char_t<wchar_t, char>(char c)
+        template <>
+        inline wchar_t to_char_t<wchar_t,char>(char c)
         {
             return omni::char_util::to_wchar(c);
         }
 
-        template<>
-        inline wchar_t to_char_t<wchar_t, wchar_t>(wchar_t c)
+        template <>
+        inline wchar_t to_char_t<wchar_t,wchar_t>(wchar_t c)
         {
             return c;
         }
         
-        /** @internal framework helper */
+        /** @internal library helper */
         namespace helpers {
-            /** @internal framework helper */
+            /** @internal library helper */
             inline bool is_1or0(char v)
             { return v == '0' || v == '1'; }
             
-            /** @internal framework helper */
+            /** @internal library helper */
             inline bool is_1or0(wchar_t v)
             { return v == L'0' || v == L'1'; }
             
-            /** @internal framework helper */
+            /** @internal library helper */
             inline bool is_nde(char v)
             { return (v == '-' || v == '.' || v == ','); }
             
-            /** @internal framework helper */
+            /** @internal library helper */
             inline bool is_nde(wchar_t v)
             { return (v == L'-' || v == L'.' || v == L','); }
             
-            /** @internal framework helper */
+            /** @internal library helper */
             inline bool is_de(char v)
             { return (v == '.' || v == ','); }
             
-            /** @internal framework helper */
+            /** @internal library helper */
             inline bool is_de(wchar_t v)
             { return (v == L'.' || v == L','); }
             
-            /** @internal framework helper */
+            /** @internal library helper */
             inline bool is_neg(char v)
             { return (v == '-'); }
             
-            /** @internal framework helper */
+            /** @internal library helper */
             inline bool is_neg(wchar_t v)
             { return (v == L'-'); }
         }

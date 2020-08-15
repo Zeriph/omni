@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - Library Examples</title>
+<link rel="stylesheet" type="text/css" href="../../content/main.css" /><link rel="icon" type="image/png" href="../../content/favicon.png" />
+<script type="text/javascript" src="../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="../htmlsrc/index.html">Source</a></li><li title="Library classes and namespaces">
+<a href="../classes/index.html">Class Index</a></li><li title="Download and view examples">
+<a href="index.html" class="current">Examples</a></li><li title="Download and view build examples">
+<a href="../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="../options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../api.html">System API</a></li><li title="Other Considerations">
+<a href="../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle"><a name="omni_examples"></a>Enumeration Types</div><div class="content"><div>
+Creating an <code>enum</code> type is simple enough in C++, simply declare one and put your values in it, for example:<br>
+<div class="sntx"><input type="checkbox" id="c0" name="c0" /><label for="c0">&nbsp;</label><pre><font class="syn_typ">enum</font> alphabet {
+&nbsp;&nbsp;&nbsp;&nbsp;A,
+&nbsp;&nbsp;&nbsp;&nbsp;B,
+&nbsp;&nbsp;&nbsp;&nbsp;C
+}</pre></div>However, this can get troublesome when name and scope resolution start to play a part in your program. Declaring the above <code>enum</code> type in the global scope of a program, then allows you to call the values in the <code>enum</code> directly. Example:<br>
+<div class="sntx"><input type="checkbox" id="c1" name="c1" /><label for="c1">&nbsp;</label><pre><font class="syn_typ">enum</font> alphabet {
+&nbsp;&nbsp;&nbsp;&nbsp;A,
+&nbsp;&nbsp;&nbsp;&nbsp;B,
+&nbsp;&nbsp;&nbsp;&nbsp;C
+}
+
+<font class="syn_typ">void</font> some_function(alphabet val)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">switch</font> (val) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">case</font> A: <a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;A&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>; <font class="syn_ins">break</font>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">case</font> B: <a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;B&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>; <font class="syn_ins">break</font>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">case</font> C: <a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;C&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>; <font class="syn_ins">break</font>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">default</font>: <a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;?&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>; <font class="syn_ins">break</font>;
+&nbsp;&nbsp;&nbsp;&nbsp;}
+}</pre></div>This fine and well, but what if we want 2 separate <code>enum</code> types with similar named values, but different underlying integral value, like so:<br>
+<div class="sntx"><input type="checkbox" id="c2" name="c2" /><label for="c2">&nbsp;</label><pre><font class="syn_typ">enum</font> alphabet {
+&nbsp;&nbsp;&nbsp;&nbsp;A = <font class="syn_num">1</font>,
+&nbsp;&nbsp;&nbsp;&nbsp;B = <font class="syn_num">2</font>,
+&nbsp;&nbsp;&nbsp;&nbsp;C = <font class="syn_num">3</font>
+}
+
+<font class="syn_typ">enum</font> action_plan {
+&nbsp;&nbsp;&nbsp;&nbsp;A = <font class="syn_num">100</font>,
+&nbsp;&nbsp;&nbsp;&nbsp;B = <font class="syn_num">1000</font>,
+&nbsp;&nbsp;&nbsp;&nbsp;C = <font class="syn_num">10000</font>
+}
+
+<font class="syn_typ">void</font> some_function(alphabet val)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">switch</font> (val) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">case</font> A: <a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;A&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>; <font class="syn_ins">break</font>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">case</font> B: <a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;B&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>; <font class="syn_ins">break</font>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">case</font> C: <a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;C&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>; <font class="syn_ins">break</font>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">default</font>: <a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;?&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>; <font class="syn_ins">break</font>;
+&nbsp;&nbsp;&nbsp;&nbsp;}
+}
+
+<font class="syn_typ">void</font> some_function(action_plan val)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">switch</font> (val) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">case</font> A: <a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Plan A&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>; <font class="syn_ins">break</font>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">case</font> B: <a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Plan B&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>; <font class="syn_ins">break</font>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">case</font> C: <a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Plan C&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>; <font class="syn_ins">break</font>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">default</font>: <a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;?&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>; <font class="syn_ins">break</font>;
+&nbsp;&nbsp;&nbsp;&nbsp;}
+}</pre></div>The above code won&#39;t compile as there&#39;s a redefinition of <code>A</code> and the other <code>enum</code> values. Additionally, a basic enum doesn&#39;t allow you to have a well-defined default type, nor can you easily know the number of values in the <code>enum</code> itself (something other languages, like C# or Java, have capabilities for).<br>
+<br>
+Enter the <code>enum</code> class wrapper.<br>
+<br>
+<font class="hdr">The Enumeration Class Objects In Omni</font><br>
+Throughout the library there are various <code>enum</code> types that are used to specify various running aspects of your code; for example, if you create an <code><a href="../classes/omni-sync-basic_thread.html">omni::sync::basic_thread</a></code> you can specify to have it start later (i.e. you specifically call the <code><a href="../classes/omni-sync-basic_thread-start.html">omni::sync::basic_thread::start</a></code> method yourself). To do this, you specify the <code><a href="../classes/omni-sync-thread_start_type-user.html">omni::sync::thread_start_type::USER</a></code> value when creating the thread.<br>
+<br>
+The <code>thread_start_type</code> class has an underlying <code>enum</code> definition and various operators that allows the class to act like a wrapper type for the enum.<br>
+<br>
+The <code>enum</code> wrapper classes that exists throughout the library allow you to define <code>enum</code> types that can be treated much like you treat any other basic integral data type, but with additional benefits of parsing and other type-safety checks. As well, since the wrapper classes only storage member is an <code>enum</code> type that is within the class, the <code>sizeof</code> the classes are equal to the <code>sizeof</code> the <code>enum</code> type itself, making the classes extremely lightweight.<br>
+<br>
+Other functionality of the <code>enum</code> wrapper classes include printing of the value as a string-ized version of the enum value (e.g. <code><a href="../classes/omni-sync-thread_start_type-user.html">omni::sync::thread_start_type::USER</a></code> will print out simply <code>USER</code> instead of the numeric value). Additionally, each wrapper class has a <code>COUNT</code> and <code>count</code> function that both return the number of values in the <code>enum</code> type, as well as a <code>DEFAULT_VALUE</code> function that returns the default enumeration value for an <code>enum</code> created without being assigned to, and string parsing and printing functionality along with assignment and equality operators that allow you to use the class like a basic integer type.<br>
+<br>
+Here&#39;s an example using the <code><a href="../classes/omni-net-protocol_type.html">omni::net::protocol_type</a></code> wrapper class to do various processing of the <code>enum</code> value:<br>
+<div class="sntx"><input type="checkbox" id="c3" name="c3" /><label for="c3">&nbsp;</label><pre><a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Count of enum values: &quot;</font> &lt;&lt; <a href="../classes/omni-net-protocol_type-count.html">omni::net::protocol_type::COUNT</a>() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Default enum value: &quot;</font> &lt;&lt; <a href="../classes/omni-net-protocol_type-default_value.html">omni::net::protocol_type::DEFAULT_VALUE</a>() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+
+<a href="../classes/omni-net-protocol_type.html">omni::net::protocol_type</a> type;
+<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Current protocol type: &quot;</font> &lt;&lt; type &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>; <font class="syn_cmt">// will print the default value</font>
+type = <a href="../classes/omni-net-protocol_type-tcp.html">omni::net::protocol_type::TCP</a>;
+<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Current protocol type: &quot;</font> &lt;&lt; type &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>; <font class="syn_cmt">// will print &quot;TCP&quot;</font>
+<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Current protocol type int value: &quot;</font> &lt;&lt; type.value() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>; <font class="syn_cmt">// will print the numeric value</font>
+
+type = <a href="../classes/omni-net-protocol_type-parse.html">omni::net::protocol_type::parse</a>(<font class="syn_str">&quot;UDP&quot;</font>);
+<font class="syn_cmt">// Since <a href="../classes/omni-net-protocol_type-udp.html">omni::net::protocol_type::UDP</a> exists, this will</font>
+<font class="syn_cmt">// assign <a href="../classes/omni-net-protocol_type-udp.html">omni::net::protocol_type::UDP</a> to type</font>
+<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Current protocol type: &quot;</font> &lt;&lt; type &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>; <font class="syn_cmt">// will print &quot;UDP&quot;</font>
+
+<font class="syn_cmt">// test to see if a number is a valid</font>
+<font class="syn_ins">if</font> (<a href="../classes/omni-net-protocol_type-is_valid.html">omni::net::protocol_type::is_valid</a>(<font class="syn_num">42</font>)) {
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;42 is a valid numeric value that can be represented as an enum&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+} <font class="syn_ins">else</font> {
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;42 is not a valid numeric value that can be represented as an enum&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+}
+
+<font class="syn_cmt">// test if a string value is valid</font>
+<font class="syn_ins">if</font> (!<a href="../classes/omni-net-protocol_type-try_parse.html">omni::net::protocol_type::try_parse</a>(<font class="syn_str">&quot;INET&quot;</font>, type)) {
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;INET is not a valid protocol type&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+}
+<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Current protocol type: &quot;</font> &lt;&lt; type &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>; <font class="syn_cmt">// will print the default value</font>
+
+<font class="syn_cmt">// you can also call the parse method directly, but be sure to wrap it in a try..catch</font>
+<font class="syn_ins">try</font> {
+&nbsp;&nbsp;&nbsp;&nbsp;type = <a href="../classes/omni-net-protocol_type-parse.html">omni::net::protocol_type::parse</a>(<font class="syn_str">&quot;INET&quot;</font>);
+} <font class="syn_ins">catch</font> (<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/exception/exception/">std::exception</a>&amp; ex) {
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Error parsing: &quot;</font> &lt;&lt; ex.what() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+}
+<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Current protocol type: &quot;</font> &lt;&lt; type &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>; <font class="syn_cmt">// will print the default value</font>
+
+<font class="syn_ins">if</font> (!<a href="../classes/omni-net-protocol_type-try_parse.html">omni::net::protocol_type::try_parse</a>(<font class="syn_str">&quot;IGMP&quot;</font>, type)) {
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// this won&#39;t print since IGMP _is_ a valid protocol_type</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;IGMP is not a valid protocol type&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+}
+<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Current protocol type: &quot;</font> &lt;&lt; type &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>; <font class="syn_cmt">// will print IGMP</font>
+
+<font class="syn_cmt">// You can cast the enum wrapper classes to an int type</font>
+int32_t val = <font class="syn_ins">static_cast</font>&lt;int32_t&gt;(type);
+
+<font class="syn_cmt">// You can test equality as well</font>
+<font class="syn_ins">if</font> (type == val) {
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Equal&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+} <font class="syn_ins">else</font> {
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Not Equal&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+}
+
+type = <a href="../classes/omni-net-protocol_type-ip.html">omni::net::protocol_type::IP</a>;
+
+<font class="syn_ins">if</font> (type &gt; val) {
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Greater than&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+} <font class="syn_ins">else</font> {
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Less than&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+}
+<font class="syn_ins">if</font> (type &lt; val) {
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Less than&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+} <font class="syn_ins">else</font> {
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Greater than&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+}
+
+<font class="syn_cmt">// You can also cast the object to a string, or call the to_string method</font>
+<a href="http://www.cplusplus.com/reference/string/">std::string</a> strtype1 = type.to_string();
+<a href="http://www.cplusplus.com/reference/string/">std::string</a> strtype2 = <font class="syn_ins">static_cast</font>&lt;<a href="http://www.cplusplus.com/reference/string/">std::string</a>&gt;(type);
+
+<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; strtype1 &lt;&lt; <font class="syn_str">&quot; == &quot;</font> &lt;&lt; strtype2 &lt;&lt; <font class="syn_str">&quot; == &quot;</font> &lt;&lt; type &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;</pre></div><font class="hdr">The <code><a href="../options/omni_enum.html">OMNI_ENUM</a></code> macro&#39;s</font><br>
+It&#39;s possible to use a <code>template</code> and other functions of the C++ language to create a basic <code>enum</code> class wrapper that one could inherit from, but creating your own derived class from that has it&#39;s own problems in both memory and object complexity as well as code readability.<br>
+<br>
+To over come this, the <code><a href="../options/omni_enum.html">OMNI_ENUM</a></code> family of macro&#39;s can be used to create an enum type of your own in an easy and efficient way. You have a few options for creating an <code>enum</code> type depending on what you would like your code to do.<br>
+<br>
+To define a simple <code>enum</code> with default-incremented values, you can use the <code><a href="../options/omni_enum_define.html">OMNI_ENUM_DEFINE</a></code> macro. To define an <code>enum</code> with values that are assigned (e.g. <code>enum { VALUE = 100 };</code>), you can use the <code><a href="../options/omni_enum_assigned.html">OMNI_ENUM_ASSIGNED</a></code> macro. Both of these macro&#39;s must be followed by the <code><a href="../options/omni_enum_end.html">OMNI_ENUM_END</a></code> macro to signify the definition is done. If you use either of these macros, you must use the <code><a href="../options/omni_enum_default.html">OMNI_ENUM_DEFAULT</a></code> macro to define a default value for the wrapper. It can come can after the <code><a href="../options/omni_enum.html">OMNI_ENUM</a></code> macro but before the <code><a href="../options/omni_enum_end.html">OMNI_ENUM_END</a></code> macro. If you have elected to use the <code><a href="../options/omni_enum_assigned.html">OMNI_ENUM_ASSIGNED</a></code> macro to create an enum and you would like access to the parser functions, you must use the <code><a href="../options/omni_enum_assigned_parsers.html">OMNI_ENUM_ASSIGNED_PARSERS</a></code> macro after the <code><a href="../options/omni_enum_assigned.html">OMNI_ENUM_ASSIGNED</a></code> definition.<br>
+<br>
+The <code><a href="../options/omni_enum_define.html">OMNI_ENUM_DEFINE</a></code> and <code><a href="../options/omni_enum_assigned.html">OMNI_ENUM_ASSIGNED</a></code> macro&#39;s take the same parameters. The first parameter is the name of the <code>enum</code> class, and the second parameter is a variadic macro parameter that can take up to 200 parameters; those parameters are the values you wish to define within your <code>enum</code> wrapper.<br>
+<br>
+For a simple example, take the following code to create a couple of <code>enum</code> wrapper types with default values.<br>
+<div class="sntx"><input type="checkbox" id="c4" name="c4" /><label for="c4">&nbsp;</label><pre><font class="syn_cmt">// create an enum type named &quot;my_enum&quot;,</font>
+<font class="syn_cmt">// with values &quot;VALUE_10, VALUE_20, NONE&quot; set to &quot;10, 20, 0&quot;</font>
+<a href="../options/omni_enum_assigned.html">OMNI_ENUM_ASSIGNED</a>(my_enum, VALUE_10=<font class="syn_num">10</font>, VALUE_20=<font class="syn_num">20</font>, NONE=<font class="syn_num">0</font>)
+<font class="syn_cmt">// you must declare a default value</font>
+<a href="../options/omni_enum_default.html">OMNI_ENUM_DEFAULT</a>(VALUE_20)
+<font class="syn_cmt">// If using the <a href="../options/omni_enum_assigned.html">OMNI_ENUM_ASSIGNED</a> macro, you must add the following macro</font>
+<font class="syn_cmt">// for parsing of the values; this macro takes _ONLY_ the parameter</font>
+<font class="syn_cmt">// names and not their assigned values.</font>
+<a href="../options/omni_enum_assigned_parsers.html">OMNI_ENUM_ASSIGNED_PARSERS</a>(VALUE_10, VALUE_20, NONE)
+<a href="../options/omni_enum_end.html">OMNI_ENUM_END</a> <font class="syn_cmt">// end definition</font>
+
+<font class="syn_cmt">// create an enum type named &quot;other_enum&quot;,</font>
+<font class="syn_cmt">// with values &quot;X, Y, Z&quot; set to &quot;0, 1, 2&quot; (default enum increment)</font>
+<a href="../options/omni_enum_define.html">OMNI_ENUM_DEFINE</a>(other_enum, X, Y, Z)
+<a href="../options/omni_enum_default.html">OMNI_ENUM_DEFAULT</a>(Y) <font class="syn_cmt">// enum default</font>
+<a href="../options/omni_enum_end.html">OMNI_ENUM_END</a> <font class="syn_cmt">// end definition</font></pre></div>Note that if you are using the <code><a href="../options/omni_enum_define.html">OMNI_ENUM_DEFINE</a></code> macro, you <b>do not</b> need to include the <code><a href="../options/omni_enum_assigned_parsers.html">OMNI_ENUM_ASSIGNED_PARSERS</a></code> for the parsing functionality as it is included by default in the macro definition.<br>
+<br>
+A few additional notes about these macros; if you are using the <code><a href="../options/omni_enum_assigned.html">OMNI_ENUM_ASSIGNED</a></code> macro, you <b>do not</b> need to actually define the values, so you could do something like this: <code><a href="../options/omni_enum_assigned.html">OMNI_ENUM_ASSIGNED</a>(my_enum, VALUE_1, VALUE_2, NONE)</code> and they will be default incremented. As well, any values you have defined in the <code><a href="../options/omni_enum_assigned.html">OMNI_ENUM_ASSIGNED</a></code> macro should be additionally named in the <code><a href="../options/omni_enum_assigned_parsers.html">OMNI_ENUM_ASSIGNED_PARSERS</a></code> macro (like above), however, if there are values you <b>do not</b> wish to have the <code>enum</code> wrapper include as valid parsable values, simply do not include that value in the macro, for example:<br>
+<div class="sntx"><input type="checkbox" id="c5" name="c5" /><label for="c5">&nbsp;</label><pre><a href="../options/omni_enum_assigned.html">OMNI_ENUM_ASSIGNED</a>(my_enum, VALUE_1, VALUE_2, NONE)
+<a href="../options/omni_enum_default.html">OMNI_ENUM_DEFAULT</a>(VALUE_2)
+<a href="../options/omni_enum_assigned_parsers.html">OMNI_ENUM_ASSIGNED_PARSERS</a>(VALUE_1, VALUE_2)
+<a href="../options/omni_enum_end.html">OMNI_ENUM_END</a></pre></div>This code will create an <code>enum</code> wrapper named <code>my_enum</code> and will have 3 values in it that will be default incremented and a default value of <code>VALUE_2</code> however, since the <code>NONE</code> value was <b>not</b> included in the <code><a href="../options/omni_enum_assigned_parsers.html">OMNI_ENUM_ASSIGNED_PARSERS</a></code> if you were to try and call <code>my_enum::parse(&quot;NONE&quot;)</code> it would error as that was not included in the list of parsable values.<br>
+<br>
+The last macro that can be utilized to create an <code>enum</code> wrapper class is the more simplistic <code><a href="../options/omni_enum.html">OMNI_ENUM</a></code> macro which can only be used to create default incremented wrappers. It takes 3 parameters, the first is the <code>enum</code> wrapper name, the second parameter is the default value of the wrapper, and the last parameter is like the <code><a href="../options/omni_enum_define.html">OMNI_ENUM_DEFINE</a></code> and <code><a href="../options/omni_enum_assigned.html">OMNI_ENUM_ASSIGNED</a></code> macros, that is, it is a variadic macro parameter that can take up to 200 parameters that will be the values of the <code>enum</code> wrapper.<br>
+<br>
+Here is a simple example to create an <code>enum</code> wrapper class using the <code><a href="../options/omni_enum.html">OMNI_ENUM</a></code> macro:<br>
+<div class="sntx"><input type="checkbox" id="c6" name="c6" /><label for="c6">&nbsp;</label><pre><a href="../options/omni_enum.html">OMNI_ENUM</a>(other_enum, <font class="syn_cmt">// name</font>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Y, <font class="syn_cmt">// default value</font>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  X, Y, Z) <font class="syn_cmt">// parameters</font>
+<font class="syn_cmt">// Note that you do _NOT_ need the <a href="../options/omni_enum_end.html">OMNI_ENUM_END</a> macro to end the</font>
+<font class="syn_cmt">// definition and, if used, will cause compilation errors!</font></pre></div>The <code><a href="../options/omni_enum.html">OMNI_ENUM</a></code> macro is a simplistic macro that can be used to create simple <code>enum</code> wrappers in 1 line of code.<br>
+<br>
+For more information on each of the macro&#39;s and how to utilize them, you can click on any of them throughout this example.<br><br><font class="hdr">Example</font><br><div class="sntx"><input type="checkbox" id="c7" name="c7" checked /><label for="c7">&nbsp;</label><pre><font class="syn_pre">#include &lt;<a href="../htmlsrc/omnilib.html">omnilib</a>&gt;</font>
+
+<a href="../options/omni_enum.html">OMNI_ENUM</a>(easy_enum, NONE, VALUE_1, VALUE_2, VALUE_3, VALUE_4, NONE)
+
+<a href="../options/omni_enum_assigned.html">OMNI_ENUM_ASSIGNED</a>(my_enum, VALUE_10 = <font class="syn_num">10</font>, VALUE_20 = <font class="syn_num">20</font>, NONE = <font class="syn_num">0</font>)
+<a href="../options/omni_enum_default.html">OMNI_ENUM_DEFAULT</a>(VALUE_20)
+<a href="../options/omni_enum_assigned_parsers.html">OMNI_ENUM_ASSIGNED_PARSERS</a>(VALUE_10, VALUE_20)
+<a href="../options/omni_enum_end.html">OMNI_ENUM_END</a> <font class="syn_cmt">// end definition</font>
+
+<a href="../options/omni_enum_define.html">OMNI_ENUM_DEFINE</a>(other_enum, X, Y, Z)
+<a href="../options/omni_enum_default.html">OMNI_ENUM_DEFAULT</a>(Y)
+<a href="../options/omni_enum_end.html">OMNI_ENUM_END</a> <font class="syn_cmt">// end definition</font>
+
+<font class="syn_typ">class</font> Foo {
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">public</font>:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../options/omni_enum.html">OMNI_ENUM</a>(InnerEnum, J, A, B, C, D, E, F, G, H, I, J, K, NONE)
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;InnerEnum val;
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Foo() : val(InnerEnum::B)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+};
+
+<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> ENUM &gt;
+<font class="syn_typ">void</font> print(<font class="syn_typ">const</font> ENUM&amp; val, <font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; good_parse, <font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; bad_parse)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;ENUM tval;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_str">&quot;enum = &quot;</font> &lt;&lt; val &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a> &lt;&lt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_str">&quot;value = &quot;</font> &lt;&lt; val.value() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a> &lt;&lt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_str">&quot;to_string = &quot;</font> &lt;&lt; val.to_string() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a> &lt;&lt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_str">&quot;std::string = &quot;</font> &lt;&lt; <font class="syn_ins">static_cast</font>&lt;<a href="http://www.cplusplus.com/reference/string/">std::string</a>&gt;(val) &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a> &lt;&lt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_str">&quot;uint32_t = &quot;</font> &lt;&lt; <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint32_t</font>&gt;(val) &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a> &lt;&lt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_str">&quot;val.count = &quot;</font> &lt;&lt; val.count() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a> &lt;&lt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_str">&quot;ENUM::COUNT() = &quot;</font> &lt;&lt; ENUM::COUNT() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a> &lt;&lt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_str">&quot;ENUM::DEFAULT_VALUE() = &quot;</font> &lt;&lt; ENUM::DEFAULT_VALUE() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a> &lt;&lt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_str">&quot;ENUM::try_parse(&quot;</font> &lt;&lt; good_parse &lt;&lt; <font class="syn_str">&quot;) = &quot;</font> &lt;&lt; (ENUM::try_parse(good_parse, tval) ? <font class="syn_str">&quot;good&quot;</font> : <font class="syn_str">&quot;bad&quot;</font>) &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a> &lt;&lt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_str">&quot;ENUM::try_parse(&quot;</font> &lt;&lt; bad_parse &lt;&lt; <font class="syn_str">&quot;) = &quot;</font> &lt;&lt; (ENUM::try_parse(bad_parse, tval) ? <font class="syn_str">&quot;good&quot;</font> : <font class="syn_str">&quot;bad&quot;</font>) &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+}
+
+<font class="syn_typ">int</font> main(<font class="syn_typ">int</font> argc, <font class="syn_typ">char</font>* argv[])
+{
+&nbsp;&nbsp;&nbsp;&nbsp;Foo foo;
+&nbsp;&nbsp;&nbsp;&nbsp;Foo::InnerEnum fe;
+&nbsp;&nbsp;&nbsp;&nbsp;easy_enum ee = easy_enum::VALUE_3;
+&nbsp;&nbsp;&nbsp;&nbsp;my_enum me = my_enum::VALUE_20;
+&nbsp;&nbsp;&nbsp;&nbsp;other_enum oe;
+
+&nbsp;&nbsp;&nbsp;&nbsp;print(foo.val, <font class="syn_str">&quot;A&quot;</font>, <font class="syn_str">&quot;Z&quot;</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;print(fe, <font class="syn_str">&quot;NONE&quot;</font>, <font class="syn_str">&quot;L&quot;</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;print(ee, <font class="syn_str">&quot;VALUE_1&quot;</font>, <font class="syn_str">&quot;VALUE_5&quot;</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;print(me, <font class="syn_str">&quot;VALUE_20&quot;</font>, <font class="syn_str">&quot;NONE&quot;</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;print(oe, <font class="syn_str">&quot;Z&quot;</font>, <font class="syn_str">&quot;A&quot;</font>);
+
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;
+}</pre></div>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

@@ -125,8 +125,8 @@ namespace omni {
                 bool is_detached() const;
                 bool join(); // default of infinite timeout
                 bool join(uint32_t timeout);
-                bool join(const omni::chrono::unsigned_timespan& span);
-                bool kill(); // Terminate 'immediately'
+                bool join(const omni::chrono::unsigned_span_t& span);
+                bool kill(); // Terminate immediately
                 bool reset();
                 bool restart();
                 bool restart(omni::sync::thread_arg_t args);
@@ -191,7 +191,7 @@ namespace omni {
                     /** The threads priority */
                     omni::sync::thread_priority m_priority;
                 #endif
-                /** If join has been called, don't detach */
+                /** If join has been called, do not detach */
                 volatile bool m_isjoined;
                 /** If parameterized start function */
                 volatile bool m_ispmthd;
@@ -200,7 +200,7 @@ namespace omni {
                 
                 /**
                  * This class is an internal thread manager not intended to be used anywhere but here.
-                 * It's used primarily to avoid the static init order fiasco (via the static instance
+                 * it is used primarily to avoid the static init order fiasco (via the static instance
                  * function). This manager class is put here (vs. in a header) so as to avoid any
                  * development environments or user code potentially trying to use this class since
                  * this class is only intended to avoid the SIOF.
@@ -219,7 +219,7 @@ namespace omni {
                         
                         static manager& instance()
                         {
-                            /* typically a 'new' without a 'delete' is a memory leak, but this
+                            /* typically a new without a delete is a memory leak, but this
                             has a similar effect to a static global variable. This instance
                             method is following the static init on first use idiom to avoid
                             the static init order fiasco that can cause innocuous crashes.

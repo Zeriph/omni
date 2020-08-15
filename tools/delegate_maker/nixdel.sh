@@ -21,10 +21,10 @@ if [ ! -d "${odir}" ]; then
     exit 1
 fi
 
-sodir="${odir}/source/omni"
+sodir="${odir}/experimental"
 base="${odir}/tools/delegate_maker"
 tfile="${base}/template.hpp"
-lfile="${odir}/docugen/doc_license.txt"
+lfile="${odir}/tools/delegate_maker/license.txt"
 
 dlmkr="sh ${base}/delmkr.sh -f ${tfile} -d ${sodir} -n 16 -l ${lfile}"
 #dlown="chown -R ${u} ${sodir}/delegate* && chgrp -R ${g} ${sodir}/delegate*"
@@ -36,5 +36,5 @@ eval ${dlmkr}
 #echo ${dlown}
 #eval ${dlown}
 
-echo ${dlmod}
-eval ${dlmod}
+#echo ${dlmod}
+#eval ${dlmod}

@@ -19,8 +19,8 @@
 
 /* DEV_NOTE: this file is not intended to be used directly by any user code!
 
- i.e. don't #include <omni/xxx_impl.hxx> and don't compile this source directly.
- this file is #include'd directly in other source. 
+ i.e. do not #include <omni/xxx_impl.hxx> and do not compile this source directly.
+ this file is included directly in other source. 
  
  The logic is that omni::cstring and omni::wstring namespaces segregate the types
  for explicit calling; i.e. you can call omni::cstring::X to check on a std:string
@@ -40,8 +40,8 @@
 #endif
 
 #if defined(OMNI_IO_DIR_INTERNAL_FW)
-    namespace omni { namespace io { /** @internal framework helper */ namespace dir_internal {
-        /** @internal framework helper */
+    namespace omni { namespace io { /** @internal library helper */ namespace dir_internal {
+        /** @internal library helper */
         bool exists(const std::string& folder)
         {
             if (folder.empty()) { return false; }
@@ -61,7 +61,7 @@
                 return false;
             #endif
         }
-        /** @internal framework helper */
+        /** @internal library helper */
         bool exists(const std::wstring& folder)
         {
             if (folder.empty()) { return false; }
@@ -82,7 +82,7 @@
             #endif
         }
 
-        /** @internal framework helper */
+        /** @internal library helper */
         bool create(const std::string& folder, bool create_path)
         {
             if (folder == "\\" || folder == "/") { return true; }
@@ -111,7 +111,7 @@
                 (::mkdir(folder.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) == 0);
             #endif
         }
-        /** @internal framework helper */
+        /** @internal library helper */
         bool create(const std::wstring& folder, bool create_path)
         {
             if (folder == L"\\" || folder == L"/") { return true; }
@@ -142,7 +142,7 @@
         }
 
         #if defined(OMNI_OS_WIN)
-            /** @internal framework helper */
+            /** @internal library helper */
             template < typename SEQ >
             SEQ get_dir_cont_win_fw(const std::string& name, int ftype)
             {
@@ -155,7 +155,7 @@
                     if (hFile != INVALID_HANDLE_VALUE) {
                         do {
                             std::string fname = std::string(c_file.cFileName);
-                            if (fname != "." && fname != ".." ) { // don't add root dir
+                            if (fname != "." && fname != ".." ) { // do not add root dir
                                 std::string file = omni::io::cpath::combine(name, fname);
                                 if (ftype == 0) {
                                     if (omni::io::dir_internal::exists(file)) { dirs.push_back(file); }
@@ -172,7 +172,7 @@
                     if ((hFile = ::_findfirst(full.c_str(), &c_file)) != -1L) {
                         do {
                             std::string fname = std::string(c_file.name);
-                            if (fname != "." && fname != ".." ) { // don't add root dir
+                            if (fname != "." && fname != ".." ) { // do not add root dir
                                 std::string file = omni::io::cpath::combine(name, fname);
                                 if (ftype == 0) {
                                     if (omni::io::dir_internal::exists(file)) { dirs.push_back(file); }
@@ -186,7 +186,7 @@
                 #endif
                 return dirs;
             }
-            /** @internal framework helper */
+            /** @internal library helper */
             template < typename SEQ >
             SEQ get_dir_cont_win_fw(const std::wstring& name, int ftype)
             {
@@ -199,7 +199,7 @@
                     if (hFile != INVALID_HANDLE_VALUE) {
                         do {
                             std::wstring fname = omni::string::to_wstring(c_file.cFileName);
-                            if (fname != L"." && fname != L".." ) { // don't add root dir
+                            if (fname != L"." && fname != L".." ) { // do not add root dir
                                 std::wstring file = omni::io::wpath::combine(name, fname);
                                 if (ftype == 0) {
                                     if (omni::io::dir_internal::exists(file)) { dirs.push_back(file); }
@@ -216,7 +216,7 @@
                     if ((hFile = ::_wfindfirst(full.c_str(), &c_file)) != -1L) {
                         do {
                             std::wstring fname = std::wstring(c_file.name);
-                            if (fname != L"." && fname != L".." ) { // don't add root dir
+                            if (fname != L"." && fname != L".." ) { // do not add root dir
                                 std::wstring file = omni::io::wpath::combine(name, fname);
                                 if (ftype == 0) {
                                     if (omni::io::dir_internal::exists(file)) { dirs.push_back(file); }
@@ -231,7 +231,7 @@
                 return dirs;
             }
         #else
-            /** @internal framework helper */
+            /** @internal library helper */
             template < typename SEQ >
             SEQ get_dir_cont_nix_fw(const std::string& name, int ftype)
             {
@@ -255,7 +255,7 @@
                 ::closedir(dp);
                 return dirs;
             }
-            /** @internal framework helper */
+            /** @internal library helper */
             template < typename SEQ >
             SEQ get_dir_cont_nix_fw(const std::wstring& name, int ftype)
             {
@@ -280,7 +280,7 @@
             }
         #endif
 
-        /** @internal framework helper */
+        /** @internal library helper */
         template < typename STR, typename SEQ >
         SEQ get_elements(const STR& folder, int ftype)
         {
@@ -296,7 +296,7 @@
             #endif
         }
 
-        /** @internal framework helper */
+        /** @internal library helper */
         bool mv(const std::string& folder, const std::string& new_name, bool create_path)
         {
             std::string root = omni::io::cpath::get_parent_name(new_name);
@@ -336,7 +336,7 @@
             #endif
             return omni::io::dir_internal::exists(new_name);
         }
-        /** @internal framework helper */
+        /** @internal library helper */
         bool mv(const std::wstring& folder, const std::wstring& new_name, bool create_path)
         {
             std::wstring root = omni::io::wpath::get_parent_name(new_name);
@@ -377,7 +377,7 @@
             return omni::io::dir_internal::exists(new_name);
         }
 
-        /** @internal framework helper */
+        /** @internal library helper */
         template < typename STR >
         void recursive_rem(const STR& name) 
         {
@@ -390,7 +390,7 @@
                 omni::io::directory::remove(*dir, true);
             }
         }
-        /** @internal framework helper */
+        /** @internal library helper */
         bool rem(const std::string& folder, bool recursive)
         {
             std::string name = omni::io::path::trim_trailing_slash(folder);
@@ -416,7 +416,7 @@
             }
             return !omni::io::dir_internal::exists(folder);
         }
-        /** @internal framework helper */
+        /** @internal library helper */
         bool rem(const std::wstring& folder, bool recursive)
         {
             std::wstring name = omni::io::path::trim_trailing_slash(folder);
@@ -535,6 +535,6 @@ bool omni::io::OMNI_PATH_FW::move(const OMNI_STRING_T_FW& folder, const OMNI_STR
 
 bool omni::io::OMNI_PATH_FW::remove(const OMNI_STRING_T_FW& folder, bool recursive)
 {
-    if (!omni::io::dir_internal::exists(folder)) { return true; } // folder doesn't exist
+    if (!omni::io::dir_internal::exists(folder)) { return true; } // folder does not exist
     return omni::io::dir_internal::rem(folder, recursive);
 }

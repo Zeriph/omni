@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - Search</title>
+<link rel="stylesheet" type="text/css" href="content/main.css" /><link rel="icon" type="image/png" href="content/favicon.png" />
+<script type="text/javascript" src="content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="docs/htmlsrc/index.html">Source</a></li><li title="Library classes and namespaces">
+<a href="docs/classes/index.html">Class Index</a></li><li title="Download and view examples">
+<a href="docs/examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="docs/build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="docs/options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="docs/api.html">System API</a></li><li title="Other Considerations">
+<a href="docs/consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="docs/codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="search.html" class="current">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="http://www.zeriph.com">Zeriph Enterprises, LLC</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle"><a name="search_omni"></a>Search Omni</div><div class="content"><div>
+<div id="srchres" name="srchres">
+Because the documentation for Omni can be viewed both online and on your local disk, we wanted it to be searchable through
+various means while still keeping the documentation similar across mediums. To achieve this, the search functionality
+included with this documentation is a basic JavaScript search engine that scans the help files for the terms specified.<br><br>
+The search is a basic case-<i>in</i>sensitive <code>OR</code> search, so if you did a search for <code>Omni delegate</code>,
+any text found that contains either <code>Omni</code> or <code>delegate</code> will be considered a match. If you wish to do an
+<code>AND</code> type search, simply enclose the term in quotes, e.g. <code>"Omni delegate"</code> would match only text that
+contains <code>Omni</code> followed by a space then followed by <code>delegate</code> (again, case does not matter). You can
+mix these patterns as well, so a search for <code>"Omni library" delegate constructor</code> will find text that matches the whole
+<code>Omni library</code> string <b>OR</b> text that matches <code>delegate</code> <b>OR</b> <code>constructor</code>.<br><br>
+The search is a simple engine to help keep documentation maintenance down, as well, if you are viewing this online, it is more
+efficient to use your preferred search engine and append its site specific tag to do the search. For example, if you used
+<a href="https://www.google.com">Google</a> or <a href="https://duckduckgo.com/html">DuckDuckGo</a>, you could enter the following
+search term: <code>Omni delegate site:zeriph.com/omni/</code> to use their engine and semantics to search the documentation.
+Similarly, if you are viewing this documentation on disk and have access to the <code>.html</code> files themselves (or you have
+JavaScript disabled for <code>file://</code> acccess), you could use a tool like
+<code><a href="https://msdn.microsoft.com/en-us/library/aa265076%28v=vs.60%29.aspx">FIND</a></code> or
+<code><a href="https://en.wikipedia.org/wiki/Grep">grep</a></code> to search through the files more precisely and efficiently
+than an offline JavaScript-based search.<br><br>
+The maximum number of results returned is <b>50</b> by default. This value can be changed in the
+<code><a href="content/search.js">search.js</a></code> file if you wish to see more by changing the global variable
+<code>maxResults</code> (at the top of the file) to whatever you wish. This number is hard coded to reduce the time
+taken to display results by updating the HTML DOM via the JavaScript search.<br><br>
+If you might have any questions or concerns about searching or using the documentation, feel free to contact the
+<a href="mailto:omniqa@zeriph.com">Omni Q&amp;A email</a>.<br><br>
+<noscript><font style="font-size:12px; color:red;">NOTE: the JavaScript search function is unavailable because JavaScript is not enabled.</font></noscript>
+</div>
+<script type="text/javascript" src="content/search_list.js"></script>
+<script type="text/javascript" src="content/search.js"></script>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS(preformSearch);</script></body></html>

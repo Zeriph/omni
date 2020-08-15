@@ -22,6 +22,23 @@
 #include <omni/sync/lock.hpp>
 #include <omni/sync/scoped_lock.hpp>
 
+/*
+    TODO: make docugen note about how smart_ptr to an array pointer will not call delete[]
+    (smart_ptr<obj[]> has to be smart_ptr<obj*>), if you want a smart_ptr<obj[]> use an STL
+    container instead (like a std::vector<obj> or std::deque<obj>)
+*/
+
+#if !defined(OMNI_SMART_PTR_SIZE_T)
+    /*
+        This defines the underlying size type used by the smart pointer
+        types. it is a hash-def because making a smart_ptr templated with
+        a type and a size type would make the smart pointer class well
+        more complicated than necessary; the hash-def allows platform
+        specific size types to be utilized.
+    */
+    #define OMNI_SMART_PTR_SIZE_T uint64_t
+#endif
+
 namespace omni {
     template < typename T >
     class smart_ptr
@@ -29,32 +46,32 @@ namespace omni {
         public:
             /** Defines the underlying type of this instance */
             typedef T pointer_t;
+            /** Specifies the underlying size type defined */
+            typedef OMNI_SMART_PTR_SIZE_T size_type;
+
+            smart_ptr() :
+                OMNI_CTOR_FW(omni::smart_ptr<T>)
+                m_ptr(OMNI_NULL),
+                m_cnt(0)
+            {
+                OMNI_D5_FW("created empty smart_ptr");
+            }
             
-            explicit smart_ptr(pointer_t *val = OMNI_NULL) :
+            explicit smart_ptr(pointer_t* val) :
                 OMNI_CTOR_FW(omni::smart_ptr<T>)
                 m_ptr(val),
-                m_cnt(new uint64_t(1))
+                m_cnt((val == OMNI_NULL) ? 0 : 1)
             {
                 OMNI_D5_FW("created by ptr");
             }
             
-            smart_ptr(const smart_ptr<T> &cp) :
+            smart_ptr(const smart_ptr< T >& cp) :
                 OMNI_CPCTOR_FW(cp)
                 m_ptr(cp.m_ptr), 
-                m_cnt(cp.m_cnt)
+                m_cnt(cp.m_cnt+1)
             {
-                this->_increment();
-                OMNI_DV5_FW("created by copy, ref count = ", *this->m_cnt);
-            }
-
-            template < typename T1 >
-            smart_ptr(smart_ptr<T1> &cp) :
-                OMNI_CPCTOR_FW(cp)
-                m_ptr(cp.m_ptr), 
-                m_cnt(cp.m_cnt)
-            {
-                this->_increment();
-                OMNI_DV5_FW("created by copy, ref count = ", *this->m_cnt);
+                ++cp.m_cnt;
+                OMNI_DV5_FW("created by copy, ref count = ", this->m_cnt);
             }
             
             ~smart_ptr()
@@ -65,10 +82,28 @@ namespace omni {
                 OMNI_CATCH_FW
                 OMNI_D5_FW("destroyed");
             }
+
+            size_type count() const
+            {
+                return this->m_cnt;
+            }
+
+            smart_ptr& reset()
+            {
+                this->_decrement();
+                this->m_ptr = OMNI_NULL;
+                this->m_cnt = 0;
+                return *this;
+            }
             
             bool valid() const
             {
                 return (this->m_ptr != OMNI_NULL);
+            }
+
+            T* value() const
+            {
+                return this->m_ptr;
             }
             
             operator bool() const
@@ -94,8 +129,9 @@ namespace omni {
             bool operator==(const smart_ptr< T >& val) const
             {
                 if (this == &val) { return true; }
-                return (this->m_ptr == val.m_ptr && this->m_cnt == val.m_cnt)
-                OMNI_EQUAL_FW(val);
+                return (this->m_ptr == val.m_ptr &&
+                        this->m_cnt == val.m_cnt)
+                        OMNI_EQUAL_FW(val);
             }
             
             bool operator!=(const smart_ptr< T >& val) const
@@ -103,63 +139,56 @@ namespace omni {
                 return !(*this == val);
             }
             
-            smart_ptr<T>& operator=(const smart_ptr<T>& val)
+            smart_ptr& operator=(const smart_ptr< T >& val)
             {
                 if (this != &val) {
-                    this->_decrement();
                     OMNI_ASSIGN_FW(val)
-                    this->m_ptr = val.m_ptr;
-                    this->m_cnt = val.m_cnt;
-                    this->_increment();
+                    if (this->m_ptr != val.m_ptr) {
+                        this->_decrement();
+                        this->m_ptr = val.m_ptr;
+                        if (this->m_ptr != OMNI_NULL) {
+                            this->m_cnt = ++val.m_cnt;
+                        }
+                    }
                 }
                 return *this;
             }
-            
-            template < typename T1 >
-            smart_ptr& operator=(const smart_ptr<T1>& val)
-            {
-                if (this != &val) {
-                    this->_decrement();
-                    OMNI_ASSIGN_FW(val)
-                    this->m_ptr = val.m_ptr;
-                    this->m_cnt = val.m_cnt;
-                    this->_increment();
-                }
-                return *this;
-            }
-            
-            smart_ptr<T>& operator=(pointer_t* val)
+
+            smart_ptr& operator=(pointer_t* val)
             {
                 if (this->m_ptr != val) {
                     this->_decrement();
                     this->m_ptr = val;
-                    this->_increment();
+                    if (this->m_ptr != OMNI_NULL) {
+                        ++this->m_cnt;
+                    }
                 }
                 return *this;
             }
             
             OMNI_MEMBERS_FW(omni::smart_ptr<T>) // disposing,name,type(),hash()
+
+            static inline smart_ptr get_instance_reference(pointer_t* val)
+            {
+                smart_ptr ret(val);
+                ++ret.m_cnt;
+                return ret;
+            }
             
         private:
+            T* m_ptr;
+            mutable size_type m_cnt;
+
             inline void _decrement()
             {
-                if (--*this->m_cnt == 0) {
+                if ((this->m_cnt > 0) && (--this->m_cnt == 0)) {
                     OMNI_D5_FW("ref count == 0, freeing pointers");
-                    delete this->m_cnt;
-                    delete this->m_ptr;
-                    this->m_cnt = OMNI_NULL;
+                    if (this->m_ptr != OMNI_NULL) {
+                        delete this->m_ptr;
+                    }
                     this->m_ptr = OMNI_NULL;
                 }
             }
-            
-            inline void _increment()
-            {
-                if (!this->m_cnt) { this->m_cnt = new uint64_t(0); }
-                ++*this->m_cnt;
-            }
-            
-            T* m_ptr;
-            uint64_t* m_cnt;
     };
     
     template < typename T >
@@ -168,11 +197,23 @@ namespace omni {
         public:
             /** Defines the underlying type of this instance */
             typedef T pointer_t;
+            /** Specifies the underlying size type defined */
+            typedef OMNI_SMART_PTR_SIZE_T size_type;
+
+            smart_ptr_safe() :
+                OMNI_CTOR_FW(omni::smart_ptr_safe<T>)
+                m_ptr(OMNI_NULL),
+                m_cnt(0),
+                m_mtx()
+            {
+                omni::sync::mutex_init(this->m_mtx);
+                OMNI_D5_FW("created by ptr");
+            }
             
-            explicit smart_ptr_safe(pointer_t* val = 0) :
+            explicit smart_ptr_safe(pointer_t* val) :
                 OMNI_CTOR_FW(omni::smart_ptr_safe<T>)
                 m_ptr(val),
-                m_cnt(new uint64_t(1)),
+                m_cnt((val == OMNI_NULL) ? 0 : 1),
                 m_mtx()
             {
                 omni::sync::mutex_init(this->m_mtx);
@@ -181,25 +222,15 @@ namespace omni {
 
             smart_ptr_safe(const smart_ptr_safe<T>& cp) :
                 OMNI_CPCTOR_FW(cp)
-                m_ptr(cp.m_ptr), 
-                m_cnt(cp.m_cnt),
+                m_ptr(), 
+                m_cnt(),
                 m_mtx()
             {
                 omni::sync::mutex_init(this->m_mtx);
-                this->_increment();
-                OMNI_DV5_FW("created by copy, ref count = ", *this->m_cnt);
-            }
-
-            template < typename T1 >
-            smart_ptr_safe(smart_ptr_safe<T1>& cp) :
-                OMNI_CPCTOR_FW(cp)
-                m_ptr(cp.m_ptr), 
-                m_cnt(cp.m_cnt),
-                m_mtx()
-            {
-                omni::sync::mutex_init(this->m_mtx);
-                this->_increment();
-                OMNI_DV5_FW("created by copy, ref count = ", *this->m_cnt);
+                omni::sync::scoped_lock<omni::sync::mutex_t> alock(&cp.m_mtx);
+                this->m_cnt = ++cp.m_cnt;
+                this->m_ptr = cp.m_ptr;
+                OMNI_DV5_FW("created by copy, ref count = ", this->m_cnt);
             }
             
             ~smart_ptr_safe()
@@ -211,11 +242,32 @@ namespace omni {
                 OMNI_CATCH_FW
                 OMNI_D5_FW("destroyed");
             }
+
+            size_type count() const
+            {
+                omni::sync::scoped_lock<omni::sync::mutex_t> alock(&this->m_mtx);
+                return this->m_cnt;
+            }
+
+            smart_ptr_safe& reset()
+            {
+                omni::sync::scoped_lock<omni::sync::mutex_t> alock(&this->m_mtx);
+                this->_dec_no_lock();
+                this->m_ptr = OMNI_NULL;
+                this->m_cnt = 0;
+                return *this;
+            }
             
             bool valid() const
             {
                 omni::sync::scoped_lock<omni::sync::mutex_t> alock(&this->m_mtx);
-                return (this->m_ptr != 0);
+                return (this->m_ptr != OMNI_NULL);
+            }
+
+            T const* value() const
+            {
+                omni::sync::scoped_lock<omni::sync::mutex_t> alock(&this->m_mtx);
+                return this->m_ptr;
             }
             
             operator bool() const
@@ -240,90 +292,89 @@ namespace omni {
                 return this->m_ptr;
             }
             
-            bool operator==(const smart_ptr_safe< T > &val) const
+            bool operator==(const smart_ptr_safe< T >& val) const
             {
                 if (this == &val) { return true; }
                 omni::sync::scoped_lock<omni::sync::mutex_t> a1(&this->m_mtx);
                 omni::sync::scoped_lock<omni::sync::mutex_t> a2(&val.m_mtx);
-                return (this->m_ptr == val.m_ptr && this->m_cnt == val.m_cnt)
+                return (this->m_ptr == val.m_ptr &&
+                        this->m_cnt == val.m_cnt)
                 OMNI_EQUAL_FW(val);
             }
             
-            bool operator!=(const smart_ptr_safe< T > &val) const
+            bool operator!=(const smart_ptr_safe< T >& val) const
             {
                 return !(*this == val);
             }
             
-            smart_ptr_safe<T>& operator=(const smart_ptr_safe<T> &val)
+            smart_ptr_safe& operator=(const smart_ptr_safe<T>& val)
             {
                 if (this != &val) {
-                    this->_decrement();
                     omni::sync::mutex_lock(this->m_mtx);
                     omni::sync::mutex_lock(val.m_mtx);
                     OMNI_ASSIGN_FW(val)
-                    this->m_ptr = val.m_ptr;
-                    this->m_cnt = val.m_cnt;
+                    if (this->m_ptr != val.m_ptr) {
+                        this->_dec_no_lock();
+                        this->m_ptr = val.m_ptr;
+                        if (this->m_ptr != OMNI_NULL) {
+                            this->m_cnt = ++val.m_cnt;
+                        }
+                    }
                     omni::sync::mutex_unlock(this->m_mtx);
                     omni::sync::mutex_unlock(val.m_mtx);
-                    this->_increment();
                 }
                 return *this;
             }
-            
-            template < typename T1 >
-            smart_ptr_safe& operator=(const smart_ptr_safe<T1> &val)
+
+            smart_ptr_safe& operator=(pointer_t* val)
             {
-                if (this != &val) {
-                    this->_decrement();
-                    omni::sync::mutex_lock(this->m_mtx);
-                    omni::sync::mutex_lock(val.m_mtx);
-                    OMNI_ASSIGN_FW(val)
-                    this->m_ptr = val.m_ptr;
-                    this->m_cnt = val.m_cnt;
-                    omni::sync::mutex_unlock(this->m_mtx);
-                    omni::sync::mutex_unlock(val.m_mtx);
-                    this->_increment();
-                }
-                return *this;
-            }
-            
-            smart_ptr_safe<T>& operator=(pointer_t *val)
-            {
+                omni::sync::scoped_lock<omni::sync::mutex_t> alock(&this->m_mtx);
                 if (this->m_ptr != val) {
-                    this->_decrement();
-                    omni::sync::mutex_lock(this->m_mtx);
+                    this->_dec_no_lock();
                     this->m_ptr = val;
-                    omni::sync::mutex_unlock(this->m_mtx);
-                    this->_increment();
+                    if (this->m_ptr != OMNI_NULL) {
+                        ++this->m_cnt;
+                    }
                 }
                 return *this;
             }
             
             OMNI_MEMBERS_FW(omni::smart_ptr_safe<T>) // disposing,name,type(),hash()
+
+            static inline smart_ptr_safe get_instance_reference(pointer_t* val)
+            {
+                smart_ptr_safe ret(val);
+                ++ret.m_cnt;
+                return ret;
+            }
             
         private:
+            T* m_ptr;
+            mutable size_type m_cnt;
+            mutable omni::sync::mutex_t m_mtx;
+
             inline void _decrement()
             {
                 omni::sync::scoped_lock<omni::sync::mutex_t> alock(&this->m_mtx);
-                if (--*this->m_cnt == 0) {
+                this->_dec_no_lock();
+            }
+
+            inline void _dec_no_lock()
+            {
+                if ((this->m_cnt > 0) && (--this->m_cnt == 0)) {
                     OMNI_D5_FW("ref count == 0, freeing pointers");
-                    delete this->m_cnt;
-                    delete this->m_ptr;
-                    this->m_cnt = 0;
-                    this->m_ptr = 0;
+                    if (this->m_ptr != OMNI_NULL) {
+                        delete this->m_ptr;
+                    }
+                    this->m_ptr = OMNI_NULL;
                 }
             }
             
             inline void _increment()
             {
                 omni::sync::scoped_lock<omni::sync::mutex_t> alock(&this->m_mtx);
-                if (!this->m_cnt) { this->m_cnt = new uint64_t(0); }
-                ++*this->m_cnt;
+                ++this->m_cnt;
             }
-            
-            T* m_ptr;
-            uint64_t* m_cnt;
-            mutable omni::sync::mutex_t m_mtx;
     };
 }
 

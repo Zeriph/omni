@@ -3,6 +3,7 @@
 #define UT_NAME socket
 #define UT_ROOT_NS net
 #include <utdefs/unit_test.hpp>
+#include <vector>
 
 #define BUFFSZ 65535
 #define SERVER_PORT 12345
@@ -14,7 +15,8 @@ class UT_CLASS_DEF
         {
             M_LIST_ADD(host_test, "tests host/ip functionality");
             M_LIST_ADD(client_server_test, "tests the client/server functionality");
-            M_LIST_ADD(www_test, "tests getting index.html from zeriph.com");
+            M_LIST_ADD(www_test, "tests getting index.html from zeriph.com with stack_buffer/vector");
+            M_LIST_ADD(unsafe_www_test, "tests getting index.html from zeriph.com with unsafe_X funcs");
         }
         
         UT_CLASS_DTOR() {}
@@ -41,7 +43,7 @@ class UT_CLASS_DEF
                 std::cout << "Error getting IP's: " << err << std::endl;
             }
 
-            err = omni::net::util::get_host("68.66.224.12", host);
+            err = omni::net::util::get_host("68.66.224.12", 80, host);
             if (err == omni::net::socket_error::SUCCESS) {
                 std::cout << "Got host: " << host << std::endl;
             } else {
@@ -49,22 +51,49 @@ class UT_CLASS_DEF
             }
         }
 
-        void www_test()
+        void unsafe_www_test()
         {
             uint32_t xfr = 0;
             const std::string req = "GET / HTTP/1.0\r\nHost: zeriph.com\r\n\r\n";
             omni::net::socket sock(omni::net::address_family::INET, omni::net::socket_type::STREAM, omni::net::protocol_type::TCP);
             if (sock.connect_host("zeriph.com", 80) == omni::net::socket_error::SUCCESS) {
                 std::cout << "Connected to " << sock << std::endl;
-                if (sock.send(req.c_str(), req.size(), xfr) == omni::net::socket_error::SUCCESS) {
+                if (sock.unsafe_send(req.c_str(), req.size(), xfr) == omni::net::socket_error::SUCCESS) {
                     std::cout << "Sent " << xfr << " bytes" << std::endl;
 
                     char* data = new char[BUFFSZ];
-                    while (sock.receive(data, BUFFSZ, xfr) == omni::net::socket_error::SUCCESS) {
+                    while (sock.unsafe_receive(data, BUFFSZ, xfr) == omni::net::socket_error::SUCCESS) {
                         if (xfr > 0) { std::cout << data; }
                         std::memset(data, 0, BUFFSZ);
                     }
                     delete[] data;
+                }
+            }
+            if (sock.last_error() != omni::net::socket_error::SUCCESS) {
+                std::cout << std::endl << "Last socket error: " << sock.last_error() << std::endl;
+            }
+
+            // Strictly speaking this is not necessary here since `sock` is a local
+            // object, so when it goes out of scope it will call close on destruction.
+            sock.close();
+        }
+
+        void www_test()
+        {
+            uint32_t xfr = 0;
+            omni::stack_buffer<char, 1024> req = "GET / HTTP/1.0\r\nHost: zeriph.com\r\n\r\n";
+            omni::net::socket sock(omni::net::address_family::INET, omni::net::socket_type::STREAM, omni::net::protocol_type::TCP);
+            if (sock.connect_host("zeriph.com", 80) == omni::net::socket_error::SUCCESS) {
+                std::cout << "Connected to " << sock << std::endl;
+                if (sock.send(req, xfr) == omni::net::socket_error::SUCCESS) {
+                    std::cout << "Sent " << xfr << " bytes" << std::endl;
+
+                    
+                    std::vector<char> data(BUFFSZ);
+                    while (sock.receive(data, xfr) == omni::net::socket_error::SUCCESS) {
+                        if (xfr > 0) { std::cout << &data[0]; }
+                        std::memset(&data[0], 0, BUFFSZ);
+                    }
                 }
             }
             if (sock.last_error() != omni::net::socket_error::SUCCESS) {
@@ -90,14 +119,14 @@ class UT_CLASS_DEF
         static void client_thread()
         {
             uint32_t xfr = 0;
-            char buff[1024] = {0};
+            omni::stack_buffer<char, 1024> buff;
             omni::net::socket s(omni::net::address_family::INET, omni::net::socket_type::STREAM, omni::net::protocol_type::TCP);
             if (s.connect("127.0.0.1", SERVER_PORT) == omni::net::socket_error::SUCCESS) {
                 std::cout << "Connected to " << s << std::endl;
                 std::cout << "Sending: HELLO!\\r\\n" << std::endl;
-                if (s.send("HELLO!\r\n", 9, xfr) == omni::net::socket_error::SUCCESS) {
+                if (s.unsafe_send("HELLO!\r\n", 9, xfr) == omni::net::socket_error::SUCCESS) {
                     std::cout << "Sent " << xfr << " bytes to server" << std::endl;
-                    if (s.receive(buff, 1024, xfr) == omni::net::socket_error::SUCCESS) {
+                    if (s.receive(buff, xfr) == omni::net::socket_error::SUCCESS) {
                         std::cout << "Received " << xfr << " bytes from server: [" << buff << "]" << std::endl;
                     } else {
                         std::cout << "Could not receive data: " << s.last_error() << std::endl;
@@ -114,7 +143,7 @@ class UT_CLASS_DEF
         static void server_thread()
         {
             uint32_t xfr = 0;
-            char buff[1024] = {0};
+            omni::stack_buffer<char, 1024> buff;
             omni::net::endpoint_descriptor remote_ep;
             omni::net::socket s(omni::net::address_family::INET, omni::net::socket_type::STREAM, omni::net::protocol_type::TCP);
             if (s.bind(SERVER_PORT) == omni::net::socket_error::SUCCESS) {
@@ -123,10 +152,10 @@ class UT_CLASS_DEF
                     std::cout << "Ready to accept connections" << std::endl;
                     if (s.accept(remote_ep) == omni::net::socket_error::SUCCESS) {
                         std::cout << "Client connected: " << remote_ep << std::endl;
-                        if (remote_ep.receive(buff, 1024, xfr) == omni::net::socket_error::SUCCESS) {
+                        if (remote_ep.receive(buff, xfr) == omni::net::socket_error::SUCCESS) {
                             std::cout << "Received " << xfr << " bytes: [" << buff << "]" << std::endl;
                             std::cout << "Sending: WELCOME!\\r\\n" << std::endl;
-                            if (remote_ep.send("WELCOME!\r\n", 11, xfr) == omni::net::socket_error::SUCCESS) {
+                            if (remote_ep.unsafe_send("WELCOME!\r\n", 11, xfr) == omni::net::socket_error::SUCCESS) {
                                 std::cout << "Sent " << xfr << " bytes to client" << std::endl;
                             } else {
                                 std::cout << "Error sending on socket: " << s.last_error() << std::endl;    

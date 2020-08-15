@@ -44,6 +44,8 @@
 #endif
 
 namespace omni {
+    // TODO: does this make sense? helper class, sure ... but prop_get/set??
+
     template < typename T >
     class property
     {
@@ -155,15 +157,16 @@ namespace omni {
                 this->m_set = sfn;
             }
             
-            /* DEV_NOTE: you might get compiler warnings about needing to return a `property<T>&` for
+            /*
+                DEV_NOTE: you might get compiler warnings about needing to return a `property<T>&` for
                 the post/pre operator overloads (e.g. ++/--), or that we should overload `operator=(property<T>)`,
-                but we specifically don't overload the `operator=(property<T>)` so as all rval's to this
+                but we specifically do not overload the `operator=(property<T>)` so as all rvals to this
                 instance _should_ be of `value_t` types. For example, in `property<int> t = 10;` if we
                 overloaded `operator=(property<T>)`, the assignment (i.e. `= 10;`) would preform an
                 implicit cast to a `property<int>` with the underlying value of 10, which is not what we want.
                 
                 Instead, by overloading only the operators below, we can treat this `property` type
-                like it's underlying type with all other operations preformed.
+                like it is underlying type with all other operations preformed.
             */
 
             // Operators - get (rval)
@@ -268,9 +271,9 @@ namespace omni {
             void _set(value_t value) { this->m_val = value; }
             
             OMNI_SAFE_PROP_MTX_FW
-            /** The 'get' functor. Used to attach to a user defined or default 'get' function */
+            /** The get functor. Used to attach to a user defined or default get function */
             get m_get;
-            /** The 'set' functor. Used to attach to a user defined or default 'set' function */
+            /** The set functor. Used to attach to a user defined or default set function */
             set m_set;
             /** The underlying value */
             value_t m_val;
@@ -362,7 +365,7 @@ namespace omni {
             value_t _get() const { return this->m_val; }
             
             OMNI_SAFE_PROP_MTX_FW
-            /** The 'get' functor. Used to attach to a user defined or default 'get' function */
+            /** The get functor. Used to attach to a user defined or default get function */
             get m_get;
             /** The underlying value */
             value_t m_val;
@@ -524,7 +527,7 @@ namespace omni {
             void _set(value_t value) { this->m_val = value; }
             
             OMNI_SAFE_PROP_MTX_FW
-            /** The 'set' functor. Used to attach to a user defined or default 'set' function */
+            /** The set functor. Used to attach to a user defined or default set function */
             set m_set;
             /** The underlying value */
             value_t m_val;

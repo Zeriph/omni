@@ -46,7 +46,7 @@ namespace omni {
             stopwatch(const omni::stopwatch &cp);
             ~stopwatch();
 
-            omni::chrono::unsigned_timespan elapsed() const;
+            omni::chrono::unsigned_span_t elapsed() const;
             uint64_t elapsed_us() const;
             uint64_t elapsed_ms() const;
             uint64_t elapsed_s() const;
@@ -78,6 +78,11 @@ namespace omni {
             omni::stopwatch& start(uint32_t offset_ms);
             omni::stopwatch& stop();
             void swap(omni::stopwatch& o);
+            omni::string_t to_string_t() const;
+            std::string to_string() const;
+            std::wstring to_wstring() const;
+            operator std::string() const { return this->to_string(); }
+            operator std::wstring() const { return this->to_wstring(); }
             omni::stopwatch& operator=(const omni::stopwatch &other);
             omni::stopwatch& operator=(bool enable);
             bool operator==(const omni::stopwatch &o) const;
@@ -85,7 +90,7 @@ namespace omni {
             
             OMNI_MEMBERS_FW(omni::stopwatch) // disposing,name,type(),hash()
 
-            OMNI_OSTREAM_RAW_FW(omni::stopwatch, value.elapsed_ms() << " ms")
+            OMNI_OSTREAM_FW(omni::stopwatch)
             
         private:
             /** The internal end clock */
@@ -101,7 +106,7 @@ namespace omni {
                 mutable omni::sync::basic_lock m_mtx;
             #endif
 
-            /** zero's the clocks */
+            /** zeros the clocks */
             void _zero();
     };
 }

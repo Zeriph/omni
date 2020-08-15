@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - Library Examples</title>
+<link rel="stylesheet" type="text/css" href="../../content/main.css" /><link rel="icon" type="image/png" href="../../content/favicon.png" />
+<script type="text/javascript" src="../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="../htmlsrc/index.html">Source</a></li><li title="Library classes and namespaces">
+<a href="../classes/index.html">Class Index</a></li><li title="Download and view examples">
+<a href="index.html" class="current">Examples</a></li><li title="Download and view build examples">
+<a href="../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="../options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../api.html">System API</a></li><li title="Other Considerations">
+<a href="../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle"><a name="omni_examples"></a>Threading</div><div class="content"><div>
+Using object-oriented design while adding multiple threads to a project can add an additional level of complexity and determinism concerns that need to be addressed. To couple threading with the idea of the <code><a href="../classes/omni-delegate.html">omni::delegate</a></code>, the library has 3 types of thread classes to utilize with various capabilities to solve different thread or design issues as well as a thread pool implementation to allow queuing of tasks to be run by multiple threads.<br>
+<br>
+<font class="hdr">Thread Types</font><br>
+The <code><a href="../classes/omni-sync-basic_thread.html">omni::sync::basic_thread</a></code>, <code><a href="../classes/omni-sync-thread.html">omni::sync::thread</a></code> and <code><a href="../classes/omni-sync-runnable_thread.html">omni::sync::runnable_thread</a></code> classes each encapsulate a thread and allow you to manage it to some extent, as well as provide some common functionality among the types (like the thread ID or stack size), in addition, each class allows you to <code><a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a></code> to a specific function or object instance via the <code><a href="../classes/omni-sync-thread_start.html">omni::sync::thread_start</a></code> and <code><a href="../classes/omni-sync-parameterized_thread_start.html">omni::sync::parameterized_thread_start</a></code> types. The <code><a href="../classes/omni-sync-thread_start.html">omni::sync::thread_start</a></code> is a <code>typedef</code> of an <code><a href="../classes/omni-callback.html">omni::callback</a></code> which can attach to functions and object instance functions that do not return a value (i.e. <code>void</code> function) and take 0 parameters, while the <code><a href="../classes/omni-sync-parameterized_thread_start.html">omni::sync::parameterized_thread_start</a></code> is a <code>typedef</code> of an <code><a href="../classes/omni-delegate1.html">omni::delegate1</a>&lt;void, <a href="../classes/omni-sync-thread_arg_t.html">omni::sync::thread_arg_t</a>&gt;</code> that can attach to functions that do not return a value and take 1 parameter that is a type of <code><a href="../classes/omni-sync-thread_arg_t.html">omni::sync::thread_arg_t</a></code>, example:<br>
+<div class="sntx"><input type="checkbox" id="c0" name="c0" /><label for="c0">&nbsp;</label><pre><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/library.html">omni/library</a>&gt;</font>
+
+<font class="syn_typ">void</font> thread_fn()
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// thread code</font>
+}
+
+<font class="syn_typ">void</font> thread_fn2(<a href="../classes/omni-sync-thread_arg_t.html">omni::sync::thread_arg_t</a> param)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> val = *(<font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">int</font>*&gt;(param));
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// thread code</font>
+}
+
+<font class="syn_typ">int</font> main(<font class="syn_typ">int</font> argc, <font class="syn_typ">char</font>* argv[])
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> val = <font class="syn_num">10</font>;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-thread.html">omni::sync::thread</a> t(&amp;thread_fn);
+&nbsp;&nbsp;&nbsp;&nbsp;t.start();
+&nbsp;&nbsp;&nbsp;&nbsp;t.join();
+&nbsp;&nbsp;&nbsp;&nbsp;t.reset(); <font class="syn_cmt">// allow thread re-use</font>
+&nbsp;&nbsp;&nbsp;&nbsp;t.bind(&amp;thread_fn2);
+&nbsp;&nbsp;&nbsp;&nbsp;t.start(&amp;val);
+&nbsp;&nbsp;&nbsp;&nbsp;t.join();
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;
+}</pre></div>Each thread class shares some common functionality amongst them, like the ability to <code>join</code> or <code>kill</code> a thread, as well, each threads <code>start</code> function does not return until the underlying thread has completely started and the function is about to be called. This adds a extra level of determinism to thread code to allow a developer to know how and when a thread has started, example:<br>
+<div class="sntx"><input type="checkbox" id="c1" name="c1" /><label for="c1">&nbsp;</label><pre><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/library.html">omni/library</a>&gt;</font>
+
+<font class="syn_typ">void</font> thread_fn()
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// thread code</font>
+}
+
+<font class="syn_typ">int</font> main(<font class="syn_typ">int</font> argc, <font class="syn_typ">char</font>* argv[])
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-thread.html">omni::sync::thread</a> t(&amp;thread_fn);
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// start() will not return until thread_fn is about to be called</font>
+&nbsp;&nbsp;&nbsp;&nbsp;t.start();
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// the actual system thread has started and we now have valid handles, so we can use them</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Thread id: &quot;</font> &lt;&lt; t.id() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// wait for the thread to finish</font>
+&nbsp;&nbsp;&nbsp;&nbsp;t.join();
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;
+}</pre></div>This extra level of determinism can help a developer when muli-threaded code and real-time requirements are needed to ensure that each thread is valid or has started properly.<br>
+<br>
+Additionally, while the underlying thread itself might be thread-safe, the individual thread classes are not inherently thread safe unless you specify one of the <code><a href="../options/omni_safe_thread.html">OMNI_SAFE_THREAD</a></code> preprocessor defines to enable thread-safe thread classes. If these macros are not defined, calls to an instance of the thread cannot be guaranteed across threads and synchronization primitives would need to be used to ensure proper access.<br>
+<br>
+While each of thread classes do share some common functionality among them (like the ability to <code>join</code> on them), they do not inherit from each other nor do they share any thread specific code (i.e. the underlying thread code itself). Each class serves a different purpose to suit a specific threading need.<br>
+<br>
+<font class="hdr">Basic Thread</font><br>
+The <code><a href="../classes/omni-sync-basic_thread.html">omni::sync::basic_thread</a></code> is a basic wrapper class for a system thread. Like the other thread types, it maintains some basic information about the thread like the thread ID, stack size and other basic properties. The <code>basic_thread</code> does not provide extra semantics to manage the underlying system thread beyond the basic capabilities of <code>join</code> and <code>kill</code> along with other common threading properties (like the handle and ID). <br>
+<br>
+The <code>basic_thread</code> will automatically start if a delegate function is supplied to the constructor, example:<br>
+<div class="sntx"><input type="checkbox" id="c2" name="c2" /><label for="c2">&nbsp;</label><pre><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/library.html">omni/library</a>&gt;</font>
+
+<font class="syn_typ">void</font> thread_fn()
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// thread code</font>
+}
+
+<font class="syn_typ">int</font> main(<font class="syn_typ">int</font> argc, <font class="syn_typ">char</font>* argv[])
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-basic_thread.html">omni::sync::basic_thread</a> t(&amp;thread_fn); <font class="syn_cmt">// starts the thread automatically if the delegate is valid</font>
+&nbsp;&nbsp;&nbsp;&nbsp;t.join(); <font class="syn_cmt">// wait for the thread to finish</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;
+}</pre></div>If no delegate is specified then you must use the <code><a href="../classes/omni-sync-basic_thread-bind.html">omni::sync::basic_thread::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a></a></code> method to attach a delegate to the thread, otherwise an error will occur if you try to call <code>start</code> on the thread. If <code>bind</code> is called to attach a function, or the start type is specified as <code><a href="../classes/omni-sync-thread_start_type-user.html">omni::sync::thread_start_type::USER</a></code> then the calling code must explicitly start the thread in order for the underlying system thread to spawn, example:<br>
+<div class="sntx"><input type="checkbox" id="c3" name="c3" /><label for="c3">&nbsp;</label><pre><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/library.html">omni/library</a>&gt;</font>
+
+<font class="syn_typ">void</font> thread_fn()
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// thread code</font>
+}
+
+<font class="syn_typ">int</font> main(<font class="syn_typ">int</font> argc, <font class="syn_typ">char</font>* argv[])
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-basic_thread.html">omni::sync::basic_thread</a> t1(); <font class="syn_cmt">// no funciton attached</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-basic_thread.html">omni::sync::basic_thread</a> t2(&amp;thread_fn, <a href="../classes/omni-sync-thread_start_type-user.html">omni::sync::thread_start_type::USER</a>); <font class="syn_cmt">// user started</font>
+&nbsp;&nbsp;&nbsp;&nbsp;t1.bind(&amp;thread_fn);
+&nbsp;&nbsp;&nbsp;&nbsp;t1.start(); <font class="syn_cmt">// explicit start</font>
+&nbsp;&nbsp;&nbsp;&nbsp;t2.start(); <font class="syn_cmt">// explicit start</font>
+&nbsp;&nbsp;&nbsp;&nbsp;t1.join();
+&nbsp;&nbsp;&nbsp;&nbsp;t2.join();
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;
+}</pre></div>Care must be taken when using a <code>basic_thread</code> since, as the name implies, it is a basic thread type that merely spawns a thread for the user and (by default) detaches the underlying handles to the thread so it can be destroyed or go out of scope and still have the thread run. Because of this, unless other options are specified for the thread, the user must take care to protect the running thread from ending prematurely (e.g. thread ends when the application ends).<br>
+<br>
+Basic thread types can be useful when you need to spawn a short-lived thread because there is minimal overhead in the thread object; a long-lived thread could be spawned from this type as well since, by default, the <code>basic_thread</code> will detach on destruction. The basic thread type does not have the functionality to signal an abort on the thread, only to kill it. Since the thread is detached, you must be aware of this if you choose to have a longer-lived thread spawned, you will need to have mechanisms in place to be alerted when the thread should end.<br>
+<br>
+The <code><a href="../classes/omni-sync-basic_thread.html">omni::sync::basic_thread</a></code> is also the thread type used in the <code><a href="../classes/omni-sync-threadpool.html">omni::sync::threadpool</a></code> to manage the tasks; if a <code>basic_thread</code> is created within a threadpool, the <code><a href="../classes/omni-sync-basic_thread-is_threadpool_thread.html">omni::sync::basic_thread::is_threadpool_thread</a></code> will return true (otherwise it is always false).<br>
+<br>
+<font class="hdr">Managed Thread</font><br>
+The <code><a href="../classes/omni-sync-thread.html">omni::sync::thread</a></code> is considered a <i>managed</i> thread because it has more logic and a little more overhead than the <code>basic_thread</code> type. The extra overhead and logic allow the <code>thread</code> type to be aborted (via <code><a href="../classes/omni-sync-thread-abort.html">omni::sync::thread::abort</a></code>, <code><a href="../classes/omni-sync-thread-abort_requested.html">omni::sync::thread::abort_requested</a></code> and <code><a href="../classes/omni-sync-thread-request_abort.html">omni::sync::thread::request_abort</a></code>) as well as keeping track of the threads state and raising an even when the thread has completed (via <code><a href="../classes/omni-sync-thread-completed.html">omni::sync::thread::completed</a></code>) or if an abort has been requested (via <code><a href="../classes/omni-sync-thread-aborted.html">omni::sync::thread::aborted</a></code>), example:<br>
+<div class="sntx"><input type="checkbox" id="c4" name="c4" /><label for="c4">&nbsp;</label><pre><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/library.html">omni/library</a>&gt;</font>
+
+<font class="syn_typ">void</font> thread_fn()
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Entered thread: &quot;</font> &lt;&lt; <a href="../classes/omni-sync-thread_id.html">omni::sync::thread_id</a>() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">while</font> (!<a href="../classes/omni-sync-thread-abort_requested.html">omni::sync::thread::abort_requested</a>()) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-sleep.html">omni::sync::sleep</a>(<font class="syn_num">50</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Leaving thread: &quot;</font> &lt;&lt; <a href="../classes/omni-sync-thread_id.html">omni::sync::thread_id</a>() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+}
+
+<font class="syn_typ">int</font> main(<font class="syn_typ">int</font> argc, <font class="syn_typ">char</font>* argv[])
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Main: creating threads&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-thread.html">omni::sync::thread</a> thread1(&amp;thread_fn); <font class="syn_cmt">// user start</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-thread.html">omni::sync::thread</a> thread2(&amp;thread_fn, <a href="../classes/omni-sync-thread_start_type-now.html">omni::sync::thread_start_type::NOW</a>); <font class="syn_cmt">// auto started</font>
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Main: threads created, starting&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-thread_t.html">omni::sync::thread_t</a> tid = thread1.start(); <font class="syn_cmt">// user start</font>
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Main: sleep 1s&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-sleep.html">omni::sync::sleep</a>(<font class="syn_num">1000</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-thread-request_abort.html">omni::sync::thread::request_abort</a>(tid); <font class="syn_cmt">// can specify thread id</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Main: join thread1&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;thread1.join();
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Main: abort join thread2&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;thread2.abort(); <font class="syn_cmt">// calls abort then joins&nbsp;&nbsp;&nbsp;&nbsp;</font>
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Main: leaving&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;
+}</pre></div>The managed thread automatically joins on destruction (if it has been started) which differs from the basic thread (which detaches, by default, on destruction). Another key difference is that the managed thread does not automatically start if no start type has been specified. So if you construct an <code><a href="../classes/omni-sync-thread.html">omni::sync::thread</a></code> and specify a delegate, you must explicitly call <code><a href="../classes/omni-sync-thread-start.html">omni::sync::thread::start</a></code> for the thread to spawn, example:<br>
+<div class="sntx"><input type="checkbox" id="c5" name="c5" /><label for="c5">&nbsp;</label><pre><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/library.html">omni/library</a>&gt;</font>
+
+<font class="syn_typ">void</font> thread_fn()
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-thread_t.html">omni::sync::thread_t</a> tid = <a href="../classes/omni-sync-thread_id.html">omni::sync::thread_id</a>();
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Entered thread: &quot;</font> &lt;&lt; tid &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">while</font> (!<a href="../classes/omni-sync-thread-abort_requested.html">omni::sync::thread::abort_requested</a>()) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-sleep.html">omni::sync::sleep</a>(<font class="syn_num">50</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Thread sleep: &quot;</font> &lt;&lt; tid &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-sleep.html">omni::sync::sleep</a>(<font class="syn_num">1000</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Leaving thread: &quot;</font> &lt;&lt; tid &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+}
+
+<font class="syn_typ">int</font> main(<font class="syn_typ">int</font> argc, <font class="syn_typ">char</font>* argv[])
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Main: creating threads&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-thread.html">omni::sync::thread</a> thread1(&amp;thread_fn); <font class="syn_cmt">// user start</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-thread.html">omni::sync::thread</a> thread2(&amp;thread_fn, <a href="../classes/omni-sync-thread_start_type-now.html">omni::sync::thread_start_type::NOW</a>); <font class="syn_cmt">// auto started</font>
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Main: threads created, starting&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;thread1.start(); <font class="syn_cmt">// user start</font>
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Main: sleep 1s&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-sleep.html">omni::sync::sleep</a>(<font class="syn_num">1000</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Main: aborting&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;thread1.abort();
+&nbsp;&nbsp;&nbsp;&nbsp;thread2.abort();
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Main: leaving, threads auto-join on destruction&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;
+}</pre></div>While there is a lot of overlap between the <code><a href="../classes/omni-sync-thread.html">omni::sync::thread</a></code> and the <code><a href="../classes/omni-sync-basic_thread.html">omni::sync::basic_thread</a></code> the <code>thread</code> does <b>not</b> inherit from, or utilize any of the <code>basic_thread</code> class code. While this might add extra code that need be maintained and double checked within the library, its a small development price to pay to avoid the inheritance cost for these types (since one of the aims of the library is to ensure a small foot print where feasible).<br>
+<br>
+<font class="hdr">Runnable</font><br>
+The <code><a href="../classes/omni-sync-runnable_thread.html">omni::sync::runnable_thread</a></code> allows you to inherit from the <code><a href="../classes/omni-sync-runnable.html">omni::sync::runnable</a></code> class and create a thread which calls the underlying virtual <code>run</code> function of the object (a familiar idiom used in other languages like Java). The <code><a href="../classes/omni-sync-thread.html">omni::sync::thread</a></code> and <code><a href="../classes/omni-sync-basic_thread.html">omni::sync::basic_thread</a></code> are not meant to be derived from and utilize a different programming idiom to start a thread on a class; to this, it might be more familiar for you to derive your object from the <code><a href="../classes/omni-sync-runnable.html">omni::sync::runnable</a></code> to create an <code><a href="../classes/omni-sync-runnable_thread.html">omni::sync::runnable_thread</a></code> which calls the <code>run</code> function in your derived class. And unlike the <code>thread</code> and <code>basic_thread</code> the <code>runnable_thread</code> class is designed to be derived from, since it derives from a <code>runnable</code> itself. It is designed this way to allow greater flexibility in how you can build or design your classes, example:<br>
+<div class="sntx"><input type="checkbox" id="c6" name="c6" /><label for="c6">&nbsp;</label><pre><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/library.html">omni/library</a>&gt;</font>
+<font class="syn_pre">#include &lt;vector&gt;</font>
+
+<font class="syn_ins">typedef</font> <a href="http://www.cplusplus.com/reference/vector/vector/">std::vector</a>&lt;<a href="../classes/omni-sync-runnable_thread.html">omni::sync::runnable_thread</a>&gt; thread_list;
+
+<font class="syn_typ">class</font> Master : <font class="syn_ins">public</font> <a href="../classes/omni-sync-runnable_thread.html">omni::sync::runnable_thread</a>
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">public</font>:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Master() : m_threads() {}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~Master()
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Master: wait threads&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;thread_list::iterator itr = <font class="syn_typ">this</font>-&gt;m_threads.begin();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">while</font> (itr != <font class="syn_typ">this</font>-&gt;m_threads.end()) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;itr-&gt;join();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;++itr;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> add(<font class="syn_typ">const</font> <a href="../classes/omni-sync-runnable.html">omni::sync::runnable</a>&amp; r)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_threads.push_back(<a href="../classes/omni-sync-runnable_thread.html">omni::sync::runnable_thread</a>(r));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">virtual</font> <font class="syn_typ">void</font> run(<a href="../classes/omni-sync-thread_arg_t.html">omni::sync::thread_arg_t</a> parm)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Master: start threads&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;thread_list::iterator itr = <font class="syn_typ">this</font>-&gt;m_threads.begin();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">while</font> (itr != <font class="syn_typ">this</font>-&gt;m_threads.end()) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;itr-&gt;start();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;++itr;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">private</font>:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;thread_list m_threads;
+};
+
+<font class="syn_typ">class</font> Slave : <font class="syn_ins">public</font> <a href="../classes/omni-sync-runnable.html">omni::sync::runnable</a>
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">public</font>:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Slave() : m_val(<font class="syn_num">42</font>) {}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~Slave() {}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">virtual</font> <font class="syn_typ">void</font> run(<a href="../classes/omni-sync-thread_arg_t.html">omni::sync::thread_arg_t</a> parm)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Slave enter, val: &quot;</font> &lt;&lt; <font class="syn_typ">this</font>-&gt;m_val &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-sleep.html">omni::sync::sleep</a>(<font class="syn_num">2000</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Slave leave, val: &quot;</font> &lt;&lt; <font class="syn_typ">this</font>-&gt;m_val &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> set(<font class="syn_typ">int</font> val) { <font class="syn_typ">this</font>-&gt;m_val = val; }
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">private</font>:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> m_val;
+};
+
+<font class="syn_typ">int</font> main(<font class="syn_typ">int</font> argc, <font class="syn_typ">char</font>* argv[])
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Main: allocating threads&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;Master master;
+&nbsp;&nbsp;&nbsp;&nbsp;Slave slaves[<font class="syn_num">10</font>];
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">for</font> (<font class="syn_typ">int</font> i = <font class="syn_num">0</font>; i &lt; <font class="syn_num">10</font>; ++i) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;master.add(slaves[i]);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slaves[i].set(i);
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Main: starting&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;master.start(); <font class="syn_cmt">// user start</font>
+&nbsp;&nbsp;&nbsp;&nbsp;master.join(); <font class="syn_cmt">// join to ensure all threads start</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Main: leaving&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;
+}</pre></div>It should be noted that the base <code>runnable</code> class is an abstract class (since the <code>run</code> function is pure virtual) so be aware of this if you intended to utilize a base <code><a href="../classes/omni-sync-runnable.html">omni::sync::runnable</a></code> type.<br>
+<br>
+<font class="hdr">Thread Pool</font><br>
+The <code><a href="../classes/omni-sync-threadpool.html">omni::sync::threadpool</a></code> is a way to queue a task and have a thread consume the task. The <code>threadpool</code> type is a class that can be instantiated and created in separate instances to allow for separate thread pools (in the event you might want separate thread pool instances vs. an application wide thread pool).<br>
+<br>
+As the name implies, the <code>threadpool</code> class is an intelligently managed pool of threads that will spawn a number of threads to preform the tasks in the queue. The minimum and maximum number of threads active will depend on the number of tasks in the queue as well as the values specified via the member function <code><a href="../classes/omni-sync-threadpool-set_max_threads.html">omni::sync::threadpool::set_max_threads</a></code> and <code><a href="../classes/omni-sync-threadpool-set_min_threads.html">omni::sync::threadpool::set_min_threads</a></code> which set the maximum thread count and minimum threshold respectively.<br>
+<br>
+When queuing a task (a delegate), the <code>threadpool</code> class will follow a few rules to determine how the queued task should be handled:<br>
+<br>
+1.) If the queue is empty, a pre-allocated thread is spawned and the task is preformed (as if you had just spawned an <code><a href="../classes/omni-sync-basic_thread.html">omni::sync::basic_thread</a></code> with the delegate).<br>
+<br>
+2.) If the queue is <i>not</i> empty but the active thread count is less than the minimum, an already allocated thread is restarted to perform the task.<br>
+<br>
+3.) If the queue is <i>not</i> empty and the active thread count is greater than the minimum and less than the maximum, a new thread is allocated and spawned to perform the task.<br>
+<br>
+4.) If the queue is <i>not</i> empty and the active thread count is at the maximum, the task is simply queued until a thread can become available to preform the task.<br>
+<br>
+The tasks are preformed in a FIFO manner, so any tasks pushed in first will be the tasks to be preformed first by any available threads. It should also be noted that any tasks queued are preformed as soon as an available thread can consume and preform it, there is no intentional delay between the act of queueing the task and an available thread consuming the tasks beyond the CPU time it takes to preform said actions.<br>
+<br>
+There is also no &quot;wait&quot; time when all active threads end, that is, once the task queue is empty, the threads end and do not wait around in the event a task might be queued; a thread is started once a task is queued so waiting in this fashion is moot.<br>
+<br>
+Setting the maximum thread count sets the maximum number of active threads (and thus active tasks) that can concurrently run within the <code>threadpool</code> instance. Setting the minimum number of threads sets the number of <code><a href="../classes/omni-sync-basic_thread.html">omni::sync::basic_thread</a></code> objects the <code>threadpool</code> will have pre-allocated for when a task is queued; the allocated thread is not started until a task is queued. As an example:<br>
+<div class="sntx"><input type="checkbox" id="c7" name="c7" /><label for="c7">&nbsp;</label><pre><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/library.html">omni/library</a>&gt;</font>
+
+<font class="syn_cmt">// default 25 max, 5 min</font>
+static <a href="../classes/omni-sync-threadpool.html">omni::sync::threadpool</a> pool;
+
+<font class="syn_pre">#define printen() <a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; __FUNCTION__ &lt;&lt; <font class="syn_str">&quot; tid: &quot;</font> &lt;&lt; <a href="../classes/omni-sync-thread_id.html">omni::sync::thread_id</a>() &lt;&lt; <font class="syn_str">&quot; enter, sleep 1s&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a></font>
+<font class="syn_pre">#define printlv() <a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; __FUNCTION__ &lt;&lt; <font class="syn_str">&quot; tid: &quot;</font> &lt;&lt; <a href="../classes/omni-sync-thread_id.html">omni::sync::thread_id</a>() &lt;&lt; <font class="syn_str">&quot; leaving&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a></font>
+
+<font class="syn_typ">void</font> pool_func1(<a href="../classes/omni-sync-thread_arg_t.html">omni::sync::thread_arg_t</a> parm)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;printen();
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-sleep.html">omni::sync::sleep</a>(<font class="syn_num">1000</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;printlv();
+}
+
+<font class="syn_typ">void</font> pool_func2(<a href="../classes/omni-sync-thread_arg_t.html">omni::sync::thread_arg_t</a> parm)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;printen();
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-sleep.html">omni::sync::sleep</a>(<font class="syn_num">2000</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;printlv();
+}
+
+<font class="syn_typ">int</font> main(<font class="syn_typ">int</font> argc, <font class="syn_typ">char</font>* argv[])
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Main: queueing&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">for</font> (<font class="syn_typ">int</font> i = <font class="syn_num">0</font>; i &lt; <font class="syn_num">100</font>; ++i) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (i % <font class="syn_num">2</font> == <font class="syn_num">0</font>) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pool.queue(&amp;pool_func2);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pool.queue(&amp;pool_func1);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;} 
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Main: waiting&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;pool.wait_active_queue();
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Main: leaving&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;
+}</pre></div>When a thread completes a task it does not immediately shut down, instead it checks the queue for any tasks that might need to be performed and if the list is empty, then the thread will shut down.<br>
+<br>
+A thread pool is typically something you use when you need a bunch of short-lived threads. You would not necessarily create a large application loop in a thread pool thread; though you could, that is not what it is designed for. When a <code>threadpool</code> instance is being destroyed, if there are threads still active, they will be joined on and the <code>threadpool</code> instance will not be fully destructed until all threads have completed.<br>
+<br>
+<font class="hdr">Additional Notes</font><br>
+As with the rest of the library, none of these types are themselves thread safe. So a race condition can occur if you spawn a thread from one thread while trying to get the id from another (for example). You can elect to protect the thread type with a synchronization primitive (like an <code><a href="../classes/omni-sync-mutex.html">omni::sync::mutex</a></code> for example) or you can define one of the <code>OMNI_SAFE_XXX</code> flags for the specific thread type (<code><a href="../options/omni_safe_thread.html">OMNI_SAFE_THREAD</a></code> for the <code><a href="../classes/omni-sync-thread.html">omni::sync::thread</a></code> or <code><a href="../options/omni_safe_runnable_thread.html">OMNI_SAFE_RUNNABLE_THREAD</a></code> for the <code><a href="../classes/omni-sync-runnable_thread.html">omni::sync::runnable_thread</a></code> for instance).<br><br><font class="hdr">Example</font><br><div class="sntx"><input type="checkbox" id="c8" name="c8" checked /><label for="c8">&nbsp;</label><pre><font class="syn_pre">#include &lt;<a href="../htmlsrc/omnilib.html">omnilib</a>&gt;</font>
+
+static <a href="../classes/omni-sync-threadpool.html">omni::sync::threadpool</a> tpool;
+static <font class="syn_typ">volatile</font> <font class="syn_typ">bool</font> is_run;
+
+<font class="syn_typ">class</font> Obj2 : <font class="syn_ins">public</font> <a href="../classes/omni-sync-runnable.html">omni::sync::runnable</a>
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">public</font>:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Obj2() : m_val(<font class="syn_num">42</font>), m_mtx() {}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Obj2(<font class="syn_typ">int</font> val) : m_val(val), m_mtx() {}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> increment(<a href="../classes/omni-generic_ptr.html">omni::generic_ptr</a> pval)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">for</font> (<font class="syn_typ">int</font> i = <font class="syn_num">0</font>; i &lt; <font class="syn_num">10</font>; ++i) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_mtx.lock();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;++<font class="syn_typ">this</font>-&gt;m_val;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_mtx.unlock();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-sleep.html">omni::sync::sleep</a>(<font class="syn_num">100</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> print_val()
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-scoped_lock.html">omni::sync::scoped_lock</a>&lt;<a href="../classes/omni-sync-basic_lock.html">omni::sync::basic_lock</a>&gt; alock(&amp;<font class="syn_typ">this</font>-&gt;m_mtx);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_typ">this</font>-&gt;m_val &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">virtual</font> <font class="syn_typ">void</font> run(<a href="../classes/omni-sync-thread_arg_t.html">omni::sync::thread_arg_t</a> args)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">while</font> (is_run) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tpool.queue(<a href="../classes/omni-sync-bind_param.html">omni::sync::bind_param</a>&lt;Obj2, &amp;Obj2::increment&gt;(*<font class="syn_typ">this</font>));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-sleep.html">omni::sync::sleep</a>(<font class="syn_num">50</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;print_val();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> set_val(<font class="syn_typ">int</font> val)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_val = val;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;m_val;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">private</font>:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> m_val;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-basic_lock.html">omni::sync::basic_lock</a> m_mtx;
+};
+
+static Obj2 obj2;
+
+<font class="syn_typ">class</font> Obj1 {
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">public</font>:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Obj1() : m_val(<font class="syn_num">42</font>) {}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Obj1(<font class="syn_typ">int</font> val) : m_val(val) {}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> get_val()
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;m_val;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> print_val() <font class="syn_typ">const</font>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_typ">this</font>-&gt;m_val &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> set_val(<font class="syn_typ">int</font> val)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_val = val;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;m_val;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> runit()
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">while</font> (is_run) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;set_val(<font class="syn_typ">this</font>-&gt;get_val() + <font class="syn_num">1</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tpool.queue(<a href="../classes/omni-sync-bind_param.html">omni::sync::bind_param</a>&lt;Obj2, &amp;Obj2::increment&gt;(obj2));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-sleep.html">omni::sync::sleep</a>(<font class="syn_num">50</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;print_val();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">private</font>:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> m_val;
+};
+
+<font class="syn_typ">void</font> run_threads(<font class="syn_typ">const</font> Obj1&amp; obj1)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;is_run = <font class="syn_ins">true</font>;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-thread.html">omni::sync::thread</a> t1(omni::sync::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a>&lt;Obj1, &amp;Obj1::runit&gt;(obj1));
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-basic_thread.html">omni::sync::basic_thread</a> t2(omni::sync::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a>&lt;Obj1, &amp;Obj1::runit&gt;(obj1)); <font class="syn_cmt">// auto-start</font>
+&nbsp;&nbsp;&nbsp;&nbsp;t1.start(); <font class="syn_cmt">// start thread</font>
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-runnable_thread.html">omni::sync::runnable_thread</a> rt(obj2);
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-create_basic_thread_parameterized.html">omni::sync::create_basic_thread_parameterized</a>&lt;Obj2, &amp;Obj2::run&gt;(obj2); <font class="syn_cmt">// auto-start/detached</font>
+&nbsp;&nbsp;&nbsp;&nbsp;rt.start(); <font class="syn_cmt">// start the runnable thread</font>
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Obj1 = &quot;</font>;
+&nbsp;&nbsp;&nbsp;&nbsp;obj1.print_val();
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Obj2 = &quot;</font>;
+&nbsp;&nbsp;&nbsp;&nbsp;obj2.print_val();
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;waiting 5 seconds&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-sleep.html">omni::sync::sleep</a>(<font class="syn_num">5000</font>); <font class="syn_cmt">// sleep 5 seconds</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;stopping&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;is_run = <font class="syn_ins">false</font>;
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;waiting on threads to finish&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// t1.join(); <a href="../classes/omni-sync-thread.html">omni::sync::thread</a> types are auto-join by default</font>
+&nbsp;&nbsp;&nbsp;&nbsp;t2.join();
+&nbsp;&nbsp;&nbsp;&nbsp;rt.join();
+}
+
+<font class="syn_typ">int</font> main(<font class="syn_typ">int</font> argc, <font class="syn_typ">char</font>* argv[])
+{
+&nbsp;&nbsp;&nbsp;&nbsp;Obj1 obj1(<font class="syn_num">128</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;obj2.set_val(<font class="syn_num">255</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;tpool.set_max_threads(<font class="syn_num">10</font>); <font class="syn_cmt">// max of 10 threads to spawn</font>
+&nbsp;&nbsp;&nbsp;&nbsp;run_threads(obj1);
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;clearing any queued threadpool tasks&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;tpool.clear_queue();
+&nbsp;&nbsp;&nbsp;&nbsp;tpool.wait_active_queue();
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;leaving&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;
+}</pre></div>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

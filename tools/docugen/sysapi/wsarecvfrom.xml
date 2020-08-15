@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<SysAPI xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>WSARecvFrom</Name>
+  <Link>https://docs.microsoft.com/en-us/windows/desktop/api/Winsock2/nf-winsock2-wsarecvfrom</Link>
+  <SysType>Windows</SysType>
+</SysAPI>

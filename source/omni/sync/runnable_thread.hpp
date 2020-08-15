@@ -45,7 +45,7 @@ namespace omni {
                 explicit runnable_thread(std::size_t max_stack_sz);
                 runnable_thread(const omni::sync::runnable& obj, std::size_t max_stack_sz);
                 runnable_thread(omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val);
-                virtual ~runnable_thread();
+                virtual ~runnable_thread() OMNI_DTOR_THROWS;
                 void abort(); // request end nicely
                 bool abort_join();
                 bool abort_join(uint32_t timeout);
@@ -56,8 +56,8 @@ namespace omni {
                 bool is_alive() const;
                 bool join(); // default of infinite timeout
                 bool join(uint32_t timeout);
-                bool join(const omni::chrono::unsigned_timespan& span);
-                bool kill(); // Terminate 'immediately'
+                bool join(const omni::chrono::unsigned_span_t& span);
+                bool kill(); // Terminate immediately
                 virtual void run(omni::sync::thread_arg_t parm) { OMNI_UNUSED(parm); } // default empty run
                 bool reset();
                 bool restart();
@@ -109,7 +109,7 @@ namespace omni {
                 #endif
                 /** The arguments passed to the thread */
                 omni::sync::thread_arg_t m_args;
-                /** The underlying interface that's called on thread run (if none assigned, then this->run()) */
+                /** The underlying interface that is called on thread run (if none assigned, then this->run()) */
                 omni::sync::runnable* m_iface;
                 /** The underlying thread ID type */
                 omni::sync::thread_t m_tid;
@@ -123,7 +123,7 @@ namespace omni {
                     /** The threads priority */
                     omni::sync::thread_priority m_priority;
                 #endif
-                /** If join has been called, don't detach */
+                /** If join has been called, do not detach */
                 volatile bool m_isjoined;
         };
     } // namespace sync

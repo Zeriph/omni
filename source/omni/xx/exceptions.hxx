@@ -19,12 +19,12 @@
  
 /* DEV_NOTE: this file is not intended to be used directly by any user code!
 
- i.e. don't #include <omni/xxx_impl.hxx> and don't compile this source directly.
- this file is #include'd directly in other source. 
+ i.e. do not #include <omni/xxx_impl.hxx> and do not compile this source directly.
+ this file is included directly in other source. 
  
- This file is specifically to contain the various exceptions the framework can throw
+ This file is specifically to contain the various exceptions the library can throw
  and is directly included in omni/exception.hpp so this file should not be included
- in any other code, framework or user.
+ in any other code, library or user.
 */
 
 // so as not to accidentally build this file with the source this macro defined in exception.hpp
@@ -34,7 +34,7 @@
 
 namespace omni {
     /**
-     * Contains exceptions the framework can throw. All exceptions are
+     * Contains exceptions the library can throw. All exceptions are
      * virtually derived from the omni::exception so that the exception
      * itself can be further extended (if so desired).
      */
@@ -161,7 +161,7 @@ namespace omni {
                 }
         };
 
-        /** This exception is specific to the Omni Framework, it is here so as not to be confused with the std::overflow_error exception. */
+        /** This exception is specific to the Omni Library, it is here so as not to be confused with the std::overflow_error exception. */
         class overflow_error : public omni::exception
         {
             public:
@@ -181,7 +181,7 @@ namespace omni {
                 }
         };
 
-        /** This exception is specific to the Omni Framework, it is here so as not to be confused with the std::underflow_error exception. */
+        /** This exception is specific to the Omni Library, it is here so as not to be confused with the std::underflow_error exception. */
         class underflow_error : public omni::exception
         {
             public:
@@ -201,7 +201,7 @@ namespace omni {
                 }
         };
         
-        /** This exception is specific to the Omni Framework, it is here so as not to be confused with the std::out_of_range exception. */
+        /** This exception is specific to the Omni Library, it is here so as not to be confused with the std::out_of_range exception. */
         class index_out_of_range : public omni::exception
         {
             public:
@@ -238,7 +238,7 @@ namespace omni {
         class invalid_binary_format : public omni::exceptions::string_exception
         {
             public:
-                invalid_binary_format() : omni::exceptions::string_exception(OMNI_STRING_INVALID_FORMAT_STR) {}
+                invalid_binary_format() : omni::exceptions::string_exception(OMNI_STRING_INVALID_BINARY_FORMAT_STR) {}
         };
         
         /** The binary string length is greater than sizeof conversion unit */
@@ -336,6 +336,13 @@ namespace omni {
                 invalid_size() : omni::exception(OMNI_ERR_SIZE_STR) {}
         };
         
+        /** The specified string does not contain a valid binary number */
+        class invalid_string_format : public omni::exceptions::string_exception
+        {
+            public:
+                invalid_string_format() : omni::exceptions::string_exception(OMNI_STRING_INVALID_FORMAT_STR) {}
+        };
+        
         /** An invalid type was detected on a template parameter that only takes certain types */
         class invalid_template_type : public omni::exception
         {
@@ -386,7 +393,7 @@ namespace omni {
                 invalid_threadpool_size() : omni::exceptions::threadpool_exception(OMNI_INVALID_SIZE_STR) {}
         };
         
-        /** An invalid type cast was detected on an Omni Framework object */
+        /** An invalid type cast was detected on an Omni Library object */
         class invalid_type_cast : public omni::exception
         {
             public:

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_OS_IGNORE</Name>
+  <Brief>Do not attempt to guess the OS type based on compiler macros.</Brief>
+  <Considerations>If you explicitly define one of the OMNI_OS_ flags (such as OMNI_OS_BSD), you must take note of which API are being referenced and built against.</Considerations>
+  <Description>By specifying the OMNI_OS_IGNORE preprocessor flag, the framework will not attempt to detect what OS is being compiled against via certain preprocessor flags and instead the user can specify what OS to compile for (useful for cross platform compilation).
+
+Current values used by the framework to determine which sections of code to use are as follows:
+
+OMNI_OS_WIN
+OMNI_OS_APPLE
+OMNI_OS_FREEBSD
+OMNI_OS_SOLARIS
+OMNI_OS_BSD
+
+Defining one of the above will also result in the framework being compiled as if it were being compiled on that platform.
+
+If one of the values is not specified the system defaults to a POSIX based platform.</Description>
+  <Notes>None.</Notes>
+  <PlatformSpecific>This flag is not platform specific but can be used to determine what platform to be compiled for (default POSIX if OMNI_OS_IGNORE is defined and no other platforms defined).</PlatformSpecific>
+  <Synopsis>&lt;code&gt;#define OMNI_OS_IGNORE&lt;/code&gt;
+
+Signifies to not use preprocessor macros to attempt to discover what OS is being compiled for.</Synopsis>
+  <IsHelper>false</IsHelper>
+  <IsConstant>false</IsConstant>
+  <IsFWHelp>true</IsFWHelp>
+</MacroOp>

@@ -19,8 +19,8 @@
 
 /* DEV_NOTE: this file is not intended to be used directly by any user code!
 
- i.e. don't #include <omni/xxx_impl.hxx> and don't compile this source directly.
- this file is #include'd directly in other source. 
+ i.e. do not #include <omni/xxx_impl.hxx> and do not compile this source directly.
+ this file is included directly in other source. 
  
  The logic is that omni::cstring and omni::wstring namespaces segregate the types
  for explicit calling; i.e. you can call omni::cstring::X to check on a std:string
@@ -40,8 +40,8 @@
 #endif
 
 #if defined(OMNI_IO_PATH_INTERNAL_FW)
-    namespace omni { namespace io { /** @internal framework helper */ namespace path_internal {
-        /** @internal framework helper */
+    namespace omni { namespace io { /** @internal library helper */ namespace path_internal {
+        /** @internal library helper */
         template < typename std_string_t >
         std_string_t generate(const std_string_t& path, const std_string_t& file, const std_string_t& ext)
         {
@@ -66,15 +66,15 @@
             return ret;
         }
         
-        /** @internal framework helper */
+        /** @internal library helper */
         template < typename T >
         T get_invalid_file_chars()
         { return T(); }
     } } }
 #endif
 
-namespace omni { namespace io { /** @internal framework helper */ namespace path_internal {
-    /** @internal framework helper */
+namespace omni { namespace io { /** @internal library helper */ namespace path_internal {
+    /** @internal library helper */
     template <>
     omni::seq::OMNI_CHAR_T_FW get_invalid_file_chars<omni::seq::OMNI_CHAR_T_FW>()
     {
@@ -108,8 +108,8 @@ OMNI_STRING_T_FW omni::io::OMNI_PATH_FW::combine(const OMNI_STRING_T_FW& path1, 
 OMNI_STRING_T_FW omni::io::OMNI_PATH_FW::get_extension(const OMNI_STRING_T_FW& path)
 {
     std::size_t psep = path.find_last_of(OMNI_L_FW("."));
-    if (psep == OMNI_STRING_T_FW::npos) { return path; }
-    return path.substr(psep+1);
+    if (psep == OMNI_STRING_T_FW::npos) { return OMNI_STRING_T_FW(); }
+    return path.substr(psep);
 }
 
 OMNI_STRING_T_FW omni::io::OMNI_PATH_FW::get_name(const OMNI_STRING_T_FW& path)
@@ -131,7 +131,7 @@ OMNI_STRING_T_FW omni::io::OMNI_PATH_FW::get_name_without_extension(const OMNI_S
 OMNI_STRING_T_FW omni::io::OMNI_PATH_FW::get_parent_name(const OMNI_STRING_T_FW& path)
 {
     std::size_t psep = path.find_last_of(OMNI_L_FW("/\\"));
-    if (psep == OMNI_STRING_T_FW::npos) { return path; }
+    if (psep == OMNI_STRING_T_FW::npos) { return OMNI_STRING_T_FW(); }
     return path.substr(0, psep);
 }
 

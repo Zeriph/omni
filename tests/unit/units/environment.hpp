@@ -30,14 +30,14 @@ class UT_CLASS_DEF
                     std::cout << omni::environment::get_var("%SYSTEMROOT%") << std::endl;
                     std::wcout << omni::environment::get_var(L"%SYSTEMROOT%") << std::endl;
                 } catch (omni::exception e) {
-                    omni::out << "framework exception caught: " << e.what() << std::endl;
+                    omni::out << "library exception caught: " << e.what() << std::endl;
                 }
                 try {
                     omni::out << "omni::environment::expand_vars(\"Progfiles is '%ProgramFiles%' and sysroot is '%systemroot%'\") = ";
                     std::cout << omni::environment::expand_vars("Progfiles is '%ProgramFiles%' and sysroot is '%systemroot%'") << std::endl;
                     std::wcout << omni::environment::expand_vars(L"Progfiles is '%ProgramFiles%' and sysroot is '%systemroot%'") << std::endl;
                 } catch (omni::exception e) {
-                    omni::out << "framework exception caught: " << e.what() << std::endl;
+                    omni::out << "library exception caught: " << e.what() << std::endl;
                 }
             #else
                 try {
@@ -45,7 +45,7 @@ class UT_CLASS_DEF
                     std::cout << omni::environment::expand_vars("We are currently at '`pwd`' and path = '${PATH}'") << std::endl;
                     std::wcout << omni::environment::expand_vars(L"We are currently at '`pwd`' and path = '${PATH}'") << std::endl;
                 } catch (omni::exception e) {
-                    omni::out << "framework exception caught: " << e.what() << std::endl;
+                    omni::out << "library exception caught: " << e.what() << std::endl;
                 }
             #endif
             if (omni::environment::var_exists("OMNI_UNAME")) {
@@ -68,7 +68,7 @@ class UT_CLASS_DEF
                 std::cout << "OMNI_UNAME = " << omni::environment::get_var("OMNI_UNAME") << std::endl;
                 std::wcout << "OMNI_UNAME = " << omni::environment::get_var(L"OMNI_UNAME") << std::endl;
             } catch (omni::exception e) {
-                omni::out << "framework exception caught: " << e.what() << std::endl;
+                omni::out << "library exception caught: " << e.what() << std::endl;
             }
             omni::out << "deleting OMNI_UNAME" << std::endl;
             if (!omni::environment::delete_var("OMNI_UNAME")) {
@@ -86,7 +86,7 @@ class UT_CLASS_DEF
                 std::cout << "OMNI_UNAME = " << omni::environment::get_var("OMNI_UNAME") << std::endl;
                 std::wcout << "OMNI_UNAME = " << omni::environment::get_var(L"OMNI_UNAME") << std::endl;
             } catch (omni::exception e) {
-                omni::out << "framework exception caught: " << e.what() << std::endl;
+                omni::out << "library exception caught: " << e.what() << std::endl;
             }
             omni::out << "new line";
             omni::out << omni::environment::NEW_LINE;

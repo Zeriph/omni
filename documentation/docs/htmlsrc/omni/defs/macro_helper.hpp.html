@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - omni/defs/macro_helper.hpp</title>
+<link rel="stylesheet" type="text/css" href="../../../../content/main.css" /><link rel="icon" type="image/png" href="../../../../content/favicon.png" />
+<script type="text/javascript" src="../../../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="../../index.html" class="current">Source</a></li><li title="Library classes and namespaces">
+<a href="../../../classes/index.html">Class Index</a></li><li title="Download and view examples">
+<a href="../../../examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="../../../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="../../../options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../../../api.html">System API</a></li><li title="Other Considerations">
+<a href="../../../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../../../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle"><a href="../../../../files/src/omni/defs/macro_helper.hpp" onclick="return popup('../../../../files/src/omni/defs/macro_helper.hpp')">omni/defs/macro_helper.hpp</a></div><div class="content"><div>
+<code><div class="cpphtmllines">
+<!--start line numbers-->
+00001:<br><div id="cmntl1" name="cmntl1">00002:<br>00003:<br>00004:<br>00005:<br>00006:<br>00007:<br>00008:<br>00009:<br>000010:<br>000011:<br>000012:<br>000013:<br>000014:<br>000015:<br>000016:<br>000017:<br>000018:<br></div>000019:<br>
+000020:<br>000021:<br>000022:<br>000023:<br>000024:<br>000025:<br>000026:<br>000027:<br>000028:<br>000029:<br>000030:<br>000031:<br>000032:<br>000033:<br>000034:<br>000035:<br>000036:<br>000037:<br>000038:<br>000039:<br>
+000040:<br>000041:<br>000042:<br>000043:<br>000044:<br>000045:<br>000046:<br>000047:<br>000048:<br>000049:<br>000050:<br>000051:<br>000052:<br>000053:<br>000054:<br>000055:<br>000056:<br>000057:<br>000058:<br>000059:<br>
+000060:<br>000061:<br>000062:<br>000063:<br>000064:<br>000065:<br>000066:<br>000067:<br>000068:<br>000069:<br>000070:<br>000071:<br>000072:<br>000073:<br>000074:<br>000075:<br>000076:<br>000077:<br>000078:<br>000079:<br>
+000080:<br>000081:<br>000082:<br>000083:<br>000084:<br>000085:<br>000086:<br>000087:<br>000088:<br>000089:<br>000090:<br>000091:<br>000092:<br>000093:<br>000094:<br>000095:<br>000096:<br>000097:<br>000098:<br>000099:<br>
+0000100:<br>0000101:<br>0000102:<br>0000103:<br>0000104:<br>0000105:<br>0000106:<br>0000107:<br>0000108:<br>0000109:<br>0000110:<br>0000111:<br>0000112:<br>0000113:<br>0000114:<br>0000115:<br>0000116:<br>0000117:<br>0000118:<br>0000119:<br>
+0000120:<br>0000121:<br>0000122:<br>0000123:<br>0000124:<br>0000125:<br>0000126:<br>0000127:<br>0000128:<br>0000129:<br>0000130:<br>0000131:<br>0000132:<br>0000133:<br>0000134:<br>0000135:<br>0000136:<br>0000137:<br>0000138:<br>0000139:<br>
+0000140:<br>0000141:<br>0000142:<br>0000143:<br>0000144:<br>0000145:<br>0000146:<br>0000147:<br>0000148:<br>0000149:<br>0000150:<br>0000151:<br>0000152:<br>0000153:<br>0000154:<br>0000155:<br>0000156:<br>0000157:<br>0000158:<br>0000159:<br>
+0000160:<br>0000161:<br>0000162:<br>0000163:<br>0000164:<br>0000165:<br>0000166:<br>0000167:<br>0000168:<br>0000169:<br>0000170:<br>0000171:<br>0000172:<br>0000173:<br>0000174:<br>0000175:<br>0000176:<br>0000177:<br>0000178:<br>0000179:<br>
+0000180:<br>0000181:<br>0000182:<br>0000183:<br>0000184:<br>0000185:<br>0000186:<br>0000187:<br>0000188:<br>0000189:<br>0000190:<br>0000191:<br>0000192:<br>0000193:<br>0000194:<br>0000195:<br>0000196:<br>0000197:<br>0000198:<br>0000199:<br>
+0000200:<br>0000201:<br>0000202:<br>0000203:<br>0000204:<br>0000205:<br>0000206:<br>0000207:<br>0000208:<br>0000209:<br>0000210:<br>0000211:<br>0000212:<br>0000213:<br>0000214:<br>0000215:<br>0000216:<br>0000217:<br>0000218:<br>0000219:<br>
+0000220:<br>0000221:<br>0000222:<br>0000223:<br>0000224:<br>0000225:<br>0000226:<br>0000227:<br>0000228:<br>0000229:<br>0000230:<br>0000231:<br>0000232:<br>0000233:<br>0000234:<br>0000235:<br>0000236:<br>0000237:<br>0000238:<br>0000239:<br>
+0000240:<br>0000241:<br>0000242:<br>0000243:<br>0000244:<br>0000245:<br>0000246:<br>0000247:<br>0000248:<br>0000249:<br>0000250:<br>0000251:<br>0000252:<br>0000253:<br>0000254:<br>0000255:<br>0000256:<br>0000257:<br>0000258:<br>0000259:<br>
+0000260:<br>0000261:<br>0000262:<br>0000263:<br>0000264:<br>0000265:<br>0000266:<br>0000267:<br>0000268:<br>0000269:<br>0000270:<br>0000271:<br>0000272:<br>0000273:<br>0000274:<br>0000275:<br>0000276:<br>0000277:<br>0000278:<br>0000279:<br>
+0000280:<br>0000281:<br>0000282:<br>0000283:<br>0000284:<br>0000285:<br>0000286:<br>0000287:<br>0000288:<br>0000289:<br>
+<!--end line numbers-->
+</div><div class="cpphtmlcmnt">
+<!--start collapse columns-->
+<img src="../../../../content/tree/min.gif" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br>
+<!--end collapse columns-->
+</div><div class="cpphtml" style="margin-left:3.75em;">
+<!--start highlighted code-->
+<font class="syn_cmt">/*<div class="syn_ex" id="cmnt1" name="cmnt1">
+ * Copyright (c), Zeriph Enterprises<br>
+ * All rights reserved.<br>
+ * <br>
+ * Contributor(s):<br>
+ * Zechariah Perez, omni (at) zeriph (dot) com<br>
+ * <br>
+ * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS &quot;AS IS&quot; AND ANY<br>
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED<br>
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE<br>
+ * DISCLAIMED. IN NO EVENT SHALL ZERIPH AND CONTRIBUTORS BE LIABLE FOR ANY<br>
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES<br>
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;<br>
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND<br>
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT<br>
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS<br>
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.<br>
+ */</div><div></div></font>
+<font class="syn_pre">#if !defined(OMNI_MACRO_HELPER_HPP)</font><br>
+<font class="syn_pre">#define OMNI_MACRO_HELPER_HPP 1</font><br>
+<font class="syn_pre">#include &lt;<a href="../../omni/defs/helper.hpp.html">omni/defs/helper.hpp</a>&gt;</font><br>
+<br>
+<font class="syn_pre">#define OMNI_MAC_1_FW 1</font><br>
+<font class="syn_pre">#define OMNI_MAC_2_FW 2</font><br>
+<font class="syn_pre">#define OMNI_MAC_3_FW 3</font><br>
+<font class="syn_pre">#define OMNI_MAC_4_FW 4</font><br>
+<font class="syn_pre">#define OMNI_MAC_5_FW 5</font><br>
+<font class="syn_pre">#define OMNI_MAC_6_FW 6</font><br>
+<font class="syn_pre">#define OMNI_MAC_7_FW 7</font><br>
+<font class="syn_pre">#define OMNI_MAC_8_FW 8</font><br>
+<font class="syn_pre">#define OMNI_MAC_9_FW 9</font><br>
+<font class="syn_pre">#define OMNI_MAC_10_FW 10</font><br>
+<font class="syn_pre">#define OMNI_MAC_11_FW 11</font><br>
+<font class="syn_pre">#define OMNI_MAC_12_FW 12</font><br>
+<font class="syn_pre">#define OMNI_MAC_13_FW 13</font><br>
+<font class="syn_pre">#define OMNI_MAC_14_FW 14</font><br>
+<font class="syn_pre">#define OMNI_MAC_15_FW 15</font><br>
+<font class="syn_pre">#define OMNI_MAC_16_FW 16</font><br>
+<font class="syn_pre">#define OMNI_MAC_17_FW 17</font><br>
+<font class="syn_pre">#define OMNI_MAC_18_FW 18</font><br>
+<font class="syn_pre">#define OMNI_MAC_19_FW 19</font><br>
+<font class="syn_pre">#define OMNI_MAC_20_FW 20</font><br>
+<font class="syn_pre">#define OMNI_MAC_21_FW 21</font><br>
+<font class="syn_pre">#define OMNI_MAC_22_FW 22</font><br>
+<font class="syn_pre">#define OMNI_MAC_23_FW 23</font><br>
+<font class="syn_pre">#define OMNI_MAC_24_FW 24</font><br>
+<font class="syn_pre">#define OMNI_MAC_25_FW 25</font><br>
+<font class="syn_pre">#define OMNI_MAC_26_FW 26</font><br>
+<font class="syn_pre">#define OMNI_MAC_27_FW 27</font><br>
+<font class="syn_pre">#define OMNI_MAC_28_FW 28</font><br>
+<font class="syn_pre">#define OMNI_MAC_29_FW 29</font><br>
+<font class="syn_pre">#define OMNI_MAC_30_FW 30</font><br>
+<font class="syn_pre">#define OMNI_MAC_31_FW 31</font><br>
+<font class="syn_pre">#define OMNI_MAC_32_FW 32</font><br>
+<font class="syn_pre">#define OMNI_MAC_33_FW 33</font><br>
+<font class="syn_pre">#define OMNI_MAC_34_FW 34</font><br>
+<font class="syn_pre">#define OMNI_MAC_35_FW 35</font><br>
+<font class="syn_pre">#define OMNI_MAC_36_FW 36</font><br>
+<font class="syn_pre">#define OMNI_MAC_37_FW 37</font><br>
+<font class="syn_pre">#define OMNI_MAC_38_FW 38</font><br>
+<font class="syn_pre">#define OMNI_MAC_39_FW 39</font><br>
+<font class="syn_pre">#define OMNI_MAC_40_FW 40</font><br>
+<font class="syn_pre">#define OMNI_MAC_41_FW 41</font><br>
+<font class="syn_pre">#define OMNI_MAC_42_FW 42</font><br>
+<font class="syn_pre">#define OMNI_MAC_43_FW 43</font><br>
+<font class="syn_pre">#define OMNI_MAC_44_FW 44</font><br>
+<font class="syn_pre">#define OMNI_MAC_45_FW 45</font><br>
+<font class="syn_pre">#define OMNI_MAC_46_FW 46</font><br>
+<font class="syn_pre">#define OMNI_MAC_47_FW 47</font><br>
+<font class="syn_pre">#define OMNI_MAC_48_FW 48</font><br>
+<font class="syn_pre">#define OMNI_MAC_49_FW 49</font><br>
+<font class="syn_pre">#define OMNI_MAC_50_FW 50</font><br>
+<font class="syn_pre">#define OMNI_MAC_51_FW 51</font><br>
+<font class="syn_pre">#define OMNI_MAC_52_FW 52</font><br>
+<font class="syn_pre">#define OMNI_MAC_53_FW 53</font><br>
+<font class="syn_pre">#define OMNI_MAC_54_FW 54</font><br>
+<font class="syn_pre">#define OMNI_MAC_55_FW 55</font><br>
+<font class="syn_pre">#define OMNI_MAC_56_FW 56</font><br>
+<font class="syn_pre">#define OMNI_MAC_57_FW 57</font><br>
+<font class="syn_pre">#define OMNI_MAC_58_FW 58</font><br>
+<font class="syn_pre">#define OMNI_MAC_59_FW 59</font><br>
+<font class="syn_pre">#define OMNI_MAC_60_FW 60</font><br>
+<font class="syn_pre">#define OMNI_MAC_61_FW 61</font><br>
+<font class="syn_pre">#define OMNI_MAC_62_FW 62</font><br>
+<font class="syn_pre">#define OMNI_MAC_63_FW 63</font><br>
+<font class="syn_pre">#define OMNI_MAC_64_FW 64</font><br>
+<font class="syn_pre">#define OMNI_MAC_65_FW 65</font><br>
+<font class="syn_pre">#define OMNI_MAC_66_FW 66</font><br>
+<font class="syn_pre">#define OMNI_MAC_67_FW 67</font><br>
+<font class="syn_pre">#define OMNI_MAC_68_FW 68</font><br>
+<font class="syn_pre">#define OMNI_MAC_69_FW 69</font><br>
+<font class="syn_pre">#define OMNI_MAC_70_FW 70</font><br>
+<font class="syn_pre">#define OMNI_MAC_71_FW 71</font><br>
+<font class="syn_pre">#define OMNI_MAC_72_FW 72</font><br>
+<font class="syn_pre">#define OMNI_MAC_73_FW 73</font><br>
+<font class="syn_pre">#define OMNI_MAC_74_FW 74</font><br>
+<font class="syn_pre">#define OMNI_MAC_75_FW 75</font><br>
+<font class="syn_pre">#define OMNI_MAC_76_FW 76</font><br>
+<font class="syn_pre">#define OMNI_MAC_77_FW 77</font><br>
+<font class="syn_pre">#define OMNI_MAC_78_FW 78</font><br>
+<font class="syn_pre">#define OMNI_MAC_79_FW 79</font><br>
+<font class="syn_pre">#define OMNI_MAC_80_FW 80</font><br>
+<font class="syn_pre">#define OMNI_MAC_81_FW 81</font><br>
+<font class="syn_pre">#define OMNI_MAC_82_FW 82</font><br>
+<font class="syn_pre">#define OMNI_MAC_83_FW 83</font><br>
+<font class="syn_pre">#define OMNI_MAC_84_FW 84</font><br>
+<font class="syn_pre">#define OMNI_MAC_85_FW 85</font><br>
+<font class="syn_pre">#define OMNI_MAC_86_FW 86</font><br>
+<font class="syn_pre">#define OMNI_MAC_87_FW 87</font><br>
+<font class="syn_pre">#define OMNI_MAC_88_FW 88</font><br>
+<font class="syn_pre">#define OMNI_MAC_89_FW 89</font><br>
+<font class="syn_pre">#define OMNI_MAC_90_FW 90</font><br>
+<font class="syn_pre">#define OMNI_MAC_91_FW 91</font><br>
+<font class="syn_pre">#define OMNI_MAC_92_FW 92</font><br>
+<font class="syn_pre">#define OMNI_MAC_93_FW 93</font><br>
+<font class="syn_pre">#define OMNI_MAC_94_FW 94</font><br>
+<font class="syn_pre">#define OMNI_MAC_95_FW 95</font><br>
+<font class="syn_pre">#define OMNI_MAC_96_FW 96</font><br>
+<font class="syn_pre">#define OMNI_MAC_97_FW 97</font><br>
+<font class="syn_pre">#define OMNI_MAC_98_FW 98</font><br>
+<font class="syn_pre">#define OMNI_MAC_99_FW 99</font><br>
+<font class="syn_pre">#define OMNI_MAC_100_FW 100</font><br>
+<font class="syn_pre">#define OMNI_MAC_101_FW 101</font><br>
+<font class="syn_pre">#define OMNI_MAC_102_FW 102</font><br>
+<font class="syn_pre">#define OMNI_MAC_103_FW 103</font><br>
+<font class="syn_pre">#define OMNI_MAC_104_FW 104</font><br>
+<font class="syn_pre">#define OMNI_MAC_105_FW 105</font><br>
+<font class="syn_pre">#define OMNI_MAC_106_FW 106</font><br>
+<font class="syn_pre">#define OMNI_MAC_107_FW 107</font><br>
+<font class="syn_pre">#define OMNI_MAC_108_FW 108</font><br>
+<font class="syn_pre">#define OMNI_MAC_109_FW 109</font><br>
+<font class="syn_pre">#define OMNI_MAC_110_FW 110</font><br>
+<font class="syn_pre">#define OMNI_MAC_111_FW 111</font><br>
+<font class="syn_pre">#define OMNI_MAC_112_FW 112</font><br>
+<font class="syn_pre">#define OMNI_MAC_113_FW 113</font><br>
+<font class="syn_pre">#define OMNI_MAC_114_FW 114</font><br>
+<font class="syn_pre">#define OMNI_MAC_115_FW 115</font><br>
+<font class="syn_pre">#define OMNI_MAC_116_FW 116</font><br>
+<font class="syn_pre">#define OMNI_MAC_117_FW 117</font><br>
+<font class="syn_pre">#define OMNI_MAC_118_FW 118</font><br>
+<font class="syn_pre">#define OMNI_MAC_119_FW 119</font><br>
+<font class="syn_pre">#define OMNI_MAC_120_FW 120</font><br>
+<font class="syn_pre">#define OMNI_MAC_121_FW 121</font><br>
+<font class="syn_pre">#define OMNI_MAC_122_FW 122</font><br>
+<font class="syn_pre">#define OMNI_MAC_123_FW 123</font><br>
+<font class="syn_pre">#define OMNI_MAC_124_FW 124</font><br>
+<font class="syn_pre">#define OMNI_MAC_125_FW 125</font><br>
+<font class="syn_pre">#define OMNI_MAC_126_FW 126</font><br>
+<font class="syn_pre">#define OMNI_MAC_127_FW 127</font><br>
+<font class="syn_pre">#define OMNI_MAC_128_FW 128</font><br>
+<font class="syn_pre">#define OMNI_MAC_129_FW 129</font><br>
+<font class="syn_pre">#define OMNI_MAC_130_FW 130</font><br>
+<font class="syn_pre">#define OMNI_MAC_131_FW 131</font><br>
+<font class="syn_pre">#define OMNI_MAC_132_FW 132</font><br>
+<font class="syn_pre">#define OMNI_MAC_133_FW 133</font><br>
+<font class="syn_pre">#define OMNI_MAC_134_FW 134</font><br>
+<font class="syn_pre">#define OMNI_MAC_135_FW 135</font><br>
+<font class="syn_pre">#define OMNI_MAC_136_FW 136</font><br>
+<font class="syn_pre">#define OMNI_MAC_137_FW 137</font><br>
+<font class="syn_pre">#define OMNI_MAC_138_FW 138</font><br>
+<font class="syn_pre">#define OMNI_MAC_139_FW 139</font><br>
+<font class="syn_pre">#define OMNI_MAC_140_FW 140</font><br>
+<font class="syn_pre">#define OMNI_MAC_141_FW 141</font><br>
+<font class="syn_pre">#define OMNI_MAC_142_FW 142</font><br>
+<font class="syn_pre">#define OMNI_MAC_143_FW 143</font><br>
+<font class="syn_pre">#define OMNI_MAC_144_FW 144</font><br>
+<font class="syn_pre">#define OMNI_MAC_145_FW 145</font><br>
+<font class="syn_pre">#define OMNI_MAC_146_FW 146</font><br>
+<font class="syn_pre">#define OMNI_MAC_147_FW 147</font><br>
+<font class="syn_pre">#define OMNI_MAC_148_FW 148</font><br>
+<font class="syn_pre">#define OMNI_MAC_149_FW 149</font><br>
+<font class="syn_pre">#define OMNI_MAC_150_FW 150</font><br>
+<font class="syn_pre">#define OMNI_MAC_151_FW 151</font><br>
+<font class="syn_pre">#define OMNI_MAC_152_FW 152</font><br>
+<font class="syn_pre">#define OMNI_MAC_153_FW 153</font><br>
+<font class="syn_pre">#define OMNI_MAC_154_FW 154</font><br>
+<font class="syn_pre">#define OMNI_MAC_155_FW 155</font><br>
+<font class="syn_pre">#define OMNI_MAC_156_FW 156</font><br>
+<font class="syn_pre">#define OMNI_MAC_157_FW 157</font><br>
+<font class="syn_pre">#define OMNI_MAC_158_FW 158</font><br>
+<font class="syn_pre">#define OMNI_MAC_159_FW 159</font><br>
+<font class="syn_pre">#define OMNI_MAC_160_FW 160</font><br>
+<font class="syn_pre">#define OMNI_MAC_161_FW 161</font><br>
+<font class="syn_pre">#define OMNI_MAC_162_FW 162</font><br>
+<font class="syn_pre">#define OMNI_MAC_163_FW 163</font><br>
+<font class="syn_pre">#define OMNI_MAC_164_FW 164</font><br>
+<font class="syn_pre">#define OMNI_MAC_165_FW 165</font><br>
+<font class="syn_pre">#define OMNI_MAC_166_FW 166</font><br>
+<font class="syn_pre">#define OMNI_MAC_167_FW 167</font><br>
+<font class="syn_pre">#define OMNI_MAC_168_FW 168</font><br>
+<font class="syn_pre">#define OMNI_MAC_169_FW 169</font><br>
+<font class="syn_pre">#define OMNI_MAC_170_FW 170</font><br>
+<font class="syn_pre">#define OMNI_MAC_171_FW 171</font><br>
+<font class="syn_pre">#define OMNI_MAC_172_FW 172</font><br>
+<font class="syn_pre">#define OMNI_MAC_173_FW 173</font><br>
+<font class="syn_pre">#define OMNI_MAC_174_FW 174</font><br>
+<font class="syn_pre">#define OMNI_MAC_175_FW 175</font><br>
+<font class="syn_pre">#define OMNI_MAC_176_FW 176</font><br>
+<font class="syn_pre">#define OMNI_MAC_177_FW 177</font><br>
+<font class="syn_pre">#define OMNI_MAC_178_FW 178</font><br>
+<font class="syn_pre">#define OMNI_MAC_179_FW 179</font><br>
+<font class="syn_pre">#define OMNI_MAC_180_FW 180</font><br>
+<font class="syn_pre">#define OMNI_MAC_181_FW 181</font><br>
+<font class="syn_pre">#define OMNI_MAC_182_FW 182</font><br>
+<font class="syn_pre">#define OMNI_MAC_183_FW 183</font><br>
+<font class="syn_pre">#define OMNI_MAC_184_FW 184</font><br>
+<font class="syn_pre">#define OMNI_MAC_185_FW 185</font><br>
+<font class="syn_pre">#define OMNI_MAC_186_FW 186</font><br>
+<font class="syn_pre">#define OMNI_MAC_187_FW 187</font><br>
+<font class="syn_pre">#define OMNI_MAC_188_FW 188</font><br>
+<font class="syn_pre">#define OMNI_MAC_189_FW 189</font><br>
+<font class="syn_pre">#define OMNI_MAC_190_FW 190</font><br>
+<font class="syn_pre">#define OMNI_MAC_191_FW 191</font><br>
+<font class="syn_pre">#define OMNI_MAC_192_FW 192</font><br>
+<font class="syn_pre">#define OMNI_MAC_193_FW 193</font><br>
+<font class="syn_pre">#define OMNI_MAC_194_FW 194</font><br>
+<font class="syn_pre">#define OMNI_MAC_195_FW 195</font><br>
+<font class="syn_pre">#define OMNI_MAC_196_FW 196</font><br>
+<font class="syn_pre">#define OMNI_MAC_197_FW 197</font><br>
+<font class="syn_pre">#define OMNI_MAC_198_FW 198</font><br>
+<font class="syn_pre">#define OMNI_MAC_199_FW 199</font><br>
+<font class="syn_pre">#define OMNI_MAC_200_FW 200</font><br>
+<br>
+<font class="syn_pre">#define OMNI_GET_MACRO_FUNC_FW(_1,_2,_3,_4,_5,_6,_7,_8,_9, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;_10,_11,_12,_13,_14,_15,_16,_17,_18,_19, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;_20,_21,_22,_23,_24,_25,_26,_27,_28,_29, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;_30,_31,_32,_33,_34,_35,_36,_37,_38,_39, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;_40,_41,_42,_43,_44,_45,_46,_47,_48,_49, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;_50,_51,_52,_53,_54,_55,_56,_57,_58,_59, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;_60,_61,_62,_63,_64,_65,_66,_67,_68,_69, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;_70,_71,_72,_73,_74,_75,_76,_77,_78,_79, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;_80,_81,_82,_83,_84,_85,_86,_87,_88,_89, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;_90,_91,_92,_93,_94,_95,_96,_97,_98,_99, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;_100,_101,_102,_103,_104,_105,_106,_107,_108,_109, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;_110,_111,_112,_113,_114,_115,_116,_117,_118,_119, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;_120,_121,_122,_123,_124,_125,_126,_127,_128,_129, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;_130,_131,_132,_133,_134,_135,_136,_137,_138,_139, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;_140,_141,_142,_143,_144,_145,_146,_147,_148,_149, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;_150,_151,_152,_153,_154,_155,_156,_157,_158,_159, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;_160,_161,_162,_163,_164,_165,_166,_167,_168,_169, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;_170,_171,_172,_173,_174,_175,_176,_177,_178,_179, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;_180,_181,_182,_183,_184,_185,_186,_187,_188,_189, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;_190,_191,_192,_193,_194,_195,_196,_197,_198,_199, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;_200,N,...) OMNI_EXPAND_FW( N )</font><br>
+<br>
+<font class="syn_pre">#define <a href="../../../options/omni_macro_arg_count.html">OMNI_MACRO_ARG_COUNT</a>(...) OMNI_EXPAND_FW( OMNI_GET_MACRO_FUNC_FW(__VA_ARGS__, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MAC_200_FW,OMNI_MAC_199_FW,OMNI_MAC_198_FW,OMNI_MAC_197_FW,OMNI_MAC_196_FW, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MAC_195_FW,OMNI_MAC_194_FW,OMNI_MAC_193_FW,OMNI_MAC_192_FW,OMNI_MAC_191_FW, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MAC_190_FW,OMNI_MAC_189_FW,OMNI_MAC_188_FW,OMNI_MAC_187_FW,OMNI_MAC_186_FW, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MAC_185_FW,OMNI_MAC_184_FW,OMNI_MAC_183_FW,OMNI_MAC_182_FW,OMNI_MAC_181_FW, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MAC_180_FW,OMNI_MAC_179_FW,OMNI_MAC_178_FW,OMNI_MAC_177_FW,OMNI_MAC_176_FW, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MAC_175_FW,OMNI_MAC_174_FW,OMNI_MAC_173_FW,OMNI_MAC_172_FW,OMNI_MAC_171_FW, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MAC_170_FW,OMNI_MAC_169_FW,OMNI_MAC_168_FW,OMNI_MAC_167_FW,OMNI_MAC_166_FW, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MAC_165_FW,OMNI_MAC_164_FW,OMNI_MAC_163_FW,OMNI_MAC_162_FW,OMNI_MAC_161_FW, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MAC_160_FW,OMNI_MAC_159_FW,OMNI_MAC_158_FW,OMNI_MAC_157_FW,OMNI_MAC_156_FW, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MAC_155_FW,OMNI_MAC_154_FW,OMNI_MAC_153_FW,OMNI_MAC_152_FW,OMNI_MAC_151_FW, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MAC_150_FW,OMNI_MAC_149_FW,OMNI_MAC_148_FW,OMNI_MAC_147_FW,OMNI_MAC_146_FW, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MAC_145_FW,OMNI_MAC_144_FW,OMNI_MAC_143_FW,OMNI_MAC_142_FW,OMNI_MAC_141_FW, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MAC_140_FW,OMNI_MAC_139_FW,OMNI_MAC_138_FW,OMNI_MAC_137_FW,OMNI_MAC_136_FW, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MAC_135_FW,OMNI_MAC_134_FW,OMNI_MAC_133_FW,OMNI_MAC_132_FW,OMNI_MAC_131_FW, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MAC_130_FW,OMNI_MAC_129_FW,OMNI_MAC_128_FW,OMNI_MAC_127_FW,OMNI_MAC_126_FW, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MAC_125_FW,OMNI_MAC_124_FW,OMNI_MAC_123_FW,OMNI_MAC_122_FW,OMNI_MAC_121_FW, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MAC_120_FW,OMNI_MAC_119_FW,OMNI_MAC_118_FW,OMNI_MAC_117_FW,OMNI_MAC_116_FW, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MAC_115_FW,OMNI_MAC_114_FW,OMNI_MAC_113_FW,OMNI_MAC_112_FW,OMNI_MAC_111_FW, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MAC_110_FW,OMNI_MAC_109_FW,OMNI_MAC_108_FW,OMNI_MAC_107_FW,OMNI_MAC_106_FW, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MAC_105_FW,OMNI_MAC_104_FW,OMNI_MAC_103_FW,OMNI_MAC_102_FW,OMNI_MAC_101_FW, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MAC_100_FW,OMNI_MAC_99_FW,OMNI_MAC_98_FW,OMNI_MAC_97_FW,OMNI_MAC_96_FW, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MAC_95_FW,OMNI_MAC_94_FW,OMNI_MAC_93_FW,OMNI_MAC_92_FW,OMNI_MAC_91_FW, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MAC_90_FW,OMNI_MAC_89_FW,OMNI_MAC_88_FW,OMNI_MAC_87_FW,OMNI_MAC_86_FW, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MAC_85_FW,OMNI_MAC_84_FW,OMNI_MAC_83_FW,OMNI_MAC_82_FW,OMNI_MAC_81_FW, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MAC_80_FW,OMNI_MAC_79_FW,OMNI_MAC_78_FW,OMNI_MAC_77_FW,OMNI_MAC_76_FW, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MAC_75_FW,OMNI_MAC_74_FW,OMNI_MAC_73_FW,OMNI_MAC_72_FW,OMNI_MAC_71_FW, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MAC_70_FW,OMNI_MAC_69_FW,OMNI_MAC_68_FW,OMNI_MAC_67_FW,OMNI_MAC_66_FW, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MAC_65_FW,OMNI_MAC_64_FW,OMNI_MAC_63_FW,OMNI_MAC_62_FW,OMNI_MAC_61_FW, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MAC_60_FW,OMNI_MAC_59_FW,OMNI_MAC_58_FW,OMNI_MAC_57_FW,OMNI_MAC_56_FW, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MAC_55_FW,OMNI_MAC_54_FW,OMNI_MAC_53_FW,OMNI_MAC_52_FW,OMNI_MAC_51_FW, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MAC_50_FW,OMNI_MAC_49_FW,OMNI_MAC_48_FW,OMNI_MAC_47_FW,OMNI_MAC_46_FW, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MAC_45_FW,OMNI_MAC_44_FW,OMNI_MAC_43_FW,OMNI_MAC_42_FW,OMNI_MAC_41_FW, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MAC_40_FW,OMNI_MAC_39_FW,OMNI_MAC_38_FW,OMNI_MAC_37_FW,OMNI_MAC_36_FW, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MAC_35_FW,OMNI_MAC_34_FW,OMNI_MAC_33_FW,OMNI_MAC_32_FW,OMNI_MAC_31_FW, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MAC_30_FW,OMNI_MAC_29_FW,OMNI_MAC_28_FW,OMNI_MAC_27_FW,OMNI_MAC_26_FW, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MAC_25_FW,OMNI_MAC_24_FW,OMNI_MAC_23_FW,OMNI_MAC_22_FW,OMNI_MAC_21_FW, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MAC_20_FW,OMNI_MAC_19_FW,OMNI_MAC_18_FW,OMNI_MAC_17_FW,OMNI_MAC_16_FW, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MAC_15_FW,OMNI_MAC_14_FW,OMNI_MAC_13_FW,OMNI_MAC_12_FW,OMNI_MAC_11_FW, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MAC_10_FW,OMNI_MAC_9_FW,OMNI_MAC_8_FW,OMNI_MAC_7_FW,OMNI_MAC_6_FW, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MAC_5_FW,OMNI_MAC_4_FW,OMNI_MAC_3_FW,OMNI_MAC_2_FW,OMNI_MAC_1_FW) )</font><br>
+<br>
+<font class="syn_pre">#endif <font class="syn_cmt">// OMNI_MACRO_HELPER_HPP</font></font><br>
+<!--end highlighted code-->
+</div></code><br>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS(); collapseAll('1', '../../../../');</script></body></html>

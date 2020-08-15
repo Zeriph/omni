@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_DISPOSE_EVENT</Name>
+  <Brief>If defined, classes within the framework will have a disposing event.</Brief>
+  <Considerations>If you enable this option, any classes that utilize this functionality will increase by &lt;code&gt;sizeof(omni::event1)&lt;/code&gt;.</Considerations>
+  <Description>Classes in C++ are deterministic by scope lifetime in that they have a start (constructor) and end (destructor). To this, if this macro is defined then any classes that can be instantiated within the framework will have an omni::event called @c disposing that will be invoked upon destruction of the Omni class. Example:
+
+@code
+static bool some_condition = false;
+
+void thread_disposed(const omni::thread* sender)
+{
+    std::cout &lt;&lt; "Thread " &lt;&lt; sender-&gt;id() &lt;&lt; " is being destroyed." &lt;&lt; std::endl;
+    some_condition = true;
+    sender-&gt;join();
+}
+
+void thread_function()
+{
+    do {
+        // thread code ...
+    } while (!some_condition);
+}
+
+void some_function()
+{
+    omni::thread t(&amp;thread_function);
+    t.disposing += &amp;thread_disposed;
+    t.start();
+}
+
+int main()
+{
+    std::cout &lt;&lt; "before" &lt;&lt; std::endl;
+    some_function()
+    // thread destructor called when scope is left from
+    // some_function, thus the disposed function will
+    // be called calling our attached thread_disposed function
+    std::cout &lt;&lt; "after" &lt;&lt; std::endl;
+}
+@code
+
+The output of the above example would be:
+
+@code
+before
+//...whatever from the thread code...
+Thread 0x00011 is being destroyed.
+after
+@code
+
+Where @c 0x00011 would be the thread id given by the system.</Description>
+  <Notes>None.</Notes>
+  <PlatformSpecific>No platform specific notes.</PlatformSpecific>
+  <Synopsis>If this macro is defined, then any classes in the Omni framework that can be instantiated (e.g. non-abstract classes and non-POD types) will have an omni::event as a member that will be raised when the objects destructor is called.</Synopsis>
+  <IsHelper>false</IsHelper>
+  <IsConstant>false</IsConstant>
+</MacroOp>

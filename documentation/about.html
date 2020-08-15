@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - What is Omni?</title>
+<link rel="stylesheet" type="text/css" href="content/main.css" /><link rel="icon" type="image/png" href="content/favicon.png" />
+<script type="text/javascript" src="content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="about.html" class="current">What is Omni?</a></li><li title="A quick start guide">
+<a href="getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="docs/htmlsrc/index.html">Source</a></li><li title="Library classes and namespaces">
+<a href="docs/classes/index.html">Class Index</a></li><li title="Download and view examples">
+<a href="docs/examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="docs/build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="docs/options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="docs/api.html">System API</a></li><li title="Other Considerations">
+<a href="docs/consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="docs/codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="http://www.zeriph.com">Zeriph Enterprises, LLC</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle"><a name="what_is_omni"></a>Omni - A C++ Library</div><div class="content"><div>
+<font class="hdr">What is Omni?</font><br>
+Omni is an object oriented, cross-platform C++ library, with recognizable paradigms like
+<a href="docs/examples/threading.html">thread objects</a>, <a href="docs/examples/delegates_and_events.html">delegates and events</a>, 
+and easy to understand <a href="docs/classes/index.html">interfaces</a>, Omni enables you to get clean and
+stable C++ code to a wider market more efficiently while lowering code maintenance costs.<br><br>
+The library is C++98 compliant<sup><a href="#supone">1</a></sup> using <a href="docs/api.html">platform API's</a> where
+the <a href="docs/api.html#system_api_std">C++ STL or standard library</a> can not accommodate<sup><a href="#suptwo">2</a></sup>
+and allows a developer the ability to customize the library to their needs. Omni is built and tested to have compatibility on
+a wide array of <a href="xplat.html">platforms</a> and is designed to be compilable <i>"out of the box"</i>, that is, after a
+fresh install of an OS and compiler there is nothing extra to setup or install<sup><a href="#supthree">3</a></sup>; just reference
+the latest <a href="files/src.zip">source</a> in your <a href="docs/build/index.html">build parameters</a> and compile!<br><br>
+
+Omni is more than a framework, it is a library of classes and procedures designed to have easy to read structures and give a 
+functional and reusable tool set with less bloat. On top of the various <a href="docs/build/index.html">build parameters</a>,
+you do not need to compile the entire library and can elect to use the portions of the library you want, leaving the portions
+you do not. And with its <a href="license.txt">open</a> design, a developer has the option to build or edit the library to
+their specific needs. This gives the developer a more flexible library to utilize and work with.<br><br>
+
+Omni aims to make the complex and unique challenges of C++ software development simple and intuitive.<br><br>
+
+<font class="hdr">What is the goal?</font><br>
+There are many goals Omni aims for, from simple designs to standards compliance. But one of the major goals of Omni is
+deterministic behaviour across platforms and compilers.<br><br>
+A compiler can choose to do what it might want at an assembly level to build a binary but it must conform to the C++ standard
+if it is to be C++ compliant. As such, while the compilers we built and tested against do indeed build conformant code,
+some (particularly older compilers) had issues with implicitness on certain classes. So while
+<code>std::bitset&lt;8&gt;(42).to_string()</code> might build without error on one compiler, another could complain about the
+<code>to_string</code> function; to which we had to adjust the code to read
+<code>std::bitset&lt;8&gt;(42).to_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;()</code>.<br><br>
+Similarly, certain platform specific functionality (like threading or synchronization primitives) can vary on their input and
+output of operations from platform to platform. For example, on Windows platforms you could use a
+<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms686908%28v=vs.85%29.aspx" class="code">CRITICAL_SECTION</a>
+to lock an area of code while on POSIX compliant systems (like Linux) you could use a
+<a href="http://pubs.opengroup.org/onlinepubs/007908799/xsh/pthread.h.html" class="code">pthread_mutex_t</a>.
+The <code>pthread_mutex_t</code> is, by default, a non-recursive lock, so if the same thread were to call <code>lock</code> twice
+in a row, a deadlock will occur and the application will hang. This differs from the <code>CRITICAL_SECTION</code> which is re-entrant,
+so a thread can call <code>lock</code> twice in a row without a deadlock. In this specific instance the
+<a href="docs/classes/omni@@sync@@mutex.html" class="code">omni::sync::mutex</a>
+ensures that the underlying mutex is a recursive mutex to not have a deadlock situation arise and have similar functionality across
+platforms.<br><br>
+
+Portions of Omni started before the C++11 standard was finalized, as such, one of the original design goals of Omni
+was to have as much <i>"out of the box"</i> compatibility as possible with as many platforms and compilers as
+could be deemed feasible. While the new standards do address some shortcomings of the previous standards libraries,
+<i>"upgrade your compiler"</i> comes with a completely different set of issues to consider, especially in cross-platform
+development.<br><br>
+
+Caveats like these are what can cause build issues and slow downs in production when trying to target your software for multiple
+platforms, and Omni can help alleviate these problems. Utilizing Omni and its deterministic classes and functions, you do not have to waste the extra time playing detective 
+to port your application between systems and can be sure the similar concepts (like that of a thread or mutex) are similar across 
+platforms, ensuring you are aware of the consequences of the code across all supported platforms!<br>
+<a class="toppg" href="#topopage">top</a><br><br>
+
+<font class="hdr">How did it start?</font><br>
+The library spawned from an appreciation for events and delegates in .NET, a great appreciation for
+the <a href="https://en.wikipedia.org/wiki/C%2B%2B">C++ language</a> and a deep understanding of the gap
+in functionally efficient cross platform programming constructs. Dissecting the
+<a href="http://msdn.microsoft.com/library/vstudio/gg145045%28v=vs.110%29.aspx">.NET Library Class Library</a>
+and the <a href="http://msdn.microsoft.com/library/vstudio/8bs2ecf4.aspx">Common Language Runtime (CLR)</a> (specifically
+from a <a href="http://msdn.microsoft.com/en-us/library/618ayhy6.aspx">C#</a> developers perspective) provided an ability
+to take the idioms and 'ease of use' of languages like C# and Java and wrap the same contexts in a cross platform library,
+making use of standards compliant C++ and any specific system API's needed.<br>
+<a class="toppg" href="#topopage">top</a><br><br>
+
+<font class="hdr">Where is it heading?</font><br>
+Omni is designed to afford a user of the library more resources to develop while using less on design
+overhead and maintenance. From the delegate and event system to the timers and threads, Omni has begun to
+grow into a full cross platform library with the intentions to provide simple to implement C++ code.<br><br>
+Currently the library is still in Beta while the documentation and base classes are ironed out and finalized.
+Once the base classes have been vetted and thoroughly tested, goals for future development include databases,
+various text parsers (like HTML and regular expressions), and user interface development.<br>
+<a class="toppg" href="#topopage">top</a><br><br>
+
+<font class="hdr">Why no pre-built libraries?</font><br>
+Choosing to develop with C++ can be a daunting undertaking considering the wide array of platforms and
+capabilities each support. Ensuring you have the right libraries and call the appropriate API for the
+system you want affects more than just design decisions, it affects its re-usability, maintainability and
+time to market to name just a few. While pre-compiled libraries are convenient, it can add an extra layer
+of confusion in  the over all process.<br><br>
+Including the full source in your project allows you the control of how your projects will be built, including
+building your own 'Omni libraries' you can then customize and use as needed. You can visit the
+<a href="docs/options/index.html">options</a> page for more details on how you can customize the library and you
+can visit the <a href="docs/build/index.html">build</a> section for more on compiling the library. For more
+information about which platforms are currently supported, you can visit the
+<a href="xplat.html">cross platform</a> section.<br>
+<a class="toppg" href="#topopage">top</a><br><br>
+
+<a name="omni_license"></a><font class="hdr">Licensing</font><br>
+Omni has a permissive free <a href="license.txt">license</a> which allows any user of the code to easily
+integrate the library as part of their works. This license was chosen to allow greater flexibility in
+how you see fit to use the code. Open source, closed source, government, finance, web, any area can easily
+be subject to any number of other licenses or other legal confusion, we'd rather avoid that and give you
+solid reusable code. We feel that Omni can help teach C++ by giving a familiar context to understand and
+providing the source in an easy to use format; a budding engineer can pick up the code and gain a deeper
+understanding for both C++ and system level programming. The license we've chosen helps us reach our goals
+of enabling and educating, both our users and ourselves.<br>
+<a class="toppg" href="#topopage">top</a><br><br>
+If you have questions, comments or concerns about the library or would like a further breakdown of a specific aspect
+please feel free to contact the <a href="mailto:omniqa@zeriph.com">Omni Q&amp;A email</a><br>
+<a class="toppg" href="#topopage">top</a><br><br>
+
+<font style="font-size:10px;">NOTES:<br>
+<a name="supone" id="supone">1.)</a> C++98 
+<a href="http://www.iso.org/iso/iso_catalogue/catalogue_ics/catalogue_detail_ics.htm?ics1=35&ics2=60&ics3=&csnumber=25845">ISO/IEC 14882:1998</a><br>
+<a name="suptwo" id="suptwo">2.)</a>
+Some functionality is not in the standards library, other functionality is only in later versions and 
+specifying certain  <a href="docs/options/index.html">compile options</a> can allow the library to
+be built with <a href="docs/options/omni_enable_cxx.html">C++11/14/17</a> extensions enabled, as well
+as various other build options.<br>
+<a name="supthree" id="supthree">3.)</a>
+Nothing extra to install except the necessary compiler and system libraries if not installed with the
+compiler or included with the platform.<br>
+<a class="toppg" href="#topopage">top</a>
+<br><br></font>
+
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

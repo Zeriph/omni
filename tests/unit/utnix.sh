@@ -68,18 +68,18 @@ usage()
 	echo "       -log        Log the output to the logs folder"
 	echo "       -po         Parse the compile script only"
     echo 
-    echo "framework options:"
+    echo "library options:"
     echo "       -lite       Sets the OMNI_LITE macro definition"
     echo "       -heavy      Sets the heavy object flag"
     echo "       -no [op]    Passes along a 'no-flag' to the compile script"
-    echo "       -safe       Sets the OMNI_SAFE_FRAMEWORK macro definition"
+    echo "       -safe       Sets the OMNI_SAFE_LIBRARY macro definition"
     echo "       -sfw [op]   Set the OMNI_SAFE_[op] macro definition"
     echo "       -np         Sets the OMNI_NON_PORTABLE compiler flag and enables"
     echo "                   compilation of 'non-portable' code"
     echo "       -nouni      Disables the UNICODE flags (does not build unicode)"
     echo "       -terr       Sets the OMNI_TERMINATE macro"
     echo 
-    echo "framework debug options:"
+    echo "library debug options:"
     echo "       -d1         Sets the OMNI_SHOW_DEBUG=1"
     echo "       -d2         Sets the OMNI_SHOW_DEBUG=2"
     echo "       -d3         Sets the OMNI_SHOW_DEBUG=3"
@@ -170,6 +170,7 @@ parse_args()
 	while [ "$*" != "" ]; do
 		case $1 in
 			"nix") sys_type="nix" ;; #; eopts="${eopts}" ;;
+            "obsd") sys_type="bsd"; eopts="${eopts} -d OMNI_NO_CSTDINT" ;;
 			"bsd") sys_type="bsd" ;; #; eopts="${eopts} -tc c++" ;;
 			"osx") sys_type="osx" ;; #; eopts="${eopts} -tc clang++" ;;
             # QNX needs special attention (nopthread because it links automagically)
@@ -195,7 +196,7 @@ parse_args()
 			"-?") usage; exit 0 ;;
             "-list") list_tests; exit 0 ;;
 
-            # framework options
+            # library options
             "-lite") eopts="${eopts} -oo lite" ;;
             "-heavy") eopts="${eopts} -oo heavy" ;;
             "-no") eopts="${eopts} -oo no ${3}"; shift ;;
@@ -204,7 +205,7 @@ parse_args()
             "-np") eopts="${eopts} -oo np" ;;
             "-terr") eopts="${eopts} -oo terr" ;;
             
-            # framework debug options
+            # library debug options
 			"-d1") eopts="${eopts} -dbg 1" ;;
 			"-d2") eopts="${eopts} -dbg 2" ;;
             "-d3") eopts="${eopts} -dbg 3" ;;

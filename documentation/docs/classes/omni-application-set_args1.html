@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - function: omni::application::set_args</title>
+<link rel="stylesheet" type="text/css" href="../../content/main.css" /><link rel="icon" type="image/png" href="../../content/favicon.png" />
+<script type="text/javascript" src="../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="../htmlsrc/index.html">Source</a></li><li title="Library classes and namespaces">
+<a href="index.html" class="current">Class Index</a></li><li title="Download and view examples">
+<a href="../examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="../options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../api.html">System API</a></li><li title="Other Considerations">
+<a href="../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle">omni::application::set_args</div><div class="content"><div>
+<div class="docdiv"><a name="nm"></a>
+<font class="docu">NAME</font><br><br>
+<code><a href="../htmlsrc/omni/application.hpp.html#omni::application::set_args" class="chnm">
+    omni::application::set_args
+    </a></code><br>
+<br>A function of <a href="omni-application.html" class="code">omni::application</a><br><br>
+    <code><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/application.hpp.html">omni/application.hpp</a>&gt;</font></code><br><code><font class="syn_typ">void</font> omni::application::set_args(<font class="syn_typ">int</font> argc, <font class="syn_typ">const</font> <font class="syn_typ">wchar_t</font>** argv)</code>
+</div><br>
+<div class="docdiv"><a name="syn"></a>
+<font class="docu">SYNOPSIS</font><br><br>
+Sets the command line arguments passed in to the underlying <code><a href="omni-application-argparser.html">omni::application::argparser</a></code> instance.
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<div class="docdiv"><a name="desc"></a>
+<font class="docu">DESCRIPTION</font><br><br>
+If you wish to retrieve the arguments passed to your application via the command line through the <code><a href="omni-application-args.html">omni::application::args</a></code> function, you will need to call this function passing in the argument count and a pointer to the argument array.
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+
+<div class="docdiv"><a name="param"></a>
+<font class="docu">PARAMETERS</font><br><br>
+<code>argc</code> - The argument count passed in to the application. <code>argv</code> - A pointer to the array of <code>wchar_t</code> arguments passed to application via command line. 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
+<div class="docdiv"><a name="err"></a>
+<font class="docu">ERRORS</font><br><br>
+It is undefined behavior if <code>argc</code> is less than the actual number of elements in the argument array. 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
+<div class="docdiv"><a name="con"></a>
+<font class="docu">CONSIDERATIONS</font><br><br>
+Care needs to be taken with argument handling as neither this function nor any functions in the <code>argparser</code> class do any argument validation (i.e. user input validation). 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
+
+
+
+
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

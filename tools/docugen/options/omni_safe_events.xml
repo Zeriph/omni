@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_SAFE_EVENTS</Name>
+  <Brief>Signifies thread safe functions in the events
+</Brief>
+  <Considerations>No special considerations
+</Considerations>
+  <Description>If defined, signifies that the omni::event will have thread safe functions.
+</Description>
+  <Notes>None.
+</Notes>
+  <PlatformSpecific>No platform specific notes.
+</PlatformSpecific>
+  <Synopsis>If defined, signifies thread safe functions are enabled.
+</Synopsis>
+  <IsHelper>false</IsHelper>
+  <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
+</MacroOp>

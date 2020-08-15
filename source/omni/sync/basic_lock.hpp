@@ -47,7 +47,7 @@ namespace omni {
                 {
                     OMNI_DTOR_FW
                     if (this->locked()) {
-                        OMNI_ERR_FW("system mutex is locked on destruction", omni::exceptions::invalid_mutex_state())
+                        OMNI_TERMINATE_FW("system mutex is locked on destruction")
                     }
                     omni::sync::mutex_destroy(this->m_mtx);
                     OMNI_D5_FW("destroyed");
@@ -119,7 +119,7 @@ namespace omni {
                 OMNI_MEMBERS_FW(omni::sync::basic_lock) // disposing,name,type(),hash()
                 
             private:
-                // defined but not implemented, shouldn't be copied
+                // defined but not implemented, should not be copied
                 basic_lock(const omni::sync::basic_lock &cp);
                 omni::sync::basic_lock& operator=(const omni::sync::basic_lock& other);
                 

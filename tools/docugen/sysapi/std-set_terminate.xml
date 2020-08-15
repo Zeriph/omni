@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<SysAPI xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>std::set_terminate</Name>
+  <Link>http://www.cplusplus.com/reference/exception/set_terminate/</Link>
+  <SysType>STD</SysType>
+</SysAPI>
