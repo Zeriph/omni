@@ -12,53 +12,22 @@ class UT_CLASS_DEF
         {
             M_LIST_ADD(move_test, "tests movement functionality");
             M_LIST_ADD(path_test, "tests the path namespace functionality");
+            M_LIST_ADD(triangle, "test the functionality in omni::geometry::triangle via direct use");
+            M_LIST_ADD(util, "tests util class");
         }
         
         UT_CLASS_DTOR() {}
 
         void info_test()
         {
-            print_info(omni::geometry::point_t);
-            print_info(omni::geometry::unsafe_point_t);
-            print_info(omni::geometry::point_3d_t);
-            print_info(omni::geometry::unsafe_point_3d_t);
-            print_info(omni::geometry::rectangle_t);
-            print_info(omni::geometry::unsafe_rectangle_t);
-            print_info(omni::geometry::size_t);
-            print_info(omni::geometry::unsafe_size_t);
-            print_info(omni::geometry::vector2<double>);
-            print_info(omni::geometry::vector2<int32_t>);
-            print_info(omni::geometry::vector3<double>);
-            print_info(omni::geometry::vector3<int32_t>);
+            UT_INFO_TEST();
         }
         
         void base_test()
         {
-            omni::geometry::rectangle_t r1(40, 50, 50, 50);
-            omni::geometry::rectangle_t r2(70, 70, 70, 50);
-            omni::geometry::rectangle_t r3 = omni::geometry::rectangle_t::intersect(r1, r2);
-            omni::geometry::rectangle_t r4 = omni::geometry::rectangle_t::merge(r1, r2);
-
-            std::cout << "r1:" << r1 << std::endl;
-            omni::out << "r2:" << r2 << std::endl;
-            omni::out << "r3:" << r3 << std::endl;
-            omni::out << "r4:" << r4 << std::endl;
-
-            std::cout << "does" << (r1.intersects_with(r2) ? " " : " NOT ") << "intersect" << std::endl;
-            
-            std::cout << "xywh_p1 " <<
-                (omni::geometry::rectangle_xywh_contains_point(r1.x(), r1.y(), r1.width(), r1.height(), r2.x(), r2.y()) ?
-                    "contains" : "doesn't contain") << std::endl;
-            std::cout << "xywh_p2 " <<
-                (omni::geometry::rectangle_xywh_contains_point(r1.x(), r1.y(), r1.width(), r1.height(), r2.location()) ?
-                    "contains" : "doesn't contain") << std::endl;
-
-            std::cout << "ltrb_p1 " <<
-                (omni::geometry::rectangle_ltrb_contains_point(r1.left(), r1.top(), r1.right(), r1.bottom(), r2.x(), r2.y()) ?
-                    "contains" : "doesn't contain") << std::endl;
-            std::cout << "ltrb_p2 " <<
-                (omni::geometry::rectangle_ltrb_contains_point(r1.left(), r1.top(), r1.right(), r1.bottom(), r2.location()) ?
-                    "contains" : "doesn't contain") << std::endl;
+            move_test(); printl("");
+            path_test(); printl("");
+            util(); printl("");
         }
 
         void move_test()
@@ -73,11 +42,6 @@ class UT_CLASS_DEF
                 *itr += omni::geometry::point_t(10, 10);
                 omni::out << *itr << std::endl;
             }
-        }
-
-        static void path_test_sig(int sig)
-        {
-            if (sig == SIGSEGV) { exit(0); }
         }
 
         void path_test()
@@ -168,6 +132,133 @@ class UT_CLASS_DEF
                 std::cout << "[" << ir->x() << ", " << ir->y() << "] ";
             }
             std::cout << std::endl << std::endl;
+        }
+
+        void triangle()
+        {
+            omni::geometry::triangle_t t1(0,0, 0,2, 2,0);
+            omni::geometry::triangleD_t t2(2.5,2.5, 6.9,8.9, 5,3, omni::geometry::triangle_side::A);
+            printl("to_string | side_a | side_b | side_c | angle_a | angle_b | angle_c | base | base_side | height | semiperimeter | perimeter | measure | incenter | circumcenter | centroid");
+            ptri(t1, "t1");
+            ptri(t2, "t2");
+            printl("\n\nDeflating t2 50%");
+            t2.deflate(50.0);
+            ptri(t2, "t2");
+            printl("\nInflating t2 200%");
+            t2.inflate(200.0);
+            ptri(t2, "t2");
+            printl("\n\nRotating t2 90 degrees CW");
+            t2.rotate_centroid(90.0, omni::math::rotation_direction::CLOCKWISE);
+            ptri(t2, "t2");
+            printl("\nRotating t2 90 degrees CCW");
+            t2.rotate_centroid(90.0, omni::math::rotation_direction::COUNTER_CLOCKWISE);
+            ptri(t2, "t2");
+            printl("\nRotating t2 47.25 degrees CCW");
+            t2.rotate_centroid(47.25, omni::math::rotation_direction::COUNTER_CLOCKWISE);
+            ptri(t2, "t2");
+            printl("\n\nRotating t1 90 degrees CCW");
+            t1.rotate_centroid(90.0, omni::math::rotation_direction::COUNTER_CLOCKWISE);
+            ptri(t1, "t1");
+            printl("\nRotating t1 90 degrees CW");
+            t1.rotate_centroid(90.0, omni::math::rotation_direction::CLOCKWISE);
+            ptri(t1, "t1");
+            printl("\nRotating t1 47.25 degrees CCW");
+            t1.rotate_centroid(47.25, omni::math::rotation_direction::COUNTER_CLOCKWISE);
+            ptri(t1, "t1");
+
+            
+            omni::geometry::triangle_t t3(0,0, 0,2, 2,0);
+            omni::geometry::triangle_t t4(2,2, 6,8, 5,3, omni::geometry::triangle_side::A);
+            omni::geometry::triangle_t t5(t3);
+            omni::geometry::triangle_t t6(t3);
+            ptri(t3, "t3");
+            ptri(t4, "t4");
+            t4.intersect(t3);
+            ptri(t4, "t4");
+
+            if (t4 != t3) {
+                t4 = t3;
+            }
+            ptri(t4, "t4");
+
+            ptri(t5, "t5");
+            t5.translate_xy(5,5);
+            ptri(t5, "t5");
+
+            if (t5 > t6) {
+                printl("t5 > t6");
+            } else {
+                printl("t5 < t6");
+            }
+
+            omni::geometry::point_t pt(10, 10);
+            ptri(t6, "t6");
+            t6 += pt;
+            ptri(t6, "t6");
+            if (t5 < t6) {
+                printl("t5 < t6");
+            } else {
+                printl("t5 > t6");
+            }
+
+            t5 -= pt;
+            ptri(t5, "t5");
+
+            ptri((t3 + pt), "t3+pt");
+            ptri((t6 - pt), "t6-pt");
+            
+            t5.rotate_on_a(120.0, omni::math::rotation_direction::CLOCKWISE);
+            ptri(t5, "t5");
+
+            t5.rotate_on_b(120.0, omni::math::rotation_direction::CLOCKWISE);
+            ptri(t5, "t5");
+
+            t5.rotate_on_c(120.0, omni::math::rotation_direction::CLOCKWISE);
+            ptri(t5, "t5");
+
+            t5.rotate_circumcenter(90.0, omni::math::rotation_direction::CLOCKWISE);
+            ptri(t5, "t5");
+
+            t5.rotate_incenter(90.0, omni::math::rotation_direction::CLOCKWISE);
+            ptri(t5, "t5");
+
+            t5.rotate_origin(90.0, omni::math::rotation_direction::CLOCKWISE);
+            ptri(t5, "t5");
+
+            t5.rotate_point(43, 2, 3, omni::math::rotation_direction::CLOCKWISE);
+            ptri(t5, "t5");
+
+            t5.reflect();
+            ptri(t5, "t5");
+
+            t5.swap(t6);
+            ptri(t5, "t5");
+
+            t5.translate_xy(15, 15);
+            ptri(t5, "t5");
+
+            t5.translate_angle(25, 62);
+            ptri(t5, "t5");
+        }
+
+        void util()
+        {
+            // template < typename T > inline omni::geometry::point2d<T> point_on_circle(T degrees, T radius, T center_x, T center_y)
+            // template <> inline omni::geometry::point2d<uint8_t> point_on_circle<uint8_t>(uint8_t degrees, uint8_t radius, uint8_t center_x, uint8_t center_y)
+            printl(omni::geometry::point_on_circle(25.6, 12.2, 12.0, 15.0));
+        }
+
+    private:
+
+        static void path_test_sig(int sig)
+        {
+            if (sig == SIGSEGV) { exit(0); }
+        }
+
+        template < typename T >
+        void ptri(omni::geometry::triangle<T> tri, const char* nm)
+        {
+            std::cout << nm << ": " << tri << std::endl;
         }
 };
 

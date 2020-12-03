@@ -1,16 +1,3 @@
-#if !defined(OMNI_UT_TESTS)
-#define OMNI_UT_TESTS
-
-#if defined(OMNI_UT_ALL) || defined(OMNI_UT_FULL)
-    #if defined(OMNI_UT_ALL) && defined(OMNI_UT_FULL)
-        #error Cannot specify to test all and full
-    #endif
-    #include "units/all.hpp"
-    #include "units/full.hpp"
-    #define OMNI_UTUA // use all tests
-#endif
-
-// test includes
 #include "units/application.hpp"
 #include "units/argparser.hpp"
 #include "units/basic_lock.hpp"
@@ -26,7 +13,6 @@
 #include "units/exceptions.hpp"
 #include "units/geometry.hpp"
 #include "units/io.hpp"
-// #include "units/fswatcher.hpp" // incomplete
 #include "units/generic_ptr.hpp"
 #include "units/math.hpp"
 #include "units/misc.hpp"
@@ -37,9 +23,7 @@
 #include "units/semaphore.hpp"
 #include "units/sequence.hpp"
 #include "units/smart_ptr.hpp"
-#include "units/socket.hpp" // incomplete
-// #include "units/tcp.hpp" // incomplete
-// #include "units/udp.hpp" // incomplete
+#include "units/socket.hpp"
 #include "units/span.hpp"
 #include "units/spin.hpp"
 #include "units/stopwatch.hpp"
@@ -50,9 +34,13 @@
 #include "units/thread.hpp"
 #include "units/threadpool.hpp"
 #include "units/version.hpp"
-
-#if defined(OMNI_UTUA)
-    #undef OMNI_UTUA
-#endif
-
-#endif // OMNI_UT_TESTS
+#include "units/point2d.hpp"
+#include "units/point3d.hpp"
+#include "units/triangle.hpp"
+#include "units/size.hpp"
+#include "units/size3d.hpp"
+#include "units/quadrilateral.hpp"
+#include "units/rectangle.hpp"
+#include "units/vector2.hpp"
+#include "units/vector3.hpp"
+#include "units/circle.hpp"

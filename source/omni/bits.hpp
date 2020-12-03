@@ -88,32 +88,32 @@ namespace omni {
         }
         
         template < typename T >
-        inline bool unsafe_is_set(const T& t, unsigned short n)
+        inline bool unsafe_is_set(const T& t, uint8_t n)
         {
-            return omni::bits::has_flag(t, (1 << n));
+            return omni::bits::has_flag(t, static_cast<T>(1 << n));
         }
         
         template < typename T >
-        inline T& unsafe_set(T& t, unsigned short n, bool s)
+        inline T& unsafe_set(T& t, uint8_t n, bool s)
         {
             if (s) { return omni::bits::set_flag(t, (1 << n)); } // set
-            return omni::bits::unset_flag(t, (1 << n));
+            return omni::bits::unset_flag(t, static_cast<T>(1 << n));
         }
         
         template < typename T >
-        inline T& unsafe_set(T& t, unsigned short n)
+        inline T& unsafe_set(T& t, uint8_t n)
         {
-            return omni::bits::set_flag(t, (1 << n));
+            return omni::bits::set_flag(t, static_cast<T>(1 << n));
         }
         
         template < typename T >
-        inline T& unsafe_unset(T& t, unsigned short n)
+        inline T& unsafe_unset(T& t, uint8_t n)
         {
-            return omni::bits::unset_flag(t, (1 << n));
+            return omni::bits::unset_flag(t, static_cast<T>(1 << n));
         }
         
         template < typename T >
-        inline bool is_set(const T& t, unsigned short n)
+        inline bool is_set(const T& t, uint8_t n)
         {
             if (n > OMNI_SIZEOF_BITS(T)) {
                 OMNI_ERRV_RETV_FW(n, " > sizeof(T)", omni::exceptions::index_out_of_range("Invalid bit", n), false)
@@ -122,7 +122,7 @@ namespace omni {
         }
         
         template < typename T >
-        inline T& set(T& t, unsigned short n, bool s)
+        inline T& set(T& t, uint8_t n, bool s)
         {
             if (n > OMNI_SIZEOF_BITS(T)) {
                 OMNI_ERRV_RETV_FW(n, " > sizeof(T)", omni::exceptions::index_out_of_range("Invalid bit", n), false)
@@ -131,7 +131,7 @@ namespace omni {
         }
         
         template < typename T >
-        inline T& set(T& t, unsigned short n)
+        inline T& set(T& t, uint8_t n)
         {
             if (n > OMNI_SIZEOF_BITS(T)) {
                 OMNI_ERRV_RETV_FW(n, " > sizeof(T)", omni::exceptions::index_out_of_range("Invalid bit", n), false)
@@ -140,7 +140,7 @@ namespace omni {
         }
         
         template < typename T >
-        inline T& unset(T& t, unsigned short n)
+        inline T& unset(T& t, uint8_t n)
         {
             if (n > OMNI_SIZEOF_BITS(T)) {
                 OMNI_ERRV_RETV_FW(n, " > sizeof(T)", omni::exceptions::index_out_of_range("Invalid bit", n), false)

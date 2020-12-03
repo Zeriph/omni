@@ -29,7 +29,6 @@ OMNI_SRC=application.cpp
 	system.cpp
 	thread.cpp
 	threadpool.cpp
-	version.cpp
 # translate the source to obj files
 OMNI_O=$(OMNI_SRC:%.cpp=$(OMNI_ODIR)/%.o)
 OMNI_LIB=$(OMNI_DIR)/test/bin/libomni.a

@@ -70,8 +70,8 @@ namespace omni {
                  * number of 100-nanosecond intervals that have elapsed since 1/1/0001 12:00am (or 0 ticks), and
                  * go up to a maximum value of 3155378975999999999 ticks (which is 12/31/9999 23:59:59.9999999).
                  */
-                explicit date_time(uint64_t ticks);
-                date_time(uint64_t ticks, const omni::chrono::date_time_kind& kind);
+                OMNI_EXPLICIT date_time(int64_t ticks);
+                date_time(int64_t ticks, const omni::chrono::date_time_kind& kind);
                 date_time(uint16_t year, uint8_t month, uint8_t day);
                 date_time(uint16_t year, uint8_t month, uint8_t day, uint8_t hour, uint8_t minute, uint8_t second);
                 date_time(uint16_t year, uint8_t month, uint8_t day, uint8_t hour, uint8_t minute, uint8_t second, const omni::chrono::date_time_kind& kind);
@@ -200,6 +200,7 @@ namespace omni {
                 #endif
 
                 date_time(); // not 'user' accessable as it's used to construct empty (min) DT objects
+                date_time(uint64_t ticks, const std::string& non_op);
                 date_time(bool is_ambiguous_dst, const omni::chrono::date_time_kind& kind, uint64_t ticks, const std::string& non_op);
                 omni::chrono::date_time _add(double value, int64_t scale);
                 omni::chrono::date_time_kind _kind() const;

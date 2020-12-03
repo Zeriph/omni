@@ -206,6 +206,24 @@ namespace OmniDocuGen
                 return TreeNode::GetAsciiTree(*this);
             }
 
+            std::string GetSignatureTextTree() const
+            {
+                return TreeNode::GetAsciiSignatureTree(*this);
+            }
+
+            int32_t GetNodeCount(bool includeSubTrees) const
+            {
+                int32_t r = this->Nodes.size();
+                if (includeSubTrees) {
+                    List<TreeNode>::const_iterator t = this->Nodes.begin();
+                    foreach_c (TreeNode, t, this->Nodes) {
+                        if (OmniDocuGen::Program::StopReq) { return 0; }
+                        r += t->GetNodeCount(true);
+                    }
+                }
+                return r;
+            }
+
             void SetRoot(const MemberTypeInformation::ptr_t& mti)
             {
                 this->Nodes.clear();
@@ -306,6 +324,18 @@ namespace OmniDocuGen
                         tnc.AddNode(n);
                     }
                 }
+            }
+
+            static std::string GetAsciiSignatureTree(const TreeNode& root)
+            {
+                std::string r = root.Text;
+                if (root.Tag) { r = root.Tag->GetSignature(true, true); }
+                r += OMNI_EOL_N;
+                foreach_c (TreeNode, sub, root.Nodes) {
+                    if (OmniDocuGen::Program::StopReq) { return ""; }
+                    r += TreeNode::GetAsciiSignatureTree(*sub);
+                }
+                return r + OMNI_EOL_N;
             }
 
             static std::string GetAsciiTree(const TreeNode& root)

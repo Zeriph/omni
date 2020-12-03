@@ -6,45 +6,92 @@
 #define OMNI_UTDBGOUT omni::out
 
 #define b2s(b) ((b) ? "true" : "false")
+#define B2S(b) (b ? "true" : "false")
+
 #define print(...) OMNI_UTDBGOUT << __VA_ARGS__
 #define printl(...) OMNI_UTDBGOUT << __VA_ARGS__ << std::endl
 #define printv(m, v) OMNI_UTDBGOUT << m << v << std::endl
 #define printsw(v) case v: printl(#v); break
 #define printswe(v, e) case v: OMNI_UTDBGOUT << e << #v << std::endl; break
-#define printve(m, v, e) OMNI_UTDBGOUT << m << v << " -- expected: " << e << std::endl
+//#define printve(m, v, e) OMNI_UTDBGOUT << m << " = " << v << " -- expected: " << e << std::endl
 
-#define cprint(m) std::cout << m
-#define cprintl(m) std::cout << m << std::endl
+#define cprint(...) std::cout << __VA_ARGS__
+#define cprintl(...) std::cout << __VA_ARGS__ << std::endl
 #define cprintv(m, v) std::cout << m << v << std::endl
+#define cprintsw(v) case v: cprintl(#v); break
+#define cprintswe(v, e) case v: std::cout << e << #v << std::endl; break
+//#define cprintve(m, v, e) std::cout << m << " = " << v << " -- expected: " << e << std::endl
 
-#define wprint(m) std::wcout << m
-#define wprintl(m) std::wcout << m << std::endl
+#define wprint(...) std::wcout << __VA_ARGS__
+#define wprintl(...) std::wcout << __VA_ARGS__ << std::endl
 #define wprintv(m, v) std::wcout << m << v << std::endl
+#define wprintsw(v) case v: wprintl(#v); break
+#define wprintswe(v, e) case v: std::wcout << e << #v << std::endl; break
+//#define wprintve(m, v, e) std::wcout << m << " = " << v << " -- expected: " << e << std::endl
 
 #if defined(OMNI_TYPE_INFO)
-    #define print_info(...) printl("sizeof("OMNI_DEF2STR( __VA_ARGS__ )") = " << sizeof( __VA_ARGS__ ) << ", hash: " << omni::type_id< __VA_ARGS__ >())
+    #define print_info(...) printl("sizeof(" OMNI_DEF2STR( __VA_ARGS__ ) ") = " << sizeof( __VA_ARGS__ ) << ", hash: " << omni::type_id< __VA_ARGS__ >())
 #else
-    #define print_info(...) printl("sizeof("OMNI_DEF2STR( __VA_ARGS__ )") = " << sizeof( __VA_ARGS__ ))
+    #define print_info(...) printl("sizeof(" OMNI_DEF2STR( __VA_ARGS__ ) ") = " << sizeof( __VA_ARGS__ ))
 #endif
-#define print_sizeof(...) printl("sizeof("OMNI_DEF2STR( __VA_ARGS__ )") = " << sizeof( __VA_ARGS__ ))
+#define print_sizeof(...) printl("sizeof(" OMNI_DEF2STR( __VA_ARGS__ ) ") = " << sizeof( __VA_ARGS__ ))
 
-#define cpfunc1(func, arg1) std::cout << OMNI_DEF2STR(func) << "(\"" << arg1 << "\") = " << func(arg1) << std::endl
-#define cpfunc2(func, arg1, arg2) std::cout << OMNI_DEF2STR(func) << "(\"" << arg1 << "\", \"" << arg2 << "\") = " << func(arg1, arg2) << std::endl
-#define cpfunc3(func, arg1, arg2, arg3) std::cout << OMNI_DEF2STR(func) << "(\"" << arg1 << "\", \"" << arg2 << "\", \"" << arg3 << "\") = " << func(arg1, arg2, arg3) << std::endl
+static inline void pause_test(uint32_t ms)
+{
+    if (ms == 0) {
+        std::string ip;
+        std::cout << "Continue (y/n): ";
+        std::cin >> ip;
+        std::cin.clear();
+        if (ip == "n") {
+            omni::application::exit();
+        }
+        std::cout << std::endl;
+    } else {
+        omni::sync::sleep(ms);
+    }
+}
+static inline void pause_test()
+{
+    pause_test(0);
+}
 
-#define cpfuncex1(func, arg1, expected) std::cout << OMNI_DEF2STR(func) << "(\"" << arg1 << "\") = " << func(arg1) << " ~~ expected result = " << expected << " ~~ " << ((func(arg1) == expected) ? "PASS" : "FAIL") << std::endl
-#define cpfuncex2(func, arg1, arg2, expected) std::cout << OMNI_DEF2STR(func) << "(\"" << arg1 << "\", \"" << arg2 << "\") = " << func(arg1, arg2) << " ~~ expected result = " << expected << " ~~ " << ((func(arg1, arg2) == expected) ? "PASS" : "FAIL") << std::endl
-#define cpfuncex3(func, arg1, arg2, arg3, expected) std::cout << OMNI_DEF2STR(func) << "(\"" << arg1 << "\", \"" << arg2 << "\", \"" << arg3 << "\") = " << func(arg1, arg2, arg3) << " ~~ expected result = " << expected << " ~~ " << ((func(arg1, arg2, arg3) == expected) ? "PASS" : "FAIL") << std::endl
+// TODO: figure this out ??? 
 
-#define wpfunc1(func, arg1) std::wcout << OMNI_DEF2STR(func) << "(\"" << arg1 << "\") = " << func(arg1) << std::endl
-#define wpfunc2(func, arg1, arg2) std::wcout << OMNI_DEF2STR(func) << "(\"" << arg1 << "\", \"" << arg2 << "\") = " << func(arg1, arg2) << std::endl
-#define wpfunc3(func, arg1, arg2, arg3) std::wcout << OMNI_DEF2STR(func) << "(\"" << arg1 << "\", \"" << arg2 << "\", \"" << arg3 << "\") = " << func(arg1, arg2, arg3) << std::endl
+template < typename T >
+static inline void test(const std::string& msg, T val, const std::string& exp)
+{
+    std::string res = omni::string_util::to_string(val);
+    std::cout << msg << " = " << val << " -- expected: " << exp << " | " << ((res == exp) ? "PASS" : "FAIL") << std::endl;
+}
+static inline void test(const std::string& msg, const std::wstring& val, const std::string& exp)
+{
+    std::string res = omni::string_util::to_string(val);
+    std::wcout << msg.c_str() << " = " << val << " -- expected: " << exp.c_str() << " | " << ((res == exp) ? "PASS" : "FAIL") << std::endl;
+}
+static inline void test(const std::string& msg, const std::wstring& val, const std::wstring& exp)
+{
+    std::wcout << msg.c_str() << " = " << val << " -- expected: " << exp << " | " << ((val == exp) ? "PASS" : "FAIL") << std::endl;
+}
 
-#define wpfuncex1(func, arg1, expected) std::wcout << OMNI_DEF2STR(func) << "(\"" << arg1 << "\") = " << func(arg1) << " ~~ expected result = " << expected << " ~~ " << ((func(arg1) == expected) ? "PASS" : "FAIL") << std::endl
-#define wpfuncex2(func, arg1, arg2, expected) std::wcout << OMNI_DEF2STR(func) << "(\"" << arg1 << "\", \"" << arg2 << "\") = " << func(arg1, arg2) << " ~~ expected result = " << expected << " ~~ " << ((func(arg1, arg2) == expected) ? "PASS" : "FAIL") << std::endl
-#define wpfuncex3(func, arg1, arg2, arg3, expected) std::wcout << OMNI_DEF2STR(func) << "(\"" << arg1 << "\", \"" << arg2 << "\", \"" << arg3 << "\") = " << func(arg1, arg2, arg3) << " ~~ expected result = " << expected << " ~~ " << ((func(arg1, arg2, arg3) == expected) ? "PASS" : "FAIL") << std::endl
-
-#define B2S(b) (b ? "true" : "false")
+template < typename T >
+static inline void test(const char* msg, T val, const std::string& exp)
+{
+    return test<T>(std::string(msg), val, exp);
+}
+template < typename T >
+static inline void test(const char* msg, T val, const char* exp)
+{
+    return test<T>(std::string(msg), val, std::string(exp));
+}
+static inline void test(const char* msg, const std::wstring& val, const char* exp)
+{
+    return test(std::string(msg), val, std::string(exp));
+}
+static inline void test(const char* msg, const std::wstring& val, const std::wstring& exp)
+{
+    return test(std::string(msg), val, exp);
+}
 
 namespace omni { class ut; class ut_base; }
 typedef std::map<std::size_t, omni::ut> test_map;
@@ -53,6 +100,7 @@ typedef std::map<omni::string_t, omni::ut_base*> unit_map;
 unit_map units; // the unit test map
 
 namespace omni {
+    // the unit test itself
     class ut {
         public:
             ut() : index(), funcptr(), name(), desc() {}

@@ -1333,12 +1333,20 @@ namespace date_time_format {
         bool bTimeOnly = true;
         int i = 0;
         int tokenLen, hour12;
+
+        std::cout << "DBG: Here .. format.size == " << format.size() << std::endl;
+
         while (i < format.size()) {
             char ch = format[i];
             int nextChar;
             int month = 1; // TODO: with CAL -> cal.GetMonth(dateTime);
             int year = 2020; // TODO: with CAL -> cal.GetYear(dateTime);
             std::stringstream enquotedString;
+
+
+            std::cout << "Looking at '" << ch << "'" << std::endl;
+
+
             switch (ch) {
                 case 'g':
                     tokenLen = date_time_format::parse_repeat_pattern(format, i, ch);
@@ -1369,7 +1377,7 @@ namespace date_time_format {
                     tokenLen = date_time_format::parse_repeat_pattern(format, i, ch);
                     if (tokenLen <= MaxSecondsFractionDigits) {
                         long fraction = 0; // TODO: with CAL -> (dateTime.ticks() % Calendar.TicksPerSecond);
-                        fraction = fraction / (long)std::pow(10, 7 - tokenLen);
+                        fraction = fraction / (long)std::pow((double)10, (double)(7 - tokenLen));
                         if (ch == 'f') {
                             result << fraction; // TODO: -> (((int)fraction).ToString(fixedNumberFormats[tokenLen - 1], CultureInfo.InvariantCulture));
                         } else {
@@ -1644,48 +1652,56 @@ namespace date_time_format {
         return date_time_format::get_real_format(format, dtfi);
     }
 
+    /*
+    static String Format(DateTime dateTime, String format, DateTimeFormatInfo dtfi, TimeSpan offset)
+    */
     static std::string format(const omni::chrono::date_time& dt, std::string format, DateTimeFormatInfo& dtfi, const omni::chrono::time_span& offset)
     {
         if (format.empty()) {
+            std::cout << "DBG: 2" << std::endl;
+
             bool timeOnlySpecialCase = false;
             /*
-            TODO: finish when Calendar class is done
-            if (dt.Ticks < Calendar.omni::chrono::TICKS_PER_DAY) {
-                // If the time is less than 1 day, consider it as time of day.
-                // Just print out the short time format.
-                //
-                // This is a workaround for VB, since they use ticks less then one day to be 
-                // time of day.  In cultures which use calendar other than Gregorian calendar, these
-                // alternative calendar may not support ticks less than a day.
-                // For example, Japanese calendar only supports date after 1868/9/8.
-                // This will pose a problem when people in VB get the time of day, and use it
-                // to call ToString(), which will use the general format (short date + long time).
-                // Since Japanese calendar does not support Gregorian year 0001, an exception will be
-                // thrown when we try to get the Japanese year for Gregorian year 0001.
-                // Therefore, the workaround allows them to call ToString() for time of day from a DateTime by
-                // formatting as ISO 8601 format.
-                switch (dtfi.Calendar.ID) {
-                    case Calendar.CAL_JAPAN: 
-                    case Calendar.CAL_TAIWAN:
-                    case Calendar.CAL_HIJRI:
-                    case Calendar.CAL_HEBREW:
-                    case Calendar.CAL_JULIAN:
-                    case Calendar.CAL_UMALQURA:
-                        timeOnlySpecialCase = true;
-                        dtfi = DateTimeFormatInfo.InvariantInfo;
-                        break;                        
-                }                     
-            }
+                TODO: finish when Calendar class is done
+                if (dt.ticks() < Calendar.omni::chrono::TICKS_PER_DAY) {
+                    // If the time is less than 1 day, consider it as time of day.
+                    // Just print out the short time format.
+                    //
+                    // This is a workaround for VB, since they use ticks less then one day to be 
+                    // time of day.  In cultures which use calendar other than Gregorian calendar, these
+                    // alternative calendar may not support ticks less than a day.
+                    // For example, Japanese calendar only supports date after 1868/9/8.
+                    // This will pose a problem when people in VB get the time of day, and use it
+                    // to call ToString(), which will use the general format (short date + long time).
+                    // Since Japanese calendar does not support Gregorian year 0001, an exception will be
+                    // thrown when we try to get the Japanese year for Gregorian year 0001.
+                    // Therefore, the workaround allows them to call ToString() for time of day from a DateTime by
+                    // formatting as ISO 8601 format.
+                    switch (dtfi.Calendar.ID) {
+                        case Calendar.CAL_JAPAN: 
+                        case Calendar.CAL_TAIWAN:
+                        case Calendar.CAL_HIJRI:
+                        case Calendar.CAL_HEBREW:
+                        case Calendar.CAL_JULIAN:
+                        case Calendar.CAL_UMALQURA:
+                            timeOnlySpecialCase = true;
+                            dtfi = DateTimeFormatInfo.InvariantInfo;
+                            break;                        
+                    }                     
+                }
             */
             if (offset == OMNI_TS_NULL_OFF_FW) {
+                std::cout << "DBG: 3" << std::endl;
+
                 // Default DateTime.ToString case.
                 if (timeOnlySpecialCase) {
                     format = "s";
                 } else {
                     format = "G";
                 }
-            }
-            else {
+            } else {
+                std::cout << "DBG: 4" << std::endl;
+
                 // Default DateTimeOffset.ToString case.
                 if (timeOnlySpecialCase) {
                     format = "yyyy'-'MM'-'ddTHH':'mm':'ss zzz"; // RoundtripDateTimeUnfixed;
@@ -1695,13 +1711,20 @@ namespace date_time_format {
             }
         }
         if (format.size() == 1) {
+            std::cout << "DBG: 5" << std::endl;
+
             format = date_time_format::expand_predefined_format(format, dt, dtfi, offset);
         }
+
+        std::cout << "DBG: 6 .. '" << format << "'" << std::endl;
+
         return date_time_format::format_customized(dt, format, dtfi, offset);
     }
 
     static std::string format(const omni::chrono::date_time& dt, std::string format)
     {
+        std::cout << "DBG: 1" << std::endl;
+
         return date_time_format::format(dt, format, DateTimeFormatInfo::CurrentInfo, OMNI_TS_NULL_OFF_FW);
     }
 
@@ -1727,11 +1750,21 @@ omni::chrono::date_time::date_time() :
     OMNI_D5_FW("created");
 }
 
+omni::chrono::date_time::date_time(uint64_t ticks, const std::string& non_op) :
+    OMNI_CTOR_FW(omni::chrono::date_time)
+    m_date(ticks)
+    OMNI_SAFE_DTTMMTX_FW
+{
+    OMNI_UNUSED(non_op);
+    OMNI_D5_FW("created");
+}
+
 omni::chrono::date_time::date_time(bool is_ambiguous_dst, const omni::chrono::date_time_kind& kind, uint64_t ticks, const std::string& non_op) :
     OMNI_CTOR_FW(omni::chrono::date_time)
     m_date(0)
     OMNI_SAFE_DTTMMTX_FW
 {
+    OMNI_UNUSED(non_op);
     if (ticks > OMNI_MAX_TICKS_FW) {
         OMNI_ERR_FW("Invalid tick count specified", omni::exceptions::invalid_range())
     }
@@ -1752,7 +1785,7 @@ omni::chrono::date_time::date_time(const omni::chrono::date_time& cp) :
     OMNI_D5_FW("copied");
 }
 
-omni::chrono::date_time::date_time(uint64_t ticks) :
+omni::chrono::date_time::date_time(int64_t ticks) :
     OMNI_CTOR_FW(omni::chrono::date_time)
     m_date(0)
     OMNI_SAFE_DTTMMTX_FW
@@ -1764,7 +1797,7 @@ omni::chrono::date_time::date_time(uint64_t ticks) :
     OMNI_D5_FW("created");
 }
 
-omni::chrono::date_time::date_time(uint64_t ticks, const omni::chrono::date_time_kind& kind) :
+omni::chrono::date_time::date_time(int64_t ticks, const omni::chrono::date_time_kind& kind) :
     OMNI_CTOR_FW(omni::chrono::date_time)
     m_date(0)
     OMNI_SAFE_DTTMMTX_FW
@@ -2566,7 +2599,7 @@ omni::chrono::date_time omni::chrono::date_time::specify_kind(const date_time& v
 
 omni::chrono::date_time omni::chrono::date_time::now()
 {
-    omni::chrono::date_time utc = omni::chrono::date_time::utc_now(); 
+    omni::chrono::date_time utc = omni::chrono::date_time::utc_now();
     bool isAmbiguousLocalDst = false;
     int64_t offset = 0; // TODO: finish -> TimeZoneInfo.GetDateTimeNowUtcOffsetFromUtc(utc, out isAmbiguousLocalDst).Ticks;
     int64_t tick = utc.ticks() + offset;
@@ -2585,10 +2618,11 @@ omni::chrono::date_time omni::chrono::date_time::utc_now()
     int64_t ticks = 0;
     #if defined(OMNI_OS_WIN)
         FILETIME ft;
-        ticks = ::GetSystemTimeAsFileTime(&ft);
+        ::GetSystemTimeAsFileTime(&ft);
         ULARGE_INTEGER tm;
         tm.LowPart = ft.dwLowDateTime;
         tm.HighPart = ft.dwHighDateTime;
+        //ticks = static_cast<int64_t>(ft);
         ticks = static_cast<int64_t>(tm.QuadPart);
         /*
             DEV_NOTE: this is from the .NET source, but mathematically doesn't make sense ...
@@ -2624,11 +2658,11 @@ omni::chrono::date_time omni::chrono::date_time::utc_now()
             if (::clock_gettime(CLOCK_REALTIME, &tm) != 0) {
                 OMNI_ERRV_RETV_FW("An error occurred getting the clock time: ", errno, omni::exceptions::clock_exception(errno), false)
             }
-            ticks = (tv.tv_sec * omni::chrono::TICKS_PER_SECOND) + (tv.tv_nsec * omni::chrono::TICKS_PER_NANOSECOND);
+            ticks = (tm.tv_sec * omni::chrono::TICKS_PER_SECOND) + (tm.tv_nsec * omni::chrono::TICKS_PER_NANOSECOND);
         #endif
-        ticks += omni::chrono::EPOCH_OFFSET;
+        ticks += omni::chrono::FILE_TIME_OFFSET;
     #endif
-    return omni::chrono::date_time(static_cast<uint64_t>(ticks) | OMNI_KIND_UTC_FW);
+    return omni::chrono::date_time((static_cast<uint64_t>(ticks) | OMNI_KIND_UTC_FW), std::string(""));
 }
 
 omni::chrono::date_time omni::chrono::date_time::today()

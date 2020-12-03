@@ -480,7 +480,7 @@ void OmniDocuGen::MemberTypeInformation::AddVerify(OmniDocuGen::MemberTypeInform
         {
             ti->OverloadIndex = this->Overloads.size() + 1;
             this->Overloads.push_back(ti);
-            return; // short-cicuit
+            return; // short-circuit
         } else {
             // not a function, then add the members of it to this instance
             foreach (ptr_t, m, ti->Members) {
@@ -501,7 +501,8 @@ void OmniDocuGen::MemberTypeInformation::AddVerify(OmniDocuGen::MemberTypeInform
             }
         }
         if (!found) {
-            this->Add(ti); }
+            this->Add(ti);
+        }
     }
 }
 
@@ -1274,7 +1275,7 @@ void OmniDocuGen::MemberTypeInformation::_ParseAsMember(const std::string& code)
     } else {
         tcode = code;
     }
-    // remove comments so any thing found doesn't need to be checked if it's actually a declaration or if it's within a comment
+    // remove comments so anything found doesn't need to be checked if it's actually a declaration or if it's within a comment
     tcode = OmniDocuGen::Util::StripComments(tcode);
     if (omni::string::contains(tcode, "typedef ")) {
         /*
@@ -1328,7 +1329,7 @@ void OmniDocuGen::MemberTypeInformation::_ParseAsMember(const std::string& code)
     )
     {
         up(4, "Function Parse start");
-        std::string line, tname, tparms;
+        std::string line, tname, tparms, expl;
         size_t ppos, apos;
         this->CodeType = OmniDocuGen::Types::CodeStructureType::Function;
         if (omni::string::contains(tcode, "template <") || omni::string::contains(tcode, "template<")) {
@@ -1376,10 +1377,10 @@ void OmniDocuGen::MemberTypeInformation::_ParseAsMember(const std::string& code)
             line = Util::GetLineOfStringData(tcode, "operator");
             apos = line.find("(");
             ppos = line.find("operator");
-        } else if (omni::string::contains(tcode, "explicit ")) {
+        } else if (omni::string::contains(tcode, "explicit ") || omni::string::contains(tcode, "OMNI_EXPLICIT ")) {
             /* EXPLICIT_CTOR:
                 (
-                    (\\b?explicit\\b
+                    (\\b?explicit|OMNI_EXPLICIT\\b
                         ([^\\(].*)
                         \\(
                             (.*)
@@ -1388,14 +1389,19 @@ void OmniDocuGen::MemberTypeInformation::_ParseAsMember(const std::string& code)
                     )
                 )
             */
-            line = Util::GetLineOfStringData(tcode, "explicit ");
+            if (omni::string::contains(tcode, "explicit ")) {
+                expl = "explicit ";
+            } else {
+                expl = "OMNI_EXPLICIT ";
+            }
+            line = Util::GetLineOfStringData(tcode, expl);
             if (!omni::string::contains(line, "(") || !omni::string::contains(line, ")")) {
-                ppos = tcode.rfind("\n", tcode.find("explicit "));
+                ppos = tcode.rfind("\n", tcode.find(expl));
                 if (ppos == std::string::npos) { ppos = 0; }
                 line = tcode.substr(ppos, (tcode.find(")") + 1) - ppos);
             }
             apos = line.find("(");
-            ppos = line.find("explicit ");
+            ppos = line.find(expl);
         } else {
             /* FUNCTION:
                 ((return_type)\\s(function_name)\\((function_params)\\);?
@@ -1442,9 +1448,9 @@ void OmniDocuGen::MemberTypeInformation::_ParseAsMember(const std::string& code)
                 this->IsInline = true;
                 this->ReturnType = omni::string::replace(this->ReturnType, "inline ", "");
             }
-            if (omni::string::contains(this->ReturnType, "explicit ")) {
+            if (!expl.empty() && omni::string::contains(this->ReturnType, expl)) {
                 this->IsExplicit = true;
-                this->ReturnType = omni::string::replace(this->ReturnType, "explicit ", "");
+                this->ReturnType = omni::string::replace(this->ReturnType, expl, "");
             }
 
             if (this->Parent &&
@@ -1487,7 +1493,7 @@ void OmniDocuGen::MemberTypeInformation::_ParseAsMember(const std::string& code)
                     if (omni::string::contains(p, "<") && !omni::string::contains(p, ">")) {
                         while (!omni::string::contains(p, ">")) {
                             if (OmniDocuGen::Program::StopReq) { return; }
-                            p += splits[++si];
+                            p += "," + splits[++si];
                         }
                     }
                     if (OmniDocuGen::Program::StopReq) { return; }
@@ -1851,8 +1857,8 @@ void OmniDocuGen::MemberTypeInformation::_ParseFunctionInfo(const std::string& c
                 try {
                     up(5, "Parsing MTI AsMember");
                     ptr_t mi(new MemberTypeInformation(tcode, this->This, OmniDocuGen::Types::MemberParseType::AsMember));
-                    up(4, "Parsed {0}", mi->FullPath);
                     mi->ScopeAccessType = csat;
+                    up(4, "Parsed {0} {1} '{2}'", mi->ScopeAccessType, mi->CodeType, mi->FullPath);
                     this->AddVerify(mi);
                     if (mi->CodeType == OmniDocuGen::Types::CodeStructureType::Ctor) {
                         if (!omni::string::contains(tcode, " :") && !omni::string::contains(tcode, ";") && !omni::string::contains(tcode, "{")) {
@@ -1981,7 +1987,7 @@ void OmniDocuGen::MemberTypeInformation::_ParseClassMembers(std::string code)
                             mti->ScopeAccessType = OmniDocuGen::Types::CodeScopeAcessType::Private;
                         }
                     }
-                    up(4, "Parsed class {0}", mti->FullPath);
+                    up(4, "Parsed {0} {1} '{2}'", mti->ScopeAccessType, mti->CodeType, mti->FullPath);
                     this->AddVerify(mti);
                 } catch (const std::exception& iex) {
                     OmniDocuGen::Program::AddError(iex, (std::string("Error parsing typedef, original code follows: ") + std::string(OMNI_EOL_N) + ocode));

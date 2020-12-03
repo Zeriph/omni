@@ -94,6 +94,22 @@ OMNI_STRING_T_FW omni::io::OMNI_PATH_FW::change_extension(const OMNI_STRING_T_FW
     return path.substr(0, psep) + OMNI_L_FW(".") + extension;
 }
 
+OMNI_STRING_T_FW omni::io::OMNI_PATH_FW::combine(const omni_sequence_t<OMNI_STRING_T_FW>& paths, const OMNI_STRING_T_FW& seperator)
+{
+    std::size_t psep;
+    OMNI_STRING_T_FW ret, sep;
+    omni_sequence_t<OMNI_STRING_T_FW>::const_iterator itr = paths.begin();
+    for (; itr != paths.end(); ++itr) {
+        psep = itr->find_last_of(seperator);
+        if ((itr == paths.begin()) || (psep == itr->length()-1)) {
+            ret += *itr;
+        } else {
+            ret += seperator + *itr;
+        }
+    }
+    return ret;
+}
+
 OMNI_STRING_T_FW omni::io::OMNI_PATH_FW::combine(const OMNI_STRING_T_FW& path1, const OMNI_STRING_T_FW& path2)
 { 
     if (path1.empty()) { return path2; }
@@ -179,10 +195,9 @@ bool omni::io::OMNI_PATH_FW::is_path_absolute(const OMNI_STRING_T_FW& path)
 
 OMNI_STRING_T_FW omni::io::OMNI_PATH_FW::trim_trailing_slash(const OMNI_STRING_T_FW& path)
 {
-    if (path.length() > 1) {
-        if (path.at(path.length() - 1) == OMNI_L_FW('/') || path.at(path.length() - 1) == OMNI_L_FW('\\')) {
-            return path.substr(0, path.length() - 1);
-        }
+    std::size_t found = path.find_last_not_of(OMNI_L_FW("\\/"));
+    if (found != OMNI_STRING_T_FW::npos) {
+        return path.substr(0, found+1);
     }
     return path;
 }

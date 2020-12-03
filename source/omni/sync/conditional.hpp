@@ -29,13 +29,19 @@
     #include <errno.h> // errno
 #endif
 
+#if defined(OMNI_32BIT_CONDITIONAL)
+    #define OMNI_COND_INT_FW uint32_t
+#else
+    #define OMNI_COND_INT_FW uint64_t
+#endif
+
 namespace omni {
     namespace sync {
         class conditional
         {
             public:
                 conditional();
-                explicit conditional(bool initially_signaled);
+                OMNI_EXPLICIT conditional(bool initially_signaled);
                 ~conditional() OMNI_DTOR_THROWS;
                 void broadcast();
                 void reset();
@@ -43,7 +49,7 @@ namespace omni {
                 inline bool signaled() const
                 {
                     omni::sync::scoped_lock<omni::sync::mutex_t> slock(&this->m_wait);
-                    return this->m_signaled;
+                    return (this->m_signaled == 1);
                 }
                 
                 void signal();
@@ -63,8 +69,8 @@ namespace omni {
                 
                 omni::sync::cond_t m_signal;
                 mutable omni::sync::mutex_t m_wait;
-                uint32_t m_waitreq;
-                volatile mutable bool m_signaled;
+                OMNI_COND_INT_FW m_waitreq;
+                volatile mutable OMNI_COND_INT_FW m_signaled;
         };
     }
 }

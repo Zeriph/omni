@@ -27,7 +27,7 @@ omni::sync::conditional::conditional() :
     m_signal(),
     m_wait(),
     m_waitreq(0),
-    m_signaled(false)
+    m_signaled(0)
 {
     this->_init();
 }
@@ -37,7 +37,7 @@ omni::sync::conditional::conditional(bool initially_signaled) :
     m_signal(),
     m_wait(),
     m_waitreq(0),
-    m_signaled(false)
+    m_signaled(0)
 {
     this->_init();
     if (initially_signaled) { this->signal(); }
@@ -74,7 +74,7 @@ void omni::sync::conditional::broadcast()
         #if defined(OMNI_WIN_USE_EVENT_CONDITIONAL)
             omni::sync::mutex_lock(this->m_wait);
             uint32_t wreq = this->m_waitreq+1;
-            this->m_signaled = true;
+            this->m_signaled = 1;
             while (--wreq > 0) {
                 if (::SetEvent(this->m_signal) == 0) {
                     omni::sync::mutex_unlock(this->m_wait);
@@ -87,13 +87,13 @@ void omni::sync::conditional::broadcast()
             omni::sync::mutex_unlock(this->m_wait);
         #else
             omni::sync::mutex_lock(this->m_wait);
-            this->m_signaled = true;
+            this->m_signaled = 1;
             ::WakeAllConditionVariable(&this->m_signal);
             omni::sync::mutex_unlock(this->m_wait);
         #endif
     #else
         omni::sync::mutex_lock(this->m_wait);
-        this->m_signaled = true;
+        this->m_signaled = 1;
         int ret = ::pthread_cond_broadcast(&this->m_signal);
         omni::sync::mutex_unlock(this->m_wait);
         if (ret != 0) {
@@ -105,7 +105,7 @@ void omni::sync::conditional::broadcast()
 void omni::sync::conditional::reset()
 {
     omni::sync::mutex_lock(this->m_wait);
-    this->m_signaled = false;
+    this->m_signaled = 0;
     #if defined(OMNI_WIN_USE_EVENT_CONDITIONAL)
         ::ResetEvent(this->m_signal);
     #endif
@@ -117,7 +117,7 @@ void omni::sync::conditional::signal()
     #if defined(OMNI_OS_WIN)
         #if defined(OMNI_WIN_USE_EVENT_CONDITIONAL)
             omni::sync::mutex_lock(this->m_wait);
-            this->m_signaled = true;
+            this->m_signaled = 1;
             if (::SetEvent(this->m_signal) == 0) {
                 omni::sync::mutex_unlock(this->m_wait);
                 OMNI_ERRV_RET_FW("An error occurred on the conditional: ", OMNI_GLE, omni::exceptions::conditional_exception(OMNI_GLE))
@@ -125,13 +125,13 @@ void omni::sync::conditional::signal()
             omni::sync::mutex_unlock(this->m_wait);
         #else
             omni::sync::mutex_lock(this->m_wait);
-            this->m_signaled = true;
+            this->m_signaled = 1;
             ::WakeConditionVariable(&this->m_signal);
             omni::sync::mutex_unlock(this->m_wait);
         #endif
     #else
         omni::sync::mutex_lock(this->m_wait);
-        this->m_signaled = true;
+        this->m_signaled = 1;
         int ret = ::pthread_cond_signal(&this->m_signal);
         omni::sync::mutex_unlock(this->m_wait);
         if (ret != 0) {
@@ -143,7 +143,7 @@ void omni::sync::conditional::signal()
 bool omni::sync::conditional::wait()
 {
     omni::sync::mutex_lock(this->m_wait);
-    if (this->m_signaled) {
+    if (this->m_signaled == 1) {
         omni::sync::mutex_unlock(this->m_wait);
         return false;
     }
@@ -154,7 +154,7 @@ bool omni::sync::conditional::wait()
             switch (::WaitForSingleObject(this->m_signal, INFINITE)) {
                 case WAIT_OBJECT_0: { // 0x00000000L
                     omni::sync::mutex_lock(this->m_wait);
-                    if (this->m_signaled) { --this->m_waitreq; }
+                    if (this->m_signaled == 1) { --this->m_waitreq; }
                     omni::sync::mutex_unlock(this->m_wait);
                     return true;
                 } break;
@@ -175,7 +175,7 @@ bool omni::sync::conditional::wait()
                     #endif
                 }
                 // spurious wake up?
-                if (!this->m_signaled) { continue; }
+                if (this->m_signaled == 0) { continue; }
                 --this->m_waitreq;
                 return true;
             }
@@ -187,7 +187,7 @@ bool omni::sync::conditional::wait()
             ret = ::pthread_cond_wait(&this->m_signal, &this->m_wait);
             if (ret == 0) {
                 // spurious wake up?
-                if (!this->m_signaled) { continue; }
+                if (this->m_signaled == 0) { continue; }
                 --this->m_waitreq;
                 return true;
             }
@@ -205,7 +205,7 @@ bool omni::sync::conditional::wait()
 bool omni::sync::conditional::wait(uint32_t timeout_ms)
 {
     omni::sync::mutex_lock(this->m_wait);
-    if (this->m_signaled) {
+    if (this->m_signaled == 1) {
         omni::sync::mutex_unlock(this->m_wait);
         return false;
     }
@@ -216,7 +216,7 @@ bool omni::sync::conditional::wait(uint32_t timeout_ms)
             switch (::WaitForSingleObject(this->m_signal, timeout_ms)) {
                 case WAIT_OBJECT_0: { // 0x00000000L
                     omni::sync::mutex_lock(this->m_wait);
-                    if (this->m_signaled) { --this->m_waitreq; }
+                    if (this->m_signaled == 1) { --this->m_waitreq; }
                     omni::sync::mutex_unlock(this->m_wait);
                     return true;
                 } break;
@@ -242,7 +242,7 @@ bool omni::sync::conditional::wait(uint32_t timeout_ms)
                     #endif
                 }
                 // spurious wake up?
-                if (!this->m_signaled) { continue; }
+                if (this->m_signaled == 0) { continue; }
                 --this->m_waitreq;
                 return true;
             }
@@ -255,8 +255,9 @@ bool omni::sync::conditional::wait(uint32_t timeout_ms)
             if (::gettimeofday(&tv, NULL) != 0) {
                 OMNI_ERRV_RETV_FW("An error occurred getting the clock time: ", errno, omni::exceptions::clock_exception(errno), false)
             }
-            tm.tv_sec = tv.tv_sec + 0;
-            tm.tv_nsec = 0;
+            // TODO: what was the point of this?
+            //tm.tv_sec = tv.tv_sec + 0;
+            //tm.tv_nsec = 0;
         #else
             if (::clock_gettime(CLOCK_REALTIME, &tm) != 0) {
                 OMNI_ERRV_RETV_FW("An error occurred getting the clock time: ", errno, omni::exceptions::clock_exception(errno), false)
@@ -271,7 +272,7 @@ bool omni::sync::conditional::wait(uint32_t timeout_ms)
             ret = ::pthread_cond_timedwait(&this->m_signal, &this->m_wait, &tm);
             if (ret == 0) {
                 // spurious wake up?
-                if (!this->m_signaled) { continue; }
+                if (this->m_signaled == 0) { continue; }
                 --this->m_waitreq;
                 return true;
             } else if (ret == ETIMEDOUT) { // time out while waiting

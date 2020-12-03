@@ -8,6 +8,41 @@ static List<OmniDocuGen::CodeGen::ptr_t> _checkedFiles;
 static List<OmniDocuGen::MemberTypeInformation::ptr_t> _checkedMembers;
 static List<OmniDocuGen::FrameworkExample> _checkExamples;
 
+class UtInfo {
+    public:
+        UtInfo() : Name(), RootNS(), IsNS(false), Empty(true), Member() {}
+        UtInfo(const UtInfo& cp) : Name(cp.Name), RootNS(cp.RootNS), IsNS(cp.IsNS), Empty(cp.Empty), Member(cp.Member) {}
+        explicit UtInfo(const std::string& nm) : Name(nm), RootNS(), IsNS(false), Empty(false), Member() {}
+        UtInfo(const std::string& nm, OmniDocuGen::MemberTypeInformation::ptr_t& mti) : Name(nm), RootNS(), IsNS(false), Empty(false), Member(mti) {}
+        UtInfo(const std::string& nm, const std::string& rns) : Name(nm), RootNS(rns), IsNS(false), Empty(false), Member() {}
+        UtInfo(const std::string& nm, const std::string& rns, OmniDocuGen::MemberTypeInformation::ptr_t& mti) : Name(nm), RootNS(rns), IsNS(false), Empty(false), Member(mti) {}
+        UtInfo(const std::string& nm, const std::string& rns, bool isns) : Name(nm), RootNS(rns), IsNS(isns), Empty(false), Member() {}
+        UtInfo(const std::string& nm, const std::string& rns, bool isns, OmniDocuGen::MemberTypeInformation::ptr_t& mti) :
+            Name(nm), RootNS(rns), IsNS(isns), Empty(false), Member(mti)
+        {
+            if (mti->Parent->CodeType == OmniDocuGen::Types::CodeStructureType::Namespace) {
+                this->RootNS = mti->Parent->Name;
+            }
+        }
+        ~UtInfo() {}
+
+        UtInfo& operator=(const UtInfo& cp)
+        {
+            this->Name = cp.Name;
+            this->RootNS = cp.RootNS;
+            this->IsNS = cp.IsNS;
+            this->Empty = cp.Empty;
+            this->Member = cp.Member;
+            return *this;
+        }
+
+        std::string Name;
+        std::string RootNS;
+        bool IsNS;
+        bool Empty;
+        OmniDocuGen::MemberTypeInformation::ptr_t Member;
+};
+
 static void FullUsage()
 {
     pl(
@@ -78,6 +113,7 @@ static void Usage()
         "[mode] is one of the following:" << std::endl <<
             "-full      Specifies running the full parser/generator." << std::endl <<
             "-parser    Specifies running the Omni class parser." << std::endl <<
+            "-ut        Specifies running the Omni unit test class parser/creator." << std::endl <<
             "-macro     Specifies running the Omni macro editor." << std::endl <<
             "-api       Specifies running the Omni system API editor." << std::endl <<
             "-html      Specifies running the code syntax HTML highlighter with optional Omni" << std::endl <<
@@ -96,6 +132,41 @@ static void Usage()
             "               the entire framework will be parsed." << std::endl <<
             "-mti [path]    View the member type information for the full path specified." << std::endl <<
             "               The full path is the full namespace path, e.g. omni::event" << std::endl <<
+            "" << std::endl <<
+        "MODE: -ut -> Runs the unit test class parser/creator." << std::endl <<
+        "OPTIONS:" << std::endl <<
+            "-in [file]     Specifies the specific Omni file to read and parse, otherwise" << std::endl <<
+            "               the entire framework will be parsed." << std::endl <<
+            "-mti [path]    View the member type information for the full path specified." << std::endl <<
+            "               The full path is the full namespace path, e.g. omni::event" << std::endl <<
+            "-noinfo        If specified, the info_test function will not be generated." << std::endl <<
+            "-new           Enables 'create' mode in which you can create or overwrite unit tests." << std::endl <<
+            "-spilt         If -new is specified, this will put each class/struct in a different" << std::endl <<
+            "               unit test file instead of splitting into unit test functions within" << std::endl <<
+            "               the same unit test file." << std::endl <<
+            "-overwrite     If -new is specified, this will overwrite the unit test if that" << std::endl <<
+            "               test already exists." << std::endl <<
+            "-name [name]   If -new is specified, this flag specifies the unit test name to use for UT_NAME." << std::endl <<
+            "               This overrides the auto-discovered value for the unit test." << std::endl <<
+            "               Note: This value is not valid with the -spilt flag." << std::endl <<
+            "-desc [data]   If -new is specified, this flag will specify a test description" << std::endl <<
+            "               for the UT_DESC macro in the unit test header." << std::endl <<
+            "-rootns [ns]   If -new is specified, this flag specifies the root namespace to use for UT_ROOT_NS." << std::endl <<
+            "               This overrides the auto-discovered value for the root namespace." << std::endl <<
+            "               Note: This value is not valid with the -spilt flag." << std::endl <<
+            "-isns          If -new is specified, this flag specifies this unit test is a namespace" << std::endl <<
+            "               (Sets UT_ISNS to true). This overrides the auto-discovered value for the unit test." << std::endl <<
+            "               Note: This value is not valid with the -spilt flag." << std::endl <<
+            "-print         If -new is specified, this will output the unit test file to the console" << std::endl <<
+            "               instead of the actual unit test output file. Note: -overwrite is ignored." << std::endl <<
+            "-comment       If -new is specified, this will enclose the output within the 'base_test'" << std::endl <<
+            "               in a multi-line comment block. This can be used in conjuction with the" << std::endl <<
+            "               -print option. Note: -overwrite is ignored." << std::endl <<
+            "" << std::endl <<
+            "NOTE: the unit test parser/creator is simplistic in its generation of the unit tests." << std::endl <<
+            "It is intended to speed up creation of unit test files and the code generated is not" << std::endl <<
+            "fully compilable without slight modification. Enabling the -comment flag will comment" << std::endl <<
+            "out the block of code to make the test file compilable." << std::endl <<
             "" << std::endl <<
         "MODE: -macro -> Create and view OMNI_ macro options" << std::endl <<
         "OPTIONS:" << std::endl <<
@@ -185,6 +256,413 @@ static void Usage()
             "               after replacing the license in the source." << std::endl <<
             "" << std::endl
     );
+}
+
+static std::string _GetMtiName(OmniDocuGen::MemberTypeInformation::ptr_t& mti)
+{
+    std::string ret;
+    if (mti->ScopeAccessType == OmniDocuGen::Types::CodeScopeAcessType::Public) {
+        if (mti->CodeType == OmniDocuGen::Types::CodeStructureType::Namespace) {
+            foreach (OmniDocuGen::MemberTypeInformation::ptr_t, member, mti->Members) {
+                std::string tmp = _GetMtiName(*member);
+                if (!tmp.empty()) {
+                    if (ret.empty()) {
+                        ret += tmp;
+                    } else {
+                        ret += " and " + tmp;
+                    }
+                }
+            }
+            if (ret.empty()) {
+                ret = mti->FullPath;
+            }
+        } else {
+            if ((mti->CodeType == OmniDocuGen::Types::CodeStructureType::Class) ||
+                (mti->CodeType == OmniDocuGen::Types::CodeStructureType::Struct))
+            {
+                ret = mti->FullPath;
+            }
+        }
+    }
+    return ret;
+}
+
+static List<UtInfo> _GetMtiUnitName(OmniDocuGen::MemberTypeInformation::ptr_t& mti)
+{
+    List<UtInfo> ret;
+    if (mti->ScopeAccessType == OmniDocuGen::Types::CodeScopeAcessType::Public) {
+        if (mti->CodeType == OmniDocuGen::Types::CodeStructureType::Namespace) {
+            foreach (OmniDocuGen::MemberTypeInformation::ptr_t, member, mti->Members) {
+                List<UtInfo> tmp = _GetMtiUnitName(*member);
+                foreach (UtInfo, ut, tmp) {
+                    ret.push_back(*ut);
+                }
+            }
+            if (ret.size() == 0) {
+                ret.push_back(UtInfo(mti->Name, "", true, mti));
+            }
+        } else {
+            if ((mti->CodeType == OmniDocuGen::Types::CodeStructureType::Class) ||
+                (mti->CodeType == OmniDocuGen::Types::CodeStructureType::Struct))
+            {
+                if (mti->Parent->CodeType == OmniDocuGen::Types::CodeStructureType::Namespace) {
+                    ret.push_back(UtInfo(mti->Name, mti->Parent->Name, mti));
+                } else {
+                    ret.push_back(UtInfo(mti->Name, mti));
+                }
+            }
+        }
+    }
+    return ret;
+}
+
+static std::string _GetVariableName(OmniDocuGen::ParameterInformation::ptr_t p)
+{
+    std::string ret = omni::string::replace(p->ParamType, "const ", "");
+    ret = omni::string::replace(ret, "&", "");
+    ret = omni::string::replace(ret, ">", "");
+    ret = omni::string::replace(ret, "<", "");
+    ret = omni::string::replace_all(ret, "::", "_");
+    ret = omni::string::replace_all(ret, ",", "");
+    ret = omni::string::replace_all(ret, " ", "");
+    ret = omni::string::replace(ret, "omni_", "");
+
+    return ret + "_" + p->Name;
+}
+
+static std::string _GetTemplate(const std::string& tp)
+{
+    std::string ret = omni::string::replace(tp, "template ", "");
+    ret = omni::string::replace(ret, "<", "");
+    ret = omni::string::replace(ret, ">", "");
+    ret = omni::string::replace_all(ret, "class ", "");
+    ret = omni::string::replace_all(ret, "typename ", "");
+    ret = omni::string::replace_all(ret, "std::size_t ", "");
+    ret = omni::string::replace_all(ret, "size_t ", "");
+    ret = omni::string::replace_all(ret, " ", "");
+    ret = omni::string::replace_all(ret, "[", "");
+    ret = omni::string::replace_all(ret, "]", "");
+    return "<" + omni::string::trim(ret) + ">";
+}
+
+static std::string _PrintMemberInfo(OmniDocuGen::MemberTypeInformation::ptr_t& mti)
+{
+    if (
+        (mti->CodeType == OmniDocuGen::Types::CodeStructureType::Dtor) ||
+        (mti->CodeType == OmniDocuGen::Types::CodeStructureType::Typedef) ||
+        (mti->ScopeAccessType == OmniDocuGen::Types::CodeScopeAcessType::Private) ||
+        (mti->Name == "hash") || (mti->Name == "name") || (mti->Name == "type") || (mti->Name == "disposing") ||
+        (omni::string::contains(mti->Signature, "friend std::ostream") || omni::string::contains(mti->Signature, "friend std::wostream"))
+    )
+    { return ""; }
+
+    std::string rv = omni::string::trim(omni::string::replace(mti->Signature, mti->ReturnType, ""));
+    std::string parms, tmp, ret;
+    std::string sig = "// " + mti->Name + " ~~ " + mti->Signature + "\n";
+
+    if (mti->CodeType == OmniDocuGen::Types::CodeStructureType::Ctor) {
+        ret = sig;
+        if (mti->IsOverloaded()) {
+            foreach (OmniDocuGen::MemberTypeInformation::ptr_t, oload, mti->Overloads) {
+                if ((*oload)->ScopeAccessType == OmniDocuGen::Types::CodeScopeAcessType::Private) { continue; }
+                ret += "// " + (*oload)->Name + " ~~ " + (*oload)->Signature + "\n";
+            }
+        }
+        return ret + "\n";
+    }
+
+    if ((mti->Parent) && (!mti->IsStatic) && (
+        (mti->Parent->CodeType == OmniDocuGen::Types::CodeStructureType::Class) ||
+        (mti->Parent->CodeType == OmniDocuGen::Types::CodeStructureType::Struct)))
+    {
+        switch (mti->CodeType) {
+            case OmniDocuGen::Types::CodeStructureType::Operator:
+                tmp = omni::string::trim(
+                    omni::string::replace(mti->Name, "operator", "") // get the operator name
+                );
+                if (!omni::char_util::is_alpha(tmp[0])) {
+                    /*
+                        It's likely a binary/arith operator, e.g.
+
+                        +    -    *    /    =    <    >    +=   -=   *=   /=   <<   >>
+                        <<=  >>=  ==   !=   <=   >=   ++   --   %    &    ^    !    |
+                        ~    &=   ^=   |=   &&   ||   %=   []
+
+                        operator!=
+                        operator+
+                        operator+=
+                        operator-
+                    */
+                    if ((tmp == "--") || (tmp == "++")) {
+                        if (mti->Parameters.size() > 0) {
+                            rv = "(" + tmp + "temp_val)";
+                        } else {
+                            rv = "(temp_val" + tmp + ")";
+                        }
+                    } else {
+                        if (mti->Parameters.size() > 0) {
+                            rv = "(temp_val " + tmp + " " + _GetVariableName(mti->Parameters[0]) + ")";
+                        } else {
+                            // this shouldn't happen
+                            rv = "(temp_val " + tmp + " " + mti->Parent->FullPath + ")";
+                        }
+                    }
+                } else {
+                    /*
+                        It's likely a type operator:
+
+                        operator omni::math::dimensional
+                        operator std::string
+                        operator std::wstring
+                    */
+                    if (mti->ReturnType != "bool") {
+                        rv = "(static_cast< " + tmp + " >(temp_val))";
+                    } else {
+                        // this shouldn't happen
+                        rv = "(temp_val " + tmp + " " + mti->Parent->FullPath + ")";
+                    }
+                }
+                break;
+            default:
+                rv = "temp_val." + mti->Name;
+                break;
+        }
+    } else if (mti->IsStatic) {
+        if (mti->IsTemplated()) {
+            rv = mti->FullPath + _GetTemplate(mti->Template);
+        } else {
+            if ((mti->Parent) && (mti->Parent->IsTemplated())) {
+                rv = mti->Parent->FullPath + _GetTemplate(mti->Parent->Template) +
+                     omni::string::replace(mti->FullPath, mti->Parent->FullPath, "");
+            } else {
+                rv = mti->FullPath;
+            }
+        }
+    }
+    if ((mti->Parameters.size() > 0) && (mti->CodeType != OmniDocuGen::Types::CodeStructureType::Operator)) {
+        foreach (OmniDocuGen::ParameterInformation::ptr_t, p, mti->Parameters) {
+            parms += _GetVariableName(*p);
+            if ((p+1) != mti->Parameters.end()) {
+                parms += ", ";
+            }
+        }
+    }
+    if ((mti->CodeType != OmniDocuGen::Types::CodeStructureType::Member) &&
+        (mti->CodeType != OmniDocuGen::Types::CodeStructureType::Operator))
+    {
+        rv += "(" + parms + ")";
+    }
+    rv = omni::string::trim(omni::string::replace(omni::string::replace(rv, "inline ", ""), "static ", ""));
+    
+    ret = "";
+    if (mti->ReturnType == "void") {
+        ret = rv + ";\ntest(\"" + rv + "\", temp_val, \"?\");\n\n";
+    } else if (mti->ReturnType == "bool") {
+        ret = "test(\"" + rv + "\", (" + rv + " ? \"true\" : \"false\"), \"?\");\n\n";
+    } else {
+        ret = "test(\"" + rv + "\", " + rv + ", \"?\");\n\n";
+    }
+
+    if (mti->IsOverloaded()) {
+        ret = sig + ret;
+        foreach (OmniDocuGen::MemberTypeInformation::ptr_t, oload, mti->Overloads) {
+            if ((*oload)->ScopeAccessType == OmniDocuGen::Types::CodeScopeAcessType::Private) { continue; }
+            if ((*oload)->IsStatic) { continue; }
+            ret += _PrintMemberInfo(*oload);
+        }
+    } else {
+        ret = sig + ret;
+    }
+    return ret;
+}
+
+static std::string _PrintMtiStaticInfo(OmniDocuGen::MemberTypeInformation::ptr_t& mti)
+{
+    std::string ret;
+    if (mti->IsOverloaded()) {
+        if (mti->IsStatic) {
+            ret += _PrintMemberInfo(mti);
+        }
+        foreach (OmniDocuGen::MemberTypeInformation::ptr_t, oload, mti->Overloads) {
+            if ((*oload)->ScopeAccessType == OmniDocuGen::Types::CodeScopeAcessType::Private) { continue; }
+            if ((*oload)->IsStatic) {
+                ret += _PrintMemberInfo(*oload);
+            }
+        }
+    } else {
+        foreach (OmniDocuGen::MemberTypeInformation::ptr_t, mem, mti->Members) {
+            if ((*mem)->IsStatic) {
+                ret += _PrintMemberInfo(*mem);
+            } else {
+                ret += _PrintMtiStaticInfo(*mem);
+            }
+        }
+    }
+    return ret;
+}
+
+static std::string _PrintMtiTestSignatureInfo(OmniDocuGen::MemberTypeInformation::ptr_t& mti)
+{
+    std::string ret;
+    if (mti->ScopeAccessType == OmniDocuGen::Types::CodeScopeAcessType::Public) {
+        if (mti->CodeType == OmniDocuGen::Types::CodeStructureType::Namespace) {
+            foreach (OmniDocuGen::MemberTypeInformation::ptr_t, member, mti->Members) {
+                if ((*member)->IsStatic) { continue; }
+                ret += _PrintMtiTestSignatureInfo(*member);
+            }
+            ret += _PrintMtiStaticInfo(mti);
+        } else {
+            if ((mti->CodeType == OmniDocuGen::Types::CodeStructureType::Class) ||
+                (mti->CodeType == OmniDocuGen::Types::CodeStructureType::Struct))
+            {
+                ret = "";// mti->FullPath + " temp_val;\n\n";
+                foreach (OmniDocuGen::MemberTypeInformation::ptr_t, member, mti->Members) {
+                    if ((*member)->IsStatic) { continue; }
+                    ret += _PrintMemberInfo(*member);
+                }
+                ret += _PrintMtiStaticInfo(mti);
+            } else {
+                ret = _PrintMemberInfo(mti);
+            }
+        }
+    }
+    return ret + "\n";
+}
+
+static List<std::string> _GetMemberParams(OmniDocuGen::MemberTypeInformation::ptr_t& mti)
+{
+    List<std::string> ret;
+    if (
+        (mti->CodeType == OmniDocuGen::Types::CodeStructureType::Ctor) ||
+        (mti->CodeType == OmniDocuGen::Types::CodeStructureType::Dtor) ||
+        (mti->CodeType == OmniDocuGen::Types::CodeStructureType::Typedef) ||
+        (mti->ScopeAccessType == OmniDocuGen::Types::CodeScopeAcessType::Private) ||
+        (mti->Name == "hash") || (mti->Name == "name") || (mti->Name == "type") || (mti->Name == "disposing") ||
+        (omni::string::contains(mti->Signature, "friend std::ostream") || omni::string::contains(mti->Signature, "friend std::wostream"))
+    )
+    { return ret; }
+
+    if ((mti->CodeType == OmniDocuGen::Types::CodeStructureType::Operator) &&
+        (mti->Parameters.size() > 0) &&
+        ((mti->Name == "operator--") || (mti->Name == "operator++")))
+    {
+        // ignore operator--(int dummy) and operator++(int dummy)
+    } else {
+        std::string tmp;
+        foreach (OmniDocuGen::ParameterInformation::ptr_t, p, mti->Parameters) {
+            tmp = omni::string::replace((*p)->ParamType, "const ", "");
+            tmp = omni::string::trim(omni::string::replace_all(tmp, "&", ""));
+            tmp = tmp + " " + _GetVariableName(*p);
+            ret.push_back(tmp);
+        }
+    }
+    
+    if (mti->IsOverloaded()) {
+        foreach (OmniDocuGen::MemberTypeInformation::ptr_t, oload, mti->Overloads) {
+            if ((*oload)->ScopeAccessType == OmniDocuGen::Types::CodeScopeAcessType::Private) { continue; }
+            if ((*oload)->IsStatic) { continue; }
+            List<std::string> tmp2 = _GetMemberParams(*oload);
+            foreach (std::string, tval, tmp2) {
+                ret.push_back(*tval);
+            }
+        }
+    }
+    return ret;
+}
+
+static List<std::string> _GetParamStaticInfo(OmniDocuGen::MemberTypeInformation::ptr_t& mti)
+{
+    List<std::string> ret;
+    if (mti->IsOverloaded()) {
+        if (mti->IsStatic) {
+            List<std::string> tmp = _GetMemberParams(mti);
+            foreach (std::string, tval, tmp) {
+                ret.push_back(*tval);
+            }
+        }
+        foreach (OmniDocuGen::MemberTypeInformation::ptr_t, oload, mti->Overloads) {
+            if ((*oload)->ScopeAccessType == OmniDocuGen::Types::CodeScopeAcessType::Private) { continue; }
+            if ((*oload)->IsStatic) {
+                List<std::string> tmp = _GetMemberParams(*oload);
+                foreach (std::string, tval, tmp) {
+                    ret.push_back(*tval);
+                }
+            }
+        }
+    } else {
+        foreach (OmniDocuGen::MemberTypeInformation::ptr_t, mem, mti->Members) {
+            if ((*mem)->IsStatic) {
+                List<std::string> tmp = _GetMemberParams(*mem);
+                foreach (std::string, tval, tmp) {
+                    ret.push_back(*tval);
+                }
+            } else {
+                List<std::string> tmp = _GetParamStaticInfo(*mem);
+                foreach (std::string, tval, tmp) {
+                    ret.push_back(*tval);
+                }
+            }
+        }
+    }
+    return ret;
+}
+
+static List<std::string> _GetMtiList(OmniDocuGen::MemberTypeInformation::ptr_t& mti)
+{
+    List<std::string> ret;
+    if (mti->ScopeAccessType == OmniDocuGen::Types::CodeScopeAcessType::Public) {
+        if (mti->CodeType == OmniDocuGen::Types::CodeStructureType::Namespace) {
+            foreach (OmniDocuGen::MemberTypeInformation::ptr_t, member, mti->Members) {
+                if ((*member)->IsStatic) { continue; }
+                List<std::string> tmp = _GetMtiList(*member);
+                foreach (std::string, tval, tmp) {
+                    ret.push_back(*tval);
+                }
+            }
+            List<std::string> tmp2 = _GetParamStaticInfo(mti);
+            foreach (std::string, tval, tmp2) {
+                ret.push_back(*tval);
+            }
+        } else {
+            if ((mti->CodeType == OmniDocuGen::Types::CodeStructureType::Class) ||
+                (mti->CodeType == OmniDocuGen::Types::CodeStructureType::Struct))
+            {
+                if (mti->IsTemplated()) {
+                    ret.push_back((mti->FullPath + _GetTemplate(mti->Template) + " temp_val"));
+                } else {
+                    ret.push_back((mti->FullPath + " temp_val"));
+                }
+                foreach (OmniDocuGen::MemberTypeInformation::ptr_t, member, mti->Members) {
+                    if ((*member)->IsStatic) { continue; }
+                    List<std::string> tmp = _GetMemberParams(*member);
+                    foreach (std::string, tval, tmp) {
+                        ret.push_back(*tval);
+                    }
+                }
+                List<std::string> tmp2 = _GetParamStaticInfo(mti);
+                foreach (std::string, tval, tmp2) {
+                    ret.push_back(*tval);
+                }
+            } else {
+                ret = _GetMemberParams(mti);
+            }
+        }
+    }
+    return ret;
+}
+
+static std::string _GetMtiParamData(OmniDocuGen::MemberTypeInformation::ptr_t& mti)
+{
+    std::string ret;
+    List<std::string> list = _GetMtiList(mti);
+    std::map<std::string, uint32_t> vals;
+    foreach (std::string, tval, list) {
+        if (vals[*tval] == 0) {
+            ret += *tval + ";\n";
+        }
+        vals[*tval] += 1;
+    }
+    return "typedef double T;\n" + ret + "\n";
 }
 
 static List<std::string> _MacroScanSourceFile(const std::string& f)
@@ -944,6 +1422,228 @@ static void CodeToHtml()
     }
 }
 
+static void UnitTest()
+{
+    omni::application::argparser& args = omni::application::args();
+    pl("Running unit test parser/creator mode");
+    OmniDocuGen::MemberTypeInformation::ptr_t mti;
+    omni::stopwatch sw;
+    std::string pfile = args["-in"];
+    if (!pfile.empty() && omni::io::file::exists(pfile)) {
+        OmniDocuGen::CodeGen cg(pfile);
+        OmniDocuGen::Program::AddParsingCode(pfile);
+        if (OmniDocuGen::Util::IsSourceExt(pfile)) {
+            sw.start();
+            cg.GenerateSourceTypeInfo();
+        } else {
+            sw.start();
+            cg.GenerateTypeInfo();
+        }
+        OmniDocuGen::Program::RemoveParsingCode(pfile);
+        if (cg.MemberInformation) {
+
+            OmniDocuGen::DocuGen::AllMti = OmniDocuGen::MemberTypeInformation::GetOmni(true);
+            OmniDocuGen::DocuGen::MtiTree.SetRoot(OmniDocuGen::DocuGen::AllMti);
+            OmniDocuGen::DocuGen::AllMti->AddVerify(cg.MemberInformation);
+            OmniDocuGen::Types::TreeNode n(cg.MemberInformation);
+            foreach (OmniDocuGen::MemberTypeInformation::ptr_t, ti, cg.MemberInformation->Members) {
+                OmniDocuGen::DocuGen::AddTree(*ti, n);
+            }
+            OmniDocuGen::Types::TreeNode::AddNodes(n, OmniDocuGen::DocuGen::MtiTree);
+
+            mti = OmniDocuGen::DocuGen::AllMti->Find(cg.MemberInformation);
+            if (!mti) {
+                pl("Member type information for " << cg.MemberInformation << " not found.");
+            }
+            sw.stop();
+        } else {
+            up("Could not find any member information in {0}", cg.SourceFile);
+        }
+    } else {
+        std::string member = args["-mti"];
+        if (member.empty()) {
+            pl("No member specified to generate unit test info.");
+        } else {
+            sw.start();
+            OmniDocuGen::DocuGen::ParseSource(OmniDocuGen::Types::SourceGenType::Normal);
+            mti = OmniDocuGen::DocuGen::AllMti->Find(member);
+            sw.stop();
+            if (!mti) {
+                pl("Member type information for " << member << " not found.");
+            }
+        }
+    }
+    if (mti) {
+        up("Found {0} with {1} total members in {2}s ({3}ms)",
+            omni::string::to_string(_GetMtiName(mti)),
+            omni::string::to_string(mti->GetNodeCount(true)),
+            omni::string::to_string(omni::math::round((static_cast<double>(sw.elapsed_ms())/1000), 3)),
+            omni::string::to_string(sw.elapsed_ms())
+        );
+        if (args.contains("-new")) {
+            bool no_info_test = args.contains("-noinfo");
+            bool do_comment = args.contains("-comment");
+            std::string description = args["-desc"];
+            List<UtInfo> ut = _GetMtiUnitName(mti);
+            std::string tests_hpp = omni::io::path::combine(OmniDocuGen::Program::Settings.UnitTestDirectory, "tests.hpp");
+            std::string utname, ofile, data, params, tplate, func_list_add, info_test, tmp;
+
+            if (args.contains("-split")) {
+                foreach (UtInfo, uti, ut) {
+                    utname = omni::string::to_lower(omni::string::trim(uti->Name));
+                    ofile = omni::io::path::combine(omni::io::path::combine(OmniDocuGen::Program::Settings.UnitTestDirectory, "units"), (utname + ".hpp"));
+
+                    tplate = omni::io::file::get_contents(omni::io::path::combine(OmniDocuGen::Program::Settings.UnitTestDirectory, "template.hpp"));
+                    tplate = omni::string::replace(tplate, "testname", utname);
+                    tplate = omni::string::replace_all(tplate, "TESTNAME", omni::string::to_upper(utname));
+                    tplate = omni::string::replace(tplate, "\n            #error MUST DEFINE TESTS", "");
+                    tplate = omni::string::replace(tplate, "\n            M_LIST_ADD(a_test, \"tests some other functionality\");", "");
+                    if (!description.empty()) {
+                        tplate = omni::string::replace(tplate,
+                            "// #define UT_DESC \"Some description\" // define if you want a different description",
+                            ("#define UT_DESC \"" + description + "\"")
+                        );
+                    } else {
+                        tplate = omni::string::replace(tplate, "\n// #define UT_DESC \"Some description\" // define if you want a different description", "");
+                    }
+                    if (uti->IsNS) {
+                        tplate = omni::string::replace(tplate, "// #define UT_ISNS true // mark if UT_NAME is a namespace", "#define UT_ISNS true");
+                    } else {
+                        tplate = omni::string::replace(tplate, "\n// #define UT_ISNS true // mark if UT_NAME is a namespace", "");
+                    }
+                    if (!uti->RootNS.empty()) {
+                        tplate = omni::string::replace(tplate,
+                            "// #define UT_ROOT_NS xxxx // mark if the root NS is !omni",
+                            ("#define UT_ROOT_NS " + omni::string::to_lower(uti->RootNS)));
+                    } else {
+                        tplate = omni::string::replace(tplate, "\n// #define UT_ROOT_NS xxxx // mark if the root NS is !omni", "");
+                    }
+
+                    params = omni::string::trim(_GetMtiParamData(uti->Member)) + "\n\n";
+                    params = omni::string::replace_all(params, "\n", "\n            ");
+                    data = omni::string::trim(_PrintMtiTestSignatureInfo(uti->Member));
+                    data = params + omni::string::replace_all(data, "\n", "\n            ");
+                    info_test = "\n            ";
+                    if (args.contains("-comment")) {
+                        data = "/*" + data + "*/";
+                        info_test += "//";
+                    }
+                    info_test += "print_info(" + uti->Member->FullPath + ");";
+                    if (!no_info_test) {
+                        tplate = omni::string::replace(tplate, "\n            UT_INFO_TEST();", info_test);
+                    }
+                    tplate = omni::string::replace(tplate, "omni::x tval;", data);
+
+                    if (args.contains("-print")) {
+                        pl("Printing '" << ofile << "'");
+                        pl(tplate);
+                        pl("");
+                    } else {
+                        if (omni::io::file::exist(ofile) && !args.contains("-overwrite")) {
+                            pl("The unit test file at '" << ofile << "' already exists and -overwite was not specified.");
+                        } else {
+                            pl("Writing '" << ofile << "'");
+                            omni::io::file::write(ofile, tplate);
+                            if (omni::io::file::exist(ofile)) {
+                                tmp = ("#include \"units/" + utname + ".hpp\"");
+                                if (!omni::string::contains(omni::io::file::get_contents(tests_hpp), tmp)) {
+                                    omni::io::file::write_line(tests_hpp, tmp, true);
+                                }
+                                pl("Success.");
+                            } else {
+                                pl("Failed writing unit test for '" << ofile << "'.");
+                            }
+                        }
+                    }
+                }
+            } else {
+                std::string basestr = "        void base_test()\n        {\n        }\n";
+                std::string newbase = "        void base_test()\n        {";
+                std::string root_ns = (args.contains("-rootns") ? args["-rootns"] : ut[0].RootNS);
+                bool is_ns = (args.contains("-isns") ? true : ut[0].IsNS);
+                
+                utname = omni::string::to_lower(omni::string::trim((args.contains("-name") ? args["-name"] : ut[0].Name)));
+                ofile = omni::io::path::combine(omni::io::path::combine(OmniDocuGen::Program::Settings.UnitTestDirectory, "units"), (utname + ".hpp"));
+
+                tplate = omni::io::file::get_contents(omni::io::path::combine(OmniDocuGen::Program::Settings.UnitTestDirectory, "template.hpp"));
+                tplate = omni::string::replace(tplate, "testname", utname);
+                tplate = omni::string::replace_all(tplate, "TESTNAME", omni::string::to_upper(utname));
+                tplate = omni::string::replace(tplate, "\n            #error MUST DEFINE TESTS", "");
+                tplate = omni::string::replace(tplate, "\n            omni::x tval;", "");
+                if (!description.empty()) {
+                    tplate = omni::string::replace(tplate,
+                        "// #define UT_DESC \"Some description\" // define if you want a different description",
+                        ("#define UT_DESC \"" + description + "\"")
+                    );
+                } else {
+                    tplate = omni::string::replace(tplate, "\n// #define UT_DESC \"Some description\" // define if you want a different description", "");
+                }
+                if (is_ns) {
+                    tplate = omni::string::replace(tplate, "// #define UT_ISNS true // mark if UT_NAME is a namespace", "#define UT_ISNS true");
+                } else {
+                    tplate = omni::string::replace(tplate, "\n// #define UT_ISNS true // mark if UT_NAME is a namespace", "");
+                }
+                if (!root_ns.empty()) {
+                    tplate = omni::string::replace(tplate,
+                        "// #define UT_ROOT_NS xxxx // mark if the root NS is !omni",
+                        ("#define UT_ROOT_NS " + omni::string::to_lower(root_ns)));
+                } else {
+                    tplate = omni::string::replace(tplate, "\n// #define UT_ROOT_NS xxxx // mark if the root NS is !omni", "");
+                }
+
+                data = ""; info_test = "";
+                foreach (UtInfo, uti, ut) {
+                    params = omni::string::trim(_GetMtiParamData(uti->Member)) + "\n\n";
+                    params = omni::string::replace_all(params, "\n", "\n            ");
+                    std::string tmp = params + omni::string::replace_all(omni::string::trim(_PrintMtiTestSignatureInfo(uti->Member)), "\n", "\n            ");
+                    info_test += "\n            ";
+                    if (args.contains("-comment")) {
+                        tmp = "/*" + tmp + "*/";
+                        info_test += "//";
+                    }
+                    info_test += "print_info(" + uti->Member->FullPath + ");";
+                    data += "\n        void " + uti->Member->Name + "()\n        {\n            " + tmp + "\n        }\n";
+                    func_list_add += "\n            M_LIST_ADD(" + uti->Member->Name + ", \"test the functionality in " + uti->Member->FullPath + "\");";
+                    newbase += "\n            " + uti->Member->Name + "(); printl(\"\");";
+                }
+                newbase += "\n        }\n";
+
+                if (!no_info_test) {
+                    tplate = omni::string::replace(tplate, "\n            UT_INFO_TEST();", info_test);
+                }
+                tplate = omni::string::replace(tplate, "\n            M_LIST_ADD(a_test, \"tests some other functionality\");", func_list_add);
+                tplate = omni::string::replace(tplate, basestr, basestr + data);
+                tplate = omni::string::replace(tplate, basestr, newbase);
+
+                if (args.contains("-print")) {
+                    pl("Printing '" << ofile << "'");
+                    pl(tplate);
+                } else {
+                    if (omni::io::file::exist(ofile) && !args.contains("-overwrite")) {
+                        pl("The unit test file at '" << ofile << "' already exists and -overwite was not specified.");
+                    } else {
+                        pl("Writing '" << ofile << "'");
+                        omni::io::file::write(ofile, tplate);
+                        if (omni::io::file::exist(ofile)) {
+                            tmp = ("#include \"units/" + utname + ".hpp\"");
+                            if (!omni::string::contains(omni::io::file::get_contents(tests_hpp), tmp)) {
+                                omni::io::file::write_line(tests_hpp, tmp, true);
+                            }
+                            pl("Success.");
+                        } else {
+                            pl("Failed writing unit test.");
+                        }
+                    }
+                }
+            }
+        } else {
+            pl("Output:" << std::endl);
+            std::cout << omni::string::trim(_GetMtiParamData(mti)) << std::endl << std::endl;
+            std::cout << omni::string::trim(_PrintMtiTestSignatureInfo(mti)) << std::endl << std::endl;
+        }
+    }
+}
+
 static void Viewer()
 {
     omni::application::argparser& args = omni::application::args();
@@ -1028,6 +1728,9 @@ static void Run()
         } else if (args.contains("-parser")) {
             // does the member parsing only
             Viewer();
+        } else if (args.contains("-ut")) {
+            // does the unit test parser/creator
+            UnitTest();
         } else if (args.contains("-macro")) {
             // do macro gen
             MacroGen();

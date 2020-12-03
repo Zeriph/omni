@@ -20,11 +20,15 @@
 #define OMNI_POINT_T_HPP 1
 
 #include <omni/geometry/size.hpp>
+#include <omni/geometry/size3d.hpp>
 #include <omni/geometry/point2d.hpp>
 #include <omni/geometry/point3d.hpp>
 #include <omni/geometry/vector2.hpp>
 #include <omni/geometry/vector3.hpp>
+#include <omni/geometry/circle.hpp>
+#include <omni/geometry/triangle.hpp>
 #include <omni/geometry/rectangle.hpp>
+#include <omni/geometry/quadrilateral.hpp>
 #include <omni/geometry/path.hpp>
 #include <omni/geometry/util.hpp>
 

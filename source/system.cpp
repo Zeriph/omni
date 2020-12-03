@@ -43,10 +43,27 @@
 #include <signal.h>
 #include <errno.h>
 #include <cstdlib>
-#include <cstdio>
 #include <climits>
 #include <cstring>
 #include <omni/defs/consts.hpp>
+
+bool omni::system::is_big_endian()
+{
+    unsigned short test = 0x0001;
+    return ((*(reinterpret_cast<char*>(&test))) == 0x00);
+}
+
+int32_t omni::system::last_error()
+{
+    return OMNI_GLE;
+}
+
+std::string omni::system::last_error_str()
+{
+    return omni::system::error_str(OMNI_GLE);
+}
+
+#if defined(OMNI_NON_PORTABLE)
 
 omni::system::architecture_type omni::system::architecture()
 {
@@ -167,86 +184,30 @@ omni::string_t omni::system::cwd()
 std::string omni::system::error_str(int code)
 {
     #if defined(OMNI_WIN_API)//defined(OMNI_OS_WIN)
-        OMNI_CHAR_T *err = new OMNI_CHAR_T[65535];
+        OMNI_CHAR_T *serr = new OMNI_CHAR_T[65535];
         // not a direct system message, must use IGNORE_INSERTS
         DWORD ret = ::FormatMessage(
             FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
             NULL,
             code,
             MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-            err,
+            serr,
             65535,
             NULL
         );
         if (ret != 0) {
-            omni::string_t werr(err); // make copy
-            delete[] err;
-            err = NULL;
+            omni::string_t werr(serr); // make copy
+            delete[] serr;
+            serr = OMNI_NULL;
             return omni::string::to_string(werr);
         }
-        delete[] err;
-        err = NULL;
+        delete[] serr;
+        serr = OMNI_NULL;
         return std::string("Unknown error ").append(omni::string::util::to_string(code));
     #else
         return std::strerror(code);
     #endif
 }
-
-bool omni::system::is_big_endian()
-{
-    unsigned short test = 0x0001;
-    return ((*(reinterpret_cast<char*>(&test))) == 0x00);
-}
-
-int32_t omni::system::last_error()
-{
-    return OMNI_GLE;
-}
-
-std::string omni::system::last_error_str()
-{
-    return omni::system::error_str(OMNI_GLE);
-}
-
-std::string omni::system::signal_str(int sig)
-{
-    /* DEV_NOTE: we do not "redefine" any of the signal names in the
-    omni namespace as it would be redundant and unnecessarily verbose */
-    #if defined(OMNI_WIN_API)
-    switch (sig) {
-        case CTRL_C_EVENT:        // signal when CTRL+C received
-            return "CTRL_C_EVENT: CTRL+C received";
-        case CTRL_BREAK_EVENT:    // signal when CTRL+BREAK received
-            return "CTRL_BREAK_EVENT: CTRL+BREAK received";
-        case CTRL_CLOSE_EVENT:    // signal when console window being closed
-            return "CTRL_CLOSE_EVENT: console window closing";
-        case CTRL_LOGOFF_EVENT:   // signal when user being logged off
-            return "CTRL_C_EVENT: user logging off";
-        case CTRL_SHUTDOWN_EVENT: // signal when system is shutting down
-            return "CTRL_C_EVENT: system shutting down";
-        default: break; // other/unknown signal
-    }
-    #endif
-    switch (sig) {
-        // SIGINT is caught by the console handler in windows
-        case SIGINT:  // signal interrupt: typically occurs when user interrupts the program (like when pressing CTRL+C)
-            return "SIGINT: signal interrupt";
-        case SIGABRT: // signal abort: abnormal termination
-            return "SIGABRT: abort/abnormal termination";
-        case SIGFPE:  // signal floating point exception: occurs on erroneous arithmetic operations (like division by 0)
-            return "SIGFPE: floating point exception";
-        case SIGILL:  // signal illegal instruction: typically occurs with code corruption
-            return "SIGILL: illegal instruction";
-        case SIGSEGV: // signal segmentation violation: typically occurs when the program tries to read/write invalid memory
-            return "SIGSEGV: segmentation violation";
-        case SIGTERM: // signal terminate: termination request sent to the program
-            return "SIGTERM: terminate";
-        default: break; // other/unknown signal
-    }
-    return std::string("Other/Unknown: ").append(omni::string::util::lexical_cast<std::string, int>(sig));
-}
-
-#if defined(OMNI_NON_PORTABLE)
 
 omni::string_t omni::system::path()
 {
@@ -348,6 +309,44 @@ uint64_t omni::system::processors()
     #else // *nix
         return static_cast<uint64_t>(::sysconf(_SC_NPROCESSORS_ONLN));
     #endif
+}
+
+std::string omni::system::signal_str(int sig)
+{
+    /* DEV_NOTE: we do not "redefine" any of the signal names in the
+    omni namespace as it would be redundant and unnecessarily verbose */
+    #if defined(OMNI_WIN_API)
+    switch (sig) {
+        case CTRL_C_EVENT:        // signal when CTRL+C received
+            return "CTRL_C_EVENT: CTRL+C received";
+        case CTRL_BREAK_EVENT:    // signal when CTRL+BREAK received
+            return "CTRL_BREAK_EVENT: CTRL+BREAK received";
+        case CTRL_CLOSE_EVENT:    // signal when console window being closed
+            return "CTRL_CLOSE_EVENT: console window closing";
+        case CTRL_LOGOFF_EVENT:   // signal when user being logged off
+            return "CTRL_C_EVENT: user logging off";
+        case CTRL_SHUTDOWN_EVENT: // signal when system is shutting down
+            return "CTRL_C_EVENT: system shutting down";
+        default: break; // other/unknown signal
+    }
+    #endif
+    switch (sig) {
+        // SIGINT is caught by the console handler in windows
+        case SIGINT:  // signal interrupt: typically occurs when user interrupts the program (like when pressing CTRL+C)
+            return "SIGINT: signal interrupt";
+        case SIGABRT: // signal abort: abnormal termination
+            return "SIGABRT: abort/abnormal termination";
+        case SIGFPE:  // signal floating point exception: occurs on erroneous arithmetic operations (like division by 0)
+            return "SIGFPE: floating point exception";
+        case SIGILL:  // signal illegal instruction: typically occurs with code corruption
+            return "SIGILL: illegal instruction";
+        case SIGSEGV: // signal segmentation violation: typically occurs when the program tries to read/write invalid memory
+            return "SIGSEGV: segmentation violation";
+        case SIGTERM: // signal terminate: termination request sent to the program
+            return "SIGTERM: terminate";
+        default: break; // other/unknown signal
+    }
+    return std::string("Other/Unknown: ").append(omni::string::util::lexical_cast<std::string, int>(sig));
 }
 
 #endif

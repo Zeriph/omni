@@ -26,6 +26,12 @@
     #include <omni/sync/basic_lock.hpp>
 #endif
 
+#if defined(OMNI_32BIT_RUNNABLE_THREAD)
+    #define OMNI_RUNTHRD_INT_FW uint32_t
+#else
+    #define OMNI_RUNTHRD_INT_FW uint64_t
+#endif
+
 namespace omni {
     namespace sync {
         /** Represents a managed over-ridable runnable thread object. */
@@ -40,9 +46,9 @@ namespace omni {
                 // Methods
                 runnable_thread();
                 runnable_thread(const omni::sync::runnable_thread& cp);
-                explicit runnable_thread(const omni::sync::runnable& obj);
-                explicit runnable_thread(const omni::sync::thread_flags& ops);
-                explicit runnable_thread(std::size_t max_stack_sz);
+                OMNI_EXPLICIT runnable_thread(const omni::sync::runnable& obj);
+                OMNI_EXPLICIT runnable_thread(const omni::sync::thread_flags& ops);
+                OMNI_EXPLICIT runnable_thread(std::size_t max_stack_sz);
                 runnable_thread(const omni::sync::runnable& obj, std::size_t max_stack_sz);
                 runnable_thread(omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val);
                 virtual ~runnable_thread() OMNI_DTOR_THROWS;
@@ -124,7 +130,7 @@ namespace omni {
                     omni::sync::thread_priority m_priority;
                 #endif
                 /** If join has been called, do not detach */
-                volatile bool m_isjoined;
+                volatile OMNI_RUNTHRD_INT_FW m_isjoined;
         };
     } // namespace sync
 } // namespace omni

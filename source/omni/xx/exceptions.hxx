@@ -32,6 +32,8 @@
     #error invalid preprocessor directive detected
 #endif
 
+/* DEV_NOTE: all exception's in Omni will be explicit for single parameter ctor's to avoid any collision */
+
 namespace omni {
     /**
      * Contains exceptions the library can throw. All exceptions are
@@ -56,7 +58,7 @@ namespace omni {
         {
             public:
                 environment_exception() : omni::exception(OMNI_ERR_ENVEX_STR) {}
-                explicit environment_exception(std::size_t err) : omni::exception(OMNI_ERR_ENVEX_STR, ": ", err) {}
+                explicit environment_exception(std::size_t errnum) : omni::exception(OMNI_ERR_ENVEX_STR, ": ", errnum) {}
                 explicit environment_exception(const char* msg) : omni::exception(msg) {}
         };
         
@@ -130,7 +132,7 @@ namespace omni {
         {
             public:
                 clock_exception() : omni::exception(OMNI_ERR_GET_TIME_STR) {}
-                explicit clock_exception(int err) : omni::exception(OMNI_ERR_GET_TIME_STR, ": ", err) {}
+                explicit clock_exception(int errnum) : omni::exception(OMNI_ERR_GET_TIME_STR, ": ", errnum) {}
         };
         
         /** A system error occurred on the conditional object */
@@ -138,7 +140,7 @@ namespace omni {
         {
             public:
                 conditional_exception() : omni::exception(OMNI_ERR_COND_OBJ_STR) {}
-                conditional_exception(int err) : omni::exception(OMNI_ERR_COND_OBJ_STR, ": ", err) {}
+                conditional_exception(int errnum) : omni::exception(OMNI_ERR_COND_OBJ_STR, ": ", errnum) {}
         };
 
         /** A NaN error has occurred. */
@@ -405,6 +407,19 @@ namespace omni {
         {
             public:
                 invalid_version() : omni::exception(OMNI_INVALID_VERSION_STR) {}
+                explicit invalid_version(const char* data) : omni::exception(OMNI_INVALID_VERSION_STR) {
+                    if (data) {
+                        this->m_what.append(" on ");
+                        this->m_what.append(data);
+                    } else {
+                        OMNI_DBGE(OMNI_NULL_PTR_STR);
+                        OMNI_EXCEPTION_TERMINATE
+                    }
+                }
+                explicit invalid_version(const std::string& data) : omni::exception(OMNI_INVALID_VERSION_STR) {
+                    this->m_what.append(" on ");
+                    this->m_what.append(data);
+                }
         };
         
         /** An attempt was made to unlock a non locked mutex */
@@ -452,6 +467,19 @@ namespace omni {
                     this->m_what.append(" on ");
                     this->m_what.append(path);
                 }
+                explicit path_exception(const char* path, const char* msg) : omni::exception(msg) {
+                    if (path) {
+                        this->m_what.append(" on ");
+                        this->m_what.append(path);
+                    } else {
+                        OMNI_DBGE(OMNI_NULL_PTR_STR);
+                        OMNI_EXCEPTION_TERMINATE
+                    }
+                }
+                explicit path_exception(const std::string& path, const std::string& msg) : omni::exception(msg) {
+                    this->m_what.append(" on ");
+                    this->m_what.append(path);
+                }
         };
 
         /** A general path exception occurred */
@@ -493,7 +521,7 @@ namespace omni {
         {
             public:
                 spin_lock_exception() : omni::exception(OMNI_ERR_SPIN_OBJ_STR) {}
-                spin_lock_exception(int err) : omni::exception(OMNI_ERR_SPIN_OBJ_STR, ": ", err) {}
+                spin_lock_exception(int errnum) : omni::exception(OMNI_ERR_SPIN_OBJ_STR, ": ", errnum) {}
         };
         
         /** An error occurred on the stopwatch */
@@ -536,11 +564,11 @@ namespace omni {
                 socket_exception() : omni::exception(OMNI_ERR_SOCKET_STR) {}
                 socket_exception(const char* msg, int er) : omni::exception(msg, er) {}
                 socket_exception(const char* msg, long er) : omni::exception(msg ,er) {}
-                socket_exception(const char* msg, size_t er) : omni::exception(msg ,er) {}
+                socket_exception(const char* msg, std::size_t er) : omni::exception(msg ,er) {}
                 explicit socket_exception(const char* msg) : omni::exception(msg) {}
                 explicit socket_exception(int er) : omni::exception(OMNI_ERR_SOCKET_STR, ": ", er) {}
                 explicit socket_exception(long er) : omni::exception(OMNI_ERR_SOCKET_STR, ": ", er) {}
-                explicit socket_exception(size_t er) : omni::exception(OMNI_ERR_SOCKET_STR, ": ", er) {}
+                explicit socket_exception(std::size_t er) : omni::exception(OMNI_ERR_SOCKET_STR, ": ", er) {}
         };
     } // namespace exceptions    
 } // namespace omni

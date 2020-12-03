@@ -207,6 +207,7 @@ void OmniDocuGen::DocuGen::Initialize()
     if (args.contains("-SourceDirectory")) { OmniDocuGen::Program::Settings.SourceDirectory = args["-SourceDirectory"]; }
     if (args.contains("-ExampleDirectory")) { OmniDocuGen::Program::Settings.ExampleDirectory = args["-ExampleDirectory"]; }
     if (args.contains("-OutputDirectory")) { OmniDocuGen::Program::Settings.OutputDirectory = args["-OutputDirectory"]; }
+    if (args.contains("-UnitTestDirectory")) { OmniDocuGen::Program::Settings.UnitTestDirectory = args["-UnitTestDirectory"]; }
     if (args.contains("-PrevZipDirectory")) { OmniDocuGen::Program::Settings.PrevZipDirectory = args["-PrevZipDirectory"]; }
     if (args.contains("-MacroDirectory")) { OmniDocuGen::Program::Settings.MacroDirectory = args["-MacroDirectory"]; }
     if (args.contains("-SystemAPIDirectory")) { OmniDocuGen::Program::Settings.SystemAPIDirectory = args["-SystemAPIDirectory"]; }
@@ -315,7 +316,8 @@ void OmniDocuGen::DocuGen::Initialize()
         "OptionsIndexHtml: {11}\n"
         "TempOptionsIndexHtml: {12}\n"
         "ExampleIndexHtml: {13}\n"
-        "TempExampleIndexHtml: {14}",
+        "TempExampleIndexHtml: {14}\n"
+        "UnitTestDirectory: {15}\n",
         OmniDocuGen::OutPaths::TempOut,
         OmniDocuGen::OutPaths::ZipDir,
         OmniDocuGen::OutPaths::HtmlSrcDir,
@@ -330,7 +332,8 @@ void OmniDocuGen::DocuGen::Initialize()
         OmniDocuGen::OutPaths::OptionsIndexHtml,
         OmniDocuGen::OutPaths::TempOptionsIndexHtml,
         OmniDocuGen::OutPaths::ExampleIndexHtml,
-        OmniDocuGen::OutPaths::TempExampleIndexHtml
+        OmniDocuGen::OutPaths::TempExampleIndexHtml,
+        OmniDocuGen::Program::Settings.UnitTestDirectory
     );
 }
 

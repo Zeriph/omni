@@ -103,7 +103,7 @@ namespace omni {
                 return this->m_data;
             }
 
-            uint64_t capacity() const
+            size_t capacity() const
             {
                 return SZ * sizeof(T);
             }
@@ -150,6 +150,11 @@ namespace omni {
             uint16_t size() const
             {
                 return SZ;
+            }
+
+            void zeroize()
+            {
+                std::memset(this->m_data, 0, sizeof(T)*SZ);
             }
 
             omni::string_t to_string_t() const

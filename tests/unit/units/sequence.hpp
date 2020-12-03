@@ -26,13 +26,13 @@ class UT_CLASS_DEF
             print("osst vals ="); omni_foreach(std::string, val, osst) { cprint(*val << ", "); } print(std::endl);
             
             omni::seq::std_wstring_t oswt = _get_list<std::wstring>(L"abc",L"def",L"ghi",L"jkl",L"mno");
-            print("oswt vals ="); omni_foreach(std::wstring, val, oswt) { print(*val << ", "); } print(std::endl);
+            print("oswt vals ="); omni_foreach(std::wstring, val, oswt) { wprint(*val << ", "); } print(std::endl);
 
             omni::seq::char_t oct = _get_list<char>('a','b','c','d','e');
             print("oct vals ="); omni_foreach(char, val, oct) { print(*val << ", "); } print(std::endl);
 
             omni::seq::wide_char_t owct = _get_list<wchar_t>(L'a',L'b',L'c',L'd',L'e');
-            print("owct vals ="); omni_foreach(wchar_t, val, owct) { print(*val << ", "); } print(std::endl);
+            print("owct vals ="); omni_foreach(wchar_t, val, owct) { wprint(*val << ", "); } print(std::endl);
 
             omni::seq::short_t os = _get_list<short>(-1000,-2000,-3000,-4000,-5000);
             print("os vals ="); omni_foreach(short, val, os) { print(*val << ", "); } print(std::endl);
@@ -88,11 +88,11 @@ class UT_CLASS_DEF
             //template < template < class, class > class std_seq_t, class T, class std_allocator_t >
             //inline bool equal(const std_seq_t<T, std_allocator_t >& a, const std_seq_t<T, std_allocator_t >& b)
             omni::seq::uint8_t oui822 = oui8;
-            printve("oui8 == oui822? ", b2s(omni::sequence::equal(oui8, oui822)), "true");
+            test("oui8 == oui822? ", b2s(omni::sequence::equal(oui8, oui822)), "true");
             //inline bool equals(InputIterator start1, InputIterator end1, InputIterator start2, InputIterator end2)
-            printve("oui8.begin-end == oui822.begin-end? ", b2s(omni::sequence::equals(oui8.begin(), oui8.end(), oui822.begin(), oui822.end())), "true");
+            test("oui8.begin-end == oui822.begin-end? ", b2s(omni::sequence::equals(oui8.begin(), oui8.end(), oui822.begin(), oui822.end())), "true");
             oui822.pop_back();
-            printve("oui8.begin-end == oui822.begin-end? ", b2s(omni::sequence::equals(oui8.begin(), oui8.end(), oui822.begin(), oui822.end())), "false");
+            test("oui8.begin-end == oui822.begin-end? ", b2s(omni::sequence::equals(oui8.begin(), oui8.end(), oui822.begin(), oui822.end())), "false");
             //template < template < class, class > class std_seq_t, class T, class std_allocator_t, class InputIterator >
             //void add_range(std_seq_t<T, std_allocator_t>& array, InputIterator start, InputIterator end)
             omni::sequence::add_range(oui822, oui8.begin(), oui8.end());

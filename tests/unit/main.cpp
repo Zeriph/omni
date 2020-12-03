@@ -1,8 +1,26 @@
 #if !defined(OMNI_NO_UT_MAIN)
 #include <omnilib>
+
+#if defined(OMNI_UT_ALL) || defined(OMNI_UT_FULL)
+    #if defined(OMNI_UT_ALL) && defined(OMNI_UT_FULL)
+        #error Cannot specify to test all and full
+    #endif
+    #include "units/all.hpp"
+    #include "units/full.hpp"
+    #define OMNI_UTUA // use all tests
+#endif
+
 #include "tests.hpp"
 
-#define print_fw_info() omni::out << "Omni C++ cross platform library (v" << OMNI_FW_VER_STR << ") unit test" << std::endl
+#if defined(OMNI_UTUA)
+    #undef OMNI_UTUA
+#endif
+
+#if defined(OMNI_UNICODE)
+    #define print_fw_info() omni::out << "Omni C++ cross platform library (v" << OMNI_FW_VER_STR << ") unit test (UNICODE)" << std::endl
+#else
+    #define print_fw_info() omni::out << "Omni C++ cross platform library (v" << OMNI_FW_VER_STR << ") unit test" << std::endl
+#endif
 #define invalid_unit(fval) omni::out << "Invalid unit specified: " << fval << std::endl
 #define invalid_test(tval) omni::out << "Invalid test specified: " << tval.c_str() << std::endl
 #define print_unit(i, itr) omni::out << ((i<9) ? "0" : "") << (i+1) << " - " << itr->name() << " - " << itr->description() << std::endl
@@ -25,6 +43,9 @@ void ut_run()
         omni::ut::current_test.funcptr();
         sw.stop();
         omni::out << std::endl << "Test complete, run time: " << sw << std::endl;
+        if (!omni::application::args().contains("-noexit")) {
+            omni::application::exit();
+        }
     } else {
         printl("Invalid test address, exiting");
         omni::application::exit();

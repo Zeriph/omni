@@ -25,13 +25,19 @@
 #include <omni/sync/auto_lock.hpp>
 #include <omni/sync/scoped_lock.hpp>
 
+#if defined(OMNI_32BIT_BINARY_SEMAPHORE)
+    #define OMNI_BINSEM_INT_FW uint32_t
+#else
+    #define OMNI_BINSEM_INT_FW uint64_t
+#endif
+
 namespace omni {
     namespace sync {
         class binary_semaphore
         {
             public:
                 binary_semaphore();
-                explicit binary_semaphore(bool initialy_owned);
+                OMNI_EXPLICIT binary_semaphore(bool initialy_owned);
                 ~binary_semaphore(); // should not inherit
                 omni::sync::semaphore_t handle() const;
                 bool locked() const;
@@ -52,8 +58,8 @@ namespace omni {
                 void _init();
                 void _dispose();
 
+                volatile OMNI_BINSEM_INT_FW m_lokd;
                 omni::sync::semaphore_t m_sem;
-                bool m_lokd;
         };
         
         typedef omni::sync::auto_lock<omni::sync::binary_semaphore> auto_binary_semaphore;

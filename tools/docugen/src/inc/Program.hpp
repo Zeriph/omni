@@ -110,6 +110,23 @@ namespace OmniDocuGen
             const std::string& v1, const std::string& v2, const std::string& v3,
             const std::string& v4, const std::string& v5, const std::string& v6,
             const std::string& v7, const std::string& v8, const std::string& v9,
+            const std::string& v10)
+        {
+            std::string ret = omni::string::replace_all(fmt, "{0}", v1);
+            ret = omni::string::replace_all(ret, "{1}", v2);
+            ret = omni::string::replace_all(ret, "{2}", v3);
+            ret = omni::string::replace_all(ret, "{3}", v4);
+            ret = omni::string::replace_all(ret, "{4}", v5);
+            ret = omni::string::replace_all(ret, "{5}", v6);
+            ret = omni::string::replace_all(ret, "{6}", v7);
+            ret = omni::string::replace_all(ret, "{7}", v8);
+            ret = omni::string::replace_all(ret, "{8}", v9);
+            return omni::string::replace_all(ret, "{9}", v10);
+        }
+        static inline std::string Format(const std::string& fmt,
+            const std::string& v1, const std::string& v2, const std::string& v3,
+            const std::string& v4, const std::string& v5, const std::string& v6,
+            const std::string& v7, const std::string& v8, const std::string& v9,
             const std::string& v10, const std::string& v11)
         {
             std::string ret = omni::string::replace_all(fmt, "{0}", v1);
@@ -142,6 +159,27 @@ namespace OmniDocuGen
             ret = omni::string::replace_all(ret, "{9}", v10);
             ret = omni::string::replace_all(ret, "{10}", v11);
             return omni::string::replace_all(ret, "{11}", v12);
+        }
+        static inline std::string Format(const std::string& fmt,
+            const std::string& v1, const std::string& v2, const std::string& v3,
+            const std::string& v4, const std::string& v5, const std::string& v6,
+            const std::string& v7, const std::string& v8, const std::string& v9,
+            const std::string& v10, const std::string& v11, const std::string& v12,
+            const std::string& v13)
+        {
+            std::string ret = omni::string::replace_all(fmt, "{0}", v1);
+            ret = omni::string::replace_all(ret, "{1}", v2);
+            ret = omni::string::replace_all(ret, "{2}", v3);
+            ret = omni::string::replace_all(ret, "{3}", v4);
+            ret = omni::string::replace_all(ret, "{4}", v5);
+            ret = omni::string::replace_all(ret, "{5}", v6);
+            ret = omni::string::replace_all(ret, "{6}", v7);
+            ret = omni::string::replace_all(ret, "{7}", v8);
+            ret = omni::string::replace_all(ret, "{8}", v9);
+            ret = omni::string::replace_all(ret, "{9}", v10);
+            ret = omni::string::replace_all(ret, "{10}", v11);
+            ret = omni::string::replace_all(ret, "{11}", v12);
+            return omni::string::replace_all(ret, "{12}", v13);
         }
         static inline std::string Format(const std::string& fmt,
             const std::string& v1, const std::string& v2, const std::string& v3,
@@ -187,6 +225,148 @@ namespace OmniDocuGen
             ret = omni::string::replace_all(ret, "{12}", v13);
             ret = omni::string::replace_all(ret, "{13}", v14);
             return omni::string::replace_all(ret, "{14}", v15);
+        }
+
+        static inline std::string Format(const std::string& fmt,
+            const std::string& v1, const std::string& v2, const std::string& v3,
+            const std::string& v4, const std::string& v5, const std::string& v6,
+            const std::string& v7, const std::string& v8, const std::string& v9,
+            const std::string& v10, const std::string& v11, const std::string& v12,
+            const std::string& v13, const std::string& v14, const std::string& v15,
+            const std::string& v16)
+        {
+            std::string ret = omni::string::replace_all(fmt, "{0}", v1);
+            ret = omni::string::replace_all(ret, "{1}", v2);
+            ret = omni::string::replace_all(ret, "{2}", v3);
+            ret = omni::string::replace_all(ret, "{3}", v4);
+            ret = omni::string::replace_all(ret, "{4}", v5);
+            ret = omni::string::replace_all(ret, "{5}", v6);
+            ret = omni::string::replace_all(ret, "{6}", v7);
+            ret = omni::string::replace_all(ret, "{7}", v8);
+            ret = omni::string::replace_all(ret, "{8}", v9);
+            ret = omni::string::replace_all(ret, "{9}", v10);
+            ret = omni::string::replace_all(ret, "{10}", v11);
+            ret = omni::string::replace_all(ret, "{11}", v12);
+            ret = omni::string::replace_all(ret, "{12}", v13);
+            ret = omni::string::replace_all(ret, "{13}", v14);
+            ret = omni::string::replace_all(ret, "{14}", v15);
+            return omni::string::replace_all(ret, "{15}", v16);
+        }
+
+        static inline std::string Format(const std::string& fmt,
+            const std::string& v1, const std::string& v2, const std::string& v3,
+            const std::string& v4, const std::string& v5, const std::string& v6,
+            const std::string& v7, const std::string& v8, const std::string& v9,
+            const std::string& v10, const std::string& v11, const std::string& v12,
+            const std::string& v13, const std::string& v14, const std::string& v15,
+            const std::string& v16, const std::string& v17)
+        {
+            std::string ret = omni::string::replace_all(fmt, "{0}", v1);
+            ret = omni::string::replace_all(ret, "{1}", v2);
+            ret = omni::string::replace_all(ret, "{2}", v3);
+            ret = omni::string::replace_all(ret, "{3}", v4);
+            ret = omni::string::replace_all(ret, "{4}", v5);
+            ret = omni::string::replace_all(ret, "{5}", v6);
+            ret = omni::string::replace_all(ret, "{6}", v7);
+            ret = omni::string::replace_all(ret, "{7}", v8);
+            ret = omni::string::replace_all(ret, "{8}", v9);
+            ret = omni::string::replace_all(ret, "{9}", v10);
+            ret = omni::string::replace_all(ret, "{10}", v11);
+            ret = omni::string::replace_all(ret, "{11}", v12);
+            ret = omni::string::replace_all(ret, "{12}", v13);
+            ret = omni::string::replace_all(ret, "{13}", v14);
+            ret = omni::string::replace_all(ret, "{14}", v15);
+            ret = omni::string::replace_all(ret, "{15}", v16);
+            return omni::string::replace_all(ret, "{16}", v17);
+        }
+
+        static inline std::string Format(const std::string& fmt,
+            const std::string& v1, const std::string& v2, const std::string& v3,
+            const std::string& v4, const std::string& v5, const std::string& v6,
+            const std::string& v7, const std::string& v8, const std::string& v9,
+            const std::string& v10, const std::string& v11, const std::string& v12,
+            const std::string& v13, const std::string& v14, const std::string& v15,
+            const std::string& v16, const std::string& v17, const std::string& v18)
+        {
+            std::string ret = omni::string::replace_all(fmt, "{0}", v1);
+            ret = omni::string::replace_all(ret, "{1}", v2);
+            ret = omni::string::replace_all(ret, "{2}", v3);
+            ret = omni::string::replace_all(ret, "{3}", v4);
+            ret = omni::string::replace_all(ret, "{4}", v5);
+            ret = omni::string::replace_all(ret, "{5}", v6);
+            ret = omni::string::replace_all(ret, "{6}", v7);
+            ret = omni::string::replace_all(ret, "{7}", v8);
+            ret = omni::string::replace_all(ret, "{8}", v9);
+            ret = omni::string::replace_all(ret, "{9}", v10);
+            ret = omni::string::replace_all(ret, "{10}", v11);
+            ret = omni::string::replace_all(ret, "{11}", v12);
+            ret = omni::string::replace_all(ret, "{12}", v13);
+            ret = omni::string::replace_all(ret, "{13}", v14);
+            ret = omni::string::replace_all(ret, "{14}", v15);
+            ret = omni::string::replace_all(ret, "{15}", v16);
+            ret = omni::string::replace_all(ret, "{16}", v17);
+            return omni::string::replace_all(ret, "{17}", v18);
+        }
+
+        static inline std::string Format(const std::string& fmt,
+            const std::string& v1, const std::string& v2, const std::string& v3,
+            const std::string& v4, const std::string& v5, const std::string& v6,
+            const std::string& v7, const std::string& v8, const std::string& v9,
+            const std::string& v10, const std::string& v11, const std::string& v12,
+            const std::string& v13, const std::string& v14, const std::string& v15,
+            const std::string& v16, const std::string& v17, const std::string& v18,
+            const std::string& v19)
+        {
+            std::string ret = omni::string::replace_all(fmt, "{0}", v1);
+            ret = omni::string::replace_all(ret, "{1}", v2);
+            ret = omni::string::replace_all(ret, "{2}", v3);
+            ret = omni::string::replace_all(ret, "{3}", v4);
+            ret = omni::string::replace_all(ret, "{4}", v5);
+            ret = omni::string::replace_all(ret, "{5}", v6);
+            ret = omni::string::replace_all(ret, "{6}", v7);
+            ret = omni::string::replace_all(ret, "{7}", v8);
+            ret = omni::string::replace_all(ret, "{8}", v9);
+            ret = omni::string::replace_all(ret, "{9}", v10);
+            ret = omni::string::replace_all(ret, "{10}", v11);
+            ret = omni::string::replace_all(ret, "{11}", v12);
+            ret = omni::string::replace_all(ret, "{12}", v13);
+            ret = omni::string::replace_all(ret, "{13}", v14);
+            ret = omni::string::replace_all(ret, "{14}", v15);
+            ret = omni::string::replace_all(ret, "{15}", v16);
+            ret = omni::string::replace_all(ret, "{16}", v17);
+            ret = omni::string::replace_all(ret, "{17}", v18);
+            return omni::string::replace_all(ret, "{18}", v19);
+        }
+
+        static inline std::string Format(const std::string& fmt,
+            const std::string& v1, const std::string& v2, const std::string& v3,
+            const std::string& v4, const std::string& v5, const std::string& v6,
+            const std::string& v7, const std::string& v8, const std::string& v9,
+            const std::string& v10, const std::string& v11, const std::string& v12,
+            const std::string& v13, const std::string& v14, const std::string& v15,
+            const std::string& v16, const std::string& v17, const std::string& v18,
+            const std::string& v19, const std::string& v20)
+        {
+            std::string ret = omni::string::replace_all(fmt, "{0}", v1);
+            ret = omni::string::replace_all(ret, "{1}", v2);
+            ret = omni::string::replace_all(ret, "{2}", v3);
+            ret = omni::string::replace_all(ret, "{3}", v4);
+            ret = omni::string::replace_all(ret, "{4}", v5);
+            ret = omni::string::replace_all(ret, "{5}", v6);
+            ret = omni::string::replace_all(ret, "{6}", v7);
+            ret = omni::string::replace_all(ret, "{7}", v8);
+            ret = omni::string::replace_all(ret, "{8}", v9);
+            ret = omni::string::replace_all(ret, "{9}", v10);
+            ret = omni::string::replace_all(ret, "{10}", v11);
+            ret = omni::string::replace_all(ret, "{11}", v12);
+            ret = omni::string::replace_all(ret, "{12}", v13);
+            ret = omni::string::replace_all(ret, "{13}", v14);
+            ret = omni::string::replace_all(ret, "{14}", v15);
+            ret = omni::string::replace_all(ret, "{15}", v16);
+            ret = omni::string::replace_all(ret, "{16}", v17);
+            ret = omni::string::replace_all(ret, "{17}", v18);
+            ret = omni::string::replace_all(ret, "{18}", v19);
+            return omni::string::replace_all(ret, "{19}", v20);
         }
     }
 
@@ -315,6 +495,15 @@ namespace OmniDocuGen
             const std::string& v1, const std::string& v2, const std::string& v3,
             const std::string& v4, const std::string& v5, const std::string& v6,
             const std::string& v7, const std::string& v8, const std::string& v9,
+            const std::string& v10)
+        {
+            if (OmniDocuGen::Program::Silent) { return; }
+            UpdateStatus(verbosity, Util::Format(fmt, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10));
+        }
+        static inline void UpdateStatus(uint32_t verbosity, const std::string& fmt,
+            const std::string& v1, const std::string& v2, const std::string& v3,
+            const std::string& v4, const std::string& v5, const std::string& v6,
+            const std::string& v7, const std::string& v8, const std::string& v9,
             const std::string& v10, const std::string& v11)
         {
             if (OmniDocuGen::Program::Silent) { return; }
@@ -334,10 +523,87 @@ namespace OmniDocuGen
             const std::string& v4, const std::string& v5, const std::string& v6,
             const std::string& v7, const std::string& v8, const std::string& v9,
             const std::string& v10, const std::string& v11, const std::string& v12,
+            const std::string& v13)
+        {
+            if (OmniDocuGen::Program::Silent) { return; }
+            UpdateStatus(verbosity, Util::Format(fmt, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13));
+        }
+        static inline void UpdateStatus(uint32_t verbosity, const std::string& fmt,
+            const std::string& v1, const std::string& v2, const std::string& v3,
+            const std::string& v4, const std::string& v5, const std::string& v6,
+            const std::string& v7, const std::string& v8, const std::string& v9,
+            const std::string& v10, const std::string& v11, const std::string& v12,
+            const std::string& v13, const std::string& v14)
+        {
+            if (OmniDocuGen::Program::Silent) { return; }
+            UpdateStatus(verbosity, Util::Format(fmt, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14));
+        }
+        static inline void UpdateStatus(uint32_t verbosity, const std::string& fmt,
+            const std::string& v1, const std::string& v2, const std::string& v3,
+            const std::string& v4, const std::string& v5, const std::string& v6,
+            const std::string& v7, const std::string& v8, const std::string& v9,
+            const std::string& v10, const std::string& v11, const std::string& v12,
             const std::string& v13, const std::string& v14, const std::string& v15)
         {
             if (OmniDocuGen::Program::Silent) { return; }
             UpdateStatus(verbosity, Util::Format(fmt, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15));
+        }
+        static inline void UpdateStatus(uint32_t verbosity, const std::string& fmt,
+            const std::string& v1, const std::string& v2, const std::string& v3,
+            const std::string& v4, const std::string& v5, const std::string& v6,
+            const std::string& v7, const std::string& v8, const std::string& v9,
+            const std::string& v10, const std::string& v11, const std::string& v12,
+            const std::string& v13, const std::string& v14, const std::string& v15,
+            const std::string& v16)
+        {
+            if (OmniDocuGen::Program::Silent) { return; }
+            UpdateStatus(verbosity, Util::Format(fmt, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16));
+        }
+        static inline void UpdateStatus(uint32_t verbosity, const std::string& fmt,
+            const std::string& v1, const std::string& v2, const std::string& v3,
+            const std::string& v4, const std::string& v5, const std::string& v6,
+            const std::string& v7, const std::string& v8, const std::string& v9,
+            const std::string& v10, const std::string& v11, const std::string& v12,
+            const std::string& v13, const std::string& v14, const std::string& v15,
+            const std::string& v16, const std::string& v17)
+        {
+            if (OmniDocuGen::Program::Silent) { return; }
+            UpdateStatus(verbosity, Util::Format(fmt, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17));
+        }
+        static inline void UpdateStatus(uint32_t verbosity, const std::string& fmt,
+            const std::string& v1, const std::string& v2, const std::string& v3,
+            const std::string& v4, const std::string& v5, const std::string& v6,
+            const std::string& v7, const std::string& v8, const std::string& v9,
+            const std::string& v10, const std::string& v11, const std::string& v12,
+            const std::string& v13, const std::string& v14, const std::string& v15,
+            const std::string& v16, const std::string& v17, const std::string& v18)
+        {
+            if (OmniDocuGen::Program::Silent) { return; }
+            UpdateStatus(verbosity, Util::Format(fmt, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18));
+        }
+        static inline void UpdateStatus(uint32_t verbosity, const std::string& fmt,
+            const std::string& v1, const std::string& v2, const std::string& v3,
+            const std::string& v4, const std::string& v5, const std::string& v6,
+            const std::string& v7, const std::string& v8, const std::string& v9,
+            const std::string& v10, const std::string& v11, const std::string& v12,
+            const std::string& v13, const std::string& v14, const std::string& v15,
+            const std::string& v16, const std::string& v17, const std::string& v18,
+            const std::string& v19)
+        {
+            if (OmniDocuGen::Program::Silent) { return; }
+            UpdateStatus(verbosity, Util::Format(fmt, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19));
+        }
+        static inline void UpdateStatus(uint32_t verbosity, const std::string& fmt,
+            const std::string& v1, const std::string& v2, const std::string& v3,
+            const std::string& v4, const std::string& v5, const std::string& v6,
+            const std::string& v7, const std::string& v8, const std::string& v9,
+            const std::string& v10, const std::string& v11, const std::string& v12,
+            const std::string& v13, const std::string& v14, const std::string& v15,
+            const std::string& v16, const std::string& v17, const std::string& v18,
+            const std::string& v19, const std::string& v20)
+        {
+            if (OmniDocuGen::Program::Silent) { return; }
+            UpdateStatus(verbosity, Util::Format(fmt, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v18));
         }
         static inline void UpdateStatus(const std::string& fmt,
             const std::string& v1)
@@ -406,11 +672,115 @@ namespace OmniDocuGen
             const std::string& v1, const std::string& v2, const std::string& v3,
             const std::string& v4, const std::string& v5, const std::string& v6,
             const std::string& v7, const std::string& v8, const std::string& v9,
+            const std::string& v10)
+        {
+            if (OmniDocuGen::Program::Silent) { return; }
+            UpdateStatus(0, Util::Format(fmt, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10));
+        }
+        static inline void UpdateStatus(const std::string& fmt,
+            const std::string& v1, const std::string& v2, const std::string& v3,
+            const std::string& v4, const std::string& v5, const std::string& v6,
+            const std::string& v7, const std::string& v8, const std::string& v9,
+            const std::string& v10, const std::string& v11)
+        {
+            if (OmniDocuGen::Program::Silent) { return; }
+            UpdateStatus(0, Util::Format(fmt, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11));
+        }
+        static inline void UpdateStatus(const std::string& fmt,
+            const std::string& v1, const std::string& v2, const std::string& v3,
+            const std::string& v4, const std::string& v5, const std::string& v6,
+            const std::string& v7, const std::string& v8, const std::string& v9,
+            const std::string& v10, const std::string& v11, const std::string& v12)
+        {
+            if (OmniDocuGen::Program::Silent) { return; }
+            UpdateStatus(0, Util::Format(fmt, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12));
+        }
+        static inline void UpdateStatus(const std::string& fmt,
+            const std::string& v1, const std::string& v2, const std::string& v3,
+            const std::string& v4, const std::string& v5, const std::string& v6,
+            const std::string& v7, const std::string& v8, const std::string& v9,
+            const std::string& v10, const std::string& v11, const std::string& v12,
+            const std::string& v13)
+        {
+            if (OmniDocuGen::Program::Silent) { return; }
+            UpdateStatus(0, Util::Format(fmt, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13));
+        }
+        static inline void UpdateStatus(const std::string& fmt,
+            const std::string& v1, const std::string& v2, const std::string& v3,
+            const std::string& v4, const std::string& v5, const std::string& v6,
+            const std::string& v7, const std::string& v8, const std::string& v9,
+            const std::string& v10, const std::string& v11, const std::string& v12,
+            const std::string& v13, const std::string& v14)
+        {
+            if (OmniDocuGen::Program::Silent) { return; }
+            UpdateStatus(0, Util::Format(fmt, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14));
+        }
+        static inline void UpdateStatus(const std::string& fmt,
+            const std::string& v1, const std::string& v2, const std::string& v3,
+            const std::string& v4, const std::string& v5, const std::string& v6,
+            const std::string& v7, const std::string& v8, const std::string& v9,
             const std::string& v10, const std::string& v11, const std::string& v12,
             const std::string& v13, const std::string& v14, const std::string& v15)
         {
             if (OmniDocuGen::Program::Silent) { return; }
             UpdateStatus(0, Util::Format(fmt, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15));
+        }
+        static inline void UpdateStatus(const std::string& fmt,
+            const std::string& v1, const std::string& v2, const std::string& v3,
+            const std::string& v4, const std::string& v5, const std::string& v6,
+            const std::string& v7, const std::string& v8, const std::string& v9,
+            const std::string& v10, const std::string& v11, const std::string& v12,
+            const std::string& v13, const std::string& v14, const std::string& v15,
+            const std::string& v16)
+        {
+            if (OmniDocuGen::Program::Silent) { return; }
+            UpdateStatus(0, Util::Format(fmt, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16));
+        }
+        static inline void UpdateStatus(const std::string& fmt,
+            const std::string& v1, const std::string& v2, const std::string& v3,
+            const std::string& v4, const std::string& v5, const std::string& v6,
+            const std::string& v7, const std::string& v8, const std::string& v9,
+            const std::string& v10, const std::string& v11, const std::string& v12,
+            const std::string& v13, const std::string& v14, const std::string& v15,
+            const std::string& v16, const std::string& v17)
+        {
+            if (OmniDocuGen::Program::Silent) { return; }
+            UpdateStatus(0, Util::Format(fmt, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17));
+        }
+        static inline void UpdateStatus(const std::string& fmt,
+            const std::string& v1, const std::string& v2, const std::string& v3,
+            const std::string& v4, const std::string& v5, const std::string& v6,
+            const std::string& v7, const std::string& v8, const std::string& v9,
+            const std::string& v10, const std::string& v11, const std::string& v12,
+            const std::string& v13, const std::string& v14, const std::string& v15,
+            const std::string& v16, const std::string& v17, const std::string& v18)
+        {
+            if (OmniDocuGen::Program::Silent) { return; }
+            UpdateStatus(0, Util::Format(fmt, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18));
+        }
+        static inline void UpdateStatus(const std::string& fmt,
+            const std::string& v1, const std::string& v2, const std::string& v3,
+            const std::string& v4, const std::string& v5, const std::string& v6,
+            const std::string& v7, const std::string& v8, const std::string& v9,
+            const std::string& v10, const std::string& v11, const std::string& v12,
+            const std::string& v13, const std::string& v14, const std::string& v15,
+            const std::string& v16, const std::string& v17, const std::string& v18,
+            const std::string& v19)
+        {
+            if (OmniDocuGen::Program::Silent) { return; }
+            UpdateStatus(0, Util::Format(fmt, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19));
+        }
+        static inline void UpdateStatus(const std::string& fmt,
+            const std::string& v1, const std::string& v2, const std::string& v3,
+            const std::string& v4, const std::string& v5, const std::string& v6,
+            const std::string& v7, const std::string& v8, const std::string& v9,
+            const std::string& v10, const std::string& v11, const std::string& v12,
+            const std::string& v13, const std::string& v14, const std::string& v15,
+            const std::string& v16, const std::string& v17, const std::string& v18,
+            const std::string& v19, const std::string& v20)
+        {
+            if (OmniDocuGen::Program::Silent) { return; }
+            UpdateStatus(0, Util::Format(fmt, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v18));
         }
 
         static inline void SetGenerationProgress(const OmniDocuGen::Types::GenerationStatus& g)

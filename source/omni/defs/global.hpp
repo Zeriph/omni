@@ -20,6 +20,7 @@
 #define OMNI_GLOBALDEFS_HPP 1
 #include <omni/defs/os.hpp>
 #include <omni/defs/arch.hpp>
+#include <omni/defs/cancel_check_def.hpp>
 #include <omni/defs/helper.hpp>
 #include <omni/defs/omni_ver.hpp>
 #include <cstddef>
@@ -44,11 +45,25 @@
     #undef _USE_MATH_DEFINES
 #endif
 
+#if !defined(OMNI_NAN)
+    #if defined(NAN)
+        #define OMNI_NAN NAN
+    #else
+        #define OMNI_NAN std::numeric_limits<double>::quiet_NaN()
+    #endif
+#endif
+
 #if defined(OMNI_NO_CSTDINT)
     #include <stdint.h>
 #else
     // DEV_NOTE: this causes compiler errors on some, and need to use stdint.h instead
     #include <cstdint>
+#endif
+
+#if defined(OMNI_NO_CSTDIO)
+    #include <stdio.h>
+#else
+    #include <cstdio>
 #endif
 
 #if defined(__UNICODE__) || defined(UNICODE) || defined(_UNICODE) || defined(__UNICODE)
@@ -74,11 +89,28 @@
     #define OMNI_NON_PORTABLE
 #endif
 
+// default of implicit constructors
+#if defined(OMNI_USE_EXPLICIT)
+    #define OMNI_EXPLICIT explicit
+#endif
+
+#if defined(OMNI_APPLE_OLD_API)
+    #define OMNI_NO_OS_MACOS
+#endif
+
 #include <omni/defs/lite_def.hpp>
-#include <omni/defs/safe_def.hpp>
 #include <omni/defs/cancel_check_def.hpp>
+#include <omni/defs/safe_def.hpp>
 #include <omni/defs/win_def.hpp>
 #include <omni/defs/null_def.hpp>
+#include <omni/defs/32bit_def.hpp>
+
+#if !defined(OMNI_EXPLICIT)
+    #define OMNI_EXPLICIT 
+#endif
+
+#define OMNI_FREE(v) delete v; v = OMNI_NULL
+#define OMNI_FREE_ARR(v) delete[] v; v = OMNI_NULL
 
 #if defined(OMNI_WIN_API)
     // For a list of error codes: http://msdn.microsoft.com/en-us/library/ms681381(VS.85).aspx
@@ -123,7 +155,7 @@
     #define OMNI_BASE_LOCALE ""
 #endif
 
-#if defined(OMNI_ENABLE_CXX)
+#if defined(OMNI_ENABLE_CXX) || defined(OMNI_ENABLE_NOEXCEPT)
     #define OMNI_DTOR_THROWS noexcept(false)
     #define OMNI_DTOR_NO_THROWS noexcept(true)
 #else
@@ -143,17 +175,28 @@
 #if !defined(OMNI_NEW_LINE)
     #if defined(OMNI_OS_WIN)
         #define OMNI_NEW_LINE "\r\n"
+        #define OMNI_WNEW_LINE L"\r\n"
         #define OMNI_PATH_SEPARATOR "\\"
+        #define OMNI_WPATH_SEPARATOR L"\\"
+        #define OMNI_PATH_ROOT "C:\\"
+        #define OMNI_WPATH_ROOT L"C:\\"
     #else
         #if defined(OMNI_APLNL)
             #define OMNI_NEW_LINE "\r"
-            #define OMNI_PATH_SEPARATOR "/"
+            #define OMNI_WNEW_LINE L"\r"
         #else
             #define OMNI_NEW_LINE "\n"
-            #define OMNI_PATH_SEPARATOR "/"
+            #define OMNI_WNEW_LINE L"\n"
         #endif
+        #define OMNI_PATH_SEPARATOR "/"
+        #define OMNI_WPATH_SEPARATOR L"/"
+        #define OMNI_PATH_ROOT "/"
+        #define OMNI_WPATH_ROOT L"/"
     #endif
 #endif
+
+// DEV_NOTE: this is triple included to enclose the header and cancel all defines that need be
+#include <omni/defs/cancel_check_def.hpp>
 
 namespace omni {
     typedef void* unsafe_t;

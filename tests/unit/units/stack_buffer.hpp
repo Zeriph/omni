@@ -74,6 +74,7 @@ class UT_CLASS_DEF
 
             printl("assigning one bigger");
             try {
+                // this also throws warnings (as it should) on some compilers
                 sbuf = "12345";
             } catch (omni::exception oex) {
                 printv("omni exception: ", oex.what());

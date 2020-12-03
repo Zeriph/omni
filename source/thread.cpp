@@ -153,7 +153,7 @@ OMNI_THREAD_FNPTR_T OMNI_THREAD_CALL_T omni::sync::thread::_start(void* param)
         omni::sync::parameterized_thread_start* pstartfn = OMNI_NULL;
         omni::sync::thread_start* startfn = OMNI_NULL;
         omni::sync::thread::manager::instance().push_back(tid, *t);
-        if (t->m_ispmthd) {
+        if (OMNI_VAL_HAS_FLAG_BIT(t->m_status, OMNI_THREAD_PMTHD_FLAG_FW)) {
             pstartfn = new omni::sync::parameterized_thread_start(*(static_cast<omni::sync::parameterized_thread_start*>(t->m_mthd)));
         } else {
             startfn = new omni::sync::thread_start(*(static_cast<omni::sync::thread_start*>(t->m_mthd)));
@@ -230,8 +230,7 @@ omni::sync::thread::thread() :
     m_ops(),
     m_state(omni::sync::thread_state::UNSTARTED),
     OMNI_PRIO_FW
-    m_isjoined(false),
-    m_ispmthd(false)
+    m_status()
 {
     #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
         omni::chrono::monotonic::initialize();
@@ -252,15 +251,14 @@ omni::sync::thread::thread(const omni::sync::thread &cp) :
     m_ops(cp.m_ops),
     m_state(cp.m_state),
     OMNI_PRIO_CP_FW
-    m_isjoined(cp.m_isjoined),
-    m_ispmthd(cp.m_ispmthd)
+    m_status(cp.m_status)
 {
     #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
         omni::chrono::monotonic::initialize();
     #endif
     this->m_ops.set_flag(omni::sync::thread_option::AUTO_JOIN, true);
     if (cp.m_mthd != OMNI_NULL) {
-        if (cp.m_ispmthd) {
+        if (OMNI_VAL_HAS_FLAG_BIT(cp.m_status, OMNI_THREAD_PMTHD_FLAG_FW)) {
             this->m_mthd = new omni::sync::parameterized_thread_start(*(static_cast<omni::sync::parameterized_thread_start*>(cp.m_mthd)));
         } else {
             this->m_mthd = new omni::sync::thread_start(*(static_cast<omni::sync::thread_start*>(cp.m_mthd)));
@@ -281,8 +279,7 @@ omni::sync::thread::thread(const omni::sync::thread_flags &ops) :
     m_ops(ops),
     m_state(omni::sync::thread_state::UNSTARTED),
     OMNI_PRIO_FW
-    m_isjoined(false),
-    m_ispmthd(false)
+    m_status()
 {
     #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
         omni::chrono::monotonic::initialize();
@@ -302,8 +299,7 @@ omni::sync::thread::thread(std::size_t max_stack_sz) :
     m_ops(max_stack_sz),
     m_state(omni::sync::thread_state::UNSTARTED),
     OMNI_PRIO_FW
-    m_isjoined(false),
-    m_ispmthd(false)
+    m_status()
 {
     #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
         omni::chrono::monotonic::initialize();
@@ -324,8 +320,7 @@ omni::sync::thread::thread(const omni::sync::thread_start &mthd) :
     m_ops(),
     m_state(omni::sync::thread_state::UNSTARTED),
     OMNI_PRIO_FW
-    m_isjoined(false),
-    m_ispmthd(false)
+    m_status()
 {
     #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
         omni::chrono::monotonic::initialize();
@@ -346,8 +341,7 @@ omni::sync::thread::thread(const omni::sync::thread_start &mthd, const omni::syn
     m_ops(),
     m_state(omni::sync::thread_state::UNSTARTED),
     OMNI_PRIO_FW
-    m_isjoined(false),
-    m_ispmthd(false)
+    m_status()
 {
     #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
         omni::chrono::monotonic::initialize();
@@ -368,8 +362,7 @@ omni::sync::thread::thread(const omni::sync::thread_start &mthd, const omni::syn
     m_ops(),
     m_state(omni::sync::thread_state::UNSTARTED),
     OMNI_PRIO_FW
-    m_isjoined(false),
-    m_ispmthd(false)
+    m_status()
 {
     #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
         omni::chrono::monotonic::initialize();
@@ -390,8 +383,7 @@ omni::sync::thread::thread(const omni::sync::thread_start& mthd, omni::sync::thr
     m_ops(),
     m_state(omni::sync::thread_state::UNSTARTED),
     OMNI_PRIO_FW
-    m_isjoined(false),
-    m_ispmthd(false)
+    m_status()
 {
     #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
         omni::chrono::monotonic::initialize();
@@ -415,8 +407,7 @@ omni::sync::thread::thread(const omni::sync::thread_start& mthd, const omni::syn
     m_ops(),
     m_state(omni::sync::thread_state::UNSTARTED),
     OMNI_PRIO_FW
-    m_isjoined(false),
-    m_ispmthd(false)
+    m_status()
 {
     #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
         omni::chrono::monotonic::initialize();
@@ -440,8 +431,7 @@ omni::sync::thread::thread(const omni::sync::thread_start& mthd, const omni::syn
     m_ops(),
     m_state(omni::sync::thread_state::UNSTARTED),
     OMNI_PRIO_FW
-    m_isjoined(false),
-    m_ispmthd(false)
+    m_status()
 {
     #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
         omni::chrono::monotonic::initialize();
@@ -465,8 +455,7 @@ omni::sync::thread::thread(const omni::sync::thread_start &mthd, std::size_t max
     m_ops(max_stack_sz),
     m_state(omni::sync::thread_state::UNSTARTED),
     OMNI_PRIO_FW
-    m_isjoined(false),
-    m_ispmthd(false)
+    m_status()
 {
     #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
         omni::chrono::monotonic::initialize();
@@ -487,8 +476,7 @@ omni::sync::thread::thread(const omni::sync::thread_start &mthd, const omni::syn
     m_ops(max_stack_sz),
     m_state(omni::sync::thread_state::UNSTARTED),
     OMNI_PRIO_FW
-    m_isjoined(false),
-    m_ispmthd(false)
+    m_status()
 {
     #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
         omni::chrono::monotonic::initialize();
@@ -509,8 +497,7 @@ omni::sync::thread::thread(const omni::sync::thread_start &mthd, const omni::syn
     m_ops(max_stack_sz),
     m_state(omni::sync::thread_state::UNSTARTED),
     OMNI_PRIO_FW
-    m_isjoined(false),
-    m_ispmthd(false)
+    m_status()
 {
     #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
         omni::chrono::monotonic::initialize();
@@ -531,8 +518,7 @@ omni::sync::thread::thread(const omni::sync::thread_start &mthd, std::size_t max
     m_ops(max_stack_sz),
     m_state(omni::sync::thread_state::UNSTARTED),
     OMNI_PRIO_FW
-    m_isjoined(false),
-    m_ispmthd(false)
+    m_status()
 {
     #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
         omni::chrono::monotonic::initialize();
@@ -556,8 +542,7 @@ omni::sync::thread::thread(const omni::sync::thread_start &mthd, const omni::syn
     m_ops(max_stack_sz),
     m_state(omni::sync::thread_state::UNSTARTED),
     OMNI_PRIO_FW
-    m_isjoined(false),
-    m_ispmthd(false)
+    m_status()
 {
     #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
         omni::chrono::monotonic::initialize();
@@ -581,8 +566,7 @@ omni::sync::thread::thread(const omni::sync::thread_start &mthd, const omni::syn
     m_ops(max_stack_sz),
     m_state(omni::sync::thread_state::UNSTARTED),
     OMNI_PRIO_FW
-    m_isjoined(false),
-    m_ispmthd(false)
+    m_status()
 {
     #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
         omni::chrono::monotonic::initialize();
@@ -606,8 +590,7 @@ omni::sync::thread::thread(const omni::sync::thread_start& mthd, omni::sync::thr
     m_ops(),
     m_state(omni::sync::thread_state::UNSTARTED),
     OMNI_PRIO_FW
-    m_isjoined(false),
-    m_ispmthd(false)
+    m_status()
 {
     #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
         omni::chrono::monotonic::initialize();
@@ -631,8 +614,7 @@ omni::sync::thread::thread(const omni::sync::parameterized_thread_start &mthd) :
     m_ops(),
     m_state(omni::sync::thread_state::UNSTARTED),
     OMNI_PRIO_FW
-    m_isjoined(false),
-    m_ispmthd(true)
+    m_status(OMNI_THREAD_PMTHD_FLAG_FW)
 {
     #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
         omni::chrono::monotonic::initialize();
@@ -653,8 +635,7 @@ omni::sync::thread::thread(const omni::sync::parameterized_thread_start &mthd, c
     m_ops(),
     m_state(omni::sync::thread_state::UNSTARTED),
     OMNI_PRIO_FW
-    m_isjoined(false),
-    m_ispmthd(true)
+    m_status(OMNI_THREAD_PMTHD_FLAG_FW)
 {
     #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
         omni::chrono::monotonic::initialize();
@@ -675,8 +656,7 @@ omni::sync::thread::thread(const omni::sync::parameterized_thread_start &mthd, c
     m_ops(),
     m_state(omni::sync::thread_state::UNSTARTED),
     OMNI_PRIO_FW
-    m_isjoined(false),
-    m_ispmthd(true)
+    m_status(OMNI_THREAD_PMTHD_FLAG_FW)
 {
     #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
         omni::chrono::monotonic::initialize();
@@ -697,8 +677,7 @@ omni::sync::thread::thread(const omni::sync::parameterized_thread_start &mthd, s
     m_ops(max_stack_sz),
     m_state(omni::sync::thread_state::UNSTARTED),
     OMNI_PRIO_FW
-    m_isjoined(false),
-    m_ispmthd(true)
+    m_status(OMNI_THREAD_PMTHD_FLAG_FW)
 {
     #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
         omni::chrono::monotonic::initialize();
@@ -719,8 +698,7 @@ omni::sync::thread::thread(const omni::sync::parameterized_thread_start &mthd, c
     m_ops(max_stack_sz),
     m_state(omni::sync::thread_state::UNSTARTED),
     OMNI_PRIO_FW
-    m_isjoined(false),
-    m_ispmthd(true)
+    m_status(OMNI_THREAD_PMTHD_FLAG_FW)
 {
     #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
         omni::chrono::monotonic::initialize();
@@ -741,8 +719,7 @@ omni::sync::thread::thread(const omni::sync::parameterized_thread_start &mthd, c
     m_ops(max_stack_sz),
     m_state(omni::sync::thread_state::UNSTARTED),
     OMNI_PRIO_FW
-    m_isjoined(false),
-    m_ispmthd(true)
+    m_status(OMNI_THREAD_PMTHD_FLAG_FW)
 {
     #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
         omni::chrono::monotonic::initialize();
@@ -763,8 +740,7 @@ omni::sync::thread::thread(const omni::sync::parameterized_thread_start& mthd, o
     m_ops(),
     m_state(omni::sync::thread_state::UNSTARTED),
     OMNI_PRIO_FW
-    m_isjoined(false),
-    m_ispmthd(true)
+    m_status(OMNI_THREAD_PMTHD_FLAG_FW)
 {
     #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
         omni::chrono::monotonic::initialize();
@@ -857,7 +833,7 @@ bool omni::sync::thread::bind(const omni::sync::parameterized_thread_start& mthd
     if (!this->unbind()) { return false; }
     OMNI_SAFE_THREAD_LOCK_FW
     this->m_mthd = new omni::sync::parameterized_thread_start(mthd);
-    this->m_ispmthd = true;
+    OMNI_VAL_SET_FLAG_BIT(this->m_status, OMNI_THREAD_PMTHD_FLAG_FW);
     OMNI_SAFE_THREAD_UNLOCK_FW
     return true;
 }
@@ -967,7 +943,7 @@ bool omni::sync::thread::is_bound() const
 {
     OMNI_SAFE_THREAD_ALOCK_FW
     if (this->m_mthd != OMNI_NULL) {
-        if (this->m_ispmthd) {
+        if (OMNI_VAL_HAS_FLAG_BIT(this->m_status, OMNI_THREAD_PMTHD_FLAG_FW)) {
             return (static_cast<omni::sync::parameterized_thread_start*>(this->m_mthd))->valid();
         } else {
             return (static_cast<omni::sync::thread_start*>(this->m_mthd))->valid();
@@ -979,7 +955,7 @@ bool omni::sync::thread::is_bound() const
 bool omni::sync::thread::is_parameter_bound() const
 {
     OMNI_SAFE_THREAD_ALOCK_FW
-    if (this->m_ispmthd) {
+    if (OMNI_VAL_HAS_FLAG_BIT(this->m_status, OMNI_THREAD_PMTHD_FLAG_FW)) {
         return (static_cast<omni::sync::parameterized_thread_start*>(this->m_mthd))->valid();
     }
     return false;
@@ -1016,7 +992,7 @@ bool omni::sync::thread::join(uint32_t timeout)
         OMNI_ERR_RETV_FW(OMNI_INVALID_THREAD_OWNER, omni::exceptions::invalid_thread_owner(), false)
     }
     #if defined(OMNI_OS_WIN)
-        this->m_isjoined = true;
+        OMNI_VAL_SET_FLAG_BIT(this->m_status, OMNI_THREAD_JOINED_FLAG_FW);
         OMNI_SAFE_THREAD_UNLOCK_FW
         return (
             (::WaitForSingleObject(OMNI_WIN_TOHNDL_FW(hndl), timeout) == 0) ? true :
@@ -1030,7 +1006,7 @@ bool omni::sync::thread::join(uint32_t timeout)
         /* There is not a portable mechanism with pthreads to wait on a specific thread without
         implementing a timed_wait condition variable. We do not want the user to have to implement
         a seperate variable based on system, so we implement a timeout loop*/
-        this->m_isjoined = true;
+        OMNI_VAL_SET_FLAG_BIT(this->m_status, OMNI_THREAD_JOINED_FLAG_FW);
         OMNI_SAFE_THREAD_UNLOCK_FW
         if (timeout != omni::sync::INFINITE_TIMEOUT) {
             OMNI_SLEEP_INIT();
@@ -1294,7 +1270,7 @@ omni::sync::thread_t omni::sync::thread::start(omni::sync::thread_arg_t args)
     int perr = 0;
     std::size_t stack_size = this->m_ops.stack_size();
     omni::sync::thread_args bargs;
-    this->m_args = (this->m_ispmthd ? args : OMNI_THREAD_ARG_NULL_T);
+    this->m_args = (OMNI_VAL_HAS_FLAG_BIT(this->m_status, OMNI_THREAD_PMTHD_FLAG_FW) ? args : OMNI_THREAD_ARG_NULL_T);
     this->m_state = omni::sync::thread_state::START_REQUESTED;
     this->m_thread = 0;
     bargs.bthread = this;
@@ -1388,9 +1364,8 @@ void omni::sync::thread::swap(omni::sync::thread &o)
         #if defined(OMNI_NON_PORTABLE)
             std::swap(this->m_priority, o.m_priority);
         #endif
-        std::swap(this->m_isjoined, o.m_isjoined);
         std::swap(this->m_mthd, o.m_mthd);
-        std::swap(this->m_ispmthd, o.m_ispmthd);
+        std::swap(this->m_status, o.m_status);
         #if defined(OMNI_SAFE_THREAD)
             this->m_mtx.unlock();
             o.m_mtx.unlock();
@@ -1461,11 +1436,13 @@ bool omni::sync::thread::operator==(const omni::sync::thread &o) const
         this->m_state == o.m_state &&
         this->m_tid == o.m_tid &&
         this->m_thread == o.m_thread &&
-        this->m_isjoined == o.m_isjoined &&
+        this->m_status == o.m_status &&
         ((this->m_mthd == o.m_mthd) ||
-        (((this->m_mthd != OMNI_NULL) && (o.m_mthd != OMNI_NULL)) && (this->m_ispmthd == o.m_ispmthd) &&
-        (this->m_ispmthd ? (*static_cast<omni::sync::parameterized_thread_start*>(this->m_mthd) == *static_cast<omni::sync::parameterized_thread_start*>(o.m_mthd))
-                         : (*static_cast<omni::sync::thread_start*>(this->m_mthd) == *static_cast<omni::sync::thread_start*>(o.m_mthd)))))
+        (((this->m_mthd != OMNI_NULL) && (o.m_mthd != OMNI_NULL)) &&
+            (OMNI_VAL_HAS_FLAG_BIT(this->m_status, OMNI_THREAD_PMTHD_FLAG_FW) == OMNI_VAL_HAS_FLAG_BIT(o.m_status, OMNI_THREAD_PMTHD_FLAG_FW)) &&
+            (OMNI_VAL_HAS_FLAG_BIT(this->m_status, OMNI_THREAD_PMTHD_FLAG_FW) ?
+            (*static_cast<omni::sync::parameterized_thread_start*>(this->m_mthd) == *static_cast<omni::sync::parameterized_thread_start*>(o.m_mthd))
+            : (*static_cast<omni::sync::thread_start*>(this->m_mthd) == *static_cast<omni::sync::thread_start*>(o.m_mthd)))))
         #if defined(OMNI_NON_PORTABLE)
             && this->m_priority == o.m_priority
         #endif
@@ -1483,14 +1460,14 @@ bool omni::sync::thread::operator!=(const omni::sync::thread &o) const
 void omni::sync::thread::_chkmthd()
 {
     if (this->m_mthd != OMNI_NULL) {
-        if (this->m_ispmthd) {
+        if (OMNI_VAL_HAS_FLAG_BIT(this->m_status, OMNI_THREAD_PMTHD_FLAG_FW)) {
             delete static_cast<omni::sync::parameterized_thread_start*>(this->m_mthd);
         } else {
             delete static_cast<omni::sync::thread_start*>(this->m_mthd);
         }
     }
     this->m_mthd = OMNI_NULL;
-    this->m_ispmthd = false;
+    OMNI_VAL_UNSET_FLAG_BIT(this->m_status, OMNI_THREAD_PMTHD_FLAG_FW);
 }
 
 void omni::sync::thread::_close_handle(bool allow_rejoin)
@@ -1499,7 +1476,7 @@ void omni::sync::thread::_close_handle(bool allow_rejoin)
     this->m_state = omni::sync::thread_state::UNSTARTED;
     if (this->m_thread != 0 && !allow_rejoin) {
         // detach the handle so the OS can cleanup when it is done
-        if (!this->m_isjoined) {
+        if (!OMNI_VAL_HAS_FLAG_BIT(this->m_status, OMNI_THREAD_JOINED_FLAG_FW)) {
             OMNI_D5_FW("closing handle");
             #if defined(OMNI_OS_WIN)
                 ::CloseHandle(OMNI_WIN_TOHNDL_FW(this->m_thread));
@@ -1510,7 +1487,7 @@ void omni::sync::thread::_close_handle(bool allow_rejoin)
             #endif
         }
     }
-    this->m_isjoined = false;
+    OMNI_VAL_UNSET_FLAG_BIT(this->m_status, OMNI_THREAD_JOINED_FLAG_FW);
     this->m_thread = 0;
     this->m_tid = 0;
     OMNI_D5_FW("handle closed");
@@ -1611,14 +1588,14 @@ void omni::sync::thread::_set_context(const omni::sync::thread& t2)
     #if defined(OMNI_NON_PORTABLE)
         this->m_priority = t2.m_priority;
     #endif
-    this->m_isjoined = t2.m_isjoined;    
     this->_chkmthd();
+    this->m_status = t2.m_status;
     if (t2.m_mthd != OMNI_NULL) {
-        if (t2.m_ispmthd) {
+        if (OMNI_VAL_HAS_FLAG_BIT(t2.m_status, OMNI_THREAD_PMTHD_FLAG_FW)) {
             this->m_mthd = new omni::sync::thread_start(*(static_cast<omni::sync::thread_start*>(t2.m_mthd)));
         } else {
             this->m_mthd = new omni::sync::parameterized_thread_start(*(static_cast<omni::sync::parameterized_thread_start*>(t2.m_mthd)));
-            this->m_ispmthd = true;
+            OMNI_VAL_SET_FLAG_BIT(this->m_status, OMNI_THREAD_PMTHD_FLAG_FW);
         }
     }
     #if defined(OMNI_SAFE_THREAD)
@@ -1708,7 +1685,7 @@ void omni::sync::thread::set_priority(omni::sync::thread_priority::enum_t p)
         (pri > omni::sync::thread_priority::HIGHEST && pri != omni::sync::thread_priority::REAL_TIME))
     {
         // invalid_priority
-        OMNI_ERRV_RET_FW("invalid priority: ", pri, omni::exceptions::invalid_thread_option(static_cast<size_t>(pri)))
+        OMNI_ERRV_RET_FW("invalid priority: ", pri, omni::exceptions::invalid_thread_option(static_cast<std::size_t>(pri)))
     }
     OMNI_SAFE_THREAD_LOCK_FW
     // if we are not running, just set the priority til next time

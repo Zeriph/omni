@@ -24,9 +24,9 @@
 namespace omni {
     namespace net {
 
-        inline omni::net::socket_error parse_error(int err)
+        inline omni::net::socket_error parse_error(int serr)
         {
-            switch (err) {
+            switch (serr) {
                 #if defined(OMNI_OS_WIN)
                     case WSANOTINITIALISED: // A successful WSAStartup call must occur before using this function.
                         return omni::net::socket_error::NOT_INITIALIZED;
@@ -134,7 +134,7 @@ namespace omni {
                 #endif
                 default: break;
             }
-            return static_cast<omni::net::socket_error::enum_t>(err);
+            return static_cast<omni::net::socket_error::enum_t>(serr);
         }
 
         inline omni::net::sockaddr_t* to_sockaddr(omni::net::sockaddr_in_t& addr)
@@ -165,9 +165,9 @@ namespace omni {
                     // 0xFF.0xFF.0xFF.0xFF
                     // 255.255.255.255
                     // A.B.C.D | A.B.D | A.D
-                    int oct = -1;
+                    int64_t oct = -1;
                     ipval = 0;
-                    for (int i = 0; i < octs.size(); ++i, oct = -1) {
+                    for (size_t i = 0; i < octs.size(); ++i, oct = -1) {
                         if (octs[i].empty() || octs[i].size() > 4) { return false; }
                         if ((octs[i].size() > 1) && (octs[i].at(0) == '0')) { // hex/octal?
                             if ((octs[i].size() > 2) && ((octs[i].at(1) == 'x') || (octs[i].at(1) == 'X'))) { // hex
@@ -179,7 +179,7 @@ namespace omni {
                                 ss >> oct;
                             } else { // octal
                                 oct = 0;
-                                for (size_t c = 1; c < octs[i].size(); ++c) {
+                                for (std::size_t c = 1; c < octs[i].size(); ++c) {
                                     if (!omni::char_util::is_octal(octs[i].at(c))) { return false; }
                                     switch (octs[i].size() - c) {
                                         case 1: oct += (omni::char_util::to_int(octs[i].at(c))); break;
@@ -217,7 +217,7 @@ namespace omni {
                             // hex
                             std::string tmp_ip = omni::cstring::reverse(ip.substr(2));
                             int64_t p = 1;
-                            for (int cnt = 0; cnt < tmp_ip.size(); ++cnt, p *= 16) {
+                            for (size_t cnt = 0; cnt < tmp_ip.size(); ++cnt, p *= 16) {
                                 if (!omni::char_util::is_hex(tmp_ip.at(cnt))) { return false; }
                                 ipval += (static_cast<int64_t>(omni::char_util::to_int(tmp_ip.at(cnt), true)) * p);
                             }
@@ -225,7 +225,7 @@ namespace omni {
                             // octal
                             std::string tmp_ip = omni::cstring::reverse(ip.substr(1));
                             int64_t p = 1;
-                            for (int cnt = 0; cnt < tmp_ip.size(); ++cnt, p *= 8) {
+                            for (size_t cnt = 0; cnt < tmp_ip.size(); ++cnt, p *= 8) {
                                 if (!omni::char_util::is_octal(tmp_ip.at(cnt))) { return false; }
                                 ipval += (static_cast<int64_t>(omni::char_util::to_int(tmp_ip.at(cnt), true)) * p);
                             }
@@ -333,12 +333,12 @@ namespace omni {
                 struct sockaddr_in sa;
                 char out[NI_MAXHOST];
                 char si[NI_MAXSERV];
-                sa.sin_family = static_cast<int>(family);
+                sa.sin_family = static_cast<OMNI_SIN_FAMILY_FW>(family);
                 sa.sin_addr.s_addr = inet_addr(tmp.c_str());
                 sa.sin_port = htons(port);
-                int err = ::getnameinfo(reinterpret_cast<struct sockaddr *>(&sa), sizeof(struct sockaddr), out, NI_MAXHOST, si, NI_MAXSERV, NI_NUMERICSERV);
-                if (err != 0) {
-                    ret = omni::net::parse_error(err);
+                int serr = ::getnameinfo(reinterpret_cast<struct sockaddr *>(&sa), sizeof(struct sockaddr), out, NI_MAXHOST, si, NI_MAXSERV, NI_NUMERICSERV);
+                if (serr != 0) {
+                    ret = omni::net::parse_error(serr);
                 } else {
                     host.assign(out);
                 }
@@ -369,12 +369,12 @@ namespace omni {
                     struct sockaddr_in sa;
                     wchar_t out[NI_MAXHOST];
                     wchar_t si[NI_MAXSERV];
-                    sa.sin_family = static_cast<int>(family);
+                    sa.sin_family = static_cast<OMNI_SIN_FAMILY_FW>(family);
                     sa.sin_addr.s_addr = inet_addr(tmp.c_str());
                     sa.sin_port = htons(port);
-                    int err = ::GetNameInfoW(reinterpret_cast<struct sockaddr *>(&sa), sizeof(struct sockaddr), out, NI_MAXHOST, si, NI_MAXSERV, NI_NUMERICSERV);
-                    if (err != 0) {
-                        ret = omni::net::parse_error(err);
+                    int serr = ::GetNameInfoW(reinterpret_cast<struct sockaddr *>(&sa), sizeof(struct sockaddr), out, NI_MAXHOST, si, NI_MAXSERV, NI_NUMERICSERV);
+                    if (serr != 0) {
+                        ret = omni::net::parse_error(serr);
                     } else {
                         host = omni::string::to_wstring(out);
                     }
@@ -382,11 +382,11 @@ namespace omni {
                 #else
                     std::string val;
                     std::string tmp = omni::string::to_string(omni::string::util::trim(ip));
-                    omni::net::socket_error err = omni::net::util::get_host(tmp, port, family, val);
-                    if (err == omni::net::socket_error::SUCCESS) {
+                    omni::net::socket_error serr = omni::net::util::get_host(tmp, port, family, val);
+                    if (serr == omni::net::socket_error::SUCCESS) {
                         host = omni::string::to_wstring(val);
                     }
-                    return err;
+                    return serr;
                 #endif
             }
 
@@ -426,7 +426,7 @@ namespace omni {
                     return omni::net::parse_error(ret);
                 }
                 for (struct addrinfo* ptr = result; ptr != NULL; ptr = ptr->ai_next) {
-                    if (ptr->ai_family == omni::net::address_family::INTERNETWORK) {
+                    if (ptr->ai_family == omni::net::address_family::INET) {
                         ips.push_back(std::string(inet_ntoa((reinterpret_cast<struct sockaddr_in *>(ptr->ai_addr))->sin_addr)));
                     }
                 }
@@ -528,7 +528,7 @@ namespace omni {
                         return omni::net::parse_error(ret);
                     }
                     for (ADDRINFOW* ptr = result; ptr != NULL; ptr = ptr->ai_next) {
-                        if (ptr->ai_family == omni::net::address_family::INTERNETWORK) {
+                        if (ptr->ai_family == omni::net::address_family::INET) {
                             std::memset(buf, 0, sizeof(buf));
                             len = 46;
                             ret = ::WSAAddressToString((reinterpret_cast<LPSOCKADDR>(ptr->ai_addr)), static_cast<DWORD>(ptr->ai_addrlen), NULL, buf, &len);
@@ -554,7 +554,7 @@ namespace omni {
                         return omni::net::parse_error(ret);
                     }
                     for (struct addrinfo* ptr = result; ptr != NULL; ptr = ptr->ai_next) {
-                        if (ptr->ai_family == omni::net::address_family::INTERNETWORK) {
+                        if (ptr->ai_family == omni::net::address_family::INET) {
                             ips.push_back(omni::string::to_wstring(inet_ntoa((reinterpret_cast<struct sockaddr_in *>(ptr->ai_addr))->sin_addr)));
                         }
                     }

@@ -98,6 +98,7 @@
     #define OMNI_SOCK_SEND_FW SD_SEND
     #define OMNI_SOCK_BOTH_FW SD_BOTH
     #define OMNI_MSG_EOR 0
+    #define OMNI_SIN_FAMILY_FW ADDRESS_FAMILY
 #else
     #define OMNI_SOCKET_T_FW int
     #define OMNI_SOCKLEN_FW socklen_t
@@ -109,6 +110,11 @@
     #define OMNI_SOCK_SEND_FW SHUT_WR
     #define OMNI_SOCK_BOTH_FW SHUT_RDWR
     #define OMNI_MSG_EOR MSG_EOR
+    #if defined(OMNI_OS_APPLE)
+        #define OMNI_SIN_FAMILY_FW sa_family_t
+    #else
+        #define OMNI_SIN_FAMILY_FW short
+    #endif
 #endif
 
 #if defined(OMNI_OS_WIN)
@@ -119,12 +125,12 @@ namespace omni {
         inline int wsa_init()
         {
             WSADATA sdata;
-            int err = ::WSAStartup(MAKEWORD(OMNI_WINSOCK_HIGH, OMNI_WINSOCK_LOW), &sdata);
-            if (err != 0) {
+            int serr = ::WSAStartup(MAKEWORD(OMNI_WINSOCK_HIGH, OMNI_WINSOCK_LOW), &sdata);
+            if (serr != 0) {
                 // Could not get the winsock dll, fail since cannot create socket
-                OMNI_DBGEV("a system error occurred in WSAStartUp: ", err)
+                OMNI_DBGEV("a system error occurred in WSAStartUp: ", serr)
             }
-            return err;
+            return serr;
         }
 
         /** @internal library helper */

@@ -33,7 +33,7 @@ omni::sync::threadpool::threadpool() :
     m_mtx(),
     m_threads(),
     m_tasks(),
-    m_isdestroy(false)
+    m_isdestroy(0)
 {
     this->_initialize_min(this->m_min);
     OMNI_D5_FW("created with 5,25");
@@ -47,7 +47,7 @@ omni::sync::threadpool::threadpool(std::size_t thread_min, std::size_t thread_ma
     m_mtx(),
     m_threads(),
     m_tasks(),
-    m_isdestroy(false)
+    m_isdestroy(0)
 {
     if (thread_min > thread_max) {
         this->m_min = thread_max;
@@ -66,7 +66,7 @@ omni::sync::threadpool::~threadpool()
     OMNI_DTOR_FW
     this->m_mtx.lock();
     OMNI_DV5_FW("active thread count: ", this->m_act);
-    this->m_isdestroy = true;
+    this->m_isdestroy = 1;
     this->m_tasks.clear();
     this->m_mtx.unlock();
     for (omni_threadpool_itr itr = this->m_threads.begin(); itr != this->m_threads.end(); ++itr)
@@ -185,7 +185,7 @@ void omni::sync::threadpool::wait_active_queue() const
 void omni::sync::threadpool::_add_queue(const omni::sync::threadpool_task& tpt)
 {
     OMNI_TPAMTX_FW
-    if (this->m_isdestroy) { return; }
+    if (this->m_isdestroy == 1) { return; }
     this->m_tasks.push_back(tpt);
     if (this->m_act < this->m_max) {
         if (this->m_act < this->m_min) {
@@ -219,7 +219,7 @@ void omni::sync::threadpool::_thread_fn()
 {
     omni::sync::threadpool_task tpt;
     this->m_mtx.lock();
-    while (!this->m_isdestroy && !this->m_tasks.empty()) {
+    while ((this->m_isdestroy == 0) && !this->m_tasks.empty()) {
         tpt = this->m_tasks.front();
         this->m_tasks.pop_front();
         ++this->m_act;
@@ -230,7 +230,7 @@ void omni::sync::threadpool::_thread_fn()
         this->m_mtx.lock();
         --this->m_act;
     }
-    if ((this->m_act >= this->m_min) && !this->m_isdestroy) {
+    if ((this->m_act >= this->m_min) && (this->m_isdestroy == 0)) {
         // find the thread in the list and remove it
         omni::sync::thread_t tid = omni::sync::thread_id();
         for (omni_threadpool_itr itr = this->m_threads.begin(); itr != this->m_threads.end(); ++itr)

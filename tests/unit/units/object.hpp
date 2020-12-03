@@ -53,7 +53,7 @@ class UT_CLASS_DEF
             o->disposing += &obj_disposing;
             printv("object 'o': ", o->hash());
             delete o;
-            //o = new omni::util::version();
+            //o = new omni::version();
             // must re-add delegate since 'delete o;' invalidated the object
             //o->disposing += &obj_disposing;
             /*printv("object 'o': ", o->hash());

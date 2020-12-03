@@ -36,6 +36,12 @@
     #define OMNI_SAFE_CLROALOCK_FW(o) 
 #endif
 
+#if defined(OMNI_32BIT_COLOR)
+    #define OMNI_CLR_INT_FW uint32_t
+#else
+    #define OMNI_CLR_INT_FW uint64_t
+#endif
+
 namespace omni {
     namespace drawing {
         template < typename BitDepth, typename RgbType, uint8_t BitSize = sizeof(BitDepth) * CHAR_BIT >
@@ -64,27 +70,27 @@ namespace omni {
                     return BitSize;
                 }
 
-                static color<BitDepth, RgbType, BitSize> from_hsl(float hue, float saturation, float lightness)
+                static omni::drawing::color<BitDepth, RgbType, BitSize> from_hsl(float hue, float saturation, float lightness)
                 {
                     return omni::drawing::color<BitDepth, RgbType, BitSize>(hue, saturation, lightness);
                 }
 
-                static color<BitDepth, RgbType, BitSize> from_hsl(float hue, uint32_t saturation, uint32_t lightness)
+                static omni::drawing::color<BitDepth, RgbType, BitSize> from_hsl(float hue, uint32_t saturation, uint32_t lightness)
                 {
                     return omni::drawing::color<BitDepth, RgbType, BitSize>(hue, saturation, lightness);
                 }
 
-                static color<BitDepth, RgbType, BitSize> from_rgb(RgbType rgb)
+                static omni::drawing::color<BitDepth, RgbType, BitSize> from_rgb(RgbType rgb)
                 {
                     return omni::drawing::color<BitDepth, RgbType, BitSize>(rgb);
                 }
 
-                static color<BitDepth, RgbType, BitSize> from_argb(RgbType argb)
+                static omni::drawing::color<BitDepth, RgbType, BitSize> from_argb(RgbType argb)
                 {
                     return omni::drawing::color<BitDepth, RgbType, BitSize>(argb, false, false);
                 }
 
-                static color<BitDepth, RgbType, BitSize> from_rgba(RgbType rgba)
+                static omni::drawing::color<BitDepth, RgbType, BitSize> from_rgba(RgbType rgba)
                 {
                     return omni::drawing::color<BitDepth, RgbType, BitSize>(rgba, true, false);
                 }
@@ -178,7 +184,7 @@ namespace omni {
 
                 color() : 
                     OMNI_CTOR_FW(omni::drawing::color)
-                    m_r(0), m_g(0), m_b(0), m_a(0), m_calc_alpha(false)
+                    m_r(0), m_g(0), m_b(0), m_a(0), m_calc_alpha(0)
                     OMNI_SAFE_CLRDMTX_FW
                 { }
 
@@ -190,7 +196,7 @@ namespace omni {
 
                 color(RgbType rgb) : 
                     OMNI_CTOR_FW(omni::drawing::color<T>)
-                    m_r(0), m_g(0), m_b(0), m_a(std::numeric_limits<BitDepth>::max()), m_calc_alpha(false)
+                    m_r(0), m_g(0), m_b(0), m_a(std::numeric_limits<BitDepth>::max()), m_calc_alpha(0)
                     OMNI_SAFE_CLRDMTX_FW
                 {
                     this->set_rgb(rgb);
@@ -198,7 +204,7 @@ namespace omni {
 
                 color(RgbType rgb, bool calculate_alpha) : 
                     OMNI_CTOR_FW(omni::drawing::color<T>)
-                    m_r(0), m_g(0), m_b(0), m_a(std::numeric_limits<BitDepth>::max()), m_calc_alpha(calculate_alpha)
+                    m_r(0), m_g(0), m_b(0), m_a(std::numeric_limits<BitDepth>::max()), m_calc_alpha(calculate_alpha ? 1 : 0)
                     OMNI_SAFE_CLRDMTX_FW
                 {
                     this->set_rgb(rgb);
@@ -206,31 +212,31 @@ namespace omni {
 
                 color(BitDepth r, BitDepth g, BitDepth b) : 
                     OMNI_CTOR_FW(omni::drawing::color)
-                    m_r(r), m_g(g), m_b(b), m_a(std::numeric_limits<BitDepth>::max()), m_calc_alpha(false)
+                    m_r(r), m_g(g), m_b(b), m_a(std::numeric_limits<BitDepth>::max()), m_calc_alpha(0)
                     OMNI_SAFE_CLRDMTX_FW
                 { }
 
                 color(BitDepth r, BitDepth g, BitDepth b, bool calculate_alpha) : 
                     OMNI_CTOR_FW(omni::drawing::color)
-                    m_r(r), m_g(g), m_b(b), m_a(std::numeric_limits<BitDepth>::max()), m_calc_alpha(calculate_alpha)
+                    m_r(r), m_g(g), m_b(b), m_a(std::numeric_limits<BitDepth>::max()), m_calc_alpha(calculate_alpha ? 1 : 0)
                     OMNI_SAFE_CLRDMTX_FW
                 { }
 
                 color(BitDepth r, BitDepth g, BitDepth b, BitDepth a) : 
                     OMNI_CTOR_FW(omni::drawing::color)
-                    m_r(r), m_g(g), m_b(b), m_a(a), m_calc_alpha(false)
+                    m_r(r), m_g(g), m_b(b), m_a(a), m_calc_alpha(0)
                     OMNI_SAFE_CLRDMTX_FW
                 { }
 
                 color(BitDepth r, BitDepth g, BitDepth b, BitDepth a, bool calculate_alpha) : 
                     OMNI_CTOR_FW(omni::drawing::color)
-                    m_r(r), m_g(g), m_b(b), m_a(a), m_calc_alpha(calculate_alpha)
+                    m_r(r), m_g(g), m_b(b), m_a(a), m_calc_alpha(calculate_alpha ? 1 : 0)
                     OMNI_SAFE_CLRDMTX_FW
                 { }
 
                 color(float hue, float saturation, float lightness) : 
                     OMNI_CTOR_FW(omni::drawing::color)
-                    m_r(0), m_g(0), m_b(0), m_a(std::numeric_limits<BitDepth>::max()), m_calc_alpha(false)
+                    m_r(0), m_g(0), m_b(0), m_a(std::numeric_limits<BitDepth>::max()), m_calc_alpha(0)
                     OMNI_SAFE_CLRDMTX_FW
                 {
                     this->set_rgb(omni::drawing::color<BitDepth, RgbType, BitSize>::hsl_to_rgb(hue, saturation, lightness));
@@ -238,7 +244,7 @@ namespace omni {
 
                 color(float hue, uint32_t saturation, uint32_t lightness) : 
                     OMNI_CTOR_FW(omni::drawing::color)
-                    m_r(0), m_g(0), m_b(0), m_a(std::numeric_limits<BitDepth>::max()), m_calc_alpha(false)
+                    m_r(0), m_g(0), m_b(0), m_a(std::numeric_limits<BitDepth>::max()), m_calc_alpha(0)
                     OMNI_SAFE_CLRDMTX_FW
                 {
                     this->set_rgb(omni::drawing::color<BitDepth, RgbType, BitSize>::hsl_to_rgb(hue, saturation, lightness));
@@ -308,7 +314,7 @@ namespace omni {
                 bool calculate_alpha() const
                 {
                     OMNI_SAFE_CLRALOCK_FW
-                    return this->m_calc_alpha;
+                    return (this->m_calc_alpha == 1);
                 }
 
                 BitDepth decrement_r()
@@ -446,7 +452,7 @@ namespace omni {
                 void set_calculate_alpha(bool calc)
                 {
                     OMNI_SAFE_CLRALOCK_FW
-                    this->m_calc_alpha = calc;
+                    this->m_calc_alpha = (calc ? 1 : 0);
                 }
 
                 void set_rgb(BitDepth r, BitDepth g, BitDepth b)
@@ -585,12 +591,12 @@ namespace omni {
 
                 operator std::wstring() const { return this->to_wstring(); }
 
-                bool operator!=(const color<BitDepth, RgbType, BitSize>& val) const
+                bool operator!=(const omni::drawing::color<BitDepth, RgbType, BitSize>& val) const
                 {
                     return !(*this == val);
                 }
                 
-                color<BitDepth, RgbType, BitSize>& operator=(const color<BitDepth, RgbType, BitSize>& val)
+                omni::drawing::color<BitDepth, RgbType, BitSize>& operator=(const omni::drawing::color<BitDepth, RgbType, BitSize>& val)
                 {
                     if (this != &val) {
                         OMNI_SAFE_CLRALOCK_FW
@@ -604,16 +610,16 @@ namespace omni {
                     return *this;
                 }
 
-                color<BitDepth, RgbType, BitSize>& operator=(RgbType val)
+                omni::drawing::color<BitDepth, RgbType, BitSize>& operator=(RgbType val)
                 {
                     this->set_rgb(val);
                     return *this;
                 }
 
-                bool operator<(const color<BitDepth, RgbType, BitSize>& val) const
+                bool operator<(const omni::drawing::color<BitDepth, RgbType, BitSize>& val) const
                 {
                     if (this == &val) { return false; }
-                    if (this->m_calc_alpha) {
+                    if (this->m_calc_alpha == 1) {
                         return this->to_rgba() < val.to_rgba();
                     }
                     return this->to_rgb() < val.to_rgb();
@@ -621,16 +627,16 @@ namespace omni {
 
                 bool operator<(RgbType val) const
                 {
-                    if (this->m_calc_alpha) {
+                    if (this->m_calc_alpha == 1) {
                         return (this->to_rgba() < val);
                     }
                     return (this->to_rgb() < val);
                 }
 
-                bool operator>(const color<BitDepth, RgbType, BitSize>& val) const
+                bool operator>(const omni::drawing::color<BitDepth, RgbType, BitSize>& val) const
                 {
                     if (this == &val) { return false; }
-                    if (this->m_calc_alpha) {
+                    if (this->m_calc_alpha == 1) {
                         return this->to_rgba() > val.to_rgba();
                     }
                     return this->to_rgb() > val.to_rgb();
@@ -638,13 +644,13 @@ namespace omni {
 
                 bool operator>(RgbType val) const
                 {
-                    if (this->m_calc_alpha) {
+                    if (this->m_calc_alpha == 1) {
                         return (this->to_rgba() > val);
                     }
                     return (this->to_rgb() > val);
                 }
 
-                bool operator==(const color<BitDepth, RgbType, BitSize>& val) const
+                bool operator==(const omni::drawing::color<BitDepth, RgbType, BitSize>& val) const
                 {
                     if (this == &val) { return true; }
                     OMNI_SAFE_CLRALOCK_FW
@@ -652,87 +658,87 @@ namespace omni {
                     return (this->m_r == val.m_r &&
                             this->m_g == val.m_g &&
                             this->m_b == val.m_b &&
-                            (this->m_calc_alpha ? (this->m_a > val.m_a) : true))
+                            ((this->m_calc_alpha == 1) ? (this->m_a > val.m_a) : true))
                     OMNI_EQUAL_FW(val);
                 }
 
                 bool operator==(RgbType val) const
                 {
-                    if (this->m_calc_alpha) {
+                    if (this->m_calc_alpha == 1) {
                         return (this->to_rgba() == val);
                     }
                     return (this->to_rgb() == val);
                 }
 
-                color<BitDepth, RgbType, BitSize> operator+(const color<BitDepth, RgbType, BitSize>& val)
+                omni::drawing::color<BitDepth, RgbType, BitSize> operator+(const omni::drawing::color<BitDepth, RgbType, BitSize>& val)
                 {
                     #if defined(OMNI_SAFE_COLOR)
                         this->m_mtx.lock();
                         if (this != &val) { val.m_mtx.lock(); }
-                        color<BitDepth, RgbType, BitSize> ret(
+                        omni::drawing::color<BitDepth, RgbType, BitSize> ret(
                             (this->m_r + val.m_r),
                             (this->m_g + val.m_g),
                             (this->m_b + val.m_b),
-                            (this->m_calc_alpha ? (this->m_a + val.m_a) : this->m_a),
-                            this->m_calc_alpha
+                            ((this->m_calc_alpha == 1) ? (this->m_a + val.m_a) : this->m_a),
+                            (this->m_calc_alpha ? true : false)
                         );
                         if (this != &val) { val.m_mtx.unlock(); }
                         this->m_mtx.unlock();
                         return ret;
                     #else
-                        return color<BitDepth, RgbType, BitSize>(
+                        return omni::drawing::color<BitDepth, RgbType, BitSize>(
                             (this->m_r + val.m_r),
                             (this->m_g + val.m_g),
                             (this->m_b + val.m_b),
-                            (this->m_calc_alpha ? (this->m_a + val.m_a) : this->m_a),
-                            this->m_calc_alpha
+                            ((this->m_calc_alpha == 1) ? (this->m_a + val.m_a) : this->m_a),
+                            (this->m_calc_alpha ? true : false)
                         );
                     #endif
                 }
 
-                color<BitDepth, RgbType, BitSize> operator+(RgbType val)
+                omni::drawing::color<BitDepth, RgbType, BitSize> operator+(RgbType val)
                 {
-                    if (this->m_calc_alpha) {
-                        return color<BitDepth, RgbType, BitSize>((this->to_rgba() + val), true);
+                    if (this->m_calc_alpha == 1) {
+                        return omni::drawing::color<BitDepth, RgbType, BitSize>((this->to_rgba() + val), true);
                     }
-                    return color<BitDepth, RgbType, BitSize>((this->to_rgb() + val), false);
+                    return omni::drawing::color<BitDepth, RgbType, BitSize>((this->to_rgb() + val), false);
                 }
 
-                color<BitDepth, RgbType, BitSize> operator-(const color<BitDepth, RgbType, BitSize>& val)
+                omni::drawing::color<BitDepth, RgbType, BitSize> operator-(const omni::drawing::color<BitDepth, RgbType, BitSize>& val)
                 {
                     #if defined(OMNI_SAFE_COLOR)
                         this->m_mtx.lock();
                         if (this != &val) { val.m_mtx.lock(); }
-                        color<BitDepth, RgbType, BitSize> ret(
+                        omni::drawing::color<BitDepth, RgbType, BitSize> ret(
                             (this->m_r - val.m_r),
                             (this->m_g - val.m_g),
                             (this->m_b - val.m_b),
-                            (this->m_calc_alpha ? (this->m_a - val.m_a) : this->m_a),
-                            this->m_calc_alpha
+                            ((this->m_calc_alpha == 1) ? (this->m_a - val.m_a) : this->m_a),
+                            (this->m_calc_alpha ? true : false)
                         );
                         if (this != &val) { val.m_mtx.unlock(); }
                         this->m_mtx.unlock();
                         return ret;
                     #else
-                        return color<BitDepth, RgbType, BitSize>(
+                        return omni::drawing::color<BitDepth, RgbType, BitSize>(
                             (this->m_r - val.m_r),
                             (this->m_g - val.m_g),
                             (this->m_b - val.m_b),
-                            (this->m_calc_alpha ? (this->m_a - val.m_a) : this->m_a),
-                            this->m_calc_alpha
+                            ((this->m_calc_alpha == 1) ? (this->m_a - val.m_a) : this->m_a),
+                            (this->m_calc_alpha ? true : false)
                         );
                     #endif
                 }
 
-                color<BitDepth, RgbType, BitSize> operator-(RgbType val)
+                omni::drawing::color<BitDepth, RgbType, BitSize> operator-(RgbType val)
                 {
-                    if (this->m_calc_alpha) {
-                        return color<BitDepth, RgbType, BitSize>((this->to_rgba() - val), true);
+                    if (this->m_calc_alpha == 1) {
+                        return omni::drawing::color<BitDepth, RgbType, BitSize>((this->to_rgba() - val), true);
                     }
-                    return color<BitDepth, RgbType, BitSize>((this->to_rgb() - val), false);
+                    return omni::drawing::color<BitDepth, RgbType, BitSize>((this->to_rgb() - val), false);
                 }
 
-                color<BitDepth, RgbType, BitSize>& operator+=(const color<BitDepth, RgbType, BitSize>& val)
+                omni::drawing::color<BitDepth, RgbType, BitSize>& operator+=(const omni::drawing::color<BitDepth, RgbType, BitSize>& val)
                 {
                     #if defined(OMNI_SAFE_COLOR)
                         this->m_mtx.lock();
@@ -740,22 +746,22 @@ namespace omni {
                         this->m_r += val.m_r;
                         this->m_g += val.m_g;
                         this->m_b += val.m_b;
-                        if (this->m_calc_alpha) { this->m_a += val.m_a; }
+                        if (this->m_calc_alpha == 1) { this->m_a += val.m_a; }
                         if (this != & val) { val.m_mtx.unlock(); }
                         this->m_mtx.unlock();
                     #else    
                         this->m_r += val.m_r;
                         this->m_g += val.m_g;
                         this->m_b += val.m_b;
-                        if (this->m_calc_alpha) { this->m_a += val.m_a; }
+                        if (this->m_calc_alpha == 1) { this->m_a += val.m_a; }
                     #endif
                     return *this;
                 }
 
-                color<BitDepth, RgbType, BitSize>& operator+=(RgbType val)
+                omni::drawing::color<BitDepth, RgbType, BitSize>& operator+=(RgbType val)
                 {
                     OMNI_SAFE_CLRALOCK_FW
-                    if (this->m_calc_alpha) {
+                    if (this->m_calc_alpha == 1) {
                         RgbType rgba = (
                             (static_cast<RgbType>(this->m_r) << (BitSize * 3)) ^
                             (static_cast<RgbType>(this->m_g) << (BitSize * 2)) ^
@@ -786,7 +792,7 @@ namespace omni {
                     return *this;
                 }
 
-                color<BitDepth, RgbType, BitSize>& operator-=(const color<BitDepth, RgbType, BitSize>& val)
+                omni::drawing::color<BitDepth, RgbType, BitSize>& operator-=(const omni::drawing::color<BitDepth, RgbType, BitSize>& val)
                 {
                     #if defined(OMNI_SAFE_COLOR)
                         this->m_mtx.lock();
@@ -794,22 +800,22 @@ namespace omni {
                         this->m_r -= val.m_r;
                         this->m_g -= val.m_g;
                         this->m_b -= val.m_b;
-                        if (this->m_calc_alpha) { this->m_a -= val.m_a; }
+                        if (this->m_calc_alpha == 1) { this->m_a -= val.m_a; }
                         if (this != & val) { val.m_mtx.unlock(); }
                         this->m_mtx.unlock();
                     #else    
                         this->m_r -= val.m_r;
                         this->m_g -= val.m_g;
                         this->m_b -= val.m_b;
-                        if (this->m_calc_alpha) { this->m_a -= val.m_a; }
+                        if (this->m_calc_alpha == 1) { this->m_a -= val.m_a; }
                     #endif
                     return *this;
                 }
 
-                color<BitDepth, RgbType, BitSize>& operator-=(RgbType val)
+                omni::drawing::color<BitDepth, RgbType, BitSize>& operator-=(RgbType val)
                 {
                     OMNI_SAFE_CLRALOCK_FW
-                    if (this->m_calc_alpha) {
+                    if (this->m_calc_alpha == 1) {
                         RgbType rgba = ((static_cast<RgbType>(this->m_r) << (BitSize * 3)) ^
                             (static_cast<RgbType>(this->m_g) << (BitSize * 2)) ^
                             (static_cast<RgbType>(this->m_b) << BitSize) ^
@@ -845,14 +851,14 @@ namespace omni {
                 BitDepth m_g;
                 BitDepth m_b;
                 BitDepth m_a;
-                volatile bool m_calc_alpha;
+                volatile OMNI_CLR_INT_FW m_calc_alpha;
                 #if defined(OMNI_SAFE_COLOR)
                     mutable omni::sync::basic_lock m_mtx;
                 #endif
 
                 color(RgbType val, bool is_rgba, bool calc) : 
                     OMNI_CTOR_FW(omni::drawing::color<BitDepth>)
-                    m_r(0), m_g(0), m_b(0), m_a(std::numeric_limits<BitDepth>::max()), m_calc_alpha(calc)
+                    m_r(0), m_g(0), m_b(0), m_a(std::numeric_limits<BitDepth>::max()), m_calc_alpha(calc ? 1 : 0)
                     OMNI_SAFE_CLRDMTX_FW
                 {
                     if (is_rgba) {

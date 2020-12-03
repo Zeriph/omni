@@ -53,19 +53,19 @@ omni::chrono::OMNI_TIMER_T_FW::~OMNI_TIMER_T_FW()
 bool omni::chrono::OMNI_TIMER_T_FW::auto_reset() const
 {
     OMNI_TMR_ALOCK_FW 
-    return this->m_auto;
+    return OMNI_VAL_HAS_FLAG_BIT(this->m_status, OMNI_TIMER_AUTO_FLAG_FW);
 }
 
 uint32_t omni::chrono::OMNI_TIMER_T_FW::interval() const
 {
     OMNI_TMR_ALOCK_FW 
-    return this->m_int;
+    return static_cast<uint32_t>(this->m_int);
 }
 
 bool omni::chrono::OMNI_TIMER_T_FW::is_running() const
 {
     OMNI_TMR_ALOCK_FW
-    return this->m_isrun;
+    return OMNI_VAL_HAS_FLAG_BIT(this->m_status, OMNI_TIMER_RUN_FLAG_FW);
 }
 
 void omni::chrono::OMNI_TIMER_T_FW::reset()
@@ -77,7 +77,11 @@ void omni::chrono::OMNI_TIMER_T_FW::reset()
 void omni::chrono::OMNI_TIMER_T_FW::set_auto_reset(bool autoreset)
 {
     OMNI_TMR_ALOCK_FW 
-    this->m_auto = autoreset;
+    if (autoreset) {
+        OMNI_VAL_SET_FLAG_BIT(this->m_status, OMNI_TIMER_AUTO_FLAG_FW);
+    } else {
+        OMNI_VAL_UNSET_FLAG_BIT(this->m_status, OMNI_TIMER_AUTO_FLAG_FW);
+    }
 }
 
 void omni::chrono::OMNI_TIMER_T_FW::set_interval(uint32_t ival)
@@ -102,7 +106,7 @@ void omni::chrono::OMNI_TIMER_T_FW::start(uint32_t delay)
             if (this->m_int == 0) {
                 OMNI_ERRV_RET_FW("Start error: ", OMNI_INDEX_OOR_STR, omni::exceptions::index_out_of_range())
             }
-            this->m_stopreq = false;
+            OMNI_VAL_UNSET_FLAG_BIT(this->m_status, OMNI_TIMER_STOP_FLAG_FW);
         }
         if (delay == 0) {
             this->m_thread = 
@@ -137,7 +141,7 @@ void omni::chrono::OMNI_TIMER_T_FW::stop(uint32_t join_timeout, bool kill_on_tim
 {
     if (this->is_running()) {
         OMNI_TMR_MLOCK_FW
-        this->m_stopreq = true;
+        OMNI_VAL_SET_FLAG_BIT(this->m_status, OMNI_TIMER_STOP_FLAG_FW);
         OMNI_TMR_ULOCK_FW
         if (join_timeout == 0) {
             this->m_thread->join();
@@ -149,8 +153,7 @@ void omni::chrono::OMNI_TIMER_T_FW::stop(uint32_t join_timeout, bool kill_on_tim
             }
         }
         OMNI_TIMER_EX_STOP_FW
-        delete this->m_thread;
-        this->m_thread = OMNI_NULL;
+        OMNI_FREE(this->m_thread);
     }
     #if defined(OMNI_DBG_L2)
     else { OMNI_D2_FW("the timer is not running"); }
@@ -163,7 +166,7 @@ void omni::chrono::OMNI_TIMER_T_FW::_run_delayed(omni::sync::thread_arg_t dly)  
     OMNI_DV1_FW("timer thread: ", omni::sync::thread_id());
     OMNI_D2_FW("waiting to start, delay " << delay << "ms");
     OMNI_TMR_MLOCK_FW
-    this->m_isrun = true;
+    OMNI_VAL_SET_FLAG_BIT(this->m_status, OMNI_TIMER_RUN_FLAG_FW);
     OMNI_TMR_ULOCK_FW
     OMNI_SLEEP_INIT();
     omni::chrono::tick_t st = omni::chrono::monotonic_tick();
@@ -178,7 +181,7 @@ void omni::chrono::OMNI_TIMER_T_FW::_run()
     OMNI_DV1_FW("timer thread: ", omni::sync::thread_id());
     OMNI_D2_FW("start timer");
     OMNI_TMR_MLOCK_FW
-    this->m_isrun = true;
+    OMNI_VAL_SET_FLAG_BIT(this->m_status, OMNI_TIMER_RUN_FLAG_FW);
     OMNI_TMR_ULOCK_FW
     this->_do_run();
 }
@@ -201,14 +204,14 @@ void omni::chrono::OMNI_TIMER_T_FW::_do_run()
     } while (this->auto_reset());
     OMNI_TIMER_EX_RUN_END_FW
     OMNI_TMR_MLOCK_FW
-    this->m_isrun = false;
+    OMNI_VAL_UNSET_FLAG_BIT(this->m_status, OMNI_TIMER_RUN_FLAG_FW);
     OMNI_TMR_ULOCK_FW
 }
 
 bool omni::chrono::OMNI_TIMER_T_FW::_stopreq() const
 {
     OMNI_TMR_ALOCK_FW
-    return this->m_stopreq;
+    return OMNI_VAL_HAS_FLAG_BIT(this->m_status, OMNI_TIMER_STOP_FLAG_FW);
 }
 
 #undef OMNI_TIMER_EX_STOP_FW

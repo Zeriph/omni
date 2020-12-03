@@ -149,7 +149,7 @@ namespace omni {
         template < template < class, class > class std_seq_t, class T, class std_allocator_t >
         void add_range(std_seq_t<T, std_allocator_t >& array1, const std_seq_t<T, std_allocator_t >& array2)
         {
-            for (size_t i = 0; i < array2.size(); ++i) {
+            for (std::size_t i = 0; i < array2.size(); ++i) {
                 array1.push_back(array2[i]);
             }
         }
@@ -157,7 +157,7 @@ namespace omni {
         template < template < class, class > class std_seq_t, class T >
         void add_range(std_seq_t<T, std::allocator<T> >& array1, const std_seq_t<T, std::allocator<T> >& array2)
         {
-            for (size_t i = 0; i < array2.size(); ++i) {
+            for (std::size_t i = 0; i < array2.size(); ++i) {
                 array1.push_back(array2[i]);
             }
         }

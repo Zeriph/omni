@@ -17,7 +17,10 @@ class UT_CLASS_DEF
         
         UT_CLASS_DTOR() {}
 
-        void info_test() { UT_INFO_TEST(); }
+        void info_test()
+        {
+            UT_INFO_TEST();
+        }
         
         void base_test()
         {

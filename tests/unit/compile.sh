@@ -78,7 +78,6 @@ fwsrc="${fwsrc} ${common}/endpoint_descriptor.cpp"
 fwsrc="${fwsrc} ${common}/environment.cpp"
 fwsrc="${fwsrc} ${common}/externs.cpp"
 fwsrc="${fwsrc} ${common}/io.cpp"
-# fwsrc="${fwsrc} ${common}/filesystemwatcher.cpp # incomplete
 fwsrc="${fwsrc} ${common}/mutex.cpp"
 fwsrc="${fwsrc} ${common}/queue_timer.cpp"
 fwsrc="${fwsrc} ${common}/runnable.cpp"
@@ -89,7 +88,6 @@ fwsrc="${fwsrc} ${common}/sync_timer.cpp"
 fwsrc="${fwsrc} ${common}/system.cpp"
 fwsrc="${fwsrc} ${common}/thread.cpp"
 fwsrc="${fwsrc} ${common}/threadpool.cpp"
-fwsrc="${fwsrc} ${common}/version.cpp"
 includes="-I${common}"
 extraopts=""
 #log_file="${omni_lib_loc}/tests/logs/build.log"
@@ -104,7 +102,6 @@ fexcep="-fexceptions"
 parse_only=0
 syntax_only=0
 nopthread=0
-useuni=1
 doasm=0
 islib=0
 libops="rvs"
@@ -171,6 +168,7 @@ usage()
 	echo "       lite        Defines the OMNI_LITE flag which trims down the code and gets rid"
 	echo "                   of some functionality"
     echo "       heavy       Defines the OMNI_DISPOSE_EVENT, OMNI_OBJECT_NAME and OMNI_TYPE_INFO macros"
+    echo "       uni         Sets the UNICODE flags (builds using unicode)"
     echo "       np          Sets the OMNI_NON_PORTABLE compiler flag and enables"
     echo "                   compilation of 'non-portable' code"
     echo "       terr        Defines the OMNI_TERMINATE macro"
@@ -180,7 +178,6 @@ usage()
     echo "       no [op]     Defines one of the following for [op]:"
     echo "                   throw     Sets the OMNI_NO_THROW flag and the -fno-exceptions"
 	echo "                             compiler and linker flag"
-    echo "                   uni       Disables the UNICODE flags (does not build using unicode)"
     echo "                   extc      Defines the OMNI_NO_EXTERN_CONSTS macro"
     echo
     echo "library debug options (-dbg):"
@@ -206,6 +203,7 @@ usage()
     echo "       nortti      Disables RTTI (run-time type information) for C++"
     echo "       noconsole   Specifies to not define the _CONSOLE flag"
 	echo "       xtra        Use the extra compiler/linker flags (can generate erroneous errors)"
+    echo "       pad         Use the -Wpadded (can generate erroneous errors)"
     echo "       opt [op]    Enable global optimization based on [op] where [op] is 0, 1, 2, 3 or s"
     echo "       asm         Generate the assembly output (.s file)"
     echo "       ggdb        Sets the -ggdb flag, enabling GDB debug output (for certain compilers)"
@@ -258,6 +256,7 @@ parse_args()
                     "terr") defines="${defines} -DOMNI_TERMINATE" ;;
                     "lite") defines="${defines} -DOMNI_LITE" ;;
                     "heavy") defines="${defines} -DOMNI_DISPOSE_EVENT -DOMNI_OBJECT_NAME -DOMNI_TYPE_INFO" ;;
+                    "uni") defines="${defines} -D_UNICODE -DUNICODE" ;;
                     "safe")
                         case $3 in
                             "fw") defines="${defines} -DOMNI_SAFE_LIBRARY" ;;
@@ -268,7 +267,6 @@ parse_args()
                     "no")
                         case $3 in
                             "throw") defines="${defines} -DOMNI_NO_THROW"; fexcep="-fno-exceptions" ;;
-                            "uni") useuni=0 ;;
                             "extc") defines="${defines} -DOMNI_NO_EXTERN_CONSTS" ;;
                             *) echo "Unknown no-library option $3"; usage ;;
                         esac
@@ -334,10 +332,11 @@ parse_args()
                         extraopts="${extraopts} -Wpointer-arith -Wcast-qual -Wcast-align -Waddress"
                         extraopts="${extraopts} -Wswitch-default -Wswitch-enum -Wunused-parameter"
                         extraopts="${extraopts} -Wfloat-equal -Wshadow -Wconversion -Wwrite-strings"
-                        extraopts="${extraopts} -Wmissing-field-initializers -Wpadded -Wredundant-decls"
+                        extraopts="${extraopts} -Wmissing-field-initializers -Wredundant-decls"
                         extraopts="${extraopts} -Wunreachable-code -Wvolatile-register-var -Wctor-dtor-privacy"
                         extraopts="${extraopts} -Wnon-virtual-dtor -Wsign-promo -Wreorder -Wno-pmf-conversions"
                         ;;
+                    "pad") extraopts="${extraopts} -Wpadded" ;;
                     *) echo "Unknown compiler option $2"; usage ;;
                 esac
                 shift
@@ -354,10 +353,6 @@ parse_args()
 }
 
 ######## END FUNCTIONS ########
-
-if [ $useuni -eq 1 ]; then
-    defines="${defines} -D_UNICODE -DUNICODE"
-fi
 
 parse_args "$@"
 extraopts="${fexcep} ${extraopts}"

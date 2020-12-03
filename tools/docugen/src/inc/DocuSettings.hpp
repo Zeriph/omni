@@ -17,6 +17,8 @@ namespace OmniDocuGen
             std::string ExampleDirectory;
             // Gets or sets the output directory used for HTML output
             std::string OutputDirectory;
+            // Gets or sets the output directory used for unit test output
+            std::string UnitTestDirectory;
             // The previous zip directory
             std::string PrevZipDirectory;
             // Gets or sets the macro/options directory
@@ -108,6 +110,7 @@ namespace OmniDocuGen
                         this->SourceDirectory = get_tag<std::string>(xml, "SourceDirectory");
                         this->ExampleDirectory = get_tag<std::string>(xml, "ExampleDirectory");
                         this->OutputDirectory = get_tag<std::string>(xml, "OutputDirectory");
+                        this->UnitTestDirectory = get_tag<std::string>(xml, "UnitTestDirectory");
                         this->PrevZipDirectory = get_tag<std::string>(xml, "PrevZipDirectory");
                         this->MacroDirectory = get_tag<std::string>(xml, "MacroDirectory");
                         this->SystemAPIDirectory = get_tag<std::string>(xml, "SystemAPIDirectory");
@@ -136,17 +139,19 @@ namespace OmniDocuGen
                         "SourceDirectory: {0}\n"
                         "ExampleDirectory: {1}\n"
                         "OutputDirectory: {2}\n"
-                        "PrevZipDirectory: {3}\n"
-                        "MacroDirectory: {4}\n"
-                        "SystemAPIDirectory: {5}\n"
-                        "LicenseFile: {6}\n"
-                        "TemplateDirectory: {7}\n"
-                        "TempZipDirectory: {8}\n"
-                        "Excluded: {9}\n"
-                        "NoParse: {10}",
+                        "UnitTestDirectory: {3}\n"
+                        "PrevZipDirectory: {4}\n"
+                        "MacroDirectory: {5}\n"
+                        "SystemAPIDirectory: {6}\n"
+                        "LicenseFile: {7}\n"
+                        "TemplateDirectory: {8}\n"
+                        "TempZipDirectory: {9}\n"
+                        "Excluded: {10}\n"
+                        "NoParse: {11}",
                         this->SourceDirectory,
                         this->ExampleDirectory,
                         this->OutputDirectory,
+                        this->UnitTestDirectory,
                         this->PrevZipDirectory,
                         this->MacroDirectory,
                         this->SystemAPIDirectory,
@@ -180,6 +185,7 @@ namespace OmniDocuGen
                     data += gen_tag(this->SourceDirectory, "SourceDirectory");
                     data += gen_tag(this->ExampleDirectory, "ExampleDirectory");
                     data += gen_tag(this->OutputDirectory, "OutputDirectory");
+                    data += gen_tag(this->UnitTestDirectory, "UnitTestDirectory");
                     data += gen_tag(this->PrevZipDirectory, "PrevZipDirectory");
                     data += gen_tag(this->MacroDirectory, "MacroDirectory");
                     data += gen_tag(this->SystemAPIDirectory, "SystemAPIDirectory");

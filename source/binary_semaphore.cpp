@@ -22,16 +22,16 @@
 
 omni::sync::binary_semaphore::binary_semaphore() :
     OMNI_CTOR_FW(omni::sync::binary_semaphore)
-    m_sem(),
-    m_lokd(false)
+    m_lokd(0),
+    m_sem()
 {
     this->_init();
 }
 
 omni::sync::binary_semaphore::binary_semaphore(bool initialy_owned) :
     OMNI_CTOR_FW(omni::sync::binary_semaphore)
-    m_sem(),
-    m_lokd(false)
+    m_lokd(0),
+    m_sem()
 {
     this->_init();
     if (initialy_owned) { this->lock(); }
@@ -53,7 +53,7 @@ omni::sync::semaphore_t omni::sync::binary_semaphore::handle() const
 
 bool omni::sync::binary_semaphore::locked() const
 {
-    return this->m_lokd;
+    return (this->m_lokd == 1);
 }
 
 bool omni::sync::binary_semaphore::lock()
@@ -61,7 +61,7 @@ bool omni::sync::binary_semaphore::lock()
     #if defined(OMNI_OS_WIN)
         switch(::WaitForSingleObject(this->m_sem, INFINITE)) {
             case WAIT_OBJECT_0: // 0x00000000L
-                this->m_lokd = true;
+                this->m_lokd = 1;
                 return true; break;
             #if defined(OMNI_DBG_L3)
                 // If debug is not enabled the following flags are not relevant to this context
@@ -78,12 +78,12 @@ bool omni::sync::binary_semaphore::lock()
         #else
             if (::sem_wait(&this->m_sem) != -1)
         #endif
-        { this->m_lokd = true; return true; }
+        { this->m_lokd = 1; return true; }
         #if defined(OMNI_DBG_L3)
             else { OMNI_DV3_FW("a system error occurred on the semaphore object: ", OMNI_GLE_PRNT); }
         #endif
     #endif
-    this->m_lokd = false;
+    this->m_lokd = 0;
     return false;
 }
 
@@ -92,7 +92,7 @@ bool omni::sync::binary_semaphore::lock(uint32_t timeout_ms)
     #if defined(OMNI_OS_WIN)
         switch(::WaitForSingleObject(this->m_sem, timeout_ms)) {
             case WAIT_OBJECT_0: // 0x00000000L
-                this->m_lokd = true;
+                this->m_lokd = 1;
                 return true; break;
             #if defined(OMNI_DBG_L3)
                 case WAIT_FAILED: OMNI_DV3_FW("a system error occurred on the semaphore object: ", OMNI_GLE_PRNT); break;
@@ -109,7 +109,7 @@ bool omni::sync::binary_semaphore::lock(uint32_t timeout_ms)
         }
         switch(::semaphore_timedwait(this->m_sem, tm)) {
             case KERN_SUCCESS:
-                this->m_lokd = true;
+                this->m_lokd = 1;
                 return true; break;
             #if defined(OMNI_DBG_L3)
                 OMNI_DSW_FW(KERN_OPERATION_TIMED_OUT);
@@ -119,7 +119,7 @@ bool omni::sync::binary_semaphore::lock(uint32_t timeout_ms)
     #else
         if (timeout_ms == 0) {
             if (::sem_trywait(&this->m_sem) == 0) {
-                this->m_lokd = true;
+                this->m_lokd = 1;
                 return true;
             }
             #if defined(OMNI_DBG_L3)
@@ -129,7 +129,7 @@ bool omni::sync::binary_semaphore::lock(uint32_t timeout_ms)
             omni::chrono::tick_t start = omni::chrono::monotonic_tick();
             do {
                 if (::sem_trywait(&this->m_sem) == 0) {
-                    this->m_lokd = true;
+                    this->m_lokd = 1;
                     return true;
                 }
                 #if defined(OMNI_DBG_L3)
@@ -138,13 +138,13 @@ bool omni::sync::binary_semaphore::lock(uint32_t timeout_ms)
             } while (omni::chrono::elapsed_ms(start) <= timeout_ms);
         }
     #endif
-    this->m_lokd = false;
+    this->m_lokd = 0;
     return false;
 }
 
 bool omni::sync::binary_semaphore::unlock()
 {
-    if (!this->m_lokd) {
+    if (this->m_lokd == 0) {
         OMNI_ERR_RETV_FW("the binary semaphore is not locked on call to release", omni::exceptions::semaphore_release_exception(), true)
     }
 #if defined(OMNI_OS_WIN)
@@ -155,7 +155,7 @@ bool omni::sync::binary_semaphore::unlock()
     if (::sem_post(&this->m_sem) != -1)
 #endif
     {
-        this->m_lokd = false;
+        this->m_lokd = 0;
         return true;
     } else {
         OMNI_ERRV_FW("a system error occurred on the semaphore object: ", OMNI_GLE_PRNT, omni::exceptions::semaphore_system_exception(OMNI_GLE_PRNT));
@@ -186,7 +186,7 @@ bool omni::sync::binary_semaphore::operator!=(const omni::sync::binary_semaphore
 void omni::sync::binary_semaphore::_dispose()
 {
     // only release if we are locked
-    if (this->m_lokd) {
+    if (this->m_lokd == 1) {
         OMNI_ERR_FW("the binary semaphore is locked on call to dispose", omni::exceptions::active_wait_exception())
     }
 #if defined(OMNI_OS_WIN)

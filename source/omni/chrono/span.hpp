@@ -55,7 +55,7 @@ namespace omni {
                     OMNI_D5_FW("created");
                 }
 
-                span(const span< TickType >& cp) :
+                span(const omni::chrono::span< TickType >& cp) :
                     OMNI_CPCTOR_FW(cp)
                     m_ticks(cp.m_ticks)
                     OMNI_SAFE_SPANMTX_FW
@@ -178,7 +178,7 @@ namespace omni {
                     return static_cast<double>(this->ticks()) * omni::chrono::SECONDS_PER_TICK;
                 }
 
-                span< TickType >& add(const span< TickType >& other)
+                omni::chrono::span< TickType >& add(const omni::chrono::span< TickType >& other)
                 {
                     OMNI_SPAN_ALOCK_FW
                     if (this == &other) {
@@ -189,7 +189,7 @@ namespace omni {
                     return *this;
                 }
 
-                span< TickType >& add(TickType ticks)
+                omni::chrono::span< TickType >& add(TickType ticks)
                 {
                     OMNI_SPAN_ALOCK_FW
                     this->m_ticks += ticks;
@@ -207,7 +207,7 @@ namespace omni {
                     return this->m_ticks ^ (this->_ticks >> 32);
                 }
                 
-                span< TickType >& subtract(const span< TickType >& other)
+                omni::chrono::span< TickType >& subtract(const omni::chrono::span< TickType >& other)
                 {
                     OMNI_SPAN_ALOCK_FW
                     if (this == &other) {
@@ -218,20 +218,20 @@ namespace omni {
                     return *this;
                 }
 
-                span< TickType >& subtract(TickType ticks)
+                omni::chrono::span< TickType >& subtract(TickType ticks)
                 {
                     OMNI_SPAN_ALOCK_FW
                     this->m_ticks -= ticks;
                     return *this;
                 }
 
-                span< TickType > duration() const
+                omni::chrono::span< TickType > duration() const
                 {
                     OMNI_SPAN_ALOCK_FW
                     return span< TickType >(this->m_ticks >= 0 ? this->m_ticks : -this->m_ticks);
                 }
 
-                span< TickType > negate() const
+                omni::chrono::span< TickType > negate() const
                 {
                     if (this->can_negate()) {
                         // has sign, can negate
@@ -241,7 +241,7 @@ namespace omni {
                     OMNI_ERR_RETV_FW(OMNI_OVERFLOW_STR, omni::exceptions::overflow_error("cannot negate unsigned span"), span< TickType >::zero())
                 }
 
-                void swap(span< TickType >& o)
+                void swap(omni::chrono::span< TickType >& o)
                 {
                     if (this != &o) {
                         OMNI_SPAN_ALOCK_FW
@@ -271,7 +271,7 @@ namespace omni {
                     return ss.str();
                 }
 
-                span< TickType >& operator=(const span< TickType >& other)
+                omni::chrono::span< TickType >& operator=(const omni::chrono::span< TickType >& other)
                 {
                     if (this != &other) {
                         OMNI_SPAN_ALOCK_FW
@@ -281,14 +281,14 @@ namespace omni {
                     return *this;
                 }
 
-                span< TickType >& operator=(span_t val)
+                omni::chrono::span< TickType >& operator=(span_t val)
                 {
                     OMNI_SPAN_ALOCK_FW
                     this->m_ticks = val;
                     return *this;
                 }
 
-                span< TickType > operator-(const span< TickType >& other)
+                omni::chrono::span< TickType > operator-(const omni::chrono::span< TickType >& other)
                 {
                     if (this == &other) {
                         // no need to lock, since (m_ticks - m_ticks == 0)
@@ -298,13 +298,13 @@ namespace omni {
                     return span< TickType >(this->m_ticks - other.ticks());
                 }
 
-                span< TickType > operator-(span_t val)
+                omni::chrono::span< TickType > operator-(span_t val)
                 {
                     OMNI_SPAN_ALOCK_FW
                     return span< TickType >(this->m_ticks - val);
                 }
 
-                span< TickType > operator+(const span< TickType >& other)
+                omni::chrono::span< TickType > operator+(const omni::chrono::span< TickType >& other)
                 {
                     if (this == &other) {
                         OMNI_SPAN_ALOCK_FW
@@ -314,13 +314,13 @@ namespace omni {
                     return span< TickType >(this->m_ticks + other.ticks());
                 }
 
-                span< TickType > operator+(span_t val)
+                omni::chrono::span< TickType > operator+(span_t val)
                 {
                     OMNI_SPAN_ALOCK_FW
                     return span< TickType >(this->m_ticks + val);
                 }
 
-                span< TickType >& operator-=(const span< TickType >& other)
+                omni::chrono::span< TickType >& operator-=(const omni::chrono::span< TickType >& other)
                 {
                     OMNI_SPAN_ALOCK_FW
                     if (this == &other) {
@@ -331,14 +331,14 @@ namespace omni {
                     return *this;
                 }
 
-                span< TickType >& operator-=(span_t val)
+                omni::chrono::span< TickType >& operator-=(span_t val)
                 {
                     OMNI_SPAN_ALOCK_FW
                     this->m_ticks -= val;
                     return *this;
                 }
 
-                span< TickType >& operator+=(const span< TickType >& other)
+                omni::chrono::span< TickType >& operator+=(const omni::chrono::span< TickType >& other)
                 {
                     OMNI_SPAN_ALOCK_FW
                     if (this == &other) {
@@ -350,25 +350,25 @@ namespace omni {
                     return *this;
                 }
 
-                span< TickType >& operator+=(span_t val)
+                omni::chrono::span< TickType >& operator+=(span_t val)
                 {
                     OMNI_SPAN_ALOCK_FW
                     this->m_ticks += val;
                     return *this;
                 }
 
-                span< TickType > operator-()
+                omni::chrono::span< TickType > operator-()
                 {
                     return this->negate();
                 }
 
-                span< TickType >& operator+()
+                omni::chrono::span< TickType >& operator+()
                 {
                     // useful as a no-op (might get optimized out)
                     return *this;
                 }
 
-                bool operator==(const span< TickType >& other) const
+                bool operator==(const omni::chrono::span< TickType >& other) const
                 {
                     if (this == &other) { return true; }
                     OMNI_SPAN_ALOCK_FW
@@ -381,7 +381,7 @@ namespace omni {
                     return this->m_ticks == val;
                 }
 
-                bool operator!=(const span< TickType >& other) const
+                bool operator!=(const omni::chrono::span< TickType >& other) const
                 {
                     if (this == &other) { return false; }
                     OMNI_SPAN_ALOCK_FW
@@ -394,7 +394,7 @@ namespace omni {
                     return this->m_ticks != val;
                 }
 
-                bool operator<(const span< TickType >& other) const
+                bool operator<(const omni::chrono::span< TickType >& other) const
                 {
                     if (this == &other) { return false; }
                     OMNI_SPAN_ALOCK_FW
@@ -407,7 +407,7 @@ namespace omni {
                     return this->m_ticks < val;
                 }
 
-                bool operator>(const span< TickType >& other) const
+                bool operator>(const omni::chrono::span< TickType >& other) const
                 {
                     if (this == &other) { return false; }
                     OMNI_SPAN_ALOCK_FW
@@ -420,7 +420,7 @@ namespace omni {
                     return this->m_ticks > val;
                 }
 
-                bool operator<=(const span< TickType >& other) const
+                bool operator<=(const omni::chrono::span< TickType >& other) const
                 {
                     if (this == &other) { return true; }
                     OMNI_SPAN_ALOCK_FW
@@ -433,7 +433,7 @@ namespace omni {
                     return this->m_ticks <= val;
                 }
 
-                bool operator>=(const span< TickType >& other) const
+                bool operator>=(const omni::chrono::span< TickType >& other) const
                 {
                     if (this == &other) { return true; }
                     OMNI_SPAN_ALOCK_FW
@@ -460,7 +460,7 @@ namespace omni {
                 
                 OMNI_OSTREAM_FW(omni::chrono::span< TickType >)
 
-                static span< TickType > parse(const std::string& s)
+                static omni::chrono::span< TickType > parse(const std::string& s)
                 {
                     span< TickType > ret;
                     if (!omni::chrono::span<TickType>::try_parse(s, ret)) {
@@ -469,7 +469,7 @@ namespace omni {
                     return ret;
                 }
 
-                static span< TickType > parse(const std::wstring& s)
+                static omni::chrono::span< TickType > parse(const std::wstring& s)
                 {
                     span< TickType > ret;
                     if (!omni::chrono::span<TickType>::try_parse(s, ret)) {
@@ -478,67 +478,67 @@ namespace omni {
                     return ret;
                 }
 
-                static bool try_parse(const std::string& s, span< TickType >& result)
+                static bool try_parse(const std::string& s, omni::chrono::span< TickType >& result)
                 {
                     return _try_parse<std::string, char>(s, result);
                 }
 
-                static bool try_parse(const std::wstring& s, span< TickType >& result)
+                static bool try_parse(const std::wstring& s, omni::chrono::span< TickType >& result)
                 {
                     return _try_parse<std::wstring, wchar_t>(s, result);
                 }
 
-                static inline span< TickType > from_time(span_t hours, span_t minutes, span_t seconds)
+                static inline omni::chrono::span< TickType > from_time(span_t hours, span_t minutes, span_t seconds)
                 {
                     return span< TickType >(hours, minutes, seconds);
                 }
 
-                static inline span< TickType > from_time(span_t days, span_t hours, span_t minutes, span_t seconds)
+                static inline omni::chrono::span< TickType > from_time(span_t days, span_t hours, span_t minutes, span_t seconds)
                 {
                     return span< TickType >(days, hours, minutes, seconds);
                 }
 
-                static inline span< TickType > from_time(span_t days, span_t hours, span_t minutes, span_t seconds, span_t milliseconds)
+                static inline omni::chrono::span< TickType > from_time(span_t days, span_t hours, span_t minutes, span_t seconds, span_t milliseconds)
                 {
                     return span< TickType >(days, hours, minutes, seconds, milliseconds);
                 }
 
-                static inline span< TickType > from_days(double value)
+                static inline omni::chrono::span< TickType > from_days(double value)
                 {
                     return _interval(value, omni::chrono::MILLISECONDS_PER_DAY);
                 }
 
-                static inline span< TickType > from_hours(double value)
+                static inline omni::chrono::span< TickType > from_hours(double value)
                 {
                     return _interval(value, omni::chrono::MILLISECONDS_PER_HOUR);
                 }
 
-                static inline span< TickType > from_milliseconds(double value)
+                static inline omni::chrono::span< TickType > from_milliseconds(double value)
                 {
                     return _interval(value, 1);
                 }
 
-                static inline span< TickType > from_minutes(double value)
+                static inline omni::chrono::span< TickType > from_minutes(double value)
                 {
                     return _interval(value, omni::chrono::MILLISECONDS_PER_MINUTE);
                 }
 
-                static inline span< TickType > from_microseconds(span_t value)
+                static inline omni::chrono::span< TickType > from_microseconds(span_t value)
                 {
                     return span< TickType >(value * omni::chrono::TICKS_PER_MICROSECOND);
                 }
 
-                static inline span< TickType > from_nanoseconds(span_t value)
+                static inline omni::chrono::span< TickType > from_nanoseconds(span_t value)
                 {
                     return span< TickType >(value * omni::chrono::TICKS_PER_NANOSECOND);
                 }
 
-                static inline span< TickType > from_seconds(double value)
+                static inline omni::chrono::span< TickType > from_seconds(double value)
                 {
                     return _interval(value, omni::chrono::MILLISECONDS_PER_SECOND);
                 }
 
-                static inline span< TickType > from_ticks(span_t value)
+                static inline omni::chrono::span< TickType > from_ticks(span_t value)
                 {
                     return span< TickType >(value);
                 }
@@ -563,17 +563,17 @@ namespace omni {
                     return std::numeric_limits<span_t>::min() / omni::chrono::TICKS_PER_MILLISECOND;
                 }
 
-                static inline span< TickType > max_value()
+                static inline omni::chrono::span< TickType > max_value()
                 {
                     return span< TickType >(std::numeric_limits<span_t>::max());
                 }
 
-                static inline span< TickType > min_value()
+                static inline omni::chrono::span< TickType > min_value()
                 {
                     return span< TickType >(std::numeric_limits<span_t>::min());
                 }
 
-                static inline span< TickType > zero()
+                static inline omni::chrono::span< TickType > zero()
                 {
                     return span< TickType >(0);
                 }
@@ -604,7 +604,7 @@ namespace omni {
                     ss << s << "." << ms;
                 }
 
-                static span< TickType > _interval(double value, int32_t scale)
+                static omni::chrono::span< TickType > _interval(double value, int32_t scale)
                 {
                     if (!omni::math::is_nan(value)) { // NaN check
                         double tmp = value * scale;

@@ -2046,7 +2046,6 @@ namespace OmniDocuGen
                 }
         };
 
-
         class SourceGenType {
             public:
                 /** The underlying enum type expected */

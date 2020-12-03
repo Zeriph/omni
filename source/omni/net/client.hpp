@@ -34,7 +34,7 @@ namespace omni {
         {
             public:
                 client();
-                client(const client& cp);
+                client(const omni::net::client& cp);
                 ~client();
                 
                 omni::net::socket_error connect(const omni::net::socket_t& serv_sock);

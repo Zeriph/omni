@@ -36,14 +36,14 @@ OMNI_CLOCK_FREQ_T omni::chrono::monotonic::m_freq;
     const int64_t omni::chrono::DAYS_PER_100_YEARS = 36524; // DAYS_PER_4_YEARS * 25 - 1
     const int64_t omni::chrono::DAYS_PER_400_YEARS = 146097; // DAYS_PER_100_YEARS * 4 + 1
     const int64_t omni::chrono::DAYS_TO_1601AD = 584388; // Number of days from 1/1/0001 to 12/31/1600 -> DAYS_PER_400_YEARS * 4
-    const int64_t omni::chrono::DAYS_TO_EPOCH = 719527; // Number of days from 1/1/0001 to 12/31/1969 -> DAYS_TO_1601AD + (DAYS_PER_100_YEARS * 3) + (DAYS_PER_4_YEARS * 17) + (DAYS_PER_YEAR * 2)
     const int64_t omni::chrono::DAYS_TO_1899AD = 693593; // Number of days from 1/1/0001 to 12/30/1899 -> DAYS_PER_400_YEARS * 4 + DAYS_PER_100_YEARS * 3 - 367;
     const int64_t omni::chrono::DAYS_TO_10000AD = 3652059; // Number of days from 1/1/0001 to 12/31/9999 -> DAYS_PER_400_YEARS * 25 - 366
+    const int64_t omni::chrono::DAYS_TO_EPOCH = 719527; // Number of days from 1/1/0001 to 12/31/1969 -> DAYS_TO_1601AD + (DAYS_PER_100_YEARS * 3) + (DAYS_PER_4_YEARS * 17) + (DAYS_PER_YEAR * 2)
     const int64_t omni::chrono::TICKS_TO_10000AD = 3155378975999999999; // DAYS_TO_10000AD * TICKS_PER_DAY - 1;
     const int64_t omni::chrono::MILLISECONDS_TO_10000AD = 315537897600000; // DAYS_TO_10000AD * MILLISECONDS_PER_DAY;
     const int64_t omni::chrono::FILE_TIME_OFFSET = 504911232000000000; // DAYS_TO_1601AD * TICKS_PER_DAY;
-    const int64_t omni::chrono::EPOCH_OFFSET = 621671328000000000; // DAYS_TO_EPOCH * TICKS_PER_DAY;
     const int64_t omni::chrono::DOUBLE_DATE_OFFSET = 599264352000000000; // DAYS_TO_1899AD * TICKS_PER_DAY;
+    const int64_t omni::chrono::EPOCH_OFFSET = 621671328000000000; // DAYS_TO_EPOCH * TICKS_PER_DAY;
     // The minimum OA date is 0100/01/01 (Note it is year 100).
     // The maximum OA date is 9999/12/31
     const int64_t omni::chrono::OA_DATE_MIN_AS_TICKS = 31241376000000000; // (DAYS_PER_100_YEARS - DAYS_PER_YEAR) * TICKS_PER_DAY;

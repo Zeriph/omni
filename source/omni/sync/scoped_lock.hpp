@@ -27,7 +27,7 @@ namespace omni {
         class scoped_lock
         {
             public:
-                explicit scoped_lock(T* l) : m_hndl(l)
+                OMNI_EXPLICIT scoped_lock(T* l) : m_hndl(l)
                 {
                     this->m_hndl->lock();
                 }
@@ -42,7 +42,7 @@ namespace omni {
                     return this->m_hndl;
                 }
                 
-                bool operator==(const scoped_lock& o) const
+                bool operator==(const omni::sync::scoped_lock<T>& o) const
                 {
                     return (this->m_hndl == o.m_hndl);
                 }
@@ -52,7 +52,7 @@ namespace omni {
                     return (this->m_hndl == &o);
                 }
                 
-                bool operator!=(const scoped_lock& o) const
+                bool operator!=(const omni::sync::scoped_lock<T>& o) const
                 {
                     return !(this->m_hndl == o.m_hndl);
                 }
@@ -64,8 +64,8 @@ namespace omni {
                 
             private:
                 scoped_lock();
-                scoped_lock(const scoped_lock& cp);
-                scoped_lock& operator=(const scoped_lock& cp);
+                scoped_lock(const omni::sync::scoped_lock<T>& cp);
+                scoped_lock& operator=(const omni::sync::scoped_lock<T>& cp);
                 
                 T* m_hndl;
         };
@@ -74,7 +74,7 @@ namespace omni {
         class scoped_lock <omni::sync::mutex_t>
         {
             public:
-                explicit scoped_lock(omni::sync::mutex_t* m) : m_mtx(m)
+                OMNI_EXPLICIT scoped_lock(omni::sync::mutex_t* m) : m_mtx(m)
                 {
                     omni::sync::mutex_lock(*this->m_mtx);
                 }

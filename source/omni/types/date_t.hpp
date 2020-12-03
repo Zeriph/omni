@@ -30,15 +30,15 @@ namespace omni {
         OMNI_CONSTEXT_FW const int64_t DAYS_PER_100_YEARS OMNI_EXT_ASSN_FW(36524); // DAYS_PER_4_YEARS * 25 - 1
         OMNI_CONSTEXT_FW const int64_t DAYS_PER_400_YEARS OMNI_EXT_ASSN_FW(146097); // DAYS_PER_100_YEARS * 4 + 1
         OMNI_CONSTEXT_FW const int64_t DAYS_TO_1601AD OMNI_EXT_ASSN_FW(584388); // Number of days from 1/1/0001 to 12/31/1600 -> DAYS_PER_400_YEARS * 4
-        OMNI_CONSTEXT_FW const int64_t DAYS_TO_EPOCH OMNI_EXT_ASSN_FW(719527); // Number of days from 1/1/0001 to 12/31/1969 -> DAYS_TO_1601AD + (DAYS_PER_100_YEARS * 3) + (DAYS_PER_4_YEARS * 17) + (DAYS_PER_YEAR * 2)
         OMNI_CONSTEXT_FW const int64_t DAYS_TO_1899AD OMNI_EXT_ASSN_FW(693593); // Number of days from 1/1/0001 to 12/30/1899 -> DAYS_PER_400_YEARS * 4 + DAYS_PER_100_YEARS * 3 - 367;
         OMNI_CONSTEXT_FW const int64_t DAYS_TO_10000AD OMNI_EXT_ASSN_FW(3652059); // Number of days from 1/1/0001 to 12/31/9999 -> DAYS_PER_400_YEARS * 25 - 366
+        OMNI_CONSTEXT_FW const int64_t DAYS_TO_EPOCH OMNI_EXT_ASSN_FW(719527); // Number of days from 1/1/0001 to 12/31/1969 -> DAYS_TO_1601AD + (DAYS_PER_100_YEARS * 3) + (DAYS_PER_4_YEARS * 17) + (DAYS_PER_YEAR * 2)
         OMNI_CONSTEXT_FW const int64_t TICKS_TO_10000AD OMNI_EXT_ASSN_FW(3155378975999999999); // DAYS_TO_10000AD * TICKS_PER_DAY - 1;
         OMNI_CONSTEXT_FW const int64_t MILLISECONDS_TO_10000AD OMNI_EXT_ASSN_FW(315537897600000); // DAYS_TO_10000AD * MILLISECONDS_PER_DAY;
 
         OMNI_CONSTEXT_FW const int64_t FILE_TIME_OFFSET OMNI_EXT_ASSN_FW(504911232000000000); // DAYS_TO_1601AD * TICKS_PER_DAY;
-        OMNI_CONSTEXT_FW const int64_t EPOCH_OFFSET OMNI_EXT_ASSN_FW(621671328000000000); // DAYS_TO_EPOCH * TICKS_PER_DAY;
         OMNI_CONSTEXT_FW const int64_t DOUBLE_DATE_OFFSET OMNI_EXT_ASSN_FW(599264352000000000); // DAYS_TO_1899AD * TICKS_PER_DAY;
+        OMNI_CONSTEXT_FW const int64_t EPOCH_OFFSET OMNI_EXT_ASSN_FW(621671328000000000); // DAYS_TO_EPOCH * TICKS_PER_DAY;
         // The minimum OA date is 0100/01/01 (Note it is year 100).
         // The maximum OA date is 9999/12/31
         OMNI_CONSTEXT_FW const int64_t OA_DATE_MIN_AS_TICKS OMNI_EXT_ASSN_FW(31241376000000000); // (DAYS_PER_100_YEARS - DAYS_PER_YEAR) * TICKS_PER_DAY;
@@ -518,6 +518,204 @@ namespace omni {
                     } else {
                         this->m_val = static_cast<enum_t>(val);
                     }
+                    return *this;
+                }
+
+                date_time_styles operator|(const date_time_styles& val)
+                {
+                    return date_time_styles(static_cast<enum_t>(this->m_val | val.m_val));
+                }
+
+                date_time_styles operator|(enum_t val)
+                {
+                    return date_time_styles(static_cast<enum_t>(this->m_val | val));
+                }
+
+                date_time_styles operator|(int32_t val)
+                {
+                    return date_time_styles(static_cast<enum_t>(this->m_val | val));
+                }
+
+                date_time_styles& operator|=(const date_time_styles& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val | val.m_val);
+                    return *this;
+                }
+
+                date_time_styles& operator|=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val | val);
+                    return *this;
+                }
+
+                date_time_styles& operator|=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val | val);
+                    return *this;
+                }
+
+                date_time_styles operator&(const date_time_styles& val)
+                {
+                    return date_time_styles(static_cast<enum_t>(this->m_val & val.m_val));
+                }
+
+                date_time_styles operator&(enum_t val)
+                {
+                    return date_time_styles(static_cast<enum_t>(this->m_val & val));
+                }
+
+                date_time_styles operator&(int32_t val)
+                {
+                    return date_time_styles(static_cast<enum_t>(this->m_val & val));
+                }
+
+                date_time_styles& operator&=(const date_time_styles& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val & val.m_val);
+                    return *this;
+                }
+
+                date_time_styles& operator&=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val & val);
+                    return *this;
+                }
+
+                date_time_styles& operator&=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val & val);
+                    return *this;
+                }
+                
+                date_time_styles& operator++()
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val + 1);
+                    return *this;
+                }
+
+                date_time_styles operator++(int dummy)
+                {
+                    OMNI_UNUSED(dummy);
+                    date_time_styles ret(this->m_val);
+                    this->m_val = static_cast<enum_t>(this->m_val + 1);
+                    return ret;
+                }
+
+                date_time_styles& operator--()
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val - 1);
+                    return *this;
+                }
+
+                date_time_styles operator--(int dummy)
+                {
+                    OMNI_UNUSED(dummy);
+                    date_time_styles ret(this->m_val);
+                    this->m_val = static_cast<enum_t>(this->m_val - 1);
+                    return ret;
+                }
+
+                date_time_styles operator~()
+                {
+                    return date_time_styles(static_cast<enum_t>(~static_cast<int32_t>(this->m_val)));
+                }
+
+                date_time_styles operator^(const date_time_styles& val)
+                {
+                    return date_time_styles(static_cast<enum_t>(this->m_val ^ val.m_val));
+                }
+
+                date_time_styles operator^(enum_t val)
+                {
+                    return date_time_styles(static_cast<enum_t>(this->m_val ^ val));
+                }
+
+                date_time_styles operator^(int32_t val)
+                {
+                    return date_time_styles(static_cast<enum_t>(this->m_val ^ val));
+                }
+
+                date_time_styles& operator^=(const date_time_styles& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val ^ val.m_val);
+                    return *this;
+                }
+
+                date_time_styles& operator^=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val ^ val);
+                    return *this;
+                }
+
+                date_time_styles& operator^=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val ^ val);
+                    return *this;
+                }
+
+                date_time_styles operator<<(const date_time_styles& val)
+                {
+                    return date_time_styles(static_cast<enum_t>(this->m_val << val.m_val));
+                }
+
+                date_time_styles operator<<(enum_t val)
+                {
+                    return date_time_styles(static_cast<enum_t>(this->m_val << val));
+                }
+
+                date_time_styles operator<<(int32_t val)
+                {
+                    return date_time_styles(static_cast<enum_t>(this->m_val << val));
+                }
+
+                date_time_styles& operator<<=(const date_time_styles& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val << val.m_val);
+                    return *this;
+                }
+
+                date_time_styles& operator<<=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val << val);
+                    return *this;
+                }
+
+                date_time_styles& operator<<=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val << val);
+                    return *this;
+                }
+
+                date_time_styles operator>>(const date_time_styles& val)
+                {
+                    return date_time_styles(static_cast<enum_t>(this->m_val >> val.m_val));
+                }
+
+                date_time_styles operator>>(enum_t val)
+                {
+                    return date_time_styles(static_cast<enum_t>(this->m_val >> val));
+                }
+
+                date_time_styles operator>>(int32_t val)
+                {
+                    return date_time_styles(static_cast<enum_t>(this->m_val >> val));
+                }
+
+                date_time_styles& operator>>=(const date_time_styles& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val >> val.m_val);
+                    return *this;
+                }
+
+                date_time_styles& operator>>=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val >> val);
+                    return *this;
+                }
+
+                date_time_styles& operator>>=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val >> val);
                     return *this;
                 }
 

@@ -105,6 +105,7 @@ namespace omni {
                         (*client)->close();
                         delete (*client);
                     }
+                    this->m_clients.clear();
                     this->m_sock.disconnect(false); // shutdown and do not reuse socket
                 }
         };

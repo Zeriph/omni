@@ -22,7 +22,7 @@
 #include <omni/sequence.hpp>
 #include <omni/type.hpp>
 #include <omni/defs/consts.hpp>
-#include <omni/util/bits.hpp>
+#include <omni/bits.hpp>
 #include <bitset>
 
 namespace omni {

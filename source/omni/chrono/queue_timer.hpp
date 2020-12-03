@@ -24,6 +24,12 @@
     #include <omni/sync/basic_lock.hpp>
 #endif
 
+#if defined(OMNI_32BIT_QUEUE_TIMER)
+    #define OMNI_QTMR_INT_FW uint32_t
+#else
+    #define OMNI_QTMR_INT_FW uint64_t
+#endif
+
 namespace omni {
     namespace chrono {
         class queue_timer
@@ -31,7 +37,7 @@ namespace omni {
             public:
                 queue_timer();
                 queue_timer(const omni::chrono::queue_timer& cp);
-                explicit queue_timer(uint32_t interval_ms);
+                OMNI_EXPLICIT queue_timer(uint32_t interval_ms);
                 queue_timer(uint32_t interval_ms,
                             const omni::chrono::timer_delegate& fn);
                 queue_timer(uint32_t interval_ms,
@@ -81,10 +87,9 @@ namespace omni {
                 omni_sequence_t<omni::chrono::timer_args> m_que; // the queue
                 omni::sync::basic_thread *m_thread; // the main timer thread to _run on
                 omni::sync::basic_thread *m_qthread; // the thread to run the queue on
-                uint32_t m_int; // "elapsed" interval in ms between ticks
-                volatile bool m_auto; // true by default, false for tick once then stop
-                volatile bool m_isrun; // is running
-                volatile bool m_stopreq; // stop requested
+
+                OMNI_QTMR_INT_FW m_int; // "elapsed" interval in ms between ticks
+                volatile OMNI_QTMR_INT_FW m_status; // auto run (true by default), is_run, stop_req
         };
     } // namespace chrono
 } // namespace omni

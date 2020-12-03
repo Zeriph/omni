@@ -18,4 +18,4 @@
  */
 
 
-#include <omni/util/bits.hpp>
+#include <omni/version.hpp>

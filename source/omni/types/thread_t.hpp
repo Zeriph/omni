@@ -22,7 +22,7 @@
 #include <omni/defs/thread_def.hpp>
 #include <omni/string/util.hpp>
 #include <omni/types/string_t.hpp>
-#include <omni/util/bits.hpp>
+#include <omni/bits.hpp>
 #include <omni/generic_ptr.hpp>
 #include <omni/chrono/tick.hpp>
 #include <omni/delegate/0.hpp>
@@ -1127,6 +1127,204 @@ namespace omni {
                     return *this;
                 }
 
+                thread_option operator|(const thread_option& val)
+                {
+                    return thread_option(static_cast<enum_t>(this->m_val | val.m_val));
+                }
+
+                thread_option operator|(enum_t val)
+                {
+                    return thread_option(static_cast<enum_t>(this->m_val | val));
+                }
+
+                thread_option operator|(int32_t val)
+                {
+                    return thread_option(static_cast<enum_t>(this->m_val | val));
+                }
+
+                thread_option& operator|=(const thread_option& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val | val.m_val);
+                    return *this;
+                }
+
+                thread_option& operator|=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val | val);
+                    return *this;
+                }
+
+                thread_option& operator|=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val | val);
+                    return *this;
+                }
+
+                thread_option operator&(const thread_option& val)
+                {
+                    return thread_option(static_cast<enum_t>(this->m_val & val.m_val));
+                }
+
+                thread_option operator&(enum_t val)
+                {
+                    return thread_option(static_cast<enum_t>(this->m_val & val));
+                }
+
+                thread_option operator&(int32_t val)
+                {
+                    return thread_option(static_cast<enum_t>(this->m_val & val));
+                }
+
+                thread_option& operator&=(const thread_option& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val & val.m_val);
+                    return *this;
+                }
+
+                thread_option& operator&=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val & val);
+                    return *this;
+                }
+
+                thread_option& operator&=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val & val);
+                    return *this;
+                }
+                
+                thread_option& operator++()
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val + 1);
+                    return *this;
+                }
+
+                thread_option operator++(int dummy)
+                {
+                    OMNI_UNUSED(dummy);
+                    thread_option ret(this->m_val);
+                    this->m_val = static_cast<enum_t>(this->m_val + 1);
+                    return ret;
+                }
+
+                thread_option& operator--()
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val - 1);
+                    return *this;
+                }
+
+                thread_option operator--(int dummy)
+                {
+                    OMNI_UNUSED(dummy);
+                    thread_option ret(this->m_val);
+                    this->m_val = static_cast<enum_t>(this->m_val - 1);
+                    return ret;
+                }
+
+                thread_option operator~()
+                {
+                    return thread_option(static_cast<enum_t>(~static_cast<int32_t>(this->m_val)));
+                }
+
+                thread_option operator^(const thread_option& val)
+                {
+                    return thread_option(static_cast<enum_t>(this->m_val ^ val.m_val));
+                }
+
+                thread_option operator^(enum_t val)
+                {
+                    return thread_option(static_cast<enum_t>(this->m_val ^ val));
+                }
+
+                thread_option operator^(int32_t val)
+                {
+                    return thread_option(static_cast<enum_t>(this->m_val ^ val));
+                }
+
+                thread_option& operator^=(const thread_option& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val ^ val.m_val);
+                    return *this;
+                }
+
+                thread_option& operator^=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val ^ val);
+                    return *this;
+                }
+
+                thread_option& operator^=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val ^ val);
+                    return *this;
+                }
+
+                thread_option operator<<(const thread_option& val)
+                {
+                    return thread_option(static_cast<enum_t>(this->m_val << val.m_val));
+                }
+
+                thread_option operator<<(enum_t val)
+                {
+                    return thread_option(static_cast<enum_t>(this->m_val << val));
+                }
+
+                thread_option operator<<(int32_t val)
+                {
+                    return thread_option(static_cast<enum_t>(this->m_val << val));
+                }
+
+                thread_option& operator<<=(const thread_option& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val << val.m_val);
+                    return *this;
+                }
+
+                thread_option& operator<<=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val << val);
+                    return *this;
+                }
+
+                thread_option& operator<<=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val << val);
+                    return *this;
+                }
+
+                thread_option operator>>(const thread_option& val)
+                {
+                    return thread_option(static_cast<enum_t>(this->m_val >> val.m_val));
+                }
+
+                thread_option operator>>(enum_t val)
+                {
+                    return thread_option(static_cast<enum_t>(this->m_val >> val));
+                }
+
+                thread_option operator>>(int32_t val)
+                {
+                    return thread_option(static_cast<enum_t>(this->m_val >> val));
+                }
+
+                thread_option& operator>>=(const thread_option& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val >> val.m_val);
+                    return *this;
+                }
+
+                thread_option& operator>>=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val >> val);
+                    return *this;
+                }
+
+                thread_option& operator>>=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val >> val);
+                    return *this;
+                }
+
                 bool operator<(const thread_option& val) const
                 {
                     return this->m_val < val.m_val;
@@ -1307,11 +1505,10 @@ namespace omni {
                 
                 /**
                  * Stack size constructor; initializes the structure with specified stack size
-                 * (specifically non-explicit constructor)
                  *
                  * @param stack    The stack size to set
                  */
-                thread_flags(std::size_t stack) :
+                OMNI_EXPLICIT thread_flags(std::size_t stack) :
                     m_stack(stack),
                     m_timeout(0),
                     m_flags(0)

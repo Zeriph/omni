@@ -25,6 +25,12 @@
 #include <omni/sync/basic_lock.hpp>
 #include <map>
 
+#if defined(OMNI_32BIT_BASIC_THREAD)
+    #define OMNI_BTHRD_INT_FW uint32_t
+#else
+    #define OMNI_BTHRD_INT_FW uint64_t
+#endif
+
 namespace omni {
     namespace sync {
         /** Represents an unmanaged system thread object. Automatically starts the thread when created
@@ -36,10 +42,10 @@ namespace omni {
                 // Where a constructor specifies a delegate method, unless user specified, the default start type is NOW
                 basic_thread();
                 basic_thread(const omni::sync::basic_thread& cp);
-                explicit basic_thread(const omni::sync::thread_flags& ops);
-                explicit basic_thread(std::size_t max_stack_sz);
-                explicit basic_thread(const omni::sync::thread_start& mthd);
-                explicit basic_thread(const omni::sync::parameterized_thread_start& mthd);
+                OMNI_EXPLICIT basic_thread(const omni::sync::thread_flags& ops);
+                OMNI_EXPLICIT basic_thread(std::size_t max_stack_sz);
+                OMNI_EXPLICIT basic_thread(const omni::sync::thread_start& mthd);
+                OMNI_EXPLICIT basic_thread(const omni::sync::parameterized_thread_start& mthd);
                 basic_thread(const omni::sync::thread_t& tid,
                              const omni::sync::thread_handle_t& h);
                 basic_thread(const omni::sync::thread_start& mthd,
@@ -153,12 +159,8 @@ namespace omni {
                     /** The threads priority */
                     omni::sync::thread_priority m_priority;
                 #endif
-                /** If join has been called, do not detach */
-                volatile bool m_isjoined;
-                /** If parameterized start function */
-                volatile bool m_ispmthd;
-                /** True if it is a thread pool thread */
-                volatile bool m_istpool;
+                /** The status of the thread, joined or is param thread start or is a threadpool thread */
+                volatile OMNI_BTHRD_INT_FW m_status;
                 
                 static OMNI_THREAD_FNPTR_T OMNI_THREAD_CALL_T _start(void* param);
                 

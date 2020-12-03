@@ -1,20 +1,18 @@
 The following is a list of known issues or action items for the current version
-of the framework and does not contain a chronological history (that is what the
+of the library and does not contain a chronological history (that is what the
 git/svn histories are for). This list is like a "live" list meant to be more of
 an all encompassing 'future' and 'todo' list noted and posted in the code repo.
 
-Current version: 0.8.2
+Current version: 0.8.3
 
--The date_time class is still being worked on.
-
--The math/geometry namespaces have not been fully tested
-
--The I/O namespace has been tested and works with the majority of functions
-but has not been fully vetted for functionality across platforms.
+-A few current test of Debian in a VM no longer work as expected (even though
+they previously did work). The tests build and run, but nothing is printed
+regarding actual results, though some tests do run as expected.
 
 -The omni::net::socket/endpoint classes only support IP4 (no IP6/Unix yet).
 
--The framework does not account for arithmetic over/under-flow errors and
+-The date_time class is still being worked on.
+
+-The library does not account for arithmetic over/under-flow errors and
 trusts the user of the code will do proper error handling above.
 
--C++11 is not fully integrated

@@ -20,7 +20,11 @@ class UT_CLASS_DEF
         
         void base_test()
         {
-            std::cout << omni::chrono::date_time::now() << std::endl;
+            try {
+                std::cout << omni::chrono::date_time::now() << std::endl;
+            } catch (std::exception& ex) {
+                std::cout << "error: " << ex.what() << std::endl;
+            }
         }
         
     //private:

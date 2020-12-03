@@ -58,6 +58,7 @@ usage()
 	echo "       -?          Display this help"
     echo "       -c [opts]   Pass extra arguments to the compiler"
     echo "       -d [define] Pass extra defines to the compiler"
+    echo "       -out [path] The output build path to put the lib/bin/obj/asm files"
 	echo "       -v          This flag signifies the verbosity level of the compiler"
 	echo "                   output. Valid '-v' values are as follows:"
 	echo "                   -v          = Verbose level 1 (basic output)"
@@ -71,12 +72,12 @@ usage()
     echo "library options:"
     echo "       -lite       Sets the OMNI_LITE macro definition"
     echo "       -heavy      Sets the heavy object flag"
+    echo "       -uni        Sets the UNICODE flags (builds using unicode)"
     echo "       -no [op]    Passes along a 'no-flag' to the compile script"
     echo "       -safe       Sets the OMNI_SAFE_LIBRARY macro definition"
     echo "       -sfw [op]   Set the OMNI_SAFE_[op] macro definition"
     echo "       -np         Sets the OMNI_NON_PORTABLE compiler flag and enables"
     echo "                   compilation of 'non-portable' code"
-    echo "       -nouni      Disables the UNICODE flags (does not build unicode)"
     echo "       -terr       Sets the OMNI_TERMINATE macro"
     echo 
     echo "library debug options:"
@@ -112,6 +113,7 @@ usage()
     echo "       -syntax     Sets the -fsyntax-only flag which checks the code for syntax"
     echo "                   errors only and does nothing beyond that"
 	echo "       -eo         Use the extra compiler/linker flags (can generate erroneous errors)"
+    echo "       -pad        Use the -Wpadded (can generate erroneous errors)"
     echo "       -std [std]  Compiles the code according to the standard defined by [std]"
 }
 
@@ -128,7 +130,7 @@ parse_set_test()
     utest=$1
     utupper=`echo ${utest} | tr [a-z] [A-Z]`
     utestflag="OMNI_UT_${utupper}"
-    if [ "$1" == "full" ]; then
+    if [ "$1" = "full" ]; then
         eopts="${eopts} -oo heavy"
         eopts="${eopts} -oo safe fw"
         eopts="${eopts} -oo np"
@@ -141,25 +143,25 @@ parse_test()
         parse_set_test "$1"
     else
     
-    ut=""
-	for test in ${unit_tests}; do
-		if [ $1 = $test ]; then
-			ut=$1
-			break
-		fi
-	done
-	if [ "$ut" == "" ]; then
-        if [ -f ${utloc}/$1.hpp ]; then
-		    echo "Empty unit test specified; this might indicate a shell escape issue"
+        ut=""
+        for test in ${unit_tests}; do
+            if [ $1 = $test ]; then
+                ut=$1
+                break
+            fi
+        done
+        if [ "$ut" = "" ]; then
+            if [ -f ${utloc}/$1.hpp ]; then
+                echo "Empty unit test specified; this might indicate a shell escape issue"
+            else
+                echo "Could not find unit test for '$1' at '${utloc}/$1.hpp'"
+                list_tests
+            fi
+            #usage
+            exit 0
         else
-            echo "Could not find unit test for '$1' at '${utloc}/$1.hpp'"
-            list_tests
+            parse_set_test "$ut"
         fi
-		#usage
-		exit 0
-	else
-        parse_set_test "$ut"
-	fi
     
     fi
 }
@@ -177,6 +179,10 @@ parse_args()
             "qnx") sys_type="qnx"; eopts="${eopts} -co nopthread -d OMNI_CLOCK_GETRES_REALTIME" ;;
             
             # compile.sh script options
+            "-out")
+                eopts="${eopts} -out ${2}"
+                binfldr="${2}/bin"
+                shift ;;
 			"-c") eopts="${eopts} -c ${2}"; shift ;;
             "-d") edefs="${edefs} -d ${2}"; shift ;;
             "-single") eopts="${eopts} -single" ;;
@@ -199,9 +205,10 @@ parse_args()
             # library options
             "-lite") eopts="${eopts} -oo lite" ;;
             "-heavy") eopts="${eopts} -oo heavy" ;;
-            "-no") eopts="${eopts} -oo no ${3}"; shift ;;
+            "-uni") eopts="${eopts} -oo uni" ;;
+            "-no") eopts="${eopts} -oo no ${2}"; shift ;;
             "-safe") eopts="${eopts} -oo safe fw" ;;
-            "-sfw") eopts="${eopts} -oo safe ${3}"; shift ;;
+            "-sfw") eopts="${eopts} -oo safe ${2}"; shift ;;
             "-np") eopts="${eopts} -oo np" ;;
             "-terr") eopts="${eopts} -oo terr" ;;
             
@@ -229,7 +236,7 @@ parse_args()
             "-nopthread") eopts="${eopts} -co nopthread" ;;
             "-nortti") eopts="${eopts} -co nortti" ;;
             "-noopt") noopt=1 ;;
-            "-opt") eopts="${eopts} -co opt ${3}" ;;
+            "-opt") eopts="${eopts} -co opt ${2}" ;;
             "-asm") eopts="${eopts} -co asm" ;;
             "-gdb")
                 eopts="${eopts} -co gdb"
@@ -241,6 +248,7 @@ parse_args()
             "-std") eopts="${eopts} -co std ${2}"; shift ;;
             "-syntax") eopts="${eopts} -co syntax" ;;
             "-eo") eopts="${eopts} -co xtra" ;;
+            "-pad") eopts="${eopts} -co pad" ;;
             "-force") force_test=1 ;;
             "-odir") shift ;;
 			*) tmput=$1 ;;
@@ -262,7 +270,7 @@ if [ $is32bit -eq 1 ]; then
     fi
 fi
 
-if [ "${sys_type}" == "osx" ]; then
+if [ "${sys_type}" = "osx" ]; then
     eopts="${eopts} -co nopthread"
 fi
 

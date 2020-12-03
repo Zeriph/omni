@@ -27,7 +27,7 @@ namespace omni {
         class auto_lock
         {
             public:
-                explicit auto_lock(T* l) : m_hndl(l)
+                OMNI_EXPLICIT auto_lock(T* l) : m_hndl(l)
                 {
                     if (this->m_hndl) { this->m_hndl->lock(); }
                     else {
@@ -111,7 +111,7 @@ namespace omni {
         class auto_lock <omni::sync::mutex_t>
         {
             public:
-                explicit auto_lock(omni::sync::mutex_t* m) : m_hndl(m)
+                OMNI_EXPLICIT auto_lock(omni::sync::mutex_t* m) : m_hndl(m)
                 {
                     if (this->m_hndl) { omni::sync::mutex_lock(*this->m_hndl); }
                     else {

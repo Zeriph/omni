@@ -24,6 +24,10 @@
 #include <omni/delegate/2.hpp>
 #include <omni/sequence.hpp>
 
+#define OMNI_TIMER_AUTO_FLAG_FW 1
+#define OMNI_TIMER_RUN_FLAG_FW 2
+#define OMNI_TIMER_STOP_FLAG_FW 4
+
 namespace omni {
     namespace chrono {
         class timer_sync_type

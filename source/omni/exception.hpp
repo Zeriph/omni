@@ -28,13 +28,18 @@
     #include <sstream>
     #include <omni/defs/consts.hpp>
     
-    /* DEV_NOTE: If you wish to have something other than std::terminate be called below, define OMNI_EXCEPTION_TERMINATE */
+    // DEV_NOTE: If you wish to have something other than std::terminate be called below, define OMNI_EXCEPTION_TERMINATE
     #if !defined(OMNI_EXCEPTION_TERMINATE)
         // std::terminate is called when an exception happens within an exception (i.e. a null pointer reference)
         #define OMNI_EXCEPTION_TERMINATE OMNI_TERMINATE;
     #endif
     #define OMNI_ERR_APPEND_FW(val) std::stringstream cval; cval << val; this->m_what.append(cval.str())
-    /* DEV_NOTE: the exception specification for throw() is an implicit noexcept(false) */
+
+    #define OMNI_CTOR_TRY try
+    #define OMNI_CTOR_CATCH catch(...) { OMNI_DBGE("A general unhandled exception occurred"); OMNI_EXCEPTION_TERMINATE }
+
+    // DEV_NOTE: the exception specification for throw() is an implicit noexcept(false)
+    // DEV_NOTE: all exceptions in Omni will be explicit for single parameter ctor's to avoid any collision
     
     namespace omni {
         /** exception is used to facilitate Omni Library specific exceptions */
@@ -68,7 +73,7 @@
                     }
                 }
                 
-                exception(const char* reason, const char* extra, int err) throw() : m_what("")
+                exception(const char* reason, const char* extra, int errnum) throw() : m_what("")
                 {
                     if (reason) { this->m_what.append(reason); }
                     else {
@@ -80,10 +85,10 @@
                         OMNI_DBGE(OMNI_NULL_PTR_STR)
                         OMNI_EXCEPTION_TERMINATE
                     }
-                    OMNI_ERR_APPEND_FW(err);
+                    OMNI_ERR_APPEND_FW(errnum);
                 }
                 
-                exception(const char* reason, const char* extra, long err) throw() : m_what("")
+                exception(const char* reason, const char* extra, long errnum) throw() : m_what("")
                 {
                     if (reason) { this->m_what.append(reason); }
                     else {
@@ -95,10 +100,10 @@
                         OMNI_DBGE(OMNI_NULL_PTR_STR);
                         OMNI_EXCEPTION_TERMINATE
                     }
-                    OMNI_ERR_APPEND_FW(err);
+                    OMNI_ERR_APPEND_FW(errnum);
                 }
 
-                exception(const char* reason, const char* extra, std::size_t err) throw() : m_what("")
+                exception(const char* reason, const char* extra, std::size_t errnum) throw() : m_what("")
                 {
                     if (reason) { this->m_what.append(reason); }
                     else {
@@ -110,7 +115,7 @@
                         OMNI_DBGE(OMNI_NULL_PTR_STR);
                         OMNI_EXCEPTION_TERMINATE
                     }
-                    OMNI_ERR_APPEND_FW(err);
+                    OMNI_ERR_APPEND_FW(errnum);
                 }
 
                 exception(const std::string& reason, const std::string& extra) throw() : m_what(reason)
@@ -118,67 +123,67 @@
                     this->m_what.append(extra);
                 }
                 
-                exception(const std::string& reason, const std::string& extra, int err) throw() : m_what(reason)
+                exception(const std::string& reason, const std::string& extra, int errnum) throw() : m_what(reason)
                 {
                     this->m_what.append(extra);
-                    OMNI_ERR_APPEND_FW(err);
+                    OMNI_ERR_APPEND_FW(errnum);
                 }
 
-                exception(const std::string& reason, const std::string& extra, long err) throw() : m_what(reason)
+                exception(const std::string& reason, const std::string& extra, long errnum) throw() : m_what(reason)
                 {
                     this->m_what.append(extra);
-                    OMNI_ERR_APPEND_FW(err);
+                    OMNI_ERR_APPEND_FW(errnum);
                 }
 
-                exception(const std::string& reason, const std::string& extra, std::size_t err) throw() : m_what(reason)
+                exception(const std::string& reason, const std::string& extra, std::size_t errnum) throw() : m_what(reason)
                 {
                     this->m_what.append(extra);
-                    OMNI_ERR_APPEND_FW(err);
+                    OMNI_ERR_APPEND_FW(errnum);
                 }
 
-                exception(const char* reason, int err) throw() : m_what("")
+                exception(const char* reason, int errnum) throw() : m_what("")
                 {
                     if (reason) { this->m_what.append(reason); }
                     else {
                         OMNI_DBGE(OMNI_NULL_PTR_STR);
                         OMNI_EXCEPTION_TERMINATE
                     }
-                    OMNI_ERR_APPEND_FW(err);
+                    OMNI_ERR_APPEND_FW(errnum);
                 }
                 
-                exception(const std::string& reason, int err) throw() : m_what(reason)
+                exception(const std::string& reason, int errnum) throw() : m_what(reason)
                 {
-                    OMNI_ERR_APPEND_FW(err);
+                    OMNI_ERR_APPEND_FW(errnum);
                 }
 
-                exception(const char* reason, long err) throw() : m_what("") 
+                exception(const char* reason, long errnum) throw() : m_what("") 
                 {
                     if (reason) { this->m_what.append(reason); }
                     else {
                         OMNI_DBGE(OMNI_NULL_PTR_STR);
                         OMNI_EXCEPTION_TERMINATE
                     }
-                    OMNI_ERR_APPEND_FW(err);
+                    OMNI_ERR_APPEND_FW(errnum);
                 }
                 
-                exception(const std::string& reason, long err) throw() : m_what(reason)
+                exception(const std::string& reason, long errnum) throw() : m_what(reason)
                 {
-                    OMNI_ERR_APPEND_FW(err);
+                    OMNI_ERR_APPEND_FW(errnum);
                 }
                 
-                exception(const char* reason, std::size_t err) throw() : m_what("")
+                exception(const char* reason, std::size_t errnum) throw() : m_what("")
                 {
                     if (reason) { this->m_what.append(reason); }
                     else {
                         OMNI_DBGE(OMNI_NULL_PTR_STR);
                         OMNI_EXCEPTION_TERMINATE
                     }
-                    OMNI_ERR_APPEND_FW(err);
+                    OMNI_ERR_APPEND_FW(errnum);
                 }
                 
-                exception(const std::string& reason, std::size_t err) throw() : m_what(reason)
+                exception(const std::string& reason, std::size_t errnum) throw() : m_what(reason)
                 {
-                    OMNI_ERR_APPEND_FW(err);
+                    OMNI_ERR_APPEND_FW(errnum);
                 }
                 
                 virtual ~exception() OMNI_DTOR_NO_THROWS
@@ -200,52 +205,52 @@
                     this->m_what.append(ex);
                 }
                 
-                virtual void append(const char* ex, int err)
+                virtual void append(const char* ex, int errnum)
                 {
                     if (ex) { this->m_what.append(ex); }
                     else {
                         OMNI_DBGE(OMNI_NULL_PTR_STR);
                         OMNI_EXCEPTION_TERMINATE
                     }
-                    OMNI_ERR_APPEND_FW(err);
+                    OMNI_ERR_APPEND_FW(errnum);
                 }
                 
-                virtual void append(const std::string& ex, int err)
+                virtual void append(const std::string& ex, int errnum)
                 {
                     this->m_what.append(ex);
-                    OMNI_ERR_APPEND_FW(err);
+                    OMNI_ERR_APPEND_FW(errnum);
                 }
 
-                virtual void append(const char* ex, long err)
+                virtual void append(const char* ex, long errnum)
                 {
                     if (ex) { this->m_what.append(ex); }
                     else {
                         OMNI_DBGE(OMNI_NULL_PTR_STR);
                         OMNI_EXCEPTION_TERMINATE
                     }
-                    OMNI_ERR_APPEND_FW(err);
+                    OMNI_ERR_APPEND_FW(errnum);
                 }
                 
-                virtual void append(const std::string& ex, long err)
+                virtual void append(const std::string& ex, long errnum)
                 {
                     this->m_what.append(ex);
-                    OMNI_ERR_APPEND_FW(err);
+                    OMNI_ERR_APPEND_FW(errnum);
                 }
                 
-                virtual void append(const char* ex, std::size_t err)
+                virtual void append(const char* ex, std::size_t errnum)
                 {
                     if (ex) { this->m_what.append(ex); }
                     else {
                         OMNI_DBGE(OMNI_NULL_PTR_STR);
                         OMNI_EXCEPTION_TERMINATE
                     }
-                    OMNI_ERR_APPEND_FW(err);
+                    OMNI_ERR_APPEND_FW(errnum);
                 }
                 
-                virtual void append(const std::string& ex, std::size_t err)
+                virtual void append(const std::string& ex, std::size_t errnum)
                 {
                     this->m_what.append(ex);
-                    OMNI_ERR_APPEND_FW(err);
+                    OMNI_ERR_APPEND_FW(errnum);
                 }
                 
                 virtual const char* what() const throw() { return this->m_what.c_str(); }
@@ -261,52 +266,52 @@
                 
                 virtual void seterr(const std::string& ex) { this->m_what = ex; }
                 
-                virtual void seterr(const char* ex, int err)
+                virtual void seterr(const char* ex, int errnum)
                 {
                     if (ex) { this->m_what = std::string(ex); }
                     else {
                         OMNI_DBGE(OMNI_NULL_PTR_STR);
                         OMNI_EXCEPTION_TERMINATE
                     }
-                    OMNI_ERR_APPEND_FW(err);
+                    OMNI_ERR_APPEND_FW(errnum);
                 }
                 
-                virtual void seterr(const std::string& ex, int err)
+                virtual void seterr(const std::string& ex, int errnum)
                 {
                     this->m_what = ex;
-                    OMNI_ERR_APPEND_FW(err);
+                    OMNI_ERR_APPEND_FW(errnum);
                 }
 
-                virtual void seterr(const char* ex, long err)
+                virtual void seterr(const char* ex, long errnum)
                 {
                     if (ex) { this->m_what = std::string(ex); }
                     else {
                         OMNI_DBGE(OMNI_NULL_PTR_STR);
                         OMNI_EXCEPTION_TERMINATE
                     }
-                    OMNI_ERR_APPEND_FW(err);
+                    OMNI_ERR_APPEND_FW(errnum);
                 }
                 
-                virtual void seterr(const std::string& ex, long err)
+                virtual void seterr(const std::string& ex, long errnum)
                 {
                     this->m_what = ex;
-                    OMNI_ERR_APPEND_FW(err);
+                    OMNI_ERR_APPEND_FW(errnum);
                 }
                 
-                virtual void seterr(const char* ex, std::size_t err)
+                virtual void seterr(const char* ex, std::size_t errnum)
                 {
                     if (ex) { this->m_what = std::string(ex); }
                     else {
                         OMNI_DBGE(OMNI_NULL_PTR_STR);
                         OMNI_EXCEPTION_TERMINATE
                     }
-                    OMNI_ERR_APPEND_FW(err);
+                    OMNI_ERR_APPEND_FW(errnum);
                 }
                 
-                virtual void seterr(const std::string& ex, std::size_t err)
+                virtual void seterr(const std::string& ex, std::size_t errnum)
                 {
                     std::stringstream cval(ex);
-                    cval << err;
+                    cval << errnum;
                     this->m_what = cval.str();
                 }
                 
@@ -342,5 +347,5 @@
     // include the omni::exceptions namespace and it is exceptions
     #include <omni/xx/exceptions.hxx>
     #undef OMNI_ERR_APPEND_FW
-#endif // OMNI_NO_THROW
+#endif // OMNI_THROW
 #endif // OMNI_EXCEPTIONS_HPP
