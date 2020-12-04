@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - omni/defs/file_def.hpp</title>
+<link rel="stylesheet" type="text/css" href="../../../../content/main.css" /><link rel="icon" type="image/png" href="../../../../content/favicon.png" />
+<script type="text/javascript" src="../../../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="../../index.html" class="current">Source</a></li><li title="Library classes and namespaces">
+<a href="../../../classes/index.html">Class Index</a></li><li title="Download and view examples">
+<a href="../../../examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="../../../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="../../../options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../../../api.html">System API</a></li><li title="Other Considerations">
+<a href="../../../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../../../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle"><a href="../../../../files/src/omni/defs/file_def.hpp" onclick="return popup('../../../../files/src/omni/defs/file_def.hpp')">omni/defs/file_def.hpp</a></div><div class="content"><div>
+<code><div class="cpphtmllines">
+<!--start line numbers-->
+0001:<br><div id="cmntl1" name="cmntl1">0002:<br>0003:<br>0004:<br>0005:<br>0006:<br>0007:<br>0008:<br>0009:<br>00010:<br>00011:<br>00012:<br>00013:<br>00014:<br>00015:<br>00016:<br>00017:<br>00018:<br></div>00019:<br>
+00020:<br>00021:<br>00022:<br>00023:<br>00024:<br>00025:<br>00026:<br>00027:<br>00028:<br>00029:<br>00030:<br>00031:<br>00032:<br>00033:<br>00034:<br>00035:<br>00036:<br>00037:<br>00038:<br>00039:<br>
+00040:<br>00041:<br>00042:<br>00043:<br>00044:<br>00045:<br>00046:<br>00047:<br>00048:<br>00049:<br>00050:<br>00051:<br>00052:<br>00053:<br>00054:<br>00055:<br>00056:<br>00057:<br>00058:<br>
+<!--end line numbers-->
+</div><div class="cpphtmlcmnt">
+<!--start collapse columns-->
+<img src="../../../../content/tree/min.gif" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<!--end collapse columns-->
+</div><div class="cpphtml" style="margin-left:3em;">
+<!--start highlighted code-->
+<font class="syn_cmt">/*<div class="syn_ex" id="cmnt1" name="cmnt1">
+ * Copyright (c), Zeriph Enterprises<br>
+ * All rights reserved.<br>
+ * <br>
+ * Contributor(s):<br>
+ * Zechariah Perez, omni (at) zeriph (dot) com<br>
+ * <br>
+ * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS &quot;AS IS&quot; AND ANY<br>
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED<br>
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE<br>
+ * DISCLAIMED. IN NO EVENT SHALL ZERIPH AND CONTRIBUTORS BE LIABLE FOR ANY<br>
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES<br>
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;<br>
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND<br>
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT<br>
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS<br>
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.<br>
+ */</div><div></div></font>
+<font class="syn_pre">#if !defined(OMNI_FILE_DEF_HPP)</font><br>
+<font class="syn_pre">#define OMNI_FILE_DEF_HPP 1</font><br>
+<br>
+<font class="syn_pre">#include &lt;sys/stat.h&gt;</font><br>
+<font class="syn_pre">#include &lt;sys/types.h&gt;</font><br>
+<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../options/omni_os_win.html">OMNI_OS_WIN</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;windows.h&gt;</font><br>
+<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;dirent.h&gt; <font class="syn_cmt">// for *Nix directory access</font></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;unistd.h&gt;</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;sys/time.h&gt;</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;fcntl.h&gt;</font><br>
+<font class="syn_pre">#endif</font><br>
+<font class="syn_pre">#include &lt;cstdarg&gt;</font><br>
+<br>
+<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../options/omni_os_win.html">OMNI_OS_WIN</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// Because we are using Windows we need to convert the name to 8.3 format otherwise, it is possible to get</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// an INVALID_HANDLE_VALUE returned from a valid file. </font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// Example: _C:\Develop\C++\file.txt_ could exist and there is nothing in the name more than 8 characters</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// long, but because the folder _C++_ has invalid 8.3 characters in it, it will fail. _C++_ in 8.3 format is _C__~1_</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// <a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa363858(v=vs.85).aspx">CreateFile</a> also needs a _\\?\_ in front of the file to <a href="https://linux.die.net/man/2/open">open</a> an actual file handle (_\\.\_ for a device)&nbsp;&nbsp;&nbsp;&nbsp;</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_FILE_CHECKA_FW(file, ret) if (file.length() &gt; MAX_PATH) { OMNI_ERRV_RETV_FW(<font class="syn_str">&quot;file name exceeds maximum path length: &quot;</font>, MAX_PATH, <a href="../../../classes/omni-exceptions-path_exception.html">omni::exceptions::path_exception</a>(omni::string::to_string(file)), ret) }</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_FILE_CHECKW_FW(tf, file, ret) file; \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (tf.length() &gt; 4 &amp;&amp; tf.substr(0, 4) != L<font class="syn_str">&quot;\\\\?\\&quot;</font>) { tf = <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>(L<font class="syn_str">&quot;\\\\?\\&quot;</font>) + tf; } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (tf.length() &gt;= OMNI_MAX_PATH_FW) { OMNI_ERRV_RETV_FW(<font class="syn_str">&quot;file name exceeds maximum path length: &quot;</font>, OMNI_MAX_PATH_FW, <a href="../../../classes/omni-exceptions-path_exception.html">omni::exceptions::path_exception</a>(omni::string::to_string(file)), ret) }</font><br>
+<font class="syn_pre">#endif</font><br>
+<br>
+<font class="syn_pre">#if !defined(<a href="../../../options/omni_io_file_truncate_fn.html">OMNI_IO_FILE_TRUNCATE_FN</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_io_file_truncate_fn.html">OMNI_IO_FILE_TRUNCATE_FN</a> ::<a href="https://linux.die.net/man/3/truncate">truncate</a></font><br>
+<font class="syn_pre">#endif</font><br>
+<font class="syn_pre">#if !defined(<a href="../../../options/omni_io_file_ftruncate_fn.html">OMNI_IO_FILE_FTRUNCATE_FN</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_io_file_ftruncate_fn.html">OMNI_IO_FILE_FTRUNCATE_FN</a> ::<a href="https://linux.die.net/man/3/ftruncate">ftruncate</a></font><br>
+<font class="syn_pre">#endif</font><br>
+<br>
+<font class="syn_pre">#if !defined(<a href="../../../options/omni_io_file_copy_bufsz.html">OMNI_IO_FILE_COPY_BUFSZ</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_io_file_copy_bufsz.html">OMNI_IO_FILE_COPY_BUFSZ</a> 4096</font><br>
+<font class="syn_pre">#endif</font><br>
+<br>
+<font class="syn_pre">#endif <font class="syn_cmt">// OMNI_FILE_DEF_HPP</font></font><br>
+<!--end highlighted code-->
+</div></code><br>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS(); collapseAll('1', '../../../../');</script></body></html>
