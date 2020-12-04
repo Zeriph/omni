@@ -44,9 +44,7 @@ omni::chrono::sync_timer::sync_timer() :
     OMNI_SAFE_STMQMTX_FW
     m_thread(OMNI_NULL),
     m_int(100),
-    m_auto(true),
-    m_isrun(false),
-    m_stopreq(false)
+    m_status(1)
 {
     #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
         omni::chrono::monotonic::initialize();
@@ -61,9 +59,7 @@ omni::chrono::sync_timer::sync_timer(const omni::chrono::sync_timer& cp) :
     OMNI_SAFE_STMQMTX_FW
     m_thread(OMNI_NULL),
     m_int(),
-    m_auto(),
-    m_isrun(),
-    m_stopreq()
+    m_status()
 {
     #if defined(OMNI_SAFE_SYNC_TIMER)
         cp.m_mtx.lock();
@@ -71,8 +67,14 @@ omni::chrono::sync_timer::sync_timer(const omni::chrono::sync_timer& cp) :
     this->state_object = cp.state_object;
     this->tick = cp.tick;
     this->m_int = cp.m_int;
-    this->m_auto = cp.m_auto;
-    if (cp.m_isrun && !cp.m_stopreq) { this->start(); }
+
+    if (OMNI_VAL_HAS_FLAG_BIT(cp.m_status, OMNI_TIMER_AUTO_FLAG_FW)) {
+        OMNI_VAL_SET_FLAG_BIT(this->m_status, OMNI_TIMER_AUTO_FLAG_FW);
+    }
+    
+    if (OMNI_VAL_HAS_FLAG_BIT(cp.m_status, OMNI_TIMER_RUN_FLAG_FW) &&
+        !OMNI_VAL_HAS_FLAG_BIT(cp.m_status, OMNI_TIMER_STOP_FLAG_FW)) { this->start(); }
+    
     #if defined(OMNI_SAFE_SYNC_TIMER)
         cp.m_mtx.unlock();
     #endif
@@ -86,9 +88,7 @@ omni::chrono::sync_timer::sync_timer(uint32_t interval_ms) :
     OMNI_SAFE_STMQMTX_FW
     m_thread(OMNI_NULL),
     m_int(interval_ms),
-    m_auto(true),
-    m_isrun(false),
-    m_stopreq(false)
+    m_status(1)
 {
     OMNI_DV5_FW("created with interval of ", this->m_int);
 }
@@ -100,9 +100,7 @@ omni::chrono::sync_timer::sync_timer(uint32_t interval_ms, const omni::chrono::t
     OMNI_SAFE_STMQMTX_FW
     m_thread(OMNI_NULL),
     m_int(interval_ms),
-    m_auto(true),
-    m_isrun(false),
-    m_stopreq(false)
+    m_status(1)
 {
     OMNI_DV5_FW("created with interval of ", this->m_int);
 }
@@ -116,10 +114,11 @@ omni::chrono::sync_timer::sync_timer(uint32_t interval_ms,
     OMNI_SAFE_STMQMTX_FW
     m_thread(OMNI_NULL),
     m_int(interval_ms),
-    m_auto(autoreset),
-    m_isrun(false),
-    m_stopreq(false)
+    m_status(1)
 {
+    if (!autoreset) {
+        OMNI_VAL_UNSET_FLAG_BIT(this->m_status, OMNI_TIMER_AUTO_FLAG_FW);
+    }
     OMNI_DV5_FW("created with interval of ", this->m_int);
 }
 
@@ -133,10 +132,11 @@ omni::chrono::sync_timer::sync_timer(uint32_t interval_ms,
     OMNI_SAFE_STMQMTX_FW
     m_thread(OMNI_NULL),
     m_int(interval_ms),
-    m_auto(autoreset),
-    m_isrun(false),
-    m_stopreq(false)
+    m_status(1)
 {
+    if (!autoreset) {
+        OMNI_VAL_UNSET_FLAG_BIT(this->m_status, OMNI_TIMER_AUTO_FLAG_FW);
+    }
     OMNI_DV5_FW("created with interval of ", this->m_int);
     this->start(delay);
 }
@@ -148,9 +148,7 @@ void omni::chrono::sync_timer::swap(omni::chrono::sync_timer& other)
         OMNI_TMR_OLOCK_FW(other)
         std::swap(this->m_thread, other.m_thread);
         std::swap(this->m_int, other.m_int);
-        std::swap(this->m_auto, other.m_auto);
-        std::swap(this->m_isrun, other.m_isrun);
-        std::swap(this->m_stopreq, other.m_stopreq);
+        std::swap(this->m_status, other.m_status);
     }
 }
 
@@ -163,14 +161,16 @@ omni::chrono::sync_timer& omni::chrono::sync_timer::operator=(const omni::chrono
             this->m_mtx.lock();
             other.m_mtx.lock();
         #endif
-        bool isrun = other.m_isrun;
-        bool stopreq = other.m_stopreq;
-        this->m_isrun = false;
-        this->m_stopreq = false;
+        bool isrun = OMNI_VAL_HAS_FLAG_BIT(other.m_status, OMNI_TIMER_RUN_FLAG_FW);
+        bool stopreq = OMNI_VAL_HAS_FLAG_BIT(other.m_status, OMNI_TIMER_STOP_FLAG_FW);
+
+        this->m_status = 0;
+        if (OMNI_VAL_HAS_FLAG_BIT(other.m_status, OMNI_TIMER_AUTO_FLAG_FW)) {
+            OMNI_VAL_SET_FLAG_BIT(this->m_status, OMNI_TIMER_AUTO_FLAG_FW);
+        }
         this->state_object = other.state_object;
         this->tick = other.tick;
         this->m_int = other.m_int;
-        this->m_auto = other.m_auto;
         #if defined(OMNI_SAFE_SYNC_TIMER)
             other.m_mtx.unlock();
             this->m_mtx.unlock();
@@ -193,9 +193,7 @@ bool omni::chrono::sync_timer::operator==(const omni::chrono::sync_timer& o) con
             (*this->m_thread == *o.m_thread)
             : (this->m_thread == o.m_thread)) &&
             this->m_int == o.m_int &&
-            this->m_auto == o.m_auto &&
-            this->m_isrun == o.m_isrun &&
-            this->m_stopreq == o.m_stopreq)
+            this->m_status == o.m_status)
             OMNI_EQUAL_FW(o);
 }
 

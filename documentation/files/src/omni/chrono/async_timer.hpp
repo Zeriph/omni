@@ -24,6 +24,12 @@
     #include <omni/sync/basic_lock.hpp>
 #endif
 
+#if defined(OMNI_32BIT_ASYNC_TIMER)
+    #define OMNI_ATMR_INT_FW uint32_t
+#else
+    #define OMNI_ATMR_INT_FW uint64_t
+#endif
+
 namespace omni {
     namespace chrono {
         class async_timer
@@ -31,7 +37,7 @@ namespace omni {
             public:
                 async_timer();
                 async_timer(const omni::chrono::async_timer& cp);
-                explicit async_timer(uint32_t interval_ms);
+                OMNI_EXPLICIT async_timer(uint32_t interval_ms);
                 async_timer(uint32_t interval_ms,
                             const omni::chrono::timer_delegate& fn);
                 async_timer(uint32_t interval_ms,
@@ -77,10 +83,9 @@ namespace omni {
                     mutable omni::sync::basic_lock m_mtx;
                 #endif
                 omni::sync::basic_thread *m_thread; // the main timer thread to _run on
-                uint32_t m_int; // "elapsed" interval in ms between ticks
-                volatile bool m_auto; // true by default, false for tick once then stop
-                volatile bool m_isrun; // is running
-                volatile bool m_stopreq; // stop requested
+
+                OMNI_ATMR_INT_FW m_int; // "elapsed" interval in ms between ticks
+                volatile OMNI_ATMR_INT_FW m_status; // auto run (true by default), is_run, stop_req
         };
     } // namespace chrono
 } // namespace omni

@@ -33,11 +33,11 @@ namespace omni {
                 argparser(const omni::application::argparser& cp);
                 argparser(uint32_t ac, const char** av);
                 argparser(uint32_t ac, const wchar_t** av);
-                explicit argparser(const omni::seq::std_string_t& av);
-                explicit argparser(const omni::seq::std_wstring_t& av);
+                OMNI_EXPLICIT argparser(const omni::seq::std_string_t& av);
+                OMNI_EXPLICIT argparser(const omni::seq::std_wstring_t& av);
                 ~argparser();
                 
-                uint32_t argc() const { return this->m_argc; }
+                uint32_t argc() const { return static_cast<uint32_t>(this->m_argc); }
                 omni::seq::string_t argv() const;
                 omni::string_t at(uint32_t index) const;
                 bool contains(const std::wstring& sw) const;
@@ -74,7 +74,7 @@ namespace omni {
             private:
                 omni::seq::string_t::const_iterator _find(omni::seq::string_t::const_iterator it, const omni::string_t& f) const;
                 omni::seq::string_t m_args;
-                uint32_t m_argc;
+                uint64_t m_argc;
         };
     }
 }

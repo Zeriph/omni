@@ -36,27 +36,26 @@
 
 // helper macros used to define a friend function of a class that can be used to output to a stream
 
-#define OMNI_FOSTREAM_OPC_FW(v, ...) friend std::ostream& operator<<(std::ostream& s, const __VA_ARGS__& c) { s << c.v; return s; }
-#define OMNI_FOSTREAM_OPW_FW(v, ...) friend std::wostream& operator<<(std::wostream& s, const __VA_ARGS__& c) { s << c.v; return s; }
+// TODO: why the variadic macro's for these?
 
-#define OMNI_FOSTREAM_OPC_FN_FW(fn, ...) friend std::ostream& operator<<(std::ostream& s, const __VA_ARGS__& c) { s << fn(c); return s; }
-#define OMNI_FOSTREAM_OPW_FN_FW(fn, ...) friend std::wostream& operator<<(std::wostream& s, const __VA_ARGS__& c) { s << fn(c); return s; }
+#define OMNI_FOSTREAM_OPC_FW(v, ...) friend std::ostream& operator<<(std::ostream& _s, const __VA_ARGS__& _c) { _s << _c.v; return _s; }
+#define OMNI_FOSTREAM_OPW_FW(v, ...) friend std::wostream& operator<<(std::wostream& _s, const __VA_ARGS__& _c) { _s << _c.v; return _s; }
 
-#define OMNI_FOSTREAM_OPC_RAW_FW(fn, ...) friend std::ostream& operator<<(std::ostream& s, const __VA_ARGS__& value) { s << fn; return s; }
-#define OMNI_FOSTREAM_OPW_RAW_FW(fn, ...) friend std::wostream& operator<<(std::wostream& s, const __VA_ARGS__& value) { s << fn; return s; }
+#define OMNI_FOSTREAM_OPC_FN_FW(fn, ...) friend std::ostream& operator<<(std::ostream& _s, const __VA_ARGS__& _c) { _s << fn(_c); return _s; }
+#define OMNI_FOSTREAM_OPW_FN_FW(fn, ...) friend std::wostream& operator<<(std::wostream& _s, const __VA_ARGS__& _c) { _s << fn(_c); return _s; }
 
-#define OMNI_FOSTREAM_OPC2T_FW(v, ...) friend std::ostream& operator<<(std::ostream& s, const __VA_ARGS__& c) { s << omni::string::util::to_string(c.v); return s; }
-#define OMNI_FOSTREAM_OPW2T_FW(v, ...) friend std::wostream& operator<<(std::wostream& s, const __VA_ARGS__& c) { s << omni::string::util::to_wstring(c.v); return s; }
+#define OMNI_FOSTREAM_OPC2T_FW(v, ...) friend std::ostream& operator<<(std::ostream& _s, const __VA_ARGS__& _c) { _s << omni::string::util::to_string(_c.v); return _s; }
+#define OMNI_FOSTREAM_OPW2T_FW(v, ...) friend std::wostream& operator<<(std::wostream& _s, const __VA_ARGS__& _c) { _s << omni::string::util::to_wstring(_c.v); return _s; }
 
-#define OMNI_FOSTREAM_OPS_FW(v, ...) friend omni::ostream_t& operator<<(omni::ostream_t& s, const __VA_ARGS__& c) { s << omni::string::util::to_string_t(c.v); return s; }
+#define OMNI_FOSTREAM_OPS_FW(v, ...) friend omni::ostream_t& operator<<(omni::ostream_t& _s, const __VA_ARGS__& _c) { _s << omni::string::util::to_string_t(_c.v); return _s; }
 
-#define OMNI_OSTREAM_OPC_FW(v, ...) std::ostream& operator<<(std::ostream& s, const __VA_ARGS__& c) { s << c.v; return s; }
-#define OMNI_OSTREAM_OPW_FW(v, ...) std::wostream& operator<<(std::wostream& s, const __VA_ARGS__& c) { s << c.v; return s; }
+#define OMNI_OSTREAM_OPC_FW(v, ...) std::ostream& operator<<(std::ostream& _s, const __VA_ARGS__& _c) { s << c.v; return s; }
+#define OMNI_OSTREAM_OPW_FW(v, ...) std::wostream& operator<<(std::wostream& _s, const __VA_ARGS__& _c) { s << c.v; return s; }
 
-#define OMNI_OSTREAM_OPC2T_FW(v, ...) std::ostream& operator<<(std::ostream& s, const __VA_ARGS__& c) { s << omni::string::util::to_string(c.v); return s; }
-#define OMNI_OSTREAM_OPW2T_FW(v, ...) std::wostream& operator<<(std::wostream& s, const __VA_ARGS__& c) { s << omni::string::util::to_wstring(c.v); return s; }
+#define OMNI_OSTREAM_OPC2T_FW(v, ...) std::ostream& operator<<(std::ostream& _s, const __VA_ARGS__& _c) { s << omni::string::util::to_string(c.v); return s; }
+#define OMNI_OSTREAM_OPW2T_FW(v, ...) std::wostream& operator<<(std::wostream& _s, const __VA_ARGS__& _c) { s << omni::string::util::to_wstring(c.v); return s; }
 
-#define OMNI_OSTREAM_OPS_FW(v, ...) omni::ostream_t& operator<<(omni::ostream_t& s, const __VA_ARGS__& c) { s << omni::string::util::to_string_t(c.v); return s; }
+#define OMNI_OSTREAM_OPS_FW(v, ...) omni::ostream_t& operator<<(omni::ostream_t& _s, const __VA_ARGS__& _c) { s << omni::string::util::to_string_t(c.v); return s; }
 
 #define OMNI_OSTREAM_OPERATOR(v, ...) OMNI_FOSTREAM_OPC_FW(v, __VA_ARGS__)
 #define OMNI_WOSTREAM_OPERATOR(v, ...) OMNI_FOSTREAM_OPW_FW(v, __VA_ARGS__)
@@ -64,12 +63,8 @@
 #define OMNI_OSTREAM_FN_OPERATOR(fn, ...) OMNI_FOSTREAM_OPC_FN_FW(fn, __VA_ARGS__)
 #define OMNI_WOSTREAM_FN_OPERATOR(fn, ...) OMNI_FOSTREAM_OPW_FN_FW(fn, __VA_ARGS__)
 
-#define OMNI_OSTREAM_RAW_OPERATOR(fn, ...) OMNI_FOSTREAM_OPC_RAW_FW(fn, __VA_ARGS__)
-#define OMNI_WOSTREAM_RAW_OPERATOR(fn, ...) OMNI_FOSTREAM_OPW_RAW_FW(fn, __VA_ARGS__)
-
 #define OMNI_STREAM_OPERATORS(v, ...) OMNI_OSTREAM_OPERATOR(v, __VA_ARGS__) OMNI_WOSTREAM_OPERATOR(v, __VA_ARGS__)
 #define OMNI_STREAM_FN_OPERATORS(v, ...) OMNI_OSTREAM_FN_OPERATOR(v, __VA_ARGS__) OMNI_WOSTREAM_FN_OPERATOR(v, __VA_ARGS__)
-#define OMNI_STREAM_RAW_OPERATORS(v, ...) OMNI_OSTREAM_RAW_OPERATOR(v, __VA_ARGS__) OMNI_WOSTREAM_RAW_OPERATOR(v, __VA_ARGS__)
 
 namespace omni {
     typedef OMNI_OSTREAM_T ostream_t;

@@ -33,54 +33,87 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
     <br>
     <code> <a href="../classes/omni-geometry-rectangle-rectangle.html">omni::geometry::rectangle::rectangle</a>()<br>
      <a href="../classes/omni-geometry-rectangle-@7Erectangle.html">omni::geometry::rectangle::~rectangle</a>()<br>
+    T <a href="../classes/omni-geometry-rectangle-area.html">omni::geometry::rectangle::area</a>()<br>
     T <a href="../classes/omni-geometry-rectangle-bottom.html">omni::geometry::rectangle::bottom</a>()<br>
+    <a href="../classes/omni-geometry-point2d.html">omni::geometry::point2d</a>&lt;T&gt; <a href="../classes/omni-geometry-rectangle-bottom_left.html">omni::geometry::rectangle::bottom_left</a>()<br>
+    <a href="../classes/omni-geometry-point2d.html">omni::geometry::point2d</a>&lt;T&gt; <a href="../classes/omni-geometry-rectangle-bottom_right.html">omni::geometry::rectangle::bottom_right</a>()<br>
+    <a href="../classes/omni-geometry-point2d.html">omni::geometry::point2d</a>&lt;T&gt; <a href="../classes/omni-geometry-rectangle-centroid.html">omni::geometry::rectangle::centroid</a>()<br>
+    <a href="../classes/omni-geometry-circle.html">omni::geometry::circle</a>&lt;T&gt; <a href="../classes/omni-geometry-rectangle-circle_from_circumcenter.html">omni::geometry::rectangle::circle_from_circumcenter</a>()<br>
+    <a href="../classes/omni-geometry-circle.html">omni::geometry::circle</a>&lt;T&gt; <a href="../classes/omni-geometry-rectangle-circle_from_incenter.html">omni::geometry::rectangle::circle_from_incenter</a>()<br>
+    <a href="../classes/omni-geometry-point2d.html">omni::geometry::point2d</a>&lt;T&gt; <a href="../classes/omni-geometry-rectangle-circumcenter.html">omni::geometry::rectangle::circumcenter</a>()<br>
+    <a href="../classes/omni-math-shape_comparator.html">omni::math::shape_comparator</a> <a href="../classes/omni-geometry-rectangle-compare.html">omni::geometry::rectangle::compare</a>(<font class="syn_typ">const</font> <a href="../classes/omni-geometry-rectangle.html">omni::geometry::rectangle</a>&lt;T&gt;&amp; rect)<br>
     <font class="syn_typ">bool</font> <a href="../classes/omni-geometry-rectangle-contains.html">omni::geometry::rectangle::contains</a>(T x, T y)<br>
     <font class="syn_typ">void</font> <a href="../classes/omni-geometry-rectangle-decrement.html">omni::geometry::rectangle::decrement</a>(T x, T y)<br>
     T <a href="../classes/omni-geometry-rectangle-decrement_x.html">omni::geometry::rectangle::decrement_x</a>()<br>
     T <a href="../classes/omni-geometry-rectangle-decrement_y.html">omni::geometry::rectangle::decrement_y</a>()<br>
-    <font class="syn_typ">void</font> <a href="../classes/omni-geometry-rectangle-deflate.html">omni::geometry::rectangle::deflate</a>(T w, T h)<br>
-    <a href="../classes/omni-geometry-unsafe_point2d.html">omni::geometry::unsafe_point2d</a>&lt;T&gt; <a href="../classes/omni-geometry-rectangle-edge.html">omni::geometry::rectangle::edge</a>()<br>
+    <font class="syn_typ">void</font> <a href="../classes/omni-geometry-rectangle-deflate.html">omni::geometry::rectangle::deflate</a>(<font class="syn_typ">double</font> percent)<br>
+    <font class="syn_typ">double</font> <a href="../classes/omni-geometry-rectangle-diagonal.html">omni::geometry::rectangle::diagonal</a>()<br>
+    <a href="../classes/omni-geometry-raw_point2d.html">omni::geometry::raw_point2d</a>&lt;T&gt; <a href="../classes/omni-geometry-rectangle-edge.html">omni::geometry::rectangle::edge</a>()<br>
     <font class="syn_typ">bool</font> <a href="../classes/omni-geometry-rectangle-empty.html">omni::geometry::rectangle::empty</a>()<br>
+    <font class="syn_typ">bool</font> <a href="../classes/omni-geometry-rectangle-empty_size.html">omni::geometry::rectangle::empty_size</a>()<br>
     <font class="syn_typ">bool</font> <a href="../classes/omni-geometry-rectangle-equals.html">omni::geometry::rectangle::equals</a>(T x, T y, T w, T h)<br>
-    static rectangle&lt;T&gt; <a href="../classes/omni-geometry-rectangle-fromltrb.html">omni::geometry::rectangle::fromLTRB</a>(T left, T top, T right, T bottom)<br>
+    static <a href="../classes/omni-geometry-rectangle.html">omni::geometry::rectangle</a>&lt;T&gt; <a href="../classes/omni-geometry-rectangle-from_ltrb.html">omni::geometry::rectangle::from_ltrb</a>(T left, T top, T right, T bottom)<br>
     <font class="syn_typ">uint64_t</font> <a href="../classes/omni-geometry-rectangle-hash.html">omni::geometry::rectangle::hash</a>()<br>
+    int32_t <a href="../classes/omni-geometry-rectangle-hash_code.html">omni::geometry::rectangle::hash_code</a>()<br>
     T <a href="../classes/omni-geometry-rectangle-height.html">omni::geometry::rectangle::height</a>()<br>
+    <a href="../classes/omni-geometry-point2d.html">omni::geometry::point2d</a>&lt;T&gt; <a href="../classes/omni-geometry-rectangle-incenter.html">omni::geometry::rectangle::incenter</a>()<br>
+    <font class="syn_typ">void</font> <a href="../classes/omni-geometry-rectangle-increment.html">omni::geometry::rectangle::increment</a>(T x, T y)<br>
     T <a href="../classes/omni-geometry-rectangle-increment_x.html">omni::geometry::rectangle::increment_x</a>()<br>
     T <a href="../classes/omni-geometry-rectangle-increment_y.html">omni::geometry::rectangle::increment_y</a>()<br>
-    <font class="syn_typ">void</font> <a href="../classes/omni-geometry-rectangle-inflate.html">omni::geometry::rectangle::inflate</a>(T w, T h)<br>
-    <font class="syn_typ">void</font> <a href="../classes/omni-geometry-rectangle-intersect.html">omni::geometry::rectangle::intersect</a>(<font class="syn_typ">const</font> rectangle&lt;T&gt;&amp; r2)<br>
+    <font class="syn_typ">void</font> <a href="../classes/omni-geometry-rectangle-inflate.html">omni::geometry::rectangle::inflate</a>(<font class="syn_typ">double</font> percent)<br>
+    <font class="syn_typ">void</font> <a href="../classes/omni-geometry-rectangle-intersect.html">omni::geometry::rectangle::intersect</a>(<font class="syn_typ">const</font> <a href="../classes/omni-geometry-rectangle.html">omni::geometry::rectangle</a>&lt;T&gt;&amp; r2)<br>
     <font class="syn_typ">bool</font> <a href="../classes/omni-geometry-rectangle-intersects_with.html">omni::geometry::rectangle::intersects_with</a>(T left, T top, T right, T bottom)<br>
+    <font class="syn_typ">bool</font> <a href="../classes/omni-geometry-rectangle-is_square.html">omni::geometry::rectangle::is_square</a>()<br>
     T <a href="../classes/omni-geometry-rectangle-left.html">omni::geometry::rectangle::left</a>()<br>
-    <a href="../classes/omni-geometry-unsafe_point2d.html">omni::geometry::unsafe_point2d</a>&lt;T&gt; <a href="../classes/omni-geometry-rectangle-location.html">omni::geometry::rectangle::location</a>()<br>
-    <font class="syn_typ">void</font> <a href="../classes/omni-geometry-rectangle-merge.html">omni::geometry::rectangle::merge</a>(<font class="syn_typ">const</font> rectangle&lt;T&gt;&amp; r2)<br>
+    <a href="../classes/omni-geometry-raw_point2d.html">omni::geometry::raw_point2d</a>&lt;T&gt; <a href="../classes/omni-geometry-rectangle-location.html">omni::geometry::rectangle::location</a>()<br>
     <font class="syn_typ">void</font> <a href="../classes/omni-geometry-rectangle-offset.html">omni::geometry::rectangle::offset</a>(T x, T y)<br>
+    T <a href="../classes/omni-geometry-rectangle-perimeter.html">omni::geometry::rectangle::perimeter</a>()<br>
+    <font class="syn_typ">void</font> <a href="../classes/omni-geometry-rectangle-reflect.html">omni::geometry::rectangle::reflect</a>()<br>
     T <a href="../classes/omni-geometry-rectangle-right.html">omni::geometry::rectangle::right</a>()<br>
+    <font class="syn_typ">void</font> <a href="../classes/omni-geometry-rectangle-rotate_centroid.html">omni::geometry::rectangle::rotate_centroid</a>(<font class="syn_typ">const</font> <a href="../classes/omni-math-rotation_angle.html">omni::math::rotation_angle</a>&amp; degrees, <font class="syn_typ">const</font> <a href="../classes/omni-math-rotation_direction.html">omni::math::rotation_direction</a>&amp; dir)<br>
+    <font class="syn_typ">void</font> <a href="../classes/omni-geometry-rectangle-rotate_circumcenter.html">omni::geometry::rectangle::rotate_circumcenter</a>(<font class="syn_typ">const</font> <a href="../classes/omni-math-rotation_angle.html">omni::math::rotation_angle</a>&amp; degrees, <font class="syn_typ">const</font> <a href="../classes/omni-math-rotation_direction.html">omni::math::rotation_direction</a>&amp; dir)<br>
+    <font class="syn_typ">void</font> <a href="../classes/omni-geometry-rectangle-rotate_incenter.html">omni::geometry::rectangle::rotate_incenter</a>(<font class="syn_typ">const</font> <a href="../classes/omni-math-rotation_angle.html">omni::math::rotation_angle</a>&amp; degrees, <font class="syn_typ">const</font> <a href="../classes/omni-math-rotation_direction.html">omni::math::rotation_direction</a>&amp; dir)<br>
+    <font class="syn_typ">void</font> <a href="../classes/omni-geometry-rectangle-rotate_on_lb.html">omni::geometry::rectangle::rotate_on_lb</a>(<font class="syn_typ">const</font> <a href="../classes/omni-math-rotation_angle.html">omni::math::rotation_angle</a>&amp; degrees, <font class="syn_typ">const</font> <a href="../classes/omni-math-rotation_direction.html">omni::math::rotation_direction</a>&amp; dir)<br>
+    <font class="syn_typ">void</font> <a href="../classes/omni-geometry-rectangle-rotate_on_lt.html">omni::geometry::rectangle::rotate_on_lt</a>(<font class="syn_typ">const</font> <a href="../classes/omni-math-rotation_angle.html">omni::math::rotation_angle</a>&amp; degrees, <font class="syn_typ">const</font> <a href="../classes/omni-math-rotation_direction.html">omni::math::rotation_direction</a>&amp; dir)<br>
+    <font class="syn_typ">void</font> <a href="../classes/omni-geometry-rectangle-rotate_on_rb.html">omni::geometry::rectangle::rotate_on_rb</a>(<font class="syn_typ">const</font> <a href="../classes/omni-math-rotation_angle.html">omni::math::rotation_angle</a>&amp; degrees, <font class="syn_typ">const</font> <a href="../classes/omni-math-rotation_direction.html">omni::math::rotation_direction</a>&amp; dir)<br>
+    <font class="syn_typ">void</font> <a href="../classes/omni-geometry-rectangle-rotate_on_rt.html">omni::geometry::rectangle::rotate_on_rt</a>(<font class="syn_typ">const</font> <a href="../classes/omni-math-rotation_angle.html">omni::math::rotation_angle</a>&amp; degrees, <font class="syn_typ">const</font> <a href="../classes/omni-math-rotation_direction.html">omni::math::rotation_direction</a>&amp; dir)<br>
+    <font class="syn_typ">void</font> <a href="../classes/omni-geometry-rectangle-rotate_origin.html">omni::geometry::rectangle::rotate_origin</a>(<font class="syn_typ">const</font> <a href="../classes/omni-math-rotation_angle.html">omni::math::rotation_angle</a>&amp; degrees, <font class="syn_typ">const</font> <a href="../classes/omni-math-rotation_direction.html">omni::math::rotation_direction</a>&amp; dir)<br>
+    <font class="syn_typ">void</font> <a href="../classes/omni-geometry-rectangle-rotate_point.html">omni::geometry::rectangle::rotate_point</a>(<font class="syn_typ">const</font> <a href="../classes/omni-math-rotation_angle.html">omni::math::rotation_angle</a>&amp; degrees, T x, T y, <font class="syn_typ">const</font> <a href="../classes/omni-math-rotation_direction.html">omni::math::rotation_direction</a>&amp; dir)<br>
+    <font class="syn_typ">void</font> <a href="../classes/omni-geometry-rectangle-scale.html">omni::geometry::rectangle::scale</a>(T x_scale, T y_scale)<br>
     <font class="syn_typ">void</font> <a href="../classes/omni-geometry-rectangle-set_location.html">omni::geometry::rectangle::set_location</a>(T x, T y)<br>
     <font class="syn_typ">void</font> <a href="../classes/omni-geometry-rectangle-set_size.html">omni::geometry::rectangle::set_size</a>(T w, T h)<br>
-    <a href="../classes/omni-geometry-unsafe_size.html">omni::geometry::unsafe_size</a>&lt;T&gt; <a href="../classes/omni-geometry-rectangle-size.html">omni::geometry::rectangle::size</a>()<br>
+    <a href="../classes/omni-geometry-raw_size.html">omni::geometry::raw_size</a>&lt;T&gt; <a href="../classes/omni-geometry-rectangle-size.html">omni::geometry::rectangle::size</a>()<br>
     <font class="syn_typ">void</font> <a href="../classes/omni-geometry-rectangle-swap.html">omni::geometry::rectangle::swap</a>(rectangle&lt;T&gt;&amp; o)<br>
     <a href="http://www.cplusplus.com/reference/string/">std::string</a> <a href="../classes/omni-geometry-rectangle-to_string.html">omni::geometry::rectangle::to_string</a>()<br>
     <a href="../classes/omni-string_t.html">omni::string_t</a> <a href="../classes/omni-geometry-rectangle-to_string_t.html">omni::geometry::rectangle::to_string_t</a>()<br>
     <a href="http://www.cplusplus.com/reference/string/">std::wstring</a> <a href="../classes/omni-geometry-rectangle-to_wstring.html">omni::geometry::rectangle::to_wstring</a>()<br>
     T <a href="../classes/omni-geometry-rectangle-top.html">omni::geometry::rectangle::top</a>()<br>
+    <a href="../classes/omni-geometry-point2d.html">omni::geometry::point2d</a>&lt;T&gt; <a href="../classes/omni-geometry-rectangle-top_left.html">omni::geometry::rectangle::top_left</a>()<br>
+    <a href="../classes/omni-geometry-point2d.html">omni::geometry::point2d</a>&lt;T&gt; <a href="../classes/omni-geometry-rectangle-top_right.html">omni::geometry::rectangle::top_right</a>()<br>
+    <font class="syn_typ">void</font> <a href="../classes/omni-geometry-rectangle-translate_angle.html">omni::geometry::rectangle::translate_angle</a>(<font class="syn_typ">float</font> angle, T distance)<br>
+    <font class="syn_typ">void</font> <a href="../classes/omni-geometry-rectangle-translate_xy.html">omni::geometry::rectangle::translate_xy</a>(T x, T y)<br>
     <font class="syn_typ">uint64_t</font> <a href="../classes/omni-geometry-rectangle-type.html">omni::geometry::rectangle::type</a>()<br>
+    <font class="syn_typ">void</font> <a href="../classes/omni-geometry-rectangle-union_merge.html">omni::geometry::rectangle::union_merge</a>(<font class="syn_typ">const</font> <a href="../classes/omni-geometry-rectangle.html">omni::geometry::rectangle</a>&lt;T&gt;&amp; r2)<br>
     T <a href="../classes/omni-geometry-rectangle-width.html">omni::geometry::rectangle::width</a>()<br>
     T <a href="../classes/omni-geometry-rectangle-x.html">omni::geometry::rectangle::x</a>()<br>
     T <a href="../classes/omni-geometry-rectangle-y.html">omni::geometry::rectangle::y</a>()<br>
      omni::geometry::rectangle::<font class="syn_ins">operator</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>()<br>
      omni::geometry::rectangle::<font class="syn_ins">operator</font> <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>()<br>
-    <font class="syn_typ">bool</font> omni::geometry::rectangle::<font class="syn_ins">operator</font>!=(<font class="syn_typ">const</font> rectangle&lt;T&gt;&amp; val)<br>
-    rectangle&lt;T&gt; omni::geometry::rectangle::<font class="syn_ins">operator</font>+(<font class="syn_typ">const</font> <a href="../classes/omni-geometry-point2d.html">omni::geometry::point2d</a>&lt;T&gt;&amp; val)<br>
-    rectangle&lt;T&gt;&amp; omni::geometry::rectangle::<font class="syn_ins">operator</font>+=(<font class="syn_typ">const</font> <a href="../classes/omni-geometry-point2d.html">omni::geometry::point2d</a>&lt;T&gt;&amp; val)<br>
-    rectangle&lt;T&gt; omni::geometry::rectangle::<font class="syn_ins">operator</font>-(<font class="syn_typ">const</font> <a href="../classes/omni-geometry-point2d.html">omni::geometry::point2d</a>&lt;T&gt;&amp; val)<br>
-    rectangle&lt;T&gt;&amp; omni::geometry::rectangle::<font class="syn_ins">operator</font>-=(<font class="syn_typ">const</font> <a href="../classes/omni-geometry-point2d.html">omni::geometry::point2d</a>&lt;T&gt;&amp; val)<br>
+    <font class="syn_typ">bool</font> omni::geometry::rectangle::<font class="syn_ins">operator</font>!=(<font class="syn_typ">const</font> <a href="../classes/omni-geometry-rectangle.html">omni::geometry::rectangle</a>&lt;T&gt;&amp; val)<br>
+    <a href="../classes/omni-geometry-rectangle.html">omni::geometry::rectangle</a>&lt;T&gt; omni::geometry::rectangle::<font class="syn_ins">operator</font>+(<font class="syn_typ">const</font> <a href="../classes/omni-geometry-point2d.html">omni::geometry::point2d</a>&lt;T&gt;&amp; val)<br>
+    <a href="../classes/omni-geometry-rectangle.html">omni::geometry::rectangle</a>&lt;T&gt;&amp; omni::geometry::rectangle::<font class="syn_ins">operator</font>+=(<font class="syn_typ">const</font> <a href="../classes/omni-geometry-point2d.html">omni::geometry::point2d</a>&lt;T&gt;&amp; val)<br>
+    <a href="../classes/omni-geometry-rectangle.html">omni::geometry::rectangle</a>&lt;T&gt; omni::geometry::rectangle::<font class="syn_ins">operator</font>-(<font class="syn_typ">const</font> <a href="../classes/omni-geometry-point2d.html">omni::geometry::point2d</a>&lt;T&gt;&amp; val)<br>
+    <a href="../classes/omni-geometry-rectangle.html">omni::geometry::rectangle</a>&lt;T&gt;&amp; omni::geometry::rectangle::<font class="syn_ins">operator</font>-=(<font class="syn_typ">const</font> <a href="../classes/omni-geometry-point2d.html">omni::geometry::point2d</a>&lt;T&gt;&amp; val)<br>
     <font class="syn_typ">bool</font> omni::geometry::rectangle::<font class="syn_ins">operator</font>&lt;(<font class="syn_typ">const</font> <a href="../classes/omni-geometry-point2d.html">omni::geometry::point2d</a>&lt;T&gt;&amp; val)<br>
     <font class="syn_ins">friend</font> <a href="http://www.cplusplus.com/reference/ostream/ostream/">std::ostream</a>&amp; omni::geometry::rectangle::<font class="syn_ins">operator</font>&lt;&lt;(std::ostream&amp; s, <font class="syn_typ">const</font> <a href="../classes/omni-geometry-rectangle.html">omni::geometry::rectangle</a>&lt;T&gt;&amp; c)<br>
-    rectangle&lt;T&gt;&amp; omni::geometry::rectangle::<font class="syn_ins">operator</font>=(<font class="syn_typ">const</font> rectangle&lt;T&gt;&amp; val)<br>
-    <font class="syn_typ">bool</font> omni::geometry::rectangle::<font class="syn_ins">operator</font>==(<font class="syn_typ">const</font> rectangle&lt;T&gt;&amp; val)<br>
+    <font class="syn_typ">bool</font> omni::geometry::rectangle::<font class="syn_ins">operator</font>&lt;=(<font class="syn_typ">const</font> <a href="../classes/omni-geometry-point2d.html">omni::geometry::point2d</a>&lt;T&gt;&amp; val)<br>
+    <a href="../classes/omni-geometry-rectangle.html">omni::geometry::rectangle</a>&lt;T&gt;&amp; omni::geometry::rectangle::<font class="syn_ins">operator</font>=(<font class="syn_typ">const</font> <a href="../classes/omni-geometry-rectangle.html">omni::geometry::rectangle</a>&lt;T&gt;&amp; val)<br>
+    <font class="syn_typ">bool</font> omni::geometry::rectangle::<font class="syn_ins">operator</font>==(<font class="syn_typ">const</font> <a href="../classes/omni-geometry-rectangle.html">omni::geometry::rectangle</a>&lt;T&gt;&amp; val)<br>
     <font class="syn_typ">bool</font> omni::geometry::rectangle::<font class="syn_ins">operator</font>&gt;(<font class="syn_typ">const</font> <a href="../classes/omni-geometry-point2d.html">omni::geometry::point2d</a>&lt;T&gt;&amp; val)<br>
+    <font class="syn_typ">bool</font> omni::geometry::rectangle::<font class="syn_ins">operator</font>&gt;=(<font class="syn_typ">const</font> <a href="../classes/omni-geometry-point2d.html">omni::geometry::point2d</a>&lt;T&gt;&amp; val)<br>
     <a href="../classes/omni-geometry-rectangle-disposing.html">omni::geometry::rectangle::disposing</a><br>
     <a href="../classes/omni-geometry-rectangle-name.html">omni::geometry::rectangle::name</a><br>
+    <a href="../classes/omni-geometry-rectangle-coordinate_t.html">omni::geometry::rectangle::coordinate_t</a><br>
     </code>
 </div><br>
 <div class="docdiv"><a name="syn"></a>

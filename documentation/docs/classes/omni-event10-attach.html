@@ -27,13 +27,13 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
     omni::event10::attach
     </a></code><br>
 <br>A member function of <a href="omni-event10.html" class="code">omni::event10</a><br><br>
-    <code><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/delegate/10.hpp.html">omni/delegate/10.hpp</a>&gt;</font></code><br><code><font class="syn_typ">void</font> omni::event10::attach(<font class="syn_typ">const</font> <a href="../classes/omni-delegate10.html">omni::delegate10</a>&lt; Ret PT1 PT2 PT3 PT4 PT5 PT6 PT7 PT8 PT9 PT10 &gt;&amp; d)</code><br>
+    <code><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/delegate/10.hpp.html">omni/delegate/10.hpp</a>&gt;</font></code><br><code><font class="syn_typ">void</font> omni::event10::attach(<font class="syn_typ">const</font> <a href="../classes/omni-delegate10.html">omni::delegate10</a>&lt; Ret, PT1, PT2, PT3, PT4, PT5, PT6, PT7, PT8, PT9, PT10 &gt;&amp; d)</code><br>
     <br>
     <br>
     <font class="docu">OVERLOADS</font><br>
     <br>
     <code><font class="syn_ins">template</font> &lt; <font class="syn_typ">class</font> InputIterator &gt; <font class="syn_typ">void</font> <a href="../classes/omni-event10-attach1.html">omni::event10::attach</a>(InputIterator begin, InputIterator end)<br>
-    <font class="syn_typ">void</font> <a href="../classes/omni-event10-attach2.html">omni::event10::attach</a>(<font class="syn_typ">const</font> event10&lt; Ret PT1 PT2 PT3 PT4 PT5 PT6 PT7 PT8 PT9 PT10 &gt;&amp; e)<br>
+    <font class="syn_typ">void</font> <a href="../classes/omni-event10-attach2.html">omni::event10::attach</a>(<font class="syn_typ">const</font> event10&lt; Ret, PT1, PT2, PT3, PT4, PT5, PT6, PT7, PT8, PT9, PT10 &gt;&amp; e)<br>
     <font class="syn_ins">template</font> &lt; ret_t (*fnptr)(PT1, PT2, PT3, PT4, PT5, PT6, PT7, PT8, PT9, PT10) &gt; <font class="syn_typ">void</font> <a href="../classes/omni-event10-attach3.html">omni::event10::attach</a>()<br>
     <font class="syn_ins">template</font> &lt; <font class="syn_typ">class</font> T, Ret (T::*fnptr)(PT1, PT2, PT3, PT4, PT5, PT6, PT7, PT8, PT9, PT10) &gt; <font class="syn_typ">void</font> <a href="../classes/omni-event10-attach4.html">omni::event10::attach</a>(T&amp; obj)<br>
     <font class="syn_ins">template</font> &lt; <font class="syn_typ">class</font> T, Ret (T::*fnptr)(PT1, PT2, PT3, PT4, PT5, PT6, PT7, PT8, PT9, PT10) &gt; <font class="syn_typ">void</font> <a href="../classes/omni-event10-attach5.html">omni::event10::attach</a>(<font class="syn_typ">const</font> T&amp; obj)<br>

@@ -40,7 +40,6 @@ to ensure this file is not built with the rest. */
     #include "externs.cpp"
     #include "io.cpp"
     #include "system.cpp"
-    #include "version.cpp"
 #endif
 
 #if defined(OMNI_TIMER_LIB) || (!defined(OMNI_THREAD_LIB) && !defined(OMNI_NET_LIB))

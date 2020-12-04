@@ -24,6 +24,12 @@
     #include <omni/sync/basic_lock.hpp>
 #endif
 
+#if defined(OMNI_32BIT_DROP_TIMER)
+    #define OMNI_DTMR_INT_FW uint32_t
+#else
+    #define OMNI_DTMR_INT_FW uint64_t
+#endif
+
 namespace omni {
     namespace chrono {
         class drop_timer
@@ -31,7 +37,7 @@ namespace omni {
             public:
                 drop_timer();
                 drop_timer(const omni::chrono::drop_timer& cp);
-                explicit drop_timer(uint32_t interval_ms);
+                OMNI_EXPLICIT drop_timer(uint32_t interval_ms);
                 drop_timer(uint32_t interval_ms,
                            const omni::chrono::timer_delegate& fn);
                 drop_timer(uint32_t interval_ms,
@@ -78,10 +84,9 @@ namespace omni {
                 #endif
                 omni::sync::basic_thread *m_thread; // the main timer thread to _run on
                 omni::sync::thread_handle_t m_exec; // the executing tick thread
-                uint32_t m_int; // "elapsed" interval in ms between ticks
-                volatile bool m_auto; // true by default, false for tick once then stop
-                volatile bool m_isrun; // is running
-                volatile bool m_stopreq; // stop requested
+
+                OMNI_DTMR_INT_FW m_int; // "elapsed" interval in ms between ticks
+                volatile OMNI_DTMR_INT_FW m_status; // auto run (true by default), is_run, stop_req
         };
     } // namespace chrono
 } // namespace omni

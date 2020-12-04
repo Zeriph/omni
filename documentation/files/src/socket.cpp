@@ -109,7 +109,7 @@ omni::net::socket_error omni::net::socket::_receive(void* buffer, uint32_t buffe
             // error
             case OMNI_SOCK_SYSERR_FW: return (this->m_last_err = omni::net::parse_error(OMNI_SOCKET_ERR_FW));
             // success
-            default: received = r; break;
+            default: received = static_cast<uint32_t>(r); break;
         }
     #endif
     return (this->m_last_err = omni::net::socket_error::SUCCESS);
@@ -142,7 +142,7 @@ omni::net::socket_error omni::net::socket::_receive_from(void* buffer, uint32_t 
             // error
             case OMNI_SOCK_SYSERR_FW: return (this->m_last_err = omni::net::parse_error(OMNI_SOCKET_ERR_FW));
             // success
-            default: received = r; break;
+            default: received = static_cast<uint32_t>(r); break;
         }
     #endif
     from_ip.assign(inet_ntoa(src_addr.sin_addr));
@@ -172,7 +172,7 @@ omni::net::socket_error omni::net::socket::_send(const void* buffer, uint32_t bu
             return (this->m_last_err = omni::net::parse_error(OMNI_SOCKET_ERR_FW));
         }
         // success
-        sent = r;
+        sent = static_cast<uint32_t>(r);
     #endif
     return (this->m_last_err = omni::net::socket_error::SUCCESS);
 }
@@ -190,7 +190,7 @@ omni::net::socket_error omni::net::socket::_send_to(const void* buffer, uint32_t
     omni::net::sockaddr_in_t to_addr;
     OMNI_SOCKLEN_FW addrlen = sizeof(omni::net::sockaddr_in_t);
     std::memset(&to_addr, 0, addrlen);
-    to_addr.sin_family = static_cast<int>(this->m_family);
+    to_addr.sin_family = static_cast<OMNI_SIN_FAMILY_FW>(this->m_family);
     to_addr.sin_port = htons(port);
     to_addr.sin_addr.s_addr = htonl(ep);
     #if defined(OMNI_WIN_API)
@@ -209,7 +209,7 @@ omni::net::socket_error omni::net::socket::_send_to(const void* buffer, uint32_t
             return (this->m_last_err = omni::net::parse_error(OMNI_SOCKET_ERR_FW));
         }
         // success
-        sent = r;
+        sent = static_cast<uint32_t>(r);
     #endif
     return (this->m_last_err = omni::net::socket_error::SUCCESS);
 }
@@ -297,14 +297,21 @@ omni::net::socket_error omni::net::socket::bind(uint32_t ip, uint16_t port)
     this->m_port = port;
     std::memset(&this->m_addr, 0, sizeof(this->m_addr));
     switch (this->m_family) {
-        case omni::net::address_family::INTERNETWORK: {
-            this->m_addr.sin_family = static_cast<int>(this->m_family);
+        case omni::net::address_family::INET: {
+            this->m_addr.sin_family = static_cast<OMNI_SIN_FAMILY_FW>(this->m_family);
             this->m_addr.sin_port = htons(this->m_port);
             this->m_addr.sin_addr.s_addr = htonl(this->m_ep4);
         } break;
+
+        // TODO: need to add
+        case omni::net::address_family::INET6:
+        // TODO: need to add
+        case omni::net::address_family::UNIX:
+        case omni::net::address_family::SNA: case omni::net::address_family::DECNET:
+        case omni::net::address_family::APPLETALK: case omni::net::address_family::UNSPECIFIED:
         default:
-            // omni::net::address_family::UNIX is not support in this socket since that is an IPC protocol
-            // omni::net::address_family::INTERNETWORK_V6 is not supported in this socket, that is socket6
+            // omni::net::address_family::UNIX is not suppored in this socket since that is an IPC protocol
+            // omni::net::address_family::INET6 is not supported in this socket, that is socket6
             return (this->m_last_err = omni::net::socket_error::PROTOCOL_FAMILY_NOT_SUPPORTED);
     }
     if (::bind(this->m_socket, omni::net::to_sockaddr(this->m_addr), sizeof(this->m_addr)) != 0) {
@@ -366,14 +373,22 @@ omni::net::socket_error omni::net::socket::connect()
     }
     std::memset(&this->m_addr, 0, sizeof(this->m_addr));
     switch (this->m_family) {
-        case omni::net::address_family::INTERNETWORK: {
-            this->m_addr.sin_family = static_cast<int>(this->m_family);
+        case omni::net::address_family::INET: {
+            this->m_addr.sin_family = static_cast<OMNI_SIN_FAMILY_FW>(this->m_family);
             this->m_addr.sin_port = htons(this->m_port);
             this->m_addr.sin_addr.s_addr = htonl(this->m_ep4);
         } break;
+        
+        // TODO: need to add
+        case omni::net::address_family::INET6:
+        // TODO: need to add
+        case omni::net::address_family::UNIX:
+
+        case omni::net::address_family::SNA: case omni::net::address_family::DECNET:
+        case omni::net::address_family::APPLETALK: case omni::net::address_family::UNSPECIFIED:
         default:
             // omni::net::address_family::UNIX is not support in this socket since that is an IPC protocol
-            // omni::net::address_family::INTERNETWORK_V6 is not supported in this socket, that is a socket6
+            // omni::net::address_family::INET6 is not supported in this socket, that is a socket6
             return (this->m_last_err = omni::net::socket_error::PROTOCOL_FAMILY_NOT_SUPPORTED);
     }
     if (OMNI_SOCKET_CONNECT_FW(this->m_socket, omni::net::to_sockaddr(this->m_addr), sizeof(this->m_addr)) != 0) {
@@ -412,15 +427,15 @@ omni::net::socket_error omni::net::socket::connect(const std::wstring& ip, uint1
 omni::net::socket_error omni::net::socket::connect_host(const std::string& host, uint16_t port)
 {
     omni::seq::std_string_t ip;
-    omni::net::socket_error err = omni::net::util::get_ip(host, port, ip);
-    if (err == omni::net::socket_error::SUCCESS) {
+    omni::net::socket_error serr = omni::net::util::get_ip(host, port, ip);
+    if (serr == omni::net::socket_error::SUCCESS) {
         if (ip.size() > 0) {
             return this->connect(ip[0], port);
         } else {
             return (this->m_last_err = omni::net::socket_error::ADDRESS_NOT_AVAILABLE);
         }
     }
-    return (this->m_last_err = err);
+    return (this->m_last_err = serr);
 }
 
 omni::net::socket_error omni::net::socket::connect_host(const std::wstring& host, uint16_t port)
@@ -456,7 +471,7 @@ omni::net::socket_error omni::net::socket::get_socket_option(omni::net::socket_o
     if (!omni::bits::unsafe_is_set(this->m_conops, omni::net::connection_option::OPEN)) {
         return (this->m_last_err = omni::net::socket_error::NOT_INITIALIZED);
     }
-    int err = 0;
+    int serr = 0;
     OMNI_SOCKLEN_FW sz;
     if ((op_level == omni::net::socket_option_level::SOCKET) &&
         ((op_name == omni::net::socket_option::LINGER) || (op_name == omni::net::socket_option::DONT_LINGER)))
@@ -464,19 +479,19 @@ omni::net::socket_error omni::net::socket::get_socket_option(omni::net::socket_o
         struct linger lop;
         std::memset(&lop, 0, sizeof(struct linger));
         sz = static_cast<OMNI_SOCKLEN_FW>(sizeof(struct linger));
-        err = ::getsockopt(this->m_socket,
+        serr = ::getsockopt(this->m_socket,
                            static_cast<int>(op_level),
                            static_cast<int>(omni::net::socket_option::LINGER),
                            reinterpret_cast<OMNI_SOCKET_XFR_T_FW*>(&lop),
                            &sz);
-        if (err == 0) { op_val = static_cast<int32_t>(lop.l_linger); }
+        if (serr == 0) { op_val = static_cast<int32_t>(lop.l_linger); }
     } else {
         OMNI_SOCKET_XFR_T_FW* val = reinterpret_cast<OMNI_SOCKET_XFR_T_FW*>(&op_val);
         sz = static_cast<OMNI_SOCKLEN_FW>(sizeof(val));
-        err = ::getsockopt(this->m_socket, static_cast<int>(op_level), static_cast<int>(op_name), val, &sz);
-        if (err == 0) { op_val = *(reinterpret_cast<int32_t*>(val)); }
+        serr = ::getsockopt(this->m_socket, static_cast<int>(op_level), static_cast<int>(op_name), val, &sz);
+        if (serr == 0) { op_val = *(reinterpret_cast<int32_t*>(val)); }
     }
-    if (err != 0) { return (this->m_last_err = omni::net::parse_error(OMNI_SOCKET_ERR_FW)); }
+    if (serr != 0) { return (this->m_last_err = omni::net::parse_error(OMNI_SOCKET_ERR_FW)); }
     return (this->m_last_err = omni::net::socket_error::SUCCESS);
 }
 
@@ -499,9 +514,9 @@ omni::net::socket_error omni::net::socket::open()
     OMNI_SOCK_OPEN_FW
     this->m_socket = OMNI_SOCKET_OPEN_FW(this->m_family, this->m_type, this->m_proto);
     if (this->m_socket == OMNI_INVALID_SOCKET) {
-        int err = OMNI_SOCKET_ERR_FW;
-        OMNI_DBGEV("a system error occurred creating the socket: ", err)
-        return (this->m_last_err = omni::net::parse_error(err));
+        int serr = OMNI_SOCKET_ERR_FW;
+        OMNI_DBGEV("a system error occurred creating the socket: ", serr)
+        return (this->m_last_err = omni::net::parse_error(serr));
     }
     omni::bits::unsafe_set(this->m_conops, omni::net::connection_option::OPEN);
     omni::bits::unsafe_unset(this->m_conops, omni::net::connection_option::SHUT);
@@ -560,8 +575,8 @@ omni::net::socket_error omni::net::socket::shutdown(omni::net::socket_shutdown h
     } else if (omni::bits::unsafe_is_set(this->m_conops, omni::net::connection_option::SHUT)) {
         return (this->m_last_err = omni::net::socket_error::SUCCESS);
     }
-    int err = ::shutdown(this->m_socket, static_cast<int>(how));
-    if (err == OMNI_SOCK_SYSERR_FW) {
+    int serr = ::shutdown(this->m_socket, static_cast<int>(how));
+    if (serr == OMNI_SOCK_SYSERR_FW) {
         return (this->m_last_err = omni::net::parse_error(OMNI_SOCKET_ERR_FW));
     }
     omni::bits::unsafe_set(this->m_conops, omni::net::connection_option::SHUT);
@@ -575,7 +590,7 @@ omni::net::socket_error omni::net::socket::set_socket_option(omni::net::socket_o
     if (!omni::bits::unsafe_is_set(this->m_conops, omni::net::connection_option::OPEN)) {
         return (this->m_last_err = omni::net::socket_error::NOT_INITIALIZED);
     }
-    int err = 0;
+    int serr = 0;
     if ((op_level == omni::net::socket_option_level::SOCKET) &&
         ((op_name == omni::net::socket_option::LINGER) || (op_name == omni::net::socket_option::DONT_LINGER)))
     {
@@ -585,19 +600,19 @@ omni::net::socket_error omni::net::socket::set_socket_option(omni::net::socket_o
             lop.l_onoff = 1;
             lop.l_linger = op_val;
         }
-        err = ::setsockopt(this->m_socket,
+        serr = ::setsockopt(this->m_socket,
                            static_cast<int>(op_level),
                            static_cast<int>(omni::net::socket_option::LINGER),
                            reinterpret_cast<OMNI_SOCKET_XFR_T_FW*>(&lop),
                            sizeof(struct linger));
     } else {
-        err = ::setsockopt(this->m_socket,
+        serr = ::setsockopt(this->m_socket,
                            static_cast<int>(op_level),
                            static_cast<int>(op_name),
                            reinterpret_cast<OMNI_SOCKET_XFR_T_FW*>(&op_val),
                            sizeof(int32_t));
     }
-    if (err != 0) {
+    if (serr != 0) {
         return (this->m_last_err = omni::net::parse_error(OMNI_SOCKET_ERR_FW));
     }
     return (this->m_last_err = omni::net::socket_error::SUCCESS);

@@ -29,7 +29,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 000060:<br>000061:<br>000062:<br>000063:<br>000064:<br>000065:<br>000066:<br>000067:<br>000068:<br>000069:<br>000070:<br>000071:<br>000072:<br>000073:<br>000074:<br>000075:<br>000076:<br>000077:<br>000078:<br>000079:<br>
 000080:<br>000081:<br>000082:<br>000083:<br>000084:<br>000085:<br>000086:<br>000087:<br>000088:<br>000089:<br>000090:<br>000091:<br>000092:<br>000093:<br>000094:<br>000095:<br>000096:<br>000097:<br>000098:<br>000099:<br>
 0000100:<br>0000101:<br>0000102:<br>0000103:<br>0000104:<br>0000105:<br>0000106:<br>0000107:<br>0000108:<br>0000109:<br>0000110:<br>0000111:<br>0000112:<br>0000113:<br>0000114:<br>0000115:<br>0000116:<br>0000117:<br>0000118:<br>0000119:<br>
-0000120:<br>0000121:<br>0000122:<br>0000123:<br>0000124:<br>0000125:<br>0000126:<br>0000127:<br>0000128:<br>
+0000120:<br>0000121:<br>0000122:<br>0000123:<br>0000124:<br>0000125:<br>0000126:<br>0000127:<br>0000128:<br>0000129:<br>0000130:<br>0000131:<br>0000132:<br>0000133:<br>0000134:<br>
 <!--end line numbers-->
 </div><div class="cpphtmlcmnt">
 <!--start collapse columns-->
@@ -39,7 +39,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <!--end collapse columns-->
 </div><div class="cpphtml" style="margin-left:3.75em;">
 <!--start highlighted code-->
@@ -71,6 +71,12 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;<a href="../../omni/sync/basic_lock.hpp.html">omni/sync/basic_lock.hpp</a>&gt;</font><br>
 <font class="syn_pre">#endif</font><br>
 <br>
+<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../options/omni_32bit_runnable_thread.html">OMNI_32BIT_RUNNABLE_THREAD</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_RUNTHRD_INT_FW uint32_t</font><br>
+<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_RUNTHRD_INT_FW uint64_t</font><br>
+<font class="syn_pre">#endif</font><br>
+<br>
 <font class="syn_ins">namespace</font> omni {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">namespace</font> sync {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">class</font> runnable_thread : <font class="syn_ins">virtual</font> <font class="syn_ins">public</font> <a href="../../../classes/omni-sync-runnable.html">omni::sync::runnable</a><br>
@@ -82,9 +88,9 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// Methods</font><br>
 <a name="omni::sync::runnable_thread::runnable_thread"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;runnable_thread();<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;runnable_thread(<font class="syn_typ">const</font> <a href="../../../classes/omni-sync-runnable_thread.html">omni::sync::runnable_thread</a>&amp; cp);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">explicit</font> runnable_thread(<font class="syn_typ">const</font> <a href="../../../classes/omni-sync-runnable.html">omni::sync::runnable</a>&amp; obj);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">explicit</font> runnable_thread(<font class="syn_typ">const</font> <a href="../../../classes/omni-sync-thread_flags.html">omni::sync::thread_flags</a>&amp; ops);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">explicit</font> runnable_thread(<a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a> max_stack_sz);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../options/omni_explicit.html">OMNI_EXPLICIT</a> runnable_thread(<font class="syn_typ">const</font> <a href="../../../classes/omni-sync-runnable.html">omni::sync::runnable</a>&amp; obj);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../options/omni_explicit.html">OMNI_EXPLICIT</a> runnable_thread(<font class="syn_typ">const</font> <a href="../../../classes/omni-sync-thread_flags.html">omni::sync::thread_flags</a>&amp; ops);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../options/omni_explicit.html">OMNI_EXPLICIT</a> runnable_thread(<a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a> max_stack_sz);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;runnable_thread(<font class="syn_typ">const</font> <a href="../../../classes/omni-sync-runnable.html">omni::sync::runnable</a>&amp; obj, <a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a> max_stack_sz);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;runnable_thread(<a href="../../../classes/omni-sync-thread_option-enum_t.html">omni::sync::thread_option::enum_t</a> op, <a href="../../../classes/omni-sync-thread_union_t.html">omni::sync::thread_union_t</a> val);<br>
 <a name="omni::sync::runnable_thread::~runnable_thread"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">virtual</font> ~runnable_thread() <a href="../../../options/omni_dtor_throws.html">OMNI_DTOR_THROWS</a>;<br>
@@ -157,7 +163,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../options/omni_non_portable.html">OMNI_NON_PORTABLE</a>)</font><br>
 <a name="omni::sync::runnable_thread::m_priority"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-sync-thread_priority.html">omni::sync::thread_priority</a> m_priority;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
-<a name="omni::sync::runnable_thread::m_isjoined"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">volatile</font> <font class="syn_typ">bool</font> m_isjoined;<br>
+<a name="omni::sync::runnable_thread::m_isjoined"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">volatile</font> OMNI_RUNTHRD_INT_FW m_isjoined;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};<br>
 &nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_cmt">// namespace sync</font><br>
 } <font class="syn_cmt">// namespace omni</font><br>

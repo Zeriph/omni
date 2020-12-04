@@ -43,6 +43,8 @@ namespace omni {
         class size
         {
             public:
+                typedef T value_t;
+
                 size() : 
                     OMNI_CTOR_FW(omni::geometry::size<T>)
                     m_w(0), m_h(0)
@@ -51,12 +53,12 @@ namespace omni {
 
                 size(const omni::geometry::size<T>& cp) :
                     OMNI_CPCTOR_FW(cp)
-                    m_w(cp.m_w), m_h(cp.m_h)
+                    m_w(cp.width()), m_h(cp.height())
                     OMNI_SAFE_GSZDMTX_FW
                 { }
 
                 size(const omni::math::dimensional<T, 2>& cp) :
-                    OMNI_CPCTOR_FW(cp)
+                    OMNI_CTOR_FW(omni::geometry::size<T>)
                     m_w(cp[0]), m_h(cp[1])
                     OMNI_SAFE_GSZDMTX_FW
                 { }
@@ -75,6 +77,12 @@ namespace omni {
                     OMNI_D5_FW("destroyed");
                 }
 
+                T area() const
+                {
+                    OMNI_SAFE_GSZALOCK_FW
+                    return (this->m_w * this->m_h);
+                }
+
                 T width() const
                 {
                     OMNI_SAFE_GSZALOCK_FW
@@ -85,6 +93,15 @@ namespace omni {
                 {
                     OMNI_SAFE_GSZALOCK_FW
                     return this->m_h;
+                }
+
+                int32_t hash_code() const
+                {
+                    OMNI_SAFE_GSZALOCK_FW
+                    return (
+                        static_cast<int32_t>(this->m_w) ^
+                        ((static_cast<int32_t>(this->m_h) << 13) | (static_cast<int32_t>(this->m_h) >> 19))
+                    );
                 }
 
                 bool empty() const
@@ -102,6 +119,18 @@ namespace omni {
                     this->m_h = h;
                 }
 
+                void set_height(T h)
+                {
+                    OMNI_SAFE_GSZALOCK_FW
+                    this->m_h = h;
+                }
+
+                void set_width(T w)
+                {
+                    OMNI_SAFE_GSZALOCK_FW
+                    this->m_w = w;
+                }
+
                 void swap(size<T>& o)
                 {
                     if (this != &o) {
@@ -110,6 +139,13 @@ namespace omni {
                         std::swap(this->m_w, o.m_w);
                         std::swap(this->m_h, o.m_h);
                     }
+                }
+
+                omni::math::dimensional<T, 2> to_dimensional() const
+                {
+                    OMNI_SAFE_GSZALOCK_FW
+                    T vals[2] = { this->m_w, this->m_h };
+                    return omni::math::dimensional<T, 2>(vals);
                 }
 
                 omni::string_t to_string_t() const
@@ -151,17 +187,15 @@ namespace omni {
 
                 operator omni::math::dimensional<T, 2>() const
                 {
-                    OMNI_SAFE_GSZALOCK_FW
-                    T vals[2] = { this->m_w, this->m_h };
-                    return omni::math::dimensional<T, 2>(vals);
+                    return this->to_dimensional();
                 }
 
-                bool operator!=(const size<T>& val) const
+                bool operator!=(const omni::geometry::size<T>& val) const
                 {
                     return !(*this == val);
                 }
                 
-                size<T>& operator=(const size<T>& val)
+                omni::geometry::size<T>& operator=(const omni::geometry::size<T>& val)
                 {
                     if (this != &val) {
                         OMNI_SAFE_GSZALOCK_FW
@@ -173,39 +207,39 @@ namespace omni {
                     return *this;
                 }
 
-                bool operator<(const size<T>& val) const
+                bool operator<(const omni::geometry::size<T>& val) const
                 {
                     if (this == &val) { return false; }
                     OMNI_SAFE_GSZALOCK_FW
                     OMNI_SAFE_GSZOALOCK_FW(val)
-                    return this->m_w < val.m_w && this->m_h < val.m_h;
+                    return (this->m_w * this->m_h) < (val.m_w * val.m_h);
                 }
 
-                bool operator<=(const size<T>& val) const
+                bool operator<=(const omni::geometry::size<T>& val) const
                 {
                     if (this == &val) { return false; }
                     OMNI_SAFE_GSZALOCK_FW
                     OMNI_SAFE_GSZOALOCK_FW(val)
-                    return this->m_w <= val.m_w && this->m_h <= val.m_h;
+                    return (this->m_w * this->m_h) <= (val.m_w * val.m_h);
                 }
 
-                bool operator>(const size<T>& val) const
+                bool operator>(const omni::geometry::size<T>& val) const
                 {
                     if (this == &val) { return false; }
                     OMNI_SAFE_GSZALOCK_FW
                     OMNI_SAFE_GSZOALOCK_FW(val)
-                    return this->m_w > val.m_w && this->m_h > val.m_h;
+                    return (this->m_w * this->m_h) > (val.m_w * val.m_h);
                 }
 
-                bool operator>=(const size<T>& val) const
+                bool operator>=(const omni::geometry::size<T>& val) const
                 {
                     if (this == &val) { return false; }
                     OMNI_SAFE_GSZALOCK_FW
                     OMNI_SAFE_GSZOALOCK_FW(val)
-                    return this->m_w >= val.m_w && this->m_h >= val.m_h;
+                    return (this->m_w * this->m_h) >= (val.m_w * val.m_h);
                 }
 
-                bool operator==(const size<T>& val) const
+                bool operator==(const omni::geometry::size<T>& val) const
                 {
                     if (this == &val) { return true; }
                     OMNI_SAFE_GSZALOCK_FW
@@ -216,37 +250,37 @@ namespace omni {
                     OMNI_EQUAL_FW(val);
                 }
 
-                size<T> operator+(const size<T>& val)
+                omni::geometry::size<T> operator+(const omni::geometry::size<T>& val)
                 {
                     #if defined(OMNI_SAFE_GEO_SIZE)
                         OMNI_SAFE_GSZALOCK_FW
                         if (this != &val) {
                             OMNI_SAFE_GSZOALOCK_FW(val)
-                            return size<T> ((this->m_w + val.m_w), (this->m_h + val.m_h));
+                            return omni::geometry::size<T> ((this->m_w + val.m_w), (this->m_h + val.m_h));
                         } else {
-                            return size<T> ((this->m_w + val.m_w), (this->m_h + val.m_h));
+                            return omni::geometry::size<T> ((this->m_w + val.m_w), (this->m_h + val.m_h));
                         }
                     #else
-                        return size<T>((this->m_w + val.m_w), (this->m_h + val.m_h));
+                        return omni::geometry::size<T>((this->m_w + val.m_w), (this->m_h + val.m_h));
                     #endif
                 }
 
-                size<T> operator-(const size<T>& val)
+                omni::geometry::size<T> operator-(const omni::geometry::size<T>& val)
                 {
                     #if defined(OMNI_SAFE_GEO_SIZE)
                         OMNI_SAFE_GSZALOCK_FW
                         if (this != &val) {
                             OMNI_SAFE_GSZOALOCK_FW(val)
-                            return size<T> ((this->m_w - val.m_w), (this->m_h - val.m_h));
+                            return omni::geometry::size<T> ((this->m_w - val.m_w), (this->m_h - val.m_h));
                         } else {
-                            return size<T> ((this->m_w - val.m_w), (this->m_h - val.m_h));
+                            return omni::geometry::size<T> ((this->m_w - val.m_w), (this->m_h - val.m_h));
                         }
                     #else
-                        return size<T>((this->m_w - val.m_w), (this->m_h - val.m_h));
+                        return omni::geometry::size<T>((this->m_w - val.m_w), (this->m_h - val.m_h));
                     #endif
                 }
 
-                size<T>& operator+=(const size<T>& val)
+                omni::geometry::size<T>& operator+=(const omni::geometry::size<T>& val)
                 {
                     #if defined(OMNI_SAFE_GEO_SIZE)
                         OMNI_SAFE_GSZALOCK_FW
@@ -265,7 +299,7 @@ namespace omni {
                     return *this;
                 }
 
-                size<T>& operator-=(const size<T>& val)
+                omni::geometry::size<T>& operator-=(const omni::geometry::size<T>& val)
                 {
                     #if defined(OMNI_SAFE_GEO_SIZE)
                         OMNI_SAFE_GSZALOCK_FW
@@ -296,40 +330,52 @@ namespace omni {
                 #endif
         };
 
-        typedef omni::geometry::size<int32_t> size_t;
+        typedef omni::geometry::size<int32_t> size32_t;
         typedef omni::geometry::size<int64_t> size64_t;
         typedef omni::geometry::size<float> sizeF_t;
 
         template < typename T >
-        class unsafe_size
+        class raw_size
         {
             public:
-                unsafe_size() : 
-                    OMNI_CTOR_FW(omni::geometry::unsafe_size<T>)
+                typedef T value_t;
+
+                raw_size() : 
+                    OMNI_CTOR_FW(omni::geometry::raw_size<T>)
                     width(0), height(0)
                 { }
 
-                unsafe_size(const omni::geometry::unsafe_size<T>& cp) :
+                raw_size(const omni::geometry::raw_size<T>& cp) :
                     OMNI_CPCTOR_FW(cp)
                     width(cp.width), height(cp.height)
                 { }
 
-                unsafe_size(const omni::math::dimensional<T, 2>& cp) :
-                    OMNI_CTOR_FW(omni::geometry::unsafe_size<T>)
+                raw_size(const omni::geometry::size<T>& cp) :
+                    OMNI_CTOR_FW(omni::geometry::raw_size<T>)
+                    width(cp.width()), height(cp.height())
+                { }
+
+                raw_size(const omni::math::dimensional<T, 2>& cp) :
+                    OMNI_CTOR_FW(omni::geometry::raw_size<T>)
                     width(cp[0]), height(cp[1])
                 { }
 
-                unsafe_size(T w, T h) : 
-                    OMNI_CTOR_FW(omni::geometry::unsafe_size<T>)
+                raw_size(T w, T h) : 
+                    OMNI_CTOR_FW(omni::geometry::raw_size<T>)
                     width(w), height(h)
                 { }
 
-                ~unsafe_size()
+                ~raw_size()
                 {
                     OMNI_TRY_FW
                     OMNI_DTOR_FW
                     OMNI_CATCH_FW
                     OMNI_D5_FW("destroyed");
+                }
+
+                T area() const
+                {
+                    return (this->width * this->height);
                 }
 
                 bool empty() const
@@ -339,12 +385,47 @@ namespace omni {
                         omni::math::are_equal<T>(this->height, 0);
                 }
 
-                void swap(unsafe_size<T>& o)
+                int32_t hash_code() const
+                {
+                    return (
+                        static_cast<int32_t>(this->width) ^
+                        ((static_cast<int32_t>(this->height) << 13) | (static_cast<int32_t>(this->height) >> 19))
+                    );
+                }
+
+                void set_dimensions(T w, T h)
+                {
+                    this->width = w;
+                    this->height = h;
+                }
+
+                void set_height(T h)
+                {
+                    this->height = h;
+                }
+
+                void set_width(T w)
+                {
+                    this->width = w;
+                }
+
+                void swap(raw_size<T>& o)
                 {
                     if (this != &o) {
-                        std::swap(this->w, o.w);
-                        std::swap(this->h, o.h);
+                        std::swap(this->width, o.width);
+                        std::swap(this->height, o.height);
                     }
+                }
+
+                omni::math::dimensional<T, 2> to_dimensional() const
+                {
+                    T vals[2] = { this->width, this->height };
+                    return omni::math::dimensional<T, 2>(vals);
+                }
+
+                omni::geometry::size<T> to_size() const
+                {
+                    return omni::geometry::size<T>(this->width, this->height);
                 }
 
                 omni::string_t to_string_t() const
@@ -380,16 +461,15 @@ namespace omni {
 
                 operator omni::math::dimensional<T, 2>() const
                 {
-                    T vals[2] = { this->width, this->height };
-                    return omni::math::dimensional<T, 2>(vals);
+                    return this->to_dimensional();
                 }
 
-                bool operator!=(const unsafe_size< T >& val) const
+                bool operator!=(const omni::geometry::raw_size< T >& val) const
                 {
                     return !(*this == val);
                 }
                 
-                unsafe_size<T>& operator=(const unsafe_size<T>& val)
+                omni::geometry::raw_size<T>& operator=(const omni::geometry::raw_size<T>& val)
                 {
                     if (this != &val) {
                         OMNI_ASSIGN_FW(val)
@@ -399,27 +479,27 @@ namespace omni {
                     return *this;
                 }
 
-                bool operator<(const unsafe_size<T>& val) const
+                bool operator<(const omni::geometry::raw_size<T>& val) const
                 {
-                    return this->width < val.width && this->height < val.height;
+                    return this->area() < val.area();
                 }
 
-                bool operator<=(const unsafe_size<T>& val) const
+                bool operator<=(const omni::geometry::raw_size<T>& val) const
                 {
-                    return this->width <= val.width && this->height <= val.height;
+                    return this->area() <= val.area();
                 }
 
-                bool operator>(const unsafe_size<T>& val) const
+                bool operator>(const omni::geometry::raw_size<T>& val) const
                 {
-                    return this->width > val.width && this->height > val.height;
+                    return this->area() > val.area();
                 }
 
-                bool operator>=(const unsafe_size<T>& val) const
+                bool operator>=(const omni::geometry::raw_size<T>& val) const
                 {
-                    return this->width >= val.width && this->height >= val.height;
+                    return this->area() >= val.area();
                 }
 
-                bool operator==(const unsafe_size< T >& val) const
+                bool operator==(const omni::geometry::raw_size< T >& val) const
                 {
                     if (this == &val) { return true; }
                     return (
@@ -429,42 +509,42 @@ namespace omni {
                     OMNI_EQUAL_FW(val);
                 }
 
-                unsafe_size<T> operator+(const unsafe_size<T>& val)
+                omni::geometry::raw_size<T> operator+(const omni::geometry::raw_size<T>& val)
                 {
-                    return size<T>((this->width + val.width), (this->height + val.height));
+                    return omni::geometry::raw_size<T>((this->width + val.width), (this->height + val.height));
                 }
 
-                unsafe_size<T> operator-(const unsafe_size<T>& val)
+                omni::geometry::raw_size<T> operator-(const omni::geometry::raw_size<T>& val)
                 {
-                    return size<T>((this->width - val.width), (this->height - val.height));
+                    return omni::geometry::raw_size<T>((this->width - val.width), (this->height - val.height));
                 }
 
-                unsafe_size<T>& operator+=(const unsafe_size<T>& val)
+                omni::geometry::raw_size<T>& operator+=(const omni::geometry::raw_size<T>& val)
                 {
                     this->width += val.width;
                     this->height += val.height;
                     return *this;
                 }
 
-                unsafe_size<T>& operator-=(const unsafe_size<T>& val)
+                omni::geometry::raw_size<T>& operator-=(const omni::geometry::raw_size<T>& val)
                 {
                     this->width -= val.width;
                     this->height -= val.height;
                     return *this;
                 }
 
-                OMNI_MEMBERS_FW(omni::geometry::unsafe_size<T>) // disposing,name,type(),hash()
+                OMNI_MEMBERS_FW(omni::geometry::raw_size<T>) // disposing,name,type(),hash()
 
-                OMNI_OSTREAM_FW(omni::geometry::unsafe_size<T>)
+                OMNI_OSTREAM_FW(omni::geometry::raw_size<T>)
 
                 T width;
 
                 T height;
         };
 
-        typedef omni::geometry::unsafe_size<int32_t> unsafe_size_t;
-        typedef omni::geometry::unsafe_size<int64_t> unsafe_size64_t;
-        typedef omni::geometry::unsafe_size<float> unsafe_sizeF_t;
+        typedef omni::geometry::raw_size<int32_t> raw_size_t;
+        typedef omni::geometry::raw_size<int64_t> raw_size64_t;
+        typedef omni::geometry::raw_size<float> raw_sizeF_t;
     }
 }
 
@@ -476,7 +556,7 @@ namespace std {
     }
 
     template < typename T >
-    inline void swap(omni::geometry::unsafe_size<T>& o1, omni::geometry::unsafe_size<T>& o2)
+    inline void swap(omni::geometry::raw_size<T>& o1, omni::geometry::raw_size<T>& o2)
     {
         o1.swap(o2);
     }

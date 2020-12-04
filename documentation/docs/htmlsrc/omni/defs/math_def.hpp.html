@@ -28,7 +28,8 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 000040:<br>000041:<br>000042:<br>000043:<br>000044:<br>000045:<br>000046:<br>000047:<br>000048:<br>000049:<br>000050:<br>000051:<br>000052:<br>000053:<br>000054:<br>000055:<br>000056:<br>000057:<br>000058:<br>000059:<br>
 000060:<br>000061:<br>000062:<br>000063:<br>000064:<br>000065:<br>000066:<br>000067:<br>000068:<br>000069:<br>000070:<br>000071:<br>000072:<br>000073:<br>000074:<br>000075:<br>000076:<br>000077:<br>000078:<br>000079:<br>
 000080:<br>000081:<br>000082:<br>000083:<br>000084:<br>000085:<br>000086:<br>000087:<br>000088:<br>000089:<br>000090:<br>000091:<br>000092:<br>000093:<br>000094:<br>000095:<br>000096:<br>000097:<br>000098:<br>000099:<br>
-0000100:<br>0000101:<br>0000102:<br>0000103:<br>0000104:<br>
+0000100:<br>0000101:<br>0000102:<br>0000103:<br>0000104:<br>0000105:<br>0000106:<br>0000107:<br>0000108:<br>0000109:<br>0000110:<br>0000111:<br>0000112:<br>0000113:<br>0000114:<br>0000115:<br>0000116:<br>0000117:<br>0000118:<br>0000119:<br>
+0000120:<br>0000121:<br>
 <!--end line numbers-->
 </div><div class="cpphtmlcmnt">
 <!--start collapse columns-->
@@ -37,7 +38,8 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br>
 <!--end collapse columns-->
 </div><div class="cpphtml" style="margin-left:3.75em;">
 <!--start highlighted code-->
@@ -119,29 +121,46 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_180_pi_l.html">OMNI_180_PI_L</a> 57.295779513082320876798154814105170336L</font><br>
 <font class="syn_pre">#endif</font><br>
 <br>
-<font class="syn_pre">#define OMNI_MATH_GET_POINT_X_FW(T, center_x, radius, angle) \<br>
-&nbsp;&nbsp;&nbsp;&nbsp;static_cast&lt;T&gt;((static_cast&lt;double&gt;(center_x) + (static_cast&lt;double&gt;(radius) * <a href="http://www.cplusplus.com/reference/cmath/cos/">std::cos</a>((static_cast&lt;double&gt;(angle) * <a href="../../../options/omni_pi_180.html">OMNI_PI_180</a>)))))</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<br>
-<font class="syn_pre">#define OMNI_MATH_GET_POINT_Y_FW(T, center_y, radius, angle) \<br>
-&nbsp;&nbsp;&nbsp;&nbsp;static_cast&lt;T&gt;((static_cast&lt;double&gt;(center_y) + (static_cast&lt;double&gt;(radius) * <a href="http://www.cplusplus.com/reference/cmath/sin/">std::sin</a>((static_cast&lt;double&gt;(angle) * <a href="../../../options/omni_pi_180.html">OMNI_PI_180</a>)))))</font><br>
+<font class="syn_cmt">// radians =  degrees * π / 180</font><br>
+<font class="syn_pre">#define <a href="../../../options/omni_deg_to_rad.html">OMNI_DEG_TO_RAD</a>(deg) deg * <a href="../../../options/omni_pi_180.html">OMNI_PI_180</a></font><br>
 <br>
-<font class="syn_pre">#define OMNI_MATH_GET_POINT_X_INT_FW(T, center_x, radius, angle) \<br>
-&nbsp;&nbsp;&nbsp;&nbsp;static_cast&lt;T&gt;(<a href="http://www.cplusplus.com/reference/cmath/ceil/">std::ceil</a>((static_cast&lt;double&gt;(center_x) + (static_cast&lt;double&gt;(radius) * <a href="http://www.cplusplus.com/reference/cmath/cos/">std::cos</a>((static_cast&lt;double&gt;(angle) * <a href="../../../options/omni_pi_180.html">OMNI_PI_180</a>))))))</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<br>
-<font class="syn_pre">#define OMNI_MATH_GET_POINT_Y_INT_FW(T, center_y, radius, angle) \<br>
-&nbsp;&nbsp;&nbsp;&nbsp;static_cast&lt;T&gt;(<a href="http://www.cplusplus.com/reference/cmath/ceil/">std::ceil</a>((static_cast&lt;double&gt;(center_y) + (static_cast&lt;double&gt;(radius) * <a href="http://www.cplusplus.com/reference/cmath/sin/">std::sin</a>((static_cast&lt;double&gt;(angle) * <a href="../../../options/omni_pi_180.html">OMNI_PI_180</a>))))))</font><br>
+<font class="syn_cmt">// degrees = radians * 180 / π</font><br>
+<font class="syn_pre">#define <a href="../../../options/omni_rad_to_deg.html">OMNI_RAD_TO_DEG</a>(rad) rad * <a href="../../../options/omni_180_pi.html">OMNI_180_PI</a></font><br>
 <br>
-<font class="syn_pre">#define OMNI_MATH_ANGLE_ERR_FW if (angle &gt; 360) { OMNI_ERR_FW(<font class="syn_str">&quot;angle cannot be greater than 360 degrees&quot;</font>, <a href="../../../classes/omni-exceptions-overflow_error.html">omni::exceptions::overflow_error</a>(<font class="syn_str">&quot;angle cannot be greater than 360 degrees&quot;</font>)) }</font><br>
+<font class="syn_pre">#define <a href="../../../options/omni_math_delta.html">OMNI_MATH_DELTA</a>(a,b) ((a) - (b))</font><br>
+<br>
+<font class="syn_pre">#define OMNI_MATH_GET_POINT_X_FW(T, center_pt, radius, angle) \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static_cast&lt;T&gt;((static_cast&lt;double&gt;(center_pt) + (static_cast&lt;double&gt;(radius) * <a href="http://www.cplusplus.com/reference/cmath/sin/">std::sin</a>(<a href="../../../options/omni_deg_to_rad.html">OMNI_DEG_TO_RAD</a>(static_cast&lt;double&gt;(angle))))))</font><br>
+<br>
+<font class="syn_pre">#define OMNI_MATH_GET_POINT_Y_FW(T, center_pt, radius, angle) \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static_cast&lt;T&gt;((static_cast&lt;double&gt;(center_pt) + (static_cast&lt;double&gt;(radius) * <a href="http://www.cplusplus.com/reference/cmath/cos/">std::cos</a>(<a href="../../../options/omni_deg_to_rad.html">OMNI_DEG_TO_RAD</a>(static_cast&lt;double&gt;(angle))))))</font><br>
+<br>
+<font class="syn_pre">#define OMNI_MATH_GET_POINT_X_INT_FW(T, center_pt, radius, angle) \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static_cast&lt;T&gt;(<a href="http://www.cplusplus.com/reference/cmath/ceil/">std::ceil</a>((static_cast&lt;double&gt;(center_pt) + (static_cast&lt;double&gt;(radius) * <a href="http://www.cplusplus.com/reference/cmath/sin/">std::sin</a>(<a href="../../../options/omni_deg_to_rad.html">OMNI_DEG_TO_RAD</a>(static_cast&lt;double&gt;(angle)))))))</font><br>
+<br>
+<font class="syn_pre">#define OMNI_MATH_GET_POINT_Y_INT_FW(T, center_pt, radius, angle) \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static_cast&lt;T&gt;(<a href="http://www.cplusplus.com/reference/cmath/ceil/">std::ceil</a>((static_cast&lt;double&gt;(center_pt) + (static_cast&lt;double&gt;(radius) * <a href="http://www.cplusplus.com/reference/cmath/cos/">std::cos</a>(<a href="../../../options/omni_deg_to_rad.html">OMNI_DEG_TO_RAD</a>(static_cast&lt;double&gt;(angle)))))))</font><br>
+<br>
+<font class="syn_pre">#define OMNI_MATH_ANGLE_ERR_FW(angle) if ((angle &lt; 0) || (angle &gt; 360)) { OMNI_ERR_FW(<font class="syn_str">&quot;angle must be between 0-360 degrees&quot;</font>, <a href="../../../classes/omni-exceptions-overflow_error.html">omni::exceptions::overflow_error</a>(<font class="syn_str">&quot;angle must be between 0-360 degrees&quot;</font>)) }</font><br>
 <br>
 <font class="syn_pre">#define OMNI_MATH_GET_POINT_FW(T, out_x, out_y, center_x, center_y, radius, angle) \<br>
-&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MATH_ANGLE_ERR_FW \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MATH_ANGLE_ERR_FW(angle) \<br>
 &nbsp;&nbsp;&nbsp;&nbsp;out_x = OMNI_MATH_GET_POINT_X_FW(T, center_x, radius, angle); \<br>
 &nbsp;&nbsp;&nbsp;&nbsp;out_y = OMNI_MATH_GET_POINT_Y_FW(T, center_y, radius, angle)</font><br>
 <br>
 <font class="syn_pre">#define OMNI_MATH_GET_POINT_INT_FW(T, out_x, out_y, center_x, center_y, radius, angle) \<br>
-&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MATH_ANGLE_ERR_FW \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MATH_ANGLE_ERR_FW(angle) \<br>
 &nbsp;&nbsp;&nbsp;&nbsp;out_x = OMNI_MATH_GET_POINT_X_INT_FW(T, center_x, radius, angle); \<br>
 &nbsp;&nbsp;&nbsp;&nbsp;out_y = OMNI_MATH_GET_POINT_Y_INT_FW(T, center_y, radius, angle)</font><br>
+<br>
+<font class="syn_pre">#define OMNI_RECT_XYWH_CONTAINS_FW(rx,ry,rw,rh,ox,oy) ((ox &gt;= rx) &amp;&amp; (ox &lt;= (rx + rw)) &amp;&amp; (oy &gt;= ry) &amp;&amp; (oy &lt;= (ry + rh)))</font><br>
+<font class="syn_pre">#define OMNI_RECT_LTRB_CONTAINS_FW(left,top,right,bottom,ox,oy) ((ox &gt;= left) &amp;&amp; (ox &lt;= right) &amp;&amp; (oy &gt;= top) &amp;&amp; (oy &lt;= bottom))</font><br>
+<br>
+<font class="syn_pre">#define OMNI_CIRCLE_CONTAINS_POINT_FW(cx,cy,r,x,y,oc) (oc ? (((x - cx)*(x - cx)) + ((y - cy) * (y - cy))) &lt;= (r * r) : (((x - cx) * (x - cx)) + ((y - cy) * (y - cy))) &lt; (r * r))</font><br>
+<br>
+<font class="syn_pre">#define OMNI_DISTANCE_2POINTS_2D_FW(start_x, start_y, end_x, end_y) (<a href="http://www.cplusplus.com/reference/cmath/sqrt/">std::sqrt</a>(static_cast&lt;double&gt;((start_x - end_x) * (start_x - end_x)) + static_cast&lt;double&gt;((start_y - end_y) * (start_y - end_y))))</font><br>
+<br>
+<font class="syn_pre">#define OMNI_DISTANCE_2POINTS_3D_FW(start_x, start_y, start_z, end_x, end_y, end_z) (<a href="http://www.cplusplus.com/reference/cmath/sqrt/">std::sqrt</a>(static_cast&lt;double&gt;((start_x - end_x) * (start_x - end_x)) + static_cast&lt;double&gt;((start_y - end_y) * (start_y - end_y)) + static_cast&lt;double&gt;((start_z - end_z) * (start_z - end_z))))</font><br>
 <br>
 <font class="syn_pre">#endif <font class="syn_cmt">// OMNI_MATH_DEF_HPP</font></font><br>
 <!--end highlighted code-->

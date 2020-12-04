@@ -26,6 +26,46 @@
     #define OMNI_ENUM_TYPE_FW(class_name) 
 #endif
 
+#if defined(OMNI_ENUM_INCLUDE_BITWISE_OPS)
+    #define OMNI_ENUM_BITWISE_OPS_FW(class_name) class_name operator|(const class_name& val) { return class_name(static_cast<enum_t>(this->m_val | val.m_val)); } \
+        class_name operator|(enum_t val) { return class_name(static_cast<enum_t>(this->m_val | val)); } \
+        class_name operator|(int32_t val) { return class_name(static_cast<enum_t>(this->m_val | val)); } \
+        class_name& operator|=(const class_name& val) { this->m_val = static_cast<enum_t>(this->m_val | val.m_val); return *this; } \
+        class_name& operator|=(enum_t val) { this->m_val = static_cast<enum_t>(this->m_val | val); return *this; } \
+        class_name& operator|=(int32_t val) { this->m_val = static_cast<enum_t>(this->m_val | val); return *this; } \
+        class_name operator&(const class_name& val) { return class_name(static_cast<enum_t>(this->m_val & val.m_val)); } \
+        class_name operator&(enum_t val) { return class_name(static_cast<enum_t>(this->m_val & val)); } \
+        class_name operator&(int32_t val) { return class_name(static_cast<enum_t>(this->m_val & val)); } \
+        class_name& operator&=(const class_name& val) { this->m_val = static_cast<enum_t>(this->m_val & val.m_val); return *this; } \
+        class_name& operator&=(enum_t val) { this->m_val = static_cast<enum_t>(this->m_val & val); return *this; } \
+        class_name& operator&=(int32_t val) { this->m_val = static_cast<enum_t>(this->m_val & val); return *this; } \
+        class_name& operator++() { this->m_val = static_cast<enum_t>(this->m_val + 1); return *this; } \
+        class_name operator++(int dummy) { OMNI_UNUSED(dummy); class_name ret(this->m_val); this->m_val = static_cast<enum_t>(this->m_val + 1); return ret; } \
+        class_name& operator--() { this->m_val = static_cast<enum_t>(this->m_val - 1); return *this; } \
+        class_name operator--(int dummy) { OMNI_UNUSED(dummy); class_name ret(this->m_val); this->m_val = static_cast<enum_t>(this->m_val - 1); return ret; } \
+        class_name operator~() { return class_name(static_cast<enum_t>(~static_cast<int32_t>(this->m_val))); } \
+        class_name operator^(const class_name& val) { return class_name(static_cast<enum_t>(this->m_val ^ val.m_val)); } \
+        class_name operator^(enum_t val) { return class_name(static_cast<enum_t>(this->m_val ^ val)); } \
+        class_name operator^(int32_t val) { return class_name(static_cast<enum_t>(this->m_val ^ val)); } \
+        class_name& operator^=(const class_name& val) { this->m_val = static_cast<enum_t>(this->m_val ^ val.m_val); return *this; } \
+        class_name& operator^=(enum_t val) { this->m_val = static_cast<enum_t>(this->m_val ^ val); return *this; } \
+        class_name& operator^=(int32_t val) { this->m_val = static_cast<enum_t>(this->m_val ^ val); return *this; } \
+        class_name operator<<(const class_name& val) { return class_name(static_cast<enum_t>(this->m_val << val.m_val)); } \
+        class_name operator<<(enum_t val) { return class_name(static_cast<enum_t>(this->m_val << val)); } \
+        class_name operator<<(int32_t val) { return class_name(static_cast<enum_t>(this->m_val << val)); } \
+        class_name& operator<<=(const class_name& val) { this->m_val = static_cast<enum_t>(this->m_val << val.m_val); return *this; } \
+        class_name& operator<<=(enum_t val) { this->m_val = static_cast<enum_t>(this->m_val << val); return *this; } \
+        class_name& operator<<=(int32_t val) { this->m_val = static_cast<enum_t>(this->m_val << val); return *this; } \
+        class_name operator>>(const class_name& val) { return class_name(static_cast<enum_t>(this->m_val >> val.m_val)); } \
+        class_name operator>>(enum_t val) { return class_name(static_cast<enum_t>(this->m_val >> val)); } \
+        class_name operator>>(int32_t val) { return class_name(static_cast<enum_t>(this->m_val >> val)); } \
+        class_name& operator>>=(const class_name& val) { this->m_val = static_cast<enum_t>(this->m_val >> val.m_val); return *this; } \
+        class_name& operator>>=(enum_t val) { this->m_val = static_cast<enum_t>(this->m_val >> val); return *this; } \
+        class_name& operator>>=(int32_t val) { this->m_val = static_cast<enum_t>(this->m_val >> val); return *this; }
+#else
+    #define OMNI_ENUM_BITWISE_OPS_FW(class_name)
+#endif
+
 #define OMNI_ENUM_ASSIGNED(class_name, ...) class class_name { \
     private: \
         template < typename S > static bool _try_parse(const S& val, class_name& out) { enum_t tmp; if (_try_parse(val, tmp)) { out.m_val = tmp; return true; } return false; } \
@@ -42,6 +82,7 @@
         class_name& operator=(const class_name& val) { if (this != &val) { this->m_val = val.m_val; } return *this; } \
         class_name& operator=(enum_t val) { this->m_val = val; return *this; } \
         class_name& operator=(int32_t val) { if (!class_name::is_valid(val)) { OMNI_ERR_RET_FW("Invalid enumeration value specified.", omni::exceptions::invalid_enum(val)); } else { this->m_val = static_cast<enum_t>(val); } return *this; } \
+        OMNI_ENUM_BITWISE_OPS_FW(class_name) \
         bool operator<(const class_name& val) const { return this->m_val < val.m_val; } \
         bool operator>(const class_name& val) const { return this->m_val > val.m_val; } \
         bool operator==(const class_name& val) const { if (this == &val) { return true; } return this->m_val == val.m_val; } \

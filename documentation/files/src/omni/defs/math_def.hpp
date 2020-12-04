@@ -76,28 +76,45 @@
     #define OMNI_180_PI_L 57.295779513082320876798154814105170336L
 #endif
 
-#define OMNI_MATH_GET_POINT_X_FW(T, center_x, radius, angle) \
-    static_cast<T>((static_cast<double>(center_x) + (static_cast<double>(radius) * std::cos((static_cast<double>(angle) * OMNI_PI_180)))))
-    
-#define OMNI_MATH_GET_POINT_Y_FW(T, center_y, radius, angle) \
-    static_cast<T>((static_cast<double>(center_y) + (static_cast<double>(radius) * std::sin((static_cast<double>(angle) * OMNI_PI_180)))))
+// radians =  degrees * π / 180
+#define OMNI_DEG_TO_RAD(deg) deg * OMNI_PI_180
 
-#define OMNI_MATH_GET_POINT_X_INT_FW(T, center_x, radius, angle) \
-    static_cast<T>(std::ceil((static_cast<double>(center_x) + (static_cast<double>(radius) * std::cos((static_cast<double>(angle) * OMNI_PI_180))))))
-    
-#define OMNI_MATH_GET_POINT_Y_INT_FW(T, center_y, radius, angle) \
-    static_cast<T>(std::ceil((static_cast<double>(center_y) + (static_cast<double>(radius) * std::sin((static_cast<double>(angle) * OMNI_PI_180))))))
+// degrees = radians * 180 / π
+#define OMNI_RAD_TO_DEG(rad) rad * OMNI_180_PI
 
-#define OMNI_MATH_ANGLE_ERR_FW if (angle > 360) { OMNI_ERR_FW("angle cannot be greater than 360 degrees", omni::exceptions::overflow_error("angle cannot be greater than 360 degrees")) }
+#define OMNI_MATH_DELTA(a,b) ((a) - (b))
+
+#define OMNI_MATH_GET_POINT_X_FW(T, center_pt, radius, angle) \
+    static_cast<T>((static_cast<double>(center_pt) + (static_cast<double>(radius) * std::sin(OMNI_DEG_TO_RAD(static_cast<double>(angle))))))
+
+#define OMNI_MATH_GET_POINT_Y_FW(T, center_pt, radius, angle) \
+    static_cast<T>((static_cast<double>(center_pt) + (static_cast<double>(radius) * std::cos(OMNI_DEG_TO_RAD(static_cast<double>(angle))))))
+
+#define OMNI_MATH_GET_POINT_X_INT_FW(T, center_pt, radius, angle) \
+    static_cast<T>(std::ceil((static_cast<double>(center_pt) + (static_cast<double>(radius) * std::sin(OMNI_DEG_TO_RAD(static_cast<double>(angle)))))))
+
+#define OMNI_MATH_GET_POINT_Y_INT_FW(T, center_pt, radius, angle) \
+    static_cast<T>(std::ceil((static_cast<double>(center_pt) + (static_cast<double>(radius) * std::cos(OMNI_DEG_TO_RAD(static_cast<double>(angle)))))))
+
+#define OMNI_MATH_ANGLE_ERR_FW(angle) if ((angle < 0) || (angle > 360)) { OMNI_ERR_FW("angle must be between 0-360 degrees", omni::exceptions::overflow_error("angle must be between 0-360 degrees")) }
 
 #define OMNI_MATH_GET_POINT_FW(T, out_x, out_y, center_x, center_y, radius, angle) \
-    OMNI_MATH_ANGLE_ERR_FW \
+    OMNI_MATH_ANGLE_ERR_FW(angle) \
     out_x = OMNI_MATH_GET_POINT_X_FW(T, center_x, radius, angle); \
     out_y = OMNI_MATH_GET_POINT_Y_FW(T, center_y, radius, angle)
 
 #define OMNI_MATH_GET_POINT_INT_FW(T, out_x, out_y, center_x, center_y, radius, angle) \
-    OMNI_MATH_ANGLE_ERR_FW \
+    OMNI_MATH_ANGLE_ERR_FW(angle) \
     out_x = OMNI_MATH_GET_POINT_X_INT_FW(T, center_x, radius, angle); \
     out_y = OMNI_MATH_GET_POINT_Y_INT_FW(T, center_y, radius, angle)
+
+#define OMNI_RECT_XYWH_CONTAINS_FW(rx,ry,rw,rh,ox,oy) ((ox >= rx) && (ox <= (rx + rw)) && (oy >= ry) && (oy <= (ry + rh)))
+#define OMNI_RECT_LTRB_CONTAINS_FW(left,top,right,bottom,ox,oy) ((ox >= left) && (ox <= right) && (oy >= top) && (oy <= bottom))
+
+#define OMNI_CIRCLE_CONTAINS_POINT_FW(cx,cy,r,x,y,oc) (oc ? (((x - cx)*(x - cx)) + ((y - cy) * (y - cy))) <= (r * r) : (((x - cx) * (x - cx)) + ((y - cy) * (y - cy))) < (r * r))
+
+#define OMNI_DISTANCE_2POINTS_2D_FW(start_x, start_y, end_x, end_y) (std::sqrt(static_cast<double>((start_x - end_x) * (start_x - end_x)) + static_cast<double>((start_y - end_y) * (start_y - end_y))))
+
+#define OMNI_DISTANCE_2POINTS_3D_FW(start_x, start_y, start_z, end_x, end_y, end_z) (std::sqrt(static_cast<double>((start_x - end_x) * (start_x - end_x)) + static_cast<double>((start_y - end_y) * (start_y - end_y)) + static_cast<double>((start_z - end_z) * (start_z - end_z))))
 
 #endif // OMNI_MATH_DEF_HPP

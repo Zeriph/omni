@@ -38,7 +38,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
     static <font class="syn_ins">inline</font> enum_t <a href="../classes/omni-net-address_family-default_value.html">omni::net::address_family::DEFAULT_VALUE</a>()<br>
     <font class="syn_typ">unsigned</font> <font class="syn_typ">short</font> <a href="../classes/omni-net-address_family-count.html">omni::net::address_family::count</a>()<br>
     <font class="syn_typ">uint64_t</font> <a href="../classes/omni-net-address_family-hash.html">omni::net::address_family::hash</a>()<br>
-    static <font class="syn_typ">bool</font> <a href="../classes/omni-net-address_family-is_valid.html">omni::net::address_family::is_valid</a>(<font class="syn_typ">int</font> val)<br>
+    static <font class="syn_typ">bool</font> <a href="../classes/omni-net-address_family-is_valid.html">omni::net::address_family::is_valid</a>(int32_t val)<br>
     static enum_t <a href="../classes/omni-net-address_family-parse.html">omni::net::address_family::parse</a>(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; val)<br>
     static <a href="http://www.cplusplus.com/reference/string/">std::string</a> <a href="../classes/omni-net-address_family-to_string.html">omni::net::address_family::to_string</a>(enum_t v)<br>
     static <a href="http://www.cplusplus.com/reference/string/">std::wstring</a> <a href="../classes/omni-net-address_family-to_wstring.html">omni::net::address_family::to_wstring</a>(enum_t v)<br>
@@ -49,17 +49,27 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
      omni::net::address_family::<font class="syn_ins">operator</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>()<br>
      omni::net::address_family::<font class="syn_ins">operator</font> <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>()<br>
     <font class="syn_typ">bool</font> omni::net::address_family::<font class="syn_ins">operator</font>!=(<font class="syn_typ">const</font> address_family&amp; val)<br>
+    address_family omni::net::address_family::<font class="syn_ins">operator</font>&amp;(<font class="syn_typ">const</font> address_family&amp; val)<br>
+    address_family&amp; omni::net::address_family::<font class="syn_ins">operator</font>&amp;=(<font class="syn_typ">const</font> address_family&amp; val)<br>
+    address_family&amp; omni::net::address_family::<font class="syn_ins">operator</font>++()<br>
+    address_family&amp; omni::net::address_family::<font class="syn_ins">operator</font>--()<br>
     <font class="syn_typ">bool</font> omni::net::address_family::<font class="syn_ins">operator</font>&lt;(<font class="syn_typ">const</font> address_family&amp; val)<br>
-    <font class="syn_ins">friend</font> <a href="http://www.cplusplus.com/reference/ostream/ostream/">std::ostream</a>&amp; omni::net::address_family::<font class="syn_ins">operator</font>&lt;&lt;(std::ostream&amp; s, <font class="syn_typ">const</font> <a href="../classes/omni-net-address_family.html">omni::net::address_family</a>&amp; c)<br>
+    address_family omni::net::address_family::<font class="syn_ins">operator</font>&lt;&lt;(<font class="syn_typ">const</font> address_family&amp; val)<br>
+    address_family&amp; omni::net::address_family::<font class="syn_ins">operator</font>&lt;&lt;=(<font class="syn_typ">const</font> address_family&amp; val)<br>
     address_family&amp; omni::net::address_family::<font class="syn_ins">operator</font>=(<font class="syn_typ">const</font> address_family&amp; val)<br>
     <font class="syn_typ">bool</font> omni::net::address_family::<font class="syn_ins">operator</font>==(<font class="syn_typ">const</font> address_family&amp; val)<br>
     <font class="syn_typ">bool</font> omni::net::address_family::<font class="syn_ins">operator</font>&gt;(<font class="syn_typ">const</font> address_family&amp; val)<br>
+    address_family omni::net::address_family::<font class="syn_ins">operator</font>&gt;&gt;(<font class="syn_typ">const</font> address_family&amp; val)<br>
+    address_family&amp; omni::net::address_family::<font class="syn_ins">operator</font>&gt;&gt;=(<font class="syn_typ">const</font> address_family&amp; val)<br>
+    address_family omni::net::address_family::<font class="syn_ins">operator</font>^(<font class="syn_typ">const</font> address_family&amp; val)<br>
+    address_family&amp; omni::net::address_family::<font class="syn_ins">operator</font>^=(<font class="syn_typ">const</font> address_family&amp; val)<br>
+    address_family omni::net::address_family::<font class="syn_ins">operator</font>|(<font class="syn_typ">const</font> address_family&amp; val)<br>
+    address_family&amp; omni::net::address_family::<font class="syn_ins">operator</font>|=(<font class="syn_typ">const</font> address_family&amp; val)<br>
+    address_family omni::net::address_family::<font class="syn_ins">operator</font>~()<br>
     <a href="../classes/omni-net-address_family-appletalk.html">omni::net::address_family::APPLETALK</a><br>
     <a href="../classes/omni-net-address_family-decnet.html">omni::net::address_family::DECNET</a><br>
     <a href="../classes/omni-net-address_family-inet.html">omni::net::address_family::INET</a><br>
     <a href="../classes/omni-net-address_family-inet6.html">omni::net::address_family::INET6</a><br>
-    <a href="../classes/omni-net-address_family-internetwork.html">omni::net::address_family::INTERNETWORK</a><br>
-    <a href="../classes/omni-net-address_family-internetwork_v6.html">omni::net::address_family::INTERNETWORK_V6</a><br>
     <a href="../classes/omni-net-address_family-sna.html">omni::net::address_family::SNA</a><br>
     <a href="../classes/omni-net-address_family-unix.html">omni::net::address_family::UNIX</a><br>
     <a href="../classes/omni-net-address_family-unspecified.html">omni::net::address_family::UNSPECIFIED</a><br>

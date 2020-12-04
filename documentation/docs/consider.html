@@ -32,6 +32,22 @@ If you feel an issue is indeed a bug, please <a href="mailto:omniqa@zeriph.com">
 <a href="https://zeriph.com/contact.php">contact us</a> to let us know so we can resolve the issue.<br><br>
 <font class="hdr">Developer Notes</font><br><br>
 
+<div class="consider"><input type="checkbox" id="issue_padding" name="issue_padding" />
+<label class="code" for="issue_padding"> details</label><table class="code"><tr>
+<td>Issue</td><td>
+Struct/class padding
+</td></tr><tr><td>Description</td><td>
+Considerable effort and care has been put into the classes and structures being properly aligned
+to byte boundaries to reduce padding, and to ideally have 0 padding. If you compile Omni with other
+options, like adding the <code>name</code> or <code>disposing</code> members to any class, the padding
+for that class/struct could be misaligned and thus the compiler will add padding. As well, if you are running
+on a 32-bit system, you can specify the <a href="options/omni_32bit.html">OMNI_32BIT</a> preprocessor
+flag to have certain classes compile with 32-bit integer types to reduce or get rid of padding.
+</td></tr><tr><td>Resolution</td><td>
+If padding and alignment are of concern, be aware that you can specify the <a href="options/omni_32bit.html">OMNI_32BIT</a> flag
+for the entire library or individual classes.
+</td></tr></table></div>
+
 <div class="consider"><input type="checkbox" id="issue_vthunk" name="issue_vthunk" />
 <label class="code" for="issue_vthunk"> details</label><table class="code"><tr>
 <td>Issue</td><td>

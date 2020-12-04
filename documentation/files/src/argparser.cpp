@@ -182,7 +182,7 @@ uint32_t omni::application::argparser::get_switch_count(const omni::string_t& sw
         OMNI_D1_FW("invalid switch specified");
         return 0;
     }
-    uint32_t ret;
+    uint32_t ret = 0;
     omni_foreach_c(omni::string_t, arg, this->m_args) {
         if (sw == *arg) { ++ret; }
     }

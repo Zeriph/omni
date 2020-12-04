@@ -34,10 +34,13 @@
     #define OMNI_SAFE_SOCKEPOALOCK_FW(o) 
 #endif
 
+#define OMNI_EPDESC_CONN_FLAG_FW 1
+#define OMNI_EPDESC_SHUT_FLAG_FW 2
+
 omni::net::socket_error omni::net::endpoint_descriptor::_close(uint16_t timeout, bool shutdown)
 {
     OMNI_SAFE_SOCKEPALOCK_FW
-    if (this->m_connected) {
+    if (OMNI_VAL_HAS_FLAG_BIT(this->m_status, OMNI_EPDESC_CONN_FLAG_FW)) {
         if (timeout > 0) {
             struct linger lop;
             lop.l_onoff = 1;
@@ -57,7 +60,7 @@ omni::net::socket_error omni::net::endpoint_descriptor::_close(uint16_t timeout,
             this->m_socket = OMNI_INVALID_SOCKET;
             std::memset(&this->m_addr, 0, sizeof(this->m_addr));
         }
-        this->m_connected = false;
+        OMNI_VAL_UNSET_FLAG_BIT(this->m_status, OMNI_EPDESC_CONN_FLAG_FW);
         this->m_last_err = omni::net::socket_error::SUCCESS;
     } else {
         this->m_last_err = omni::net::socket_error::NOT_CONNECTED;
@@ -68,7 +71,7 @@ omni::net::socket_error omni::net::endpoint_descriptor::_close(uint16_t timeout,
 omni::net::socket_error omni::net::endpoint_descriptor::_receive(void* buffer, uint32_t buffer_size, omni::net::socket_flags flags, uint32_t& received)
 {
     OMNI_SAFE_SOCKEPALOCK_FW
-    if (!this->m_connected) {
+    if (!OMNI_VAL_HAS_FLAG_BIT(this->m_status, OMNI_EPDESC_CONN_FLAG_FW)) {
         return (this->m_last_err = omni::net::socket_error::NOT_CONNECTED);
     }
     #if defined(OMNI_WIN_API)
@@ -89,7 +92,7 @@ omni::net::socket_error omni::net::endpoint_descriptor::_receive(void* buffer, u
             // error
             case OMNI_SOCK_SYSERR_FW: return (this->m_last_err = omni::net::parse_error(OMNI_SOCKET_ERR_FW));
             // success
-            default: received = r; break;
+            default: received = static_cast<uint32_t>(r); break;
         }
     #endif
     return (this->m_last_err = omni::net::socket_error::SUCCESS);
@@ -98,7 +101,7 @@ omni::net::socket_error omni::net::endpoint_descriptor::_receive(void* buffer, u
 omni::net::socket_error omni::net::endpoint_descriptor::_send(const void* buffer, uint32_t buffer_size, omni::net::socket_flags flags, uint32_t& sent)
 {
     OMNI_SAFE_SOCKEPALOCK_FW
-    if (!this->m_connected) {
+    if (!OMNI_VAL_HAS_FLAG_BIT(this->m_status, OMNI_EPDESC_CONN_FLAG_FW)) {
         return (this->m_last_err = omni::net::socket_error::NOT_CONNECTED);
     }
     #if defined(OMNI_WIN_API)
@@ -117,7 +120,7 @@ omni::net::socket_error omni::net::endpoint_descriptor::_send(const void* buffer
             return (this->m_last_err = omni::net::parse_error(OMNI_SOCKET_ERR_FW));
         }
         // success
-        sent = r;
+        sent = static_cast<uint32_t>(r);
     #endif
     return (this->m_last_err = omni::net::socket_error::SUCCESS);
 }
@@ -125,7 +128,7 @@ omni::net::socket_error omni::net::endpoint_descriptor::_send(const void* buffer
 omni::net::endpoint_descriptor::endpoint_descriptor() :
     OMNI_CTOR_FW(omni::net::endpoint_descriptor)
     m_socket(OMNI_INVALID_SOCKET), m_addr(),  m_last_err(omni::net::socket_error::UNSPECIFIED),
-    m_connected(), m_shut()
+    m_status()
     OMNI_SAFE_SOCKEPMTX_FW
 {
 }
@@ -133,7 +136,7 @@ omni::net::endpoint_descriptor::endpoint_descriptor() :
 omni::net::endpoint_descriptor::endpoint_descriptor(const omni::net::endpoint_descriptor& cp) :
     OMNI_CTOR_FW(omni::net::endpoint_descriptor)
     m_socket(OMNI_INVALID_SOCKET), m_addr(), m_last_err(omni::net::socket_error::UNSPECIFIED),
-    m_connected(), m_shut()
+    m_status()
     OMNI_SAFE_SOCKEPMTX_FW
 {
     this->swap(*const_cast<omni::net::endpoint_descriptor*>(&cp));
@@ -171,13 +174,13 @@ omni::net::socket_t omni::net::endpoint_descriptor::native_handle() const
 bool omni::net::endpoint_descriptor::is_connected() const
 {
     OMNI_SAFE_SOCKEPALOCK_FW
-    return this->m_connected;
+    return OMNI_VAL_HAS_FLAG_BIT(this->m_status, OMNI_EPDESC_CONN_FLAG_FW);
 }
 
 bool omni::net::endpoint_descriptor::is_shutdown() const
 {
     OMNI_SAFE_SOCKEPALOCK_FW
-    return this->m_shut;
+    return OMNI_VAL_HAS_FLAG_BIT(this->m_status, OMNI_EPDESC_SHUT_FLAG_FW);
 }
 
 omni::net::socket_error omni::net::endpoint_descriptor::last_error() const
@@ -189,7 +192,7 @@ omni::net::socket_error omni::net::endpoint_descriptor::last_error() const
 omni::net::socket_error omni::net::endpoint_descriptor::connect(const omni::net::socket_t& serv_sock)
 {
     OMNI_SAFE_SOCKEPALOCK_FW
-    if (this->m_connected) {
+    if (OMNI_VAL_HAS_FLAG_BIT(this->m_status, OMNI_EPDESC_CONN_FLAG_FW)) {
         return (this->m_last_err = omni::net::socket_error::IS_CONNECTED);
     }
     OMNI_SOCKLEN_FW out_len = sizeof(this->m_addr);
@@ -197,8 +200,8 @@ omni::net::socket_error omni::net::endpoint_descriptor::connect(const omni::net:
     if (this->m_socket == OMNI_INVALID_SOCKET) {
         return (this->m_last_err = omni::net::parse_error(OMNI_SOCKET_ERR_FW));
     }
-    this->m_connected = true;
-    this->m_shut = false;
+    OMNI_VAL_SET_FLAG_BIT(this->m_status, OMNI_EPDESC_CONN_FLAG_FW);
+    OMNI_VAL_UNSET_FLAG_BIT(this->m_status, OMNI_EPDESC_SHUT_FLAG_FW);
     return (this->m_last_err = omni::net::socket_error::SUCCESS);
 }
 
@@ -215,7 +218,7 @@ omni::net::socket_error omni::net::endpoint_descriptor::close(uint16_t timeout)
 omni::net::socket_error omni::net::endpoint_descriptor::ioc(uint32_t op_code, omni::net::xfr_t* val, int32_t& result)
 {
     OMNI_SAFE_SOCKEPALOCK_FW
-    if (!this->m_connected) {
+    if (!OMNI_VAL_HAS_FLAG_BIT(this->m_status, OMNI_EPDESC_CONN_FLAG_FW)) {
         return (this->m_last_err = omni::net::socket_error::NOT_CONNECTED);
     }
     #if defined(OMNI_OS_WIN)
@@ -232,10 +235,10 @@ omni::net::socket_error omni::net::endpoint_descriptor::ioc(uint32_t op_code, om
 omni::net::socket_error omni::net::endpoint_descriptor::get_socket_option(omni::net::socket_option_level op_level, int32_t op_name, int32_t& op_val)
 {
     OMNI_SAFE_SOCKEPALOCK_FW
-    if (!this->m_connected) {
+    if (!OMNI_VAL_HAS_FLAG_BIT(this->m_status, OMNI_EPDESC_CONN_FLAG_FW)) {
         return (this->m_last_err = omni::net::socket_error::NOT_CONNECTED);
     }
-    int err = 0;
+    int serr = 0;
     OMNI_SOCKLEN_FW sz;
     if ((op_level == omni::net::socket_option_level::SOCKET) &&
         ((op_name == omni::net::socket_option::LINGER) || (op_name == omni::net::socket_option::DONT_LINGER)))
@@ -243,19 +246,19 @@ omni::net::socket_error omni::net::endpoint_descriptor::get_socket_option(omni::
         struct linger lop;
         std::memset(&lop, 0, sizeof(struct linger));
         sz = static_cast<OMNI_SOCKLEN_FW>(sizeof(struct linger));
-        err = ::getsockopt(this->m_socket,
+        serr = ::getsockopt(this->m_socket,
                            static_cast<int>(op_level),
                            static_cast<int>(omni::net::socket_option::LINGER),
                            reinterpret_cast<OMNI_SOCKET_XFR_T_FW*>(&lop),
                            &sz);
-        if (err == 0) { op_val = static_cast<int32_t>(lop.l_linger); }
+        if (serr == 0) { op_val = static_cast<int32_t>(lop.l_linger); }
     } else {
         OMNI_SOCKET_XFR_T_FW* val = reinterpret_cast<OMNI_SOCKET_XFR_T_FW*>(&op_val);
         sz = static_cast<OMNI_SOCKLEN_FW>(sizeof(val));
-        err = ::getsockopt(this->m_socket, static_cast<int>(op_level), static_cast<int>(op_name), val, &sz);
-        if (err == 0) { op_val = *(reinterpret_cast<int32_t*>(val)); }
+        serr = ::getsockopt(this->m_socket, static_cast<int>(op_level), static_cast<int>(op_name), val, &sz);
+        if (serr == 0) { op_val = *(reinterpret_cast<int32_t*>(val)); }
     }
-    if (err != 0) { return (this->m_last_err = omni::net::parse_error(OMNI_SOCKET_ERR_FW)); }
+    if (serr != 0) { return (this->m_last_err = omni::net::parse_error(OMNI_SOCKET_ERR_FW)); }
     return (this->m_last_err = omni::net::socket_error::SUCCESS);
 }
 
@@ -272,26 +275,26 @@ omni::net::socket_error omni::net::endpoint_descriptor::get_socket_option(omni::
 omni::net::socket_error omni::net::endpoint_descriptor::shutdown(omni::net::socket_shutdown how)
 {
     OMNI_SAFE_SOCKEPALOCK_FW
-    if (!this->m_connected) {
+    if (!OMNI_VAL_HAS_FLAG_BIT(this->m_status, OMNI_EPDESC_CONN_FLAG_FW)) {
         return (this->m_last_err = omni::net::socket_error::NOT_CONNECTED);
-    } else if (this->m_shut) {
+    } else if (OMNI_VAL_HAS_FLAG_BIT(this->m_status, OMNI_EPDESC_SHUT_FLAG_FW)) {
         return (this->m_last_err = omni::net::socket_error::SUCCESS);
     }
-    int err = ::shutdown(this->m_socket, static_cast<int>(how));
-    if (err == OMNI_SOCK_SYSERR_FW) {
+    int serr = ::shutdown(this->m_socket, static_cast<int>(how));
+    if (serr == OMNI_SOCK_SYSERR_FW) {
         return (this->m_last_err = omni::net::parse_error(OMNI_SOCKET_ERR_FW));
     }
-    this->m_shut = true;
+    OMNI_VAL_SET_FLAG_BIT(this->m_status, OMNI_EPDESC_SHUT_FLAG_FW);
     return (this->m_last_err = omni::net::socket_error::SUCCESS);
 }
 
 omni::net::socket_error omni::net::endpoint_descriptor::set_socket_option(omni::net::socket_option_level op_level, int32_t op_name, int32_t op_val)
 {
     OMNI_SAFE_SOCKEPALOCK_FW
-    if (!this->m_connected) {
+    if (!OMNI_VAL_HAS_FLAG_BIT(this->m_status, OMNI_EPDESC_CONN_FLAG_FW)) {
         return (this->m_last_err = omni::net::socket_error::NOT_CONNECTED);
     }
-    int err = 0;
+    int serr = 0;
     if ((op_level == omni::net::socket_option_level::SOCKET) &&
         ((op_name == omni::net::socket_option::LINGER) || (op_name == omni::net::socket_option::DONT_LINGER)))
     {
@@ -301,19 +304,19 @@ omni::net::socket_error omni::net::endpoint_descriptor::set_socket_option(omni::
             lop.l_onoff = 1;
             lop.l_linger = op_val;
         }
-        err = ::setsockopt(this->m_socket,
+        serr = ::setsockopt(this->m_socket,
                            static_cast<int>(op_level),
                            static_cast<int>(omni::net::socket_option::LINGER),
                            reinterpret_cast<OMNI_SOCKET_XFR_T_FW*>(&lop),
                            sizeof(struct linger));
     } else {
-        err = ::setsockopt(this->m_socket,
+        serr = ::setsockopt(this->m_socket,
                            static_cast<int>(op_level),
                            static_cast<int>(op_name),
                            reinterpret_cast<OMNI_SOCKET_XFR_T_FW*>(&op_val),
                            sizeof(int32_t));
     }
-    if (err != 0) {
+    if (serr != 0) {
         return (this->m_last_err = omni::net::parse_error(OMNI_SOCKET_ERR_FW));
     }
     return (this->m_last_err = omni::net::socket_error::SUCCESS);
@@ -337,8 +340,7 @@ void omni::net::endpoint_descriptor::swap(omni::net::endpoint_descriptor& other)
         std::swap(this->m_socket, other.m_socket);
         std::swap(this->m_addr, other.m_addr);
         std::swap(this->m_last_err, other.m_last_err);
-        std::swap(this->m_connected, other.m_connected);
-        std::swap(this->m_shut, other.m_shut);
+        std::swap(this->m_status, other.m_status);
     }
 }
 
@@ -376,18 +378,17 @@ omni::net::endpoint_descriptor& omni::net::endpoint_descriptor::operator=(omni::
     this->m_socket = other.m_socket;
     //this->m_addr = other.m_addr;
     std::memcpy(&this->m_addr, &other.m_addr, sizeof(this->m_addr));
-    this->m_connected = other.m_connected;
-    this->m_shut = other.m_shut;
+    this->m_status = other.m_status;
     
     other.m_socket = OMNI_INVALID_SOCKET;
     std::memset(&other.m_addr, 0, sizeof(other.m_addr));
-    other.m_connected = false;
-    other.m_shut = false;
+    other.m_status = 0;
     return *this;
 }
 
 bool omni::net::endpoint_descriptor::operator==(const omni::net::endpoint_descriptor &other) const
 {
+    OMNI_UNUSED(other);
     return false;
 }
 

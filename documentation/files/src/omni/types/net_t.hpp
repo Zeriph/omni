@@ -21,7 +21,7 @@
 #include <omni/defs/global.hpp>
 #include <omni/defs/class_macros.hpp>
 #include <omni/defs/net_def.hpp>
-#include <omni/util/bits.hpp>
+#include <omni/bits.hpp>
 #include <omni/stack_buffer.hpp>
 
 /*
@@ -40,9 +40,7 @@ namespace omni {
                 typedef enum enum_t {
                     UNSPECIFIED = AF_UNSPEC,
                     UNIX = AF_UNIX,
-                    INTERNETWORK = AF_INET,
                     INET = AF_INET,
-                    INTERNETWORK_V6 = AF_INET6,
                     INET6 = AF_INET6,
                     SNA = AF_SNA,
                     DECNET = AF_DECnet,
@@ -51,7 +49,7 @@ namespace omni {
                 
                 static inline unsigned short COUNT()
                 {
-                    return 9;
+                    return 7;
                 }
 
                 static inline enum_t DEFAULT_VALUE()
@@ -99,7 +97,7 @@ namespace omni {
                     return _try_parse(val, out);
                 }
 
-                static bool is_valid(int val)
+                static bool is_valid(int32_t val)
                 {
                     return _valid(val);
                 }
@@ -172,13 +170,211 @@ namespace omni {
                     return *this;
                 }
 
-                address_family& operator=(int val)
+                address_family& operator=(int32_t val)
                 {
                     if (!address_family::is_valid(val)) {
                         OMNI_ERR_RET_FW("Invalid enumeration value specified.", omni::exceptions::invalid_enum(val));
                     } else {
                         this->m_val = static_cast<enum_t>(val);
                     }
+                    return *this;
+                }
+
+                address_family operator|(const address_family& val)
+                {
+                    return address_family(static_cast<enum_t>(this->m_val | val.m_val));
+                }
+
+                address_family operator|(enum_t val)
+                {
+                    return address_family(static_cast<enum_t>(this->m_val | val));
+                }
+
+                address_family operator|(int32_t val)
+                {
+                    return address_family(static_cast<enum_t>(this->m_val | val));
+                }
+
+                address_family& operator|=(const address_family& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val | val.m_val);
+                    return *this;
+                }
+
+                address_family& operator|=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val | val);
+                    return *this;
+                }
+
+                address_family& operator|=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val | val);
+                    return *this;
+                }
+
+                address_family operator&(const address_family& val)
+                {
+                    return address_family(static_cast<enum_t>(this->m_val & val.m_val));
+                }
+
+                address_family operator&(enum_t val)
+                {
+                    return address_family(static_cast<enum_t>(this->m_val & val));
+                }
+
+                address_family operator&(int32_t val)
+                {
+                    return address_family(static_cast<enum_t>(this->m_val & val));
+                }
+
+                address_family& operator&=(const address_family& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val & val.m_val);
+                    return *this;
+                }
+
+                address_family& operator&=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val & val);
+                    return *this;
+                }
+
+                address_family& operator&=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val & val);
+                    return *this;
+                }
+                
+                address_family& operator++()
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val + 1);
+                    return *this;
+                }
+
+                address_family operator++(int dummy)
+                {
+                    OMNI_UNUSED(dummy);
+                    address_family ret(this->m_val);
+                    this->m_val = static_cast<enum_t>(this->m_val + 1);
+                    return ret;
+                }
+
+                address_family& operator--()
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val - 1);
+                    return *this;
+                }
+
+                address_family operator--(int dummy)
+                {
+                    OMNI_UNUSED(dummy);
+                    address_family ret(this->m_val);
+                    this->m_val = static_cast<enum_t>(this->m_val - 1);
+                    return ret;
+                }
+
+                address_family operator~()
+                {
+                    return address_family(static_cast<enum_t>(~static_cast<int32_t>(this->m_val)));
+                }
+
+                address_family operator^(const address_family& val)
+                {
+                    return address_family(static_cast<enum_t>(this->m_val ^ val.m_val));
+                }
+
+                address_family operator^(enum_t val)
+                {
+                    return address_family(static_cast<enum_t>(this->m_val ^ val));
+                }
+
+                address_family operator^(int32_t val)
+                {
+                    return address_family(static_cast<enum_t>(this->m_val ^ val));
+                }
+
+                address_family& operator^=(const address_family& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val ^ val.m_val);
+                    return *this;
+                }
+
+                address_family& operator^=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val ^ val);
+                    return *this;
+                }
+
+                address_family& operator^=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val ^ val);
+                    return *this;
+                }
+
+                address_family operator<<(const address_family& val)
+                {
+                    return address_family(static_cast<enum_t>(this->m_val << val.m_val));
+                }
+
+                address_family operator<<(enum_t val)
+                {
+                    return address_family(static_cast<enum_t>(this->m_val << val));
+                }
+
+                address_family operator<<(int32_t val)
+                {
+                    return address_family(static_cast<enum_t>(this->m_val << val));
+                }
+
+                address_family& operator<<=(const address_family& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val << val.m_val);
+                    return *this;
+                }
+
+                address_family& operator<<=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val << val);
+                    return *this;
+                }
+
+                address_family& operator<<=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val << val);
+                    return *this;
+                }
+
+                address_family operator>>(const address_family& val)
+                {
+                    return address_family(static_cast<enum_t>(this->m_val >> val.m_val));
+                }
+
+                address_family operator>>(enum_t val)
+                {
+                    return address_family(static_cast<enum_t>(this->m_val >> val));
+                }
+
+                address_family operator>>(int32_t val)
+                {
+                    return address_family(static_cast<enum_t>(this->m_val >> val));
+                }
+
+                address_family& operator>>=(const address_family& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val >> val.m_val);
+                    return *this;
+                }
+
+                address_family& operator>>=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val >> val);
+                    return *this;
+                }
+
+                address_family& operator>>=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val >> val);
                     return *this;
                 }
 
@@ -192,7 +388,7 @@ namespace omni {
                     return this->m_val < val;
                 }
 
-                bool operator<(int val) const
+                bool operator<(int32_t val) const
                 {
                     return this->m_val < static_cast<enum_t>(val);
                 }
@@ -207,7 +403,7 @@ namespace omni {
                     return this->m_val > val;
                 }
 
-                bool operator>(int val) const
+                bool operator>(int32_t val) const
                 {
                     return this->m_val > val;
                 }
@@ -224,7 +420,7 @@ namespace omni {
                     return this->m_val == val;
                 }
 
-                bool operator==(int val) const
+                bool operator==(int32_t val) const
                 {
                     return this->m_val == val;
                 }
@@ -288,9 +484,7 @@ namespace omni {
                     if (!val.empty()) {
                         OMNI_S2E_FW(UNSPECIFIED)
                         OMNI_S2E_FW(UNIX)
-                        OMNI_S2E_FW(INTERNETWORK)
                         OMNI_S2E_FW(INET)
-                        OMNI_S2E_FW(INTERNETWORK_V6)
                         OMNI_S2E_FW(INET6)
                         OMNI_S2E_FW(SNA)
                         OMNI_S2E_FW(DECNET)
@@ -306,10 +500,8 @@ namespace omni {
                     switch (v) {
                         OMNI_E2SS_FW(UNSPECIFIED);
                         OMNI_E2SS_FW(UNIX);
-                        OMNI_E2SS_FW(INTERNETWORK);
-                        //OMNI_E2SS_FW(INET);
-                        OMNI_E2SS_FW(INTERNETWORK_V6);
-                        //OMNI_E2SS_FW(INET6);
+                        OMNI_E2SS_FW(INET);
+                        OMNI_E2SS_FW(INET6);
                         OMNI_E2SS_FW(SNA);
                         OMNI_E2SS_FW(DECNET);
                         OMNI_E2SS_FW(APPLETALK);
@@ -320,15 +512,13 @@ namespace omni {
                     return ss.str();
                 }
 
-                static bool _valid(int val)
+                static bool _valid(int32_t val)
                 {
                     return (val == 
                         UNSPECIFIED ||
                         UNIX ||
-                        INTERNETWORK ||
-                        // INET ||
-                        INTERNETWORK_V6 ||
-                        // INET6 ||
+                        INET ||
+                        INET6 ||
                         SNA ||
                         DECNET ||
                         APPLETALK
@@ -397,7 +587,7 @@ namespace omni {
                     return _try_parse(val, out);
                 }
 
-                static bool is_valid(int val)
+                static bool is_valid(int32_t val)
                 {
                     return _valid(val);
                 }
@@ -470,7 +660,7 @@ namespace omni {
                     return *this;
                 }
 
-                connection_option& operator=(int val)
+                connection_option& operator=(int32_t val)
                 {
                     if (!connection_option::is_valid(val)) {
                         OMNI_ERR_RET_FW("Invalid enumeration value specified.", omni::exceptions::invalid_enum(val));
@@ -490,7 +680,7 @@ namespace omni {
                     return this->m_val < val;
                 }
 
-                bool operator<(int val) const
+                bool operator<(int32_t val) const
                 {
                     return this->m_val < static_cast<enum_t>(val);
                 }
@@ -505,7 +695,7 @@ namespace omni {
                     return this->m_val > val;
                 }
 
-                bool operator>(int val) const
+                bool operator>(int32_t val) const
                 {
                     return this->m_val > val;
                 }
@@ -522,7 +712,7 @@ namespace omni {
                     return this->m_val == val;
                 }
 
-                bool operator==(int val) const
+                bool operator==(int32_t val) const
                 {
                     return this->m_val == val;
                 }
@@ -610,7 +800,7 @@ namespace omni {
                     return ss.str();
                 }
 
-                static bool _valid(int val)
+                static bool _valid(int32_t val)
                 {
                     return (val == 
                         CONNECTED ||
@@ -690,7 +880,7 @@ namespace omni {
                     return _try_parse(val, out);
                 }
 
-                static bool is_valid(int val)
+                static bool is_valid(int32_t val)
                 {
                     return _valid(val);
                 }
@@ -763,13 +953,211 @@ namespace omni {
                     return *this;
                 }
 
-                protocol_type& operator=(int val)
+                protocol_type& operator=(int32_t val)
                 {
                     if (!protocol_type::is_valid(val)) {
                         OMNI_ERR_RET_FW("Invalid enumeration value specified.", omni::exceptions::invalid_enum(val));
                     } else {
                         this->m_val = static_cast<enum_t>(val);
                     }
+                    return *this;
+                }
+
+                protocol_type operator|(const protocol_type& val)
+                {
+                    return protocol_type(static_cast<enum_t>(this->m_val | val.m_val));
+                }
+
+                protocol_type operator|(enum_t val)
+                {
+                    return protocol_type(static_cast<enum_t>(this->m_val | val));
+                }
+
+                protocol_type operator|(int32_t val)
+                {
+                    return protocol_type(static_cast<enum_t>(this->m_val | val));
+                }
+
+                protocol_type& operator|=(const protocol_type& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val | val.m_val);
+                    return *this;
+                }
+
+                protocol_type& operator|=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val | val);
+                    return *this;
+                }
+
+                protocol_type& operator|=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val | val);
+                    return *this;
+                }
+
+                protocol_type operator&(const protocol_type& val)
+                {
+                    return protocol_type(static_cast<enum_t>(this->m_val & val.m_val));
+                }
+
+                protocol_type operator&(enum_t val)
+                {
+                    return protocol_type(static_cast<enum_t>(this->m_val & val));
+                }
+
+                protocol_type operator&(int32_t val)
+                {
+                    return protocol_type(static_cast<enum_t>(this->m_val & val));
+                }
+
+                protocol_type& operator&=(const protocol_type& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val & val.m_val);
+                    return *this;
+                }
+
+                protocol_type& operator&=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val & val);
+                    return *this;
+                }
+
+                protocol_type& operator&=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val & val);
+                    return *this;
+                }
+                
+                protocol_type& operator++()
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val + 1);
+                    return *this;
+                }
+
+                protocol_type operator++(int dummy)
+                {
+                    OMNI_UNUSED(dummy);
+                    protocol_type ret(this->m_val);
+                    this->m_val = static_cast<enum_t>(this->m_val + 1);
+                    return ret;
+                }
+
+                protocol_type& operator--()
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val - 1);
+                    return *this;
+                }
+
+                protocol_type operator--(int dummy)
+                {
+                    OMNI_UNUSED(dummy);
+                    protocol_type ret(this->m_val);
+                    this->m_val = static_cast<enum_t>(this->m_val - 1);
+                    return ret;
+                }
+
+                protocol_type operator~()
+                {
+                    return protocol_type(static_cast<enum_t>(~static_cast<int32_t>(this->m_val)));
+                }
+
+                protocol_type operator^(const protocol_type& val)
+                {
+                    return protocol_type(static_cast<enum_t>(this->m_val ^ val.m_val));
+                }
+
+                protocol_type operator^(enum_t val)
+                {
+                    return protocol_type(static_cast<enum_t>(this->m_val ^ val));
+                }
+
+                protocol_type operator^(int32_t val)
+                {
+                    return protocol_type(static_cast<enum_t>(this->m_val ^ val));
+                }
+
+                protocol_type& operator^=(const protocol_type& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val ^ val.m_val);
+                    return *this;
+                }
+
+                protocol_type& operator^=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val ^ val);
+                    return *this;
+                }
+
+                protocol_type& operator^=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val ^ val);
+                    return *this;
+                }
+
+                protocol_type operator<<(const protocol_type& val)
+                {
+                    return protocol_type(static_cast<enum_t>(this->m_val << val.m_val));
+                }
+
+                protocol_type operator<<(enum_t val)
+                {
+                    return protocol_type(static_cast<enum_t>(this->m_val << val));
+                }
+
+                protocol_type operator<<(int32_t val)
+                {
+                    return protocol_type(static_cast<enum_t>(this->m_val << val));
+                }
+
+                protocol_type& operator<<=(const protocol_type& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val << val.m_val);
+                    return *this;
+                }
+
+                protocol_type& operator<<=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val << val);
+                    return *this;
+                }
+
+                protocol_type& operator<<=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val << val);
+                    return *this;
+                }
+
+                protocol_type operator>>(const protocol_type& val)
+                {
+                    return protocol_type(static_cast<enum_t>(this->m_val >> val.m_val));
+                }
+
+                protocol_type operator>>(enum_t val)
+                {
+                    return protocol_type(static_cast<enum_t>(this->m_val >> val));
+                }
+
+                protocol_type operator>>(int32_t val)
+                {
+                    return protocol_type(static_cast<enum_t>(this->m_val >> val));
+                }
+
+                protocol_type& operator>>=(const protocol_type& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val >> val.m_val);
+                    return *this;
+                }
+
+                protocol_type& operator>>=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val >> val);
+                    return *this;
+                }
+
+                protocol_type& operator>>=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val >> val);
                     return *this;
                 }
 
@@ -783,7 +1171,7 @@ namespace omni {
                     return this->m_val < val;
                 }
 
-                bool operator<(int val) const
+                bool operator<(int32_t val) const
                 {
                     return this->m_val < static_cast<enum_t>(val);
                 }
@@ -798,7 +1186,7 @@ namespace omni {
                     return this->m_val > val;
                 }
 
-                bool operator>(int val) const
+                bool operator>(int32_t val) const
                 {
                     return this->m_val > val;
                 }
@@ -815,7 +1203,7 @@ namespace omni {
                     return this->m_val == val;
                 }
 
-                bool operator==(int val) const
+                bool operator==(int32_t val) const
                 {
                     return this->m_val == val;
                 }
@@ -917,7 +1305,7 @@ namespace omni {
                     return ss.str();
                 }
 
-                static bool _valid(int val)
+                static bool _valid(int32_t val)
                 {
                     return (val == 
                         UNKNOWN ||
@@ -1039,7 +1427,7 @@ namespace omni {
                     return _try_parse(val, out);
                 }
 
-                static bool is_valid(int val)
+                static bool is_valid(int32_t val)
                 {
                     return _valid(val);
                 }
@@ -1112,13 +1500,211 @@ namespace omni {
                     return *this;
                 }
 
-                socket_error& operator=(int val)
+                socket_error& operator=(int32_t val)
                 {
                     if (!socket_error::is_valid(val)) {
                         OMNI_ERR_RET_FW("Invalid enumeration value specified.", omni::exceptions::invalid_enum(val));
                     } else {
                         this->m_val = static_cast<enum_t>(val);
                     }
+                    return *this;
+                }
+
+                socket_error operator|(const socket_error& val)
+                {
+                    return socket_error(static_cast<enum_t>(this->m_val | val.m_val));
+                }
+
+                socket_error operator|(enum_t val)
+                {
+                    return socket_error(static_cast<enum_t>(this->m_val | val));
+                }
+
+                socket_error operator|(int32_t val)
+                {
+                    return socket_error(static_cast<enum_t>(this->m_val | val));
+                }
+
+                socket_error& operator|=(const socket_error& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val | val.m_val);
+                    return *this;
+                }
+
+                socket_error& operator|=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val | val);
+                    return *this;
+                }
+
+                socket_error& operator|=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val | val);
+                    return *this;
+                }
+
+                socket_error operator&(const socket_error& val)
+                {
+                    return socket_error(static_cast<enum_t>(this->m_val & val.m_val));
+                }
+
+                socket_error operator&(enum_t val)
+                {
+                    return socket_error(static_cast<enum_t>(this->m_val & val));
+                }
+
+                socket_error operator&(int32_t val)
+                {
+                    return socket_error(static_cast<enum_t>(this->m_val & val));
+                }
+
+                socket_error& operator&=(const socket_error& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val & val.m_val);
+                    return *this;
+                }
+
+                socket_error& operator&=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val & val);
+                    return *this;
+                }
+
+                socket_error& operator&=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val & val);
+                    return *this;
+                }
+                
+                socket_error& operator++()
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val + 1);
+                    return *this;
+                }
+
+                socket_error operator++(int dummy)
+                {
+                    OMNI_UNUSED(dummy);
+                    socket_error ret(this->m_val);
+                    this->m_val = static_cast<enum_t>(this->m_val + 1);
+                    return ret;
+                }
+
+                socket_error& operator--()
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val - 1);
+                    return *this;
+                }
+
+                socket_error operator--(int dummy)
+                {
+                    OMNI_UNUSED(dummy);
+                    socket_error ret(this->m_val);
+                    this->m_val = static_cast<enum_t>(this->m_val - 1);
+                    return ret;
+                }
+
+                socket_error operator~()
+                {
+                    return socket_error(static_cast<enum_t>(~static_cast<int32_t>(this->m_val)));
+                }
+
+                socket_error operator^(const socket_error& val)
+                {
+                    return socket_error(static_cast<enum_t>(this->m_val ^ val.m_val));
+                }
+
+                socket_error operator^(enum_t val)
+                {
+                    return socket_error(static_cast<enum_t>(this->m_val ^ val));
+                }
+
+                socket_error operator^(int32_t val)
+                {
+                    return socket_error(static_cast<enum_t>(this->m_val ^ val));
+                }
+
+                socket_error& operator^=(const socket_error& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val ^ val.m_val);
+                    return *this;
+                }
+
+                socket_error& operator^=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val ^ val);
+                    return *this;
+                }
+
+                socket_error& operator^=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val ^ val);
+                    return *this;
+                }
+
+                socket_error operator<<(const socket_error& val)
+                {
+                    return socket_error(static_cast<enum_t>(this->m_val << val.m_val));
+                }
+
+                socket_error operator<<(enum_t val)
+                {
+                    return socket_error(static_cast<enum_t>(this->m_val << val));
+                }
+
+                socket_error operator<<(int32_t val)
+                {
+                    return socket_error(static_cast<enum_t>(this->m_val << val));
+                }
+
+                socket_error& operator<<=(const socket_error& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val << val.m_val);
+                    return *this;
+                }
+
+                socket_error& operator<<=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val << val);
+                    return *this;
+                }
+
+                socket_error& operator<<=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val << val);
+                    return *this;
+                }
+
+                socket_error operator>>(const socket_error& val)
+                {
+                    return socket_error(static_cast<enum_t>(this->m_val >> val.m_val));
+                }
+
+                socket_error operator>>(enum_t val)
+                {
+                    return socket_error(static_cast<enum_t>(this->m_val >> val));
+                }
+
+                socket_error operator>>(int32_t val)
+                {
+                    return socket_error(static_cast<enum_t>(this->m_val >> val));
+                }
+
+                socket_error& operator>>=(const socket_error& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val >> val.m_val);
+                    return *this;
+                }
+
+                socket_error& operator>>=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val >> val);
+                    return *this;
+                }
+
+                socket_error& operator>>=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val >> val);
                     return *this;
                 }
 
@@ -1132,7 +1718,7 @@ namespace omni {
                     return this->m_val < val;
                 }
 
-                bool operator<(int val) const
+                bool operator<(int32_t val) const
                 {
                     return this->m_val < static_cast<enum_t>(val);
                 }
@@ -1147,7 +1733,7 @@ namespace omni {
                     return this->m_val > val;
                 }
 
-                bool operator>(int val) const
+                bool operator>(int32_t val) const
                 {
                     return this->m_val > val;
                 }
@@ -1164,7 +1750,7 @@ namespace omni {
                     return this->m_val == val;
                 }
 
-                bool operator==(int val) const
+                bool operator==(int32_t val) const
                 {
                     return this->m_val == val;
                 }
@@ -1336,7 +1922,7 @@ namespace omni {
                     return ss.str();
                 }
 
-                static bool _valid(int val)
+                static bool _valid(int32_t val)
                 {
                     return (val == 
                         UNSPECIFIED ||
@@ -1394,7 +1980,7 @@ namespace omni {
         {
             public:
                 typedef enum enum_t {
-                    NONE = 0,
+                    NONE = -1,
                     OUT_OF_BAND = MSG_OOB,          // 1
                     PEEK = MSG_PEEK,                // 2
                     DONT_ROUTE = MSG_DONTROUTE,     // 4
@@ -1451,7 +2037,7 @@ namespace omni {
                     return _try_parse(val, out);
                 }
 
-                static bool is_valid(int val)
+                static bool is_valid(int32_t val)
                 {
                     return _valid(val);
                 }
@@ -1524,13 +2110,211 @@ namespace omni {
                     return *this;
                 }
 
-                socket_flags& operator=(int val)
+                socket_flags& operator=(int32_t val)
                 {
                     if (!socket_flags::is_valid(val)) {
                         OMNI_ERR_RET_FW("Invalid enumeration value specified.", omni::exceptions::invalid_enum(val));
                     } else {
                         this->m_val = static_cast<enum_t>(val);
                     }
+                    return *this;
+                }
+
+                socket_flags operator|(const socket_flags& val)
+                {
+                    return socket_flags(static_cast<enum_t>(this->m_val | val.m_val));
+                }
+
+                socket_flags operator|(enum_t val)
+                {
+                    return socket_flags(static_cast<enum_t>(this->m_val | val));
+                }
+
+                socket_flags operator|(int32_t val)
+                {
+                    return socket_flags(static_cast<enum_t>(this->m_val | val));
+                }
+
+                socket_flags& operator|=(const socket_flags& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val | val.m_val);
+                    return *this;
+                }
+
+                socket_flags& operator|=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val | val);
+                    return *this;
+                }
+
+                socket_flags& operator|=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val | val);
+                    return *this;
+                }
+
+                socket_flags operator&(const socket_flags& val)
+                {
+                    return socket_flags(static_cast<enum_t>(this->m_val & val.m_val));
+                }
+
+                socket_flags operator&(enum_t val)
+                {
+                    return socket_flags(static_cast<enum_t>(this->m_val & val));
+                }
+
+                socket_flags operator&(int32_t val)
+                {
+                    return socket_flags(static_cast<enum_t>(this->m_val & val));
+                }
+
+                socket_flags& operator&=(const socket_flags& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val & val.m_val);
+                    return *this;
+                }
+
+                socket_flags& operator&=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val & val);
+                    return *this;
+                }
+
+                socket_flags& operator&=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val & val);
+                    return *this;
+                }
+                
+                socket_flags& operator++()
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val + 1);
+                    return *this;
+                }
+
+                socket_flags operator++(int dummy)
+                {
+                    OMNI_UNUSED(dummy);
+                    socket_flags ret(this->m_val);
+                    this->m_val = static_cast<enum_t>(this->m_val + 1);
+                    return ret;
+                }
+
+                socket_flags& operator--()
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val - 1);
+                    return *this;
+                }
+
+                socket_flags operator--(int dummy)
+                {
+                    OMNI_UNUSED(dummy);
+                    socket_flags ret(this->m_val);
+                    this->m_val = static_cast<enum_t>(this->m_val - 1);
+                    return ret;
+                }
+
+                socket_flags operator~()
+                {
+                    return socket_flags(static_cast<enum_t>(~static_cast<int32_t>(this->m_val)));
+                }
+
+                socket_flags operator^(const socket_flags& val)
+                {
+                    return socket_flags(static_cast<enum_t>(this->m_val ^ val.m_val));
+                }
+
+                socket_flags operator^(enum_t val)
+                {
+                    return socket_flags(static_cast<enum_t>(this->m_val ^ val));
+                }
+
+                socket_flags operator^(int32_t val)
+                {
+                    return socket_flags(static_cast<enum_t>(this->m_val ^ val));
+                }
+
+                socket_flags& operator^=(const socket_flags& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val ^ val.m_val);
+                    return *this;
+                }
+
+                socket_flags& operator^=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val ^ val);
+                    return *this;
+                }
+
+                socket_flags& operator^=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val ^ val);
+                    return *this;
+                }
+
+                socket_flags operator<<(const socket_flags& val)
+                {
+                    return socket_flags(static_cast<enum_t>(this->m_val << val.m_val));
+                }
+
+                socket_flags operator<<(enum_t val)
+                {
+                    return socket_flags(static_cast<enum_t>(this->m_val << val));
+                }
+
+                socket_flags operator<<(int32_t val)
+                {
+                    return socket_flags(static_cast<enum_t>(this->m_val << val));
+                }
+
+                socket_flags& operator<<=(const socket_flags& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val << val.m_val);
+                    return *this;
+                }
+
+                socket_flags& operator<<=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val << val);
+                    return *this;
+                }
+
+                socket_flags& operator<<=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val << val);
+                    return *this;
+                }
+
+                socket_flags operator>>(const socket_flags& val)
+                {
+                    return socket_flags(static_cast<enum_t>(this->m_val >> val.m_val));
+                }
+
+                socket_flags operator>>(enum_t val)
+                {
+                    return socket_flags(static_cast<enum_t>(this->m_val >> val));
+                }
+
+                socket_flags operator>>(int32_t val)
+                {
+                    return socket_flags(static_cast<enum_t>(this->m_val >> val));
+                }
+
+                socket_flags& operator>>=(const socket_flags& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val >> val.m_val);
+                    return *this;
+                }
+
+                socket_flags& operator>>=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val >> val);
+                    return *this;
+                }
+
+                socket_flags& operator>>=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val >> val);
                     return *this;
                 }
 
@@ -1544,7 +2328,7 @@ namespace omni {
                     return this->m_val < val;
                 }
 
-                bool operator<(int val) const
+                bool operator<(int32_t val) const
                 {
                     return this->m_val < static_cast<enum_t>(val);
                 }
@@ -1559,7 +2343,7 @@ namespace omni {
                     return this->m_val > val;
                 }
 
-                bool operator>(int val) const
+                bool operator>(int32_t val) const
                 {
                     return this->m_val > val;
                 }
@@ -1576,7 +2360,7 @@ namespace omni {
                     return this->m_val == val;
                 }
 
-                bool operator==(int val) const
+                bool operator==(int32_t val) const
                 {
                     return this->m_val == val;
                 }
@@ -1656,7 +2440,7 @@ namespace omni {
                         OMNI_E2SS_FW(OUT_OF_BAND);
                         OMNI_E2SS_FW(PEEK);
                         OMNI_E2SS_FW(DONT_ROUTE);
-                        //OMNI_E2SS_FW(END_OF_RECORD);
+                        OMNI_E2SS_FW(END_OF_RECORD);
                         default:
                             ss << "UNKNOWN (" << static_cast<int>(v) << ")";
                             break;
@@ -1664,7 +2448,7 @@ namespace omni {
                     return ss.str();
                 }
 
-                static bool _valid(int val)
+                static bool _valid(int32_t val)
                 {
                     return (val == 
                         NONE ||
@@ -1736,7 +2520,7 @@ namespace omni {
                     return _try_parse(val, out);
                 }
 
-                static bool is_valid(int val)
+                static bool is_valid(int32_t val)
                 {
                     return _valid(val);
                 }
@@ -1809,7 +2593,7 @@ namespace omni {
                     return *this;
                 }
 
-                select_mode& operator=(int val)
+                select_mode& operator=(int32_t val)
                 {
                     if (!select_mode::is_valid(val)) {
                         OMNI_ERR_RET_FW("Invalid enumeration value specified.", omni::exceptions::invalid_enum(val));
@@ -1829,7 +2613,7 @@ namespace omni {
                     return this->m_val < val;
                 }
 
-                bool operator<(int val) const
+                bool operator<(int32_t val) const
                 {
                     return this->m_val < static_cast<enum_t>(val);
                 }
@@ -1844,7 +2628,7 @@ namespace omni {
                     return this->m_val > val;
                 }
 
-                bool operator>(int val) const
+                bool operator>(int32_t val) const
                 {
                     return this->m_val > val;
                 }
@@ -1861,7 +2645,7 @@ namespace omni {
                     return this->m_val == val;
                 }
 
-                bool operator==(int val) const
+                bool operator==(int32_t val) const
                 {
                     return this->m_val == val;
                 }
@@ -1947,7 +2731,7 @@ namespace omni {
                     return ss.str();
                 }
 
-                static bool _valid(int val)
+                static bool _valid(int32_t val)
                 {
                     return (val == 
                         NONE ||
@@ -2020,7 +2804,7 @@ namespace omni {
                     return _try_parse(val, out);
                 }
 
-                static bool is_valid(int val)
+                static bool is_valid(int32_t val)
                 {
                     return _valid(val);
                 }
@@ -2093,13 +2877,211 @@ namespace omni {
                     return *this;
                 }
 
-                socket_option_level& operator=(int val)
+                socket_option_level& operator=(int32_t val)
                 {
                     if (!socket_option_level::is_valid(val)) {
                         OMNI_ERR_RET_FW("Invalid enumeration value specified.", omni::exceptions::invalid_enum(val));
                     } else {
                         this->m_val = static_cast<enum_t>(val);
                     }
+                    return *this;
+                }
+
+                socket_option_level operator|(const socket_option_level& val)
+                {
+                    return socket_option_level(static_cast<enum_t>(this->m_val | val.m_val));
+                }
+
+                socket_option_level operator|(enum_t val)
+                {
+                    return socket_option_level(static_cast<enum_t>(this->m_val | val));
+                }
+
+                socket_option_level operator|(int32_t val)
+                {
+                    return socket_option_level(static_cast<enum_t>(this->m_val | val));
+                }
+
+                socket_option_level& operator|=(const socket_option_level& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val | val.m_val);
+                    return *this;
+                }
+
+                socket_option_level& operator|=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val | val);
+                    return *this;
+                }
+
+                socket_option_level& operator|=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val | val);
+                    return *this;
+                }
+
+                socket_option_level operator&(const socket_option_level& val)
+                {
+                    return socket_option_level(static_cast<enum_t>(this->m_val & val.m_val));
+                }
+
+                socket_option_level operator&(enum_t val)
+                {
+                    return socket_option_level(static_cast<enum_t>(this->m_val & val));
+                }
+
+                socket_option_level operator&(int32_t val)
+                {
+                    return socket_option_level(static_cast<enum_t>(this->m_val & val));
+                }
+
+                socket_option_level& operator&=(const socket_option_level& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val & val.m_val);
+                    return *this;
+                }
+
+                socket_option_level& operator&=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val & val);
+                    return *this;
+                }
+
+                socket_option_level& operator&=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val & val);
+                    return *this;
+                }
+                
+                socket_option_level& operator++()
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val + 1);
+                    return *this;
+                }
+
+                socket_option_level operator++(int dummy)
+                {
+                    OMNI_UNUSED(dummy);
+                    socket_option_level ret(this->m_val);
+                    this->m_val = static_cast<enum_t>(this->m_val + 1);
+                    return ret;
+                }
+
+                socket_option_level& operator--()
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val - 1);
+                    return *this;
+                }
+
+                socket_option_level operator--(int dummy)
+                {
+                    OMNI_UNUSED(dummy);
+                    socket_option_level ret(this->m_val);
+                    this->m_val = static_cast<enum_t>(this->m_val - 1);
+                    return ret;
+                }
+
+                socket_option_level operator~()
+                {
+                    return socket_option_level(static_cast<enum_t>(~static_cast<int32_t>(this->m_val)));
+                }
+
+                socket_option_level operator^(const socket_option_level& val)
+                {
+                    return socket_option_level(static_cast<enum_t>(this->m_val ^ val.m_val));
+                }
+
+                socket_option_level operator^(enum_t val)
+                {
+                    return socket_option_level(static_cast<enum_t>(this->m_val ^ val));
+                }
+
+                socket_option_level operator^(int32_t val)
+                {
+                    return socket_option_level(static_cast<enum_t>(this->m_val ^ val));
+                }
+
+                socket_option_level& operator^=(const socket_option_level& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val ^ val.m_val);
+                    return *this;
+                }
+
+                socket_option_level& operator^=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val ^ val);
+                    return *this;
+                }
+
+                socket_option_level& operator^=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val ^ val);
+                    return *this;
+                }
+
+                socket_option_level operator<<(const socket_option_level& val)
+                {
+                    return socket_option_level(static_cast<enum_t>(this->m_val << val.m_val));
+                }
+
+                socket_option_level operator<<(enum_t val)
+                {
+                    return socket_option_level(static_cast<enum_t>(this->m_val << val));
+                }
+
+                socket_option_level operator<<(int32_t val)
+                {
+                    return socket_option_level(static_cast<enum_t>(this->m_val << val));
+                }
+
+                socket_option_level& operator<<=(const socket_option_level& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val << val.m_val);
+                    return *this;
+                }
+
+                socket_option_level& operator<<=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val << val);
+                    return *this;
+                }
+
+                socket_option_level& operator<<=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val << val);
+                    return *this;
+                }
+
+                socket_option_level operator>>(const socket_option_level& val)
+                {
+                    return socket_option_level(static_cast<enum_t>(this->m_val >> val.m_val));
+                }
+
+                socket_option_level operator>>(enum_t val)
+                {
+                    return socket_option_level(static_cast<enum_t>(this->m_val >> val));
+                }
+
+                socket_option_level operator>>(int32_t val)
+                {
+                    return socket_option_level(static_cast<enum_t>(this->m_val >> val));
+                }
+
+                socket_option_level& operator>>=(const socket_option_level& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val >> val.m_val);
+                    return *this;
+                }
+
+                socket_option_level& operator>>=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val >> val);
+                    return *this;
+                }
+
+                socket_option_level& operator>>=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val >> val);
                     return *this;
                 }
 
@@ -2113,7 +3095,7 @@ namespace omni {
                     return this->m_val < val;
                 }
 
-                bool operator<(int val) const
+                bool operator<(int32_t val) const
                 {
                     return this->m_val < static_cast<enum_t>(val);
                 }
@@ -2128,7 +3110,7 @@ namespace omni {
                     return this->m_val > val;
                 }
 
-                bool operator>(int val) const
+                bool operator>(int32_t val) const
                 {
                     return this->m_val > val;
                 }
@@ -2145,7 +3127,7 @@ namespace omni {
                     return this->m_val == val;
                 }
 
-                bool operator==(int val) const
+                bool operator==(int32_t val) const
                 {
                     return this->m_val == val;
                 }
@@ -2235,7 +3217,7 @@ namespace omni {
                     return ss.str();
                 }
 
-                static bool _valid(int val)
+                static bool _valid(int32_t val)
                 {
                     return (val == 
                         UNSPECIFIED ||
@@ -2322,7 +3304,7 @@ namespace omni {
                     return _try_parse(val, out);
                 }
 
-                static bool is_valid(int val)
+                static bool is_valid(int32_t val)
                 {
                     return _valid(val);
                 }
@@ -2395,13 +3377,211 @@ namespace omni {
                     return *this;
                 }
 
-                socket_option& operator=(int val)
+                socket_option& operator=(int32_t val)
                 {
                     if (!socket_option::is_valid(val)) {
                         OMNI_ERR_RET_FW("Invalid enumeration value specified.", omni::exceptions::invalid_enum(val));
                     } else {
                         this->m_val = static_cast<enum_t>(val);
                     }
+                    return *this;
+                }
+
+                socket_option operator|(const socket_option& val)
+                {
+                    return socket_option(static_cast<enum_t>(this->m_val | val.m_val));
+                }
+
+                socket_option operator|(enum_t val)
+                {
+                    return socket_option(static_cast<enum_t>(this->m_val | val));
+                }
+
+                socket_option operator|(int32_t val)
+                {
+                    return socket_option(static_cast<enum_t>(this->m_val | val));
+                }
+
+                socket_option& operator|=(const socket_option& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val | val.m_val);
+                    return *this;
+                }
+
+                socket_option& operator|=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val | val);
+                    return *this;
+                }
+
+                socket_option& operator|=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val | val);
+                    return *this;
+                }
+
+                socket_option operator&(const socket_option& val)
+                {
+                    return socket_option(static_cast<enum_t>(this->m_val & val.m_val));
+                }
+
+                socket_option operator&(enum_t val)
+                {
+                    return socket_option(static_cast<enum_t>(this->m_val & val));
+                }
+
+                socket_option operator&(int32_t val)
+                {
+                    return socket_option(static_cast<enum_t>(this->m_val & val));
+                }
+
+                socket_option& operator&=(const socket_option& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val & val.m_val);
+                    return *this;
+                }
+
+                socket_option& operator&=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val & val);
+                    return *this;
+                }
+
+                socket_option& operator&=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val & val);
+                    return *this;
+                }
+                
+                socket_option& operator++()
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val + 1);
+                    return *this;
+                }
+
+                socket_option operator++(int dummy)
+                {
+                    OMNI_UNUSED(dummy);
+                    socket_option ret(this->m_val);
+                    this->m_val = static_cast<enum_t>(this->m_val + 1);
+                    return ret;
+                }
+
+                socket_option& operator--()
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val - 1);
+                    return *this;
+                }
+
+                socket_option operator--(int dummy)
+                {
+                    OMNI_UNUSED(dummy);
+                    socket_option ret(this->m_val);
+                    this->m_val = static_cast<enum_t>(this->m_val - 1);
+                    return ret;
+                }
+
+                socket_option operator~()
+                {
+                    return socket_option(static_cast<enum_t>(~static_cast<int32_t>(this->m_val)));
+                }
+
+                socket_option operator^(const socket_option& val)
+                {
+                    return socket_option(static_cast<enum_t>(this->m_val ^ val.m_val));
+                }
+
+                socket_option operator^(enum_t val)
+                {
+                    return socket_option(static_cast<enum_t>(this->m_val ^ val));
+                }
+
+                socket_option operator^(int32_t val)
+                {
+                    return socket_option(static_cast<enum_t>(this->m_val ^ val));
+                }
+
+                socket_option& operator^=(const socket_option& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val ^ val.m_val);
+                    return *this;
+                }
+
+                socket_option& operator^=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val ^ val);
+                    return *this;
+                }
+
+                socket_option& operator^=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val ^ val);
+                    return *this;
+                }
+
+                socket_option operator<<(const socket_option& val)
+                {
+                    return socket_option(static_cast<enum_t>(this->m_val << val.m_val));
+                }
+
+                socket_option operator<<(enum_t val)
+                {
+                    return socket_option(static_cast<enum_t>(this->m_val << val));
+                }
+
+                socket_option operator<<(int32_t val)
+                {
+                    return socket_option(static_cast<enum_t>(this->m_val << val));
+                }
+
+                socket_option& operator<<=(const socket_option& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val << val.m_val);
+                    return *this;
+                }
+
+                socket_option& operator<<=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val << val);
+                    return *this;
+                }
+
+                socket_option& operator<<=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val << val);
+                    return *this;
+                }
+
+                socket_option operator>>(const socket_option& val)
+                {
+                    return socket_option(static_cast<enum_t>(this->m_val >> val.m_val));
+                }
+
+                socket_option operator>>(enum_t val)
+                {
+                    return socket_option(static_cast<enum_t>(this->m_val >> val));
+                }
+
+                socket_option operator>>(int32_t val)
+                {
+                    return socket_option(static_cast<enum_t>(this->m_val >> val));
+                }
+
+                socket_option& operator>>=(const socket_option& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val >> val.m_val);
+                    return *this;
+                }
+
+                socket_option& operator>>=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val >> val);
+                    return *this;
+                }
+
+                socket_option& operator>>=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val >> val);
                     return *this;
                 }
 
@@ -2415,7 +3595,7 @@ namespace omni {
                     return this->m_val < val;
                 }
 
-                bool operator<(int val) const
+                bool operator<(int32_t val) const
                 {
                     return this->m_val < static_cast<enum_t>(val);
                 }
@@ -2430,7 +3610,7 @@ namespace omni {
                     return this->m_val > val;
                 }
 
-                bool operator>(int val) const
+                bool operator>(int32_t val) const
                 {
                     return this->m_val > val;
                 }
@@ -2447,7 +3627,7 @@ namespace omni {
                     return this->m_val == val;
                 }
 
-                bool operator==(int val) const
+                bool operator==(int32_t val) const
                 {
                     return this->m_val == val;
                 }
@@ -2561,7 +3741,7 @@ namespace omni {
                     return ss.str();
                 }
 
-                static bool _valid(int val)
+                static bool _valid(int32_t val)
                 {
                     return (val ==                         
                         DONT_LINGER ||
@@ -2649,7 +3829,7 @@ namespace omni {
                     return _try_parse(val, out);
                 }
 
-                static bool is_valid(int val)
+                static bool is_valid(int32_t val)
                 {
                     return _valid(val);
                 }
@@ -2722,13 +3902,211 @@ namespace omni {
                     return *this;
                 }
 
-                tcp_option& operator=(int val)
+                tcp_option& operator=(int32_t val)
                 {
                     if (!tcp_option::is_valid(val)) {
                         OMNI_ERR_RET_FW("Invalid enumeration value specified.", omni::exceptions::invalid_enum(val));
                     } else {
                         this->m_val = static_cast<enum_t>(val);
                     }
+                    return *this;
+                }
+
+                tcp_option operator|(const tcp_option& val)
+                {
+                    return tcp_option(static_cast<enum_t>(this->m_val | val.m_val));
+                }
+
+                tcp_option operator|(enum_t val)
+                {
+                    return tcp_option(static_cast<enum_t>(this->m_val | val));
+                }
+
+                tcp_option operator|(int32_t val)
+                {
+                    return tcp_option(static_cast<enum_t>(this->m_val | val));
+                }
+
+                tcp_option& operator|=(const tcp_option& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val | val.m_val);
+                    return *this;
+                }
+
+                tcp_option& operator|=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val | val);
+                    return *this;
+                }
+
+                tcp_option& operator|=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val | val);
+                    return *this;
+                }
+
+                tcp_option operator&(const tcp_option& val)
+                {
+                    return tcp_option(static_cast<enum_t>(this->m_val & val.m_val));
+                }
+
+                tcp_option operator&(enum_t val)
+                {
+                    return tcp_option(static_cast<enum_t>(this->m_val & val));
+                }
+
+                tcp_option operator&(int32_t val)
+                {
+                    return tcp_option(static_cast<enum_t>(this->m_val & val));
+                }
+
+                tcp_option& operator&=(const tcp_option& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val & val.m_val);
+                    return *this;
+                }
+
+                tcp_option& operator&=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val & val);
+                    return *this;
+                }
+
+                tcp_option& operator&=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val & val);
+                    return *this;
+                }
+                
+                tcp_option& operator++()
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val + 1);
+                    return *this;
+                }
+
+                tcp_option operator++(int dummy)
+                {
+                    OMNI_UNUSED(dummy);
+                    tcp_option ret(this->m_val);
+                    this->m_val = static_cast<enum_t>(this->m_val + 1);
+                    return ret;
+                }
+
+                tcp_option& operator--()
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val - 1);
+                    return *this;
+                }
+
+                tcp_option operator--(int dummy)
+                {
+                    OMNI_UNUSED(dummy);
+                    tcp_option ret(this->m_val);
+                    this->m_val = static_cast<enum_t>(this->m_val - 1);
+                    return ret;
+                }
+
+                tcp_option operator~()
+                {
+                    return tcp_option(static_cast<enum_t>(~static_cast<int32_t>(this->m_val)));
+                }
+
+                tcp_option operator^(const tcp_option& val)
+                {
+                    return tcp_option(static_cast<enum_t>(this->m_val ^ val.m_val));
+                }
+
+                tcp_option operator^(enum_t val)
+                {
+                    return tcp_option(static_cast<enum_t>(this->m_val ^ val));
+                }
+
+                tcp_option operator^(int32_t val)
+                {
+                    return tcp_option(static_cast<enum_t>(this->m_val ^ val));
+                }
+
+                tcp_option& operator^=(const tcp_option& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val ^ val.m_val);
+                    return *this;
+                }
+
+                tcp_option& operator^=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val ^ val);
+                    return *this;
+                }
+
+                tcp_option& operator^=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val ^ val);
+                    return *this;
+                }
+
+                tcp_option operator<<(const tcp_option& val)
+                {
+                    return tcp_option(static_cast<enum_t>(this->m_val << val.m_val));
+                }
+
+                tcp_option operator<<(enum_t val)
+                {
+                    return tcp_option(static_cast<enum_t>(this->m_val << val));
+                }
+
+                tcp_option operator<<(int32_t val)
+                {
+                    return tcp_option(static_cast<enum_t>(this->m_val << val));
+                }
+
+                tcp_option& operator<<=(const tcp_option& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val << val.m_val);
+                    return *this;
+                }
+
+                tcp_option& operator<<=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val << val);
+                    return *this;
+                }
+
+                tcp_option& operator<<=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val << val);
+                    return *this;
+                }
+
+                tcp_option operator>>(const tcp_option& val)
+                {
+                    return tcp_option(static_cast<enum_t>(this->m_val >> val.m_val));
+                }
+
+                tcp_option operator>>(enum_t val)
+                {
+                    return tcp_option(static_cast<enum_t>(this->m_val >> val));
+                }
+
+                tcp_option operator>>(int32_t val)
+                {
+                    return tcp_option(static_cast<enum_t>(this->m_val >> val));
+                }
+
+                tcp_option& operator>>=(const tcp_option& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val >> val.m_val);
+                    return *this;
+                }
+
+                tcp_option& operator>>=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val >> val);
+                    return *this;
+                }
+
+                tcp_option& operator>>=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val >> val);
                     return *this;
                 }
 
@@ -2742,7 +4120,7 @@ namespace omni {
                     return this->m_val < val;
                 }
 
-                bool operator<(int val) const
+                bool operator<(int32_t val) const
                 {
                     return this->m_val < static_cast<enum_t>(val);
                 }
@@ -2757,7 +4135,7 @@ namespace omni {
                     return this->m_val > val;
                 }
 
-                bool operator>(int val) const
+                bool operator>(int32_t val) const
                 {
                     return this->m_val > val;
                 }
@@ -2774,7 +4152,7 @@ namespace omni {
                     return this->m_val == val;
                 }
 
-                bool operator==(int val) const
+                bool operator==(int32_t val) const
                 {
                     return this->m_val == val;
                 }
@@ -2858,7 +4236,7 @@ namespace omni {
                     return ss.str();
                 }
 
-                static bool _valid(int val)
+                static bool _valid(int32_t val)
                 {
                     return (val == 
                         UNSPECIFIED ||
@@ -2928,7 +4306,7 @@ namespace omni {
                     return _try_parse(val, out);
                 }
 
-                static bool is_valid(int val)
+                static bool is_valid(int32_t val)
                 {
                     return _valid(val);
                 }
@@ -3001,13 +4379,211 @@ namespace omni {
                     return *this;
                 }
 
-                socket_shutdown& operator=(int val)
+                socket_shutdown& operator=(int32_t val)
                 {
                     if (!socket_shutdown::is_valid(val)) {
                         OMNI_ERR_RET_FW("Invalid enumeration value specified.", omni::exceptions::invalid_enum(val));
                     } else {
                         this->m_val = static_cast<enum_t>(val);
                     }
+                    return *this;
+                }
+
+                socket_shutdown operator|(const socket_shutdown& val)
+                {
+                    return socket_shutdown(static_cast<enum_t>(this->m_val | val.m_val));
+                }
+
+                socket_shutdown operator|(enum_t val)
+                {
+                    return socket_shutdown(static_cast<enum_t>(this->m_val | val));
+                }
+
+                socket_shutdown operator|(int32_t val)
+                {
+                    return socket_shutdown(static_cast<enum_t>(this->m_val | val));
+                }
+
+                socket_shutdown& operator|=(const socket_shutdown& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val | val.m_val);
+                    return *this;
+                }
+
+                socket_shutdown& operator|=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val | val);
+                    return *this;
+                }
+
+                socket_shutdown& operator|=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val | val);
+                    return *this;
+                }
+
+                socket_shutdown operator&(const socket_shutdown& val)
+                {
+                    return socket_shutdown(static_cast<enum_t>(this->m_val & val.m_val));
+                }
+
+                socket_shutdown operator&(enum_t val)
+                {
+                    return socket_shutdown(static_cast<enum_t>(this->m_val & val));
+                }
+
+                socket_shutdown operator&(int32_t val)
+                {
+                    return socket_shutdown(static_cast<enum_t>(this->m_val & val));
+                }
+
+                socket_shutdown& operator&=(const socket_shutdown& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val & val.m_val);
+                    return *this;
+                }
+
+                socket_shutdown& operator&=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val & val);
+                    return *this;
+                }
+
+                socket_shutdown& operator&=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val & val);
+                    return *this;
+                }
+                
+                socket_shutdown& operator++()
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val + 1);
+                    return *this;
+                }
+
+                socket_shutdown operator++(int dummy)
+                {
+                    OMNI_UNUSED(dummy);
+                    socket_shutdown ret(this->m_val);
+                    this->m_val = static_cast<enum_t>(this->m_val + 1);
+                    return ret;
+                }
+
+                socket_shutdown& operator--()
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val - 1);
+                    return *this;
+                }
+
+                socket_shutdown operator--(int dummy)
+                {
+                    OMNI_UNUSED(dummy);
+                    socket_shutdown ret(this->m_val);
+                    this->m_val = static_cast<enum_t>(this->m_val - 1);
+                    return ret;
+                }
+
+                socket_shutdown operator~()
+                {
+                    return socket_shutdown(static_cast<enum_t>(~static_cast<int32_t>(this->m_val)));
+                }
+
+                socket_shutdown operator^(const socket_shutdown& val)
+                {
+                    return socket_shutdown(static_cast<enum_t>(this->m_val ^ val.m_val));
+                }
+
+                socket_shutdown operator^(enum_t val)
+                {
+                    return socket_shutdown(static_cast<enum_t>(this->m_val ^ val));
+                }
+
+                socket_shutdown operator^(int32_t val)
+                {
+                    return socket_shutdown(static_cast<enum_t>(this->m_val ^ val));
+                }
+
+                socket_shutdown& operator^=(const socket_shutdown& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val ^ val.m_val);
+                    return *this;
+                }
+
+                socket_shutdown& operator^=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val ^ val);
+                    return *this;
+                }
+
+                socket_shutdown& operator^=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val ^ val);
+                    return *this;
+                }
+
+                socket_shutdown operator<<(const socket_shutdown& val)
+                {
+                    return socket_shutdown(static_cast<enum_t>(this->m_val << val.m_val));
+                }
+
+                socket_shutdown operator<<(enum_t val)
+                {
+                    return socket_shutdown(static_cast<enum_t>(this->m_val << val));
+                }
+
+                socket_shutdown operator<<(int32_t val)
+                {
+                    return socket_shutdown(static_cast<enum_t>(this->m_val << val));
+                }
+
+                socket_shutdown& operator<<=(const socket_shutdown& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val << val.m_val);
+                    return *this;
+                }
+
+                socket_shutdown& operator<<=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val << val);
+                    return *this;
+                }
+
+                socket_shutdown& operator<<=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val << val);
+                    return *this;
+                }
+
+                socket_shutdown operator>>(const socket_shutdown& val)
+                {
+                    return socket_shutdown(static_cast<enum_t>(this->m_val >> val.m_val));
+                }
+
+                socket_shutdown operator>>(enum_t val)
+                {
+                    return socket_shutdown(static_cast<enum_t>(this->m_val >> val));
+                }
+
+                socket_shutdown operator>>(int32_t val)
+                {
+                    return socket_shutdown(static_cast<enum_t>(this->m_val >> val));
+                }
+
+                socket_shutdown& operator>>=(const socket_shutdown& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val >> val.m_val);
+                    return *this;
+                }
+
+                socket_shutdown& operator>>=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val >> val);
+                    return *this;
+                }
+
+                socket_shutdown& operator>>=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val >> val);
                     return *this;
                 }
 
@@ -3021,7 +4597,7 @@ namespace omni {
                     return this->m_val < val;
                 }
 
-                bool operator<(int val) const
+                bool operator<(int32_t val) const
                 {
                     return this->m_val < static_cast<enum_t>(val);
                 }
@@ -3036,7 +4612,7 @@ namespace omni {
                     return this->m_val > val;
                 }
 
-                bool operator>(int val) const
+                bool operator>(int32_t val) const
                 {
                     return this->m_val > val;
                 }
@@ -3053,7 +4629,7 @@ namespace omni {
                     return this->m_val == val;
                 }
 
-                bool operator==(int val) const
+                bool operator==(int32_t val) const
                 {
                     return this->m_val == val;
                 }
@@ -3139,7 +4715,7 @@ namespace omni {
                     return ss.str();
                 }
 
-                static bool _valid(int val)
+                static bool _valid(int32_t val)
                 {
                     return (val == 
                         UNSPECIFIED ||
@@ -3212,7 +4788,7 @@ namespace omni {
                     return _try_parse(val, out);
                 }
 
-                static bool is_valid(int val)
+                static bool is_valid(int32_t val)
                 {
                     return _valid(val);
                 }
@@ -3285,13 +4861,211 @@ namespace omni {
                     return *this;
                 }
 
-                socket_type& operator=(int val)
+                socket_type& operator=(int32_t val)
                 {
                     if (!socket_type::is_valid(val)) {
                         OMNI_ERR_RET_FW("Invalid enumeration value specified.", omni::exceptions::invalid_enum(val));
                     } else {
                         this->m_val = static_cast<enum_t>(val);
                     }
+                    return *this;
+                }
+
+                socket_type operator|(const socket_type& val)
+                {
+                    return socket_type(static_cast<enum_t>(this->m_val | val.m_val));
+                }
+
+                socket_type operator|(enum_t val)
+                {
+                    return socket_type(static_cast<enum_t>(this->m_val | val));
+                }
+
+                socket_type operator|(int32_t val)
+                {
+                    return socket_type(static_cast<enum_t>(this->m_val | val));
+                }
+
+                socket_type& operator|=(const socket_type& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val | val.m_val);
+                    return *this;
+                }
+
+                socket_type& operator|=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val | val);
+                    return *this;
+                }
+
+                socket_type& operator|=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val | val);
+                    return *this;
+                }
+
+                socket_type operator&(const socket_type& val)
+                {
+                    return socket_type(static_cast<enum_t>(this->m_val & val.m_val));
+                }
+
+                socket_type operator&(enum_t val)
+                {
+                    return socket_type(static_cast<enum_t>(this->m_val & val));
+                }
+
+                socket_type operator&(int32_t val)
+                {
+                    return socket_type(static_cast<enum_t>(this->m_val & val));
+                }
+
+                socket_type& operator&=(const socket_type& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val & val.m_val);
+                    return *this;
+                }
+
+                socket_type& operator&=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val & val);
+                    return *this;
+                }
+
+                socket_type& operator&=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val & val);
+                    return *this;
+                }
+                
+                socket_type& operator++()
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val + 1);
+                    return *this;
+                }
+
+                socket_type operator++(int dummy)
+                {
+                    OMNI_UNUSED(dummy);
+                    socket_type ret(this->m_val);
+                    this->m_val = static_cast<enum_t>(this->m_val + 1);
+                    return ret;
+                }
+
+                socket_type& operator--()
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val - 1);
+                    return *this;
+                }
+
+                socket_type operator--(int dummy)
+                {
+                    OMNI_UNUSED(dummy);
+                    socket_type ret(this->m_val);
+                    this->m_val = static_cast<enum_t>(this->m_val - 1);
+                    return ret;
+                }
+
+                socket_type operator~()
+                {
+                    return socket_type(static_cast<enum_t>(~static_cast<int32_t>(this->m_val)));
+                }
+
+                socket_type operator^(const socket_type& val)
+                {
+                    return socket_type(static_cast<enum_t>(this->m_val ^ val.m_val));
+                }
+
+                socket_type operator^(enum_t val)
+                {
+                    return socket_type(static_cast<enum_t>(this->m_val ^ val));
+                }
+
+                socket_type operator^(int32_t val)
+                {
+                    return socket_type(static_cast<enum_t>(this->m_val ^ val));
+                }
+
+                socket_type& operator^=(const socket_type& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val ^ val.m_val);
+                    return *this;
+                }
+
+                socket_type& operator^=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val ^ val);
+                    return *this;
+                }
+
+                socket_type& operator^=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val ^ val);
+                    return *this;
+                }
+
+                socket_type operator<<(const socket_type& val)
+                {
+                    return socket_type(static_cast<enum_t>(this->m_val << val.m_val));
+                }
+
+                socket_type operator<<(enum_t val)
+                {
+                    return socket_type(static_cast<enum_t>(this->m_val << val));
+                }
+
+                socket_type operator<<(int32_t val)
+                {
+                    return socket_type(static_cast<enum_t>(this->m_val << val));
+                }
+
+                socket_type& operator<<=(const socket_type& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val << val.m_val);
+                    return *this;
+                }
+
+                socket_type& operator<<=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val << val);
+                    return *this;
+                }
+
+                socket_type& operator<<=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val << val);
+                    return *this;
+                }
+
+                socket_type operator>>(const socket_type& val)
+                {
+                    return socket_type(static_cast<enum_t>(this->m_val >> val.m_val));
+                }
+
+                socket_type operator>>(enum_t val)
+                {
+                    return socket_type(static_cast<enum_t>(this->m_val >> val));
+                }
+
+                socket_type operator>>(int32_t val)
+                {
+                    return socket_type(static_cast<enum_t>(this->m_val >> val));
+                }
+
+                socket_type& operator>>=(const socket_type& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val >> val.m_val);
+                    return *this;
+                }
+
+                socket_type& operator>>=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val >> val);
+                    return *this;
+                }
+
+                socket_type& operator>>=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val >> val);
                     return *this;
                 }
 
@@ -3305,7 +5079,7 @@ namespace omni {
                     return this->m_val < val;
                 }
 
-                bool operator<(int val) const
+                bool operator<(int32_t val) const
                 {
                     return this->m_val < static_cast<enum_t>(val);
                 }
@@ -3320,7 +5094,7 @@ namespace omni {
                     return this->m_val > val;
                 }
 
-                bool operator>(int val) const
+                bool operator>(int32_t val) const
                 {
                     return this->m_val > val;
                 }
@@ -3337,7 +5111,7 @@ namespace omni {
                     return this->m_val == val;
                 }
 
-                bool operator==(int val) const
+                bool operator==(int32_t val) const
                 {
                     return this->m_val == val;
                 }
@@ -3427,7 +5201,7 @@ namespace omni {
                     return ss.str();
                 }
 
-                static bool _valid(int val)
+                static bool _valid(int32_t val)
                 {
                     return (val == 
                         UNKNOWN ||

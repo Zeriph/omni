@@ -23,6 +23,12 @@
 #include <omni/sync/auto_lock.hpp>
 #include <omni/sync/scoped_lock.hpp>
 
+#if defined(OMNI_32BIT_BASIC_LOCK)
+    #define OMNI_BL_INT_FW uint32_t
+#else
+    #define OMNI_BL_INT_FW uint64_t
+#endif
+
 namespace omni {
     namespace sync {
         class basic_lock
@@ -35,7 +41,7 @@ namespace omni {
                     omni::sync::mutex_init(this->m_mtx);
                 }
                 
-                explicit basic_lock(bool initialy_owned) :
+                OMNI_EXPLICIT basic_lock(bool initialy_owned) :
                     OMNI_CTOR_FW(omni::sync::basic_lock)
                     m_lokd(0), m_mtx()
                 {
@@ -123,7 +129,7 @@ namespace omni {
                 basic_lock(const omni::sync::basic_lock &cp);
                 omni::sync::basic_lock& operator=(const omni::sync::basic_lock& other);
                 
-                volatile uint32_t m_lokd;
+                volatile OMNI_BL_INT_FW m_lokd;
                 omni::sync::mutex_t m_mtx;
         };
         

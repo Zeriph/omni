@@ -62,7 +62,7 @@ namespace omni {
                 OMNI_DV5_FW("created omni::object with name ", this->name);
             }
             
-            explicit object(const omni::callback& ev) : 
+            OMNI_EXPLICIT object(const omni::callback& ev) : 
                 disposing(ev),
                 name(),
                 tag()

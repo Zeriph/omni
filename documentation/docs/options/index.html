@@ -30,6 +30,23 @@ The following is a list of compiler options that can effect how the library is b
 <input type="checkbox" name="comp_ops" id="comp_ops" /><label for="comp_ops"></label><ul name="ulo" id="ulo">
     <li><code><a href="omni_180_pi_f.html">OMNI_180_PI_F</a></code> - A framework macro/option</li>
     <li><code><a href="omni_180_pi_l.html">OMNI_180_PI_L</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_32bit.html">OMNI_32BIT</a></code> - A library macro/option</li>
+    <li><code><a href="omni_32bit_async_timer.html">OMNI_32BIT_ASYNC_TIMER</a></code> - A library macro/option</li>
+    <li><code><a href="omni_32bit_basic_lock.html">OMNI_32BIT_BASIC_LOCK</a></code> - A library macro/option</li>
+    <li><code><a href="omni_32bit_basic_thread.html">OMNI_32BIT_BASIC_THREAD</a></code> - A library macro/option</li>
+    <li><code><a href="omni_32bit_binary_semaphore.html">OMNI_32BIT_BINARY_SEMAPHORE</a></code> - A library macro/option</li>
+    <li><code><a href="omni_32bit_color.html">OMNI_32BIT_COLOR</a></code> - A library macro/option</li>
+    <li><code><a href="omni_32bit_conditional.html">OMNI_32BIT_CONDITIONAL</a></code> - A library macro/option</li>
+    <li><code><a href="omni_32bit_drop_timer.html">OMNI_32BIT_DROP_TIMER</a></code> - A library macro/option</li>
+    <li><code><a href="omni_32bit_endpoint_descriptor.html">OMNI_32BIT_ENDPOINT_DESCRIPTOR</a></code> - A library macro/option</li>
+    <li><code><a href="omni_32bit_mutex.html">OMNI_32BIT_MUTEX</a></code> - A library macro/option</li>
+    <li><code><a href="omni_32bit_queue_timer.html">OMNI_32BIT_QUEUE_TIMER</a></code> - A library macro/option</li>
+    <li><code><a href="omni_32bit_runnable_thread.html">OMNI_32BIT_RUNNABLE_THREAD</a></code> - A library macro/option</li>
+    <li><code><a href="omni_32bit_spin.html">OMNI_32BIT_SPIN</a></code> - A library macro/option</li>
+    <li><code><a href="omni_32bit_stopwatch.html">OMNI_32BIT_STOPWATCH</a></code> - A library macro/option</li>
+    <li><code><a href="omni_32bit_sync_timer.html">OMNI_32BIT_SYNC_TIMER</a></code> - A library macro/option</li>
+    <li><code><a href="omni_32bit_thread.html">OMNI_32BIT_THREAD</a></code> - A library macro/option</li>
+    <li><code><a href="omni_32bit_threadpool.html">OMNI_32BIT_THREADPOOL</a></code> - A library macro/option</li>
     <li><code><a href="omni_allow_ub.html">OMNI_ALLOW_UB</a></code> - If defined, this allows the framework to compile with undefined behavior.</li>
     <li><code><a href="omni_aplnl.html">OMNI_APLNL</a></code> - If defined, uses the \r new line instead of \n.</li>
     <li><code><a href="omni_arch_amd64.html">OMNI_ARCH_AMD64</a></code> - A framework macro/option</li>
@@ -76,12 +93,15 @@ The following is a list of compiler options that can effect how the library is b
     <li><code><a href="omni_err_range_str.html">OMNI_ERR_RANGE_STR</a></code> - A framework macro/option</li>
     <li><code><a href="omni_err_socket_str.html">OMNI_ERR_SOCKET_STR</a></code> - A framework macro/option</li>
     <li><code><a href="omni_exception_terminate.html">OMNI_EXCEPTION_TERMINATE</a></code> - The call made when an exception happens within an omni::execption.</li>
+    <li><code><a href="omni_explicit.html">OMNI_EXPLICIT</a></code> - A library macro/option</li>
     <li><code><a href="omni_fw_ver_use_time.html">OMNI_FW_VER_USE_TIME</a></code> - The framework will use the build time in framework version string.</li>
     <li><code><a href="omni_heavy_object_compare.html">OMNI_HEAVY_OBJECT_COMPARE</a></code> - A framework macro/option</li>
     <li><code><a href="omni_invalid_delegate_invoke_str.html">OMNI_INVALID_DELEGATE_INVOKE_STR</a></code> - A framework macro/option</li>
     <li><code><a href="omni_invalid_enum.html">OMNI_INVALID_ENUM</a></code> - A framework macro/option</li>
     <li><code><a href="omni_invalid_socket.html">OMNI_INVALID_SOCKET</a></code> - A framework macro/option</li>
     <li><code><a href="omni_invalid_thread_owner.html">OMNI_INVALID_THREAD_OWNER</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_io_file_copy_bufsz.html">OMNI_IO_FILE_COPY_BUFSZ</a></code> - A library macro/option</li>
+    <li><code><a href="omni_io_file_copy_use_fstream.html">OMNI_IO_FILE_COPY_USE_FSTREAM</a></code> - A library macro/option</li>
     <li><code><a href="omni_io_file_ftruncate_fn.html">OMNI_IO_FILE_FTRUNCATE_FN</a></code> - A framework macro/option</li>
     <li><code><a href="omni_io_file_truncate_fn.html">OMNI_IO_FILE_TRUNCATE_FN</a></code> - A framework macro/option</li>
     <li><code><a href="omni_io_use_truncate.html">OMNI_IO_USE_TRUNCATE</a></code> - A framework macro/option</li>
@@ -94,22 +114,44 @@ The following is a list of compiler options that can effect how the library is b
     <li><code><a href="omni_nchar_wchar.html">OMNI_NCHAR_WCHAR</a></code> - A framework macro/option</li>
     <li><code><a href="omni_net_lib.html">OMNI_NET_LIB</a></code> - A framework macro/option</li>
     <li><code><a href="omni_non_portable.html">OMNI_NON_PORTABLE</a></code> - If defined, the framework will enable non-portable code.</li>
+    <li><code><a href="omni_no_32bit.html">OMNI_NO_32BIT</a></code> - A library macro/option</li>
+    <li><code><a href="omni_no_32bit_async_timer.html">OMNI_NO_32BIT_ASYNC_TIMER</a></code> - A library macro/option</li>
+    <li><code><a href="omni_no_32bit_basic_lock.html">OMNI_NO_32BIT_BASIC_LOCK</a></code> - A library macro/option</li>
+    <li><code><a href="omni_no_32bit_basic_thread.html">OMNI_NO_32BIT_BASIC_THREAD</a></code> - A library macro/option</li>
+    <li><code><a href="omni_no_32bit_binary_semaphore.html">OMNI_NO_32BIT_BINARY_SEMAPHORE</a></code> - A library macro/option</li>
+    <li><code><a href="omni_no_32bit_color.html">OMNI_NO_32BIT_COLOR</a></code> - A library macro/option</li>
+    <li><code><a href="omni_no_32bit_conditional.html">OMNI_NO_32BIT_CONDITIONAL</a></code> - A library macro/option</li>
+    <li><code><a href="omni_no_32bit_drop_timer.html">OMNI_NO_32BIT_DROP_TIMER</a></code> - A library macro/option</li>
+    <li><code><a href="omni_no_32bit_endpoint_descriptor.html">OMNI_NO_32BIT_ENDPOINT_DESCRIPTOR</a></code> - A library macro/option</li>
+    <li><code><a href="omni_no_32bit_mutex.html">OMNI_NO_32BIT_MUTEX</a></code> - A library macro/option</li>
+    <li><code><a href="omni_no_32bit_queue_timer.html">OMNI_NO_32BIT_QUEUE_TIMER</a></code> - A library macro/option</li>
+    <li><code><a href="omni_no_32bit_runnable_thread.html">OMNI_NO_32BIT_RUNNABLE_THREAD</a></code> - A library macro/option</li>
+    <li><code><a href="omni_no_32bit_spin.html">OMNI_NO_32BIT_SPIN</a></code> - A library macro/option</li>
+    <li><code><a href="omni_no_32bit_stopwatch.html">OMNI_NO_32BIT_STOPWATCH</a></code> - A library macro/option</li>
+    <li><code><a href="omni_no_32bit_sync_timer.html">OMNI_NO_32BIT_SYNC_TIMER</a></code> - A library macro/option</li>
+    <li><code><a href="omni_no_32bit_thread.html">OMNI_NO_32BIT_THREAD</a></code> - A library macro/option</li>
+    <li><code><a href="omni_no_32bit_threadpool.html">OMNI_NO_32BIT_THREADPOOL</a></code> - A library macro/option</li>
     <li><code><a href="omni_no_base_setlocale.html">OMNI_NO_BASE_SETLOCALE</a></code> - Disables the setlocale function in the <code><a href="../classes/omni-application.html">omni::application</a></code></li>
     <li><code><a href="omni_no_check_arithmetic_overflow.html">OMNI_NO_CHECK_ARITHMETIC_OVERFLOW</a></code> - A framework macro/option</li>
     <li><code><a href="omni_no_chrono_auto_init_tick.html">OMNI_NO_CHRONO_AUTO_INIT_TICK</a></code> - A framework macro/option</li>
     <li><code><a href="omni_no_clink.html">OMNI_NO_CLINK</a></code> - Does not link certain portions of the framework with <code>C</code> linkage</li>
     <li><code><a href="omni_no_clock_getres_realtime.html">OMNI_NO_CLOCK_GETRES_REALTIME</a></code> - A framework macro/option</li>
     <li><code><a href="omni_no_cstdint.html">OMNI_NO_CSTDINT</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_no_cstdio.html">OMNI_NO_CSTDIO</a></code> - A library macro/option</li>
     <li><code><a href="omni_no_dispose_event.html">OMNI_NO_DISPOSE_EVENT</a></code> - Disables the <code><a href="omni_dispose_event.html">OMNI_DISPOSE_EVENT</a></code> macro</li>
     <li><code><a href="omni_no_env_wordexp.html">OMNI_NO_ENV_WORDEXP</a></code> - A framework macro/option</li>
     <li><code><a href="omni_no_except.html">OMNI_NO_EXCEPT</a></code> - Disables exception handling in the framework</li>
+    <li><code><a href="omni_no_explicit.html">OMNI_NO_EXPLICIT</a></code> - A library macro/option</li>
     <li><code><a href="omni_no_extern_consts.html">OMNI_NO_EXTERN_CONSTS</a></code> - If defined, Omni constants will not have external linkage</li>
     <li><code><a href="omni_no_fw_ver.html">OMNI_NO_FW_VER</a></code> - Disables the framework version header from being baked into the framework.</li>
     <li><code><a href="omni_no_fw_ver_use_time.html">OMNI_NO_FW_VER_USE_TIME</a></code> - A framework macro/option</li>
     <li><code><a href="omni_no_heavy_object_compare.html">OMNI_NO_HEAVY_OBJECT_COMPARE</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_no_io_file_copy_use_fstream.html">OMNI_NO_IO_FILE_COPY_USE_FSTREAM</a></code> - A library macro/option</li>
     <li><code><a href="omni_no_mutex_owner.html">OMNI_NO_MUTEX_OWNER</a></code> - Disables the <code><a href="omni_mutex_owner.html">OMNI_MUTEX_OWNER</a></code> macro</li>
+    <li><code><a href="omni_no_noexcept.html">OMNI_NO_NOEXCEPT</a></code> - A library macro/option</li>
     <li><code><a href="omni_no_non_portable.html">OMNI_NO_NON_PORTABLE</a></code> - Disables the <code><a href="omni_non_portable.html">OMNI_NON_PORTABLE</a></code> macro</li>
     <li><code><a href="omni_no_object_name.html">OMNI_NO_OBJECT_NAME</a></code> - Disables the <code><a href="omni_object_name.html">OMNI_OBJECT_NAME</a></code> macro</li>
+    <li><code><a href="omni_no_os_macos.html">OMNI_NO_OS_MACOS</a></code> - A library macro/option</li>
     <li><code><a href="omni_no_printl.html">OMNI_NO_PRINTL</a></code> - Disables the defined <code>println</code> macro.</li>
     <li><code><a href="omni_no_proc_sys.html">OMNI_NO_PROC_SYS</a></code> - Does not use the <code>proc</code> file system for system path.</li>
     <li><code><a href="omni_no_safe_application.html">OMNI_NO_SAFE_APPLICATION</a></code> - Disables the <code><a href="omni_safe_application.html">OMNI_SAFE_APPLICATION</a></code> macro</li>
@@ -154,6 +196,7 @@ The following is a list of compiler options that can effect how the library is b
     <li><code><a href="omni_no_thread_stdcall.html">OMNI_NO_THREAD_STDCALL</a></code> - A framework macro/option</li>
     <li><code><a href="omni_no_throw.html">OMNI_NO_THROW</a></code> - Disables exceptions (throw keyword) in the framework.</li>
     <li><code><a href="omni_no_type_info.html">OMNI_NO_TYPE_INFO</a></code> - Disables the <code><a href="omni_type_info.html">OMNI_TYPE_INFO</a></code> macro</li>
+    <li><code><a href="omni_no_unicode.html">OMNI_NO_UNICODE</a></code> - A library macro/option</li>
     <li><code><a href="omni_no_win_api.html">OMNI_NO_WIN_API</a></code> - Use the Microsoft C Runtime Library where applicable.</li>
     <li><code><a href="omni_no_win_lean.html">OMNI_NO_WIN_LEAN</a></code> - Does not enable the <code>WIN32_LEAN_AND_MEAN</code> macro</li>
     <li><code><a href="omni_no_win_use_event_conditional.html">OMNI_NO_WIN_USE_EVENT_CONDITIONAL</a></code> - A framework macro/option</li>
@@ -162,7 +205,6 @@ The following is a list of compiler options that can effect how the library is b
     <li><code><a href="omni_object_name.html">OMNI_OBJECT_NAME</a></code> - If defined, adds a <code>name</code> string member to each object.</li>
     <li><code><a href="omni_ofstream_t.html">OMNI_OFSTREAM_T</a></code> - A framework macro/option</li>
     <li><code><a href="omni_ostream_fn_operator.html">OMNI_OSTREAM_FN_OPERATOR</a></code> - A framework macro/option</li>
-    <li><code><a href="omni_ostream_raw_operator.html">OMNI_OSTREAM_RAW_OPERATOR</a></code> - A framework macro/option</li>
     <li><code><a href="omni_os_plan9.html">OMNI_OS_PLAN9</a></code> - A framework macro/option</li>
     <li><code><a href="omni_os_vxworks.html">OMNI_OS_VXWORKS</a></code> - A framework macro/option</li>
     <li><code><a href="omni_overflow_str.html">OMNI_OVERFLOW_STR</a></code> - A framework macro/option</li>
@@ -179,10 +221,12 @@ The following is a list of compiler options that can effect how the library is b
     <li><code><a href="omni_plus_wchar.html">OMNI_PLUS_WCHAR</a></code> - A framework macro/option</li>
     <li><code><a href="omni_print.html">OMNI_PRINT</a></code> - A framework macro/option</li>
     <li><code><a href="omni_printl.html">OMNI_PRINTL</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_quadrilateral_use_sa.html">OMNI_QUADRILATERAL_USE_SA</a></code> - A library macro/option</li>
     <li><code><a href="omni_safe_application.html">OMNI_SAFE_APPLICATION</a></code> - Signifies thread safe functions in <code><a href="../classes/omni-application.html">omni::application</a></code></li>
     <li><code><a href="omni_safe_async_timer.html">OMNI_SAFE_ASYNC_TIMER</a></code> - Signifies thread safe functions in <code><a href="../classes/omni-chrono-async_timer.html">omni::chrono::async_timer</a></code></li>
     <li><code><a href="omni_safe_basic_thread.html">OMNI_SAFE_BASIC_THREAD</a></code> - Signifies thread safe functions in omni::sync::basci_thread</li>
     <li><code><a href="omni_safe_chrono.html">OMNI_SAFE_CHRONO</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_safe_circle.html">OMNI_SAFE_CIRCLE</a></code> - A library macro/option</li>
     <li><code><a href="omni_safe_color.html">OMNI_SAFE_COLOR</a></code> - A framework macro/option</li>
     <li><code><a href="omni_safe_datetime.html">OMNI_SAFE_DATETIME</a></code> - A framework macro/option</li>
     <li><code><a href="omni_safe_delegates.html">OMNI_SAFE_DELEGATES</a></code> - Signifies thread safe functions in the delegates</li>
@@ -190,13 +234,18 @@ The following is a list of compiler options that can effect how the library is b
     <li><code><a href="omni_safe_events.html">OMNI_SAFE_EVENTS</a></code> - Signifies thread safe functions in the events</li>
     <li><code><a href="omni_safe_geometry.html">OMNI_SAFE_GEOMETRY</a></code> - A framework macro/option</li>
     <li><code><a href="omni_safe_geo_size.html">OMNI_SAFE_GEO_SIZE</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_safe_geo_size3d.html">OMNI_SAFE_GEO_SIZE3D</a></code> - A library macro/option</li>
     <li><code><a href="omni_safe_library.html">OMNI_SAFE_LIBRARY</a></code> - Signifies thread safe functions in the framework</li>
     <li><code><a href="omni_safe_locks.html">OMNI_SAFE_LOCKS</a></code> - Signifies thread safe functions in locking classes</li>
     <li><code><a href="omni_safe_mutex.html">OMNI_SAFE_MUTEX</a></code> - Signifies thread safe functions in <code><a href="../classes/omni-sync-mutex.html">omni::sync::mutex</a></code></li>
     <li><code><a href="omni_safe_net.html">OMNI_SAFE_NET</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_safe_net_client.html">OMNI_SAFE_NET_CLIENT</a></code> - A library macro/option</li>
+    <li><code><a href="omni_safe_net_server.html">OMNI_SAFE_NET_SERVER</a></code> - A library macro/option</li>
+    <li><code><a href="omni_safe_net_version.html">OMNI_SAFE_NET_VERSION</a></code> - A library macro/option</li>
     <li><code><a href="omni_safe_point2d.html">OMNI_SAFE_POINT2D</a></code> - A framework macro/option</li>
     <li><code><a href="omni_safe_point3d.html">OMNI_SAFE_POINT3D</a></code> - A framework macro/option</li>
     <li><code><a href="omni_safe_prop.html">OMNI_SAFE_PROP</a></code> - Signifies thread safe functions in <code><a href="../classes/omni-property.html">omni::property</a></code></li>
+    <li><code><a href="omni_safe_quadrangle.html">OMNI_SAFE_QUADRANGLE</a></code> - A library macro/option</li>
     <li><code><a href="omni_safe_queue_timer.html">OMNI_SAFE_QUEUE_TIMER</a></code> - Signifies thread safe functions in <code><a href="../classes/omni-chrono-queue_timer.html">omni::chrono::queue_timer</a></code></li>
     <li><code><a href="omni_safe_rectangle.html">OMNI_SAFE_RECTANGLE</a></code> - A framework macro/option</li>
     <li><code><a href="omni_safe_runnable_thread.html">OMNI_SAFE_RUNNABLE_THREAD</a></code> - Signifies thread safe functions in <code><a href="../classes/omni-sync-runnable_thread.html">omni::sync::runnable_thread</a></code></li>
@@ -209,8 +258,10 @@ The following is a list of compiler options that can effect how the library is b
     <li><code><a href="omni_safe_thread.html">OMNI_SAFE_THREAD</a></code> - Signifies thread safe functions in <code><a href="../classes/omni-sync-thread.html">omni::sync::thread</a></code></li>
     <li><code><a href="omni_safe_threads.html">OMNI_SAFE_THREADS</a></code> - Signifies thread safe functions in the threads</li>
     <li><code><a href="omni_safe_timers.html">OMNI_SAFE_TIMERS</a></code> - Signifies thread safe functions in the timers</li>
+    <li><code><a href="omni_safe_triangle.html">OMNI_SAFE_TRIANGLE</a></code> - A library macro/option</li>
     <li><code><a href="omni_safe_vector2.html">OMNI_SAFE_VECTOR2</a></code> - A framework macro/option</li>
     <li><code><a href="omni_safe_vector3.html">OMNI_SAFE_VECTOR3</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_safe_version.html">OMNI_SAFE_VERSION</a></code> - A library macro/option</li>
     <li><code><a href="omni_sequence_container_type.html">OMNI_SEQUENCE_CONTAINER_TYPE</a></code> - A framework macro/option</li>
     <li><code><a href="omni_show_debug.html">OMNI_SHOW_DEBUG</a></code> - Display framework debug output.</li>
     <li><code><a href="omni_show_debug_err.html">OMNI_SHOW_DEBUG_ERR</a></code> - Displays errors as part of the debug output.</li>
@@ -223,7 +274,6 @@ The following is a list of compiler options that can effect how the library is b
     <li><code><a href="omni_socket_default_get_host_port.html">OMNI_SOCKET_DEFAULT_GET_HOST_PORT</a></code> - A framework macro/option</li>
     <li><code><a href="omni_somaxconn.html">OMNI_SOMAXCONN</a></code> - A framework macro/option</li>
     <li><code><a href="omni_stream_fn_operators.html">OMNI_STREAM_FN_OPERATORS</a></code> - A framework macro/option</li>
-    <li><code><a href="omni_stream_raw_operators.html">OMNI_STREAM_RAW_OPERATORS</a></code> - A framework macro/option</li>
     <li><code><a href="omni_string_invalid_binary_format_str.html">OMNI_STRING_INVALID_BINARY_FORMAT_STR</a></code> - A framework macro/option</li>
     <li><code><a href="omni_terminate.html">OMNI_TERMINATE</a></code> - Defines the underlying terminate function to call.</li>
     <li><code><a href="omni_threadpool_use_seq_t.html">OMNI_THREADPOOL_USE_SEQ_T</a></code> - A framework macro/option</li>
@@ -234,8 +284,10 @@ The following is a list of compiler options that can effect how the library is b
     <li><code><a href="omni_thread_stdcall.html">OMNI_THREAD_STDCALL</a></code> - Signifies to use <code>__stdcall</code> for the <code><a href="omni_thread_call_t.html">OMNI_THREAD_CALL_T</a></code></li>
     <li><code><a href="omni_throw.html">OMNI_THROW</a></code> - If defined, signifies to throw on exception.</li>
     <li><code><a href="omni_timer_lib.html">OMNI_TIMER_LIB</a></code> - If defined will build only the timers in library.cpp</li>
+    <li><code><a href="omni_triangle_use_sa.html">OMNI_TRIANGLE_USE_SA</a></code> - A library macro/option</li>
     <li><code><a href="omni_type_info.html">OMNI_TYPE_INFO</a></code> - Defines if the omni::type class should be used in other classes.</li>
     <li><code><a href="omni_underflow_str.html">OMNI_UNDERFLOW_STR</a></code> - A framework macro/option</li>
+    <li><code><a href="omni_use_explicit.html">OMNI_USE_EXPLICIT</a></code> - A library macro/option</li>
     <li><code><a href="omni_use_m_pi.html">OMNI_USE_M_PI</a></code> - A framework macro/option</li>
     <li><code><a href="omni_use_m_pi_l.html">OMNI_USE_M_PI_L</a></code> - A framework macro/option</li>
     <li><code><a href="omni_winsock_high.html">OMNI_WINSOCK_HIGH</a></code> - A framework macro/option</li>
@@ -248,7 +300,6 @@ The following is a list of compiler options that can effect how the library is b
     <li><code><a href="omni_win_no_pragma_ws2_32_lib.html">OMNI_WIN_NO_PRAGMA_WS2_32_LIB</a></code> - A framework macro/option</li>
     <li><code><a href="omni_win_use_event_conditional.html">OMNI_WIN_USE_EVENT_CONDITIONAL</a></code> - Defines whether to use an event or condition type on Windows</li>
     <li><code><a href="omni_wostream_fn_operator.html">OMNI_WOSTREAM_FN_OPERATOR</a></code> - A framework macro/option</li>
-    <li><code><a href="omni_wostream_raw_operator.html">OMNI_WOSTREAM_RAW_OPERATOR</a></code> - A framework macro/option</li>
     <li><code><a href="omni_wprint.html">OMNI_WPRINT</a></code> - A framework macro/option</li>
     <li><code><a href="omni_wprintl.html">OMNI_WPRINTL</a></code> - A framework macro/option</li>
 
@@ -265,6 +316,7 @@ The following is a list of helper macros used by the library that can be utilize
     <li><code><a href="omni_bool2wstr.html">OMNI_BOOL2WSTR</a></code> - Convert a bool value to a wide string.</li>
     <li><code><a href="omni_def2str.html">OMNI_DEF2STR</a></code> - String-izes the value passed in</li>
     <li><code><a href="omni_defconcat.html">OMNI_DEFCONCAT</a></code> - Concatenate 2 #define values.</li>
+    <li><code><a href="omni_deg_to_rad.html">OMNI_DEG_TO_RAD</a></code> - A library macro/option</li>
     <li><code><a href="omni_delegate.html">OMNI_DELEGATE</a></code> - A helper macro for defining an <code><a href="../classes/omni-delegate.html">omni::delegate</a></code></li>
     <li><code><a href="omni_dwstr.html">OMNI_DWSTR</a></code> - Widens a string-ized macro</li>
     <li><code><a href="omni_event.html">OMNI_EVENT</a></code> - A helper macro for defining an <code><a href="../classes/omni-event.html">omni::event</a></code></li>
@@ -273,6 +325,8 @@ The following is a list of helper macros used by the library that can be utilize
     <li><code><a href="omni_no_use_cmath_consts.html">OMNI_NO_USE_CMATH_CONSTS</a></code> - Cancels <code><a href="omni_use_cmath_consts.html">OMNI_USE_CMATH_CONSTS</a></code></li>
     <li><code><a href="omni_null.html">OMNI_NULL</a></code> - The NULL value used throughout the framework.</li>
     <li><code><a href="omni_ostream_operator.html">OMNI_OSTREAM_OPERATOR</a></code> - A helper macro to implement the <code>operator&lt;&lt;</code> stream friend function</li>
+    <li><code><a href="omni_path_root.html">OMNI_PATH_ROOT</a></code> - A library macro/option</li>
+    <li><code><a href="omni_rad_to_deg.html">OMNI_RAD_TO_DEG</a></code> - A library macro/option</li>
     <li><code><a href="omni_sequence_t.html">OMNI_SEQUENCE_T</a></code> - A framework macro/option</li>
     <li><code><a href="omni_seq_t.html">OMNI_SEQ_T</a></code> - A framework macro/option</li>
     <li><code><a href="omni_set_n_bit.html">OMNI_SET_N_BIT</a></code> - Sets a bit in a value</li>
@@ -293,17 +347,23 @@ The following is a list of helper macros used by the library that can be utilize
     <li><code><a href="omni_val_set_flag_bool_t.html">OMNI_VAL_SET_FLAG_BOOL_T</a></code> - Sets a flag bit in a value casting to a specified type.</li>
     <li><code><a href="omni_val_unset_flag_bit.html">OMNI_VAL_UNSET_FLAG_BIT</a></code> - Unsets a flag bit in a value.</li>
     <li><code><a href="omni_wincode.html">OMNI_WINCODE</a></code> - Defined when a Windows Unicode environment detected.</li>
+    <li><code><a href="omni_wnew_line.html">OMNI_WNEW_LINE</a></code> - A library macro/option</li>
     <li><code><a href="omni_wostream_operator.html">OMNI_WOSTREAM_OPERATOR</a></code> - A helper macro to implement the <code>operator&lt;&lt;</code> wide stream friend function</li>
+    <li><code><a href="omni_wpath_root.html">OMNI_WPATH_ROOT</a></code> - A library macro/option</li>
+    <li><code><a href="omni_wpath_separator.html">OMNI_WPATH_SEPARATOR</a></code> - A library macro/option</li>
     <li><code><a href="omni_wstr.html">OMNI_WSTR</a></code> - Widens an input string (defined as <code>L##v</code>)</li>
     <li><code><a href="omni_xor_swap.html">OMNI_XOR_SWAP</a></code> - A helper macro defining an XOR swap</li>
 
 </ul></div><br><a name="fwhelp"></a><div class="ops"><font>Library Macros</font><br>
 The following is a list of macros used internally by the library.
 <input type="checkbox" name="fwhelp_ops" id="fwhelp_ops" /><label for="fwhelp_ops"></label><ul name="ulh" id="ulh">
+    <li><code><a href="omni_apple_old_api.html">OMNI_APPLE_OLD_API</a></code> - A library macro/option</li>
     <li><code><a href="omni_char_t.html">OMNI_CHAR_T</a></code> - Defines the underlying char type.</li>
     <li><code><a href="omni_clock_freq_t.html">OMNI_CLOCK_FREQ_T</a></code> - Defines the underlying clock frequency variable type.</li>
     <li><code><a href="omni_clock_tick_t.html">OMNI_CLOCK_TICK_T</a></code> - Defines the underlying clock tick type.</li>
     <li><code><a href="omni_cond_t.html">OMNI_COND_T</a></code> - Defines the underlying condition variable type.</li>
+    <li><code><a href="omni_ctor_catch.html">OMNI_CTOR_CATCH</a></code> - A library macro/option</li>
+    <li><code><a href="omni_ctor_try.html">OMNI_CTOR_TRY</a></code> - A library macro/option</li>
     <li><code><a href="omni_date.html">OMNI_DATE</a></code> - Defines the build date for the framework.</li>
     <li><code><a href="omni_dbge.html">OMNI_DBGE</a></code> - A helper macro used for debug error output.</li>
     <li><code><a href="omni_dbgev.html">OMNI_DBGEV</a></code> - A helper macro used for debug error output.</li>
@@ -315,6 +375,10 @@ The following is a list of macros used internally by the library.
     <li><code><a href="omni_debug.html">OMNI_DEBUG</a></code> - Defined when any debug values are defined.</li>
     <li><code><a href="omni_dtor_no_throws.html">OMNI_DTOR_NO_THROWS</a></code> - Specifies</li>
     <li><code><a href="omni_dtor_throws.html">OMNI_DTOR_THROWS</a></code> - Specifies</li>
+    <li><code><a href="omni_enable_noexcept.html">OMNI_ENABLE_NOEXCEPT</a></code> - A library macro/option</li>
+    <li><code><a href="omni_enum_include_bitwise_ops.html">OMNI_ENUM_INCLUDE_BITWISE_OPS</a></code> - A library macro/option</li>
+    <li><code><a href="omni_free.html">OMNI_FREE</a></code> - A library macro/option</li>
+    <li><code><a href="omni_free_arr.html">OMNI_FREE_ARR</a></code> - A library macro/option</li>
     <li><code><a href="omni_fstream_t.html">OMNI_FSTREAM_T</a></code> - Defines the underlying <code>fstream</code> type.</li>
     <li><code><a href="omni_fw_ver_maj.html">OMNI_FW_VER_MAJ</a></code> - Defines the current framework major version.</li>
     <li><code><a href="omni_fw_ver_min.html">OMNI_FW_VER_MIN</a></code> - Defines the current framework minor version.</li>
@@ -324,7 +388,9 @@ The following is a list of macros used internally by the library.
     <li><code><a href="omni_gle_prnt.html">OMNI_GLE_PRNT</a></code> - Can be used in print statements to output the last error code.</li>
     <li><code><a href="omni_ifstream_t.html">OMNI_IFSTREAM_T</a></code> - Defines the underlying <code>ifstream</code> type.</li>
     <li><code><a href="omni_istream_t.html">OMNI_ISTREAM_T</a></code> - Defines the underlying <code>istream</code> type.</li>
+    <li><code><a href="omni_math_delta.html">OMNI_MATH_DELTA</a></code> - A library macro/option</li>
     <li><code><a href="omni_mutex_t.html">OMNI_MUTEX_T</a></code> - Defines the underlying mutex handle type based on system.</li>
+    <li><code><a href="omni_nan.html">OMNI_NAN</a></code> - A library macro/option</li>
     <li><code><a href="omni_ostream_t.html">OMNI_OSTREAM_T</a></code> - Defines the underlying <code>ostream</code> type.</li>
     <li><code><a href="omni_os_aegis.html">OMNI_OS_AEGIS</a></code> - Defines Aegis environment was detected.</li>
     <li><code><a href="omni_os_aix.html">OMNI_OS_AIX</a></code> - Defines AIX environment was detected.</li>

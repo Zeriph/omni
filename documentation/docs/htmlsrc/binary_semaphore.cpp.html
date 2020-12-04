@@ -77,16 +77,16 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <br>
 <a href="../classes/omni-sync-binary_semaphore-binary_semaphore.html">omni::sync::binary_semaphore::binary_semaphore</a>() :<br>
 &nbsp;&nbsp;&nbsp;&nbsp;OMNI_CTOR_FW(<a href="../classes/omni-sync-binary_semaphore.html">omni::sync::binary_semaphore</a>)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;m_sem(),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;m_lokd(<font class="syn_ins">false</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;m_lokd(<font class="syn_num">0</font>),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;m_sem()<br>
 {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;_init();<br>
 }<br>
 <br>
 <a href="../classes/omni-sync-binary_semaphore-binary_semaphore.html">omni::sync::binary_semaphore::binary_semaphore</a>(<font class="syn_typ">bool</font> initialy_owned) :<br>
 &nbsp;&nbsp;&nbsp;&nbsp;OMNI_CTOR_FW(<a href="../classes/omni-sync-binary_semaphore.html">omni::sync::binary_semaphore</a>)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;m_sem(),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;m_lokd(<font class="syn_ins">false</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;m_lokd(<font class="syn_num">0</font>),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;m_sem()<br>
 {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;_init();<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (initialy_owned) { <font class="syn_typ">this</font>-&gt;lock(); }<br>
@@ -108,7 +108,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <br>
 <font class="syn_typ">bool</font> <a href="../classes/omni-sync-binary_semaphore-locked.html">omni::sync::binary_semaphore::locked</a>() <font class="syn_typ">const</font><br>
 {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;m_lokd;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_lokd == <font class="syn_num">1</font>);<br>
 }<br>
 <br>
 <font class="syn_typ">bool</font> <a href="../classes/omni-sync-binary_semaphore-lock.html">omni::sync::binary_semaphore::lock</a>()<br>
@@ -116,7 +116,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../options/omni_os_win.html">OMNI_OS_WIN</a>)</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">switch</font>(::<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms687032%28v=vs.85%29.aspx">WaitForSingleObject</a>(<font class="syn_typ">this</font>-&gt;m_sem, INFINITE)) {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">case</font> WAIT_OBJECT_0: <font class="syn_cmt">// 0x00000000L</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_lokd = <font class="syn_ins">true</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_lokd = <font class="syn_num">1</font>;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">true</font>; <font class="syn_ins">break</font>;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../options/omni_dbg_l3.html">OMNI_DBG_L3</a>)</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// If debug is not enabled the following flags are not relevant to this context</font><br>
@@ -133,12 +133,12 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (::<a href="http://pubs.opengroup.org/onlinepubs/007908799/xsh/sem_wait.html">sem_wait</a>(&amp;<font class="syn_typ">this</font>-&gt;m_sem) != -<font class="syn_num">1</font>)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <font class="syn_typ">this</font>-&gt;m_lokd = <font class="syn_ins">true</font>; <font class="syn_ins">return</font> <font class="syn_ins">true</font>; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <font class="syn_typ">this</font>-&gt;m_lokd = <font class="syn_num">1</font>; <font class="syn_ins">return</font> <font class="syn_ins">true</font>; }<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../options/omni_dbg_l3.html">OMNI_DBG_L3</a>)</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">else</font> { OMNI_DV3_FW(<font class="syn_str">&quot;a system error occurred on the semaphore object: &quot;</font>, <a href="../options/omni_gle_prnt.html">OMNI_GLE_PRNT</a>); }<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_lokd = <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_lokd = <font class="syn_num">0</font>;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
 }<br>
 <br>
@@ -147,7 +147,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../options/omni_os_win.html">OMNI_OS_WIN</a>)</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">switch</font>(::<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms687032%28v=vs.85%29.aspx">WaitForSingleObject</a>(<font class="syn_typ">this</font>-&gt;m_sem, timeout_ms)) {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">case</font> WAIT_OBJECT_0: <font class="syn_cmt">// 0x00000000L</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_lokd = <font class="syn_ins">true</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_lokd = <font class="syn_num">1</font>;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">true</font>; <font class="syn_ins">break</font>;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../options/omni_dbg_l3.html">OMNI_DBG_L3</a>)</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">case</font> WAIT_FAILED: OMNI_DV3_FW(<font class="syn_str">&quot;a system error occurred on the semaphore object: &quot;</font>, <a href="../options/omni_gle_prnt.html">OMNI_GLE_PRNT</a>); <font class="syn_ins">break</font>;<br>
@@ -164,7 +164,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">switch</font>(::<a href="http://www.opensource.apple.com/source/xnu/xnu-1456.1.26/osfmk/mach/semaphore.h">semaphore_timedwait</a>(<font class="syn_typ">this</font>-&gt;m_sem, tm)) {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">case</font> KERN_SUCCESS:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_lokd = <font class="syn_ins">true</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_lokd = <font class="syn_num">1</font>;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">true</font>; <font class="syn_ins">break</font>;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../options/omni_dbg_l3.html">OMNI_DBG_L3</a>)</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DSW_FW(KERN_OPERATION_TIMED_OUT);<br>
@@ -174,7 +174,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (timeout_ms == <font class="syn_num">0</font>) {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (::<a href="http://pubs.opengroup.org/onlinepubs/009695399/functions/sem_trywait.html">sem_trywait</a>(&amp;<font class="syn_typ">this</font>-&gt;m_sem) == <font class="syn_num">0</font>) {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_lokd = <font class="syn_ins">true</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_lokd = <font class="syn_num">1</font>;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">true</font>;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../options/omni_dbg_l3.html">OMNI_DBG_L3</a>)</font><br>
@@ -184,7 +184,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-chrono-tick_t.html">omni::chrono::tick_t</a> start = <a href="../classes/omni-chrono-monotonic_tick.html">omni::chrono::monotonic_tick</a>();<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">do</font> {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (::<a href="http://pubs.opengroup.org/onlinepubs/009695399/functions/sem_trywait.html">sem_trywait</a>(&amp;<font class="syn_typ">this</font>-&gt;m_sem) == <font class="syn_num">0</font>) {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_lokd = <font class="syn_ins">true</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_lokd = <font class="syn_num">1</font>;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">true</font>;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../options/omni_dbg_l3.html">OMNI_DBG_L3</a>)</font><br>
@@ -193,13 +193,13 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">while</font> (<a href="../classes/omni-chrono-elapsed_ms.html">omni::chrono::elapsed_ms</a>(start) &lt;= timeout_ms);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_lokd = <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_lokd = <font class="syn_num">0</font>;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
 }<br>
 <br>
 <font class="syn_typ">bool</font> <a href="../classes/omni-sync-binary_semaphore-unlock.html">omni::sync::binary_semaphore::unlock</a>()<br>
 {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!<font class="syn_typ">this</font>-&gt;m_lokd) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font>-&gt;m_lokd == <font class="syn_num">0</font>) {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_RETV_FW(<font class="syn_str">&quot;the binary semaphore is not locked on call to release&quot;</font>, <a href="../classes/omni-exceptions-semaphore_release_exception.html">omni::exceptions::semaphore_release_exception</a>(), <font class="syn_ins">true</font>)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;}<br>
 <font class="syn_pre"><font class="syn_pre">#if defined(<a href="../options/omni_os_win.html">OMNI_OS_WIN</a>)</font><br>
@@ -210,7 +210,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (::<a href="http://pubs.opengroup.org/onlinepubs/007908775/xsh/sem_post.html">sem_post</a>(&amp;<font class="syn_typ">this</font>-&gt;m_sem) != -<font class="syn_num">1</font>)<br>
 <font class="syn_pre">#endif</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;{<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_lokd = <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_lokd = <font class="syn_num">0</font>;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">true</font>;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERRV_FW(<font class="syn_str">&quot;a system error occurred on the semaphore object: &quot;</font>, <a href="../options/omni_gle_prnt.html">OMNI_GLE_PRNT</a>, <a href="../classes/omni-exceptions-semaphore_system_exception.html">omni::exceptions::semaphore_system_exception</a>(<a href="../options/omni_gle_prnt.html">OMNI_GLE_PRNT</a>));<br>
@@ -241,7 +241,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <font class="syn_typ">void</font> <a href="../classes/omni-sync-binary_semaphore-_dispose.html">omni::sync::binary_semaphore::_dispose</a>()<br>
 {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// only release if we are locked</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font>-&gt;m_lokd) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font>-&gt;m_lokd == <font class="syn_num">1</font>) {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_FW(<font class="syn_str">&quot;the binary semaphore is locked on call to dispose&quot;</font>, <a href="../classes/omni-exceptions-active_wait_exception.html">omni::exceptions::active_wait_exception</a>())<br>
 &nbsp;&nbsp;&nbsp;&nbsp;}<br>
 <font class="syn_pre"><font class="syn_pre">#if defined(<a href="../options/omni_os_win.html">OMNI_OS_WIN</a>)</font><br>

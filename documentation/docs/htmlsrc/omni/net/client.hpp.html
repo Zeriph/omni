@@ -64,7 +64,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <font class="syn_pre">#if !defined(OMNI_NET_CLIENT_HPP)</font><br>
 <font class="syn_pre">#define OMNI_NET_CLIENT_HPP 1</font><br>
 <font class="syn_pre">#include &lt;<a href="../../omni/types/net_t.hpp.html">omni/types/net_t.hpp</a>&gt;</font><br>
-<font class="syn_pre"><font class="syn_pre">#if defined(OMNI_SAFE_NET_CLIENT)</font><br>
+<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../options/omni_safe_net_client.html">OMNI_SAFE_NET_CLIENT</a>)</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;<a href="../../omni/sync/basic_lock.hpp.html">omni/sync/basic_lock.hpp</a>&gt;</font><br>
 <font class="syn_pre">#endif</font><br>
 <br>
@@ -78,7 +78,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">public</font>:<br>
 <a name="omni::net::client::client"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;client();<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;client(<font class="syn_typ">const</font> client&amp; cp);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;client(<font class="syn_typ">const</font> <a href="../../../classes/omni-net-client.html">omni::net::client</a>&amp; cp);<br>
 <a name="omni::net::client::~client"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~client();<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
 <a name="omni::net::client::connect"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> connect(<font class="syn_typ">const</font> <a href="../../../classes/omni-net-socket_t.html">omni::net::socket_t</a>&amp; serv_sock);<br>

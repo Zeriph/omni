@@ -24,6 +24,11 @@
 #if defined(OMNI_SAFE_STOPWATCH)
     #include <omni/sync/basic_lock.hpp>
 #endif
+#if defined(OMNI_32BIT_STOPWATCH)
+    #define OMNI_SW_INT_FW uint32_t
+#else
+    #define OMNI_SW_INT_FW uint64_t
+#endif
 
 namespace omni {
     class stopwatch
@@ -62,8 +67,7 @@ namespace omni {
         private:
             omni::chrono::tick_t m_end;
             omni::chrono::tick_t m_init;
-            volatile bool m_isrun;
-            volatile bool m_isstrt;
+            volatile OMNI_SW_INT_FW m_status;
 
             #if defined(OMNI_SAFE_STOPWATCH)
                 mutable omni::sync::basic_lock m_mtx;

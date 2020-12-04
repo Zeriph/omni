@@ -62,7 +62,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 0000720:<br>0000721:<br>0000722:<br>0000723:<br>0000724:<br>0000725:<br>0000726:<br>0000727:<br>0000728:<br>0000729:<br>0000730:<br>0000731:<br>0000732:<br>0000733:<br>0000734:<br>0000735:<br>0000736:<br>0000737:<br>0000738:<br>0000739:<br>
 0000740:<br>0000741:<br>0000742:<br>0000743:<br>0000744:<br>0000745:<br>0000746:<br>0000747:<br>0000748:<br>0000749:<br>0000750:<br>0000751:<br>0000752:<br>0000753:<br>0000754:<br>0000755:<br>0000756:<br>0000757:<br>0000758:<br>0000759:<br>
 0000760:<br>0000761:<br>0000762:<br>0000763:<br>0000764:<br>0000765:<br>0000766:<br>0000767:<br>0000768:<br>0000769:<br>0000770:<br>0000771:<br>0000772:<br>0000773:<br>0000774:<br>0000775:<br>0000776:<br>0000777:<br>0000778:<br>0000779:<br>
-0000780:<br>0000781:<br>0000782:<br>
+0000780:<br>0000781:<br>0000782:<br>0000783:<br>0000784:<br>0000785:<br>0000786:<br>0000787:<br>0000788:<br>0000789:<br>0000790:<br>0000791:<br>0000792:<br>0000793:<br>0000794:<br>0000795:<br>0000796:<br>0000797:<br>
 <!--end line numbers-->
 </div><div class="cpphtmlcmnt">
 <!--start collapse columns-->
@@ -105,7 +105,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <!--end collapse columns-->
 </div><div class="cpphtml" style="margin-left:3.75em;">
 <!--start highlighted code-->
@@ -220,7 +220,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// error</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">case</font> OMNI_SOCK_SYSERR_FW: <font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../classes/omni-net-parse_error.html">omni::net::parse_error</a>(OMNI_SOCKET_ERR_FW));<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// success</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">default</font>: received = r; <font class="syn_ins">break</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">default</font>: received = <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint32_t</font>&gt;(r); <font class="syn_ins">break</font>;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../classes/omni-net-socket_error-success.html">omni::net::socket_error::SUCCESS</a>);<br>
@@ -253,7 +253,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// error</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">case</font> OMNI_SOCK_SYSERR_FW: <font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../classes/omni-net-parse_error.html">omni::net::parse_error</a>(OMNI_SOCKET_ERR_FW));<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// success</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">default</font>: received = r; <font class="syn_ins">break</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">default</font>: received = <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint32_t</font>&gt;(r); <font class="syn_ins">break</font>;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;from_ip.assign(<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/inet_ntoa.html">inet_ntoa</a>(src_addr.sin_addr));<br>
@@ -283,7 +283,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../classes/omni-net-parse_error.html">omni::net::parse_error</a>(OMNI_SOCKET_ERR_FW));<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// success</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sent = r;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sent = <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint32_t</font>&gt;(r);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../classes/omni-net-socket_error-success.html">omni::net::socket_error::SUCCESS</a>);<br>
 }<br>
@@ -301,7 +301,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-net-sockaddr_in_t.html">omni::net::sockaddr_in_t</a> to_addr;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;OMNI_SOCKLEN_FW addrlen = <font class="syn_ins">sizeof</font>(<a href="../classes/omni-net-sockaddr_in_t.html">omni::net::sockaddr_in_t</a>);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/cstring/memset/">std::memset</a>(&amp;to_addr, <font class="syn_num">0</font>, addrlen);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;to_addr.sin_family = <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">int</font>&gt;(<font class="syn_typ">this</font>-&gt;m_family);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;to_addr.sin_family = <font class="syn_ins">static_cast</font>&lt;OMNI_SIN_FAMILY_FW&gt;(<font class="syn_typ">this</font>-&gt;m_family);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;to_addr.sin_port = <a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/htons.html">htons</a>(port);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;to_addr.sin_addr.s_addr = htonl(ep);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../options/omni_win_api.html">OMNI_WIN_API</a>)</font><br>
@@ -320,7 +320,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../classes/omni-net-parse_error.html">omni::net::parse_error</a>(OMNI_SOCKET_ERR_FW));<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// success</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sent = r;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sent = <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint32_t</font>&gt;(r);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../classes/omni-net-socket_error-success.html">omni::net::socket_error::SUCCESS</a>);<br>
 }<br>
@@ -408,14 +408,21 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_port = port;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/cstring/memset/">std::memset</a>(&amp;<font class="syn_typ">this</font>-&gt;m_addr, <font class="syn_num">0</font>, <font class="syn_ins">sizeof</font>(<font class="syn_typ">this</font>-&gt;m_addr));<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">switch</font> (<font class="syn_typ">this</font>-&gt;m_family) {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">case</font> omni::net::address_family::INTERNETWORK: {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_addr.sin_family = <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">int</font>&gt;(<font class="syn_typ">this</font>-&gt;m_family);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">case</font> omni::net::address_family::INET: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_addr.sin_family = <font class="syn_ins">static_cast</font>&lt;OMNI_SIN_FAMILY_FW&gt;(<font class="syn_typ">this</font>-&gt;m_family);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_addr.sin_port = <a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/htons.html">htons</a>(<font class="syn_typ">this</font>-&gt;m_port);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_addr.sin_addr.s_addr = htonl(<font class="syn_typ">this</font>-&gt;m_ep4);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">break</font>;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// TODO: need to add</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">case</font> omni::net::address_family::INET6:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// TODO: need to add</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">case</font> omni::net::address_family::UNIX:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">case</font> omni::net::address_family::SNA: <font class="syn_ins">case</font> omni::net::address_family::DECNET:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">case</font> omni::net::address_family::APPLETALK: <font class="syn_ins">case</font> omni::net::address_family::UNSPECIFIED:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">default</font>:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// <a href="../classes/omni-net-address_family-unix.html">omni::net::address_family::UNIX</a> is not support in this socket since that is an IPC protocol</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// <a href="../classes/omni-net-address_family-internetwork_v6.html">omni::net::address_family::INTERNETWORK_V6</a> is not supported in this socket, that is socket6</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// <a href="../classes/omni-net-address_family-unix.html">omni::net::address_family::UNIX</a> is not suppored in this socket since that is an IPC protocol</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// <a href="../classes/omni-net-address_family-inet6.html">omni::net::address_family::INET6</a> is not supported in this socket, that is socket6</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../classes/omni-net-socket_error-protocol_family_not_supported.html">omni::net::socket_error::PROTOCOL_FAMILY_NOT_SUPPORTED</a>);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a>(<font class="syn_typ">this</font>-&gt;m_socket, <a href="../classes/omni-net-to_sockaddr.html">omni::net::to_sockaddr</a>(<font class="syn_typ">this</font>-&gt;m_addr), <font class="syn_ins">sizeof</font>(<font class="syn_typ">this</font>-&gt;m_addr)) != <font class="syn_num">0</font>) {<br>
@@ -477,14 +484,22 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/cstring/memset/">std::memset</a>(&amp;<font class="syn_typ">this</font>-&gt;m_addr, <font class="syn_num">0</font>, <font class="syn_ins">sizeof</font>(<font class="syn_typ">this</font>-&gt;m_addr));<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">switch</font> (<font class="syn_typ">this</font>-&gt;m_family) {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">case</font> omni::net::address_family::INTERNETWORK: {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_addr.sin_family = <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">int</font>&gt;(<font class="syn_typ">this</font>-&gt;m_family);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">case</font> omni::net::address_family::INET: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_addr.sin_family = <font class="syn_ins">static_cast</font>&lt;OMNI_SIN_FAMILY_FW&gt;(<font class="syn_typ">this</font>-&gt;m_family);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_addr.sin_port = <a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/htons.html">htons</a>(<font class="syn_typ">this</font>-&gt;m_port);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_addr.sin_addr.s_addr = htonl(<font class="syn_typ">this</font>-&gt;m_ep4);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">break</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// TODO: need to add</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">case</font> omni::net::address_family::INET6:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// TODO: need to add</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">case</font> omni::net::address_family::UNIX:<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">case</font> omni::net::address_family::SNA: <font class="syn_ins">case</font> omni::net::address_family::DECNET:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">case</font> omni::net::address_family::APPLETALK: <font class="syn_ins">case</font> omni::net::address_family::UNSPECIFIED:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">default</font>:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// <a href="../classes/omni-net-address_family-unix.html">omni::net::address_family::UNIX</a> is not support in this socket since that is an IPC protocol</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// <a href="../classes/omni-net-address_family-internetwork_v6.html">omni::net::address_family::INTERNETWORK_V6</a> is not supported in this socket, that is a socket6</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// <a href="../classes/omni-net-address_family-inet6.html">omni::net::address_family::INET6</a> is not supported in this socket, that is a socket6</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../classes/omni-net-socket_error-protocol_family_not_supported.html">omni::net::socket_error::PROTOCOL_FAMILY_NOT_SUPPORTED</a>);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (OMNI_SOCKET_CONNECT_FW(<font class="syn_typ">this</font>-&gt;m_socket, <a href="../classes/omni-net-to_sockaddr.html">omni::net::to_sockaddr</a>(<font class="syn_typ">this</font>-&gt;m_addr), <font class="syn_ins">sizeof</font>(<font class="syn_typ">this</font>-&gt;m_addr)) != <font class="syn_num">0</font>) {<br>
@@ -523,15 +538,15 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <a href="../classes/omni-net-socket_error.html">omni::net::socket_error</a> <a href="../classes/omni-net-socket-connect_host.html">omni::net::socket::connect_host</a>(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; host, <font class="syn_typ">uint16_t</font> port)<br>
 {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;omni::seq::std_string_t ip;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-net-socket_error.html">omni::net::socket_error</a> err = <a href="../classes/omni-net-util-get_ip.html">omni::net::util::get_ip</a>(host, port, ip);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (err == <a href="../classes/omni-net-socket_error-success.html">omni::net::socket_error::SUCCESS</a>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-net-socket_error.html">omni::net::socket_error</a> serr = <a href="../classes/omni-net-util-get_ip.html">omni::net::util::get_ip</a>(host, port, ip);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (serr == <a href="../classes/omni-net-socket_error-success.html">omni::net::socket_error::SUCCESS</a>) {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (ip.size() &gt; <font class="syn_num">0</font>) {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;connect(ip[<font class="syn_num">0</font>], port);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../classes/omni-net-socket_error-address_not_available.html">omni::net::socket_error::ADDRESS_NOT_AVAILABLE</a>);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = err);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = serr);<br>
 }<br>
 <br>
 <a href="../classes/omni-net-socket_error.html">omni::net::socket_error</a> <a href="../classes/omni-net-socket-connect_host.html">omni::net::socket::connect_host</a>(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>&amp; host, <font class="syn_typ">uint16_t</font> port)<br>
@@ -567,7 +582,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!<a href="../classes/omni-bits-unsafe_is_set.html">omni::bits::unsafe_is_set</a>(<font class="syn_typ">this</font>-&gt;m_conops, <a href="../classes/omni-net-connection_option-open.html">omni::net::connection_option::OPEN</a>)) {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../classes/omni-net-socket_error-not_initialized.html">omni::net::socket_error::NOT_INITIALIZED</a>);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> err = <font class="syn_num">0</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> serr = <font class="syn_num">0</font>;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;OMNI_SOCKLEN_FW sz;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> ((op_level == <a href="../classes/omni-net-socket_option_level-socket.html">omni::net::socket_option_level::SOCKET</a>) &amp;&amp;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((op_name == <a href="../classes/omni-net-socket_option-linger.html">omni::net::socket_option::LINGER</a>) || (op_name == <a href="../classes/omni-net-socket_option-dont_linger.html">omni::net::socket_option::DONT_LINGER</a>)))<br>
@@ -575,19 +590,19 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">struct</font> linger lop;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/cstring/memset/">std::memset</a>(&amp;lop, <font class="syn_num">0</font>, <font class="syn_ins">sizeof</font>(<font class="syn_typ">struct</font> linger));<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sz = <font class="syn_ins">static_cast</font>&lt;OMNI_SOCKLEN_FW&gt;(<font class="syn_ins">sizeof</font>(<font class="syn_typ">struct</font> linger));<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;err = ::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/getsockopt.html">getsockopt</a>(<font class="syn_typ">this</font>-&gt;m_socket,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;serr = ::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/getsockopt.html">getsockopt</a>(<font class="syn_typ">this</font>-&gt;m_socket,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">int</font>&gt;(op_level),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">int</font>&gt;(<a href="../classes/omni-net-socket_option-linger.html">omni::net::socket_option::LINGER</a>),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <font class="syn_ins">reinterpret_cast</font>&lt;OMNI_SOCKET_XFR_T_FW*&gt;(&amp;lop),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   &amp;sz);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (err == <font class="syn_num">0</font>) { op_val = <font class="syn_ins">static_cast</font>&lt;int32_t&gt;(lop.l_linger); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (serr == <font class="syn_num">0</font>) { op_val = <font class="syn_ins">static_cast</font>&lt;int32_t&gt;(lop.l_linger); }<br>
 &nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SOCKET_XFR_T_FW* val = <font class="syn_ins">reinterpret_cast</font>&lt;OMNI_SOCKET_XFR_T_FW*&gt;(&amp;op_val);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sz = <font class="syn_ins">static_cast</font>&lt;OMNI_SOCKLEN_FW&gt;(<font class="syn_ins">sizeof</font>(val));<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;err = ::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/getsockopt.html">getsockopt</a>(<font class="syn_typ">this</font>-&gt;m_socket, <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">int</font>&gt;(op_level), <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">int</font>&gt;(op_name), val, &amp;sz);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (err == <font class="syn_num">0</font>) { op_val = *(<font class="syn_ins">reinterpret_cast</font>&lt;int32_t*&gt;(val)); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;serr = ::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/getsockopt.html">getsockopt</a>(<font class="syn_typ">this</font>-&gt;m_socket, <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">int</font>&gt;(op_level), <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">int</font>&gt;(op_name), val, &amp;sz);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (serr == <font class="syn_num">0</font>) { op_val = *(<font class="syn_ins">reinterpret_cast</font>&lt;int32_t*&gt;(val)); }<br>
 &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (err != <font class="syn_num">0</font>) { <font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../classes/omni-net-parse_error.html">omni::net::parse_error</a>(OMNI_SOCKET_ERR_FW)); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (serr != <font class="syn_num">0</font>) { <font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../classes/omni-net-parse_error.html">omni::net::parse_error</a>(OMNI_SOCKET_ERR_FW)); }<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../classes/omni-net-socket_error-success.html">omni::net::socket_error::SUCCESS</a>);<br>
 }<br>
 <br>
@@ -610,9 +625,9 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;OMNI_SOCK_OPEN_FW<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_socket = OMNI_SOCKET_OPEN_FW(<font class="syn_typ">this</font>-&gt;m_family, <font class="syn_typ">this</font>-&gt;m_type, <font class="syn_typ">this</font>-&gt;m_proto);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font>-&gt;m_socket == <a href="../options/omni_invalid_socket.html">OMNI_INVALID_SOCKET</a>) {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> err = OMNI_SOCKET_ERR_FW;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../options/omni_dbgev.html">OMNI_DBGEV</a>(<font class="syn_str">&quot;a system error occurred creating the socket: &quot;</font>, err)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../classes/omni-net-parse_error.html">omni::net::parse_error</a>(err));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> serr = OMNI_SOCKET_ERR_FW;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../options/omni_dbgev.html">OMNI_DBGEV</a>(<font class="syn_str">&quot;a system error occurred creating the socket: &quot;</font>, serr)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../classes/omni-net-parse_error.html">omni::net::parse_error</a>(serr));<br>
 &nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-bits-unsafe_set.html">omni::bits::unsafe_set</a>(<font class="syn_typ">this</font>-&gt;m_conops, <a href="../classes/omni-net-connection_option-open.html">omni::net::connection_option::OPEN</a>);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-bits-unsafe_unset.html">omni::bits::unsafe_unset</a>(<font class="syn_typ">this</font>-&gt;m_conops, <a href="../classes/omni-net-connection_option-shut.html">omni::net::connection_option::SHUT</a>);<br>
@@ -671,8 +686,8 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> <font class="syn_ins">if</font> (<a href="../classes/omni-bits-unsafe_is_set.html">omni::bits::unsafe_is_set</a>(<font class="syn_typ">this</font>-&gt;m_conops, <a href="../classes/omni-net-connection_option-shut.html">omni::net::connection_option::SHUT</a>)) {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../classes/omni-net-socket_error-success.html">omni::net::socket_error::SUCCESS</a>);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> err = ::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/shutdown.html">shutdown</a>(<font class="syn_typ">this</font>-&gt;m_socket, <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">int</font>&gt;(how));<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (err == OMNI_SOCK_SYSERR_FW) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> serr = ::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/shutdown.html">shutdown</a>(<font class="syn_typ">this</font>-&gt;m_socket, <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">int</font>&gt;(how));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (serr == OMNI_SOCK_SYSERR_FW) {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../classes/omni-net-parse_error.html">omni::net::parse_error</a>(OMNI_SOCKET_ERR_FW));<br>
 &nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-bits-unsafe_set.html">omni::bits::unsafe_set</a>(<font class="syn_typ">this</font>-&gt;m_conops, <a href="../classes/omni-net-connection_option-shut.html">omni::net::connection_option::SHUT</a>);<br>
@@ -686,7 +701,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!<a href="../classes/omni-bits-unsafe_is_set.html">omni::bits::unsafe_is_set</a>(<font class="syn_typ">this</font>-&gt;m_conops, <a href="../classes/omni-net-connection_option-open.html">omni::net::connection_option::OPEN</a>)) {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../classes/omni-net-socket_error-not_initialized.html">omni::net::socket_error::NOT_INITIALIZED</a>);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> err = <font class="syn_num">0</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> serr = <font class="syn_num">0</font>;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> ((op_level == <a href="../classes/omni-net-socket_option_level-socket.html">omni::net::socket_option_level::SOCKET</a>) &amp;&amp;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((op_name == <a href="../classes/omni-net-socket_option-linger.html">omni::net::socket_option::LINGER</a>) || (op_name == <a href="../classes/omni-net-socket_option-dont_linger.html">omni::net::socket_option::DONT_LINGER</a>)))<br>
 &nbsp;&nbsp;&nbsp;&nbsp;{<br>
@@ -696,19 +711,19 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lop.l_onoff = <font class="syn_num">1</font>;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lop.l_linger = op_val;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;err = ::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/setsockopt.html">setsockopt</a>(<font class="syn_typ">this</font>-&gt;m_socket,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;serr = ::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/setsockopt.html">setsockopt</a>(<font class="syn_typ">this</font>-&gt;m_socket,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">int</font>&gt;(op_level),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">int</font>&gt;(<a href="../classes/omni-net-socket_option-linger.html">omni::net::socket_option::LINGER</a>),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <font class="syn_ins">reinterpret_cast</font>&lt;OMNI_SOCKET_XFR_T_FW*&gt;(&amp;lop),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <font class="syn_ins">sizeof</font>(<font class="syn_typ">struct</font> linger));<br>
 &nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;err = ::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/setsockopt.html">setsockopt</a>(<font class="syn_typ">this</font>-&gt;m_socket,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;serr = ::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/setsockopt.html">setsockopt</a>(<font class="syn_typ">this</font>-&gt;m_socket,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">int</font>&gt;(op_level),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">int</font>&gt;(op_name),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <font class="syn_ins">reinterpret_cast</font>&lt;OMNI_SOCKET_XFR_T_FW*&gt;(&amp;op_val),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <font class="syn_ins">sizeof</font>(int32_t));<br>
 &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (err != <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (serr != <font class="syn_num">0</font>) {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../classes/omni-net-parse_error.html">omni::net::parse_error</a>(OMNI_SOCKET_ERR_FW));<br>
 &nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../classes/omni-net-socket_error-success.html">omni::net::socket_error::SUCCESS</a>);<br>

@@ -115,10 +115,10 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <font class="syn_ins">return</font> (<a href="http://www.cplusplus.com/reference/cwctype/iswdigit/">std::iswdigit</a>(c) != <font class="syn_num">0</font>); }<br>
 <br>
 <a name="omni::char_util::is_punct"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> is_punct(<font class="syn_typ">char</font> c)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <font class="syn_ins">return</font> (std::ispunct(c) != <font class="syn_num">0</font>); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <font class="syn_ins">return</font> (<a href="http://www.cplusplus.com/reference/locale/ispunct/">std::ispunct</a>(c) != <font class="syn_num">0</font>); }<br>
 <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> is_punct(<font class="syn_typ">wchar_t</font> c)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <font class="syn_ins">return</font> (std::iswpunct(c) != <font class="syn_num">0</font>); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <font class="syn_ins">return</font> (<a href="http://www.cplusplus.com/reference/cwctype/iswpunct/">std::iswpunct</a>(c) != <font class="syn_num">0</font>); }<br>
 <br>
 <a name="omni::char_util::is_alpha_digit"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> is_alpha_digit(<font class="syn_typ">char</font> c)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>

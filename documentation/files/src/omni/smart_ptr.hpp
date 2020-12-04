@@ -55,7 +55,7 @@ namespace omni {
                 OMNI_D5_FW("created empty smart_ptr");
             }
             
-            explicit smart_ptr(pointer_t* val) :
+            OMNI_EXPLICIT smart_ptr(pointer_t* val) :
                 OMNI_CTOR_FW(omni::smart_ptr<T>)
                 m_ptr(val),
                 m_cnt((val == OMNI_NULL) ? 0 : 1)
@@ -182,9 +182,8 @@ namespace omni {
                 if ((this->m_cnt > 0) && (--this->m_cnt == 0)) {
                     OMNI_D5_FW("ref count == 0, freeing pointers");
                     if (this->m_ptr != OMNI_NULL) {
-                        delete this->m_ptr;
+                        OMNI_FREE(this->m_ptr);
                     }
-                    this->m_ptr = OMNI_NULL;
                 }
             }
     };
@@ -206,7 +205,7 @@ namespace omni {
                 OMNI_D5_FW("created by ptr");
             }
             
-            explicit smart_ptr_safe(pointer_t* val) :
+            OMNI_EXPLICIT smart_ptr_safe(pointer_t* val) :
                 OMNI_CTOR_FW(omni::smart_ptr_safe<T>)
                 m_ptr(val),
                 m_cnt((val == OMNI_NULL) ? 0 : 1),
@@ -360,9 +359,8 @@ namespace omni {
                 if ((this->m_cnt > 0) && (--this->m_cnt == 0)) {
                     OMNI_D5_FW("ref count == 0, freeing pointers");
                     if (this->m_ptr != OMNI_NULL) {
-                        delete this->m_ptr;
+                        OMNI_FREE(this->m_ptr);
                     }
-                    this->m_ptr = OMNI_NULL;
                 }
             }
             

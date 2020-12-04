@@ -23,66 +23,103 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <div class="ptitle">omni::geometry</div><div class="content"><div>
 <div class="docdiv"><a name="nm"></a>
 <font class="docu">NAME</font><br><br>
-<code><a href="../htmlsrc/omni/geometry/path.hpp.html#omni::geometry" class="chnm">
+<code><a href="../htmlsrc/omni/geometry/circle.hpp.html#omni::geometry" class="chnm">
     omni::geometry
     </a></code><br>
 <br>A namespace of <a href="omni.html" class="code">omni</a><br><br>
-    <code><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/geometry/path.hpp.html">omni/geometry/path.hpp</a>&gt;</font></code><br><code>namespace omni::geometry</code><br>
+    <code><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/geometry/circle.hpp.html">omni/geometry/circle.hpp</a>&gt;</font></code><br><code>namespace omni::geometry</code><br>
     <br>
     <font class="docu">MEMBERS</font><br>
     <br>
     <code><a href="../classes/omni-geometry-path.html">omni::geometry::path</a><br>
+    <a href="../classes/omni-geometry-circle.html">omni::geometry::circle</a><br>
     <a href="../classes/omni-geometry-point2d.html">omni::geometry::point2d</a><br>
     <a href="../classes/omni-geometry-point3d.html">omni::geometry::point3d</a><br>
+    <a href="../classes/omni-geometry-quadrilateral.html">omni::geometry::quadrilateral</a><br>
+    <a href="../classes/omni-geometry-raw_circle.html">omni::geometry::raw_circle</a><br>
+    <a href="../classes/omni-geometry-raw_point2d.html">omni::geometry::raw_point2d</a><br>
+    <a href="../classes/omni-geometry-raw_point3d.html">omni::geometry::raw_point3d</a><br>
+    <a href="../classes/omni-geometry-raw_rectangle.html">omni::geometry::raw_rectangle</a><br>
+    <a href="../classes/omni-geometry-raw_size.html">omni::geometry::raw_size</a><br>
+    <a href="../classes/omni-geometry-raw_size3d.html">omni::geometry::raw_size3d</a><br>
+    <a href="../classes/omni-geometry-raw_triangle.html">omni::geometry::raw_triangle</a><br>
     <a href="../classes/omni-geometry-rectangle.html">omni::geometry::rectangle</a><br>
     <a href="../classes/omni-geometry-size.html">omni::geometry::size</a><br>
-    <a href="../classes/omni-geometry-unsafe_point2d.html">omni::geometry::unsafe_point2d</a><br>
-    <a href="../classes/omni-geometry-unsafe_point3d.html">omni::geometry::unsafe_point3d</a><br>
-    <a href="../classes/omni-geometry-unsafe_rectangle.html">omni::geometry::unsafe_rectangle</a><br>
-    <a href="../classes/omni-geometry-unsafe_size.html">omni::geometry::unsafe_size</a><br>
+    <a href="../classes/omni-geometry-size3d.html">omni::geometry::size3d</a><br>
+    <a href="../classes/omni-geometry-triangle.html">omni::geometry::triangle</a><br>
+    <a href="../classes/omni-geometry-triangle_side.html">omni::geometry::triangle_side</a><br>
     <a href="../classes/omni-geometry-vector2.html">omni::geometry::vector2</a><br>
     <a href="../classes/omni-geometry-vector3.html">omni::geometry::vector3</a><br>
-    <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt;  <a href="../classes/omni-geometry-point_on_circle.html">omni::geometry::point_on_circle</a>(T angle, T radius, T center_x, T center_y)<br>
-    <font class="syn_ins">template</font> &lt;&gt;  <a href="../classes/omni-geometry-point_on_circle.html">omni::geometry::point_on_circle</a>&lt;int8_t&gt;(int8_t angle, int8_t radius, int8_t center_x, int8_t center_y)<br>
-    <font class="syn_ins">template</font> &lt;&gt;  <a href="../classes/omni-geometry-point_on_circle.html">omni::geometry::point_on_circle</a>&lt;<font class="syn_typ">uint8_t</font>&gt;(<font class="syn_typ">uint8_t</font> angle, <font class="syn_typ">uint8_t</font> radius, <font class="syn_typ">uint8_t</font> center_x, <font class="syn_typ">uint8_t</font> center_y)<br>
-    <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt; <font class="syn_ins">inline</font> <font class="syn_typ">bool</font> <a href="../classes/omni-geometry-rectangle_ltrb_contains_point.html">omni::geometry::rectangle_ltrb_contains_point</a>(T left, T top, T right, T bottom, T x, T y)<br>
-    <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt; <font class="syn_ins">inline</font> <font class="syn_typ">bool</font> <a href="../classes/omni-geometry-rectangle_xywh_contains_point.html">omni::geometry::rectangle_xywh_contains_point</a>(T x, T y, T w, T h, T x2, T y2)<br>
+    <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt;  <a href="../classes/omni-geometry-point_on_circle.html">omni::geometry::point_on_circle</a>(T degrees, T radius, T center_x, T center_y)<br>
+    <font class="syn_ins">template</font> &lt;&gt;  <a href="../classes/omni-geometry-point_on_circle.html">omni::geometry::point_on_circle</a>&lt;<font class="syn_typ">uint8_t</font>&gt;(<font class="syn_typ">uint8_t</font> degrees, <font class="syn_typ">uint8_t</font> radius, <font class="syn_typ">uint8_t</font> center_x, <font class="syn_typ">uint8_t</font> center_y)<br>
+    <a href="../classes/omni-geometry-circle64_t.html">omni::geometry::circle64_t</a><br>
+    <a href="../classes/omni-geometry-circlef_t.html">omni::geometry::circleF_t</a><br>
+    <a href="../classes/omni-geometry-circle_t.html">omni::geometry::circle_t</a><br>
+    <a href="../classes/omni-geometry-point64_3d_seq_t.html">omni::geometry::point64_3d_seq_t</a><br>
     <a href="../classes/omni-geometry-point64_3d_t.html">omni::geometry::point64_3d_t</a><br>
     <a href="../classes/omni-geometry-point64_seq_t.html">omni::geometry::point64_seq_t</a><br>
     <a href="../classes/omni-geometry-point64_t.html">omni::geometry::point64_t</a><br>
+    <a href="../classes/omni-geometry-pointd_3d_seq_t.html">omni::geometry::pointD_3d_seq_t</a><br>
     <a href="../classes/omni-geometry-pointd_3d_t.html">omni::geometry::pointD_3d_t</a><br>
     <a href="../classes/omni-geometry-pointd_seq_t.html">omni::geometry::pointD_seq_t</a><br>
     <a href="../classes/omni-geometry-pointd_t.html">omni::geometry::pointD_t</a><br>
+    <a href="../classes/omni-geometry-pointf_3d_seq_t.html">omni::geometry::pointF_3d_seq_t</a><br>
     <a href="../classes/omni-geometry-pointf_3d_t.html">omni::geometry::pointF_3d_t</a><br>
     <a href="../classes/omni-geometry-pointf_seq_t.html">omni::geometry::pointF_seq_t</a><br>
     <a href="../classes/omni-geometry-pointf_t.html">omni::geometry::pointF_t</a><br>
+    <a href="../classes/omni-geometry-point_3d_seq_t.html">omni::geometry::point_3d_seq_t</a><br>
     <a href="../classes/omni-geometry-point_3d_t.html">omni::geometry::point_3d_t</a><br>
     <a href="../classes/omni-geometry-point_seq_t.html">omni::geometry::point_seq_t</a><br>
     <a href="../classes/omni-geometry-point_t.html">omni::geometry::point_t</a><br>
+    <a href="../classes/omni-geometry-quadrilateral64_t.html">omni::geometry::quadrilateral64_t</a><br>
+    <a href="../classes/omni-geometry-quadrilaterald_t.html">omni::geometry::quadrilateralD_t</a><br>
+    <a href="../classes/omni-geometry-quadrilateralf_t.html">omni::geometry::quadrilateralF_t</a><br>
+    <a href="../classes/omni-geometry-quadrilateral_t.html">omni::geometry::quadrilateral_t</a><br>
+    <a href="../classes/omni-geometry-raw_circle64_t.html">omni::geometry::raw_circle64_t</a><br>
+    <a href="../classes/omni-geometry-raw_circlef_t.html">omni::geometry::raw_circleF_t</a><br>
+    <a href="../classes/omni-geometry-raw_circle_t.html">omni::geometry::raw_circle_t</a><br>
+    <a href="../classes/omni-geometry-raw_point64_3d_seq_t.html">omni::geometry::raw_point64_3d_seq_t</a><br>
+    <a href="../classes/omni-geometry-raw_point64_3d_t.html">omni::geometry::raw_point64_3d_t</a><br>
+    <a href="../classes/omni-geometry-raw_point64_seq_t.html">omni::geometry::raw_point64_seq_t</a><br>
+    <a href="../classes/omni-geometry-raw_point64_t.html">omni::geometry::raw_point64_t</a><br>
+    <a href="../classes/omni-geometry-raw_pointd_3d_seq_t.html">omni::geometry::raw_pointD_3d_seq_t</a><br>
+    <a href="../classes/omni-geometry-raw_pointd_3d_t.html">omni::geometry::raw_pointD_3d_t</a><br>
+    <a href="../classes/omni-geometry-raw_pointd_seq_t.html">omni::geometry::raw_pointD_seq_t</a><br>
+    <a href="../classes/omni-geometry-raw_pointd_t.html">omni::geometry::raw_pointD_t</a><br>
+    <a href="../classes/omni-geometry-raw_pointf_3d_seq_t.html">omni::geometry::raw_pointF_3d_seq_t</a><br>
+    <a href="../classes/omni-geometry-raw_pointf_3d_t.html">omni::geometry::raw_pointF_3d_t</a><br>
+    <a href="../classes/omni-geometry-raw_pointf_seq_t.html">omni::geometry::raw_pointF_seq_t</a><br>
+    <a href="../classes/omni-geometry-raw_pointf_t.html">omni::geometry::raw_pointF_t</a><br>
+    <a href="../classes/omni-geometry-raw_point_3d_seq_t.html">omni::geometry::raw_point_3d_seq_t</a><br>
+    <a href="../classes/omni-geometry-raw_point_3d_t.html">omni::geometry::raw_point_3d_t</a><br>
+    <a href="../classes/omni-geometry-raw_point_seq_t.html">omni::geometry::raw_point_seq_t</a><br>
+    <a href="../classes/omni-geometry-raw_point_t.html">omni::geometry::raw_point_t</a><br>
+    <a href="../classes/omni-geometry-raw_rectangle64_t.html">omni::geometry::raw_rectangle64_t</a><br>
+    <a href="../classes/omni-geometry-raw_rectanglef_t.html">omni::geometry::raw_rectangleF_t</a><br>
+    <a href="../classes/omni-geometry-raw_rectangle_t.html">omni::geometry::raw_rectangle_t</a><br>
+    <a href="../classes/omni-geometry-raw_size3d_64_t.html">omni::geometry::raw_size3d_64_t</a><br>
+    <a href="../classes/omni-geometry-raw_size3d_f_t.html">omni::geometry::raw_size3d_F_t</a><br>
+    <a href="../classes/omni-geometry-raw_size3d_t.html">omni::geometry::raw_size3d_t</a><br>
+    <a href="../classes/omni-geometry-raw_size64_t.html">omni::geometry::raw_size64_t</a><br>
+    <a href="../classes/omni-geometry-raw_sizef_t.html">omni::geometry::raw_sizeF_t</a><br>
+    <a href="../classes/omni-geometry-raw_size_t.html">omni::geometry::raw_size_t</a><br>
+    <a href="../classes/omni-geometry-raw_triangle64_t.html">omni::geometry::raw_triangle64_t</a><br>
+    <a href="../classes/omni-geometry-raw_triangled_t.html">omni::geometry::raw_triangleD_t</a><br>
+    <a href="../classes/omni-geometry-raw_trianglef_t.html">omni::geometry::raw_triangleF_t</a><br>
+    <a href="../classes/omni-geometry-raw_triangle_t.html">omni::geometry::raw_triangle_t</a><br>
     <a href="../classes/omni-geometry-rectangle64_t.html">omni::geometry::rectangle64_t</a><br>
     <a href="../classes/omni-geometry-rectanglef_t.html">omni::geometry::rectangleF_t</a><br>
     <a href="../classes/omni-geometry-rectangle_t.html">omni::geometry::rectangle_t</a><br>
+    <a href="../classes/omni-geometry-size32_t.html">omni::geometry::size32_t</a><br>
+    <a href="../classes/omni-geometry-size3d_64_t.html">omni::geometry::size3d_64_t</a><br>
+    <a href="../classes/omni-geometry-size3d_f_t.html">omni::geometry::size3d_F_t</a><br>
+    <a href="../classes/omni-geometry-size3d_t.html">omni::geometry::size3d_t</a><br>
     <a href="../classes/omni-geometry-size64_t.html">omni::geometry::size64_t</a><br>
     <a href="../classes/omni-geometry-sizef_t.html">omni::geometry::sizeF_t</a><br>
-    <a href="../classes/omni-geometry-size_t.html">omni::geometry::size_t</a><br>
-    <a href="../classes/omni-geometry-unsafe_point64_3d_t.html">omni::geometry::unsafe_point64_3d_t</a><br>
-    <a href="../classes/omni-geometry-unsafe_point64_seq_t.html">omni::geometry::unsafe_point64_seq_t</a><br>
-    <a href="../classes/omni-geometry-unsafe_point64_t.html">omni::geometry::unsafe_point64_t</a><br>
-    <a href="../classes/omni-geometry-unsafe_pointd_3d_t.html">omni::geometry::unsafe_pointD_3d_t</a><br>
-    <a href="../classes/omni-geometry-unsafe_pointd_seq_t.html">omni::geometry::unsafe_pointD_seq_t</a><br>
-    <a href="../classes/omni-geometry-unsafe_pointd_t.html">omni::geometry::unsafe_pointD_t</a><br>
-    <a href="../classes/omni-geometry-unsafe_pointf_3d_t.html">omni::geometry::unsafe_pointF_3d_t</a><br>
-    <a href="../classes/omni-geometry-unsafe_pointf_seq_t.html">omni::geometry::unsafe_pointF_seq_t</a><br>
-    <a href="../classes/omni-geometry-unsafe_pointf_t.html">omni::geometry::unsafe_pointF_t</a><br>
-    <a href="../classes/omni-geometry-unsafe_point_3d_t.html">omni::geometry::unsafe_point_3d_t</a><br>
-    <a href="../classes/omni-geometry-unsafe_point_seq_t.html">omni::geometry::unsafe_point_seq_t</a><br>
-    <a href="../classes/omni-geometry-unsafe_point_t.html">omni::geometry::unsafe_point_t</a><br>
-    <a href="../classes/omni-geometry-unsafe_rectangle64_t.html">omni::geometry::unsafe_rectangle64_t</a><br>
-    <a href="../classes/omni-geometry-unsafe_rectanglef_t.html">omni::geometry::unsafe_rectangleF_t</a><br>
-    <a href="../classes/omni-geometry-unsafe_rectangle_t.html">omni::geometry::unsafe_rectangle_t</a><br>
-    <a href="../classes/omni-geometry-unsafe_size64_t.html">omni::geometry::unsafe_size64_t</a><br>
-    <a href="../classes/omni-geometry-unsafe_sizef_t.html">omni::geometry::unsafe_sizeF_t</a><br>
-    <a href="../classes/omni-geometry-unsafe_size_t.html">omni::geometry::unsafe_size_t</a><br>
+    <a href="../classes/omni-geometry-triangle64_t.html">omni::geometry::triangle64_t</a><br>
+    <a href="../classes/omni-geometry-triangled_t.html">omni::geometry::triangleD_t</a><br>
+    <a href="../classes/omni-geometry-trianglef_t.html">omni::geometry::triangleF_t</a><br>
+    <a href="../classes/omni-geometry-triangle_t.html">omni::geometry::triangle_t</a><br>
     <a href="../classes/omni-geometry-vector2d_t.html">omni::geometry::vector2D_t</a><br>
     <a href="../classes/omni-geometry-vector2f_t.html">omni::geometry::vector2F_t</a><br>
     <a href="../classes/omni-geometry-vector3d_t.html">omni::geometry::vector3D_t</a><br>

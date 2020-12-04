@@ -19,7 +19,6 @@
 #if !defined(OMNI_ENVIRONMENT_HPP)
 #define OMNI_ENVIRONMENT_HPP 1
 #if !defined(OMNI_OS_WIN)
-    #include <cstdio>
     #if defined(OMNI_ENV_WORDEXP)
         /* DEV_NOTE: these functions, if used improperly (not validating
         user input) will open your software to security holes!!!

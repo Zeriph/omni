@@ -23,10 +23,6 @@
 
 // DEV_NOTE: while most classes in the library will have a safe version, enum classes will _not_
 
-#if defined(OMNI_SAFE_LIBRARY) && defined(OMNI_NO_SAFE_LIBRARY)
-    #undef OMNI_SAFE_LIBRARY
-#endif
-
 #if defined(OMNI_SAFE_LIBRARY)
     #define OMNI_SAFE_APPLICATION
     #define OMNI_SAFE_COLOR

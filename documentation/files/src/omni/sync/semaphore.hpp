@@ -31,8 +31,8 @@ namespace omni {
         {
             public:
                 semaphore();
-                explicit semaphore(uint32_t maxent);
-                explicit semaphore(uint32_t maxent, bool lock1st);
+                OMNI_EXPLICIT semaphore(uint32_t maxent);
+                semaphore(uint32_t maxent, bool lock1st);
                 ~semaphore(); // should not inherit
                 omni::sync::semaphore_t handle() const;
                 uint32_t locked() const;

@@ -23,13 +23,19 @@
     #include <omni/sync/basic_lock.hpp>
 #endif
 
+#if defined(OMNI_32BIT_ENDPOINT_DESCRIPTOR)
+    #define OMNI_EPDESC_INT_FW uint32_t
+#else
+    #define OMNI_EPDESC_INT_FW uint64_t
+#endif
+
 namespace omni {
     namespace net {
         class endpoint_descriptor
         {
             public:
                 endpoint_descriptor();
-                endpoint_descriptor(const endpoint_descriptor& cp);
+                endpoint_descriptor(const omni::net::endpoint_descriptor& cp);
                 ~endpoint_descriptor();
                 
                 omni::net::socket_error connect(const omni::net::socket_t& serv_sock);
@@ -104,7 +110,6 @@ namespace omni {
                 {
                     return this->_send(buffer, buffer_size, flags, sent);
                 }
-
                 
                 omni::net::socket_error set_socket_option(omni::net::socket_option_level op_level, int32_t op_name, int32_t op_val);
                 omni::net::socket_error set_socket_option(omni::net::socket_option_level op_level, omni::net::socket_option op_name, int32_t op_val);
@@ -138,8 +143,8 @@ namespace omni {
                 omni::net::socket_t m_socket;
                 omni::net::sockaddr_in_t m_addr;
                 omni::net::socket_error m_last_err;
-                bool m_connected;
-                bool m_shut;
+                volatile OMNI_EPDESC_INT_FW m_status;
+
                 #if defined(OMNI_SAFE_SOCKET_EP)
                     mutable omni::sync::basic_lock m_mtx;
                 #endif

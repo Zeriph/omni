@@ -20,7 +20,6 @@
 #define OMNI_GEOMETRY_PATH_HPP 1
 #include <omni/defs/global.hpp>
 #include <omni/defs/class_macros.hpp>
-#include <omni/geometry/size.hpp>
 #include <omni/geometry/point2d.hpp>
 #include <omni/math.hpp>
 
@@ -39,35 +38,35 @@ namespace omni {
                 if (invert_x && invert_y) { // Flip Horiz/Vert
                     for (angle = 0; angle < 360; angle += step) {
                         x1 = (static_cast<double>(x) + (static_cast<double>(radius) * std::cos(angle * OMNI_PI_180)));
-                        y1 = (static_cast<double>(x) + (static_cast<double>(radius) * std::sin(angle * OMNI_PI_180)));
+                        y1 = (static_cast<double>(y) + (static_cast<double>(radius) * std::sin(angle * OMNI_PI_180)));
                         points.push_back(omni::geometry::point2d<T>(static_cast<T>(x1), static_cast<T>(y1)));
                     }
                 } else if (invert_x) { // Flip Horiz
                     for (angle = 360; angle > 0; angle -= step) {
                         x1 = (static_cast<double>(x) + (static_cast<double>(radius) * std::cos(angle * OMNI_PI_180)));
-                        y1 = (static_cast<double>(x) + (static_cast<double>(radius) * std::sin(angle * OMNI_PI_180)));
+                        y1 = (static_cast<double>(y) + (static_cast<double>(radius) * std::sin(angle * OMNI_PI_180)));
                         points.push_back(omni::geometry::point2d<T>(static_cast<T>(x1), static_cast<T>(y1)));
                     }
                 } else if (invert_y) { // Flip Vert
                     for (angle = 180; angle > 0; angle -= step) {
                         x1 = (static_cast<double>(x) + (static_cast<double>(radius) * std::cos(angle * OMNI_PI_180)));
-                        y1 = (static_cast<double>(x) + (static_cast<double>(radius) * std::sin(angle * OMNI_PI_180)));
+                        y1 = (static_cast<double>(y) + (static_cast<double>(radius) * std::sin(angle * OMNI_PI_180)));
                         points.push_back(omni::geometry::point2d<T>(static_cast<T>(x1), static_cast<T>(y1)));
                     }
                     for (angle = 360; angle > 180; angle -= step) {
                         x1 = (static_cast<double>(x) + (static_cast<double>(radius) * std::cos(angle * OMNI_PI_180)));
-                        y1 = (static_cast<double>(x) + (static_cast<double>(radius) * std::sin(angle * OMNI_PI_180)));
+                        y1 = (static_cast<double>(y) + (static_cast<double>(radius) * std::sin(angle * OMNI_PI_180)));
                         points.push_back(omni::geometry::point2d<T>(static_cast<T>(x1), static_cast<T>(y1)));
                     }
                 } else { // Normal
                     for (angle = 180; angle < 360; angle += step) {
                         x1 = (static_cast<double>(x) + (static_cast<double>(radius) * std::cos(angle * OMNI_PI_180)));
-                        y1 = (static_cast<double>(x) + (static_cast<double>(radius) * std::sin(angle * OMNI_PI_180)));
+                        y1 = (static_cast<double>(y) + (static_cast<double>(radius) * std::sin(angle * OMNI_PI_180)));
                         points.push_back(omni::geometry::point2d<T>(static_cast<T>(x1), static_cast<T>(y1)));
                     }
                     for (angle = 0; angle < 180; angle += step) {
                         x1 = (static_cast<double>(x) + (static_cast<double>(radius) * std::cos(angle * OMNI_PI_180)));
-                        y1 = (static_cast<double>(x) + (static_cast<double>(radius) * std::sin(angle * OMNI_PI_180)));
+                        y1 = (static_cast<double>(y) + (static_cast<double>(radius) * std::sin(angle * OMNI_PI_180)));
                         points.push_back(omni::geometry::point2d<T>(static_cast<T>(x1), static_cast<T>(y1)));
                     }
                 }
@@ -150,6 +149,7 @@ namespace omni {
                     T rise = y2 - y1;
                     double len = std::sqrt(static_cast<double>(run * run) + static_cast<double>(rise * rise));
                     for (double L = 1.0; L < len; L += static_cast<double>(step)) {
+                        //calculate_point(T start_x, T start_y, T end_x, T end_y, T len, T& out_x, T& out_y)
                         points.push_back(omni::math::calculate_point<T>(x1, y1, x2, y2, static_cast<T>(L)));
                     }
                 }
@@ -336,7 +336,7 @@ namespace omni {
             inline std_seq_t< typename omni::geometry::point2d< T >, typename std::allocator< omni::geometry::point2d< T > > >
             rectangle(T x, T y, T x_len, T y_len, T step, bool invert_x, bool invert_y)
             {
-                return rectangle<std_seq_t, T, std::allocator< omni::geometry::point2d< T > > >(x, y, x_len, y_len, step);
+                return rectangle<std_seq_t, T, std::allocator< omni::geometry::point2d< T > > >(x, y, x_len, y_len, step, invert_x, invert_y);
             }
 
             template < template < class, class > class std_seq_t, typename T >

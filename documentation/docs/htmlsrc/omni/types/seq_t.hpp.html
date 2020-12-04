@@ -198,7 +198,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">template</font> &lt; <font class="syn_typ">class</font>, <font class="syn_typ">class</font> &gt; <font class="syn_typ">class</font> std_seq_t, <font class="syn_typ">class</font> T, <font class="syn_typ">class</font> std_allocator_t &gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> add_range(std_seq_t&lt;T, std_allocator_t &gt;&amp; array1, <font class="syn_typ">const</font> std_seq_t&lt;T, std_allocator_t &gt;&amp; array2)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">for</font> (size_t i = <font class="syn_num">0</font>; i &lt; array2.size(); ++i) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">for</font> (<a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a> i = <font class="syn_num">0</font>; i &lt; array2.size(); ++i) {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;array1.push_back(array2[i]);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
@@ -206,7 +206,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">template</font> &lt; <font class="syn_typ">class</font>, <font class="syn_typ">class</font> &gt; <font class="syn_typ">class</font> std_seq_t, <font class="syn_typ">class</font> T &gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> add_range(std_seq_t&lt;T, <a href="http://www.cplusplus.com/reference/memory/allocator/">std::allocator</a>&lt;T&gt; &gt;&amp; array1, <font class="syn_typ">const</font> std_seq_t&lt;T, <a href="http://www.cplusplus.com/reference/memory/allocator/">std::allocator</a>&lt;T&gt; &gt;&amp; array2)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">for</font> (size_t i = <font class="syn_num">0</font>; i &lt; array2.size(); ++i) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">for</font> (<a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a> i = <font class="syn_num">0</font>; i &lt; array2.size(); ++i) {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;array1.push_back(array2[i]);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>

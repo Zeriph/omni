@@ -26,7 +26,8 @@
 namespace omni {
     
     namespace system {
-        class architecture_type {
+        class architecture_type
+        {
             public:
                 typedef enum enum_t {
                     // Unknown architecture type
@@ -396,17 +397,18 @@ namespace omni {
                 }
         };
 
-        omni::system::architecture_type architecture();
-        omni::string_t cwd();
-        std::string error_str(int code);
         bool is_big_endian();
         int32_t last_error();
         std::string last_error_str();
+
         #if defined(OMNI_NON_PORTABLE)
+            omni::system::architecture_type architecture();
+            omni::string_t cwd();
+            std::string error_str(int code);
             omni::string_t path();
             uint64_t processors();
+            std::string signal_str(int sig);
         #endif
-        std::string signal_str(int sig);
     }
 }
 

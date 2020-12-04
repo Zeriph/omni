@@ -20,7 +20,6 @@
 #define OMNI_3D_POINT_HPP 1
 #include <omni/defs/global.hpp>
 #include <omni/defs/class_macros.hpp>
-#include <omni/geometry/size.hpp>
 
 #if defined(OMNI_SAFE_POINT3D)
     #include <omni/sync/basic_lock.hpp>
@@ -43,6 +42,8 @@ namespace omni {
         class point3d
         {
             public:
+                typedef T coordinate_t;
+
                 point3d() : 
                     OMNI_CTOR_FW(omni::geometry::point3d<T>)
                     m_x(0), m_y(0), m_z(0)
@@ -51,11 +52,11 @@ namespace omni {
 
                 point3d(const omni::geometry::point3d<T>& cp) :
                     OMNI_CPCTOR_FW(cp)
-                    m_x(cp.m_x), m_y(cp.m_y), m_z(cp.m_z)
+                    m_x(cp.x()), m_y(cp.y()), m_z(cp.z())
                     OMNI_SAFE_P3DMTX_FW
                 { }
 
-                point3d(const omni::math::dimensional<T, 3>& cp) : 
+                OMNI_EXPLICIT point3d(const omni::math::dimensional<T, 3>& cp) : 
                     OMNI_CTOR_FW(omni::geometry::point3d<T>)
                     m_x(cp[0]), m_y(cp[1]), m_z(cp[2])
                     OMNI_SAFE_P3DMTX_FW
@@ -93,34 +94,6 @@ namespace omni {
                     return this->m_z;
                 }
 
-                bool empty() const
-                {
-                    OMNI_SAFE_P3ALOCK_FW
-                    return this->m_x == 0 && this->m_y == 0 && this->m_z == 0;
-                }
-
-                bool equals(T x, T y, T z) const
-                {
-                    OMNI_SAFE_P3ALOCK_FW
-                    return
-                        omni::math::are_equal<T>(this->m_x, x) &&
-                        omni::math::are_equal<T>(this->m_y, y) &&
-                        omni::math::are_equal<T>(this->m_z, z);
-                }
-
-                void set_coordinates(T x, T y, T z)
-                {
-                    OMNI_SAFE_P3ALOCK_FW
-                    this->m_x = x;
-                    this->m_y = y;
-                    this->m_z = z;
-                }
-
-                void set_coordinates(const omni::math::dimensional<T, 3>& point)
-                {
-                    this->set_coordinates(point[0], point[1], point[2]);
-                }
-
                 T decrement_x()
                 {
                     OMNI_SAFE_P3ALOCK_FW
@@ -139,24 +112,69 @@ namespace omni {
                     return --this->m_z;
                 }
 
-                T decrease_x(T val)
+                T decrement_x(T val)
                 {
                     OMNI_SAFE_P3ALOCK_FW
                     return (this->m_x -= val);
                 }
 
-                T decrease_y(T val)
+                T decrement_y(T val)
                 {
                     OMNI_SAFE_P3ALOCK_FW
                     return (this->m_y -= val);
                 }
 
-                T decrease_z(T val)
+                T decrement_z(T val)
                 {
                     OMNI_SAFE_P3ALOCK_FW
                     return (this->m_z -= val);
                 }
+
+                void decrement(const omni::geometry::point3d<T>& val)
+                {
+                    this->decrement(val.x(), val.y(), val.z());
+                }
+
+                void decrement(const omni::math::dimensional<T, 3>& val)
+                {
+                    this->decrement(val[0], val[1], val[2]);
+                }
+
+                void decrement(T x, T y, T z)
+                {
+                    OMNI_SAFE_P2ALOCK_FW
+                    this->m_x -= x;
+                    this->m_y -= y;
+                    this->m_z -= z;
+                }
+
+                bool empty() const
+                {
+                    OMNI_SAFE_P3ALOCK_FW
+                    return omni::math::are_equal(this->m_x, static_cast<T>(0)) &&
+                           omni::math::are_equal(this->m_y, static_cast<T>(0)) &&
+                           omni::math::are_equal(this->m_z, static_cast<T>(0));
+                }
+
+                bool equals(T x, T y, T z) const
+                {
+                    OMNI_SAFE_P3ALOCK_FW
+                    return
+                        omni::math::are_equal<T>(this->m_x, x) &&
+                        omni::math::are_equal<T>(this->m_y, y) &&
+                        omni::math::are_equal<T>(this->m_z, z);
+                }
                 
+                int32_t hash_code() const
+                {
+                    OMNI_SAFE_P3ALOCK_FW
+                    return (
+                        static_cast<int32_t>(this->m_x) ^
+                        ((static_cast<int32_t>(this->m_y) << 13) | (static_cast<int32_t>(this->m_y) >> 19)) ^
+                        ((static_cast<int32_t>(this->m_z) << 26) | (static_cast<int32_t>(this->m_z) >>  6))
+                    );
+                }
+
                 T increment_x()
                 {
                     OMNI_SAFE_P3ALOCK_FW
@@ -175,22 +193,71 @@ namespace omni {
                     return ++this->m_z;
                 }
 
-                T increase_x(T val)
+                T increment_x(T val)
                 {
                     OMNI_SAFE_P3ALOCK_FW
                     return (this->m_x += val);
                 }
 
-                T increase_y(T val)
+                T increment_y(T val)
                 {
                     OMNI_SAFE_P3ALOCK_FW
                     return (this->m_y += val);
                 }
 
-                T increase_z(T val)
+                T increment_z(T val)
                 {
                     OMNI_SAFE_P3ALOCK_FW
                     return (this->m_z += val);
+                }
+
+                void increment(const omni::geometry::point3d<T>& val)
+                {
+                    this->increment(val.x(), val.y(), val.z());
+                }
+
+                void increment(const omni::math::dimensional<T, 3>& val)
+                {
+                    this->increment(val[0], val[1], val[2]);
+                }
+
+                void increment(T x, T y, T z)
+                {
+                    OMNI_SAFE_P2ALOCK_FW
+                    this->m_x += x;
+                    this->m_y += y;
+                    this->m_z += z;
+                }
+
+                void offset(const omni::geometry::point3d<T>& val)
+                {
+                    this->offset(val.x(), val.y(), val.z());
+                }
+
+                void offset(const omni::math::dimensional<T, 3>& val)
+                {
+                    this->offset(val[0], val[1], val[2]);
+                }
+
+                void offset(T x, T y, T z)
+                {
+                    OMNI_SAFE_P2ALOCK_FW
+                    this->m_x += x;
+                    this->m_y += y;
+                    this->m_z += z;
+                }
+
+                void set(T x, T y, T z)
+                {
+                    OMNI_SAFE_P3ALOCK_FW
+                    this->m_x = x;
+                    this->m_y = y;
+                    this->m_z = z;
+                }
+
+                void set(const omni::math::dimensional<T, 3>& point)
+                {
+                    this->set(point[0], point[1], point[2]);
                 }
 
                 void swap(point3d<T>& o)
@@ -231,16 +298,29 @@ namespace omni {
                     return s.str();
                 }
 
-                operator std::string() const { return this->to_string(); }
+                operator std::string() const
+                {
+                    return this->to_string();
+                }
 
-                operator std::wstring() const { return this->to_wstring(); }
+                operator std::wstring() const
+                {
+                    return this->to_wstring();
+                }
 
-                bool operator!=(const point3d< T >& val) const
+                omni::math::dimensional<T, 3> to_dimensional() const
+                {
+                    OMNI_SAFE_P2ALOCK_FW
+                    T vals[3] = { this->m_x, this->m_y, this->m_z };
+                    return omni::math::dimensional<T, 3>(vals);
+                }
+
+                bool operator!=(const omni::geometry::point3d< T >& val) const
                 {
                     return !(*this == val);
                 }
 
-                point3d<T>& operator=(const point3d<T>& val)
+                omni::geometry::point3d<T>& operator=(const omni::geometry::point3d<T>& val)
                 {
                     if (this != &val) {
                         OMNI_SAFE_P3ALOCK_FW
@@ -253,27 +333,39 @@ namespace omni {
                     return *this;
                 }
 
-                bool operator<(const point3d<T>& val) const
+                bool operator<(const omni::geometry::point3d<T>& val) const
                 {
                     if (this == &val) { return false; }
                     OMNI_SAFE_P3ALOCK_FW
                     OMNI_SAFE_P3OALOCK_FW(val)
-                    return this->m_x < val.m_x &&
-                           this->m_y < val.m_y &&
-                           this->m_z < val.m_z;
+                    return (this->m_x + this->m_y + this->m_z) < (val.m_x + val.m_y + val.m_z);
                 }
 
-                bool operator>(const point3d<T>& val) const
+                bool operator<=(const omni::geometry::point3d<T>& val) const
                 {
                     if (this == &val) { return false; }
                     OMNI_SAFE_P3ALOCK_FW
                     OMNI_SAFE_P3OALOCK_FW(val)
-                    return this->m_x > val.m_x && 
-                           this->m_y > val.m_y &&
-                           this->m_z > val.m_z;
+                    return (this->m_x + this->m_y + this->m_z) <= (val.m_x + val.m_y + val.m_z);
                 }
 
-                bool operator==(const point3d< T >& val) const
+                bool operator>(const omni::geometry::point3d<T>& val) const
+                {
+                    if (this == &val) { return false; }
+                    OMNI_SAFE_P3ALOCK_FW
+                    OMNI_SAFE_P3OALOCK_FW(val)
+                    return (this->m_x + this->m_y + this->m_z) > (val.m_x + val.m_y + val.m_z);
+                }
+
+                bool operator>=(const omni::geometry::point3d<T>& val) const
+                {
+                    if (this == &val) { return false; }
+                    OMNI_SAFE_P3ALOCK_FW
+                    OMNI_SAFE_P3OALOCK_FW(val)
+                    return (this->m_x + this->m_y + this->m_z) >= (val.m_x + val.m_y + val.m_z);
+                }
+
+                bool operator==(const omni::geometry::point3d< T >& val) const
                 {
                     if (this == &val) { return true; }
                     OMNI_SAFE_P3ALOCK_FW
@@ -285,43 +377,75 @@ namespace omni {
                     OMNI_EQUAL_FW(val);
                 }
 
-                point3d<T> operator+(const point3d<T>& val)
+                omni::geometry::point3d<T> operator+(const omni::geometry::point3d<T>& val)
                 {
                     #if defined(OMNI_SAFE_POINT3D)
                         this->m_mtx.lock();
                         if (this != &val) { val.m_mtx.lock(); }
-                        point3d<T> ret((this->m_x + val.m_x),
+                        omni::geometry::point3d<T> ret((this->m_x + val.m_x),
                                        (this->m_y + val.m_y),
                                        (this->m_z + val.m_z));
                         if (this != &val) { val.m_mtx.unlock(); }
                         this->m_mtx.unlock();
                         return ret;
                     #else
-                        return point3d<T>((this->m_x + val.m_x),
+                        return omni::geometry::point3d<T>((this->m_x + val.m_x),
                                           (this->m_y + val.m_y),
                                           (this->m_z + val.m_z));
                     #endif
                 }
 
-                point3d<T> operator-(const point3d<T>& val)
+                omni::geometry::point3d<T> operator+(const omni::math::dimensional<T, 3>& val)
+                {
+                    OMNI_SAFE_P3ALOCK_FW
+                    return omni::geometry::point3d<T>((this->m_x + val[0]),
+                                      (this->m_y + val[1]),
+                                      (this->m_z + val[2]));
+                }
+
+                omni::geometry::point3d<T> operator+(T val)
+                {
+                    OMNI_SAFE_P3ALOCK_FW
+                    return omni::geometry::point3d<T>((this->m_x + val),
+                                      (this->m_y + val),
+                                      (this->m_z + val));
+                }
+
+                omni::geometry::point3d<T> operator-(const omni::geometry::point3d<T>& val)
                 {
                     #if defined(OMNI_SAFE_POINT3D)
                         this->m_mtx.lock();
                         if (this != &val) { val.m_mtx.lock(); }
-                        point3d<T> ret((this->m_x - val.m_x),
+                        omni::geometry::point3d<T> ret((this->m_x - val.m_x),
                                        (this->m_y - val.m_y),
                                        (this->m_z - val.m_z));
                         if (this != &val) { val.m_mtx.unlock(); }
                         this->m_mtx.unlock();
                         return ret;
                     #else
-                        return point3d<T>((this->m_x - val.m_x),
+                        return omni::geometry::point3d<T>((this->m_x - val.m_x),
                                           (this->m_y - val.m_y),
                                           (this->m_z - val.m_z));
                     #endif
                 }
 
-                point3d<T>& operator+=(const point3d<T>& val)
+                omni::geometry::point3d<T> operator-(const omni::math::dimensional<T, 3>& val)
+                {
+                    OMNI_SAFE_P3ALOCK_FW
+                    return omni::geometry::point3d<T>((this->m_x - val[0]),
+                                      (this->m_y - val[1]),
+                                      (this->m_z - val[2]));
+                }
+
+                omni::geometry::point3d<T> operator-(T val)
+                {
+                    OMNI_SAFE_P3ALOCK_FW
+                    return omni::geometry::point3d<T>((this->m_x - val),
+                                      (this->m_y - val),
+                                      (this->m_z - val));
+                }
+
+                omni::geometry::point3d<T>& operator+=(const omni::geometry::point3d<T>& val)
                 {
                     #if defined(OMNI_SAFE_POINT3D)
                         this->m_mtx.lock();
@@ -339,7 +463,25 @@ namespace omni {
                     return *this;
                 }
 
-                point3d<T>& operator-=(const point3d<T>& val)
+                omni::geometry::point3d<T>& operator+=(const omni::math::dimensional<T, 3>& val)
+                {
+                    OMNI_SAFE_P3ALOCK_FW
+                    this->m_x += val[0];
+                    this->m_y += val[1];
+                    this->m_z += val[2];
+                    return *this;
+                }
+
+                omni::geometry::point3d<T>& operator+=(T val)
+                {
+                    OMNI_SAFE_P3ALOCK_FW
+                    this->m_x += val;
+                    this->m_y += val;
+                    this->m_z += val;
+                    return *this;
+                }
+
+                omni::geometry::point3d<T>& operator-=(const omni::geometry::point3d<T>& val)
                 {
                     #if defined(OMNI_SAFE_POINT3D)
                         this->m_mtx.lock();
@@ -355,6 +497,43 @@ namespace omni {
                         this->m_z -= val.m_z;
                     #endif
                     return *this;
+                }
+
+                omni::geometry::point3d<T>& operator-=(const omni::math::dimensional<T, 3>& val)
+                {
+                    OMNI_SAFE_P3ALOCK_FW
+                    this->m_x -= val[0];
+                    this->m_y -= val[1];
+                    this->m_z -= val[2];
+                    return *this;
+                }
+
+                omni::geometry::point3d<T>& operator-=(T val)
+                {
+                    OMNI_SAFE_P3ALOCK_FW
+                    this->m_x -= val;
+                    this->m_y -= val;
+                    this->m_z -= val;
+                    return *this;
+                }
+
+                operator omni::math::dimensional<T, 3>() const
+                {
+                    return this->to_dimensional();
+                }
+
+                static omni::geometry::point3d<T> add(const omni::geometry::point3d<T>& point, const omni::math::dimensional<T, 3> coord)
+                {
+                    return omni::geometry::point3d<T>(point.x() + coord[0],
+                                      point.y() + coord[1],
+                                      point.z() + coord[2]);
+                }
+
+                static omni::geometry::point3d<T> subtract(const omni::geometry::point3d<T>& point, const omni::math::dimensional<T, 3> coord)
+                {
+                    return omni::geometry::point3d<T>(point.x() - coord[0],
+                                      point.y() - coord[1],
+                                      point.z() - coord[2]);
                 }
 
                 OMNI_MEMBERS_FW(omni::geometry::point3d<T>) // disposing,name,type(),hash()
@@ -375,31 +554,43 @@ namespace omni {
         typedef omni::geometry::point3d<float> pointF_3d_t;
         typedef omni::geometry::point3d<double> pointD_3d_t;
 
+        typedef omni_sequence_t<omni::geometry::point_3d_t> point_3d_seq_t;
+        typedef omni_sequence_t<omni::geometry::point64_3d_t> point64_3d_seq_t;
+        typedef omni_sequence_t<omni::geometry::pointF_3d_t> pointF_3d_seq_t;
+        typedef omni_sequence_t<omni::geometry::pointD_3d_t> pointD_3d_seq_t;
+
         template < typename T >
-        class unsafe_point3d
+        class raw_point3d
         {
             public:
-                unsafe_point3d() : 
-                    OMNI_CTOR_FW(omni::geometry::unsafe_point3d<T>)
+                typedef T coordinate_t;
+
+                raw_point3d() : 
+                    OMNI_CTOR_FW(omni::geometry::raw_point3d<T>)
                     x(0), y(0), z(0)
                 { }
 
-                unsafe_point3d(const omni::geometry::unsafe_point3d<T>& cp) :
+                raw_point3d(const omni::geometry::raw_point3d<T>& cp) : 
                     OMNI_CPCTOR_FW(cp)
                     x(cp.x), y(cp.y), z(cp.z)
                 { }
 
-                unsafe_point3d(const omni::math::dimensional<T, 3>& cp) : 
-                    OMNI_CTOR_FW(omni::geometry::unsafe_point3d<T>)
+                raw_point3d(const omni::geometry::point3d<T>& cp) :
+                    OMNI_CTOR_FW(omni::geometry::raw_point3d<T>)
+                    x(cp.x()), y(cp.y()), z(cp.z())
+                { }
+
+                raw_point3d(const omni::math::dimensional<T, 3>& cp) :
+                    OMNI_CTOR_FW(omni::geometry::raw_point3d<T>)
                     x(cp[0]), y(cp[1]), z(cp[2])
                 { }
 
-                unsafe_point3d(T _x, T _y, T _z) : 
-                    OMNI_CTOR_FW(omni::geometry::unsafe_point3d<T>)
+                raw_point3d(T _x, T _y, T _z) : 
+                    OMNI_CTOR_FW(omni::geometry::raw_point3d<T>)
                     x(_x), y(_y), z(_z)
                 { }
 
-                ~unsafe_point3d()
+                ~raw_point3d()
                 {
                     OMNI_TRY_FW
                     OMNI_DTOR_FW
@@ -407,17 +598,131 @@ namespace omni {
                     OMNI_D5_FW("destroyed");
                 }
 
+                T decrement_x()
+                {
+                    return --this->x;
+                }
+
+                T decrement_y()
+                {
+                    return --this->y;
+                }
+
+                T decrement_z()
+                {
+                    return --this->z;
+                }
+
+                T decrement_x(T val)
+                {
+                    return (this->x -= val);
+                }
+
+                T decrement_y(T val)
+                {
+                    return (this->y -= val);
+                }
+
+                T decrement_z(T val)
+                {
+                    return (this->z -= val);
+                }
+
+                int32_t hash_code() const
+                {
+                    return (
+                        static_cast<int32_t>(this->x) ^
+                        ((static_cast<int32_t>(this->y) << 13) | (static_cast<int32_t>(this->y) >> 19)) ^
+                        ((static_cast<int32_t>(this->z) << 26) | (static_cast<int32_t>(this->z) >>  6))
+                    );
+                }
+                
+                T increment_x()
+                {
+                    return ++this->x;
+                }
+
+                T increment_y()
+                {
+                    return ++this->y;
+                }
+
+                T increment_z()
+                {
+                    return ++this->z;
+                }
+
+                T increment_x(T val) 
+                {
+                    return (this->x += val);
+                }
+
+                T increment_y(T val)
+                {
+                    return (this->y += val);
+                }
+
+                T increment_z(T val)
+                {
+                    return (this->z += val);
+                }
+
+                void decrement(const omni::geometry::raw_point3d<T>& val)
+                {
+                    this->decrement(val.x, val.y, val.z);
+                }
+
+                void decrement(const omni::geometry::point3d<T>& val)
+                {
+                    this->decrement(val.x(), val.y(), val.z());
+                }
+
+                void decrement(const omni::math::dimensional<T, 3>& val)
+                {
+                    this->decrement(val[0], val[1], val[2]);
+                }
+
+                void decrement(T _x, T _y, T _z)
+                {
+                    this->x -= _x;
+                    this->y -= _y;
+                    this->z -= _z;
+                }
+
                 bool empty() const
                 {
-                    return this->x == 0 && this->y == 0 && this->z == 0;
+                    return omni::math::are_equal(this->x, static_cast<T>(0)) &&
+                           omni::math::are_equal(this->y, static_cast<T>(0)) &&
+                           omni::math::are_equal(this->z, static_cast<T>(0));
                 }
 
                 bool equals(T _x, T _y, T _z) const
                 {
-                    return
-                        omni::math::are_equal<T>(this->x, _x) &&
-                        omni::math::are_equal<T>(this->y, _y) &&
-                        omni::math::are_equal<T>(this->z, _z);
+                    return this->x == _x && 
+                           this->y == _y &&
+                           this->z == _z;
+                }
+
+                void offset(const omni::geometry::raw_point3d<T>& val)
+                {
+                    this->offset(val.x, val.y, val.z);
+                }
+
+                void offset(const omni::geometry::point3d<T>& val)
+                {
+                    this->offset(val.x(), val.y(), val.z());
+                }
+
+                void offset(const omni::math::dimensional<T, 3>& val)
+                {
+                    this->offset(val[0], val[1], val[2]);
+                }
+
+                void offset(T _x, T _y, T _z)
+                {
+                    this->x += _x;
+                    this->y += _y;
+                    this->z += _z;
                 }
 
                 void set(T _x, T _y, T _z)
@@ -427,7 +732,7 @@ namespace omni {
                     this->z = _z;
                 }
 
-                void swap(unsafe_point3d<T>& o)
+                void swap(raw_point3d<T>& o)
                 {
                     if (this != &o) {
                         std::swap(this->x, o.x);
@@ -457,16 +762,33 @@ namespace omni {
                     return s.str();
                 }
 
-                operator std::string() const { return this->to_string(); }
+                operator std::string() const
+                {
+                    return this->to_string();
+                }
 
-                operator std::wstring() const { return this->to_wstring(); }
+                operator std::wstring() const
+                {
+                    return this->to_wstring();
+                }
 
-                bool operator!=(const unsafe_point3d<T>& val) const
+                omni::geometry::point3d<T> to_point3d() const
+                {
+                    return omni::geometry::point3d<T>(this->x, this->y, this->z);
+                }
+
+                omni::math::dimensional<T, 3> to_dimensional() const
+                {
+                    T vals[3] = { this->x, this->y, this->z };
+                    return omni::math::dimensional<T, 3>(vals);
+                }
+
+                bool operator!=(const omni::geometry::raw_point3d<T>& val) const
                 {
                     return !(*this == val);
                 }
                 
-                unsafe_point3d<T>& operator=(const unsafe_point3d<T>& val)
+                omni::geometry::raw_point3d<T>& operator=(const omni::geometry::raw_point3d<T>& val)
                 {
                     if (this != &val) {
                         OMNI_ASSIGN_FW(val)
@@ -477,63 +799,142 @@ namespace omni {
                     return *this;
                 }
 
-                bool operator<(const unsafe_point3d<T>& val) const
+                bool operator<(const omni::geometry::raw_point3d<T>& val) const
                 {
-                    return this->x < val.x &&
-                           this->y < val.y &&
-                           this->z < val.z;
+                    return (this->x + this->y + this->z) < (val.x + val.y + val.z);
                 }
 
-                bool operator>(const unsafe_point3d<T>& val) const
+                bool operator<=(const omni::geometry::raw_point3d<T>& val) const
                 {
-                    return this->x > val.x && 
-                           this->y > val.y &&
-                           this->z > val.z;
+                    return (this->x + this->y + this->z) <= (val.x + val.y + val.z);
                 }
 
-                bool operator==(const unsafe_point3d<T>& val) const
+                bool operator>(const omni::geometry::raw_point3d<T>& val) const
+                {
+                    return (this->x + this->y + this->z) > (val.x + val.y + val.z);
+                }
+
+                bool operator>=(const omni::geometry::raw_point3d<T>& val) const
+                {
+                    return (this->x + this->y + this->z) >= (val.x + val.y + val.z);
+                }
+
+                bool operator==(const omni::geometry::raw_point3d<T>& val) const
                 {
                     if (this == &val) { return true; }
                     return (
                         omni::math::are_equal<T>(this->x, val.x) &&
                         omni::math::are_equal<T>(this->y, val.y) &&
-                        omni::math::are_equal<T>(this->z, val.z))
+                        omni::math::are_equal<T>(this->z, val.z)
+                    )
                     OMNI_EQUAL_FW(val);
                 }
 
-                unsafe_point3d<T> operator+(const unsafe_point3d<T>& val)
+                omni::geometry::raw_point3d<T> operator+(const omni::geometry::raw_point3d<T>& val)
                 {
-                    return unsafe_point3d<T>((this->x + val.x),
+                    return omni::geometry::raw_point3d<T>((this->x + val.x),
                                           (this->y + val.y),
                                           (this->z + val.z));
                 }
 
-                unsafe_point3d<T> operator-(const unsafe_point3d<T>& val)
+                omni::geometry::raw_point3d<T> operator+(const omni::math::dimensional<T, 3>& val)
                 {
-                    return unsafe_point3d<T>((this->x - val.x),
+                    return omni::geometry::raw_point3d<T>((this->x + val[0]),
+                                          (this->y + val[1]),
+                                          (this->z + val[2]));
+                }
+
+                omni::geometry::raw_point3d<T> operator+(T val)
+                {
+                    return omni::geometry::raw_point3d<T>((this->x + val),
+                                          (this->y + val),
+                                          (this->z + val));
+                }
+
+                omni::geometry::raw_point3d<T> operator-(const omni::geometry::raw_point3d<T>& val)
+                {
+                    return omni::geometry::raw_point3d<T>((this->x - val.x),
                                           (this->y - val.y),
                                           (this->z - val.z));
                 }
 
-                unsafe_point3d<T>& operator+=(const unsafe_point3d<T>& val)
+                omni::geometry::raw_point3d<T> operator-(const omni::math::dimensional<T, 3>& val)
                 {
-                    this->x += val.x;
-                    this->y += val.y;
-                    this->z += val.z;
+                    return omni::geometry::raw_point3d<T>((this->x - val[0]),
+                                          (this->y - val[1]),
+                                          (this->z - val[2]));
+                }
+
+                omni::geometry::raw_point3d<T> operator-(T val)
+                {
+                    return omni::geometry::raw_point3d<T>((this->x - val),
+                                          (this->y - val),
+                                          (this->z - val));
+                }
+
+                omni::geometry::raw_point3d<T>& operator+=(const omni::geometry::raw_point3d<T>& val)
+                {
+                    this->offset(val.x, val.y, val.z);
                     return *this;
                 }
 
-                unsafe_point3d<T>& operator-=(const unsafe_point3d<T>& val)
+                omni::geometry::raw_point3d<T>& operator+=(const omni::math::dimensional<T, 3>& val)
                 {
-                    this->x -= val.x;
-                    this->y -= val.y;
-                    this->z -= val.z;
+                    this->offset(val);
                     return *this;
                 }
 
-                OMNI_MEMBERS_FW(omni::geometry::unsafe_point3d<T>) // disposing,name,type(),hash()
+                omni::geometry::raw_point3d<T>& operator+=(T val)
+                {
+                    this->offset(val, val, val);
+                    return *this;
+                }
 
-                OMNI_OSTREAM_FW(omni::geometry::unsafe_point3d<T>)
+                omni::geometry::raw_point3d<T>& operator-=(const omni::geometry::raw_point3d<T>& val)
+                {
+                    this->decrement(val.x, val.y, val.z);
+                    return *this;
+                }
+
+                omni::geometry::raw_point3d<T>& operator-=(const omni::math::dimensional<T, 3>& val)
+                {
+                    this->decrement(val);
+                    return *this;
+                }
+
+                omni::geometry::raw_point3d<T>& operator-=(T val)
+                {
+                    this->decrement(val, val, val);
+                    return *this;
+                }
+
+                operator omni::geometry::point3d<T>() const
+                {
+                    return this->to_point3d();
+                }
+
+                operator omni::math::dimensional<T, 3>() const
+                {
+                    return this->to_dimensional();
+                }
+
+                static omni::geometry::raw_point3d<T> add(const omni::geometry::raw_point3d<T>& point, const omni::math::dimensional<T, 3> sz)
+                {
+                    return omni::geometry::raw_point3d<T>((point.x + sz[0]),
+                                          (point.y + sz[1]),
+                                          (point.z + sz[2]));
+                }
+
+                static omni::geometry::raw_point3d<T> subtract(const omni::geometry::raw_point3d<T>& point, const omni::math::dimensional<T, 3> sz)
+                {
+                    return omni::geometry::raw_point3d<T>((point.x - sz[0]),
+                                          (point.y - sz[1]),
+                                          (point.z - sz[2]));
+                }
+
+                OMNI_MEMBERS_FW(omni::geometry::raw_point3d<T>) // disposing,name,type(),hash()
+
+                OMNI_OSTREAM_FW(omni::geometry::raw_point3d<T>)
 
                 T x;
 
@@ -542,10 +943,15 @@ namespace omni {
                 T z;
         };
 
-        typedef omni::geometry::unsafe_point3d<int32_t> unsafe_point_3d_t;
-        typedef omni::geometry::unsafe_point3d<int64_t> unsafe_point64_3d_t;
-        typedef omni::geometry::unsafe_point3d<float> unsafe_pointF_3d_t;
-        typedef omni::geometry::unsafe_point3d<double> unsafe_pointD_3d_t;
+        typedef omni::geometry::raw_point3d<int32_t> raw_point_3d_t;
+        typedef omni::geometry::raw_point3d<int64_t> raw_point64_3d_t;
+        typedef omni::geometry::raw_point3d<float> raw_pointF_3d_t;
+        typedef omni::geometry::raw_point3d<double> raw_pointD_3d_t;
+
+        typedef omni_sequence_t<omni::geometry::raw_point_3d_t> raw_point_3d_seq_t;
+        typedef omni_sequence_t<omni::geometry::raw_point64_3d_t> raw_point64_3d_seq_t;
+        typedef omni_sequence_t<omni::geometry::raw_pointF_3d_t> raw_pointF_3d_seq_t;
+        typedef omni_sequence_t<omni::geometry::raw_pointD_3d_t> raw_pointD_3d_seq_t;
     }
 }
 
@@ -557,7 +963,7 @@ namespace std {
     }
 
     template < typename T >
-    inline void swap(omni::geometry::unsafe_point3d<T>& o1, omni::geometry::unsafe_point3d<T>& o2)
+    inline void swap(omni::geometry::raw_point3d<T>& o1, omni::geometry::raw_point3d<T>& o2)
     {
         o1.swap(o2);
     }

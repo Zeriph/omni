@@ -33,11 +33,19 @@ namespace omni {
                 
                 runnable(const omni::sync::runnable& cp)
                     OMNI_OCPCTOR_FW(cp)
-                {}
-                
-                runnable& operator=(runnable& o)
                 {
-                    OMNI_ASSIGN_FW(o)
+                    #if !defined(OMNI_OBJ_CTV1_FW)
+                        OMNI_UNUSED(cp);
+                    #endif
+                }
+                
+                omni::sync::runnable& operator=(omni::sync::runnable& o)
+                {
+                    #if !defined(OMNI_DISPOSE_EVENT) && !defined(OMNI_OBJECT_NAME)
+                        OMNI_UNUSED(o);
+                    #else
+                        OMNI_ASSIGN_FW(o)
+                    #endif
                     return *this;
                 }
                 
@@ -60,8 +68,6 @@ namespace omni {
                 }
                 
                 OMNI_MEMBERS_FW(omni::sync::runnable) // disposing,name,type(),hash()
-                
-            //private:
         };
     }
 } // namespace omni

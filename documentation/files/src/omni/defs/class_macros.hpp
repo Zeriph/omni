@@ -31,9 +31,6 @@
 #define OMNI_OSTREAM_STR_FW(...) OMNI_FOSTREAM_OPC2T_FW(to_string_t(), __VA_ARGS__) \
                                  OMNI_FOSTREAM_OPW2T_FW(to_string_t(), __VA_ARGS__)
 
-#define OMNI_OSTREAM_RAW_FW(val, ...) OMNI_OSTREAM_RAW_OPERATOR(val, __VA_ARGS__) \
-                                      OMNI_WOSTREAM_RAW_OPERATOR(val, __VA_ARGS__)
-
 #if defined(OMNI_OBJ_CTV1_FW)
     #undef OMNI_OBJ_CTV1_FW
 #endif

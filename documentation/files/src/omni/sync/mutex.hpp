@@ -25,13 +25,19 @@
     #include <omni/types/thread_t.hpp>
 #endif
 
+#if defined(OMNI_32BIT_MUTEX)
+    #define OMNI_MTX_INT_FW uint32_t
+#else
+    #define OMNI_MTX_INT_FW uint64_t
+#endif
+
 namespace omni {
     namespace sync {
         class mutex
         {
             public:
                 mutex();
-                explicit mutex(bool initially_owned);
+                OMNI_EXPLICIT mutex(bool initially_owned);
                 ~mutex(); // should not inherit
                 const omni::sync::mutex_t handle() const;
                 bool locked() const;
@@ -49,7 +55,7 @@ namespace omni {
                 mutex(const omni::sync::mutex &cp);
                 omni::sync::mutex& operator=(const omni::sync::mutex& other);
                 
-                volatile uint32_t m_lokd;
+                volatile OMNI_MTX_INT_FW m_lokd;
                 omni::sync::mutex_t m_mtx;
                 #if defined(OMNI_SAFE_MUTEX)
                     mutable omni::sync::mutex_t m_imtx; // internal mutex

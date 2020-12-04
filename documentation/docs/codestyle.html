@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - Coding Style, Standards and Best Practices</title>
+<link rel="stylesheet" type="text/css" href="../content/main.css" /><link rel="icon" type="image/png" href="../content/favicon.png" />
+<script type="text/javascript" src="../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../download.html">Downloads</a></li>
+</ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="htmlsrc/index.html">Source</a></li><li title="Library classes and namespaces">
+<a href="classes/index.html">Class Index</a></li><li title="Download and view examples">
+<a href="examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="api.html">System API</a></li><li title="Other Considerations">
+<a href="consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="codestyle.html" class="current">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="http://www.zeriph.com">Zeriph Enterprises, LLC</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle"><a name="codestyle"></a>Coding Style, Standards and Best Practices</div><div class="content"><div style="padding-left:1em;">
+<table style="border:1px solid white;text-align:center;width:40em;margin:auto;">
+<tr><td><b>CORRECT VERSION NOTICE</b></td></tr><tr><td>
+This document is subject to frequent detailed changes critical to correct engineering.<br>
+Any hard copy may be out of date. Readers are responsible to ensure they are reading the most current document.
+Confirm the correct version by checking the on-line version of the document, the on-line master list or the project authority.
+</td></tr></table><br>
+
+<a name="toc"></a><font class="hdr">Table of Contents</font><br>
+<ol class="toc">
+<li><a href="#s1">Introduction</a></li>
+<li><a href="#s2">General Rules</a></li>
+<li><a href="#s3">Notes</a></li>
+<li><a href="#s4">Program Files</a><ol>
+<li><a href="#s4a">Source Files</a></li>
+<li><a href="#s4b">Header Files</a></li></ol></li>
+<li><a href="#s5">Formatting</a><ol>
+<li><a href="#s5a">Indentations</a></li>
+<li><a href="#s5b">Braces</a></li>
+<li><a href="#s5c">Parenthesis</a></li>
+<li><a href="#s5d">Spaces</a></li>
+<li><a href="#s5e">Declarations</a></li>
+<li><a href="#s5f">Statements</a><ol>
+<li><a href="#s5f1">Compound statements</a></li></ol></li>
+<li><a href="#s5g">Scope references and the '<code>this</code>' operator</a><ol>
+<li><a href="#s5g1">Scope</a></li>
+<li><a href="#s5g2">The '<code>this</code>' operator</a></li></ol></li></li>
+<li><a href="#s5h">Examples</a></li></ol></li>
+<li><a href="#s6">Hierarchical Types</a></li>
+<li><a href="#s7">Functions</a><ol>
+<li><a href="#s7a">Use of <code>goto()</code></a></li></ol></li>
+<li><a href="#s8">Comments</a><ol>
+<li><a href="#s8a">JavaDoc/Doxygen Comments</a></li></ol></li>
+<li><a href="#s9">Naming</a><ol>
+<li><a href="#s9a">File Names</a></li></ol></li>
+<li><a href="#s10">Continuation Lines</a></li>
+<li><a href="#s11">Variable Initialization</a><ol>
+<li><a href="#s11a">Constructor Logic</a></li></ol></li>
+<li><a href="#s12">Macros, Enums and Constants</a></li>
+<li><a href="#s13">Error handling and Exceptions</a></li>
+<li><a href="#s14">Appendix A: Other Considerations</a></li></ol><hr>
+
+<a name="s1"></a><font class="hdr">1. Introduction</font>
+<div class="csec">
+This document describes the coding guidelines for the various code files that
+are written by the Software Engineering Team at Zeriph. The goal of these guidelines
+is to increase portability, reduce maintenance, and above all improve clarity. Some
+of the content as well as the coding style presented here is a mixed derivative of
+styles presented in the <a href="#references">References</a> section below.<br><br>
+The secondary purpose of this document is to describe the layout of the code
+throughout the Omni library in the event one wishes to fix, add, or create a
+derivative work from the full source.
+</div>
+
+<a name="s2"></a><font class="hdr">2. General Rules</font><br>
+<div class="csec" style="padding-left:1em;">
+<li>Indentations shall be 4 spaces long. Do not replace spaces with tabs.</li>
+<li>All source code should use Unix end-of-line convention (<code>\n</code> instead of <code>\r\n</code> or <code>\r</code>).</li>
+<li>All source code should use lower-case names for files and directories where applicable, and shall replace white space
+with an underscore (e.g. <code>some_file.cpp</code>).</li>
+<li>All source files will have 1 empty line at the end of the file.</li>
+<li>There should be no revision control tags in source files. Use the CRM tools instead.</li>
+<li>If there are source files that do not adhere to this document, follow that source file's
+coding style as best you can, refactor when permitted. A mixed coding style can be just as hard,
+or harder, to maintain than a bad coding style.</li>
+</div>
+
+<a name="s3"></a><font class="hdr">3. Notes</font><br>
+<div class="csec">
+Any coding styles not mentioned in this file should be brought up to the team to ensure the style meets any
+specifications that might be required. NOTE: this only applies to those working internally on the library and
+does not need to apply to a general use case of this library.<br><br>
+
+In general the code presented for any examples will try to be as technically correct as possible, however it is
+not the technicalities of the actual code, but the idea presented (syntax layout/etc.) that should be paid attention
+to throughout this style document.
+</div>
+
+<a name="s4"></a><font class="hdr">4. Program Files</font><br><br>
+<a name="s4a"></a><font class="hdr">4a. Source Files</font><br>
+<div class="csec">
+Program/implementation (.c/.cpp/etc.) files should be organized in the following manner:
+<ul>
+<li>A comment with the copyright notice (unless it is 3rd party code that does not allow copyright).
+Be sure to include any other copyright notices that may be required (i.e. the GPL if using code that
+comes direct from GPL copyrighted code).</li>
+<li>System imported functionality before local imported functionality (e.g. system <code>#include</code>'s before local).</li>
+<li>Member variables or properties and any forward declarations that may be needed.</li>
+<li>Public member function implementations.</li>
+<li>Protected member functions implementations.</li>
+<li>Private member function implementations.</li>
+<li>Public static/extern functions.</li>
+<li>Protected static functions.</li>
+<li>Private static/extern functions.</li>
+</ul>
+
+All functions should try and be arranged in alphabetical order when feasible.<br>
+<br>Any member properties/variables should also be arranged alphabetical unless doing so will cause
+additional padding of the class/struct. In which case, the member variables should be ordered in such
+a way as to reduce the padding, and initialized in the constructor appropriately.<br><br>
+
+Notes on program/code file implementation:
+<ul>
+<li>If implementing code from a header file, follow the layout of the header file. For instance,
+if a class is defined with 4 functions, those 4 functions will be implemented in the same order in the program file.</li>
+<li>Only function implementation should be in the program files itself, everything else (interface declarations,
+<code>enum</code> types, global/local variables, <code>class</code> or <code>struct</code> definitions, etc.) will be
+in the header file.</li>
+<li>It is OK to put forward declarations in program files that might be needed within the file.</li>
+<li>If any member functions are defined within a namespace only they will be treated as a <code>static member</code> of a
+class and will be put in the <code>global/static member</code> area of the file.</li>
+<li>Any implementation in a header file (such as the case with templates and inline functions) will adhere
+to the standards put forth in this document.</li>
+</ul>
+
+<br>See <a href="#s9">Naming</a> for more information on how to name items within your header file.
+</div>
+
+<a name="s4b"></a><font class="hdr">4b. Header Files</font><br>
+<div class="csec">
+Interface files (.h/.hpp/header files) should be organized in the following manner:
+<ul>
+<li>A comment with the copyright notice (unless it is 3rd party code that does not allow copyright).
+Be sure to include any other copyright notices that may be required (i.e. the GPL if using code
+that comes direct from GPL copyrighted code).</li>
+<li>A comment describing the purpose of the file (unless the code is properly commented or clear from
+its intention). The comment should not contain revision information or revision control tags.</li>
+<li><code>#ifndef</code> that prevents accidental double inclusion.</li>
+<li>Other <code>#include</code>'s, if needed.</li>
+<li>Opening brace of C++ guard (<code>#ifdef __cplusplus</code>), if needed.</li>
+<li><code>#define</code>'s and <code>enum</code> types.</li>
+<li>Data structures.</li>
+<li>Global variable declarations (using <code>extern</code> where needed).</li>
+<li>Global function declarations (using <code>extern</code> where needed).</li>
+<li>Classes and namespaces.</li>
+<li>Closing brace of C++ guard if opening brace exists.</li>
+<li><code>#endif</code> for preventing accidental double inclusion.</li>
+</ul>
+
+Notes on header file implementation:
+<ul>
+<li>Try and keep any actual implementation details (code) out of the header file, unless it cannot be avoided.</li>
+<li>Try and keep the definitions in alphabetical order.</li>
+<li>Alphabetical ordering can be ignored if using a type within a declaration that uses another type below it
+and a forward declaration is not possible or would convolute the code.</li>
+<li>There may be instances where it is unavoidable to put implementation (code) in the header file (for instance,
+when making use of templating), this is OK but try and keep as much code as possible in the actual program file
+(the .c or .cpp file) for cleaner implementation and separation of problem domains.</li>
+</ul>
+See <a href="#s9">Naming</a> for more information on how to name items within your header file.
+</div>
+
+<a name="s5"></a><font class="hdr">5. Formatting</font><br><br>
+<a name="s5a"></a><font class="hdr">5a. Indentations</font><br>
+<div class="csec">
+Indentions will be 4 spaces each and follow a tree structure. In other words,
+following a definition of some type, if there is code that supports the definition
+(for instance as in an <code>if</code> statement, there is code that follows the
+<code>if</code>) this code shall be 1 indent and any subsequent areas shall be indent count +1.<br>
+Example:
+<pre>
+if (...) { // 0 indent
+    // 1 indent
+    if (x == y) {
+        // 2 indents
+    } else {
+        if (z > 0) {
+            // 3 indents
+        }
+    }
+}
+</pre>
+Other notations on indentions in regards to placement of braces or function names, etc. are
+noted in the following sub paragraphs. 
+</div>
+
+<a name="s5b"></a><font class="hdr">5b. Braces</font><br>
+<div class="csec">
+Though there is no technical reason for a different placement and position of braces, it is preferred
+(for readability) that the opening brace be put on the same line at the end, and the closing brace as
+the first and only (in most cases) character on a line.<br>
+<br>
+Example:
+<pre>
+if (...) {
+     // do x,y,z
+}
+// single lines are acceptable if doing small computations:
+if (...) { /* do x */ }
+</pre>
+This guideline does not apply to functions. Functions shall have the opening brace at the beginning of a
+new line immediately following the function definition.<br>
+<br>
+Example:
+<pre>
+int function_name(int x)
+{
+    // function body
+    return value;
+}
+</pre>
+Other notations on brace placement can be found in the below sections.
+</div>
+
+<a name="s5c"></a><font class="hdr">5c. Parenthesis</font><br>
+<div class="csec">
+It is generally a good idea to use parenthesis in expressions involving mixed operators.<br>
+If there is an area of code that will have multiple parameters in between the parenthesis,
+you should treat the parenthesis as they were braces of an <code>if</code> statement in regards
+to placement.<br>
+<br>
+Example:
+<pre>
+// mixed operators
+int i = (((a * b) / (c * d)) * 10) + 1;
+
+// expansive parenthesis
+object* obj = new object(
+    param1, // comment on param1
+    param2, // other comment
+    param3,
+    param4,
+    param5,
+    param6
+);
+</pre>
+</div>
+
+<a name="s5d"></a><font class="hdr">5d. Spaces</font><br>
+<div class="csec">
+The use of spaces depends (mostly) on function-versus-keyword usage. Use a space after (most) keywords.
+The notable exceptions are <code>sizeof</code>, <code>typeof</code>, <code>exit</code> and any other reserved
+keywords that can look/act somewhat like a function.<br>
+<br>
+Example:
+<pre>
+if (x == 1) { // space following control statement 'if'
+    if (y > sizeof(object)) { // no space after 'sizeof'
+        exit 1; // no space after 'exit'
+    }
+}
+</pre>
+<br>
+There should be 1 space immediately following the last closing code (the last parenthesis before the opening
+brace in the above <code>if</code> statements for instance).<br>
+<br>
+There will be no spacing immediately following an opening parenthesis or immediately before a closing parenthesis.<br>
+<br>
+Example:
+<pre>
+s = sizeof( object ); // WRONG
+s = sizeof(object); // RIGHT
+</pre>
+<br>
+If declaring a pointer type, the pointer operator (the asterisks <code>*</code>) will be immediately before the data type.<br>
+<br>
+Example:
+<pre>
+char * value; // WRONG
+char *value; // WRONG
+char* value; // RIGHT
+</pre>
+<br>
+Use 1 space on either side of a most binary/ternary operators (<code>&lt;</code>, <code>=</code>, <code>+</code>, <code>-</code>, <code>*</code>, etc.).<br>
+<br>
+Example:
+<pre>
+a = (((1+1)*2)/4); // WRONG
+a = (((1 + 1) * 2) / 4); // RIGHT
+a+=5; // WRONG
+a += 5; // RIGHT
+</pre>
+<br>
+There will be no space after unary operators (<code>&amp;</code>, <code>*</code>, <code>!</code>, <code>~</code>, <code>sizeof</code>, etc.).<br>
+<br>
+Example:
+<pre>
+char* a = &amp; b; // WRONG
+char* a = &amp;b; // RIGHT
+int x = ~ (y + 1); // WRONG
+int x = ~(y + 1); // RIGHT
+</pre>
+<br>
+No space before or after the increment and decrement unary operators, <code>++</code>, <code>--</code>.<br>
+<br>
+Example:
+<pre>
+x ++; // WRONG
+x++; // RIGHT
+</pre>
+<br>
+No space before or after the scope resolution operators (<code>.</code>, <code>-></code>, <code>::</code>).<br>
+<br>
+Example:
+<pre>
+x . get_ref() -> base_class :: some_func(); // WRONG
+x.get_ref()->base_class::some_func(); // RIGHT
+</pre>
+<br>
+Any initialization lists will be separated by a space before and after the colon (<code>:</code>) and after each initializer.<br>
+<br>
+Example:
+<pre>
+class object {
+    public:
+        object(const char* name, int count) : m_name(name), m_count(count) {}
+    private:
+        const char* m_name;
+        int m_count;
+};
+</pre>
+<br>
+An initialization list can be on a single line, or multiple lines if there are multiple entries.
+Be sure to line up the entries accordingly.<br>
+<br>
+Example:
+<pre>
+object(const char* name, int count) :
+	m_name(name),
+	m_count(count) {} // Braces can be here if nothing is to be done
+        // or here on next line
+</pre>
+Lastly, do not leave trailing whitespace at the ends of lines.
+</div>
+
+<a name="s5e"></a><font class="hdr">5e. Declarations</font><br>
+<div class="csec">
+One declaration per line is recommended since it encourages commenting, though it is acceptable to
+put all declarations on a single line (especially when multiple are needed).<br><br>
+Example:
+<pre>
+int level = 0; // comment on level
+int size = 100; // comment on size
+int level = 0, size = 100, tmp, x, y, z; // OK, just be sure to comment
+</pre>
+<br>
+When declaring multiple variables of the same base type, do not mix the variable types
+(reference, pointer, etc.) on the same line.<br><br>
+Example:
+<pre>
+int x = 0, y[SIZE] = { 0 }; // WRONG
+int x = 0; // RIGHT
+int y[SIZE] = { 0 }; // RIGHT
+</pre>
+<br>
+Another alternative is to line up a group of declarations (with spaces, not tabs), while acceptable, it is
+preferred to use the above method mentioned.<br><br>
+Example:
+<pre>
+int   level        = 0; 
+int   size         = 0;
+float current_data = 0.0;
+</pre>
+<br>
+Function level declarations will be only at the beginning of blocks of code (a block is anything surrounded
+by braces <code>{</code> and <code>}</code>). This can be ignored if initializing an object or type that will
+consume resources and only needs to be declared if something is to happen.<br><br>
+Example:
+<pre>
+void set_state(int x, int y)
+{
+    // initialize variables here
+    std::vector<int> group;
+    object tmp();
+    int counter = 0;
+    if (x == 0 && y == 0) {
+        // alert or something else
+    } else {
+        // instantiate memory/CPU intensive object/resource
+        resource* resrc = new resource();
+        // do something with resource
+        delete resrc;
+    }
+}
+</pre>
+<br>
+Avoid local declarations that hide higher level declarations at a function level, in other words do
+not declare the same variable name in an inner block, while syntactically correct, it can lead to
+confusion in code.<br><br>
+Example:
+<pre>
+void set_state(int x, int y)
+{
+    int counter = 0;
+    // other code that uses the 'counter' variable
+    for (int counter = 0; counter &lt; 10; ++counter) {
+        // this could lead to errors in this section of code
+        // remedy is to rename this 'inner' variable to something else
+    }
+}
+</pre>
+<br>
+Function variables should be initialized, when feasible, when they are declared.<br><br>
+Example:
+<pre>
+std::list<int> group; // no need to 'initialize' to anything
+int x = 0; // initialize <code>x</code> to zero
+object* obj = NULL; // pointer types can be NULL if allowable by the type
+object* obj = new object(); // initializing tmp to a new instance
+</pre>
+</div>
+
+<a name="s5f"></a><font class="hdr">5f. Statements</font><br>
+<div class="csec">
+In general, each line should contain at most one statement. If putting multiple statements on a single line,
+try and group them such that they preform similar functionality. The <code>break</code> statement is OK to put
+on the same line as another statement as long as it is easy to read.<br><br>
+Example:
+<pre>
+++i; ++x; // OK
+++i; break; // OK
+some_func(); break; // OK
+do_something_with_var(x); ++x; ++i; // NOT OK
+</pre>
+<br>
+Do not nest the ternary conditional operator (<code>... ? ... : ...</code>).<br><br>
+Example:
+<pre>
+int num = ((count &lt; x) ? ((x &gt; 10) ? x : 0) : 1); // WRONG
+int num = ((count &lt; x) ? 10 : x); // RIGHT
+</pre>
+<br>
+Functions that do not return a value (<code>void</code>) should not have a <code>return</code> statement as the
+last statement in the function.<br><br>
+Example:
+<pre>
+void set_state(int x)
+{
+    // do something
+    return; // WRONG
+}
+</pre>
+<br>
+If returning a value, the return statement should not enclose its return value in parenthesis,
+unless it is a compound return statement.<br><br>
+Example:
+<pre>
+return (val); // WRONG
+return val; // RIGHT
+return (val + 10 - some_func()); // OK
+</pre>
+</div>
+
+<a name="s5f1"></a><font class="hdr">5f1. Compound statements</font><br>
+<div class="csec">
+Compound statements are statements that contain lists of statements enclosed in braces.
+The enclosed list should be indented one more level than the compound statement itself.
+The opening left brace should be at the end of the line beginning the compound statement
+and the closing right brace should be alone on a line, positioned under the beginning of
+the compound statement (see examples below). Note that the left brace that begins a function
+body is the only occurrence of a left brace which should be alone on a line.<br><br>
+
+Braces are also used around a single statement when it is part of a control structure, such as
+an <code>if-else</code> or <code>for</code> statement.<br><br>
+Example:
+<pre>
+if (condition) {
+    if (other_condition) {
+        statement;
+    }
+}
+</pre>
+<br>
+All statements and control blocks that allow for optional braces are to include braces. This is for clarity of code.<br><br>
+Example:
+<pre>
+/* The following is valid, but could potentially be confusing 
+to read depending on context of the code */
+if (condition)
+    do_something();
+
+// This is preferred
+if (condition) {
+    do_something();
+}
+</pre>
+<br>
+Any empty statements can have the opening and closing braces immediately following it.<br><br>
+Example:
+<pre>
+for (;;) { }
+</pre>
+</div>
+
+<a name="s5g"></a><font class="hdr">5g. Scope references and the '<code style="font-size: 22px;">this</code>' operator</font><br><br>
+<a name="s5g1"></a><font class="hdr">5g1. Scope</font><br>
+<div class="csec">
+When referencing a variable or function, the scope of that variable must be included as well. This is to ensure the
+code is immediately readable and understandable by anyone not familiar with the structure of the code.<br>
+<br>
+Take the following code as an example:
+<pre>
+void some_function(int newidx)
+{
+    // ... other code
+    do_something_with_updated_index(newidx);
+}
+</pre>
+<br>
+When looking at the above code, it is not immediately clear as to where the function <code>do_something_with_updated_index</code>
+resides, in other words, the scope of the function is unclear and could potentially lead to confusion by other developers.
+It can also lead to naming conflicts.<br>
+<br>
+Take the following code as an example:
+<pre>
+class base_class
+{
+    public:
+        static bool some_function(double val)
+        {
+            return (val > 0.0d);
+        }
+};
+
+class some_class : base_class
+{ 
+    public:
+        bool some_function(long val)
+        {
+            return (val > 100L);
+        }
+
+        void do_something()
+        {
+            // some other code
+            some_function(get_input());
+            // which one are we intending to call?
+        }
+};
+</pre>
+<br>
+To this affect all variables and functions will have at least 1 level of scope applied for reference.
+To illustrate this point, take the above code as an example applied with the appropriate scope:
+<pre>
+class base_class
+{
+    public:
+        static bool some_function(double val)
+        {
+            return (val > 0.0d);
+        }
+};
+
+class some_class : base_class
+{ 
+    public:
+        bool some_function(long val)
+        {
+            return (val > 100L);
+        }
+
+        void do_something()
+        {
+            // some other code
+            this->some_function(get_input());
+            base_class::some_function(static_cast<double>(get_input()));
+        }
+};
+</pre>
+<br>
+By explicitly defining the scope of the variable or function, you not only make the code more readable, but also
+remove any possibilities of inadvertently calling the wrong function or having the compiler assume which function
+you meant to call; while it might lead to more verbosity throughout the library's internal code, it removes
+ambiguity which leads to cleaner, less buggy code.<br>
+<br>
+Higher levels of scope may be applied where more clarity is needed, but typically 1 level of scope is sufficient. As an
+example, the following C# code illustrates how adding higher levels of scope can add clarity; this example uses C# due
+to the lack of examples across the library and C++ standards to illustrate this point:
+<pre>
+Thread.Sleep(1000);
+Thread.AddUserRequest(someObj);
+</pre>
+For the first two functions above, their first level up is the <code>Thread</code> class, however it is not immediately clear
+if <code>Thread</code> is the same class for each function, or if it is the same name within two separate namespaces.
+For this you can use 1 more level up in scope, or you can elect to use the full scope, for example:
+<pre>
+System.Threading.Thread.Sleep(1000);
+CustomFramework.Utils.Threading.Thread.AddUserRequest(someObj);
+</pre>
+<br>
+If the single level of scope is the current class, then the <code>this</code> operator will be used for clarity.
+</div>
+
+<a name="s5g2"></a><font class="hdr">5g2. The '<code style="font-size: 22px;">this</code>' operator</font><br>
+<div class="csec">
+The <code>this</code> operator is a special operator that returns a reference to the current instance of the
+object you are operating in (the class you are in). If no <code>this</code> operator is explicitly applied to the
+variable or function, one is implicitly applied by the compiler (scope permitting).<br>
+<br>
+The <code>this</code> operator has 0 impact on performance since it is simply referring to a scope, not an operation.<br>
+<br>
+For clarity the <code>this</code> operator will be put on all member variables and functions for immediate understanding
+of what scope the variable of method is a part of.<br>
+<br>
+If the variable or function you are referencing within a child class is from its parent class, it is still preferred to
+reference it via the <code>this</code> operator. It is ok, in certain instances, to reference parent members and functions
+via the parent class; examples would be a specific languages rules requiring the use of the parent keyword or in an event
+when using the parent keyword would add clarity to code.<br>
+</div>
+
+<a name="s5h"></a><font class="hdr">5h. Examples</font><br>
+<div class="csec">
+<b>if, if-else, if-else-if statements</b>:
+<pre>
+if (condition) {
+    statements;
+}
+
+if (condition) {
+    statements;
+} else {
+    statements;
+}
+
+if (condition) {
+    statements;
+} else if (condition) {
+    statements;
+}
+</pre>
+<br>
+Note that the right brace before the else and the right brace before the <code>while</code> of a <code>do-while</code>
+statement (see below) are the only places where a right brace appears that is not alone on a line.<br>
+<br>
+<b>for statements:</b>
+<pre>
+for (initialization; condition; update) {
+    statements;
+}
+</pre>
+<br>
+When using the comma operator in the initialization or update clauses of a <code>for</code> statement, it is suggested that no
+more than three variables should be updated. More than this tends to make the expression too complex or confusing.
+In this case it is generally better to use separate statements outside the <code>for</code> loop (for the initialization clause),
+or at the end of the loop (for the update clause).<br>
+<br>
+The infinite loop is written using a <code>while</code> or <code>for</code> loop. While infinite loop's are useful tools
+it's best to be sure there is some rudimentary mechanism to allow the loop to exit (on user input for instance, or the
+program shutting down).<br>
+<br>
+<pre>
+while (!exit_condition) {
+    statements;
+    if (exit_condition) { break; }
+    statements;
+}
+
+for ( ;!exit_condition; ) {
+    statements;
+    if (exit_condition) { break; }
+    statements;
+}
+</pre>
+<br>
+<b>while statements:</b>
+<pre>
+while (condition) {
+    statements;
+}
+</pre>
+<br>
+<b>do-while statements:</b>
+<pre>
+do {
+    statements;
+} while (condition);
+</pre>
+<br>
+<b>switch statements:</b>
+<pre>
+switch (condition) {
+    case ABC:
+    case DEF:
+        statements;
+        break;
+    case XYZ:
+        statements;
+        break;
+    default:
+        statements;
+        break;
+}
+</pre>
+<br>
+The last <code>break</code> is, strictly speaking, redundant, but it is recommended form nonetheless because it prevents
+a fall-through error if another <code>case</code> is added later after the last one. In general, the fall-through feature
+of the <code>switch</code> statement should rarely, if ever, be used (except for multiple case labels as shown in the example).
+If it is, it should be commented for future maintenance.<br>
+<br>
+All switch statements should include a default case. Don't assume that the list of cases covers all possible cases.<br>
+<br>
+New, unanticipated, cases may be added later, or bugs elsewhere in the program may cause variables to take on unexpected values.<br>
+<br>
+Notes on <code>switch</code> statements:
+<ul>
+<li>The <code>case</code> statement should be indented one level more than the <code>switch</code> statement.</li>
+<li>The <code>case</code> statement should be on a line separate from the statements within the case.</li>
+<li>The <code>break</code> statement should be indented to the same level as the code within the case.</li>
+</ul>
+The following shows the format that should be used for a <code>switch</code> whenever the blocks of statements contain more
+than a couple of lines.<br>
+<br>
+Example:
+<pre>
+switch (condition) {
+    case ABC:
+    case DEF:
+        statement1;
+        .
+        .
+        statement2;
+        break;
+    case XYZ:
+        statement1;
+        .
+        .
+        statement2;
+        break;
+    default:
+        statements;
+        break;
+}
+</pre>
+</div>
+
+<a name="s6"></a><font class="hdr">6. Hierarchical Types</font><br>
+<div class="csec">
+Hierarchical types (<code>class</code>, <code>interface</code>, <code>enum</code>, etc.) shall be laid out in such a
+manner that best suits the design needs of that specific type. This document will not cover design specifications,
+only general guidelines to certain idioms.<br>
+<br>
+Inner types should be specific in nature to its parent type.<br>
+<br>
+Avoid too many inner types or too deep a tree of inner types. The tree depth excludes namespaces.<br>
+<br>
+Generic types should still be contained within a <code>namespace</code>, static/abstract <code>class</code>, or some
+other container mechanism. This is for clarity of code and to split out any generic code that could potentially be
+reused by other code.<br>
+<br>
+See <a href="#s9">Naming</a> for more information on how to name hierarchical types.
+</div>
+
+<a name="s7"></a><font class="hdr">7. Functions</font><br>
+<div class="csec">
+Treat reserved keywords that can act like function as such (except for the exit and return statements).<br>
+<br>
+Example: 
+<pre>
+sizeof x // Valid, but not preferred method
+sizeof(x) // Preferred
+</pre>
+<br>
+In program files, functions should be separated by one blank line.<br>
+<br>
+Example:
+<pre>
+int get_value()
+{
+    return value;
+}
+
+void set_value(int val)
+{
+    value = val;
+}
+</pre>
+<br>
+When declaring function prototypes with parameters (which should be in the header file), include the parameter name as
+well as its type.<br>
+<br>
+Example:
+<pre>
+int get_value(); // no parameters
+void set_value(int new_value); // parameter is 'new_value' and is of type 'int'
+</pre>
+<br>
+It is not required to give a parameter name in C/C++ when defining the method; however, it does give more clarity as
+to what the parameter should potentially do. This is especially helpful when only looking at the header file, or when
+using an IDE that has some sort of 'IntelliSense' engine.<br>
+<br>
+That being said; functions should be simple, as short as possible, do one thing and do it well. It is OK to have longer
+line count functions if it cannot be avoided, for instance, a conceptually simple function that consists of a really long,
+but simple, case statement is OK to be long, however, an overly complex function that is only 3 lines (for example) might
+need to be rewritten for clarities sake (unless there is a reason for the complexity, like speed or efficiency for
+instance).<br>
+<br>
+Try to limit the number of local variables used within a function to in between 5 and 10. Anything more could add to the
+complexity of the code and thus be more error prone or not as easy to understand; this also helps your stack be generally
+smaller and thus more efficient.<br>
+<br>
+An idea that is to be followed with functions:<br>
+<br>
+If the function looks like it might not be <i>easily</i> understood by a high school freshman with a good beginners
+programming book, chances are <i>you</i> might not understand either in a couple of weeks.<br>
+<br>
+To this affect, in any function you write, be sure it can be understood; either through the syntax and semantics of
+the code itself or through commenting, preferably through commenting.
+</div>
+
+<a name="s7a"></a><font class="hdr">7a. Use of <code style="font-size: 22px;">goto()</code></font><br>
+<div class="csec">
+The <code>goto</code> statement should be used extremely sparingly. While the <code>goto</code> statement is a completely valid
+tool, it can be error prone if not used correctly (similar to a <code>case</code> statement without a <code>break</code>). Any
+code that uses a <code>goto</code> can be restructured to <i>not</i> use the <code>goto</code>, typically with the addition
+of an <code>if</code> or some other control flow statement.<br>
+<br>
+Since the <code>goto</code> statement is syntactically equivalent to a <code>jmp</code> statement in assembler, a
+<code>goto</code> can be valuable in instances where memory and CPU cycles are in a very limited supply. Even in these
+cases, boolean values in conjunction with proper <code>if</code> statements could avoid the <code>goto</code> with no
+added overhead.<br>
+<br>
+Again, while the <code>goto</code> statement is a valid and potentially useful tool, it is best to avoid them and use
+well-structured code instead.
+</div>
+
+<a name="s8"></a><font class="hdr">8. Comments</font><br>
+<div class="csec">
+Commenting is vitally important to quickly and easily understanding a programs control structure and flow. It is because
+of this that commenting can be good and bad.<br>
+<br>
+To avoid excess commenting, it is typically best to leave comments out of the function bodies themselves. It is OK to
+comment areas of a function to warn about something in the code or to better explain why something is the way it is
+(as per the paragraph below). It is easier, however, to read the code if the function itself is commented (usually
+directly above the function definition) telling what it does and possibly why.<br>
+<br>
+Typically you do not want to try and explain how your code works, more so, what the code is supposed to do and
+potentially why you did something the way you did (if it's not overtly clear by the code).<br>
+<br>
+Commenting should be limited in scope to the particular area you are commenting on, it shouldn't include author names,
+bug tracking, or other items that do not directly reflect that area of code. In other words a comment should reflect
+and clarify the code it is being written for.<br>
+<br>
+Both C89 <code>/*...*/</code> and C99 <code>//...</code> style commenting is acceptable.<br>
+<br>
+There are three styles of comments: block (multi-line), single-line, and trailing.<br>
+<br>
+For single-line comments, the C89 or C99 style is OK to use. Both styles are also OK for a trailing comment, if the
+trailing comment fits on the same line.<br>
+<br>
+For block (multi-line) comments, if the comment is more than 2 lines, do no use the C99 style commenting, only use C89
+style. This is true for trailing comments as well.<br>
+<br>
+C89 style block comments should be in the form with the opening <code>/*</code> in columns 1-2, a <code>*</code> in
+column 2 before each line of comment text, and the closing <code>*/</code> in columns 2-3.<br>
+<br>
+Example:
+<pre>
+123 &lt;- column
+/*
+ * Here is a block comment.
+ * The comment text should be tabbed or spaced over uniformly.
+ * The opening slash-star and closing star-slash are alone on a line.
+ */
+</pre>
+<br>
+One-line comments alone on a line should be indented to that of the code that follows.<br>
+<br>
+Example:
+<pre>
+if (argc &lt; 3) {
+    // Argument count is not the number we need, show the usage
+    show_usage();
+    exit 1;
+}
+</pre>
+<br>
+Trailing comments should be short. They can be tabbed uniformly or left at your discretion. They must be at least 1 space
+from the code. They can also be either C89 or C99 style commenting.<br>
+<br>
+Example:
+<pre>
+if (a == EXCEPTION) {
+    b = true;          /* C89 comment */
+} else {
+    b = isprime(a);    // C99 comment
+}
+</pre>
+As mentioned above in the <a href="#s2">General Rules</a>, if a file does not adhere to these guidelines, stick as closely
+as possible to that file's way of commenting. Also, whatever style you choose for commenting, stick with it
+(don't mix and match).<br>
+<br>
+Example:
+<pre>
+if (a == 10) {
+    b = true; // Don't start with C99 style single line comments
+} else {
+    b = (a &lt; 5 && a &gt; 2); /* then switch to C89 style in other areas */
+}
+</pre>
+<br>
+This does not preclude the use of other commenting types, it is OK to mix and match commenting types within a file.<br>
+<br>
+Example:
+<pre>
+if (a == 10) {
+	b = true; // Single line C99 style comment
+	/*
+	 * Mixed with longer C89 block style comments
+	 * is completely OK, just don't overly use
+     * mix-and-match style.
+	 */
+}
+</pre>
+As stated above however, if single line comments are C99 style and multi line comments are C89 style, do not then
+switch to a C99 multi line comment and C89 single line comment. This is to avoid the jarring effect that mixed
+style commenting can have visually while reading the code.<br>
+<br>
+It is also important to comment your data (variables) when it is not obvious as to what they do or in the event you are
+declaring a global variable or defining a member variable within a class.<br>
+<br>
+Lastly, always remember, you never know who will be looking at the comments, so try to avoid any asinine comments or
+comments that are insulting or degrading.
+</div>
+
+<a name="s8a"></a><font class="hdr">8a. JavaDoc/Doxygen Comments</font><br>
+<div class="csec">
+JavaDoc/Doxygen<sup><a href="#ref4">[4]</a></sup> tagged comments should be used for the following:<br>
+<ul>
+<li>Source file description</li>
+<li>API usage including:<ul>
+<li>Defines</li>
+<li>Enums, overall description plus description of each value</li>
+<li>Data Structures, overall description plus description of each member</li>
+<li>Global Data</li>
+<li>Functions, including:<ul>
+<li>Brief description</li>
+<li>Detailed description (if necessary)</li>
+<li>Arguments, including whether it is an input or output</li>
+<li>Return values (if any)</li>
+</ul></li></ul></li></ul>
+Doxygen has the capability of parsing JavaDoc style comments, so JavaDoc style will be the style of commenting
+for the library.
+</div>
+
+<a name="s9"></a><font class="hdr">9. Naming</font><br>
+<div class="csec">
+Naming of variables and functions can sometimes lead to easier to understand code than any amount of documentation
+might provide. As such, naming is more important to code use than documentation is.<br>
+<br>
+Names should be descriptive and as short as possible. Local variables (those within function bodies only) can be
+even shorter and less descriptive if they are extremely limited in use. For instance, in a <code>for</codE> loop, one
+could simply declare <code>for (int i = 0; i &lt; 10; ++i)</code> versus some long name convention
+<code>for (int loop_counter; loop_counter &lt; 10; ++loop_counter)</code>. In contrast, public variables should be
+as descriptive and short as possible. For instance <code>int current_thread_count</code> is well more descriptive
+than something like <code>int tcount</code>.<br>
+<br>
+The following is the naming convention to be used with this document:
+<ul>
+<li>Do not use “Hungarian notation” (types can change)</li>
+<li>Underscores are to be avoided in publicly available names (for any type)</li>
+<li>Names with leading and/or trailing underscores are reserved for system purposes and should not be
+used for any user-created names (does not apply to private members).</li>
+<li><code>#define</code> constants and variable constants should be in all CAPS.</li>
+<li>Enum constants are Capitalized (the first letter is) or in all CAPS (all letters are).</li>
+<li>Functions, typedef's, and variable names, as well as struct's, union's, and enum tag names should be lower case with
+an underscore for any spaces, example: <code>get_current_pid</code>, or <code>set_user_name</code></li>
+<li>Many macro "functions" are in all CAPS. Some macros (such as getchar and putchar) are in lower case since they may
+also exist as functions. Lower-case macro names are only acceptable if the macros behave like a function call, that is,
+they evaluate their parameters exactly once and do not assign values to named parameters. Sometimes it is impossible to
+write a macro that behaves like a function even though the arguments are evaluated exactly once.</li>
+<li>Avoid names that differ only slightly, like <code>foobar</code> and <code>foo_bar</code>.
+The potential for confusion is considerable.</li>
+<li>Avoid names that can look like each other. On many terminals and printers, 'l' (lowercase <code>ell</code>),
+'1' (number one) and 'I' (capital <code>eye</code>) look quite similar. A variable named 'l' is particularly bad
+because it looks so much like the constant '1' (due to font variations).</li>
+</ul>
+
+Global names, in general, should have a common prefix identifying the module (file) that they belong with (unless they
+are within a class or namespace of some type). Globals may alternatively be grouped in a global structure.<br>
+<br>
+Private member variables (not functions) should start with <code>m_</code> then the variable name to identify it is a
+member level variable.<br>
+<br>
+Private member functions should start with <code>_</code> then the function name to identify it is a private member
+level function.<br>
+<br>
+File level variables or functions (those only declared within a single program file) will follow the naming convention based
+upon what level of access that variable or function is supposed to have.<br>
+<br>
+Hierarchical types (<code>class</code>, <code>struct</code>, <code>enum</code>, etc.) should be named according to what
+they will contain within them and to some extent what they will do. The naming of the type shall follow the standards as
+listed above regardless of scope.<br>
+<br>
+Avoid names that might conflict with various standard library names (like calling a class <code>cout</code> or variable
+<code>stdin</code>).
+</div>
+
+<a name="s9a"></a><font class="hdr">9a. File Names</font><br>
+<div class="csec">
+File names should be all lowercase with valid characters being 0-9, a-z, and the underscore “_”.<br>
+<br>
+The following extensions will be used for the specific types:<br>
+<code>.hpp</code> – header file for C++<br>
+<code>.cpp</code> –C++ based source file<br>
+<code>.cxx</code> –C++ based source file specific to the library only<br>
+<br>
+The file names should reflect the functionality defined/implemented in that file.<br>
+<br>
+Files with logical connections (e.g. pairs of header and source files) should reflect that connection in
+their names wherever possible.<br>
+<br>
+Files belonging to the same module should reflect that dependency by a short unique prefix to the filename,
+followed by an underscore. The following illustrates this convention:<br>
+<pre>
+Makefile		io_base.cpp
+server.c		io_base.h
+server_ioplug.h	io_file.h
+server_ioplug.c 	io_file.cpp
+io_cwrapper.h		io_stream.h
+io_cwrapper.c		io_stream.cpp
+</pre>
+</div>
+
+<a name="s10"></a><font class="hdr">10. Continuation Lines</font><br>
+<div class="csec">
+Sometimes an expression will not easily fit on a single line, such occurrences are especially likely when blocks
+are nested deeply or long identifiers are used. If this happens, the expression should be broken after the last
+comma in the case of a function call (never in the middle of a parameter expression), or after the last operator
+that fits on the line. The next line should be further indented by 2 spaces or lined up with the first parameter
+on the above line. If they are needed, subsequent continuation lines should be broken in the same manner, and
+aligned with each other. The next line of a continuation line should only ever start with a parameter name, not
+any type of operator or punctuation (except for a closing punctuation like a closing parenthesis or brace).<br>
+<br>
+Example:
+<pre>
+if (long_logical_test_1 || long_logical_test_2 ||
+    long_logical_test_3) {
+	statements;
+}
+
+// long_identifier_term3 is 5 spaces out instead of 2 to showcase
+// alignment of parameters with each other
+a = (long_identifier_term1 - long_identifier_term2) *
+     long_identifier_term3;
+
+// showcase putting closing parenthesis on single line
+function(
+    long_complicated_expression1,
+    long_complicated_expression2,
+    long_complicated_expression3,
+    long_complicated_expression4,
+    long_complicated_expression5,
+    long_complicated_expression6
+);
+</pre>
+</div>
+
+<a name="s11"></a><font class="hdr">11. Variable Initialization</font><br>
+<div class="csec">
+Variables should be initialized when defined, unless initialization will cause additional resource
+usage when unnecessary.<br>
+<br>
+Example:
+<pre>
+int x = 0;
+some_struct s; 
+if (someval > 0) {
+	// Causes resources to be consumed and is only needed if <code>someval</code> > 0
+	object o;
+}
+</pre>
+<br>
+Or consider the following:
+<pre>
+object* s = null; // declare but nullify
+for (int i = 0; i &lt; some_var; ++i) {
+    // object s(i); // WRONG: (named resource in tight loop)
+    s = new object(i); // OK: named vars take resources vs. memory allocation
+    s->some_function();
+    s->some_other_function();
+    delete s;
+}
+</pre>
+<br>
+Multiple assignments are OK as well in the case when doing so does not sacrifice readability.<br>
+Example:
+<pre>
+int x, y, z, i, a, b, c; // temporary variables
+x = y = z = i = a = b =c = 0; // OK
+
+int rad, max, min, a, b, c;
+rad = max = min = a = b = c = 0; // Valid but unclear about rad, max and min are
+</pre>
+<br>
+In the last portion, it would be better to have declared <code>rad</code>, <code>max</code>, and <code>min</code> on
+separate lines with comments explaining what each is.<br>
+<br>
+The variables that are being multiply assigned should all be of the same type (or all pointers being initialized to
+<code>NULL</code>).<br>
+<br>
+Do not use multiple assignments for complex expressions.<br>
+<br>
+Example:
+<pre>
+foo_bar.fb_name.firstchar = bar_foo.fb_name.lastchar = 'c'; // Not easy to read!
+</pre>
+</div>
+
+<a name="s11a"></a><font class="hdr">11a. Constructor Logic</font><br>
+<div class="csec">
+Class members should be instantiated in the member initialization list when feasible and in the order they are declared
+in your class to clarify this is the order in which they will be initialized by the compiler (actual order does not matter
+but this increases clarity in the event a member is a class/struct type and thus might have more initialization code that
+needs to be considered).
+</div>
+
+<a name="s12"></a><font class="hdr">12. Macros, Enums and Constants</font><br>
+<div class="csec">
+Names of macros defining constants are to be all CAPS, example: <code>#define CONSTANT 0x12345</code><br>
+<br>
+CAPITALIZED macro names are appreciated but macros resembling functions may be named in lower case. Generally,
+inline functions are preferable to macros resembling functions.<br>
+<br>
+Things to avoid when using macros:<br>
+<ol>
+    <li>Macros that affect control flow, example:
+<pre>
+#define FOO(x)       \
+    if (blah(x) &lt; 0) \
+    return -EBUGGERED;
+</pre>
+</li>
+<li>Macros that depend on having a local variable with a magic name, example: <code>#define FOO(val) bar(index, val)</code></li>
+<li>Macros with arguments that are used as l-values, example: <code>FOO(x) = y;</code></li>
+<li>Forgetting about precedence: macros defining constants using expressions must enclose the expression in parentheses.
+Beware of similar issues with macros using parameters, example:
+<pre>
+#define CONSTANT 0x4000
+#define CONSTEXP (CONSTANT | 3)
+</pre>
+</li>
+<li>Forgetting about macro expansion, example:
+<pre>
+#define FOO(x) std::cout &lt;&lt; "X = " &lt;&lt;
+
+FOO(10); // ERROR
+</pre>
+In this <code>FOO(10);</code> would expand out to <code>std::cout &lt;&lt; "X = " &lt;&lt; ;</code>.
+</li>
+</ol>
+</div>
+
+<a name="s13"></a><font class="hdr">13. Error handling and Exceptions</font><br>
+<div class="csec">
+Error handling and catching exceptions can be extremely useful when debugging applications to ensure stable code.
+As such, they can have a tendency to be used as a way of control flow versus their original intent (to alert of a
+critical error within the application and possibly recover from it). Error handling should not be used as a way of
+controlling program flow, but instead a way of being notified when an area of code has done something it should not
+have and as a way of cleaning up after oneself.
+</div>
+
+<a name="s14"></a><font class="hdr">14. Appendix A: Other Considerations</font><br>
+<div class="csec">
+Please note that while there are many ideas and concepts covered in this outline, not everything can be taken into account.
+This document is meant as a general guideline and not as a must. If you're making a 10 line program to do a very simple task,
+following these guidelines may be more time consuming than is needed to understand the simple program. Use your best
+judgment when creating new code.<br>
+<br>
+Try and avoid 'non-standard' standards. For example, as of 1995, C++ adds <code>#define</code> values of
+<code>and</code>, <code>or</code>, <code>not</code> and a couple of others (as defined in the header <code>ciso646</code>)
+that are literal translations (definitions) of their respective values. In other words in the <code>ciso646</code> header
+file you would have the following:
+<pre>
+#define and &amp;&amp;
+#define or ||
+#define not ! 
+#define bit_and &amp;
+#define bit_or |
+</pre>
+Along with some other definitions for some comparison and bitwise operators. So one could technically do the following:
+<pre>
+int x = 10;
+int y = 10;
+bool z = false;
+if (x == 10 and y == 10) {
+    if (not z) {
+        // do something
+    } else {
+        // do something else
+    }
+}
+</pre>
+<br>
+Notice the <code>and</code> in between the <code>x</code> and <code>y</code> comparison statements? This is the same as 
+saying <code>x == 10 &amp;&amp; y == 20</code>. So even though the macro definitions of these value or actually considered a
+'standard' within the C++ standards, it might confuse those less privy to such values. We say this because the
+actual <code>and</code> operator itself (the double ampersand <code>&amp;&amp;</code>) is pretty common among many languages,
+making it easier to fully understand that this is an actual comparison operator, while the name <code>and</code> itself might
+be a reserved keyword to function as the same as the <code>&amp;&amp;</code> operator, or could it could potentially function
+as a bitwise <code>and</code> operator (<code>&amp;</code>). The implementation of the actual <code>and</code> keyword or
+name is language dependent. Hence why we say 'non-standard' standard, because though it is an actual 'standard' of the
+language itself, it's not as widely used as other nomenclature, as such it's potential for ambiguity is much higher.
+To this effect we advise against these constructs unless absolutely necessary.
+</div>
+
+<hr><a name="references"></a><font class="hdr">References</font><br>
+<ol style="list-style-type:lower-roman;">
+<li><a href="http://cm.bell-labs.com/cm/cs/cbook/">The C Programming Language, Second Edition
+<li><a href="http://iaci.unq.edu.ar/materias/computadores2/files/books/The_C++_Programming_Language.pdf">The C++ Programming Language, Third Edition</a></li>
+<li><a href="https://www.kernel.org/doc/html/v4.10/process/coding-style.html">Linux kernel coding style</a></li>
+<li><a href="http://msdn.microsoft.com/en-us/library/aa291593(v=VS.71).aspx">Microsoft Coding Techniques</a></li>
+<li><a href="http://msdn.microsoft.com/en-us/library/vstudio/ms229042(v=vs.100).aspx">Microsoft Design Guidelines for Developing Class Libraries</a></li>
+<li><a href="http://www.oracle.com/technetwork/java/codeconv-138413.html">Code conventions for the Java Programming Language (Oracle)</a></li>
+<li><a name="ref4"></a><a href="http://www.doxygen.org/">Doxygen</a></li>
+</ol>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

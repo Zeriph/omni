@@ -31,7 +31,6 @@
 #include <errno.h>
 #include <clocale>
 #include <cstdlib>
-#include <cstdio>
 #include <cstring>
 #include <omni/application.hpp>
 #include <omni/strings.hpp>
@@ -652,7 +651,6 @@ int omni::application::last_signal()
     #else
         return omni::application::m_sig;
     #endif
-    
 }
 
 int omni::application::run(const int& argc, const char** argv, const omni::sync::parameterized_thread_start& start_func, omni::generic_ptr targs, bool exit_with_work_thread)

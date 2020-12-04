@@ -28,6 +28,12 @@
 are not within a global namespace i.e. ::pthread_spin_lock(&lock) will give the error:
 expected id-expression before (, while pthread_spin_lock(&lock) resolves and works */
 
+#if defined(OMNI_32BIT_SPIN)
+    #define OMNI_SPIN_INT_FW uint32_t
+#else
+    #define OMNI_SPIN_INT_FW uint64_t
+#endif
+
 namespace omni {
     namespace sync {
         class spin_lock
@@ -35,14 +41,14 @@ namespace omni {
             public:
                 spin_lock() :
                     OMNI_CTOR_FW(omni::sync::spin_lock)
-                    m_lock(), m_lokd(false)
+                    m_lock(), m_lokd(0)
                 {
                     this->_init();
                 }
                 
-                explicit spin_lock(bool initialy_owned) :
+                OMNI_EXPLICIT spin_lock(bool initialy_owned) :
                     OMNI_CTOR_FW(omni::sync::spin_lock)
-                    m_lock(), m_lokd(false)
+                    m_lock(), m_lokd(0)
                 {
                     this->_init();
                     if (initialy_owned) { this->lock(); }
@@ -51,20 +57,20 @@ namespace omni {
                 ~spin_lock() OMNI_DTOR_THROWS
                 {
                     OMNI_DTOR_FW
-                    if (this->m_lokd) { this->unlock(); }
+                    if (this->m_lokd == 1) { this->unlock(); }
                     #if defined(OMNI_OS_WIN) || defined(OMNI_OS_APPLE)
                         this->m_lock = 0;
                     #else
-                        int err = ::pthread_spin_destroy(&this->m_lock);
-                        if (err != 0) {
-                            OMNI_ERRV_FW("An error occurred destroying the spin lock: ", err, omni::exceptions::spin_lock_exception(err))
+                        int serr = ::pthread_spin_destroy(&this->m_lock);
+                        if (serr != 0) {
+                            OMNI_ERRV_FW("An error occurred destroying the spin lock: ", serr, omni::exceptions::spin_lock_exception(serr))
                         }
                     #endif
                 }
 
                 inline bool locked() const
                 {
-                    return this->m_lokd;
+                    return this->m_lokd == 1;
                 }
                 
                 void lock()
@@ -79,12 +85,12 @@ namespace omni {
                             ::OSSpinLockLock(&this->m_lock);
                         #endif
                     #else
-                        int err = pthread_spin_lock(&this->m_lock);
-                        if (err != 0) {
-                            OMNI_ERRV_FW("An error occurred on the spin lock: ", err, omni::exceptions::spin_lock_exception(err))
+                        int serr = pthread_spin_lock(&this->m_lock);
+                        if (serr != 0) {
+                            OMNI_ERRV_FW("An error occurred on the spin lock: ", serr, omni::exceptions::spin_lock_exception(serr))
                         }
                     #endif
-                    this->m_lokd = true;
+                    this->m_lokd = 1;
                 }
                 
                 void unlock()
@@ -100,23 +106,23 @@ namespace omni {
                     #else
                         pthread_spin_unlock(&this->m_lock);
                     #endif
-                    this->m_lokd = false;
+                    this->m_lokd = 0;
                 }
                 
                 bool trylock()
                 {
                     #if defined(OMNI_OS_WIN)
-                        this->m_lokd = (::InterlockedExchange(&this->m_lock, 1) == 0);
+                        this->m_lokd = ((::InterlockedExchange(&this->m_lock, 1) == 0) ? 1 : 0);
                     #elif defined(OMNI_OS_APPLE)
                         #if defined(OMNI_OS_MACOS)
-                            this->m_lokd = ::os_unfair_lock_trylock(this->m_lock);
+                            this->m_lokd = (::os_unfair_lock_trylock(this->m_lock) ? 1 : 0);
                         #else
-                            this->m_lokd = ::OSSpinLockTry(&this->m_lock);
+                            this->m_lokd = (::OSSpinLockTry(&this->m_lock) ? 1 : 0);
                         #endif
                     #else
-                        this->m_lokd = (pthread_spin_trylock(&this->m_lock) == 0);
+                        this->m_lokd = ((pthread_spin_trylock(&this->m_lock) == 0) ? 1 : 0);
                     #endif
-                    return this->m_lokd;
+                    return this->m_lokd == 1;
                 }
                 
                 bool operator==(const omni::sync::spin_lock& o)
@@ -144,15 +150,15 @@ namespace omni {
                     #if defined(OMNI_OS_WIN) || defined(OMNI_OS_APPLE)
                         this->m_lock = 0;
                     #else
-                        int err = ::pthread_spin_init(&this->m_lock, PTHREAD_PROCESS_PRIVATE);
-                        if (err != 0) {
-                            OMNI_ERRV_FW("An error occurred initializing the spin lock: ", err, omni::exceptions::spin_lock_exception(err))
+                        int serr = ::pthread_spin_init(&this->m_lock, PTHREAD_PROCESS_PRIVATE);
+                        if (serr != 0) {
+                            OMNI_ERRV_FW("An error occurred initializing the spin lock: ", serr, omni::exceptions::spin_lock_exception(serr))
                         }
                     #endif
                 }
                 
                 omni::sync::spin_lock_t m_lock;
-                volatile mutable bool m_lokd;
+                volatile mutable OMNI_SPIN_INT_FW m_lokd;
         };
         
         class spin_wait
@@ -160,11 +166,11 @@ namespace omni {
             public:
                 spin_wait() :
                     OMNI_CTOR_FW(omni::sync::spin_wait)
-                    m_sig(false) { }
+                    m_sig(0) { }
                     
-                explicit spin_wait(bool initsig) :
+                OMNI_EXPLICIT spin_wait(bool initsig) :
                     OMNI_CTOR_FW(omni::sync::spin_wait)
-                    m_sig(initsig) { }
+                    m_sig(initsig ? 1 : 0) { }
                 
                 ~spin_wait()
                 {
@@ -174,30 +180,30 @@ namespace omni {
 
                 inline void reset()
                 {
-                    this->m_sig = false;
+                    this->m_sig = 0;
                 }
                 
                 void reset(uint32_t sleep_ms)
                 {
                     OMNI_SLEEP_INIT();
-                    this->m_sig = true;
+                    this->m_sig = 1;
                     OMNI_SLEEP(sleep_ms);
-                    this->m_sig = false;
+                    this->m_sig = 0;
                 }
                 
                 inline bool signaled() const
                 {
-                    return this->m_sig;
+                    return this->m_sig == 1;
                 }
                 
                 inline void signal()
                 {
-                    this->m_sig = true;
+                    this->m_sig = 1;
                 }
 
                 inline void busy_wait() const
                 {
-                    while (!this->m_sig) {
+                    while (this->m_sig == 0) {
                         OMNI_THREAD_YIELD();
                     }
                 }
@@ -206,17 +212,17 @@ namespace omni {
                 {
                     omni::chrono::monotonic::initialize();
                     omni::chrono::tick_t start = omni::chrono::monotonic_tick();
-                    while (!this->m_sig && (omni::chrono::elapsed_ms(start) <= timeout_ms)) {
+                    while ((this->m_sig == 0) && (omni::chrono::elapsed_ms(start) <= timeout_ms)) {
                         OMNI_THREAD_YIELD();
                     }
                     // if !this->m_sig, then the timeout failed
-                    return this->m_sig;
+                    return (this->m_sig == 1);
                 }
                 
                 inline void sleep_wait() const
                 {
                     OMNI_SLEEP_INIT();
-                    while (!this->m_sig) {
+                    while (this->m_sig == 0) {
                         OMNI_SLEEP1();
                     }
                 }
@@ -228,11 +234,11 @@ namespace omni {
                         omni::chrono::monotonic::initialize();
                     #endif
                     omni::chrono::tick_t start = omni::chrono::monotonic_tick();
-                    while (!this->m_sig && (omni::chrono::elapsed_ms(start) <= timeout_ms)) {
+                    while ((this->m_sig == 0) && (omni::chrono::elapsed_ms(start) <= timeout_ms)) {
                         OMNI_SLEEP1();
                     }
                     // if !this->m_sig, then the timeout failed
-                    return this->m_sig;
+                    return (this->m_sig == 1);
                 }
                 
                 bool operator==(const omni::sync::spin_wait &o) const
@@ -254,7 +260,7 @@ namespace omni {
                 spin_wait(const omni::sync::spin_wait &cp); // C++1X delete 
                 omni::sync::spin_wait& operator=(const omni::sync::spin_wait &other); // C++1X delete
                 
-                volatile mutable bool m_sig;
+                volatile mutable OMNI_SPIN_INT_FW m_sig;
         };
         
         class safe_spin_wait
@@ -262,14 +268,14 @@ namespace omni {
             public:
                 safe_spin_wait() :
                     OMNI_CTOR_FW(omni::sync::safe_spin_wait)
-                    m_mtx(), m_sig(false)
+                    m_mtx(), m_sig(0)
                 {
                     omni::sync::mutex_init(this->m_mtx);
                 }
                     
-                explicit safe_spin_wait(bool initsig) :
+                OMNI_EXPLICIT safe_spin_wait(bool initsig) :
                     OMNI_CTOR_FW(omni::sync::safe_spin_wait)
-                    m_mtx(), m_sig(initsig)
+                    m_mtx(), m_sig(initsig ? 1 : 0)
                 {
                     omni::sync::mutex_init(this->m_mtx);
                 }
@@ -284,7 +290,7 @@ namespace omni {
                 void reset()
                 {
                     omni::sync::mutex_lock(this->m_mtx);
-                    this->m_sig = false;
+                    this->m_sig = 0;
                     omni::sync::mutex_unlock(this->m_mtx);
                 }
                 
@@ -292,24 +298,24 @@ namespace omni {
                 {
                     OMNI_SLEEP_INIT();
                     omni::sync::mutex_lock(this->m_mtx);
-                    this->m_sig = true;
+                    this->m_sig = 1;
                     omni::sync::mutex_unlock(this->m_mtx);
                     OMNI_SLEEP(sleep_ms);
                     omni::sync::mutex_lock(this->m_mtx);
-                    this->m_sig = false;
+                    this->m_sig = 0;
                     omni::sync::mutex_unlock(this->m_mtx);
                 }
                 
                 bool signaled() const
                 {
                     omni::sync::scoped_lock<omni::sync::mutex_t> alock(&this->m_mtx);
-                    return this->m_sig;
+                    return (this->m_sig == 1);
                 }
                 
                 void signal()
                 {
                     omni::sync::mutex_lock(this->m_mtx);
-                    this->m_sig = true;
+                    this->m_sig = 1;
                     omni::sync::mutex_unlock(this->m_mtx);
                 }
 
@@ -317,7 +323,7 @@ namespace omni {
                 {
                     for(;;) {
                         omni::sync::mutex_lock(this->m_mtx);
-                        if (this->m_sig) {
+                        if (this->m_sig == 1) {
                             omni::sync::mutex_unlock(this->m_mtx);
                             return;
                         }
@@ -331,7 +337,7 @@ namespace omni {
                     omni::chrono::tick_t start = omni::chrono::monotonic_tick();
                     while (omni::chrono::elapsed_ms(start) <= timeout_ms) {
                         omni::sync::mutex_lock(this->m_mtx);
-                        if (this->m_sig) {
+                        if (this->m_sig == 1) {
                             omni::sync::mutex_unlock(this->m_mtx);
                             return true;
                         }
@@ -340,7 +346,7 @@ namespace omni {
                     }
                     // if !this->m_sig, then the timeout failed
                     omni::sync::mutex_lock(this->m_mtx);
-                    if (this->m_sig) {
+                    if (this->m_sig == 1) {
                         omni::sync::mutex_unlock(this->m_mtx);
                         return true;
                     }
@@ -353,7 +359,7 @@ namespace omni {
                     OMNI_SLEEP_INIT();
                     for(;;) {
                         omni::sync::mutex_lock(this->m_mtx);
-                        if (this->m_sig) {
+                        if (this->m_sig == 1) {
                             omni::sync::mutex_unlock(this->m_mtx);
                             return;
                         }
@@ -368,7 +374,7 @@ namespace omni {
                     omni::chrono::tick_t start = omni::chrono::monotonic_tick();
                     while (omni::chrono::elapsed_ms(start) <= timeout_ms) {
                         omni::sync::mutex_lock(this->m_mtx);
-                        if (this->m_sig) {
+                        if (this->m_sig == 1) {
                             omni::sync::mutex_unlock(this->m_mtx);
                             return true;
                         }
@@ -377,7 +383,7 @@ namespace omni {
                     }
                     // if !this->m_sig, then the timeout failed
                     omni::sync::mutex_lock(this->m_mtx);
-                    if (this->m_sig) {
+                    if (this->m_sig == 1) {
                         omni::sync::mutex_unlock(this->m_mtx);
                         return true;
                     }
@@ -407,7 +413,7 @@ namespace omni {
                 omni::sync::safe_spin_wait& operator=(const omni::sync::safe_spin_wait &other); // C++1X delete
                 
                 mutable omni::sync::mutex_t m_mtx;
-                volatile mutable bool m_sig;
+                volatile mutable OMNI_SPIN_INT_FW m_sig;
         };
         
         typedef omni::sync::auto_lock<omni::sync::spin_lock> auto_spin_lock;

@@ -44,7 +44,7 @@ namespace omni {
         class vector3
         {
             public:
-                typedef V value_t;
+                typedef V coordinate_t;
                 typedef omni::geometry::point3d<V> point3d_t;
 
                 vector3() :
@@ -113,10 +113,10 @@ namespace omni {
                     OMNI_D5_FW("destroyed");
                 }
 
-                float angle_between(const vector3& b)
+                double angle_between(const omni::geometry::vector3<V>& b)
                 {
                     OMNI_SAFE_VEC3ALOCK_FW
-                    return this->_dot_product(b) / (this->_magnitude() * b._magnitude());
+                    return OMNI_RAD_TO_DEG((this->_dot_product(b) / (this->_magnitude() * b._magnitude())));
                 }
 
                 void assign(V start_x, V start_y, V start_z, V x, V y, V z)
@@ -212,7 +212,7 @@ namespace omni {
                     );
                 }
 
-                vector3 cross_product(const vector3& b) const
+                omni::geometry::vector3<V> cross_product(const omni::geometry::vector3<V>& b) const
                 {
                     OMNI_SAFE_VEC3ALOCK_FW
                     if (this != &b) {
@@ -223,21 +223,20 @@ namespace omni {
                             c.y = a.z * b.x − a.x * b.z
                             c.z = a.x * b.y − a.y * b.x
                         */
-                        return vector3(
+                        return omni::geometry::vector3<V>(
                             ((this->m_y * b.m_z) - (this->m_z * b.m_y)), // x
                             ((this->m_z * b.m_x) - (this->m_x * b.m_z)), // y
                             ((this->m_x * b.m_y) - (this->m_y * b.m_x))  // z
                         );
                     }
-                    // TODO: is it in standard form? or does it make sense to do the start_X/Y/Z stuff?
-                    return vector3(
+                    return omni::geometry::vector3<V>(
                         ((this->m_y * b.m_z) - (this->m_z * b.m_y)), // x
                         ((this->m_z * b.m_x) - (this->m_x * b.m_z)), // y
                         ((this->m_x * b.m_y) - (this->m_y * b.m_x))  // z
                     );
                 }
 
-                V dot_product(const vector3& b) const
+                V dot_product(const omni::geometry::vector3<V>& b) const
                 {
                     OMNI_SAFE_VEC3ALOCK_FW
                     if (this != &b) {
@@ -247,19 +246,19 @@ namespace omni {
                     return this->_dot_product(b);
                 }
 
-                float direction_x() const
+                double direction_x() const
                 {
                     OMNI_SAFE_VEC3ALOCK_FW
                     return this->_direction_x();
                 }
 
-                float direction_y() const
+                double direction_y() const
                 {
                     OMNI_SAFE_VEC3ALOCK_FW
                     return this->_direction_y();
                 }
 
-                float direction_z() const
+                double direction_z() const
                 {
                     OMNI_SAFE_VEC3ALOCK_FW
                     return this->_direction_z();
@@ -275,7 +274,7 @@ namespace omni {
                     );
                 }
 
-                long double distance_from(const vector3& b)
+                long double distance_from(const omni::geometry::vector3<V>& b)
                 {
                     OMNI_SAFE_VEC3ALOCK_FW
                     if (this != &b) {
@@ -290,6 +289,19 @@ namespace omni {
                         ((b._x() - this->_x()) * (b._x() - this->_x())) + 
                         ((b._y() - this->_y()) * (b._y() - this->_y())) + 
                         ((b._z() - this->_z()) * (b._z() - this->_z()))
+                    );
+                }
+
+                int32_t hash_code() const
+                {
+                    OMNI_SAFE_VEC3ALOCK_FW
+                    return (
+                        static_cast<int32_t>(this->m_sx) ^
+                        ((static_cast<int32_t>(this->m_sy) << 13) | (static_cast<int32_t>(this->m_sy) >> 19)) ^
+                        ((static_cast<int32_t>(this->m_sz) << 20) | (static_cast<int32_t>(this->m_sz) >> 14)) ^
+                        ((static_cast<int32_t>(this->m_x) << 26) | (static_cast<int32_t>(this->m_x) >>  6)) ^
+                        ((static_cast<int32_t>(this->m_y) <<  7) | (static_cast<int32_t>(this->m_y) >> 25)) ^
+                        ((static_cast<int32_t>(this->m_z) <<  24) | (static_cast<int32_t>(this->m_z) >> 8))
                     );
                 }
 
@@ -311,7 +323,7 @@ namespace omni {
 
                 V length() const
                 {
-                    this->magnitude();
+                    return this->magnitude();
                 }
 
                 V magnitude() const
@@ -394,13 +406,13 @@ namespace omni {
                     return point3d_t(this->m_sx, this->m_sy, this->m_sz);
                 }
 
-                vector3 to_standard_form() const
+                omni::geometry::vector3<V> to_standard_form() const
                 {
                     OMNI_SAFE_VEC3ALOCK_FW
-                    return vector3(this->_x(), this->_y(), this->_z());
+                    return omni::geometry::vector3<V>(this->_x(), this->_y(), this->_z());
                 }
 
-                vector3 unit_vector() const
+                omni::geometry::vector3<V> unit_vector() const
                 {
                     return *this / this->magnitude();
                 }
@@ -507,21 +519,21 @@ namespace omni {
                     );
                 }
 
-                bool operator==(const vector3& b) const
+                bool operator==(const omni::geometry::vector3<V>& b) const
                 {
                     if (this == &b) { return true; }
                     OMNI_SAFE_VEC3ALOCK_FW
                     OMNI_SAFE_VEC3OALOCK_FW(b)
                     return (
-                        (this->_magnitude() == b._magnitude()) &&
-                        (this->_direction_xy() == b._direction_xy()) &&
-                        (this->_direction_xz() == b._direction_xz()) &&
-                        (this->_direction_yz() == b._direction_yz())
+                        omni::math::are_equal(this->_magnitude(), b._magnitude()) &&
+                        omni::math::are_equal(this->_direction_x(), b._direction_x()) &&
+                        omni::math::are_equal(this->_direction_y(), b._direction_y()) &&
+                        omni::math::are_equal(this->_direction_z(), b._direction_z())
                     )
                     OMNI_EQUAL_FW(b);
                 }
 
-                vector3& operator=(const vector3& b)
+                omni::geometry::vector3<V>& operator=(const omni::geometry::vector3<V>& b)
                 {
                     if (this != &b) {
                         OMNI_SAFE_VEC3ALOCK_FW
@@ -538,7 +550,7 @@ namespace omni {
                 }
 
                 template < typename T >
-                vector3& operator=(const omni::geometry::point3d<T>& point)
+                omni::geometry::vector3<V>& operator=(const omni::geometry::point3d<T>& point)
                 {
                     OMNI_SAFE_VEC3ALOCK_FW
                     this->m_x = static_cast<V>(point.x());
@@ -547,49 +559,48 @@ namespace omni {
                     return *this;
                 }
 
-                vector3 operator-(const vector3& b) const
+                omni::geometry::vector3<V> operator-(const omni::geometry::vector3<V>& b) const
                 {
                     OMNI_SAFE_VEC3ALOCK_FW
                     if (this != &b) {
                         OMNI_SAFE_VEC3OALOCK_FW(b)
-                        return vector3(
-                            this->m_start_x,
-                            this->m_start_y,
-                            this->m_start_z,
-                            (this->m_x + std::negate<V>(b.m_x)),
-                            (this->m_y + std::negate<V>(b.m_y)),
-                            (this->m_z + std::negate<V>(b.m_z))
+                        return omni::geometry::vector3<V>(
+                            this->m_sx,
+                            this->m_sy,
+                            this->m_sz,
+                            (this->m_x + (-b.m_x)),
+                            (this->m_y + (-b.m_y)),
+                            (this->m_z + (-b.m_z))
                         );
                     }
-                    // TODO: need to verify all of these
-                    return vector3(
-                        this->m_start_x,
-                        this->m_start_y,
-                        this->m_start_z,
-                        (this->m_x + std::negate<V>(b.m_x)),
-                        (this->m_y + std::negate<V>(b.m_y)),
-                        (this->m_z + std::negate<V>(b.m_z))
+                    return omni::geometry::vector3<V>(
+                        this->m_sx,
+                        this->m_sy,
+                        this->m_sz,
+                        (this->m_x + (-b.m_x)),
+                        (this->m_y + (-b.m_y)),
+                        (this->m_z + (-b.m_z))
                     );
                 }
 
-                vector3 operator+(const vector3& b) const
+                omni::geometry::vector3<V> operator+(const omni::geometry::vector3<V>& b) const
                 {
                     OMNI_SAFE_VEC3ALOCK_FW
                     if (this != &b) {
                         OMNI_SAFE_VEC3OALOCK_FW(b)
-                        return vector3(
-                            this->m_start_x,
-                            this->m_start_y,
-                            this->m_start_z,
+                        return omni::geometry::vector3<V>(
+                            this->m_sx,
+                            this->m_sy,
+                            this->m_sz,
                             (this->m_x + b.m_x),
                             (this->m_y + b.m_y),
                             (this->m_z + b.m_z)
                         );
                     }
-                    return vector3(
-                        this->m_start_x,
-                        this->m_start_y,
-                        this->m_start_z,
+                    return omni::geometry::vector3<V>(
+                        this->m_sx,
+                        this->m_sy,
+                        this->m_sz,
                         (this->m_x + b.m_x),
                         (this->m_y + b.m_y),
                         (this->m_z + b.m_z)
@@ -597,13 +608,13 @@ namespace omni {
                 }
 
                 // scalar multiplication
-                vector3 operator*(V scalar) const
+                omni::geometry::vector3<V> operator*(V scalar) const
                 {
                     OMNI_SAFE_VEC3ALOCK_FW
-                    return vector3(
-                        this->m_start_x,
-                        this->m_start_y,
-                        this->m_start_z,
+                    return omni::geometry::vector3<V>(
+                        this->m_sx,
+                        this->m_sy,
+                        this->m_sz,
                         (this->m_x * scalar),
                         (this->m_y * scalar),
                         (this->m_z * scalar)
@@ -611,13 +622,13 @@ namespace omni {
                 }
 
                 // scalar division
-                vector3 operator/(V scalar) const
+                omni::geometry::vector3<V> operator/(V scalar) const
                 {
                     OMNI_SAFE_VEC3ALOCK_FW
-                    return vector3(
-                        this->m_start_x,
-                        this->m_start_y,
-                        this->m_start_z,
+                    return omni::geometry::vector3<V>(
+                        this->m_sx,
+                        this->m_sy,
+                        this->m_sz,
                         (this->m_x / scalar),
                         (this->m_y / scalar),
                         (this->m_z / scalar)
@@ -640,22 +651,22 @@ namespace omni {
                     mutable omni::sync::basic_lock m_mtx;
                 #endif
 
-                inline V _dot_product(const vector3& b) const
+                inline V _dot_product(const omni::geometry::vector3<V>& b) const
                 {
                     return (this->_x() * b._x()) + (this->_y() * b._y()) + (this->_z() * b._z());
                 }
 
-                inline float _direction_x() const
+                inline double _direction_x() const
                 {
                     return omni::math::rad_to_deg(std::atan(this->_x() / this->_magnitude()));
                 }
 
-                inline float _direction_y() const
+                inline double _direction_y() const
                 {
                     return omni::math::rad_to_deg(std::atan(this->_y() / this->_magnitude()));
                 }
 
-                inline float _direction_z() const
+                inline double _direction_z() const
                 {
                     return omni::math::rad_to_deg(std::atan(this->_z() / this->_magnitude()));
                 }

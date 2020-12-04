@@ -44,7 +44,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
     <font class="syn_typ">bool</font> <a href="../classes/omni-delegate2-is_bound.html">omni::delegate2::is_bound</a>()<br>
     <font class="syn_typ">bool</font> <a href="../classes/omni-delegate2-is_member_bound.html">omni::delegate2::is_member_bound</a>()<br>
     <font class="syn_typ">const</font> functor <a href="../classes/omni-delegate2-method.html">omni::delegate2::method</a>()<br>
-    <font class="syn_typ">void</font> <a href="../classes/omni-delegate2-swap.html">omni::delegate2::swap</a>(delegate2&lt; Ret PT1 PT2 &gt;&amp; d)<br>
+    <font class="syn_typ">void</font> <a href="../classes/omni-delegate2-swap.html">omni::delegate2::swap</a>(delegate2&lt; Ret, PT1, PT2 &gt;&amp; d)<br>
     <font class="syn_typ">void</font>* <a href="../classes/omni-delegate2-target.html">omni::delegate2::target</a>()<br>
     <font class="syn_ins">inline</font> <font class="syn_typ">void</font> <a href="../classes/omni-delegate2-unbind.html">omni::delegate2::unbind</a>()<br>
     <font class="syn_ins">template</font> &lt; <font class="syn_typ">class</font> T, ret_t (T::*fnptr)(p1_t, p2_t) &gt; <font class="syn_ins">inline</font> <font class="syn_typ">void</font> <a href="../classes/omni-delegate2-unsafe_set_method.html">omni::delegate2::unsafe_set_method</a>()<br>
@@ -54,9 +54,9 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
     <font class="syn_ins">inline</font> ret_t omni::delegate2::<font class="syn_ins">operator</font>()<br>
     <font class="syn_ins">inline</font> omni::delegate2::<font class="syn_ins">operator</font> <font class="syn_typ">bool</font>()<br>
     <font class="syn_ins">inline</font> <font class="syn_typ">bool</font> omni::delegate2::<font class="syn_ins">operator</font>!()<br>
-    <font class="syn_typ">bool</font> omni::delegate2::<font class="syn_ins">operator</font>!=(<font class="syn_typ">const</font> delegate2&lt; Ret PT1 PT2 &gt;&amp; d)<br>
-    delegate2&lt; Ret, PT1, PT2 &gt;&amp; omni::delegate2::<font class="syn_ins">operator</font>=(<font class="syn_typ">const</font> delegate2&lt; Ret PT1 PT2 &gt;&amp; d)<br>
-    <font class="syn_typ">bool</font> omni::delegate2::<font class="syn_ins">operator</font>==(<font class="syn_typ">const</font> delegate2&lt; Ret PT1 PT2 &gt;&amp; d)<br>
+    <font class="syn_typ">bool</font> omni::delegate2::<font class="syn_ins">operator</font>!=(<font class="syn_typ">const</font> delegate2&lt; Ret, PT1, PT2 &gt;&amp; d)<br>
+    delegate2&lt; Ret, PT1, PT2 &gt;&amp; omni::delegate2::<font class="syn_ins">operator</font>=(<font class="syn_typ">const</font> delegate2&lt; Ret, PT1, PT2 &gt;&amp; d)<br>
+    <font class="syn_typ">bool</font> omni::delegate2::<font class="syn_ins">operator</font>==(<font class="syn_typ">const</font> delegate2&lt; Ret, PT1, PT2 &gt;&amp; d)<br>
     <a href="../classes/omni-delegate2-@4028@402Afunction_ptr@4029.html">omni::delegate2::(*function_ptr)</a><br>
     <a href="../classes/omni-delegate2-@4028@402Afunctor@4029.html">omni::delegate2::(*functor)</a><br>
     <a href="../classes/omni-delegate2-p1_t.html">omni::delegate2::p1_t</a><br>

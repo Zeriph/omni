@@ -44,7 +44,7 @@ namespace omni {
         class vector2
         {
             public:
-                typedef V value_t;
+                typedef V coordinate_t;
                 typedef omni::geometry::point2d<V> point2d_t;
 
                 vector2() :
@@ -113,10 +113,10 @@ namespace omni {
                     OMNI_D5_FW("destroyed");
                 }
 
-                float angle_between(const vector2& b)
+                double angle_between(const omni::geometry::vector2<V>& b)
                 {
                     OMNI_SAFE_VEC2ALOCK_FW
-                    return this->_dot_product(b) / (this->_magnitude() * b._magnitude());
+                    return OMNI_RAD_TO_DEG((this->_dot_product(b) / (this->_magnitude() * b._magnitude())));
                 }
 
                 void assign(V start_x, V start_y, V x, V y)
@@ -200,7 +200,7 @@ namespace omni {
                     );
                 }
 
-                V cross_product(const vector2& b) const
+                V cross_product(const omni::geometry::vector2<V>& b) const
                 {
                     // returns scalar since 2d
                     OMNI_SAFE_VEC2ALOCK_FW
@@ -225,7 +225,7 @@ namespace omni {
                     return (this->_x() * b._y()) - (this->_y() * b._x());
                 }
 
-                V dot_product(const vector2& b) const
+                V dot_product(const omni::geometry::vector2<V>& b) const
                 {
                     OMNI_SAFE_VEC2ALOCK_FW
                     if (this != &b) {
@@ -235,13 +235,13 @@ namespace omni {
                     return this->_dot_product(b);
                 }
 
-                float direction() const
+                double direction() const
                 {
                     OMNI_SAFE_VEC2ALOCK_FW
                     return this->_direction();
                 }
 
-                long double distance_from(const vector2& b)
+                long double distance_from(const omni::geometry::vector2<V>& b)
                 {
                     OMNI_SAFE_VEC2ALOCK_FW
                     if (this != &b) {
@@ -254,6 +254,17 @@ namespace omni {
                     return std::sqrt(
                         ((b._x() - this->_x()) * (b._x() - this->_x())) + 
                         ((b._y() - this->_y()) * (b._y() - this->_y()))
+                    );
+                }
+
+                int32_t hash_code() const
+                {
+                    OMNI_SAFE_VEC2ALOCK_FW
+                    return (
+                        static_cast<int32_t>(this->m_sx) ^
+                        ((static_cast<int32_t>(this->m_sy) << 13) | (static_cast<int32_t>(this->m_sy) >> 19)) ^
+                        ((static_cast<int32_t>(this->m_x) << 26) | (static_cast<int32_t>(this->m_x) >>  6)) ^
+                        ((static_cast<int32_t>(this->m_y) <<  7) | (static_cast<int32_t>(this->m_y) >> 25))
                     );
                 }
 
@@ -274,7 +285,7 @@ namespace omni {
 
                 V length() const
                 {
-                    this->magnitude();
+                    return this->magnitude();
                 }
 
                 V magnitude() const
@@ -337,13 +348,13 @@ namespace omni {
                     return point2d_t(this->m_sx, this->m_sy);
                 }
 
-                vector2 to_standard_form() const
+                omni::geometry::vector2<V> to_standard_form() const
                 {
                     OMNI_SAFE_VEC2ALOCK_FW
-                    return vector2(this->_x(), this->_y());
+                    return omni::geometry::vector2<V>(this->_x(), this->_y());
                 }
 
-                vector2 unit_vector() const
+                omni::geometry::vector2<V> unit_vector() const
                 {
                     return *this / this->magnitude();
                 }
@@ -416,19 +427,19 @@ namespace omni {
                     return omni::geometry::point2d<T>(static_cast<T>(this->_x()), static_cast<T>(this->_y()));
                 }
 
-                bool operator==(const vector2& b) const
+                bool operator==(const omni::geometry::vector2<V>& b) const
                 {
                     if (this == &b) { return true; }
                     OMNI_SAFE_VEC2ALOCK_FW
                     OMNI_SAFE_VEC2OALOCK_FW(b)
                     return (
-                        (this->_magnitude() == b._magnitude()) &&
-                        (this->_direction() == b._direction())
+                        omni::math::are_equal(this->_magnitude(), b._magnitude()) &&
+                        omni::math::are_equal(this->_direction(), b._direction())
                     )
                     OMNI_EQUAL_FW(b);
                 }
 
-                vector2& operator=(const vector2& b)
+                omni::geometry::vector2<V>& operator=(const omni::geometry::vector2<V>& b)
                 {
                     if (this != &b) {
                         OMNI_SAFE_VEC2ALOCK_FW
@@ -443,7 +454,7 @@ namespace omni {
                 }
 
                 template < typename T >
-                vector2& operator=(const omni::geometry::point2d<T>& point)
+                omni::geometry::vector2<V>& operator=(const omni::geometry::point2d<T>& point)
                 {
                     OMNI_SAFE_VEC2ALOCK_FW
                     this->m_x = static_cast<V>(point.x());
@@ -451,66 +462,65 @@ namespace omni {
                     return *this;
                 }
 
-                vector2 operator-(const vector2& b) const
+                omni::geometry::vector2<V> operator-(const omni::geometry::vector2<V>& b) const
                 {
                     OMNI_SAFE_VEC2ALOCK_FW
                     if (this != &b) {
                         OMNI_SAFE_VEC2OALOCK_FW(b)
-                        return vector2(
-                            this->m_start_x,
-                            this->m_start_y,
-                            (this->m_x + std::negate<V>(b.m_x)),
-                            (this->m_y + std::negate<V>(b.m_y))
+                        return omni::geometry::vector2<V>(
+                            this->m_sx,
+                            this->m_sy,
+                            (this->m_x + (-b.m_x)),
+                            (this->m_y + (-b.m_y))
                         );
                     }
-                    // TODO: need to verify all of these
-                    return vector2(
-                        this->m_start_x,
-                        this->m_start_y,
-                        (this->m_x + std::negate<V>(b.m_x)),
-                        (this->m_y + std::negate<V>(b.m_y))
+                    return omni::geometry::vector2<V>(
+                        this->m_sx,
+                        this->m_sy,
+                        (this->m_x + (-b.m_x)),
+                        (this->m_y + (-b.m_y))
                     );
                 }
 
-                vector2 operator+(const vector2& b) const
+                omni::geometry::vector2<V> operator+(const omni::geometry::vector2<V>& b) const
                 {
                     OMNI_SAFE_VEC2ALOCK_FW
                     if (this != &b) {
                         OMNI_SAFE_VEC2OALOCK_FW(b)
-                        return vector2(
-                            this->m_start_x,
-                            this->m_start_y,
+                        return omni::geometry::vector2<V>(
+                            this->m_sx,
+                            this->m_sy,
                             (this->m_x + b.m_x),
                             (this->m_y + b.m_y)
                         );
                     }
-                    return vector2(
-                        this->m_start_x,
-                        this->m_start_y,
+                    return omni::geometry::vector2<V>(
+                        this->m_sx,
+                        this->m_sy,
                         (this->m_x + b.m_x),
                         (this->m_y + b.m_y)
                     );
                 }
 
                 // scalar multiplication
-                vector2 operator*(V scalar) const
+                omni::geometry::vector2<V> operator*(V scalar) const
                 {
                     OMNI_SAFE_VEC2ALOCK_FW
-                    return vector2(
-                        this->m_start_x,
-                        this->m_start_y,
+                    return omni::geometry::vector2<V>(
+                        this->m_sx,
+                        this->m_sy,
                         (this->m_x * scalar),
                         (this->m_y * scalar)
                     );
                 }
 
                 // scalar division
-                vector2 operator/(V scalar) const
+                omni::geometry::vector2<V> operator/(V scalar) const
                 {
                     OMNI_SAFE_VEC2ALOCK_FW
-                    return vector2(
-                        this->m_start_x,
-                        this->m_start_y,
+                    return omni::geometry::vector2<V>(
+                        this->m_sx,
+                        this->m_sy,
                         (this->m_x / scalar),
                         (this->m_y / scalar)
                     );
@@ -530,12 +540,12 @@ namespace omni {
                     mutable omni::sync::basic_lock m_mtx;
                 #endif
 
-                inline V _dot_product(const vector2& b) const
+                inline V _dot_product(const omni::geometry::vector2<V>& b) const
                 {
                     return (this->_x() * b._x()) + (this->_y() * b._y());
                 }
 
-                inline float _direction() const
+                inline double _direction() const
                 {
                     return omni::math::rad_to_deg(
                         std::atan(

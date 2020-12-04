@@ -28,7 +28,7 @@ namespace omni {
             
             threadpool_task() : task(), param() {}
             threadpool_task(const omni::sync::threadpool_task& cp) : task(cp.task), param(cp.param) {}
-            explicit threadpool_task(omni::sync::parameterized_thread_start t) : task(t), param() {}
+            OMNI_EXPLICIT threadpool_task(omni::sync::parameterized_thread_start t) : task(t), param() {}
             threadpool_task(omni::sync::parameterized_thread_start t, omni::generic_ptr p) : task(t), param(p) {}
             ~threadpool_task() { }
             

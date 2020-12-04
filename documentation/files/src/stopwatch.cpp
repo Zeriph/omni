@@ -33,12 +33,20 @@
     #define OMNI_STOPWATCH_ULOCK_FW
 #endif
 
+#define OMNI_STOPWATCH_RUN_FW 1
+#define OMNI_STOPWATCH_START_FW 2
+
+/*
+#define OMNI_VAL_HAS_FLAG_BIT(val, flag) ((val & flag) == flag)
+#define OMNI_VAL_SET_FLAG_BIT(val, flag) val = (val | flag)
+#define OMNI_VAL_UNSET_FLAG_BIT(val, flag) val = ((val | flag) ^ flag)
+*/
+
 omni::stopwatch::stopwatch() :
     OMNI_CTOR_FW(omni::stopwatch)
     m_end(),
     m_init(),
-    m_isrun(false),
-    m_isstrt(false)
+    m_status(0)
     OMNI_SAFE_SWMTX_FW
 {
     #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
@@ -46,7 +54,6 @@ omni::stopwatch::stopwatch() :
     #endif
     std::memset(&this->m_init, 0, sizeof(omni::chrono::tick_t));
     std::memset(&this->m_end, 0, sizeof(omni::chrono::tick_t));
-    this->m_isrun = false;
     OMNI_D5_FW("created");
 }
 
@@ -54,21 +61,19 @@ omni::stopwatch::stopwatch(const omni::stopwatch &cp) :
     OMNI_CPCTOR_FW(cp)
     m_end(),
     m_init(),
-    m_isrun(false),
-    m_isstrt(false)
+    m_status(cp.m_status)
     OMNI_SAFE_SWMTX_FW
 {
     #if defined(OMNI_OS_WIN) || defined(OMNI_OS_APPLE)
         this->m_init = cp.m_init;
         this->m_end = cp.m_end;
     #else
+        // DEV_NOTE: can't just 'copy' these
         this->m_init.tv_sec = cp.m_init.tv_sec;
         this->m_init.tv_nsec = cp.m_init.tv_nsec;
         this->m_end.tv_sec = cp.m_end.tv_sec;
         this->m_end.tv_nsec = cp.m_end.tv_nsec;
     #endif
-    this->m_isrun = cp.m_isrun;
-    this->m_isstrt = cp.m_isstrt;
     OMNI_D5_FW("copied");
 }
 
@@ -89,7 +94,7 @@ uint64_t omni::stopwatch::elapsed_us() const
 {
     OMNI_STOPWATCH_ALOCK_FW
     return omni::chrono::elapsed_us(this->m_init,
-        (this->m_isrun ? omni::chrono::monotonic_tick() : this->m_end)
+        (OMNI_VAL_HAS_FLAG_BIT(this->m_status, OMNI_STOPWATCH_RUN_FW) ? omni::chrono::monotonic_tick() : this->m_end)
     );
 }
 
@@ -97,7 +102,7 @@ uint64_t omni::stopwatch::elapsed_ms() const
 {
     OMNI_STOPWATCH_ALOCK_FW
     return omni::chrono::elapsed_ms(this->m_init,
-        (this->m_isrun ? omni::chrono::monotonic_tick() : this->m_end)
+        (OMNI_VAL_HAS_FLAG_BIT(this->m_status, OMNI_STOPWATCH_RUN_FW) ? omni::chrono::monotonic_tick() : this->m_end)
     );
 }
 
@@ -105,14 +110,14 @@ uint64_t omni::stopwatch::elapsed_s() const
 {
     OMNI_STOPWATCH_ALOCK_FW
     return omni::chrono::elapsed_s(this->m_init,
-        (this->m_isrun ? omni::chrono::monotonic_tick() : this->m_end)
+        (OMNI_VAL_HAS_FLAG_BIT(this->m_status, OMNI_STOPWATCH_RUN_FW) ? omni::chrono::monotonic_tick() : this->m_end)
     );
 }
 
 bool omni::stopwatch::is_running() const
 {
     OMNI_STOPWATCH_ALOCK_FW
-    return this->m_isrun;
+    return OMNI_VAL_HAS_FLAG_BIT(this->m_status, OMNI_STOPWATCH_RUN_FW);
 }
 
 omni::stopwatch& omni::stopwatch::reset()
@@ -143,12 +148,12 @@ omni::stopwatch& omni::stopwatch::start()
 omni::stopwatch& omni::stopwatch::start(uint32_t offset_ms)
 {
     OMNI_STOPWATCH_ALOCK_FW
-    if (this->m_isrun) {
+    if (OMNI_VAL_HAS_FLAG_BIT(this->m_status, OMNI_STOPWATCH_RUN_FW)) {
         // Do not start if we are already running
         OMNI_D2_FW("stopwatch already running");
         return *this;
     }
-    if (!this->m_isstrt) {
+    if (!OMNI_VAL_HAS_FLAG_BIT(this->m_status, OMNI_STOPWATCH_START_FW)) {
         omni::chrono::tick_t syst = omni::chrono::monotonic_tick();
         // if the user specifies an offset, we need to adjust the syst var to
         // be as if it were behind by offset_ms
@@ -183,7 +188,7 @@ omni::stopwatch& omni::stopwatch::start(uint32_t offset_ms)
             }
         #endif
         this->m_end = this->m_init;
-        this->m_isstrt = true;
+        OMNI_VAL_SET_FLAG_BIT(this->m_status, OMNI_STOPWATCH_START_FW);
         #if defined(OMNI_OS_WIN) || defined(OMNI_OS_APPLE)
             #if defined(OMNI_OS_WIN) && defined(OMNI_WIN_MONO_TICK_QPC)
                 OMNI_DV2_FW("initial clock = ", this->m_init.QuadPart);
@@ -194,16 +199,16 @@ omni::stopwatch& omni::stopwatch::start(uint32_t offset_ms)
             OMNI_DV2_FW("initial clock = ", this->m_init.tv_nsec);
         #endif
     }
-    this->m_isrun = true;
+    OMNI_VAL_SET_FLAG_BIT(this->m_status, OMNI_STOPWATCH_RUN_FW);
     return *this;
 }
 
 omni::stopwatch& omni::stopwatch::stop()
 {
     OMNI_STOPWATCH_ALOCK_FW
-    if (this->m_isrun) {
+    if (OMNI_VAL_HAS_FLAG_BIT(this->m_status, OMNI_STOPWATCH_RUN_FW)) {
         this->m_end = omni::chrono::monotonic_tick();
-        this->m_isrun = false;
+        OMNI_VAL_UNSET_FLAG_BIT(this->m_status, OMNI_STOPWATCH_RUN_FW);
         #if defined(OMNI_OS_WIN) || defined(OMNI_OS_APPLE)
             #if defined(OMNI_OS_WIN) && defined(OMNI_WIN_MONO_TICK_QPC)
                 OMNI_DV2_FW("end clock = ", this->m_end.QuadPart);
@@ -227,8 +232,7 @@ void omni::stopwatch::swap(omni::stopwatch& o)
         OMNI_STOPWATCH_OLOCK_FW(o)
         std::swap(this->m_end, o.m_end);
         std::swap(this->m_init, o.m_init);
-        std::swap(this->m_isrun, o.m_isrun);
-        std::swap(this->m_isstrt, o.m_isstrt);
+        std::swap(this->m_status, o.m_status);
     }
 }
 
@@ -265,8 +269,7 @@ omni::stopwatch& omni::stopwatch::operator=(const omni::stopwatch &other)
         OMNI_ASSIGN_FW(other)
         this->m_end = other.m_end;
         this->m_init = other.m_init;
-        this->m_isrun = other.m_isrun;
-        this->m_isstrt = other.m_isstrt;
+        this->m_status = other.m_status;
     }
     return *this;
 }
@@ -284,8 +287,7 @@ bool omni::stopwatch::operator==(const omni::stopwatch &o) const
     OMNI_STOPWATCH_ALOCK_FW
     return (omni::chrono::equal(this->m_init, o.m_init) &&
             omni::chrono::equal(this->m_end, o.m_end) &&
-            this->m_isrun == o.m_isrun &&
-            this->m_isstrt == o.m_isstrt)
+            this->m_status == o.m_status)
             OMNI_EQUAL_FW(o);
 }
 
@@ -299,5 +301,5 @@ void omni::stopwatch::_zero()
     OMNI_STOPWATCH_ALOCK_FW
     std::memset(&this->m_init, 0, sizeof(omni::chrono::tick_t));
     this->m_end = this->m_init;
-    this->m_isstrt = false;
+    OMNI_VAL_UNSET_FLAG_BIT(this->m_status, OMNI_STOPWATCH_START_FW);
 }

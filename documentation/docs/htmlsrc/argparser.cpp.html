@@ -249,7 +249,7 @@ omni::seq::string_t <a href="../classes/omni-application-argparser-get_switches.
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_D1_FW(<font class="syn_str">&quot;invalid switch specified&quot;</font>);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint32_t</font> ret;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint32_t</font> ret = <font class="syn_num">0</font>;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;omni_foreach_c(<a href="../classes/omni-string_t.html">omni::string_t</a>, arg, <font class="syn_typ">this</font>-&gt;m_args) {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (sw == *arg) { ++ret; }<br>
 &nbsp;&nbsp;&nbsp;&nbsp;}<br>

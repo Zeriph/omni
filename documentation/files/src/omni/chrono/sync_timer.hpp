@@ -24,6 +24,12 @@
     #include <omni/sync/basic_lock.hpp>
 #endif
 
+#if defined(OMNI_32BIT_SYNC_TIMER)
+    #define OMNI_STMR_INT_FW uint32_t
+#else
+    #define OMNI_STMR_INT_FW uint64_t
+#endif
+
 namespace omni {
     namespace chrono {
         class sync_timer
@@ -31,7 +37,7 @@ namespace omni {
             public:
                 sync_timer();
                 sync_timer(const omni::chrono::sync_timer& cp);
-                explicit sync_timer(uint32_t interval_ms);
+                OMNI_EXPLICIT sync_timer(uint32_t interval_ms);
                 sync_timer(uint32_t interval_ms,
                            const omni::chrono::timer_delegate& fn);
                 sync_timer(uint32_t interval_ms,
@@ -77,10 +83,9 @@ namespace omni {
                     mutable omni::sync::basic_lock m_mtx;
                 #endif
                 omni::sync::basic_thread *m_thread; // the main timer thread to _run on
-                uint32_t m_int; // "elapsed" interval in ms between ticks
-                volatile bool m_auto; // true by default, false for tick once then stop
-                volatile bool m_isrun; // is running
-                volatile bool m_stopreq; // stop requested
+
+                OMNI_STMR_INT_FW m_int; // "elapsed" interval in ms between ticks
+                volatile OMNI_STMR_INT_FW m_status; // auto run (true by default), is_run, stop_req
         };
     } // namespace chrono
 } // namespace omni

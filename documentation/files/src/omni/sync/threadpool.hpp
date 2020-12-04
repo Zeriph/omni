@@ -25,6 +25,12 @@
 #include <omni/chrono/span.hpp>
 #include <list>
 
+#if defined(OMNI_32BIT_THREADPOOL)
+    #define OMNI_TPOOL_INT_FW uint32_t
+#else
+    #define OMNI_TPOOL_INT_FW uint64_t
+#endif
+
 namespace omni {
     namespace sync {
         class threadpool
@@ -82,7 +88,7 @@ namespace omni {
                     std::list<omni::sync::threadpool_task> m_tasks;
                 #endif
                 
-                volatile bool m_isdestroy;
+                volatile OMNI_TPOOL_INT_FW m_isdestroy;
         };
     }
 }

@@ -133,7 +133,7 @@ omni::sync::runnable_thread::runnable_thread() :
     m_ops(),
     m_state(omni::sync::thread_state::UNSTARTED),
     OMNI_RPRIO_FW
-    m_isjoined(false)
+    m_isjoined(0)
 {
     #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
         omni::chrono::monotonic::initialize();
@@ -171,7 +171,7 @@ omni::sync::runnable_thread::runnable_thread(const omni::sync::thread_flags &ops
     m_ops(ops),
     m_state(omni::sync::thread_state::UNSTARTED),
     OMNI_RPRIO_FW
-    m_isjoined(false)
+    m_isjoined(0)
 {
     #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
         omni::chrono::monotonic::initialize();
@@ -192,7 +192,7 @@ omni::sync::runnable_thread::runnable_thread(std::size_t max_stack_sz) :
     m_ops(max_stack_sz),
     m_state(omni::sync::thread_state::UNSTARTED),
     OMNI_RPRIO_FW
-    m_isjoined(false)
+    m_isjoined(0)
 {
     #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
         omni::chrono::monotonic::initialize();
@@ -213,7 +213,7 @@ omni::sync::runnable_thread::runnable_thread(const omni::sync::runnable& obj) :
     m_ops(),
     m_state(omni::sync::thread_state::UNSTARTED),
     OMNI_RPRIO_FW
-    m_isjoined(false)
+    m_isjoined(0)
 {
     #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
         omni::chrono::monotonic::initialize();
@@ -233,7 +233,7 @@ omni::sync::runnable_thread::runnable_thread(const omni::sync::runnable& obj, st
     m_ops(max_stack_sz),
     m_state(omni::sync::thread_state::UNSTARTED),
     OMNI_RPRIO_FW
-    m_isjoined(false)
+    m_isjoined(0)
 {
     #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
         omni::chrono::monotonic::initialize();
@@ -253,7 +253,7 @@ omni::sync::runnable_thread::runnable_thread(omni::sync::thread_option::enum_t o
     m_ops(),
     m_state(omni::sync::thread_state::UNSTARTED),
     OMNI_RPRIO_FW
-    m_isjoined(false)
+    m_isjoined(0)
 {
     #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
         omni::chrono::monotonic::initialize();
@@ -439,7 +439,7 @@ bool omni::sync::runnable_thread::join(uint32_t timeout)
         OMNI_ERR_RETV_FW(OMNI_INVALID_THREAD_OWNER, omni::exceptions::invalid_thread_owner(), false)
     }
     #if defined(OMNI_OS_WIN)
-        this->m_isjoined = true;
+        this->m_isjoined = 1;
         OMNI_SAFE_RUNLOCK_FW
         return (
             (::WaitForSingleObject(OMNI_WIN_TOHNDL_FW(hndl), timeout) == 0) ? true :
@@ -453,7 +453,7 @@ bool omni::sync::runnable_thread::join(uint32_t timeout)
         /* There is not a portable mechanism with pthreads to wait on a specific thread without
         implementing a timed_wait condition variable. We do not want the user to have to implement
         a seperate variable based on system, so we implement a timeout loop*/
-        this->m_isjoined = true;
+        this->m_isjoined = 1;
         OMNI_SAFE_RUNLOCK_FW
         if (timeout != omni::sync::INFINITE_TIMEOUT) {
             OMNI_SLEEP_INIT();
@@ -888,12 +888,12 @@ void omni::sync::runnable_thread::_close_handle()
         #if defined(OMNI_OS_WIN)
             ::CloseHandle(OMNI_WIN_TOHNDL_FW(this->m_thread));
         #else
-            if (!this->m_isjoined) {
+            if (this->m_isjoined == 0) {
                 /* if we have called pthread_join on this thread then do not detach
                 it as that releases it is resources and makes it unjoinable */
                 ::pthread_detach(this->m_thread);
             }
-            this->m_isjoined = false;
+            this->m_isjoined = 0;
         #endif
     }
     this->m_tid = 0;
@@ -1036,7 +1036,7 @@ void omni::sync::runnable_thread::set_priority(omni::sync::thread_priority::enum
         (pri > omni::sync::thread_priority::HIGHEST && pri != omni::sync::thread_priority::REAL_TIME))
     {
         // invalid_priority
-        OMNI_ERRV_RET_FW("invalid priority: ", pri, omni::exceptions::invalid_thread_option(static_cast<size_t>(pri)))
+        OMNI_ERRV_RET_FW("invalid priority: ", pri, omni::exceptions::invalid_thread_option(static_cast<std::size_t>(pri)))
     }
     OMNI_SAFE_RLOCK_FW
     // if we are not running, just set the priority til next time

@@ -21,6 +21,15 @@
 
 // TODO: (continuous) add any other no-library entities here that do _not_ relate to the safe options
 
+#if defined(OMNI_SAFE_LIBRARY) && defined(OMNI_NO_SAFE_LIBRARY)
+    #undef OMNI_SAFE_LIBRARY
+#endif
+#if defined(OMNI_32BIT) && defined(OMNI_NO_32BIT)
+    #undef OMNI_32BIT
+#endif
+#if defined(OMNI_OS_MACOS) && defined(OMNI_NO_OS_MACOS)
+    #undef OMNI_OS_MACOS
+#endif
 #if defined(OMNI_OBJECT_NAME) && defined(OMNI_NO_OBJECT_NAME)
     #undef OMNI_OBJECT_NAME
 #endif
@@ -42,8 +51,17 @@
 #if defined(OMNI_NON_PORTABLE) && defined(OMNI_NO_NON_PORTABLE)
     #undef OMNI_NON_PORTABLE
 #endif
+#if defined(OMNI_ENABLE_NOEXCEPT) && defined(OMNI_NO_NOEXCEPT)
+    #undef OMNI_ENABLE_NOEXCEPT
+#endif
+#if defined(OMNI_EXPLICIT) && defined(OMNI_NO_EXPLICIT)
+    #undef OMNI_EXPLICIT
+#endif
 #if defined(OMNI_ENV_WORDEXP) && defined(OMNI_NO_ENV_WORDEXP)
     #undef OMNI_ENV_WORDEXP
+#endif
+#if defined(OMNI_IO_FILE_COPY_USE_FSTREAM) && defined(OMNI_NO_IO_FILE_COPY_USE_FSTREAM)
+    #undef OMNI_IO_FILE_COPY_USE_FSTREAM
 #endif
 #if defined(OMNI_CLOCK_GETRES_REALTIME) && defined(OMNI_NO_CLOCK_GETRES_REALTIME)
     #undef OMNI_CLOCK_GETRES_REALTIME
@@ -89,6 +107,24 @@
 #endif
 #if defined(OMNI_USE_M_PI_F) && defined(OMNI_NO_USE_M_PI_F)
     #undef OMNI_USE_MATH_DEFS
+#endif
+
+#if defined(OMNI_NO_UNICODE)
+    #if defined(OMNI_UNICODE)
+        #undef OMNI_UNICODE
+    #endif
+    #if defined(__UNICODE__)
+        #undef __UNICODE__
+    #endif
+    #if defined(UNICODE)
+        #undef UNICODE
+    #endif
+    #if defined(_UNICODE)
+        #undef _UNICODE
+    #endif
+    #if defined(__UNICODE)
+        #undef __UNICODE
+    #endif
 #endif
 
 #endif // OMNI_CANCEL_CHECK_DEF_HPP

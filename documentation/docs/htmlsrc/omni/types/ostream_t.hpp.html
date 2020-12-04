@@ -26,14 +26,14 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 0001:<br><div id="cmntl1" name="cmntl1">0002:<br>0003:<br>0004:<br>0005:<br>0006:<br>0007:<br>0008:<br>0009:<br>00010:<br>00011:<br>00012:<br>00013:<br>00014:<br>00015:<br>00016:<br>00017:<br>00018:<br></div>00019:<br>
 00020:<br>00021:<br>00022:<br>00023:<br>00024:<br>00025:<br>00026:<br>00027:<br>00028:<br>00029:<br>00030:<br>00031:<br>00032:<br>00033:<br>00034:<br>00035:<br>00036:<br>00037:<br>00038:<br>00039:<br>
 00040:<br>00041:<br>00042:<br>00043:<br>00044:<br>00045:<br>00046:<br>00047:<br>00048:<br>00049:<br>00050:<br>00051:<br>00052:<br>00053:<br>00054:<br>00055:<br>00056:<br>00057:<br>00058:<br>00059:<br>
-00060:<br>00061:<br>00062:<br>00063:<br>00064:<br>00065:<br>00066:<br>00067:<br>00068:<br>00069:<br>00070:<br>00071:<br>00072:<br>00073:<br>00074:<br>00075:<br>00076:<br>00077:<br>00078:<br>00079:<br>00080:<br>
+00060:<br>00061:<br>00062:<br>00063:<br>00064:<br>00065:<br>00066:<br>00067:<br>00068:<br>00069:<br>00070:<br>00071:<br>00072:<br>00073:<br>00074:<br>00075:<br>
 <!--end line numbers-->
 </div><div class="cpphtmlcmnt">
 <!--start collapse columns-->
 <img src="../../../../content/tree/min.gif" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <!--end collapse columns-->
 </div><div class="cpphtml" style="margin-left:3em;">
 <!--start highlighted code-->
@@ -75,27 +75,26 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <br>
 <font class="syn_cmt">// helper macros used to define a friend function of a class that can be used to output to a stream</font><br>
 <br>
-<font class="syn_pre">#define OMNI_FOSTREAM_OPC_FW(v, ...) friend <a href="http://www.cplusplus.com/reference/ostream/ostream/">std::ostream</a>&amp; operator&lt;&lt;(<a href="http://www.cplusplus.com/reference/ostream/ostream/">std::ostream</a>&amp; s, const __VA_ARGS__&amp; c) { s &lt;&lt; c.v; return s; }</font><br>
-<font class="syn_pre">#define OMNI_FOSTREAM_OPW_FW(v, ...) friend <a href="http://www.cplusplus.com/reference/ostream/wostream/">std::wostream</a>&amp; operator&lt;&lt;(<a href="http://www.cplusplus.com/reference/ostream/wostream/">std::wostream</a>&amp; s, const __VA_ARGS__&amp; c) { s &lt;&lt; c.v; return s; }</font><br>
+<font class="syn_cmt">// TODO: why the variadic macro&#39;s for these?</font><br>
 <br>
-<font class="syn_pre">#define OMNI_FOSTREAM_OPC_FN_FW(fn, ...) friend <a href="http://www.cplusplus.com/reference/ostream/ostream/">std::ostream</a>&amp; operator&lt;&lt;(<a href="http://www.cplusplus.com/reference/ostream/ostream/">std::ostream</a>&amp; s, const __VA_ARGS__&amp; c) { s &lt;&lt; fn(c); return s; }</font><br>
-<font class="syn_pre">#define OMNI_FOSTREAM_OPW_FN_FW(fn, ...) friend <a href="http://www.cplusplus.com/reference/ostream/wostream/">std::wostream</a>&amp; operator&lt;&lt;(<a href="http://www.cplusplus.com/reference/ostream/wostream/">std::wostream</a>&amp; s, const __VA_ARGS__&amp; c) { s &lt;&lt; fn(c); return s; }</font><br>
+<font class="syn_pre">#define OMNI_FOSTREAM_OPC_FW(v, ...) friend <a href="http://www.cplusplus.com/reference/ostream/ostream/">std::ostream</a>&amp; operator&lt;&lt;(<a href="http://www.cplusplus.com/reference/ostream/ostream/">std::ostream</a>&amp; _s, const __VA_ARGS__&amp; _c) { _s &lt;&lt; _c.v; return _s; }</font><br>
+<font class="syn_pre">#define OMNI_FOSTREAM_OPW_FW(v, ...) friend <a href="http://www.cplusplus.com/reference/ostream/wostream/">std::wostream</a>&amp; operator&lt;&lt;(<a href="http://www.cplusplus.com/reference/ostream/wostream/">std::wostream</a>&amp; _s, const __VA_ARGS__&amp; _c) { _s &lt;&lt; _c.v; return _s; }</font><br>
 <br>
-<font class="syn_pre">#define OMNI_FOSTREAM_OPC_RAW_FW(fn, ...) friend <a href="http://www.cplusplus.com/reference/ostream/ostream/">std::ostream</a>&amp; operator&lt;&lt;(<a href="http://www.cplusplus.com/reference/ostream/ostream/">std::ostream</a>&amp; s, const __VA_ARGS__&amp; value) { s &lt;&lt; fn; return s; }</font><br>
-<font class="syn_pre">#define OMNI_FOSTREAM_OPW_RAW_FW(fn, ...) friend <a href="http://www.cplusplus.com/reference/ostream/wostream/">std::wostream</a>&amp; operator&lt;&lt;(<a href="http://www.cplusplus.com/reference/ostream/wostream/">std::wostream</a>&amp; s, const __VA_ARGS__&amp; value) { s &lt;&lt; fn; return s; }</font><br>
+<font class="syn_pre">#define OMNI_FOSTREAM_OPC_FN_FW(fn, ...) friend <a href="http://www.cplusplus.com/reference/ostream/ostream/">std::ostream</a>&amp; operator&lt;&lt;(<a href="http://www.cplusplus.com/reference/ostream/ostream/">std::ostream</a>&amp; _s, const __VA_ARGS__&amp; _c) { _s &lt;&lt; fn(_c); return _s; }</font><br>
+<font class="syn_pre">#define OMNI_FOSTREAM_OPW_FN_FW(fn, ...) friend <a href="http://www.cplusplus.com/reference/ostream/wostream/">std::wostream</a>&amp; operator&lt;&lt;(<a href="http://www.cplusplus.com/reference/ostream/wostream/">std::wostream</a>&amp; _s, const __VA_ARGS__&amp; _c) { _s &lt;&lt; fn(_c); return _s; }</font><br>
 <br>
-<font class="syn_pre">#define OMNI_FOSTREAM_OPC2T_FW(v, ...) friend <a href="http://www.cplusplus.com/reference/ostream/ostream/">std::ostream</a>&amp; operator&lt;&lt;(<a href="http://www.cplusplus.com/reference/ostream/ostream/">std::ostream</a>&amp; s, const __VA_ARGS__&amp; c) { s &lt;&lt; <a href="../../../classes/omni-string-util-to_string.html">omni::string::util::to_string</a>(c.v); return s; }</font><br>
-<font class="syn_pre">#define OMNI_FOSTREAM_OPW2T_FW(v, ...) friend <a href="http://www.cplusplus.com/reference/ostream/wostream/">std::wostream</a>&amp; operator&lt;&lt;(<a href="http://www.cplusplus.com/reference/ostream/wostream/">std::wostream</a>&amp; s, const __VA_ARGS__&amp; c) { s &lt;&lt; <a href="../../../classes/omni-string-util-to_wstring.html">omni::string::util::to_wstring</a>(c.v); return s; }</font><br>
+<font class="syn_pre">#define OMNI_FOSTREAM_OPC2T_FW(v, ...) friend <a href="http://www.cplusplus.com/reference/ostream/ostream/">std::ostream</a>&amp; operator&lt;&lt;(<a href="http://www.cplusplus.com/reference/ostream/ostream/">std::ostream</a>&amp; _s, const __VA_ARGS__&amp; _c) { _s &lt;&lt; <a href="../../../classes/omni-string-util-to_string.html">omni::string::util::to_string</a>(_c.v); return _s; }</font><br>
+<font class="syn_pre">#define OMNI_FOSTREAM_OPW2T_FW(v, ...) friend <a href="http://www.cplusplus.com/reference/ostream/wostream/">std::wostream</a>&amp; operator&lt;&lt;(<a href="http://www.cplusplus.com/reference/ostream/wostream/">std::wostream</a>&amp; _s, const __VA_ARGS__&amp; _c) { _s &lt;&lt; <a href="../../../classes/omni-string-util-to_wstring.html">omni::string::util::to_wstring</a>(_c.v); return _s; }</font><br>
 <br>
-<font class="syn_pre">#define OMNI_FOSTREAM_OPS_FW(v, ...) friend <a href="../../../classes/omni-ostream_t.html">omni::ostream_t</a>&amp; operator&lt;&lt;(<a href="../../../classes/omni-ostream_t.html">omni::ostream_t</a>&amp; s, const __VA_ARGS__&amp; c) { s &lt;&lt; <a href="../../../classes/omni-string-util-to_string_t.html">omni::string::util::to_string_t</a>(c.v); return s; }</font><br>
+<font class="syn_pre">#define OMNI_FOSTREAM_OPS_FW(v, ...) friend <a href="../../../classes/omni-ostream_t.html">omni::ostream_t</a>&amp; operator&lt;&lt;(<a href="../../../classes/omni-ostream_t.html">omni::ostream_t</a>&amp; _s, const __VA_ARGS__&amp; _c) { _s &lt;&lt; <a href="../../../classes/omni-string-util-to_string_t.html">omni::string::util::to_string_t</a>(_c.v); return _s; }</font><br>
 <br>
-<font class="syn_pre">#define OMNI_OSTREAM_OPC_FW(v, ...) <a href="http://www.cplusplus.com/reference/ostream/ostream/">std::ostream</a>&amp; operator&lt;&lt;(<a href="http://www.cplusplus.com/reference/ostream/ostream/">std::ostream</a>&amp; s, const __VA_ARGS__&amp; c) { s &lt;&lt; c.v; return s; }</font><br>
-<font class="syn_pre">#define OMNI_OSTREAM_OPW_FW(v, ...) <a href="http://www.cplusplus.com/reference/ostream/wostream/">std::wostream</a>&amp; operator&lt;&lt;(<a href="http://www.cplusplus.com/reference/ostream/wostream/">std::wostream</a>&amp; s, const __VA_ARGS__&amp; c) { s &lt;&lt; c.v; return s; }</font><br>
+<font class="syn_pre">#define OMNI_OSTREAM_OPC_FW(v, ...) <a href="http://www.cplusplus.com/reference/ostream/ostream/">std::ostream</a>&amp; operator&lt;&lt;(<a href="http://www.cplusplus.com/reference/ostream/ostream/">std::ostream</a>&amp; _s, const __VA_ARGS__&amp; _c) { s &lt;&lt; c.v; return s; }</font><br>
+<font class="syn_pre">#define OMNI_OSTREAM_OPW_FW(v, ...) <a href="http://www.cplusplus.com/reference/ostream/wostream/">std::wostream</a>&amp; operator&lt;&lt;(<a href="http://www.cplusplus.com/reference/ostream/wostream/">std::wostream</a>&amp; _s, const __VA_ARGS__&amp; _c) { s &lt;&lt; c.v; return s; }</font><br>
 <br>
-<font class="syn_pre">#define OMNI_OSTREAM_OPC2T_FW(v, ...) <a href="http://www.cplusplus.com/reference/ostream/ostream/">std::ostream</a>&amp; operator&lt;&lt;(<a href="http://www.cplusplus.com/reference/ostream/ostream/">std::ostream</a>&amp; s, const __VA_ARGS__&amp; c) { s &lt;&lt; <a href="../../../classes/omni-string-util-to_string.html">omni::string::util::to_string</a>(c.v); return s; }</font><br>
-<font class="syn_pre">#define OMNI_OSTREAM_OPW2T_FW(v, ...) <a href="http://www.cplusplus.com/reference/ostream/wostream/">std::wostream</a>&amp; operator&lt;&lt;(<a href="http://www.cplusplus.com/reference/ostream/wostream/">std::wostream</a>&amp; s, const __VA_ARGS__&amp; c) { s &lt;&lt; <a href="../../../classes/omni-string-util-to_wstring.html">omni::string::util::to_wstring</a>(c.v); return s; }</font><br>
+<font class="syn_pre">#define OMNI_OSTREAM_OPC2T_FW(v, ...) <a href="http://www.cplusplus.com/reference/ostream/ostream/">std::ostream</a>&amp; operator&lt;&lt;(<a href="http://www.cplusplus.com/reference/ostream/ostream/">std::ostream</a>&amp; _s, const __VA_ARGS__&amp; _c) { s &lt;&lt; <a href="../../../classes/omni-string-util-to_string.html">omni::string::util::to_string</a>(c.v); return s; }</font><br>
+<font class="syn_pre">#define OMNI_OSTREAM_OPW2T_FW(v, ...) <a href="http://www.cplusplus.com/reference/ostream/wostream/">std::wostream</a>&amp; operator&lt;&lt;(<a href="http://www.cplusplus.com/reference/ostream/wostream/">std::wostream</a>&amp; _s, const __VA_ARGS__&amp; _c) { s &lt;&lt; <a href="../../../classes/omni-string-util-to_wstring.html">omni::string::util::to_wstring</a>(c.v); return s; }</font><br>
 <br>
-<font class="syn_pre">#define OMNI_OSTREAM_OPS_FW(v, ...) <a href="../../../classes/omni-ostream_t.html">omni::ostream_t</a>&amp; operator&lt;&lt;(<a href="../../../classes/omni-ostream_t.html">omni::ostream_t</a>&amp; s, const __VA_ARGS__&amp; c) { s &lt;&lt; <a href="../../../classes/omni-string-util-to_string_t.html">omni::string::util::to_string_t</a>(c.v); return s; }</font><br>
+<font class="syn_pre">#define OMNI_OSTREAM_OPS_FW(v, ...) <a href="../../../classes/omni-ostream_t.html">omni::ostream_t</a>&amp; operator&lt;&lt;(<a href="../../../classes/omni-ostream_t.html">omni::ostream_t</a>&amp; _s, const __VA_ARGS__&amp; _c) { s &lt;&lt; <a href="../../../classes/omni-string-util-to_string_t.html">omni::string::util::to_string_t</a>(c.v); return s; }</font><br>
 <br>
 <font class="syn_pre">#define <a href="../../../options/omni_ostream_operator.html">OMNI_OSTREAM_OPERATOR</a>(v, ...) OMNI_FOSTREAM_OPC_FW(v, __VA_ARGS__)</font><br>
 <font class="syn_pre">#define <a href="../../../options/omni_wostream_operator.html">OMNI_WOSTREAM_OPERATOR</a>(v, ...) OMNI_FOSTREAM_OPW_FW(v, __VA_ARGS__)</font><br>
@@ -103,12 +102,8 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <font class="syn_pre">#define <a href="../../../options/omni_ostream_fn_operator.html">OMNI_OSTREAM_FN_OPERATOR</a>(fn, ...) OMNI_FOSTREAM_OPC_FN_FW(fn, __VA_ARGS__)</font><br>
 <font class="syn_pre">#define <a href="../../../options/omni_wostream_fn_operator.html">OMNI_WOSTREAM_FN_OPERATOR</a>(fn, ...) OMNI_FOSTREAM_OPW_FN_FW(fn, __VA_ARGS__)</font><br>
 <br>
-<font class="syn_pre">#define <a href="../../../options/omni_ostream_raw_operator.html">OMNI_OSTREAM_RAW_OPERATOR</a>(fn, ...) OMNI_FOSTREAM_OPC_RAW_FW(fn, __VA_ARGS__)</font><br>
-<font class="syn_pre">#define <a href="../../../options/omni_wostream_raw_operator.html">OMNI_WOSTREAM_RAW_OPERATOR</a>(fn, ...) OMNI_FOSTREAM_OPW_RAW_FW(fn, __VA_ARGS__)</font><br>
-<br>
 <font class="syn_pre">#define <a href="../../../options/omni_stream_operators.html">OMNI_STREAM_OPERATORS</a>(v, ...) <a href="../../../options/omni_ostream_operator.html">OMNI_OSTREAM_OPERATOR</a>(v, __VA_ARGS__) <a href="../../../options/omni_wostream_operator.html">OMNI_WOSTREAM_OPERATOR</a>(v, __VA_ARGS__)</font><br>
 <font class="syn_pre">#define <a href="../../../options/omni_stream_fn_operators.html">OMNI_STREAM_FN_OPERATORS</a>(v, ...) <a href="../../../options/omni_ostream_fn_operator.html">OMNI_OSTREAM_FN_OPERATOR</a>(v, __VA_ARGS__) <a href="../../../options/omni_wostream_fn_operator.html">OMNI_WOSTREAM_FN_OPERATOR</a>(v, __VA_ARGS__)</font><br>
-<font class="syn_pre">#define <a href="../../../options/omni_stream_raw_operators.html">OMNI_STREAM_RAW_OPERATORS</a>(v, ...) <a href="../../../options/omni_ostream_raw_operator.html">OMNI_OSTREAM_RAW_OPERATOR</a>(v, __VA_ARGS__) <a href="../../../options/omni_wostream_raw_operator.html">OMNI_WOSTREAM_RAW_OPERATOR</a>(v, __VA_ARGS__)</font><br>
 <br>
 <font class="syn_ins">namespace</font> omni {<br>
 <a name="omni::ostream_t"></a>&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">typedef</font> <a href="../../../options/omni_ostream_t.html">OMNI_OSTREAM_T</a> ostream_t;<br>

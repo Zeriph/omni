@@ -90,7 +90,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;m_mtx(),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;m_threads(),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;m_tasks(),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;m_isdestroy(<font class="syn_ins">false</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;m_isdestroy(<font class="syn_num">0</font>)<br>
 {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;_initialize_min(<font class="syn_typ">this</font>-&gt;m_min);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;OMNI_D<font class="syn_num">5</font>_FW(<font class="syn_str">&quot;created with 5,<font class="syn_num">25</font>&quot;</font>);<br>
@@ -104,7 +104,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;m_mtx(),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;m_threads(),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;m_tasks(),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;m_isdestroy(<font class="syn_ins">false</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;m_isdestroy(<font class="syn_num">0</font>)<br>
 {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (thread_min &gt; thread_max) {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_min = thread_max;<br>
@@ -123,7 +123,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTOR_FW<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_mtx.lock();<br>
 &nbsp;&nbsp;&nbsp;&nbsp;OMNI_DV5_FW(<font class="syn_str">&quot;active thread count: &quot;</font>, <font class="syn_typ">this</font>-&gt;m_act);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_isdestroy = <font class="syn_ins">true</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_isdestroy = <font class="syn_num">1</font>;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_tasks.clear();<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_mtx.unlock();<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">for</font> (omni_threadpool_itr itr = <font class="syn_typ">this</font>-&gt;m_threads.begin(); itr != <font class="syn_typ">this</font>-&gt;m_threads.end(); ++itr)<br>
@@ -242,7 +242,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <font class="syn_typ">void</font> <a href="../classes/omni-sync-threadpool-_add_queue.html">omni::sync::threadpool::_add_queue</a>(<font class="syn_typ">const</font> <a href="../classes/omni-sync-threadpool_task.html">omni::sync::threadpool_task</a>&amp; tpt)<br>
 {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;OMNI_TPAMTX_FW<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font>-&gt;m_isdestroy) { <font class="syn_ins">return</font>; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font>-&gt;m_isdestroy == <font class="syn_num">1</font>) { <font class="syn_ins">return</font>; }<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_tasks.push_back(tpt);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font>-&gt;m_act &lt; <font class="syn_typ">this</font>-&gt;m_max) {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font>-&gt;m_act &lt; <font class="syn_typ">this</font>-&gt;m_min) {<br>
@@ -276,7 +276,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-threadpool_task.html">omni::sync::threadpool_task</a> tpt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_mtx.lock();<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">while</font> (!<font class="syn_typ">this</font>-&gt;m_isdestroy &amp;&amp; !<font class="syn_typ">this</font>-&gt;m_tasks.empty()) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">while</font> ((<font class="syn_typ">this</font>-&gt;m_isdestroy == <font class="syn_num">0</font>) &amp;&amp; !<font class="syn_typ">this</font>-&gt;m_tasks.empty()) {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tpt = <font class="syn_typ">this</font>-&gt;m_tasks.front();<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_tasks.pop_front();<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;++<font class="syn_typ">this</font>-&gt;m_act;<br>
@@ -287,7 +287,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_mtx.lock();<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--<font class="syn_typ">this</font>-&gt;m_act;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> ((<font class="syn_typ">this</font>-&gt;m_act &gt;= <font class="syn_typ">this</font>-&gt;m_min) &amp;&amp; !<font class="syn_typ">this</font>-&gt;m_isdestroy) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> ((<font class="syn_typ">this</font>-&gt;m_act &gt;= <font class="syn_typ">this</font>-&gt;m_min) &amp;&amp; (<font class="syn_typ">this</font>-&gt;m_isdestroy == <font class="syn_num">0</font>)) {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// find the thread in the list and remove it</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-thread_t.html">omni::sync::thread_t</a> tid = <a href="../classes/omni-sync-thread_id.html">omni::sync::thread_id</a>();<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">for</font> (omni_threadpool_itr itr = <font class="syn_typ">this</font>-&gt;m_threads.begin(); itr != <font class="syn_typ">this</font>-&gt;m_threads.end(); ++itr)<br>

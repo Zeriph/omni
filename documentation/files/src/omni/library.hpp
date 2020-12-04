@@ -78,8 +78,9 @@ int main(int argc, char *argv[]) {
 #include <omni/io.hpp>
 #include <omni/application.hpp>
 #include <omni/argparser.hpp>
-#include <omni/util/bits.hpp>
-#include <omni/util/version.hpp>
+#include <omni/bits.hpp>
+#include <omni/version.hpp>
+#include <omni/net/version.hpp>
 
 // chrono
 #include <omni/chrono_types.hpp> // chrono_t.hpp, time.hpp, span.hpp, stopwatch.hpp, timer.hpp
