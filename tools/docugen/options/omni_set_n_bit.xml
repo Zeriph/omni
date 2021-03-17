@@ -1,10 +1,8 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_SET_N_BIT</Name>
-  <Brief>Sets a bit in a value
-</Brief>
-  <Considerations>No special considerations
-</Considerations>
+  <Brief>Sets a bit in a value</Brief>
+  <Considerations>No special considerations</Considerations>
   <Description>This is a helper macro designed to flip a bit within a numeric value and is defined as such:
 
 @code
@@ -27,12 +25,9 @@ OMNI_SET_N_BIT(i, 10); // i is now 0000 0100 0000 0010 (1026)
 std::cout &lt;&lt; "i = " &lt;&lt; i &lt;&lt; ", c = " &lt;&lt; c &lt;&lt; std::endl;
 @code
 </Description>
-  <Notes>None.
-</Notes>
-  <PlatformSpecific>No platform specific notes.
-</PlatformSpecific>
-  <Synopsis>A helper macro to set a specific bit within a value.
-</Synopsis>
+  <Notes>None.</Notes>
+  <PlatformSpecific>No platform specific notes.</PlatformSpecific>
+  <Synopsis>A helper macro to set a specific bit within a value.</Synopsis>
   <IsHelper>true</IsHelper>
   <IsConstant>false</IsConstant>
   <IsFWHelp>false</IsFWHelp>

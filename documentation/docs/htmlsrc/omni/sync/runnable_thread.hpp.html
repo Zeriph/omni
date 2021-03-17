@@ -29,17 +29,17 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 000060:<br>000061:<br>000062:<br>000063:<br>000064:<br>000065:<br>000066:<br>000067:<br>000068:<br>000069:<br>000070:<br>000071:<br>000072:<br>000073:<br>000074:<br>000075:<br>000076:<br>000077:<br>000078:<br>000079:<br>
 000080:<br>000081:<br>000082:<br>000083:<br>000084:<br>000085:<br>000086:<br>000087:<br>000088:<br>000089:<br>000090:<br>000091:<br>000092:<br>000093:<br>000094:<br>000095:<br>000096:<br>000097:<br>000098:<br>000099:<br>
 0000100:<br>0000101:<br>0000102:<br>0000103:<br>0000104:<br>0000105:<br>0000106:<br>0000107:<br>0000108:<br>0000109:<br>0000110:<br>0000111:<br>0000112:<br>0000113:<br>0000114:<br>0000115:<br>0000116:<br>0000117:<br>0000118:<br>0000119:<br>
-0000120:<br>0000121:<br>0000122:<br>0000123:<br>0000124:<br>0000125:<br>0000126:<br>0000127:<br>0000128:<br>0000129:<br>0000130:<br>0000131:<br>0000132:<br>0000133:<br>0000134:<br>
+0000120:<br>0000121:<br>0000122:<br>0000123:<br>0000124:<br>0000125:<br>0000126:<br>0000127:<br>0000128:<br>0000129:<br>0000130:<br>0000131:<br>0000132:<br>0000133:<br>
 <!--end line numbers-->
 </div><div class="cpphtmlcmnt">
 <!--start collapse columns-->
-<img src="../../../../content/tree/min.gif" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<img src="../../../../content/tree/min.gif" alt="Min/Max" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <!--end collapse columns-->
 </div><div class="cpphtml" style="margin-left:3.75em;">
 <!--start highlighted code-->
@@ -94,6 +94,9 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;runnable_thread(<font class="syn_typ">const</font> <a href="../../../classes/omni-sync-runnable.html">omni::sync::runnable</a>&amp; obj, <a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a> max_stack_sz);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;runnable_thread(<a href="../../../classes/omni-sync-thread_option-enum_t.html">omni::sync::thread_option::enum_t</a> op, <a href="../../../classes/omni-sync-thread_union_t.html">omni::sync::thread_union_t</a> val);<br>
 <a name="omni::sync::runnable_thread::~runnable_thread"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">virtual</font> ~runnable_thread() <a href="../../../options/omni_dtor_throws.html">OMNI_DTOR_THROWS</a>;<br>
+<br>
+<a name="omni::sync::runnable_thread::state_changed"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-sync-runnable_thread-state_event.html">omni::sync::runnable_thread::state_event</a> state_changed;<br>
+<br>
 <a name="omni::sync::runnable_thread::abort"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> abort(); <font class="syn_cmt">// request end nicely</font><br>
 <a name="omni::sync::runnable_thread::abort_join"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> abort_join();<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> abort_join(<font class="syn_typ">uint32_t</font> timeout);<br>
@@ -129,8 +132,6 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <a name="omni::sync::runnable_thread::set_priority"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> set_priority(<a href="../../../classes/omni-sync-thread_priority-enum_t.html">omni::sync::thread_priority::enum_t</a> p);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-<a name="omni::sync::runnable_thread::state_changed"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-sync-runnable_thread-state_event.html">omni::sync::runnable_thread::state_event</a> state_changed;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// disposing,name,type(),hash()</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MEMBERS_FW(<a href="../../../classes/omni-sync-runnable_thread.html">omni::sync::runnable_thread</a>)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
@@ -138,19 +139,6 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <a name="omni::sync::runnable_thread::state_update"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">virtual</font> <font class="syn_typ">void</font> state_update(<a href="../../../classes/omni-sync-thread_state-enum_t.html">omni::sync::thread_state::enum_t</a> old_state) { <a href="../../../options/omni_unused.html">OMNI_UNUSED</a>(old_state); }<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">private</font>:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// Methods</font><br>
-<a name="omni::sync::runnable_thread::_close_handle"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> _close_handle();<br>
-<a name="omni::sync::runnable_thread::force"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> _hreset(<font class="syn_typ">bool</font> force = <font class="syn_ins">false</font>);<br>
-<a name="omni::sync::runnable_thread::_hvalid"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> _hvalid() <font class="syn_typ">const</font>;<br>
-<a name="omni::sync::runnable_thread::_state_running"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> _state_running() <font class="syn_typ">const</font>;<br>
-<a name="omni::sync::runnable_thread::_state_changed"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> _state_changed(<a href="../../../classes/omni-sync-thread_state-enum_t.html">omni::sync::thread_state::enum_t</a> nstate);<br>
-<a name="omni::sync::runnable_thread::_set_context"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> _set_context(<font class="syn_typ">const</font> <a href="../../../classes/omni-sync-runnable_thread.html">omni::sync::runnable_thread</a>&amp; t2);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../options/omni_non_portable.html">OMNI_NON_PORTABLE</a>)</font><br>
-<a name="omni::sync::runnable_thread::_set_prio"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> _set_prio();<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
-<a name="omni::sync::runnable_thread::_start"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static <a href="../../../options/omni_thread_fnptr_t.html">OMNI_THREAD_FNPTR_T</a> <a href="../../../options/omni_thread_call_t.html">OMNI_THREAD_CALL_T</a> _start(<font class="syn_typ">void</font>* param);<br>
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// Members</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../options/omni_safe_runnable_thread.html">OMNI_SAFE_RUNNABLE_THREAD</a>)</font><br>
 <a name="omni::sync::runnable_thread::m_mtx"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">mutable</font> <a href="../../../classes/omni-sync-basic_lock.html">omni::sync::basic_lock</a> m_mtx;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
@@ -164,6 +152,17 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <a name="omni::sync::runnable_thread::m_priority"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-sync-thread_priority.html">omni::sync::thread_priority</a> m_priority;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
 <a name="omni::sync::runnable_thread::m_isjoined"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">volatile</font> OMNI_RUNTHRD_INT_FW m_isjoined;<br>
+<br>
+<a name="omni::sync::runnable_thread::_close_handle"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> _close_handle();<br>
+<a name="omni::sync::runnable_thread::force"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> _hreset(<font class="syn_typ">bool</font> force = <font class="syn_ins">false</font>);<br>
+<a name="omni::sync::runnable_thread::_hvalid"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> _hvalid() <font class="syn_typ">const</font>;<br>
+<a name="omni::sync::runnable_thread::_state_running"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> _state_running() <font class="syn_typ">const</font>;<br>
+<a name="omni::sync::runnable_thread::_state_changed"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> _state_changed(<a href="../../../classes/omni-sync-thread_state-enum_t.html">omni::sync::thread_state::enum_t</a> nstate);<br>
+<a name="omni::sync::runnable_thread::_set_context"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> _set_context(<font class="syn_typ">const</font> <a href="../../../classes/omni-sync-runnable_thread.html">omni::sync::runnable_thread</a>&amp; t2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../options/omni_non_portable.html">OMNI_NON_PORTABLE</a>)</font><br>
+<a name="omni::sync::runnable_thread::_set_prio"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> _set_prio();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+<a name="omni::sync::runnable_thread::_start"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static <a href="../../../options/omni_thread_fnptr_t.html">OMNI_THREAD_FNPTR_T</a> <a href="../../../options/omni_thread_call_t.html">OMNI_THREAD_CALL_T</a> _start(<font class="syn_typ">void</font>* param);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};<br>
 &nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_cmt">// namespace sync</font><br>
 } <font class="syn_cmt">// namespace omni</font><br>

@@ -1,0 +1,54 @@
+body, table { color: #101010; }
+body { background-color: #EEEEEE; }
+noscript { color: #FF5555; }
+a:link, a:visited { color: #2E93D6; }
+a:hover { color: #34B2E9; }
+/* menu */
+div.menu { border-right: 1px solid #1174D6; }
+/* menu headers */
+div.menu ul li > div { background: #0C549C; color: #E0E0E0; text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.75); }
+/* menu items */
+div.menu li a { color: #003050; text-shadow: 1px 1px 2px rgba(200, 200, 200, 0.8); }
+div.menu li a:hover, div.menu li a.current { color: #F0F0FF; background: #1174D6; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); }
+/* menu search area (javascript enabled) */
+div.menu li .search_js input { border: 1px solid #EEEEEE; }
+/* info title */
+div.content  { border-left: 1px solid #1174D6; }
+div.ptitle { color: #252525; border-bottom: 2px solid #5C81A3; text-shadow: 1px 1px 2px rgba(180,180,200,0.5); }
+/* api list */
+div.apilist > ol > li > input+label+ul > li > a { color: #009B62; }
+div.apilist > ol > li > input+label+ul > li > a:hover { color: #18D28F; }
+/* syntax highlight */
+div.sntx { background-color: #CACACA; border: 1px solid #272727; box-shadow: 0 0 4px #777777; }
+div.cpphtmllines { border-right: 1px solid #1174D6; }
+div.cpphtmlcmnt { border-right: 1px solid #1174D6; }
+div.cpphtmlcmnt > img+br+div { border-right: 1px solid #5A5A5A; }
+div.cpphtmlcmnt > img+br+div+div { border-top: 1px solid #5A5A5A; }
+div.syn_ex + div.c { border-bottom: 1px solid #5A5A5A; }
+/* font keyword syntax highlights */
+font.syn_doc { color: #8080FF; } /* doxy comments: /** */
+font.syn_ins { color: #F7772E; } /* instruction words: if, then */
+font.syn_typ { color: #009AA5; } /* type words: int, char */
+font.syn_pre { color: #303030; } /* preprocessor: #def */
+font.syn_num { color: #8E972D; } /* numbers: 42 */
+font.syn_str { color: #BCBC00; } /* strings: "string" */
+font.syn_chr { color: #FF8080; } /* characters: 'c' */
+font.syn_opr { color: #FFCC00; } /* operators: ==, + */
+font.syn_cmt { color: #009900; } /* comments: //,/* */
+font.syn_dkw { color: #FF80FF; } /* doxy keywords: @see,@brief */
+/* class tree */
+div.classtree li a { color: #101010; }
+/* file tree */
+div.ftree li a { color: #101010; }
+/* download (for the table) */
+div.dlzip { border-top: 1px solid #B9B9B9; border-bottom: 1px solid #B9B9B9; }
+div.dltbl { border-bottom: 1px solid #B9B9B9; }
+div.dltbl > div { border-top: 1px solid #B9B9B9; }
+div.ozipprev > li > div { border: 1px solid #B9B9B9; }
+/* consideration table */
+div.consider table, div.consider table tr, div.consider table tr td { border: 1px solid #CACACA; }
+/* alert text */
+.alert { color: #FF0000; }
+/* solutions from getting_started */
+.solutions tr { border: 1px solid #7A7A7A; }
+.solutions td.f { border-right:1px solid #7A7A7A; }

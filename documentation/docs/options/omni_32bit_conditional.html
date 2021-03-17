@@ -24,20 +24,22 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <div class="docdiv">
     <font class="docu">MACRO</font><br><br>
     <code><font style="font-size:16px;">
-    <code>OMNI_32BIT_CONDITIONAL</code> - A library macro/option
+    <code>OMNI_32BIT_CONDITIONAL</code> - If defined, uses 32-bit types in the <code><a href="../classes/omni-sync-conditional.html">omni::sync::conditional</a></code> class.
     </font></code>
 </div><br>
 <div class="docdiv">
     <font class="docu">SYNOPSIS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    A library macro/option
+    <code>#define <a href="omni_32bit_conditional.html">OMNI_32BIT_CONDITIONAL</a></code><br>
+<br>
+Signifies to enable the <code><a href="omni_32bit_conditional.html">OMNI_32BIT_CONDITIONAL</a></code> flag and utilize 32-bit types.
 </div><br>
 <div class="docdiv">
     <font class="docu">DESCRIPTION</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    A library macro/option that changes certain functionality
+    If defined, the <code><a href="../classes/omni-sync-conditional.html">omni::sync::conditional</a></code> class will utilize a 32-bit intergral type for its wait counter, versus a 64-bit type.
 </div><br>
 <div class="docdiv">
     <font class="docu">CONSIDERATIONS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    No special considerations
+    A wait counter is kept because a conditional type cannot be destroyed while there are active waits; due to this, if a wait operation is preformed more than the maximum value for the underlying counter type, an overflow can occur and put the conditional into an undefined state. For example, if this flag is defined then the counter type will be 32-bit, thus the maximum number of wait operations that can be preforemd without a release operation is <code><a href="http://www.cplusplus.com/reference/limits/numeric_limits/">std::numeric_limits</a></code>&lt;uint32_t&gt;::max().
 </div><br>
 <div class="docdiv">
     <font class="docu">PLATFORM SPECIFIC</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
@@ -45,7 +47,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 </div><br>
 <div class="docdiv">
     <font class="docu">NOTES</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    None.
+    See the considerations for this flag.
 </div><br>
 <!--end content-->
 </div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

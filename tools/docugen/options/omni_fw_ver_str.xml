@@ -1,18 +1,12 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_FW_VER_STR</Name>
-  <Brief>Defines the current framework full version string.
-</Brief>
-  <Considerations>No special consideration.
-</Considerations>
-  <Description>None.
-</Description>
-  <Notes>None.
-</Notes>
-  <PlatformSpecific>No special consideration.
-</PlatformSpecific>
-  <Synopsis>If OMNI_NO_FW_VER is not defined, this macro will expand to the current framework version. If OMNI_FW_VER_USE_TIME is defined, the build date/time will be appeneded to the framework string.
-</Synopsis>
+  <Brief>Defines the current library full version string.</Brief>
+  <Considerations>No special consideration.</Considerations>
+  <Description>None.</Description>
+  <Notes>None.</Notes>
+  <PlatformSpecific>No special consideration.</PlatformSpecific>
+  <Synopsis>If OMNI_NO_FW_VER is not defined, this macro will expand to the current library version. If OMNI_FW_VER_USE_TIME is defined, the build date/time will be appeneded to the library string.</Synopsis>
   <IsHelper>true</IsHelper>
   <IsConstant>false</IsConstant>
   <IsFWHelp>true</IsFWHelp>

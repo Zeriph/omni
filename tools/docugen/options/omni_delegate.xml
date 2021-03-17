@@ -1,10 +1,8 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_DELEGATE</Name>
-  <Brief>A helper macro for defining an omni::delegate
-</Brief>
-  <Considerations>No special considerations.
-</Considerations>
+  <Brief>A helper macro for defining an omni::delegate</Brief>
+  <Considerations>No special considerations.</Considerations>
   <Description>This helper macro allows you to define an omni::delegate of any parameter length without having to specify the specific omni::delegate type. In other words, usually one would have to define an omni::delegate with 2 parameter types by declaring it as such omni::delegate2&lt;void, int, int&gt; additionally, one would have to define an omni::delegate that takes 1 parameter as such omni::delegate1&lt;void, int&gt; this is true for any of the omni::delegate types up to 16 parameters.
 
 So that you do not have to specify the specific delegate type, you can use the omni_delegate helper macro to define the correct omni::delegate type without having to be specific each time, reducing code and confusion.
@@ -61,10 +59,8 @@ int main(int argc, char* argv[])
 }
 @code
 </Description>
-  <Notes>None.
-</Notes>
-  <PlatformSpecific>No platform specific notes.
-</PlatformSpecific>
+  <Notes>None.</Notes>
+  <PlatformSpecific>No platform specific notes.</PlatformSpecific>
   <Synopsis>Creating and defining omni::delegate types can get quite verbose when dealing with a function with multiple parameters. To alleviate this, you can use this helper macro to define an omni::delegate with a number of parameters and a specific return type:
 
 @code

@@ -24,20 +24,20 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <div class="docdiv">
     <font class="docu">MACRO</font><br><br>
     <code><font style="font-size:16px;">
-    <code>OMNI_BASE_LOCALE_CATEGORY</code> - Defines
+    <code>OMNI_BASE_LOCALE_CATEGORY</code> - Defines the underlying locale category to utilize.
     </font></code>
 </div><br>
 <div class="docdiv">
     <font class="docu">SYNOPSIS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    A library macro/option
+    Defines which system locale category to utilize throughout the application; default of LC_ALL.
 </div><br>
 <div class="docdiv">
     <font class="docu">DESCRIPTION</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    A library macro/option that changes certain functionality
+    If <code><a href="omni_no_base_setlocale.html">OMNI_NO_BASE_SETLOCALE</a></code> is not defined, then the setlocale function is called with a category of LC_ALL and an empty locale. If you wish to specify which category and locale to utilize, you can define <code><a href="omni_base_locale_category.html">OMNI_BASE_LOCALE_CATEGORY</a></code> and OMNI_BASE_LOCALE.
 </div><br>
 <div class="docdiv">
     <font class="docu">CONSIDERATIONS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    No special considerations
+    No special considerations.
 </div><br>
 <div class="docdiv">
     <font class="docu">PLATFORM SPECIFIC</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>

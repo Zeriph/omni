@@ -1,18 +1,13 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_B2S</Name>
-  <Brief>Converts a bool to string equivalent
-</Brief>
-  <Considerations>No special considerations
-</Considerations>
-  <Description>Converts a boolean value to its string equivalent; this is a short hand helper macro for OMNI_BOOL2STR
-</Description>
-  <Notes>None.
-</Notes>
-  <PlatformSpecific>No platform specific notes.
-</PlatformSpecific>
-  <Synopsis>Converts a boolean value to its string equivalent
-</Synopsis>
+  <Brief>Converts a bool to string equivalent.</Brief>
+  <Considerations>No special considerations.</Considerations>
+  <Description>Converts a boolean value to its string equivalent; this is a short hand helper macro for OMNI_BOOL2STR.</Description>
+  <Notes>None.</Notes>
+  <PlatformSpecific>No platform specific notes.</PlatformSpecific>
+  <Synopsis>Converts a boolean value to its string equivalent.</Synopsis>
   <IsHelper>true</IsHelper>
   <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
 </MacroOp>

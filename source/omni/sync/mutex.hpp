@@ -51,10 +51,6 @@ namespace omni {
                 OMNI_MEMBERS_FW(omni::sync::mutex) // disposing,name,type(),hash()
                 
             private:
-                // defined but not implemented, should not be copied
-                mutex(const omni::sync::mutex &cp);
-                omni::sync::mutex& operator=(const omni::sync::mutex& other);
-                
                 volatile OMNI_MTX_INT_FW m_lokd;
                 omni::sync::mutex_t m_mtx;
                 #if defined(OMNI_SAFE_MUTEX)
@@ -63,6 +59,10 @@ namespace omni {
                 #if defined(OMNI_MUTEX_OWNER)
                     omni::sync::thread_t m_owner;
                 #endif
+
+                // defined but not implemented, should not be copied
+                mutex(const omni::sync::mutex& cp);
+                omni::sync::mutex& operator=(const omni::sync::mutex& other);
         };
         
         typedef omni::sync::auto_lock<omni::sync::mutex> auto_mutex;

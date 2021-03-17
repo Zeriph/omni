@@ -21,7 +21,6 @@
 #include <omni/defs/global.hpp>
 #include <omni/defs/class_macros.hpp>
 #include <omni/geometry/point2d.hpp>
-#include <omni/math.hpp>
 
 // TODO: add a omni::delegate<bool> break_condition variable to all of these
 

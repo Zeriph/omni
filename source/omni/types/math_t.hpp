@@ -20,37 +20,45 @@
 #define OMNI_MATH_T_HPP 1
 #include <omni/defs/global.hpp>
 #include <omni/defs/math_def.hpp>
+#include <omni/defs/math_radmap_def.hpp>
+#include <omni/defs/class_macros.hpp>
+#include <omni/string/util.hpp>
 #include <functional>
 #include <cstdarg>
 
 namespace omni {
     namespace math {
-        #if !defined(OMNI_NO_EXTERN_CONSTS)
-            extern const double      E;
-            extern const long double E_L;
-            extern const float       E_F;
-            extern const double      PI;
-            extern const long double PI_L;
-            extern const float       PI_F;
-            extern const double      PI_180;
-            extern const long double PI_L_180;
-            extern const float       PI_F_180;
-            extern const double      RADS[361];
-            extern const double      RADS_SIN[361];
-            extern const double      RADS_COS[361];
-        #else
-            const double      E = OMNI_E;
-            const long double E_L = OMNI_E_L;
-            const float       E_F = OMNI_E_F;
-            const double      PI = OMNI_PI;
-            const long double PI_L = OMNI_PI_L;
-            const float       PI_F = OMNI_PI_F;
-            const double      PI_180 = OMNI_PI_180;
-            const long double PI_L_180 = OMNI_PI_L_180;
-            const float       PI_F_180 = OMNI_PI_F_180;
-            #define OMNI_MATH_RAD_MAP_FW
-            #include <omni/xx/math_radmap.hxx>
-            #undef OMNI_MATH_RAD_MAP_FW
+        #if !defined(OMNI_NO_CONSTS)
+            namespace compat {
+                OMNI_CONSTEXT_FW const double PI OMNI_EXT_ASSN_FW(OMNI_MATH_COMPAT_PI);
+                OMNI_CONSTEXT_FW const double E OMNI_EXT_ASSN_FW(OMNI_MATH_COMPAT_E);
+                OMNI_CONSTEXT_FW const double TAU OMNI_EXT_ASSN_FW(OMNI_MATH_COMPAT_TAU);
+            }
+
+            OMNI_CONSTEXT_FW const double E OMNI_EXT_ASSN_FW(OMNI_E);
+            OMNI_CONSTEXT_FW const double PI OMNI_EXT_ASSN_FW(OMNI_PI);
+            OMNI_CONSTEXT_FW const double PI_180 OMNI_EXT_ASSN_FW(OMNI_PI_180);
+            OMNI_CONSTEXT_FW const double TAU OMNI_EXT_ASSN_FW(OMNI_TAU);
+            
+            OMNI_CONSTEXT_FW const long double E_L OMNI_EXT_ASSN_FW(OMNI_E_L);
+            OMNI_CONSTEXT_FW const long double PI_L OMNI_EXT_ASSN_FW(OMNI_PI_L);
+            OMNI_CONSTEXT_FW const long double PI_L_180 OMNI_EXT_ASSN_FW(OMNI_PI_L_180);
+            OMNI_CONSTEXT_FW const long double TAU_L OMNI_EXT_ASSN_FW(OMNI_TAU_L);
+            
+            OMNI_CONSTEXT_FW const float E_F OMNI_EXT_ASSN_FW(OMNI_E_F);
+            OMNI_CONSTEXT_FW const float PI_F OMNI_EXT_ASSN_FW(OMNI_PI_F);
+            OMNI_CONSTEXT_FW const float PI_F_180 OMNI_EXT_ASSN_FW(OMNI_PI_F_180);
+            OMNI_CONSTEXT_FW const float TAU_F OMNI_EXT_ASSN_FW(OMNI_TAU_F);
+
+            #if !defined(OMNI_NO_EXTERN_CONSTS)
+                extern const double      RADS[361];
+                extern const double      RADS_SIN[361];
+                extern const double      RADS_COS[361];
+            #else
+                const double      RADS[] = OMNI_MATH_RADS;
+                const double      RADS_SIN[] = OMNI_MATH_RADS_SIN;
+                const double      RADS_COS[] = OMNI_MATH_RADS_COS;
+            #endif
         #endif
 
         template < typename T >

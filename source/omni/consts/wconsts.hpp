@@ -23,6 +23,8 @@
 #include <string>
 #include <cstdlib> // wchar_t
 
+#if !defined(OMNI_NO_CONSTS)
+
 namespace omni {
     namespace wconsts {
         #define OMNI_MISC_T_FW 2
@@ -34,5 +36,7 @@ namespace omni {
         #undef OMNI_MISC_T_FW
     }
 }
+
+#endif
 
 #endif // OMNI_WCONSTANTS_HPP

@@ -51,21 +51,19 @@ namespace omni {
                 OMNI_MEMBERS_FW(omni::sync::semaphore) // disposing,name,type(),hash()
                 
             private:
-                // defined but not implemented, should not be copied
-                semaphore(const omni::sync::semaphore& cp); // = delete;
-                omni::sync::semaphore& operator=(const omni::sync::semaphore& other); // = delete;
-                
-                // Functions
-                void _init(uint32_t maxent);
-                void _dispose();
-
-                // Members
                 uint32_t m_cnt;
                 uint32_t m_max;
                 omni::sync::semaphore_t m_sem;
                 #if defined(OMNI_SAFE_SEMAPHORE)
                     mutable omni::sync::mutex_t m_mtx;
                 #endif
+                
+                // defined but not implemented, should not be copied
+                semaphore(const omni::sync::semaphore& cp); // = delete;
+                omni::sync::semaphore& operator=(const omni::sync::semaphore& other); // = delete;
+
+                void _init(uint32_t maxent);
+                void _dispose();
         };
     }
 }

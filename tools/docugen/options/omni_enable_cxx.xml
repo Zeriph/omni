@@ -9,4 +9,5 @@
   <Synopsis>Current C++11/14/17 support will be added in future revisions.</Synopsis>
   <IsHelper>false</IsHelper>
   <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
 </MacroOp>

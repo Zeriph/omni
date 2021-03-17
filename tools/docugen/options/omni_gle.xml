@@ -1,18 +1,12 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_GLE</Name>
-  <Brief>Defines the system 'get last error' API used based on OS detected.
-</Brief>
-  <Considerations>No special consideration.
-</Considerations>
-  <Description>None.
-</Description>
-  <Notes>None.
-</Notes>
-  <PlatformSpecific>No special consideration.
-</PlatformSpecific>
-  <Synopsis>None.
-</Synopsis>
+  <Brief>Defines the system 'get last error' API used based on OS detected.</Brief>
+  <Considerations>No special consideration.</Considerations>
+  <Description>None.</Description>
+  <Notes>None.</Notes>
+  <PlatformSpecific>No special consideration.</PlatformSpecific>
+  <Synopsis>None.</Synopsis>
   <IsHelper>true</IsHelper>
   <IsConstant>false</IsConstant>
   <IsFWHelp>true</IsFWHelp>

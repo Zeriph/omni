@@ -25,13 +25,15 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <!--start line numbers-->
 0001:<br><div id="cmntl1" name="cmntl1">0002:<br>0003:<br>0004:<br>0005:<br>0006:<br>0007:<br>0008:<br>0009:<br>00010:<br>00011:<br>00012:<br>00013:<br>00014:<br>00015:<br>00016:<br>00017:<br>00018:<br></div>00019:<br>
 00020:<br>00021:<br>00022:<br>00023:<br>00024:<br>00025:<br>00026:<br>00027:<br>00028:<br>00029:<br>00030:<br>00031:<br>00032:<br>00033:<br>00034:<br>00035:<br>00036:<br>00037:<br>00038:<br>00039:<br>
-00040:<br>00041:<br>00042:<br>00043:<br>00044:<br>00045:<br>00046:<br>00047:<br>00048:<br>00049:<br>00050:<br>00051:<br>00052:<br>00053:<br>00054:<br>00055:<br>00056:<br>
+00040:<br>00041:<br>00042:<br>00043:<br>00044:<br>00045:<br>00046:<br>00047:<br>00048:<br>00049:<br>00050:<br>00051:<br>00052:<br>00053:<br>00054:<br>00055:<br>00056:<br>00057:<br>00058:<br>00059:<br>
+00060:<br>00061:<br>00062:<br>00063:<br>00064:<br>00065:<br>00066:<br>
 <!--end line numbers-->
 </div><div class="cpphtmlcmnt">
 <!--start collapse columns-->
-<img src="../../../content/tree/min.gif" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<img src="../../../content/tree/min.gif" alt="Min/Max" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br>
 <!--end collapse columns-->
 </div><div class="cpphtml" style="margin-left:3em;">
 <!--start highlighted code-->
@@ -60,6 +62,8 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <font class="syn_pre">#include &lt;<a href="../omni/consts/cconsts.hpp.html">omni/consts/cconsts.hpp</a>&gt;</font><br>
 <font class="syn_pre">#include &lt;<a href="../omni/consts/wconsts.hpp.html">omni/consts/wconsts.hpp</a>&gt;</font><br>
 <br>
+<font class="syn_pre">#if !defined(<a href="../../options/omni_no_consts.html">OMNI_NO_CONSTS</a>)</font><br>
+<br>
 <font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../options/omni_unicode.html">OMNI_UNICODE</a>)</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_CONSTS_NS_FW <a href="../../classes/omni-wconsts.html">omni::wconsts</a></font><br>
 <font class="syn_pre">#else</font><br>
@@ -73,21 +77,29 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <a name="omni::consts::size"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">namespace</font> size {<br>
 <a name="omni::consts::size::binary"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">namespace</font> binary {<br>
 <a name="omni::consts::size::binary::string"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">namespace</font> string = OMNI_CONSTS_NS_FW::size::binary::string;<br>
-<a name="omni::consts::size::binary::KB"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> <font class="syn_typ">uint32_t</font> KB OMNI_EXT_ASSN_FW(<a href="../../options/omni_kib_ival.html">OMNI_KIB_IVAL</a>);<br>
-<a name="omni::consts::size::binary::MB"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> <font class="syn_typ">uint32_t</font> MB OMNI_EXT_ASSN_FW(<a href="../../options/omni_mib_ival.html">OMNI_MIB_IVAL</a>);<br>
-<a name="omni::consts::size::binary::GB"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> <font class="syn_typ">uint32_t</font> GB OMNI_EXT_ASSN_FW(<a href="../../options/omni_gib_ival.html">OMNI_GIB_IVAL</a>);<br>
+<a name="omni::consts::size::binary::KB"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> <font class="syn_typ">uint64_t</font> KB OMNI_EXT_ASSN_FW(<a href="../../options/omni_kib_ival.html">OMNI_KIB_IVAL</a>);<br>
+<a name="omni::consts::size::binary::MB"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> <font class="syn_typ">uint64_t</font> MB OMNI_EXT_ASSN_FW(<a href="../../options/omni_mib_ival.html">OMNI_MIB_IVAL</a>);<br>
+<a name="omni::consts::size::binary::GB"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> <font class="syn_typ">uint64_t</font> GB OMNI_EXT_ASSN_FW(<a href="../../options/omni_gib_ival.html">OMNI_GIB_IVAL</a>);<br>
+<a name="omni::consts::size::binary::TB"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> <font class="syn_typ">uint64_t</font> TB OMNI_EXT_ASSN_FW(<a href="../../options/omni_tib_ival.html">OMNI_TIB_IVAL</a>);<br>
+<a name="omni::consts::size::binary::PB"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> <font class="syn_typ">uint64_t</font> PB OMNI_EXT_ASSN_FW(<a href="../../options/omni_pib_ival.html">OMNI_PIB_IVAL</a>);<br>
+<a name="omni::consts::size::binary::EB"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> <font class="syn_typ">uint64_t</font> EB OMNI_EXT_ASSN_FW(<a href="../../options/omni_eib_ival.html">OMNI_EIB_IVAL</a>);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 <a name="omni::consts::size::decimal"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">namespace</font> decimal {<br>
 <a name="omni::consts::size::decimal::string"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">namespace</font> string = OMNI_CONSTS_NS_FW::size::decimal::string;<br>
-<a name="omni::consts::size::decimal::KB"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> <font class="syn_typ">uint32_t</font> KB OMNI_EXT_ASSN_FW(<a href="../../options/omni_kb_ival.html">OMNI_KB_IVAL</a>); <br>
-<a name="omni::consts::size::decimal::MB"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> <font class="syn_typ">uint32_t</font> MB OMNI_EXT_ASSN_FW(<a href="../../options/omni_mb_ival.html">OMNI_MB_IVAL</a>);<br>
-<a name="omni::consts::size::decimal::GB"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> <font class="syn_typ">uint32_t</font> GB OMNI_EXT_ASSN_FW(<a href="../../options/omni_gb_ival.html">OMNI_GB_IVAL</a>);<br>
+<a name="omni::consts::size::decimal::KB"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> <font class="syn_typ">uint64_t</font> KB OMNI_EXT_ASSN_FW(<a href="../../options/omni_kb_ival.html">OMNI_KB_IVAL</a>); <br>
+<a name="omni::consts::size::decimal::MB"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> <font class="syn_typ">uint64_t</font> MB OMNI_EXT_ASSN_FW(<a href="../../options/omni_mb_ival.html">OMNI_MB_IVAL</a>);<br>
+<a name="omni::consts::size::decimal::GB"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> <font class="syn_typ">uint64_t</font> GB OMNI_EXT_ASSN_FW(<a href="../../options/omni_gb_ival.html">OMNI_GB_IVAL</a>);<br>
+<a name="omni::consts::size::decimal::TB"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> <font class="syn_typ">uint64_t</font> TB OMNI_EXT_ASSN_FW(<a href="../../options/omni_tb_ival.html">OMNI_TB_IVAL</a>);<br>
+<a name="omni::consts::size::decimal::PB"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> <font class="syn_typ">uint64_t</font> PB OMNI_EXT_ASSN_FW(<a href="../../options/omni_pb_ival.html">OMNI_PB_IVAL</a>);<br>
+<a name="omni::consts::size::decimal::EB"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> <font class="syn_typ">uint64_t</font> EB OMNI_EXT_ASSN_FW(<a href="../../options/omni_eb_ival.html">OMNI_EB_IVAL</a>);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;}<br>
 }<br>
 <br>
 <font class="syn_pre">#undef OMNI_CONSTS_NS_FW</font><br>
+<br>
+<font class="syn_pre">#endif</font><br>
 <br>
 <font class="syn_pre">#endif <font class="syn_cmt">// OMNI_CONSTANTS_HPP</font></font><br>
 <!--end highlighted code-->

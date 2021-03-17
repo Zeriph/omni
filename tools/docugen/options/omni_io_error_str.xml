@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_IO_ERROR_STR</Name>
+  <Brief>"General I/O error"</Brief>
+  <Considerations>No special considerations</Considerations>
+  <Description>If not already defined, defines the library macro constant of:
+@code
+"KiB"
+@code
+</Description>
+  <Notes>None.</Notes>
+  <PlatformSpecific>No platform specific notes.</PlatformSpecific>
+  <Synopsis>A library macro/option</Synopsis>
+  <IsHelper>true</IsHelper>
+  <IsConstant>true</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
+</MacroOp>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_BIND_CONST</Name>
-  <Brief>A helper macro for binding the omni::delegate to const members</Brief>
+  <Brief>A helper macro for binding the omni::delegate to const members.</Brief>
   <Considerations>No special considerations.</Considerations>
   <Description>See the documentation for OMNI_BIND for more information.</Description>
   <Notes>None.</Notes>
@@ -9,4 +9,5 @@
   <Synopsis>This macro is similar in to the OMNI_BIND macro, except it calls the omni::delegate::bind_const function to bind to member functions with the const qualifier.</Synopsis>
   <IsHelper>true</IsHelper>
   <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
 </MacroOp>

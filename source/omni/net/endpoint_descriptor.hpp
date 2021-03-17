@@ -75,6 +75,16 @@ namespace omni {
                     // if CXX buffer.data
                     return this->_receive(&buffer[0], (buffer.size() * sizeof(T)), flags, received);
                 }
+                template < size_t SZ >
+                omni::net::socket_error receive(char (&buffer)[SZ], uint32_t& received)
+                {
+                    return this->_receive(buffer, SZ, omni::net::socket_flags::NONE, received);
+                }
+                template < size_t SZ >
+                omni::net::socket_error receive(char (&buffer)[SZ], omni::net::socket_flags flags, uint32_t& received)
+                {
+                    return this->_receive(buffer, SZ, flags, received);
+                }
                 omni::net::socket_error unsafe_receive(char* buffer, uint32_t buffer_size, uint32_t& received)
                 {
                     return this->_receive(buffer, buffer_size, omni::net::socket_flags::NONE, received);
@@ -103,6 +113,16 @@ namespace omni {
                 {
                     return this->_send(&buffer[0], (buffer.size() * sizeof(T)), flags, sent);
                 }
+                template < size_t SZ >
+                omni::net::socket_error send(const char (&buffer)[SZ], uint32_t& sent)
+                {
+                    return this->_send(buffer, SZ, omni::net::socket_flags::NONE, sent);
+                }
+                template < size_t SZ >
+                omni::net::socket_error send(const char (&buffer)[SZ], omni::net::socket_flags flags, uint32_t& sent)
+                {
+                    return this->_send(buffer, SZ, flags, sent);
+                }
                 omni::net::socket_error unsafe_send(const char* buffer, uint32_t buffer_size, uint32_t& sent)
                 {
                     return this->_send(buffer, buffer_size, omni::net::socket_flags::NONE, sent);
@@ -121,10 +141,14 @@ namespace omni {
                 std::string to_string() const;
                 std::wstring to_wstring() const;
 
-                omni::net::endpoint_descriptor& operator=(omni::net::endpoint_descriptor &other);
-                bool operator==(const omni::net::endpoint_descriptor &other) const;
-                bool operator==(const omni::net::socket_t &sock) const;
+                omni::net::endpoint_descriptor& operator=(omni::net::endpoint_descriptor& other);
+                bool operator==(const omni::net::endpoint_descriptor& other) const;
+                bool operator==(const omni::net::socket_t& sock) const;
                 bool operator==(uint32_t ep) const;
+
+                inline bool operator!=(const omni::net::endpoint_descriptor& other) const { return !(*this == other); }
+                inline bool operator!=(const omni::net::socket_t& sock) const { return !(*this == sock); }
+                inline bool operator!=(uint32_t ep) const { return !(*this == ep); }
 
                 operator std::string() const
                 {

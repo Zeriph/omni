@@ -79,9 +79,10 @@ namespace omni {
                 OMNI_OSTREAM_FW(omni::application::argparser)
                 
             private:
-                omni::seq::string_t::const_iterator _find(omni::seq::string_t::const_iterator it, const omni::string_t& f) const;
                 omni::seq::string_t m_args;
                 uint64_t m_argc;
+                
+                omni::seq::string_t::const_iterator _find(omni::seq::string_t::const_iterator it, const omni::string_t& f) const;
         };
     }
 }

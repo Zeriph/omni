@@ -148,11 +148,13 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 000002440:<br>000002441:<br>000002442:<br>000002443:<br>000002444:<br>000002445:<br>000002446:<br>000002447:<br>000002448:<br>000002449:<br>000002450:<br>000002451:<br>000002452:<br>000002453:<br>000002454:<br>000002455:<br>000002456:<br>000002457:<br>000002458:<br>000002459:<br>
 000002460:<br>000002461:<br>000002462:<br>000002463:<br>000002464:<br>000002465:<br>000002466:<br>000002467:<br>000002468:<br>000002469:<br>000002470:<br>000002471:<br>000002472:<br>000002473:<br>000002474:<br>000002475:<br>000002476:<br>000002477:<br>000002478:<br>000002479:<br>
 000002480:<br>000002481:<br>000002482:<br>000002483:<br>000002484:<br>000002485:<br>000002486:<br>000002487:<br>000002488:<br>000002489:<br>000002490:<br>000002491:<br>000002492:<br>000002493:<br>000002494:<br>000002495:<br>000002496:<br>000002497:<br>000002498:<br>000002499:<br>
-000002500:<br>000002501:<br>000002502:<br>000002503:<br>000002504:<br>000002505:<br>000002506:<br>000002507:<br>000002508:<br>
+000002500:<br>000002501:<br>000002502:<br>000002503:<br>000002504:<br>000002505:<br>000002506:<br>000002507:<br>000002508:<br>000002509:<br>000002510:<br>000002511:<br>000002512:<br>000002513:<br>000002514:<br>000002515:<br>000002516:<br>000002517:<br>000002518:<br>000002519:<br>
+000002520:<br>000002521:<br>000002522:<br>000002523:<br>000002524:<br>000002525:<br>000002526:<br>000002527:<br>000002528:<br>
 <!--end line numbers-->
 </div><div class="cpphtmlcmnt">
 <!--start collapse columns-->
-<img src="../../../../content/tree/min.gif" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<img src="../../../../content/tree/min.gif" alt="Min/Max" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -1247,7 +1249,26 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
 <a name="omni::geometry::rectangle::operator!="></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> <font class="syn_ins">operator</font>!=(<font class="syn_typ">const</font> <a href="../../../classes/omni-geometry-rectangle.html">omni::geometry::rectangle</a>&lt;T&gt;&amp; val) <font class="syn_typ">const</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// TODO: make sure for every operator== there is an operator!=</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> !(*<font class="syn_typ">this</font> == val);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> <font class="syn_ins">operator</font>!=(<font class="syn_typ">const</font> <a href="../../../classes/omni-geometry-point2d.html">omni::geometry::point2d</a>&lt;T&gt;&amp; val) <font class="syn_typ">const</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> !(*<font class="syn_typ">this</font> == val);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> <font class="syn_ins">operator</font>!=(<font class="syn_typ">const</font> <a href="../../../classes/omni-geometry-raw_point2d.html">omni::geometry::raw_point2d</a>&lt;T&gt;&amp; val) <font class="syn_typ">const</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> !(*<font class="syn_typ">this</font> == val);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> <font class="syn_ins">operator</font>!=(<font class="syn_typ">const</font> <a href="../../../classes/omni-geometry-size.html">omni::geometry::size</a>&lt;T&gt;&amp; val) <font class="syn_typ">const</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> !(*<font class="syn_typ">this</font> == val);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> <font class="syn_ins">operator</font>!=(<font class="syn_typ">const</font> <a href="../../../classes/omni-geometry-raw_size.html">omni::geometry::raw_size</a>&lt;T&gt;&amp; val) <font class="syn_typ">const</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> !(*<font class="syn_typ">this</font> == val);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
@@ -1599,6 +1620,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <br>
 <a name="omni::geometry::rectangle::_intersects_with"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> _intersects_with(T left, T top, T right, T bottom) <font class="syn_typ">const</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// TODO: do line intersection instead</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_RECT_LTRB_CONTAINS_FW(<font class="syn_typ">this</font>-&gt;m_loc.x, <font class="syn_typ">this</font>-&gt;m_loc.y, <font class="syn_typ">this</font>-&gt;m_edge.x, <font class="syn_typ">this</font>-&gt;m_edge.y, left, top) ||<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_RECT_LTRB_CONTAINS_FW(<font class="syn_typ">this</font>-&gt;m_loc.x, <font class="syn_typ">this</font>-&gt;m_loc.y, <font class="syn_typ">this</font>-&gt;m_edge.x, <font class="syn_typ">this</font>-&gt;m_edge.y, right, top) ||<br>

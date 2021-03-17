@@ -23,13 +23,13 @@
 // DEV_NOTE: within the library, if these are implemented, for consistency, try to keep the definition on one line
 
 #define OMNI_OSTREAM_FW(...) OMNI_OSTREAM_OPERATOR(to_string(), __VA_ARGS__) \
-                             OMNI_WOSTREAM_OPERATOR(to_wstring(), __VA_ARGS__)
+                            OMNI_WOSTREAM_OPERATOR(to_wstring(), __VA_ARGS__)
 
 #define OMNI_OSTREAM_FN_FW(...) OMNI_OSTREAM_FN_OPERATOR(to_string, __VA_ARGS__) \
                                 OMNI_WOSTREAM_FN_OPERATOR(to_wstring, __VA_ARGS__)
 
 #define OMNI_OSTREAM_STR_FW(...) OMNI_FOSTREAM_OPC2T_FW(to_string_t(), __VA_ARGS__) \
-                                 OMNI_FOSTREAM_OPW2T_FW(to_string_t(), __VA_ARGS__)
+                                OMNI_FOSTREAM_OPW2T_FW(to_string_t(), __VA_ARGS__)
 
 #if defined(OMNI_OBJ_CTV1_FW)
     #undef OMNI_OBJ_CTV1_FW
@@ -160,6 +160,7 @@
 #endif
 
 #define OMNI_MEMBERS_FW(...) OMNI_MTI_MBRT_FW(__VA_ARGS__) OMNI_MDE_MBRT_FW(__VA_ARGS__) OMNI_MNM_MBRT_FW 
+
 #define OMNI_ASSIGN_FW(T) OMNI_MTI_SETCP_FW(T) OMNI_MDE_SETCP_FW(T) OMNI_MNM_SETCP_FW(T)
 #define OMNI_DTOR_FW OMNI_MDE_DTOR_FW
 

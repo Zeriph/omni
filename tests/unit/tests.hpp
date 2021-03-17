@@ -7,6 +7,7 @@
 #include "units/chrono.hpp"
 #include "units/color.hpp"
 #include "units/conditional.hpp"
+#include "units/crypto.hpp"
 #include "units/date_time.hpp"
 #include "units/delegate.hpp"
 #include "units/environment.hpp"

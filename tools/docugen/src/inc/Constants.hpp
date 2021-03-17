@@ -35,11 +35,11 @@ namespace OmniDocuGen
 
         const std::string HtmlHashTable =
             "Download the latest version: <b>" OMNI_FW_VER_STR "</b><br><div class=\"dltbl code\" style=\"font-size:14px;\"><div><span><a href=\"files/src.zip\">" OMNI_EOL_RN
-            "<img src=\"content/dl.gif\">src.zip</a><span>({0})</span></span><span>- The latest source files." OMNI_EOL_RN
+            "<img src=\"content/dl.gif\" alt=\"Download\">src.zip</a><span>({0})</span></span><span style=\"padding-left:0.75em;\">- The latest source files." OMNI_EOL_RN
             "<font class=\"toppg\">(<a href=\"download.html#srczip\">info</a>)</font></span></div><div><span><a href=\"files/help.zip\">" OMNI_EOL_RN
-            "<img src=\"content/dl.gif\">help.zip</a><span>({1})</span></span><span>- The help documentation for the library (this site)." OMNI_EOL_RN
+            "<img src=\"content/dl.gif\" alt=\"Download\">help.zip</a><span>({1})</span></span><span style=\"padding-left:0.75em;\">- The help documentation for the library (this site)." OMNI_EOL_RN
             "<font class=\"toppg\">(<a href=\"download.html#helpzip\">info</a>)</font></span></div><div><span><a href=\"files/omni.zip\">" OMNI_EOL_RN
-            "<img src=\"content/dl.gif\">omni.zip</a><span>({2})</span></span><span>- A combined file of the src.zip and help.zip." OMNI_EOL_RN
+            "<img src=\"content/dl.gif\" alt=\"Download\">omni.zip</a><span>({2})</span></span><span style=\"padding-left:0.75em;\">- A combined file of the src.zip and help.zip." OMNI_EOL_RN
             "<font class=\"toppg\">(<a href=\"download.html#omnizip\">info</a>)</font></span></div></div>" OMNI_EOL_RN;
 
         const std::string ViewFolderTemplate = "<li class=\"fldr\" title=\"folder: {0}\"><label for=\"{0}_fldr\">{0}</label>\r\n<input type=\"checkbox\" id=\"{0}_fldr\" name=\"{0}_fldr\" />\r\n<ol id=\"fldr_{0}\" name=\"fldr_{0}\">\r\n";

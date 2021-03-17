@@ -32,11 +32,11 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 0000120:<br>0000121:<br>0000122:<br>0000123:<br>0000124:<br>0000125:<br>0000126:<br>0000127:<br>0000128:<br>0000129:<br>0000130:<br>0000131:<br>0000132:<br>0000133:<br>0000134:<br>0000135:<br>0000136:<br>0000137:<br>0000138:<br>0000139:<br>
 0000140:<br>0000141:<br>0000142:<br>0000143:<br>0000144:<br>0000145:<br>0000146:<br>0000147:<br>0000148:<br>0000149:<br>0000150:<br>0000151:<br>0000152:<br>0000153:<br>0000154:<br>0000155:<br>0000156:<br>0000157:<br>0000158:<br>0000159:<br>
 0000160:<br>0000161:<br>0000162:<br>0000163:<br>0000164:<br>0000165:<br>0000166:<br>0000167:<br>0000168:<br>0000169:<br>0000170:<br>0000171:<br>0000172:<br>0000173:<br>0000174:<br>0000175:<br>0000176:<br>0000177:<br>0000178:<br>0000179:<br>
-0000180:<br>0000181:<br>0000182:<br>0000183:<br>0000184:<br>0000185:<br>0000186:<br>0000187:<br>0000188:<br>0000189:<br>0000190:<br>0000191:<br>0000192:<br>0000193:<br>0000194:<br>
+0000180:<br>0000181:<br>0000182:<br>0000183:<br>0000184:<br>0000185:<br>0000186:<br>0000187:<br>0000188:<br>0000189:<br>0000190:<br>0000191:<br>
 <!--end line numbers-->
 </div><div class="cpphtmlcmnt">
 <!--start collapse columns-->
-<img src="../../../../content/tree/min.gif" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<img src="../../../../content/tree/min.gif" alt="Min/Max" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -45,7 +45,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br>
 <!--end collapse columns-->
 </div><div class="cpphtml" style="margin-left:3.75em;">
 <!--start highlighted code-->
@@ -174,20 +174,6 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">private</font>:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// Methods</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;basic_thread(<font class="syn_typ">const</font> <a href="../../../classes/omni-sync-thread_start.html">omni::sync::thread_start</a>&amp; mthd, <font class="syn_typ">bool</font> tpool);<br>
-<a name="omni::sync::basic_thread::_chkmthd"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> _chkmthd();<br>
-<a name="omni::sync::basic_thread::_close_handle"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> _close_handle(<font class="syn_typ">bool</font> allow_rejoin);<br>
-<a name="omni::sync::basic_thread::_hreset"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> _hreset(<font class="syn_typ">bool</font> force, <font class="syn_typ">bool</font> allow_rejoin);<br>
-<a name="omni::sync::basic_thread::_hvalid"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> _hvalid() <font class="syn_typ">const</font>;<br>
-<a name="omni::sync::basic_thread::_state_running"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> _state_running() <font class="syn_typ">const</font>;<br>
-<a name="omni::sync::basic_thread::_state_machine"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> _state_machine(<font class="syn_typ">const</font> <a href="../../../classes/omni-sync-thread_t.html">omni::sync::thread_t</a> tid);<br>
-<a name="omni::sync::basic_thread::_set_context"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> _set_context(<font class="syn_typ">const</font> <a href="../../../classes/omni-sync-basic_thread.html">omni::sync::basic_thread</a>&amp; t2);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../options/omni_non_portable.html">OMNI_NON_PORTABLE</a>)</font><br>
-<a name="omni::sync::basic_thread::_set_prio"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> _set_prio();<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// Members</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../options/omni_safe_basic_thread.html">OMNI_SAFE_BASIC_THREAD</a>)</font><br>
 <a name="omni::sync::basic_thread::m_mtx"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">mutable</font> <a href="../../../classes/omni-sync-basic_lock.html">omni::sync::basic_lock</a> m_mtx;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
@@ -202,6 +188,17 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
 <a name="omni::sync::basic_thread::m_status"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">volatile</font> OMNI_BTHRD_INT_FW m_status;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;basic_thread(<font class="syn_typ">const</font> <a href="../../../classes/omni-sync-thread_start.html">omni::sync::thread_start</a>&amp; mthd, <font class="syn_typ">bool</font> tpool);<br>
+<a name="omni::sync::basic_thread::_chkmthd"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> _chkmthd();<br>
+<a name="omni::sync::basic_thread::_close_handle"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> _close_handle(<font class="syn_typ">bool</font> allow_rejoin);<br>
+<a name="omni::sync::basic_thread::_hreset"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> _hreset(<font class="syn_typ">bool</font> force, <font class="syn_typ">bool</font> allow_rejoin);<br>
+<a name="omni::sync::basic_thread::_hvalid"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> _hvalid() <font class="syn_typ">const</font>;<br>
+<a name="omni::sync::basic_thread::_state_running"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> _state_running() <font class="syn_typ">const</font>;<br>
+<a name="omni::sync::basic_thread::_state_machine"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> _state_machine(<font class="syn_typ">const</font> <a href="../../../classes/omni-sync-thread_t.html">omni::sync::thread_t</a> tid);<br>
+<a name="omni::sync::basic_thread::_set_context"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> _set_context(<font class="syn_typ">const</font> <a href="../../../classes/omni-sync-basic_thread.html">omni::sync::basic_thread</a>&amp; t2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../options/omni_non_portable.html">OMNI_NON_PORTABLE</a>)</font><br>
+<a name="omni::sync::basic_thread::_set_prio"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> _set_prio();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
 <a name="omni::sync::basic_thread::_start"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static <a href="../../../options/omni_thread_fnptr_t.html">OMNI_THREAD_FNPTR_T</a> <a href="../../../options/omni_thread_call_t.html">OMNI_THREAD_CALL_T</a> _start(<font class="syn_typ">void</font>* param);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
 <a name="omni::sync::basic_thread::manager"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">class</font> manager<br>

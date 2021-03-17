@@ -21,7 +21,6 @@
 #include <omni/defs/global.hpp>
 #include <omni/defs/class_macros.hpp>
 #include <omni/geometry/point3d.hpp>
-#include <omni/math.hpp>
 
 #if defined(OMNI_SAFE_VECTOR3)
     #include <omni/sync/basic_lock.hpp>
@@ -278,7 +277,7 @@ namespace omni {
                 {
                     OMNI_SAFE_VEC3ALOCK_FW
                     if (this != &b) {
-                        OMNI_SAFE_VEC2OALOCK_FW(b)
+                        OMNI_SAFE_VEC3OALOCK_FW(b)
                         return std::sqrt(
                             ((b._x() - this->_x()) * (b._x() - this->_x())) + 
                             ((b._y() - this->_y()) * (b._y() - this->_y())) + 
@@ -531,6 +530,11 @@ namespace omni {
                         omni::math::are_equal(this->_direction_z(), b._direction_z())
                     )
                     OMNI_EQUAL_FW(b);
+                }
+
+                bool operator!=(const omni::geometry::vector3<V>& b) const
+                {
+                    return !(*this == b);
                 }
 
                 omni::geometry::vector3<V>& operator=(const omni::geometry::vector3<V>& b)

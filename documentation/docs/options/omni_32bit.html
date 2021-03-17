@@ -24,20 +24,22 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <div class="docdiv">
     <font class="docu">MACRO</font><br><br>
     <code><font style="font-size:16px;">
-    <code>OMNI_32BIT</code> - A library macro/option
+    <code>OMNI_32BIT</code> - If defined, enables all <code>OMNI_32BIT_X</code> flags.
     </font></code>
 </div><br>
 <div class="docdiv">
     <font class="docu">SYNOPSIS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    A library macro/option
+    <code>#define <a href="omni_32bit.html">OMNI_32BIT</a></code><br>
+<br>
+Signifies to enable all OMNI_32BIT_X flags.
 </div><br>
 <div class="docdiv">
     <font class="docu">DESCRIPTION</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    A library macro/option that changes certain functionality
+    If defined, various classes in the library will utilize a 32-bit intergral type, versus a 64-bit type for their undelying values. This can reduce the size of some classes due to alignment and padding, as well as make the usage of the classes more CPU effecient depending on architecture.
 </div><br>
 <div class="docdiv">
     <font class="docu">CONSIDERATIONS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    No special considerations
+    The classes in which an <code><a href="omni_32bit.html">OMNI_32BIT</a></code> flag exist will use 32-bit types, thus limiting their minimum and maximum values.
 </div><br>
 <div class="docdiv">
     <font class="docu">PLATFORM SPECIFIC</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>

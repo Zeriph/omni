@@ -56,9 +56,6 @@ namespace omni {
                 template < typename T, uint16_t SZ >
                 omni::net::socket_error receive(omni::stack_buffer<T, SZ> buffer, uint32_t& rcvd);
 
-                template < typename T >
-                omni::net::socket_error receive(omni::heap_buffer<T> buffer, uint32_t& rcvd);
-
                 omni::net::socket_error receive(char* buffer, uint32_t len, uint32_t& rcvd);
                 omni::net::socket_error receive(int8_t* buffer, uint32_t len, uint32_t& rcvd);
                 omni::net::socket_error receive(uint8_t* buffer, uint32_t len, uint32_t& rcvd);
@@ -81,14 +78,16 @@ namespace omni {
                 std::string to_string() const;
                 std::wstring to_wstring() const;
 
-
                 // TODO: omni::delegate2<void, char*, uint32_t> data_received;
 
-
-                omni::net::client& operator=(omni::net::client &other);
-                bool operator==(const omni::net::client &other) const;
-                bool operator==(const omni::net::socket_t &sock) const;
+                omni::net::client& operator=(omni::net::client& other);
+                bool operator==(const omni::net::client& other) const;
+                bool operator==(const omni::net::socket_t& sock) const;
                 bool operator==(uint32_t ep) const;
+
+                inline bool operator!=(const omni::net::client& other) const { return !(*this == other); }
+                inline bool operator!=(const omni::net::socket_t& sock) const { return !(*this == sock); }
+                inline bool operator!=(uint32_t ep) const { return !(*this == ep); }
 
                 operator std::string() const
                 {

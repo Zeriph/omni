@@ -15,6 +15,8 @@ zexf="-DOMNI_UT_FULL -DOMNI_SHOW_DEBUG=5 -DOMNI_SHOW_DEBUG_ERR -DOMNI_SHOW_DEBUG
 if [ "$1" == "list" ]; then
     find ${exdir} -type f -name "*.cpp" -exec basename "{}" ";"
     exit 0
+elif [ "$1" == "html" ]; then
+    xfile="${fwexd}/index_html.cpp"
 elif [ "$1" == "fw" ]; then
     if [ "$2" == "list" ]; then
         tname=`basename ${fwexd}`

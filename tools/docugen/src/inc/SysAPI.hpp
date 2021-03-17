@@ -173,9 +173,9 @@ namespace OmniDocuGen
                 if (this->Link.empty() && this->Name.empty()) { return std::string(); }
                 std::stringstream ss;
                 ss << "<li><a href=\"" << this->Link << "\">" << this->Name << "</a><ul>\r\n";
-                foreach_c (std::string, it, this->References) {
+                /*foreach_c (std::string, it, this->References) {
                     ss << "<li><a href=\"htmlsrc/" << *it << ".html\">" << *it << "</a></li>\r\n";
-                }
+                }*/
                 ss << "</ul></li>";
                 return ss.str();
             }

@@ -19,6 +19,8 @@
 #if !defined(OMNI_FSTREAM_T_HPP)
 #define OMNI_FSTREAM_T_HPP 1
 #include <omni/defs/global.hpp>
+#include <omni/defs/class_macros.hpp>
+#include <omni/string/util.hpp>
 #include <fstream>
 
 #if defined(OMNI_UNICODE)

@@ -51,7 +51,7 @@ static void FullUsage()
             "-maxmacrothreads   Max number of macro threads" << std::endl <<
             "-maxmtithreads     Max number of MTI threads" << std::endl <<
             "-maxsyntaxthreads  Max number of syntax threads" << std::endl <<
-            "-maxpool           Max number of thrad pool threads" << std::endl <<
+            "-maxpool           Max number of thread pool threads" << std::endl <<
             "" << std::endl <<
             "Build/generation options:" << std::endl <<
             "-doclasses     Sepcifies to generate all class help (docs/classes/*.html)" << std::endl <<
@@ -129,14 +129,14 @@ static void Usage()
         "MODE: -parser -> Runs the class parser only." << std::endl <<
         "OPTIONS:" << std::endl <<
             "-in [file]     Specifies the specific Omni file to read and parse, otherwise" << std::endl <<
-            "               the entire framework will be parsed." << std::endl <<
+            "               the entire library will be parsed." << std::endl <<
             "-mti [path]    View the member type information for the full path specified." << std::endl <<
             "               The full path is the full namespace path, e.g. omni::event" << std::endl <<
             "" << std::endl <<
         "MODE: -ut -> Runs the unit test class parser/creator." << std::endl <<
         "OPTIONS:" << std::endl <<
             "-in [file]     Specifies the specific Omni file to read and parse, otherwise" << std::endl <<
-            "               the entire framework will be parsed." << std::endl <<
+            "               the entire library will be parsed." << std::endl <<
             "-mti [path]    View the member type information for the full path specified." << std::endl <<
             "               The full path is the full namespace path, e.g. omni::event" << std::endl <<
             "-noinfo        If specified, the info_test function will not be generated." << std::endl <<
@@ -1028,7 +1028,7 @@ static void MacroGen()
             read_line(constant);
         }
         if (fwhelp.empty()) {
-            pv("Is this macro a framework helper macro? (T/F): ");
+            pv("Is this macro a library helper macro? (T/F): ");
             read_line(fwhelp);
         }
         bool is_helper = ((helper.size() > 0) && (omni::string::to_lower(helper)[0] == 't')) ? true : false;
@@ -1060,7 +1060,8 @@ static void MacroGen()
             macros[mo->Name] = 1;
             oldops[mo->Name] = 1;
         }
-        omni::seq::std_string_t src = omni::io::directory::get_all_files(OmniDocuGen::Program::Settings.SourceDirectory);
+        omni::seq::std_string_t src;
+        omni::io::directory::get_all_files(OmniDocuGen::Program::Settings.SourceDirectory, src);
         pl("Scanning " << src.size() << " source files from " << OmniDocuGen::Program::Settings.SourceDirectory);
         sw.start();
         omni_foreach (std::string, s, src) {
@@ -1142,7 +1143,8 @@ static void SysAPI()
     if (args.contains("-scan")) {
         OmniDocuGen::DocuGen::LoadSystemAPI(OmniDocuGen::Program::Settings.SystemAPIDirectory);
         size_t apisz = OmniDocuGen::DocuGen::SysAPIs.size();
-        omni::seq::std_string_t sources = omni::io::directory::get_all_files(OmniDocuGen::Program::Settings.SourceDirectory);
+        omni::seq::std_string_t sources;
+        omni::io::directory::get_all_files(OmniDocuGen::Program::Settings.SourceDirectory, sources);
         List<std::string> found;
         omni_foreach (std::string, src, sources) {
             up(1, "Searching in {0}", *src);
@@ -1266,7 +1268,8 @@ static void LicenseReplacer()
         pl("New license and old license are the same.");
         return;
     }
-    omni::seq::std_string_t files = omni::io::directory::get_all_files(omni_dir);
+    omni::seq::std_string_t files;
+    omni::io::directory::get_all_files(omni_dir, files);
     pl("Found " << files.size() << " files.");
     std::string contents;
     std::string fname;

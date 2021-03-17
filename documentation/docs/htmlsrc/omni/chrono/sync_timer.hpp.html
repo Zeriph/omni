@@ -32,7 +32,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <!--end line numbers-->
 </div><div class="cpphtmlcmnt">
 <!--start collapse columns-->
-<img src="../../../../content/tree/min.gif" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<img src="../../../../content/tree/min.gif" alt="Min/Max" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -115,20 +115,20 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MEMBERS_FW(<a href="../../../classes/omni-chrono-sync_timer.html">omni::chrono::sync_timer</a>) <font class="syn_cmt">// disposing,name,type(),hash()</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">private</font>:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../options/omni_safe_sync_timer.html">OMNI_SAFE_SYNC_TIMER</a>)</font><br>
+<a name="omni::chrono::sync_timer::m_mtx"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">mutable</font> <a href="../../../classes/omni-sync-basic_lock.html">omni::sync::basic_lock</a> m_mtx;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+<a name="omni::chrono::sync_timer::m_thread"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-sync-basic_thread.html">omni::sync::basic_thread</a>* m_thread; <font class="syn_cmt">// the main timer thread to _run on</font><br>
+<br>
+<a name="omni::chrono::sync_timer::m_int"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_STMR_INT_FW m_int; <font class="syn_cmt">// &quot;elapsed&quot; interval in ms between ticks</font><br>
+<a name="omni::chrono::sync_timer::m_status"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">volatile</font> OMNI_STMR_INT_FW m_status; <font class="syn_cmt">// auto run (true by default), is_run, stop_req</font><br>
+<br>
 <a name="omni::chrono::sync_timer::_do_run"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> _do_run();<br>
 <a name="omni::chrono::sync_timer::_do_tick"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> _do_tick();<br>
 <a name="omni::chrono::sync_timer::_run"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> _run();<br>
 <a name="omni::chrono::sync_timer::_run_delayed"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> _run_delayed(<a href="../../../classes/omni-sync-thread_arg_t.html">omni::sync::thread_arg_t</a> param);<br>
 <a name="omni::chrono::sync_timer::_run_noblock"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> _run_noblock();<br>
 <a name="omni::chrono::sync_timer::_stopreq"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> _stopreq() <font class="syn_typ">const</font>;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../options/omni_safe_sync_timer.html">OMNI_SAFE_SYNC_TIMER</a>)</font><br>
-<a name="omni::chrono::sync_timer::m_mtx"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">mutable</font> <a href="../../../classes/omni-sync-basic_lock.html">omni::sync::basic_lock</a> m_mtx;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
-<a name="omni::chrono::sync_timer::*m_thread"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-sync-basic_thread.html">omni::sync::basic_thread</a> *m_thread; <font class="syn_cmt">// the main timer thread to _run on</font><br>
-<br>
-<a name="omni::chrono::sync_timer::m_int"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_STMR_INT_FW m_int; <font class="syn_cmt">// &quot;elapsed&quot; interval in ms between ticks</font><br>
-<a name="omni::chrono::sync_timer::m_status"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">volatile</font> OMNI_STMR_INT_FW m_status; <font class="syn_cmt">// auto run (true by default), is_run, stop_req</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};<br>
 &nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_cmt">// namespace chrono</font><br>
 } <font class="syn_cmt">// namespace omni</font><br>

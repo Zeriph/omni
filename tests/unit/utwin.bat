@@ -44,36 +44,36 @@ set sys_type=win
 :argloop
 if not "%1"=="" (
     REM compile script options
-	if "%1"=="-c" (
-		set eopts=%eopts% -c %2
-		set useeo=1
-		shift
+    if "%1"=="-c" (
+        set eopts=%eopts% -c %2
+        set useeo=1
+        shift
     ) else if "%1"=="-d" (
         set edefs=%edefs% -d %2
         shift
     ) else if "%1"=="-l" (
-		set libs=%libs% -l %2
+        set libs=%libs% -l %2
         shift
     ) else if "%1"=="-log" (
-		set use_log=1
+        set use_log=1
     ) else if "%1"=="-single" (
         set eopts=%eopts% -single
     ) else if "%1"=="-lib" (
         set eopts=%eopts% -lib
     ) else if "%1"=="-v" (
-		set vs=-v
-	) else if "%1"=="-vv" (
-		set vs=-vv
-	) else if "%1"=="-vvv" (
-		set vs=-vvv
-	) else if "%1"=="-v2" (
-		set vs=-vv
-	) else if "%1"=="-v3" (
-		set vs=-vvv
+        set vs=-v
+    ) else if "%1"=="-vv" (
+        set vs=-vv
+    ) else if "%1"=="-vvv" (
+        set vs=-vvv
+    ) else if "%1"=="-v2" (
+        set vs=-vv
+    ) else if "%1"=="-v3" (
+        set vs=-vvv
     ) else if "%1"=="-po" (
-		set eopts=%eopts% -po
-	) else if "%1"=="-?" (
-		goto showusage
+        set eopts=%eopts% -po
+    ) else if "%1"=="-?" (
+        goto showusage
     ) else if "%1"=="-list" (
         goto list_tests
     REM library options
@@ -118,17 +118,17 @@ if not "%1"=="" (
         set eopts=%eopts% -dbg 4 -dbg full
     ) else if "%1"=="-dbg5" (
         set eopts=%eopts% -dbg 5 -dbg full
-	REM compiler/linker options
+    REM compiler/linker options
     ) else if "%1"=="-np" (
-		set eopts=%eopts% -co np
-	) else if "%1"=="-x86" (
-		set eopts=%eopts% -co x86
-	) else if "%1"=="-x64" (
-		set eopts=%eopts% -co x64
-	) else if "%1"=="-we" (
-		set eopts=%eopts% -co we
-	) else if "%1"=="-se" (
-		set eopts=%eopts% -co se
+        set eopts=%eopts% -co np
+    ) else if "%1"=="-x86" (
+        set eopts=%eopts% -co x86
+    ) else if "%1"=="-x64" (
+        set eopts=%eopts% -co x64
+    ) else if "%1"=="-we" (
+        set eopts=%eopts% -co we
+    ) else if "%1"=="-se" (
+        set eopts=%eopts% -co se
     ) else if "%1"=="-nortti" (
         set eopts=%eopts% -co nortti
     ) else if "%1"=="-opt" (    
@@ -144,28 +144,28 @@ if not "%1"=="" (
     ) else if "%1"=="-syntax" (
         set eopts=%eopts% -co syntax
     ) else if "%1"=="-eo" (
-		set eopts=%eopts% -co xtra
+        set eopts=%eopts% -co xtra
     ) else if "%1"=="-vs2005" (
-		set eopts=%eopts% -co vs2005
-	) else if "%1"=="-vs2008" (
-		set eopts=%eopts% -co vs2008
-	) else if "%1"=="-vs2010" (
-		set eopts=%eopts% -co vs2010
-	) else if "%1"=="-vs2012" (
-		set eopts=%eopts% -co vs2012
+        set eopts=%eopts% -co vs2005
+    ) else if "%1"=="-vs2008" (
+        set eopts=%eopts% -co vs2008
+    ) else if "%1"=="-vs2010" (
+        set eopts=%eopts% -co vs2010
+    ) else if "%1"=="-vs2012" (
+        set eopts=%eopts% -co vs2012
     ) else if "%1"=="-vs2013" (
-		set eopts=%eopts% -co vs2013
+        set eopts=%eopts% -co vs2013
     ) else if "%1"=="-vs2015" (
-		set eopts=%eopts% -co vs2015
+        set eopts=%eopts% -co vs2015
     ) else if "%1"=="-vs2017" (
-		set eopts=%eopts% -co vs2017
+        set eopts=%eopts% -co vs2017
     ) else if "%1"=="-odir" (
         shift
-	) else (
+    ) else (
         set tmput=%1
-	)
-	shift
-	goto argloop
+    )
+    shift
+    goto argloop
 )
 
 call :parse_test %tmput% wasEr
@@ -175,7 +175,7 @@ if !wasEr! equ 1 (
 )
 
 if %use_log% equ 1 (
-	set llog=-log "%omni_lib_loc%\tests\logs\!sys_type!_build.log"
+    set llog=-log "%omni_lib_loc%\tests\logs\!sys_type!_build.log"
 )
 
 if %noopt% equ 0 (

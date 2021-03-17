@@ -29,15 +29,15 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 </div><br>
 <div class="docdiv">
     <font class="docu">SYNOPSIS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    If this macro is defined, the constants within the Omni framework will not be extern&#39;d and instead will exist as const values in the headers to be included.
+    If this macro is defined, the constants within the library will not be extern&#39;d and instead will exist as const values in the headers to be included.
 </div><br>
 <div class="docdiv">
     <font class="docu">DESCRIPTION</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    The constant string values in the framework are marked <code>extern</code> as their default linkage. To change this behavior to have all string constants be marked as <code>static</code> instead of <code>extern</code> you can define this macro option, there&#39;s no additional files to exclude as this flag disables portions of the code that pertain to the extern values.
+    The constant string values in the library are marked <code>extern</code> as their default linkage. To change this behaviour to have all string constants be marked as <code>static</code> instead of <code>extern</code> you can define this macro option, there&#39;s no additional files to exclude as this flag disables portions of the code that pertain to the extern values.
 </div><br>
 <div class="docdiv">
     <font class="docu">CONSIDERATIONS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    Know that you are changing the linkage from static to extern with regards to the constant values in the Omni framework.
+    Know that you are changing the linkage from static to extern with regards to the constant values in the library.
 </div><br>
 <div class="docdiv">
     <font class="docu">PLATFORM SPECIFIC</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
@@ -45,7 +45,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 </div><br>
 <div class="docdiv">
     <font class="docu">NOTES</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    The extern&#39;d values reside in <a href="../htmlsrc/framework.cpp.html" class="code">framework.cpp</a> (which is always built with the framework, but if the macro is enabled, the extern portions are not compiled in).
+    The extern&#39;d values reside in <a href="../htmlsrc/library.cpp.html" class="code">library.cpp</a> (which is always built with the library, but if the macro is enabled, the extern portions are not compiled in).
 </div><br>
 <!--end content-->
 </div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

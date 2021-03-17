@@ -24,24 +24,26 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <div class="docdiv">
     <font class="docu">MACRO</font><br><br>
     <code><font style="font-size:16px;">
-    <code>OMNI_ARCH_EPIPHANY</code> - A framework macro/option
+    <code>OMNI_ARCH_EPIPHANY</code> - Defines an Epiphany processor architecture was detected.
     </font></code>
 </div><br>
 <div class="docdiv">
     <font class="docu">SYNOPSIS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    A framework macro/option
+    If compilation happens on an architecture (or with a compiler) with certain preprocessor flags, this macro is defined.<br>
+<br>
+See <a href="../htmlsrc/omni/defs/arch.hpp.html" class="code">omni/defs/arch.hpp</a> for which flags enable this option.
 </div><br>
 <div class="docdiv">
     <font class="docu">DESCRIPTION</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    A framework macro/option that changes certain functionality
+    None.
 </div><br>
 <div class="docdiv">
     <font class="docu">CONSIDERATIONS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    No special considerations
+    Architecture detection via preprocessor flags is not always guaranteed as they can be explicitly defined by a user. Take care when relying on these macros to determine architecture specifics.
 </div><br>
 <div class="docdiv">
     <font class="docu">PLATFORM SPECIFIC</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    No platform specific notes.
+    No special consideration.
 </div><br>
 <div class="docdiv">
     <font class="docu">NOTES</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>

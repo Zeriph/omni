@@ -31,7 +31,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <!--end line numbers-->
 </div><div class="cpphtmlcmnt">
 <!--start collapse columns-->
-<img src="../../../../content/tree/min.gif" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<img src="../../../../content/tree/min.gif" alt="Min/Max" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -76,7 +76,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">public</font>:<br>
 <a name="omni::stopwatch::stopwatch"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stopwatch();<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stopwatch(<font class="syn_typ">const</font> <a href="../../../classes/omni-stopwatch.html">omni::stopwatch</a> &amp;cp);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stopwatch(<font class="syn_typ">const</font> <a href="../../../classes/omni-stopwatch.html">omni::stopwatch</a>&amp; cp);<br>
 <a name="omni::stopwatch::~stopwatch"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~stopwatch();<br>
 <br>
 <a name="omni::stopwatch::elapsed"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-chrono-unsigned_span_t.html">omni::chrono::unsigned_span_t</a> elapsed() <font class="syn_typ">const</font>;<br>
@@ -96,10 +96,10 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <a name="omni::stopwatch::to_wstring"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a> to_wstring() <font class="syn_typ">const</font>;<br>
 <a name="omni::stopwatch::operator std::string"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">operator</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>() <font class="syn_typ">const</font> { <font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;to_string(); }<br>
 <a name="omni::stopwatch::operator std::wstring"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">operator</font> <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>() <font class="syn_typ">const</font> { <font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;to_wstring(); }<br>
-<a name="omni::stopwatch::operator="></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-stopwatch.html">omni::stopwatch</a>&amp; <font class="syn_ins">operator</font>=(<font class="syn_typ">const</font> <a href="../../../classes/omni-stopwatch.html">omni::stopwatch</a> &amp;other);<br>
+<a name="omni::stopwatch::operator="></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-stopwatch.html">omni::stopwatch</a>&amp; <font class="syn_ins">operator</font>=(<font class="syn_typ">const</font> <a href="../../../classes/omni-stopwatch.html">omni::stopwatch</a>&amp; other);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-stopwatch.html">omni::stopwatch</a>&amp; <font class="syn_ins">operator</font>=(<font class="syn_typ">bool</font> enable);<br>
-<a name="omni::stopwatch::operator=="></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> <font class="syn_ins">operator</font>==(<font class="syn_typ">const</font> <a href="../../../classes/omni-stopwatch.html">omni::stopwatch</a> &amp;o) <font class="syn_typ">const</font>;<br>
-<a name="omni::stopwatch::operator!="></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> <font class="syn_ins">operator</font>!=(<font class="syn_typ">const</font> <a href="../../../classes/omni-stopwatch.html">omni::stopwatch</a> &amp;o) <font class="syn_typ">const</font>;<br>
+<a name="omni::stopwatch::operator=="></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> <font class="syn_ins">operator</font>==(<font class="syn_typ">const</font> <a href="../../../classes/omni-stopwatch.html">omni::stopwatch</a>&amp; o) <font class="syn_typ">const</font>;<br>
+<a name="omni::stopwatch::operator!="></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> <font class="syn_ins">operator</font>!=(<font class="syn_typ">const</font> <a href="../../../classes/omni-stopwatch.html">omni::stopwatch</a>&amp; o) <font class="syn_typ">const</font>;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MEMBERS_FW(<a href="../../../classes/omni-stopwatch.html">omni::stopwatch</a>) <font class="syn_cmt">// disposing,name,type(),hash()</font><br>
 <br>

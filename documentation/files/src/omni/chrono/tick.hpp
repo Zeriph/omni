@@ -25,48 +25,6 @@ namespace omni {
         class monotonic
         {
             public:
-                inline static omni::chrono::tick_t tick()
-                {
-                    #if !defined(OMNI_NO_CHRONO_AUTO_INIT_TICK)
-                        omni::chrono::monotonic::initialize();
-                    #endif
-                    #if defined(OMNI_OS_WIN)
-                        #if defined(OMNI_WIN_MONO_TICK_QPC)
-                            omni::chrono::tick_t tmp;
-                            if (::QueryPerformanceCounter(&tmp) == 0) {
-                                std::memset(&tmp, 0, sizeof(omni::chrono::tick_t));
-                                OMNI_ERR_FW("An error occurred getting the clock time", omni::exceptions::clock_exception())
-                            }
-                            return tmp;
-                        #else
-                            return
-                            #if defined(OMNI_WIN_API)
-                                #if defined(OMNI_WIN_MONO_TICK_COUNT)
-                                    ::GetTickCount()
-                                #else
-                                    ::GetTickCount64()
-                                #endif
-                            #else
-                                std::clock()
-                            #endif
-                            ;
-                        #endif
-                    #elif defined(OMNI_OS_APPLE)
-                        return ::mach_absolute_time();
-                    #else
-                        omni::chrono::tick_t tmp;
-                        if (::clock_gettime(CLOCK_MONOTONIC, &tmp) != 0) {
-                            #if defined(OMNI_THROW) || defined(OMNI_TERMINATE)
-                                OMNI_ERRV_FW("An error occurred getting the clock time: ", std::strerror(errno), omni::exceptions::clock_exception())
-                            #else
-                                OMNI_DBGEV("An error occurred getting the clock time: ", std::strerror(errno))
-                                std::memset(&tmp, 0, sizeof(omni::chrono::tick_t));
-                            #endif
-                        }
-                        return tmp;
-                    #endif
-                }
-
                 inline static double elapsed_us(omni::chrono::tick_t init, omni::chrono::tick_t end)
                 {
                     #if defined(OMNI_OS_APPLE)
@@ -110,6 +68,10 @@ namespace omni {
                 inline static double elapsed_s(omni::chrono::tick_t init)
                 {
                     return omni::chrono::monotonic::elapsed_s(init, omni::chrono::monotonic::tick());
+                }
+                inline static omni::chrono::freq_t frequency()
+                {
+                    return omni::chrono::monotonic::m_freq;
                 }
                 
                 inline static bool initialize()
@@ -162,9 +124,46 @@ namespace omni {
                     #endif
                 }
 
-                inline static omni::chrono::freq_t frequency()
+                inline static omni::chrono::tick_t tick()
                 {
-                    return m_freq;
+                    #if !defined(OMNI_NO_CHRONO_AUTO_INIT_TICK)
+                        omni::chrono::monotonic::initialize();
+                    #endif
+                    #if defined(OMNI_OS_WIN)
+                        #if defined(OMNI_WIN_MONO_TICK_QPC)
+                            omni::chrono::tick_t tmp;
+                            if (::QueryPerformanceCounter(&tmp) == 0) {
+                                std::memset(&tmp, 0, sizeof(omni::chrono::tick_t));
+                                OMNI_ERR_FW("An error occurred getting the clock time", omni::exceptions::clock_exception())
+                            }
+                            return tmp;
+                        #else
+                            return
+                            #if defined(OMNI_WIN_API)
+                                #if defined(OMNI_WIN_MONO_TICK_COUNT)
+                                    ::GetTickCount()
+                                #else
+                                    ::GetTickCount64()
+                                #endif
+                            #else
+                                std::clock()
+                            #endif
+                            ;
+                        #endif
+                    #elif defined(OMNI_OS_APPLE)
+                        return ::mach_absolute_time();
+                    #else
+                        omni::chrono::tick_t tmp;
+                        if (::clock_gettime(CLOCK_MONOTONIC, &tmp) != 0) {
+                            #if defined(OMNI_THROW) || defined(OMNI_TERMINATE)
+                                OMNI_ERRV_FW("An error occurred getting the clock time: ", std::strerror(errno), omni::exceptions::clock_exception())
+                            #else
+                                OMNI_DBGEV("An error occurred getting the clock time: ", std::strerror(errno))
+                                std::memset(&tmp, 0, sizeof(omni::chrono::tick_t));
+                            #endif
+                        }
+                        return tmp;
+                    #endif
                 }
                 
             private:
@@ -174,11 +173,6 @@ namespace omni {
                 
                 static omni::chrono::freq_t m_freq;
         };
-        
-        inline omni::chrono::tick_t monotonic_tick()
-        {
-            return omni::chrono::monotonic::tick();
-        }
         
         inline bool equal(const omni::chrono::tick_t& t1, const omni::chrono::tick_t& t2)
         {
@@ -234,6 +228,11 @@ namespace omni {
         inline uint64_t elapsed_s(omni::chrono::tick_t init)
         {
             return static_cast<uint64_t>(omni::chrono::monotonic::elapsed_s(init));
+        }
+
+        inline omni::chrono::tick_t monotonic_tick()
+        {
+            return omni::chrono::monotonic::tick();
         }
     }
 }

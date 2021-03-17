@@ -1,18 +1,12 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_DBGE</Name>
-  <Brief>A helper macro used for debug error output.
-</Brief>
-  <Considerations>No special considerations
-</Considerations>
-  <Description>If debug is enabled in the framework, this macro simply expands to a &lt;code&gt;omni::out &lt;&lt; string &lt;&lt; std::endl;&lt;/code&gt; while if debug is not enabled, then the value in the macro is not compiled in.
-</Description>
-  <Notes>None.
-</Notes>
-  <PlatformSpecific>No platform specific notes.
-</PlatformSpecific>
-  <Synopsis>The OMNI_DBGE helper macro is used within the framework to print debug statements.
-</Synopsis>
+  <Brief>A helper macro used for debug error output.</Brief>
+  <Considerations>No special considerations.</Considerations>
+  <Description>If debug is enabled in the library, this macro simply expands to a &lt;code&gt;omni::out &lt;&lt; string &lt;&lt; std::endl;&lt;/code&gt; while if debug is not enabled, then the value in the macro is not compiled in.</Description>
+  <Notes>None.</Notes>
+  <PlatformSpecific>No platform specific notes.</PlatformSpecific>
+  <Synopsis>The OMNI_DBGE helper macro is used within the library to print debug statements.</Synopsis>
   <IsHelper>true</IsHelper>
   <IsConstant>false</IsConstant>
   <IsFWHelp>true</IsFWHelp>

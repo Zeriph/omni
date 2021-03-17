@@ -44,7 +44,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <!--end line numbers-->
 </div><div class="cpphtmlcmnt">
 <!--start collapse columns-->
-<img src="../../content/tree/min.gif" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<img src="../../content/tree/min.gif" alt="Min/Max" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -95,7 +95,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;OMNI_D5_FW(<font class="syn_str">&quot;created&quot;</font>);<br>
 }<br>
 <br>
-<a href="../classes/omni-application-argparser-argparser.html">omni::application::argparser::argparser</a>(<font class="syn_typ">const</font> <a href="../classes/omni-application-argparser.html">omni::application::argparser</a> &amp;cp) :<br>
+<a href="../classes/omni-application-argparser-argparser.html">omni::application::argparser::argparser</a>(<font class="syn_typ">const</font> <a href="../classes/omni-application-argparser.html">omni::application::argparser</a>&amp; cp) :<br>
 &nbsp;&nbsp;&nbsp;&nbsp;OMNI_CPCTOR_FW(cp)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;m_args(cp.m_args),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;m_argc(cp.m_argc)<br>
@@ -383,7 +383,7 @@ omni::seq::string_t <a href="../classes/omni-application-argparser-get_range.htm
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;m_args[index];<br>
 }<br>
 <br>
-<a href="../classes/omni-application-argparser.html">omni::application::argparser</a>&amp; omni::application::argparser::<font class="syn_ins">operator</font>=(<font class="syn_typ">const</font> <a href="../classes/omni-application-argparser.html">omni::application::argparser</a> &amp;ap)<br>
+<a href="../classes/omni-application-argparser.html">omni::application::argparser</a>&amp; omni::application::argparser::<font class="syn_ins">operator</font>=(<font class="syn_typ">const</font> <a href="../classes/omni-application-argparser.html">omni::application::argparser</a>&amp; ap)<br>
 {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font> != &amp;ap) {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ASSIGN_FW(ap);<br>
@@ -394,14 +394,14 @@ omni::seq::string_t <a href="../classes/omni-application-argparser-get_range.htm
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> *<font class="syn_typ">this</font>;<br>
 }<br>
 <br>
-<font class="syn_typ">bool</font> omni::application::argparser::<font class="syn_ins">operator</font>==(<font class="syn_typ">const</font> <a href="../classes/omni-application-argparser.html">omni::application::argparser</a> &amp;o) <font class="syn_typ">const</font><br>
+<font class="syn_typ">bool</font> omni::application::argparser::<font class="syn_ins">operator</font>==(<font class="syn_typ">const</font> <a href="../classes/omni-application-argparser.html">omni::application::argparser</a>&amp; o) <font class="syn_typ">const</font><br>
 {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font> == &amp;o) { <font class="syn_ins">return</font> <font class="syn_ins">true</font>; }<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_argc == o.m_argc &amp;&amp; <font class="syn_typ">this</font>-&gt;m_args == o.m_args)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;OMNI_EQUAL_FW(o);<br>
 }<br>
 <br>
-<font class="syn_typ">bool</font> omni::application::argparser::<font class="syn_ins">operator</font>!=(<font class="syn_typ">const</font> <a href="../classes/omni-application-argparser.html">omni::application::argparser</a> &amp;o) <font class="syn_typ">const</font><br>
+<font class="syn_typ">bool</font> omni::application::argparser::<font class="syn_ins">operator</font>!=(<font class="syn_typ">const</font> <a href="../classes/omni-application-argparser.html">omni::application::argparser</a>&amp; o) <font class="syn_typ">const</font><br>
 {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> !(*<font class="syn_typ">this</font> == o);<br>
 }<br>

@@ -45,29 +45,30 @@ force_test=0
 
 usage()
 {
-	echo "usage: utnix [system] [test] [flags]"
-	echo 
-	echo "SYSTEM:"
-	echo " The [system] value specified will determine on what type of system to compile"
-	echo " on. Valid values are bsd, nix, osx, and qnx"
-	echo
-	echo "FLAGS:"
-	echo " Valid flags that can be passed to the compile script are as follows:"
-	echo
+    echo "usage: utnix [system] [test] [flags]"
+    echo 
+    echo "SYSTEM:"
+    echo " The [system] value specified will determine on what type of system to compile"
+    echo " on. Valid values are bsd, nix, osx, and qnx"
+    echo
+    echo "FLAGS:"
+    echo " Valid flags that can be passed to the compile script are as follows:"
+    echo
     echo "compile script options:"
-	echo "       -?          Display this help"
+    echo "       -?          Display this help"
     echo "       -c [opts]   Pass extra arguments to the compiler"
     echo "       -d [define] Pass extra defines to the compiler"
+    echo "       -i [path]   Includes [path] in the compiler include path"
     echo "       -out [path] The output build path to put the lib/bin/obj/asm files"
-	echo "       -v          This flag signifies the verbosity level of the compiler"
-	echo "                   output. Valid '-v' values are as follows:"
-	echo "                   -v          = Verbose level 1 (basic output)"
-	echo "                   -vv/-v2     = Verbose L2 (show more output)"
-	echo "                   -vvv/-v3    = Verbose L3 (show ALL output)"
+    echo "       -v          This flag signifies the verbosity level of the compiler"
+    echo "                   output. Valid '-v' values are as follows:"
+    echo "                   -v          = Verbose level 1 (basic output)"
+    echo "                   -vv/-v2     = Verbose L2 (show more output)"
+    echo "                   -vvv/-v3    = Verbose L3 (show ALL output)"
     echo "       -single     Builds library.cpp"
     echo "       -lib        Builds omni.a then links against it for the unit tests"
-	echo "       -log        Log the output to the logs folder"
-	echo "       -po         Parse the compile script only"
+    echo "       -log        Log the output to the logs folder"
+    echo "       -po         Parse the compile script only"
     echo 
     echo "library options:"
     echo "       -lite       Sets the OMNI_LITE macro definition"
@@ -93,10 +94,10 @@ usage()
     echo "compiler options:"
     echo "       -tc [tc]    Sets the compiler/toolchain to use (default of g++)"
     echo "       -lc [lc]    Sets the library toolchain when -lib specified (default of ar)"
-	echo "       -effc       Sets the -Weffc++ flag which warns about style guidlines"
-	echo "                   violations from Scott Meyers' Effective C++ book"
-	echo "       -we         Treat all warnings as errors"
-	echo "       -se         Stop on first error (instead of trying to continue)"
+    echo "       -effc       Sets the -Weffc++ flag which warns about style guidlines"
+    echo "                   violations from Scott Meyers' Effective C++ book"
+    echo "       -we         Treat all warnings as errors"
+    echo "       -se         Stop on first error (instead of trying to continue)"
     echo "       -stats      Sets the -Q flag when compiling which shows statistics of the"
     echo "                   compilation unit"
     echo "       -pe         Sets the -pedantic-errors flag"
@@ -112,17 +113,17 @@ usage()
     echo "       -3          Specifying this will enable 32-bit compilation"
     echo "       -syntax     Sets the -fsyntax-only flag which checks the code for syntax"
     echo "                   errors only and does nothing beyond that"
-	echo "       -eo         Use the extra compiler/linker flags (can generate erroneous errors)"
+    echo "       -eo         Use the extra compiler/linker flags (can generate erroneous errors)"
     echo "       -pad        Use the -Wpadded (can generate erroneous errors)"
     echo "       -std [std]  Compiles the code according to the standard defined by [std]"
 }
 
 list_tests()
 {
-	echo "Current tests available:"
+    echo "Current tests available:"
     for test in ${unit_tests}; do
         echo "- ${test}"
-	done
+    done
 }
 
 parse_set_test()
@@ -169,12 +170,12 @@ parse_test()
 parse_args()
 {
     tmpuvar="-u"
-	while [ "$*" != "" ]; do
-		case $1 in
-			"nix") sys_type="nix" ;; #; eopts="${eopts}" ;;
+    while [ "$*" != "" ]; do
+        case $1 in
+            "nix") sys_type="nix" ;; #; eopts="${eopts}" ;;
             "obsd") sys_type="bsd"; eopts="${eopts} -d OMNI_NO_CSTDINT" ;;
-			"bsd") sys_type="bsd" ;; #; eopts="${eopts} -tc c++" ;;
-			"osx") sys_type="osx" ;; #; eopts="${eopts} -tc clang++" ;;
+            "bsd") sys_type="bsd" ;; #; eopts="${eopts} -tc c++" ;;
+            "osx") sys_type="osx" ;; #; eopts="${eopts} -tc clang++" ;;
             # QNX needs special attention (nopthread because it links automagically)
             "qnx") sys_type="qnx"; eopts="${eopts} -co nopthread -d OMNI_CLOCK_GETRES_REALTIME" ;;
             
@@ -183,8 +184,9 @@ parse_args()
                 eopts="${eopts} -out ${2}"
                 binfldr="${2}/bin"
                 shift ;;
-			"-c") eopts="${eopts} -c ${2}"; shift ;;
+            "-c") eopts="${eopts} -c ${2}"; shift ;;
             "-d") edefs="${edefs} -d ${2}"; shift ;;
+            "-i") edefs="${edefs} -i ${2}"; shift ;;
             "-single") eopts="${eopts} -single" ;;
             "-lib") eopts="${eopts} -lib" ;;
             "-log") use_log=1 ;;
@@ -194,12 +196,12 @@ parse_args()
                 shift ;;
             "-lc") eopst="${eopts} -lc ${2}"; shift ;;
             "-v") vs="-v" ;;
-			"-vv") vs="-vv" ;;
-			"-vvv") vs="-vvv" ;;
-			"-v2") vs="-vv" ;;
-			"-v3") vs="-vvv" ;;
+            "-vv") vs="-vv" ;;
+            "-vvv") vs="-vvv" ;;
+            "-v2") vs="-vv" ;;
+            "-v3") vs="-vvv" ;;
             "-po") eopts="${eopts} -po" ;;
-			"-?") usage; exit 0 ;;
+            "-?") usage; exit 0 ;;
             "-list") list_tests; exit 0 ;;
 
             # library options
@@ -213,8 +215,8 @@ parse_args()
             "-terr") eopts="${eopts} -oo terr" ;;
             
             # library debug options
-			"-d1") eopts="${eopts} -dbg 1" ;;
-			"-d2") eopts="${eopts} -dbg 2" ;;
+            "-d1") eopts="${eopts} -dbg 1" ;;
+            "-d2") eopts="${eopts} -dbg 2" ;;
             "-d3") eopts="${eopts} -dbg 3" ;;
             "-d4") eopts="${eopts} -dbg 4" ;;
             "-d5") eopts="${eopts} -dbg 5" ;;
@@ -225,7 +227,7 @@ parse_args()
             "-dbg3") eopts="${eopts} -dbg 3 -dbg full" ;;
             "-dbg4") eopts="${eopts} -dbg 4 -dbg full" ;;
             "-dbg5") eopts="${eopts} -dbg 5 -dbg full" ;;
-			
+            
             # compiler options
             "-effc") eopts="${eopts} -co effc" ;;
             "-we") eopts="${eopts} -co we" ;;
@@ -251,10 +253,10 @@ parse_args()
             "-pad") eopts="${eopts} -co pad" ;;
             "-force") force_test=1 ;;
             "-odir") shift ;;
-			*) tmput=$1 ;;
-		esac
-		shift
-	done
+            *) tmput=$1 ;;
+        esac
+        shift
+    done
     eopts="${eopts} ${tmpuvar}"
 }
 

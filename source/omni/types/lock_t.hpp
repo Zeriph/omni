@@ -54,7 +54,6 @@
     #define OMNI_COND_T pthread_cond_t
 #else
     #include <pthread.h>
-    #include <errno.h>
     #include <semaphore.h>
     #include <pthread.h>
     #define OMNI_SPIN_LOCK_T pthread_spinlock_t

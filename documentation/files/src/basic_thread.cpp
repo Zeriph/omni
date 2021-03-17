@@ -17,6 +17,8 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include <omni/sync/basic_thread.hpp>
+#include <omni/chrono/tick.hpp>
+#include <omni/consts/cconsts.hpp>
 #if !defined(OMNI_OS_WIN)
     // need the following for POSIX thread set prio/join
     #include <unistd.h>
@@ -24,8 +26,6 @@
     #include <ctime>
     #include <cstring>
 #endif
-#include <omni/chrono/tick.hpp>
-#include <omni/consts/cconsts.hpp>
 
 #if defined(OMNI_NON_PORTABLE)
     #define OMNI_TPRIO_FW    m_priority(omni::sync::thread_priority::NORMAL),
@@ -168,7 +168,7 @@ omni::sync::basic_thread::basic_thread() :
     OMNI_D5_FW("thread created");
 }
 
-omni::sync::basic_thread::basic_thread(const omni::sync::basic_thread &cp) : 
+omni::sync::basic_thread::basic_thread(const omni::sync::basic_thread& cp) : 
     OMNI_CPCTOR_FW(cp)
     OMNI_SAFE_TMTX_FW
     m_args(cp.m_args),
@@ -190,7 +190,7 @@ omni::sync::basic_thread::basic_thread(const omni::sync::basic_thread &cp) :
     OMNI_D5_FW("thread copied");
 }
 
-omni::sync::basic_thread::basic_thread(const omni::sync::thread_flags &ops) : 
+omni::sync::basic_thread::basic_thread(const omni::sync::thread_flags& ops) : 
     OMNI_CTOR_FW(omni::sync::basic_thread)
     OMNI_SAFE_TMTX_FW
     m_args(),
@@ -228,7 +228,7 @@ omni::sync::basic_thread::basic_thread(std::size_t max_stack_sz) :
     OMNI_DV5_FW("thread created with stack size of ", this->m_ops.stack_size());
 }
 
-omni::sync::basic_thread::basic_thread(const omni::sync::thread_t &tid, const omni::sync::thread_handle_t &h) : 
+omni::sync::basic_thread::basic_thread(const omni::sync::thread_t& tid, const omni::sync::thread_handle_t& h) : 
     OMNI_CTOR_FW(omni::sync::basic_thread)
     OMNI_SAFE_TMTX_FW
     m_args(),
@@ -301,7 +301,7 @@ omni::sync::basic_thread::basic_thread(const omni::sync::thread_t &tid, const om
     OMNI_DV5_FW("thread created with stack size of ", this->m_ops.stack_size());
 }
 
-omni::sync::basic_thread::basic_thread(const omni::sync::thread_start &mthd) : 
+omni::sync::basic_thread::basic_thread(const omni::sync::thread_start& mthd) : 
     OMNI_CTOR_FW(omni::sync::basic_thread)
     OMNI_SAFE_TMTX_FW
     m_args(),
@@ -344,7 +344,7 @@ omni::sync::basic_thread::basic_thread(const omni::sync::thread_start& mthd, omn
     }
 }
 
-omni::sync::basic_thread::basic_thread(const omni::sync::thread_start &mthd, std::size_t max_stack_sz) : 
+omni::sync::basic_thread::basic_thread(const omni::sync::thread_start& mthd, std::size_t max_stack_sz) : 
     OMNI_CTOR_FW(omni::sync::basic_thread)
     OMNI_SAFE_TMTX_FW
     m_args(),
@@ -365,7 +365,7 @@ omni::sync::basic_thread::basic_thread(const omni::sync::thread_start &mthd, std
     this->start();
 }
 
-omni::sync::basic_thread::basic_thread(const omni::sync::thread_start &mthd, std::size_t max_stack_sz, omni::sync::thread_start_type::enum_t st) :
+omni::sync::basic_thread::basic_thread(const omni::sync::thread_start& mthd, std::size_t max_stack_sz, omni::sync::thread_start_type::enum_t st) :
     OMNI_CTOR_FW(omni::sync::basic_thread)
     OMNI_SAFE_TMTX_FW
     m_args(),
@@ -409,7 +409,7 @@ omni::sync::basic_thread::basic_thread(const omni::sync::thread_start& mthd, omn
     this->start();
 }
 
-omni::sync::basic_thread::basic_thread(const omni::sync::parameterized_thread_start &mthd) : 
+omni::sync::basic_thread::basic_thread(const omni::sync::parameterized_thread_start& mthd) : 
     OMNI_CTOR_FW(omni::sync::basic_thread)
     OMNI_SAFE_TMTX_FW
     m_args(),
@@ -516,7 +516,7 @@ omni::sync::basic_thread::basic_thread(const omni::sync::parameterized_thread_st
     }
 }
 
-omni::sync::basic_thread::basic_thread(const omni::sync::parameterized_thread_start &mthd, std::size_t max_stack_sz) :
+omni::sync::basic_thread::basic_thread(const omni::sync::parameterized_thread_start& mthd, std::size_t max_stack_sz) :
     OMNI_CTOR_FW(omni::sync::basic_thread)
     OMNI_SAFE_TMTX_FW
     m_args(),
@@ -536,7 +536,7 @@ omni::sync::basic_thread::basic_thread(const omni::sync::parameterized_thread_st
     this->start(OMNI_THREAD_ARG_NULL_T);
 }
 
-omni::sync::basic_thread::basic_thread(const omni::sync::parameterized_thread_start &mthd, std::size_t max_stack_sz, omni::sync::thread_start_type::enum_t st) :
+omni::sync::basic_thread::basic_thread(const omni::sync::parameterized_thread_start& mthd, std::size_t max_stack_sz, omni::sync::thread_start_type::enum_t st) :
     OMNI_CTOR_FW(omni::sync::basic_thread)
     OMNI_SAFE_TMTX_FW
     m_args(),
@@ -580,7 +580,7 @@ omni::sync::basic_thread::basic_thread(const omni::sync::parameterized_thread_st
     this->start(OMNI_THREAD_ARG_NULL_T);
 }
 
-omni::sync::basic_thread::basic_thread(const omni::sync::thread_start &mthd, bool tpool) : 
+omni::sync::basic_thread::basic_thread(const omni::sync::thread_start& mthd, bool tpool) : 
     OMNI_CTOR_FW(omni::sync::basic_thread)
     OMNI_SAFE_TMTX_FW
     m_args(),
@@ -793,7 +793,7 @@ bool omni::sync::basic_thread::is_threadpool_thread() const
 
 bool omni::sync::basic_thread::join()
 {
-    return this->join(omni::sync::INFINITE_TIMEOUT);
+    return this->join(OMNI_INFINITE_TIMEOUT);
 }
 
 bool omni::sync::basic_thread::join(uint32_t timeout)
@@ -811,7 +811,7 @@ bool omni::sync::basic_thread::join(uint32_t timeout)
     omni::sync::thread_handle_t hndl = this->m_thread;
     if (hndl == omni::sync::thread_handle()) {
         OMNI_SAFE_TUNLOCK_FW
-        OMNI_ERR_RETV_FW(OMNI_INVALID_THREAD_OWNER, omni::exceptions::invalid_thread_owner(), false)
+        OMNI_ERR_RETV_FW(OMNI_INVALID_THREAD_OWNER_STR, omni::exceptions::invalid_thread_owner(), false)
     }
     #if defined(OMNI_OS_WIN)
         OMNI_VAL_SET_FLAG_BIT(this->m_status, OMNI_THREAD_JOINED_FLAG_FW);
@@ -830,7 +830,7 @@ bool omni::sync::basic_thread::join(uint32_t timeout)
         // a separate variable based on system, so we implement a timeout loop
         OMNI_VAL_SET_FLAG_BIT(this->m_status, OMNI_THREAD_JOINED_FLAG_FW);
         OMNI_SAFE_TUNLOCK_FW
-        if (timeout != omni::sync::INFINITE_TIMEOUT) {
+        if (timeout != OMNI_INFINITE_TIMEOUT) {
             OMNI_SLEEP_INIT();
             volatile bool iav = true;
             omni::chrono::tick_t ts = omni::chrono::monotonic_tick();
@@ -872,7 +872,7 @@ bool omni::sync::basic_thread::kill()
     omni::sync::thread_handle_t hndl = this->m_thread;
     if (hndl == omni::sync::thread_handle()) {
         OMNI_SAFE_TUNLOCK_FW
-        OMNI_ERR_RETV_FW(OMNI_INVALID_THREAD_OWNER, omni::exceptions::invalid_thread_owner(), false)
+        OMNI_ERR_RETV_FW(OMNI_INVALID_THREAD_OWNER_STR, omni::exceptions::invalid_thread_owner(), false)
     }
     this->m_state = omni::sync::thread_state::STOP_REQUESTED;
     OMNI_SAFE_TUNLOCK_FW
@@ -1152,7 +1152,7 @@ void omni::sync::basic_thread::unbind()
     this->_chkmthd();
 }
 
-omni::sync::basic_thread &omni::sync::basic_thread::operator=(const omni::sync::basic_thread &o)
+omni::sync::basic_thread& omni::sync::basic_thread::operator=(const omni::sync::basic_thread& o)
 {
     if (this != &o) {
         OMNI_SAFE_TLOCK_FW
@@ -1175,7 +1175,7 @@ omni::sync::basic_thread &omni::sync::basic_thread::operator=(const omni::sync::
     return *this;
 }
 
-bool omni::sync::basic_thread::operator==(const omni::sync::basic_thread &o) const
+bool omni::sync::basic_thread::operator==(const omni::sync::basic_thread& o) const
 {
     if (this == &o) { return true; }
     #if defined(OMNI_SAFE_THREAD)
@@ -1200,7 +1200,7 @@ bool omni::sync::basic_thread::operator==(const omni::sync::basic_thread &o) con
         );
 }
 
-bool omni::sync::basic_thread::operator!=(const omni::sync::basic_thread &o) const
+bool omni::sync::basic_thread::operator!=(const omni::sync::basic_thread& o) const
 {
     return !(*this == o);
 }

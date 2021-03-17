@@ -21,7 +21,6 @@
 #include <omni/defs/global.hpp>
 #include <omni/defs/class_macros.hpp>
 #include <omni/geometry/point2d.hpp>
-#include <omni/math.hpp>
 
 #if defined(OMNI_SAFE_VECTOR2)
     #include <omni/sync/basic_lock.hpp>
@@ -440,6 +439,11 @@ namespace omni {
                         omni::math::are_equal(this->_direction(), b._direction())
                     )
                     OMNI_EQUAL_FW(b);
+                }
+
+                bool operator!=(const omni::geometry::vector2<V>& b) const
+                {
+                    return !(*this == b);
                 }
 
                 omni::geometry::vector2<V>& operator=(const omni::geometry::vector2<V>& b)

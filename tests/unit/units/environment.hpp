@@ -89,7 +89,7 @@ class UT_CLASS_DEF
                 omni::out << "library exception caught: " << e.what() << std::endl;
             }
             omni::out << "new line";
-            omni::out << omni::environment::NEW_LINE;
+            omni::out << OMNI_NEW_LINE;
             omni::out << "new line" << std::endl;
         }
 };

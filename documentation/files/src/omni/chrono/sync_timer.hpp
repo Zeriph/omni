@@ -72,20 +72,20 @@ namespace omni {
                 OMNI_MEMBERS_FW(omni::chrono::sync_timer) // disposing,name,type(),hash()
                 
             private:
+                #if defined(OMNI_SAFE_SYNC_TIMER)
+                    mutable omni::sync::basic_lock m_mtx;
+                #endif
+                omni::sync::basic_thread* m_thread; // the main timer thread to _run on
+
+                OMNI_STMR_INT_FW m_int; // "elapsed" interval in ms between ticks
+                volatile OMNI_STMR_INT_FW m_status; // auto run (true by default), is_run, stop_req
+
                 void _do_run();
                 void _do_tick();
                 void _run();
                 void _run_delayed(omni::sync::thread_arg_t param);
                 void _run_noblock();
                 bool _stopreq() const;
-                
-                #if defined(OMNI_SAFE_SYNC_TIMER)
-                    mutable omni::sync::basic_lock m_mtx;
-                #endif
-                omni::sync::basic_thread *m_thread; // the main timer thread to _run on
-
-                OMNI_STMR_INT_FW m_int; // "elapsed" interval in ms between ticks
-                volatile OMNI_STMR_INT_FW m_status; // auto run (true by default), is_run, stop_req
         };
     } // namespace chrono
 } // namespace omni

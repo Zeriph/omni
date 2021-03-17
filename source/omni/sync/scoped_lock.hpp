@@ -63,11 +63,11 @@ namespace omni {
                 }
                 
             private:
+                T* m_hndl;
+
                 scoped_lock();
                 scoped_lock(const omni::sync::scoped_lock<T>& cp);
                 scoped_lock& operator=(const omni::sync::scoped_lock<T>& cp);
-                
-                T* m_hndl;
         };
         
         template <>
@@ -110,11 +110,11 @@ namespace omni {
                 }
                 
             private:
+                omni::sync::mutex_t* m_mtx;
+
                 scoped_lock();
                 scoped_lock(const scoped_lock& cp);
                 scoped_lock& operator=(const scoped_lock& cp);
-                
-                omni::sync::mutex_t* m_mtx;
         };
     }
 }

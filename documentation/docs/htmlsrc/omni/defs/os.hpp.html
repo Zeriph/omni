@@ -40,13 +40,13 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 0000280:<br>0000281:<br>0000282:<br>0000283:<br>0000284:<br>0000285:<br>0000286:<br>0000287:<br>0000288:<br>0000289:<br>0000290:<br>0000291:<br>0000292:<br>0000293:<br>0000294:<br>0000295:<br>0000296:<br>0000297:<br>0000298:<br>0000299:<br>
 0000300:<br>0000301:<br>0000302:<br>0000303:<br>0000304:<br>0000305:<br>0000306:<br>0000307:<br>0000308:<br>0000309:<br>0000310:<br>0000311:<br>0000312:<br>0000313:<br>0000314:<br>0000315:<br>0000316:<br>0000317:<br>0000318:<br>0000319:<br>
 0000320:<br>0000321:<br>0000322:<br>0000323:<br>0000324:<br>0000325:<br>0000326:<br>0000327:<br>0000328:<br>0000329:<br>0000330:<br>0000331:<br>0000332:<br>0000333:<br>0000334:<br>0000335:<br>0000336:<br>0000337:<br>0000338:<br>0000339:<br>
-0000340:<br>0000341:<br><div id="cmntl4" name="cmntl4">0000342:<br>0000343:<br>0000344:<br>0000345:<br>0000346:<br>0000347:<br>0000348:<br>0000349:<br>0000350:<br></div>0000351:<br>0000352:<br>0000353:<br>0000354:<br>0000355:<br>
+0000340:<br>0000341:<br>0000342:<br>0000343:<br>0000344:<br>0000345:<br>0000346:<br>0000347:<br>0000348:<br>0000349:<br>0000350:<br>
 <!--end line numbers-->
 </div><div class="cpphtmlcmnt">
 <!--start collapse columns-->
-<img src="../../../../content/tree/min.gif" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
-<br><br><img src="../../../../content/tree/min.gif" id="cmnti2" name="cmnti2" onclick="collapse('2', '../../../../');" /><br><div id="cmnts2" name="cmnts2"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br></div><div></div><br><br><img src="../../../../content/tree/min.gif" id="cmnti3" name="cmnti3" onclick="collapse('3', '../../../../');" /><br><div id="cmnts3" name="cmnts3"><br><br><br><br><br><br><br><br><br></div><div></div><br><br><br><br><br><br>
+<img src="../../../../content/tree/min.gif" alt="Min/Max" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<br><br><img src="../../../../content/tree/min.gif" alt="Min/Max" id="cmnti2" name="cmnti2" onclick="collapse('2', '../../../../');" /><br><div id="cmnts2" name="cmnts2"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br></div><div></div><br><br><img src="../../../../content/tree/min.gif" alt="Min/Max" id="cmnti3" name="cmnti3" onclick="collapse('3', '../../../../');" /><br><div id="cmnts3" name="cmnts3"><br><br><br><br><br><br><br><br><br></div><div></div><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -61,7 +61,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><img src="../../../../content/tree/min.gif" id="cmnti4" name="cmnti4" onclick="collapse('4', '../../../../');" /><br><div id="cmnts4" name="cmnts4"><br><br><br><br><br><br><br><br><br></div><div></div><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br>
 <!--end collapse columns-->
 </div><div class="cpphtml" style="margin-left:3.75em;">
 <!--start highlighted code-->
@@ -405,16 +405,11 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
 <br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// check for any invalid combo&#39;s</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">/*<div class="syn_ex" id="cmnt4" name="cmnt4">
-&nbsp;&nbsp;&nbsp;&nbsp;TODO: check if this is legit<br>
-&nbsp;&nbsp;&nbsp;&nbsp;#if defined(__CYGWIN__) || defined(__MINGW32__)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#if defined(OMNI_OS_WIN)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#define OMNI_OS_CYGWIN<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#else<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#error &quot;OMNI_OS_WIN in Cygwin environment&quot; <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#endif<br>
-&nbsp;&nbsp;&nbsp;&nbsp;#endif<br>
-&nbsp;&nbsp;&nbsp;&nbsp;*/</div><div></div></font>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../options/omni_os_cygwin.html">OMNI_OS_CYGWIN</a>) || defined(<a href="../../../options/omni_os_mingw.html">OMNI_OS_MINGW</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../options/omni_os_win.html">OMNI_OS_WIN</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#warning <font class="syn_str">&quot;OMNI_OS_WIN in Cygwin environment&quot;</font> <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
 <br>
 <font class="syn_pre">#endif <font class="syn_cmt">// <a href="../../../options/omni_os_ignore.html">OMNI_OS_IGNORE</a></font></font><br>
 <br>
@@ -422,4 +417,4 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <!--end highlighted code-->
 </div></code><br>
 <!--end content-->
-</div></div></div></div><script type="text/javascript">loadJS(); collapseAll('4', '../../../../');</script></body></html>
+</div></div></div></div><script type="text/javascript">loadJS(); collapseAll('3', '../../../../');</script></body></html>

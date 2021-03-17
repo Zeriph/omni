@@ -112,14 +112,15 @@
 #define OMNI_FREE(v) delete v; v = OMNI_NULL
 #define OMNI_FREE_ARR(v) delete[] v; v = OMNI_NULL
 
+// For a list of error codes: see errno.h
+#include <cerrno>  // C++ defs, but some impls do not have errno defined here
+#include <errno.h> // so also include C defs ... (this happens a lot more than we would like)
+
 #if defined(OMNI_WIN_API)
     // For a list of error codes: http://msdn.microsoft.com/en-us/library/ms681381(VS.85).aspx
     #define OMNI_GLE ::GetLastError()
     #define OMNI_GLE_PRNT static_cast<long>(::GetLastError())
 #else
-    // For a list of error codes: see errno.h
-    #include <cerrno>  // C++ defs, but some impls do not have errno defined here
-    #include <errno.h> // so also include C defs ... (this happens a lot more than we would like)
     #define OMNI_GLE errno
     #define OMNI_GLE_PRNT errno
 #endif
@@ -140,6 +141,10 @@
     #define OMNI_CLINKC_FW }
 #endif
 
+#if !defined(OMNI_SIGCALL)
+    #define OMNI_SIGCALL
+#endif
+
 #if !defined(OMNI_CODE_PAGE)
     #if defined(OMNI_OS_WIN) || defined(CP_UTF8)
         #define OMNI_CODE_PAGE CP_UTF8
@@ -157,10 +162,14 @@
 
 #if defined(OMNI_ENABLE_CXX) || defined(OMNI_ENABLE_NOEXCEPT)
     #define OMNI_DTOR_THROWS noexcept(false)
-    #define OMNI_DTOR_NO_THROWS noexcept(true)
+    #define OMNI_FUNC_THROWS noexcept(false)
+    #define OMNI_DTOR_NO_THROW noexcept(true)
+    #define OMNI_FUNC_NO_THROW noexcept(true)
 #else
     #define OMNI_DTOR_THROWS
-    #define OMNI_DTOR_NO_THROWS throw()
+    #define OMNI_FUNC_THROWS
+    #define OMNI_DTOR_NO_THROW throw()
+    #define OMNI_FUNC_NO_THROW throw()
 #endif
 
 // if debug is not defined, this will not get included
@@ -181,7 +190,7 @@
         #define OMNI_PATH_ROOT "C:\\"
         #define OMNI_WPATH_ROOT L"C:\\"
     #else
-        #if defined(OMNI_APLNL)
+        #if defined(OMNI_RL)
             #define OMNI_NEW_LINE "\r"
             #define OMNI_WNEW_LINE L"\r"
         #else
@@ -197,6 +206,8 @@
 
 // DEV_NOTE: this is triple included to enclose the header and cancel all defines that need be
 #include <omni/defs/cancel_check_def.hpp>
+
+#include <omni/defs/stdinc.hpp>
 
 namespace omni {
     typedef void* unsafe_t;

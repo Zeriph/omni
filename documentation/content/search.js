@@ -51,7 +51,7 @@ function searchOnFile(opath, npath, qvals)
         xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
     }
     try {
-        window.title = "Omni C++ Framework - Searching " + file;
+        window.title = "Omni C++ Library - Searching " + file;
         xmlhttp.open("GET", file, false);
         xmlhttp.send();
         for (var i = 0; i < qlen; ++i) {

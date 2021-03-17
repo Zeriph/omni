@@ -18,141 +18,130 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href="d
 <li title="Search the source and documentation" id="srchli" name="srchli"><a href="search.html">Search the Library</a>
 </li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
 <input name="omnisrch" id="omnisrch" type="text" /><img src="content/search.gif" /></form></li></ul></li>
-</ul><div class="ftr"><div>(C) <a href="http://www.zeriph.com">Zeriph Enterprises, LLC</a></div></div></div></div><div class="info">
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
 <!--start content-->
 <div class="ptitle"><a name="what_is_omni"></a>Omni C++ Library Documentation</div><div class="content"><div>
 <!--start download table-->
-Download the latest version: <b>0.8.3</b><br><div class="dltbl code" style="font-size:14px;"><div><span><a href="files/src.zip">
-<img src="content/dl.gif">src.zip</a><span>(543.1 KB)</span></span><span>- The latest source files.
+Download the latest version: <b>0.8.4</b><br><div class="dltbl code" style="font-size:14px;"><div><span><a href="files/src.zip">
+<img src="content/dl.gif" alt="Download">src.zip</a><span>(585.2 KB)</span></span><span style="padding-left:0.75em;">- The latest source files.
 <font class="toppg">(<a href="download.html#srczip">info</a>)</font></span></div><div><span><a href="files/help.zip">
-<img src="content/dl.gif">help.zip</a><span>(6.7 MB)</span></span><span>- The help documentation for the library (this site).
+<img src="content/dl.gif" alt="Download">help.zip</a><span>(6.6 MB)</span></span><span style="padding-left:0.75em;">- The help documentation for the library (this site).
 <font class="toppg">(<a href="download.html#helpzip">info</a>)</font></span></div><div><span><a href="files/omni.zip">
-<img src="content/dl.gif">omni.zip</a><span>(4 MB)</span></span><span>- A combined file of the src.zip and help.zip.
+<img src="content/dl.gif" alt="Download">omni.zip</a><span>(15.2 MB)</span></span><span style="padding-left:0.75em;">- A combined file of the src.zip and help.zip.
 <font class="toppg">(<a href="download.html#omnizip">info</a>)</font></span></div></div>
 <!--end download table-->
 <br>Omni is a cross platform, object oriented library written in C++ and designed to give the developer a functional and 
 reusable tool set.<br><br>
-With its easy to understand interfaces and recognizable paradigms like managed
-<a href="docs/examples/threading.html">thread objects</a>, <a href="docs/examples/delegates_and_events.html">delegates and events</a>,
+
+With its easy to understand interfaces, recognizable paradigms like managed <a href="docs/examples/threading.html">thread objects</a>,
+<a href="docs/examples/delegates_and_events.html">delegates and events</a>, and its permissive free <a href="license.txt">license</a>,
 Omni enables you to get clean and stable C++ code to a wider market faster while lowering future code maintenance costs.<br><br>
-The library spawned from an appreciation for events and delegates in .NET, a great appreciation for the 
-<a href="https://en.wikipedia.org/wiki/C%2B%2B">C++ language</a> and a deep understanding of a gap in ease of
-functionally efficient cross platform programming. Dissecting the 
-<a href="http://msdn.microsoft.com/library/vstudio/gg145045%28v=vs.110%29.aspx">.NET Library Class Library</a> and the
-<a href="http://msdn.microsoft.com/library/vstudio/8bs2ecf4.aspx">Common Language Runtime (CLR) </a> (specifically from a
-<a href="http://msdn.microsoft.com/en-us/library/618ayhy6.aspx">C#</a> developers perspective) provided an ability to take
-the idioms and "<i>ease of use</i>" of languages like C# and Java and wrap the same contexts in a cross platform library
-making use of standard C++ and OS/platform API's. Omni is more than a set of libraries to be linked against; it is designed to
-afford a user of the library more resources to develop while using less on design overhead and maintenance.<br><br>
-The Omni library has a permissive free <a href="license.txt">license</a> which allows any user of the code to easily integrate the library
-as part of their works. This license was chosen to allow greater flexibility in how you see fit to use the code. Open source, 
-closed source, government, finance, web, any area can easily be subject to a number of other licenses or other legal confusion and 
-we'd rather avoid that and just give you solid reusable code. We also feel that Omni can help someone grasp some of the finer points
-of C++ by giving a familiar context to understand (e.g. coming from a .NET or Java background, Omni seems rather familiar);
-providing the source in an easy to use format, a budding engineer can pick up the code and gain a deeper understanding for both C++ 
-and system level programming. The license we've chosen helps us reach our goals of enabling and educating, both our users and ourselves.<br><br>
-Check out the <a href="docs/examples/index.html">examples</a> or <a href="docs/classes/index.html">classes</a> 
-section for more on working with the library or visit the <a href="getstarted.html">getting started</a>
-page to get up and running with Omni; for more information about which platforms
-are currently supported, visit the  <a href="xplat.html">cross platform</a> section.<br><br>
+
+Check out the <a href="docs/examples/index.html">examples</a> or <a href="docs/classes/index.html">classes</a> section for more
+on working with the library or visit the <a href="getstarted.html">getting started</a> page to get up and running with Omni;
+for more information about which platforms are currently supported, visit the <a href="xplat.html">cross platform</a> section.<br><br>
+
 <b>Please note:</b> the library (and documentation) are in beta and are publicly available so
 anyone interested may follow its progress until the release of 1.0 (version 1.0 will be feature
 complete and be fully documented).<br>
 <br>Thank you for your interest in the Omni library and stay tuned for more.<br><br>
+
 <font class="hdr">A Quick Example:</font><br>
 The following is a simple demonstration of Omni to give an example of some of the feature sets the library can provide.
 Like most examples this is not intended to demonstrate a "live" example of any real-world code, more of how Omni can
 be utilized and a demonstration of a few of the <a href="docs/classes/index.html">classes</a>.<br>
-<div class="sntx"><input type="checkbox" id="c0" name="c0" checked /><label for="c0"> example</label><pre><font class="syn_pre">#include &lt;omnilib&gt;</font>
-<font class="syn_pre">#include &lt;vector&gt;</font>
+<!--start index example-->
+<div class="sntx"><input type="checkbox" id="c0" name="c0" checked /><label for="c0"> example</label><pre>
+<font class="syn_pre">#include &lt;<a href="htmlsrc/omnilib.html">omnilib</a>&gt;</font>
+
+<font class="syn_ins">typedef</font> <a href="http://www.cplusplus.com/reference/vector/vector/">std::vector</a>&lt;<a href="classes/omni-net-endpoint_descriptor.html">omni::net::endpoint_descriptor</a>*&gt; endpoint_list;
 
 <font class="syn_typ">class</font> server {
-    <font class="syn_typ">public</font>:
-        server() :
-            m_clients(),
-            m_sock(<a href="../classes/omni@@net@@address_family@@enum_t@@inet.html">omni::net::address_family::INET</a>, <a href="../classes/omni@@net@@socket_type@@enum_t@@stream.html">omni::net::socket_type::STREAM</a>, <a href="../classes/omni@@net@@protocol_type@@enum_t@@tcp.html">omni::net::protocol_type::TCP</a>),
-            m_mtx(),
-            m_run(<font class="syn_ins">false</font>)
-        {
-            <font class="syn_ins">if</font> (<font class="syn_typ">this</font>-&gt;m_sock.bind(<font class="syn_num">12345</font>) == <a href="../classes/omni@@net@@socket_error@@enum_t@@success.html">omni::net::socket_error::SUCCESS</a>) {
-                <font class="syn_typ">this</font>-&gt;m_sock.listen();
-            }
-        }
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">public</font>:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;server() :
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_clients(),
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_sock(<a href="classes/omni-net-address_family-inet.html">omni::net::address_family::INET</a>, <a href="classes/omni-net-socket_type-stream.html">omni::net::socket_type::STREAM</a>, <a href="classes/omni-net-protocol_type-tcp.html">omni::net::protocol_type::TCP</a>),
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_mtx(),
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_run(<font class="syn_ins">false</font>)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font>-&gt;m_sock.bind(<font class="syn_num">12345</font>) == <a href="classes/omni-net-socket_error-success.html">omni::net::socket_error::SUCCESS</a>) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_sock.listen();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
 
-        ~server()
-        {
-            <font class="syn_typ">this</font>-&gt;_stop();
-        }
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~server()
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;_stop();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
 
-        <font class="syn_typ">bool</font> is_running() <font class="syn_typ">const</font>
-        {
-            <a href="../classes/omni@@sync@@scoped_basic_lock.html">omni::sync::scoped_basic_lock</a> lock(&amp;<font class="syn_typ">this</font>-&gt;m_mtx);
-            <font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;m_run;
-        }
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> is_running() <font class="syn_typ">const</font>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="classes/omni-sync-scoped_basic_lock.html">omni::sync::scoped_basic_lock</a> lock(&amp;<font class="syn_typ">this</font>-&gt;m_mtx);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;m_run;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
 
-        <font class="syn_typ">void</font> run()
-        {
-            <font class="syn_typ">this</font>-&gt;m_mtx.lock();
-            <font class="syn_ins">if</font> (<font class="syn_typ">this</font>-&gt;m_sock.is_listening()) {
-                <font class="syn_typ">this</font>-&gt;m_run = <font class="syn_ins">true</font>;
-            }
-            <font class="syn_typ">this</font>-&gt;m_mtx.unlock();
-            <font class="syn_ins">while</font> (<font class="syn_typ">this</font>-&gt;is_running()) {
-                <a href="../classes/omni@@net@@endpoint_descriptor.html">omni::net::endpoint_descriptor</a>* client = <font class="syn_ins">new</font> <a href="../classes/omni@@net@@endpoint_descriptor.html">omni::net::endpoint_descriptor</a>();
-                <font class="syn_ins">if</font> (<font class="syn_typ">this</font>-&gt;m_sock.accept(*client) == <a href="../classes/omni@@net@@socket_error@@enum_t@@success.html">omni::net::socket_error::SUCCESS</a>) {
-                    <font class="syn_typ">this</font>-&gt;m_clients.push_back(client);
-                }
-            }
-        }
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> run()
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_mtx.lock();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font>-&gt;m_sock.is_listening()) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_run = <font class="syn_ins">true</font>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_mtx.unlock();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">while</font> (<font class="syn_typ">this</font>-&gt;is_running()) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="classes/omni-net-endpoint_descriptor.html">omni::net::endpoint_descriptor</a>* client = <font class="syn_ins">new</font> <a href="classes/omni-net-endpoint_descriptor.html">omni::net::endpoint_descriptor</a>();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font>-&gt;m_sock.accept(*client) == <a href="classes/omni-net-socket_error-success.html">omni::net::socket_error::SUCCESS</a>) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_clients.push_back(client);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
 
-        <font class="syn_typ">void</font> signal(<font class="syn_typ">int</font> sig)
-        {
-            <a href="../classes/omni@@sync@@scoped_basic_lock.html">omni::sync::scoped_basic_lock</a> lock(&amp;<font class="syn_typ">this</font>-&gt;m_mtx);
-            uint32_t xfr = <font class="syn_num">0</font>;
-            <font class="syn_ins">for</font> (<a href="http://www.cplusplus.com/reference/vector/vector/">std::vector</a>&lt;<a href="../classes/omni@@net@@endpoint_descriptor.html">omni::net::endpoint_descriptor</a>*&gt;::iterator client = <font class="syn_typ">this</font>-&gt;m_clients.begin();
-                    client != <font class="syn_typ">this</font>-&gt;m_clients.end();
-                    ++client)
-            {
-                (*client)-&gt;send(<font class="syn_str">&quot;END&quot;</font>, <font class="syn_num">4</font>, xfr);
-            }
-            <font class="syn_typ">this</font>-&gt;m_run = <font class="syn_ins">false</font>;
-        }
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> signal(<font class="syn_typ">int</font> sig)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="classes/omni-sync-scoped_basic_lock.html">omni::sync::scoped_basic_lock</a> lock(&amp;<font class="syn_typ">this</font>-&gt;m_mtx);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint32_t</font> sent = <font class="syn_num">0</font>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">char</font> buff[] = {<font class="syn_chr">&#39;E&#39;</font>,<font class="syn_chr">&#39;N&#39;</font>,<font class="syn_chr">&#39;D&#39;</font>,<font class="syn_chr">&#39;\0&#39;</font>};
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;std_foreach(endpoint_list, client, <font class="syn_typ">this</font>-&gt;m_clients) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(*client)-&gt;<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/send.html">send</a>(buff, sent);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_run = <font class="syn_ins">false</font>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
 
-        <font class="syn_ins">operator</font> <font class="syn_typ">bool</font>()
-        {
-            <a href="../classes/omni@@sync@@scoped_basic_lock.html">omni::sync::scoped_basic_lock</a> lock(&amp;<font class="syn_typ">this</font>-&gt;m_mtx);
-            <font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;m_sock.is_listening();
-        }
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">operator</font> <font class="syn_typ">bool</font>()
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="classes/omni-sync-scoped_basic_lock.html">omni::sync::scoped_basic_lock</a> lock(&amp;<font class="syn_typ">this</font>-&gt;m_mtx);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;m_sock.is_listening();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
 
-    <font class="syn_typ">private</font>:
-        <a href="http://www.cplusplus.com/reference/vector/vector/">std::vector</a>&lt;<a href="../classes/omni@@net@@endpoint_descriptor.html">omni::net::endpoint_descriptor</a>*&gt; m_clients;
-        <a href="../classes/omni@@net@@socket.html">omni::net::socket</a> m_sock;
-        <font class="syn_typ">mutable</font> <a href="../classes/omni@@sync@@basic_lock.html">omni::sync::basic_lock</a> m_mtx;
-        <font class="syn_typ">volatile</font> <font class="syn_typ">bool</font> m_run;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">private</font>:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endpoint_list m_clients;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="classes/omni-net-socket.html">omni::net::socket</a> m_sock;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">mutable</font> <a href="classes/omni-sync-basic_lock.html">omni::sync::basic_lock</a> m_mtx;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">volatile</font> <font class="syn_typ">bool</font> m_run;
 
-        <font class="syn_typ">void</font> _stop()
-        {
-            <a href="../classes/omni@@sync@@scoped_basic_lock.html">omni::sync::scoped_basic_lock</a> lock(&amp;<font class="syn_typ">this</font>-&gt;m_mtx);
-            <font class="syn_ins">for</font> (<a href="http://www.cplusplus.com/reference/vector/vector/">std::vector</a>&lt;<a href="../classes/omni@@net@@endpoint_descriptor.html">omni::net::endpoint_descriptor</a>*&gt;::iterator client = <font class="syn_typ">this</font>-&gt;m_clients.begin();
-                    client != <font class="syn_typ">this</font>-&gt;m_clients.end();
-                    ++client)
-            {
-                (*client)-&gt;close();
-                <font class="syn_ins">delete</font> (*client);
-            }
-            <font class="syn_typ">this</font>-&gt;m_sock.disconnect(<font class="syn_ins">false</font>); <font class="syn_cmt">// shutdown and don&#39;t reuse socket</font>
-        }
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> _stop()
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="classes/omni-sync-scoped_basic_lock.html">omni::sync::scoped_basic_lock</a> lock(&amp;<font class="syn_typ">this</font>-&gt;m_mtx);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;std_foreach(endpoint_list, client, <font class="syn_typ">this</font>-&gt;m_clients) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(*client)-&gt;<a href="https://linux.die.net/man/2/close">close</a>();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">delete</font> (*client);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_sock.disconnect(<font class="syn_ins">false</font>); <font class="syn_cmt">// <a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/shutdown.html">shutdown</a> and don&#39;t reuse socket</font>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
 };
 
 <font class="syn_typ">int</font> main(<font class="syn_typ">int</font> argc, <font class="syn_typ">const</font> <font class="syn_typ">char</font>* argv[])
 {
-    server srv;
-    <font class="syn_ins">if</font> (srv) {
-        <a href="../classes/omni@@application@@signal_handler@@attach.html">omni::application::signal_handler::attach</a>(<a href="../classes/omni@@application@@signal_handler@@callback.html">omni::application::signal_handler::callback</a><a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">::bind</a>&lt;server, &amp;server::signal&gt;(&amp;srv));
-        <font class="syn_ins">return</font> <a href="../classes/omni@@application@@run.html">omni::application::run</a>(argc, argv, <a href="../classes/omni@@sync.html">omni::sync</a><a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">::bind</a>&lt;server, &amp;server::run&gt;(&amp;srv), <font class="syn_ins">true</font>, <font class="syn_ins">true</font>);
-    }
-    <font class="syn_ins">return</font> -<font class="syn_num">1</font>;
-}</pre></div>
+&nbsp;&nbsp;&nbsp;&nbsp;server srv;
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (srv) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="classes/omni-application-run_type.html">omni::application::run_type</a> rt = <a href="classes/omni-application-run_type-exit_with_work_thread.html">omni::application::run_type::EXIT_WITH_WORK_THREAD</a> |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="classes/omni-application-run_type-kill_worker_on_signal.html">omni::application::run_type::KILL_WORKER_ON_SIGNAL</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="classes/omni-application-signal_handler-attach.html">omni::application::signal_handler::attach</a>(omni::application::signal_handler::callback::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a>&lt;server, &amp;server::signal&gt;(&amp;srv));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="classes/omni-application-run.html">omni::application::run</a>(argc, argv, omni::sync::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/bind.html">bind</a>&lt;server, &amp;server::run&gt;(&amp;srv), rt);
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> -<font class="syn_num">1</font>;
+}
+</pre></div>
+<!--end index example-->
 For more, you can visit the <a href="docs/examples/index.html">examples</a> page or the 
 <a href="docs/classes/index.html">class index</a> to browse the library.<br><br>
 <!--end content-->

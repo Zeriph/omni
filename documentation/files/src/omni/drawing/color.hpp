@@ -20,6 +20,7 @@
 #define OMNI_COLOR_HPP 1
 #include <omni/defs/global.hpp>
 #include <omni/defs/class_macros.hpp>
+#include <omni/string/util.hpp>
 
 #if defined(OMNI_SAFE_COLOR)
     #include <omni/sync/basic_lock.hpp>
@@ -50,137 +51,6 @@ namespace omni {
             public:
                 typedef BitDepth int_t;
                 typedef RgbType rgb_t;
-
-                // gets the L of the HSL
-                static float brightness(BitDepth red, BitDepth green, BitDepth blue)
-                {
-                    // ((max + min) / 2) / BitDepth::max
-                    return
-                    (
-                        (
-                            static_cast<float>(std::max(std::max(red, green), blue) + std::min(std::min(red, green), blue))
-                            / 2.0f
-                        )
-                        / std::numeric_limits<BitDepth>::max()
-                    );
-                }
-
-                static uint32_t bits()
-                {
-                    return BitSize;
-                }
-
-                static omni::drawing::color<BitDepth, RgbType, BitSize> from_hsl(float hue, float saturation, float lightness)
-                {
-                    return omni::drawing::color<BitDepth, RgbType, BitSize>(hue, saturation, lightness);
-                }
-
-                static omni::drawing::color<BitDepth, RgbType, BitSize> from_hsl(float hue, uint32_t saturation, uint32_t lightness)
-                {
-                    return omni::drawing::color<BitDepth, RgbType, BitSize>(hue, saturation, lightness);
-                }
-
-                static omni::drawing::color<BitDepth, RgbType, BitSize> from_rgb(RgbType rgb)
-                {
-                    return omni::drawing::color<BitDepth, RgbType, BitSize>(rgb);
-                }
-
-                static omni::drawing::color<BitDepth, RgbType, BitSize> from_argb(RgbType argb)
-                {
-                    return omni::drawing::color<BitDepth, RgbType, BitSize>(argb, false, false);
-                }
-
-                static omni::drawing::color<BitDepth, RgbType, BitSize> from_rgba(RgbType rgba)
-                {
-                    return omni::drawing::color<BitDepth, RgbType, BitSize>(rgba, true, false);
-                }
-
-                // gets the H of the HSL (in degrees)
-                static float hue(BitDepth red, BitDepth green, BitDepth blue)
-                {
-                    BitDepth cmax = std::max(std::max(red, green), blue);
-                    BitDepth cmin = std::min(std::min(red, green), blue);
-                    if (cmax == cmin) { return 0.0f; }
-                    float ret = 0.0f;
-                    if (cmax == red) {
-                        ret = 60.0f * (std::fmod((static_cast<float>(green - blue) / (cmax - cmin)), 6.0f));
-                    } else if (cmax == green) {
-                        ret = 60.0f * ((static_cast<float>(blue - red) / (cmax - cmin)) + 2.0f);
-                    } else if (cmax == blue) {
-                        ret = 60.0f * ((static_cast<float>(red - green) / (cmax - cmin)) + 4.0f);
-                    }
-                    if (ret < 0.0f) { ret += 360.0f; }
-                    return ret;
-                }
-
-                // gets the S of the HSL
-                static float saturation(BitDepth red, BitDepth green, BitDepth blue)
-                {
-                    BitDepth cmax = std::max(std::max(red, green), blue);
-                    BitDepth cmin = std::min(std::min(red, green), blue);
-                    if (cmax == cmin) { return 0.0f; }
-                    return 
-                        (static_cast<float>(cmax - cmin) / std::numeric_limits<BitDepth>::max())
-                        /
-                        (1.0f - std::fabs((static_cast<float>(cmax + cmin) / std::numeric_limits<BitDepth>::max()) - 1.0f));
-                }
-
-                static RgbType hsl_to_rgb(float hue, float saturation, float luminance)
-                {
-                    if ((hue > 360.0f || hue < 0.0f) ||
-                        (saturation > 1.0f || saturation < 0.0f) ||
-                        (luminance > 1.0f || luminance < 0.0f))
-                    {
-                        OMNI_ERR_RETV_FW(OMNI_ERR_RANGE_STR, omni::exceptions::invalid_range(), 0)
-                    }
-                    if ((hue == 0.00f) && (saturation == 0.00f) && (luminance == 0.0f)) { return 0; }
-                    BitDepth nmax = std::numeric_limits<BitDepth>::max();
-                    float C = (1.0f - std::fabs((2.0f * luminance) - 1.0f)) * saturation;
-                    float X = C * (1.0f - std::fabs(std::fmod((hue / 60.0f), 2.0f) - 1.0f));
-                    float m = luminance - C / 2.0f;
-                    float tr = 0.0f;
-                    float tg = 0.0f;
-                    float tb = 0.0f;
-                    if (hue < 120.0f) {
-                        if (hue < 60.0f) {
-                            tr = C;
-                            tg = X;
-                        } else {
-                            tr = X;
-                            tg = C;
-                        }
-                    } else if (hue < 240.0f) {
-                        if (hue < 180.0f) {
-                            tg = C;
-                            tb = X;
-                        } else {
-                            tg = X;
-                            tb = C;
-                        }
-                    } else if (hue < 360.0f) {
-                        if (hue < 300.0f) {
-                            tr = X;
-                            tb = C;
-                        } else {
-                            tr = C;
-                            tb = X;
-                        }
-                    }
-                    return (
-                        (static_cast<BitDepth>(::ceilf((tr + m) * nmax)) << (BitSize * 2)) ^
-                        (static_cast<BitDepth>(::ceilf((tg + m) * nmax)) << BitSize) ^
-                        (static_cast<BitDepth>(::ceilf((tb + m) * nmax)))
-                    );
-                }
-
-                static RgbType hsl_to_rgb(float hue, uint32_t saturation, uint32_t lightness)
-                {
-                    return omni::drawing::color<BitDepth, RgbType, BitSize>::hsl_to_rgb(
-                        hue,
-                        (static_cast<float>(saturation) / 100.0f),
-                        (static_cast<float>(lightness) / 100.0f)
-                    );
-                }
 
                 color() : 
                     OMNI_CTOR_FW(omni::drawing::color)
@@ -595,6 +465,11 @@ namespace omni {
                 {
                     return !(*this == val);
                 }
+
+                bool operator!=(RgbType val) const
+                {
+                    return !(*this == val);
+                }
                 
                 omni::drawing::color<BitDepth, RgbType, BitSize>& operator=(const omni::drawing::color<BitDepth, RgbType, BitSize>& val)
                 {
@@ -843,8 +718,138 @@ namespace omni {
                 }
 
                 OMNI_MEMBERS_FW(omni::drawing::color<BitDepth, RgbType, BitSize>) // disposing,name,type(),hash()
-                
                 OMNI_OSTREAM_FW(omni::drawing::color<BitDepth, RgbType, BitSize>)
+
+                // gets the L of the HSL
+                static float brightness(BitDepth red, BitDepth green, BitDepth blue)
+                {
+                    // ((max + min) / 2) / BitDepth::max
+                    return
+                    (
+                        (
+                            static_cast<float>(std::max(std::max(red, green), blue) + std::min(std::min(red, green), blue))
+                            / 2.0f
+                        )
+                        / std::numeric_limits<BitDepth>::max()
+                    );
+                }
+
+                static uint32_t bits()
+                {
+                    return BitSize;
+                }
+
+                static omni::drawing::color<BitDepth, RgbType, BitSize> from_hsl(float hue, float saturation, float lightness)
+                {
+                    return omni::drawing::color<BitDepth, RgbType, BitSize>(hue, saturation, lightness);
+                }
+
+                static omni::drawing::color<BitDepth, RgbType, BitSize> from_hsl(float hue, uint32_t saturation, uint32_t lightness)
+                {
+                    return omni::drawing::color<BitDepth, RgbType, BitSize>(hue, saturation, lightness);
+                }
+
+                static omni::drawing::color<BitDepth, RgbType, BitSize> from_rgb(RgbType rgb)
+                {
+                    return omni::drawing::color<BitDepth, RgbType, BitSize>(rgb);
+                }
+
+                static omni::drawing::color<BitDepth, RgbType, BitSize> from_argb(RgbType argb)
+                {
+                    return omni::drawing::color<BitDepth, RgbType, BitSize>(argb, false, false);
+                }
+
+                static omni::drawing::color<BitDepth, RgbType, BitSize> from_rgba(RgbType rgba)
+                {
+                    return omni::drawing::color<BitDepth, RgbType, BitSize>(rgba, true, false);
+                }
+
+                // gets the H of the HSL (in degrees)
+                static float hue(BitDepth red, BitDepth green, BitDepth blue)
+                {
+                    BitDepth cmax = std::max(std::max(red, green), blue);
+                    BitDepth cmin = std::min(std::min(red, green), blue);
+                    if (cmax == cmin) { return 0.0f; }
+                    float ret = 0.0f;
+                    if (cmax == red) {
+                        ret = 60.0f * (std::fmod((static_cast<float>(green - blue) / (cmax - cmin)), 6.0f));
+                    } else if (cmax == green) {
+                        ret = 60.0f * ((static_cast<float>(blue - red) / (cmax - cmin)) + 2.0f);
+                    } else if (cmax == blue) {
+                        ret = 60.0f * ((static_cast<float>(red - green) / (cmax - cmin)) + 4.0f);
+                    }
+                    if (ret < 0.0f) { ret += 360.0f; }
+                    return ret;
+                }
+
+                // gets the S of the HSL
+                static float saturation(BitDepth red, BitDepth green, BitDepth blue)
+                {
+                    BitDepth cmax = std::max(std::max(red, green), blue);
+                    BitDepth cmin = std::min(std::min(red, green), blue);
+                    if (cmax == cmin) { return 0.0f; }
+                    return 
+                        (static_cast<float>(cmax - cmin) / std::numeric_limits<BitDepth>::max())
+                        /
+                        (1.0f - std::fabs((static_cast<float>(cmax + cmin) / std::numeric_limits<BitDepth>::max()) - 1.0f));
+                }
+
+                static RgbType hsl_to_rgb(float hue, float saturation, float luminance)
+                {
+                    if ((hue > 360.0f || hue < 0.0f) ||
+                        (saturation > 1.0f || saturation < 0.0f) ||
+                        (luminance > 1.0f || luminance < 0.0f))
+                    {
+                        OMNI_ERR_RETV_FW(OMNI_ERR_RANGE_STR, omni::exceptions::invalid_range(), 0)
+                    }
+                    if ((hue == 0.00f) && (saturation == 0.00f) && (luminance == 0.0f)) { return 0; }
+                    BitDepth nmax = std::numeric_limits<BitDepth>::max();
+                    float C = (1.0f - std::fabs((2.0f * luminance) - 1.0f)) * saturation;
+                    float X = C * (1.0f - std::fabs(std::fmod((hue / 60.0f), 2.0f) - 1.0f));
+                    float m = luminance - C / 2.0f;
+                    float tr = 0.0f;
+                    float tg = 0.0f;
+                    float tb = 0.0f;
+                    if (hue < 120.0f) {
+                        if (hue < 60.0f) {
+                            tr = C;
+                            tg = X;
+                        } else {
+                            tr = X;
+                            tg = C;
+                        }
+                    } else if (hue < 240.0f) {
+                        if (hue < 180.0f) {
+                            tg = C;
+                            tb = X;
+                        } else {
+                            tg = X;
+                            tb = C;
+                        }
+                    } else if (hue < 360.0f) {
+                        if (hue < 300.0f) {
+                            tr = X;
+                            tb = C;
+                        } else {
+                            tr = C;
+                            tb = X;
+                        }
+                    }
+                    return (
+                        (static_cast<BitDepth>(::ceilf((tr + m) * nmax)) << (BitSize * 2)) ^
+                        (static_cast<BitDepth>(::ceilf((tg + m) * nmax)) << BitSize) ^
+                        (static_cast<BitDepth>(::ceilf((tb + m) * nmax)))
+                    );
+                }
+
+                static RgbType hsl_to_rgb(float hue, uint32_t saturation, uint32_t lightness)
+                {
+                    return omni::drawing::color<BitDepth, RgbType, BitSize>::hsl_to_rgb(
+                        hue,
+                        (static_cast<float>(saturation) / 100.0f),
+                        (static_cast<float>(lightness) / 100.0f)
+                    );
+                }
                 
             private:
                 BitDepth m_r;

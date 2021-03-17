@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_32BIT_BASIC_LOCK</Name>
+  <Brief>If defined, uses 32-bit types in the omni::sync::basic_lock class.</Brief>
+  <Considerations>A lock counter is kept due to the recurisve nature of locks in the library, due to this, if a lock operation is preformed more than the maximum value for the underlying lock counter type, an overflow can occur and put the lock into an undefined state. For example, if this flag is defined then the lock's counter type will be 32-bit, thus the maximum number of lock operations that can be preforemd without an unlock operation is std::numeric_limits&lt;uint32_t&gt;::max().</Considerations>
+  <Description>If defined, the omni::sync::basic_lock class will utilize a 32-bit intergral type for its lock counter, versus a 64-bit type.</Description>
+  <Notes>See the considerations for this flag.</Notes>
+  <PlatformSpecific>No platform specific notes.</PlatformSpecific>
+  <Synopsis>&lt;code&gt;#define OMNI_32BIT_BASIC_LOCK&lt;/code&gt;
+
+Signifies to enable the OMNI_32BIT_BASIC_LOCK flag and utilize 32-bit types.</Synopsis>
+  <IsHelper>false</IsHelper>
+  <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
+</MacroOp>

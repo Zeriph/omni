@@ -1,19 +1,13 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_180_PI</Name>
-  <Brief>Defined as the constant value of 180/Pi
-</Brief>
-  <Considerations>No special considerations
-</Considerations>
-  <Description>A framework macro/option that changes certain functionality
-</Description>
-  <Notes>None.
-</Notes>
-  <PlatformSpecific>No platform specific notes.
-</PlatformSpecific>
-  <Synopsis>A framework macro/option
-</Synopsis>
-  <IsHelper>true</IsHelper>
+  <Brief>Defined as the double constant value of 180/Pi</Brief>
+  <Considerations>No special considerations</Considerations>
+  <Description>A library macro constant defined as @c 57.29577951308232087684 which is the result of &lt;code&gt;180 / 3.14159265358979323846&lt;/code&gt;</Description>
+  <Notes>None.</Notes>
+  <PlatformSpecific>No platform specific notes.</PlatformSpecific>
+  <Synopsis>Defined as @c 57.29577951308232087684</Synopsis>
+  <IsHelper>false</IsHelper>
   <IsConstant>true</IsConstant>
   <IsFWHelp>false</IsFWHelp>
 </MacroOp>

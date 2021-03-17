@@ -108,7 +108,7 @@ std::string omni::environment::expand_vars(const std::string& vars)
             for many security reasons. As such it is not really a good idea to call this function
             without validating the user input; this is here for a convenience function. */
             std::string cmd = "echo \"" + vars + "\"";
-            FILE *fp = ::popen(cmd.c_str(), "r");
+            FILE* fp = ::popen(cmd.c_str(), "r");
             if (fp == NULL) {
                 OMNI_ERR_RETV_FW("Error expanding environment variable: failed to open pipe", omni::exceptions::pipe_exception(), omni::string_t())
             }

@@ -48,8 +48,8 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <!--end line numbers-->
 </div><div class="cpphtmlcmnt">
 <!--start collapse columns-->
-<img src="../../../../content/tree/min.gif" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
-<br><br><br><br><br><br><br><img src="../../../../content/tree/min.gif" id="cmnti2" name="cmnti2" onclick="collapse('2', '../../../../');" /><br><div id="cmnts2" name="cmnts2"><br><br></div><div></div><br><br><br><br><br><br><br><br><br><br>
+<img src="../../../../content/tree/min.gif" alt="Min/Max" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<br><br><br><br><br><br><br><img src="../../../../content/tree/min.gif" alt="Min/Max" id="cmnti2" name="cmnti2" onclick="collapse('2', '../../../../');" /><br><div id="cmnts2" name="cmnts2"><br><br></div><div></div><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -216,8 +216,11 @@ expected id-expression before (, while pthread_spin_lock(&amp;lock) resolves and
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MEMBERS_FW(<a href="../../../classes/omni-sync-spin_lock.html">omni::sync::spin_lock</a>) <font class="syn_cmt">// disposing,name,type(),hash()</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">private</font>:<br>
+<a name="omni::sync::spin_lock::m_lock"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-sync-spin_lock_t.html">omni::sync::spin_lock_t</a> m_lock;<br>
+<a name="omni::sync::spin_lock::m_lokd"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">volatile</font> <font class="syn_typ">mutable</font> OMNI_SPIN_INT_FW m_lokd;<br>
+<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// defined but not implemented, does not make sense to copy</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;spin_lock(<font class="syn_typ">const</font> <a href="../../../classes/omni-sync-spin_lock.html">omni::sync::spin_lock</a> &amp;cp);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;spin_lock(<font class="syn_typ">const</font> <a href="../../../classes/omni-sync-spin_lock.html">omni::sync::spin_lock</a>&amp; cp);<br>
 <a name="omni::sync::spin_lock::operator="></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-sync-spin_lock.html">omni::sync::spin_lock</a>&amp; <font class="syn_ins">operator</font>=(<font class="syn_typ">const</font> <a href="../../../classes/omni-sync-spin_lock.html">omni::sync::spin_lock</a>&amp; other);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
 <a name="omni::sync::spin_lock::_init"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">void</font> _init()<br>
@@ -231,9 +234,6 @@ expected id-expression before (, while pthread_spin_lock(&amp;lock) resolves and
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-<a name="omni::sync::spin_lock::m_lock"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-sync-spin_lock_t.html">omni::sync::spin_lock_t</a> m_lock;<br>
-<a name="omni::sync::spin_lock::m_lokd"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">volatile</font> <font class="syn_typ">mutable</font> OMNI_SPIN_INT_FW m_lokd;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">class</font> spin_wait<br>
@@ -316,14 +316,14 @@ expected id-expression before (, while pthread_spin_lock(&amp;lock) resolves and
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_sig == <font class="syn_num">1</font>);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-<a name="omni::sync::spin_wait::operator=="></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> <font class="syn_ins">operator</font>==(<font class="syn_typ">const</font> <a href="../../../classes/omni-sync-spin_wait.html">omni::sync::spin_wait</a> &amp;o) <font class="syn_typ">const</font><br>
+<a name="omni::sync::spin_wait::operator=="></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> <font class="syn_ins">operator</font>==(<font class="syn_typ">const</font> <a href="../../../classes/omni-sync-spin_wait.html">omni::sync::spin_wait</a>&amp; o) <font class="syn_typ">const</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font> == &amp;o) { <font class="syn_ins">return</font> <font class="syn_ins">true</font>; }<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_sig == o.m_sig)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_EQUAL_FW(o);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 <br>
-<a name="omni::sync::spin_wait::operator!="></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> <font class="syn_ins">operator</font>!=(<font class="syn_typ">const</font> <a href="../../../classes/omni-sync-spin_wait.html">omni::sync::spin_wait</a> &amp;o) <font class="syn_typ">const</font><br>
+<a name="omni::sync::spin_wait::operator!="></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> <font class="syn_ins">operator</font>!=(<font class="syn_typ">const</font> <a href="../../../classes/omni-sync-spin_wait.html">omni::sync::spin_wait</a>&amp; o) <font class="syn_typ">const</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> !(*<font class="syn_typ">this</font> == o);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
@@ -331,11 +331,11 @@ expected id-expression before (, while pthread_spin_lock(&amp;lock) resolves and
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MEMBERS_FW(<a href="../../../classes/omni-sync-spin_wait.html">omni::sync::spin_wait</a>) <font class="syn_cmt">// disposing,name,type(),hash()</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">private</font>:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// defined but not implemented. should not be copied</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;spin_wait(<font class="syn_typ">const</font> <a href="../../../classes/omni-sync-spin_wait.html">omni::sync::spin_wait</a> &amp;cp); <font class="syn_cmt">// C++1X delete </font><br>
-<a name="omni::sync::spin_wait::operator="></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-sync-spin_wait.html">omni::sync::spin_wait</a>&amp; <font class="syn_ins">operator</font>=(<font class="syn_typ">const</font> <a href="../../../classes/omni-sync-spin_wait.html">omni::sync::spin_wait</a> &amp;other); <font class="syn_cmt">// C++1X delete</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
 <a name="omni::sync::spin_wait::m_sig"></a><a name="omni::sync::safe_spin_wait::m_sig"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">volatile</font> <font class="syn_typ">mutable</font> OMNI_SPIN_INT_FW m_sig;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// defined but not implemented. should not be copied</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;spin_wait(<font class="syn_typ">const</font> <a href="../../../classes/omni-sync-spin_wait.html">omni::sync::spin_wait</a>&amp; cp); <font class="syn_cmt">// C++1X delete </font><br>
+<a name="omni::sync::spin_wait::operator="></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-sync-spin_wait.html">omni::sync::spin_wait</a>&amp; <font class="syn_ins">operator</font>=(<font class="syn_typ">const</font> <a href="../../../classes/omni-sync-spin_wait.html">omni::sync::spin_wait</a>&amp; other); <font class="syn_cmt">// C++1X delete</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">class</font> safe_spin_wait<br>
@@ -466,7 +466,7 @@ expected id-expression before (, while pthread_spin_lock(&amp;lock) resolves and
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-<a name="omni::sync::safe_spin_wait::operator=="></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> <font class="syn_ins">operator</font>==(<font class="syn_typ">const</font> <a href="../../../classes/omni-sync-safe_spin_wait.html">omni::sync::safe_spin_wait</a> &amp;o) <font class="syn_typ">const</font><br>
+<a name="omni::sync::safe_spin_wait::operator=="></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> <font class="syn_ins">operator</font>==(<font class="syn_typ">const</font> <a href="../../../classes/omni-sync-safe_spin_wait.html">omni::sync::safe_spin_wait</a>&amp; o) <font class="syn_typ">const</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font> == &amp;o) { <font class="syn_ins">return</font> <font class="syn_ins">true</font>; }<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-sync-scoped_lock.html">omni::sync::scoped_lock</a>&lt;<a href="../../../classes/omni-sync-mutex_t.html">omni::sync::mutex_t</a>&gt; alock(&amp;<font class="syn_typ">this</font>-&gt;m_mtx);<br>
@@ -475,7 +475,7 @@ expected id-expression before (, while pthread_spin_lock(&amp;lock) resolves and
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_EQUAL_FW(o);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 <br>
-<a name="omni::sync::safe_spin_wait::operator!="></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> <font class="syn_ins">operator</font>!=(<font class="syn_typ">const</font> <a href="../../../classes/omni-sync-safe_spin_wait.html">omni::sync::safe_spin_wait</a> &amp;o) <font class="syn_typ">const</font><br>
+<a name="omni::sync::safe_spin_wait::operator!="></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> <font class="syn_ins">operator</font>!=(<font class="syn_typ">const</font> <a href="../../../classes/omni-sync-safe_spin_wait.html">omni::sync::safe_spin_wait</a>&amp; o) <font class="syn_typ">const</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> !(*<font class="syn_typ">this</font> == o);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
@@ -483,12 +483,12 @@ expected id-expression before (, while pthread_spin_lock(&amp;lock) resolves and
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MEMBERS_FW(<a href="../../../classes/omni-sync-safe_spin_wait.html">omni::sync::safe_spin_wait</a>) <font class="syn_cmt">// disposing,name,type(),hash()</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">private</font>:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// defined but not implemented. should not be copied</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;safe_spin_wait(<font class="syn_typ">const</font> <a href="../../../classes/omni-sync-safe_spin_wait.html">omni::sync::safe_spin_wait</a> &amp;cp); <font class="syn_cmt">// C++1X delete </font><br>
-<a name="omni::sync::safe_spin_wait::operator="></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-sync-safe_spin_wait.html">omni::sync::safe_spin_wait</a>&amp; <font class="syn_ins">operator</font>=(<font class="syn_typ">const</font> <a href="../../../classes/omni-sync-safe_spin_wait.html">omni::sync::safe_spin_wait</a> &amp;other); <font class="syn_cmt">// C++1X delete</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
 <a name="omni::sync::safe_spin_wait::m_mtx"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">mutable</font> <a href="../../../classes/omni-sync-mutex_t.html">omni::sync::mutex_t</a> m_mtx;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">volatile</font> <font class="syn_typ">mutable</font> OMNI_SPIN_INT_FW m_sig;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// defined but not implemented. should not be copied</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;safe_spin_wait(<font class="syn_typ">const</font> <a href="../../../classes/omni-sync-safe_spin_wait.html">omni::sync::safe_spin_wait</a>&amp; cp); <font class="syn_cmt">// C++1X delete </font><br>
+<a name="omni::sync::safe_spin_wait::operator="></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-sync-safe_spin_wait.html">omni::sync::safe_spin_wait</a>&amp; <font class="syn_ins">operator</font>=(<font class="syn_typ">const</font> <a href="../../../classes/omni-sync-safe_spin_wait.html">omni::sync::safe_spin_wait</a>&amp; other); <font class="syn_cmt">// C++1X delete</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
 <a name="omni::sync::auto_spin_lock"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">typedef</font> <a href="../../../classes/omni-sync-auto_lock.html">omni::sync::auto_lock</a>&lt;<a href="../../../classes/omni-sync-spin_lock.html">omni::sync::spin_lock</a>&gt; auto_spin_lock;<br>

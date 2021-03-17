@@ -71,11 +71,11 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 0000900:<br>0000901:<br>0000902:<br>0000903:<br>0000904:<br>0000905:<br>0000906:<br>0000907:<br>0000908:<br>0000909:<br>0000910:<br>0000911:<br>0000912:<br>0000913:<br>0000914:<br>0000915:<br>0000916:<br>0000917:<br>0000918:<br>0000919:<br>
 0000920:<br>0000921:<br>0000922:<br>0000923:<br>0000924:<br>0000925:<br>0000926:<br>0000927:<br>0000928:<br>0000929:<br>0000930:<br>0000931:<br>0000932:<br>0000933:<br>0000934:<br>0000935:<br>0000936:<br>0000937:<br>0000938:<br>0000939:<br>
 0000940:<br>0000941:<br>0000942:<br>0000943:<br>0000944:<br>0000945:<br>0000946:<br>0000947:<br>0000948:<br>0000949:<br>0000950:<br>0000951:<br>0000952:<br>0000953:<br>0000954:<br>0000955:<br>0000956:<br>0000957:<br>0000958:<br>0000959:<br>
-0000960:<br>0000961:<br>0000962:<br>0000963:<br>0000964:<br>0000965:<br>0000966:<br>0000967:<br>0000968:<br>0000969:<br>0000970:<br>0000971:<br>0000972:<br>0000973:<br>
+0000960:<br>0000961:<br>0000962:<br>0000963:<br>0000964:<br>0000965:<br>0000966:<br>0000967:<br>0000968:<br>0000969:<br>0000970:<br>0000971:<br>0000972:<br>0000973:<br>0000974:<br>
 <!--end line numbers-->
 </div><div class="cpphtmlcmnt">
 <!--start collapse columns-->
-<img src="../../../../content/tree/min.gif" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<img src="../../../../content/tree/min.gif" alt="Min/Max" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -123,7 +123,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <!--end collapse columns-->
 </div><div class="cpphtml" style="margin-left:3.75em;">
 <!--start highlighted code-->
@@ -149,6 +149,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <font class="syn_pre">#define OMNI_3D_POINT_HPP 1</font><br>
 <font class="syn_pre">#include &lt;<a href="../../omni/defs/global.hpp.html">omni/defs/global.hpp</a>&gt;</font><br>
 <font class="syn_pre">#include &lt;<a href="../../omni/defs/class_macros.hpp.html">omni/defs/class_macros.hpp</a>&gt;</font><br>
+<font class="syn_pre">#include &lt;<a href="../../omni/math.hpp.html">omni/math.hpp</a>&gt;</font><br>
 <br>
 <font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../options/omni_safe_point3d.html">OMNI_SAFE_POINT3D</a>)</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;<a href="../../omni/sync/basic_lock.hpp.html">omni/sync/basic_lock.hpp</a>&gt;</font><br>
@@ -271,7 +272,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> decrement(T x, T y, T z)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_P2ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_P3ALOCK_FW<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_x -= x;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_y -= y;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_z -= z;<br>
@@ -352,7 +353,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> increment(T x, T y, T z)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_P2ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_P3ALOCK_FW<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_x += x;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_y += y;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_z += z;<br>
@@ -370,7 +371,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> offset(T x, T y, T z)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_P2ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_P3ALOCK_FW<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_x += x;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_y += y;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_z += z;<br>
@@ -439,7 +440,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <br>
 <a name="omni::geometry::raw_point3d::to_dimensional"></a><a name="omni::geometry::point3d::to_dimensional"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-math-dimensional.html">omni::math::dimensional</a>&lt;T, <font class="syn_num">3</font>&gt; to_dimensional() <font class="syn_typ">const</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_P2ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_P3ALOCK_FW<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;T vals[<font class="syn_num">3</font>] = { <font class="syn_typ">this</font>-&gt;m_x, <font class="syn_typ">this</font>-&gt;m_y, <font class="syn_typ">this</font>-&gt;m_z };<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../../../classes/omni-math-dimensional.html">omni::math::dimensional</a>&lt;T, <font class="syn_num">3</font>&gt;(vals);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>

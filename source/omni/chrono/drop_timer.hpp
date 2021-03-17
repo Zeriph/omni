@@ -64,7 +64,7 @@ namespace omni {
                 void stop(uint32_t join_timeout);
                 void stop(uint32_t join_timeout, bool kill_on_timeout);
                 void swap(omni::chrono::drop_timer& other);
-                omni::chrono::timer_sync_type::enum_t tick_type() const { return omni::chrono::timer_sync_type::DROP; }
+                inline omni::chrono::timer_sync_type::enum_t tick_type() const { return omni::chrono::timer_sync_type::DROP; }
                 omni::chrono::drop_timer& operator=(const omni::chrono::drop_timer& other);
                 bool operator==(const omni::chrono::drop_timer& o) const;
                 inline bool operator!=(const omni::chrono::drop_timer& o) const { return !(*this == o); }
@@ -72,21 +72,21 @@ namespace omni {
                 OMNI_MEMBERS_FW(omni::chrono::drop_timer) // disposing,name,type(),hash()
                 
             private:
+                #if defined(OMNI_SAFE_DROP_TIMER)
+                    mutable omni::sync::basic_lock m_mtx;
+                #endif
+                omni::sync::basic_thread* m_thread; // the main timer thread to _run on
+                omni::sync::thread_handle_t m_exec; // the executing tick thread
+
+                OMNI_DTMR_INT_FW m_int; // "elapsed" interval in ms between ticks
+                volatile OMNI_DTMR_INT_FW m_status; // auto run (true by default), is_run, stop_req
+
                 void _do_run();
                 void _do_tick();
                 void _run();
                 void _run_delayed(omni::sync::thread_arg_t param);
                 void _run_skip();
                 bool _stopreq() const;
-                
-                #if defined(OMNI_SAFE_DROP_TIMER)
-                    mutable omni::sync::basic_lock m_mtx;
-                #endif
-                omni::sync::basic_thread *m_thread; // the main timer thread to _run on
-                omni::sync::thread_handle_t m_exec; // the executing tick thread
-
-                OMNI_DTMR_INT_FW m_int; // "elapsed" interval in ms between ticks
-                volatile OMNI_DTMR_INT_FW m_status; // auto run (true by default), is_run, stop_req
         };
     } // namespace chrono
 } // namespace omni

@@ -1,20 +1,19 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_CLOCK_GETRES_REALTIME</Name>
-  <Brief>Changes the behavior of the clock_getres
-</Brief>
-  <Considerations>No special considerations
-</Considerations>
-  <Description>Some systems (like QNX) only take @c CLOCK_REALTIME for clock_getres, but will return correct values for clock_gettime with @c CLOCK_MONOTONIC, defining this macro will change the behavior of what clock_getres calls.
+  <Brief>Changes the behaviour of the clock_getres.</Brief>
+  <Considerations>No special considerations.</Considerations>
+  <Description>Some systems (like QNX) only take @c CLOCK_REALTIME for clock_getres, but will return correct values for clock_gettime with @c CLOCK_MONOTONIC, defining this macro will change the behaviour of what clock_getres calls.
 
-Defining this macro will set it to @c CLOCK_REALTIME and with it undefined (default) the framework will use @c CLOCK_MONOTONIC
+Defining this macro will set it to @c CLOCK_REALTIME and with it undefined (default) the library will use @c CLOCK_MONOTONIC
 </Description>
-  <Notes>None.
-</Notes>
-  <PlatformSpecific>This only affects non-Windows systems; defining this macro on Windows based platforms will have no effect on the framework code.
-</PlatformSpecific>
-  <Synopsis>Some platforms do not have support for certain resolution timers when calling clock_getres this macro changes the underlying resolution used.
+  <Notes>None.</Notes>
+  <PlatformSpecific>This only affects non-Windows systems; defining this macro on Windows based platforms will have no effect on the library code.</PlatformSpecific>
+  <Synopsis>&lt;code&gt;#define OMNI_CLOCK_GETRES_REALTIME&lt;/code&gt;
+
+Some platforms do not have support for certain resolution timers when calling clock_getres this macro changes the underlying resolution used.
 </Synopsis>
   <IsHelper>false</IsHelper>
   <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
 </MacroOp>

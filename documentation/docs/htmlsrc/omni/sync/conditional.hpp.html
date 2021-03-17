@@ -26,14 +26,14 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 0001:<br><div id="cmntl1" name="cmntl1">0002:<br>0003:<br>0004:<br>0005:<br>0006:<br>0007:<br>0008:<br>0009:<br>00010:<br>00011:<br>00012:<br>00013:<br>00014:<br>00015:<br>00016:<br>00017:<br>00018:<br></div>00019:<br>
 00020:<br>00021:<br>00022:<br>00023:<br>00024:<br>00025:<br>00026:<br>00027:<br>00028:<br>00029:<br>00030:<br>00031:<br>00032:<br>00033:<br>00034:<br>00035:<br>00036:<br>00037:<br>00038:<br>00039:<br>
 00040:<br>00041:<br>00042:<br>00043:<br>00044:<br>00045:<br>00046:<br>00047:<br>00048:<br>00049:<br>00050:<br>00051:<br>00052:<br>00053:<br>00054:<br>00055:<br>00056:<br>00057:<br>00058:<br>00059:<br>
-00060:<br>00061:<br>00062:<br>00063:<br>00064:<br>00065:<br>00066:<br>00067:<br>00068:<br>00069:<br>00070:<br>00071:<br>00072:<br>00073:<br>00074:<br>00075:<br>00076:<br>00077:<br>00078:<br>00079:<br>
+00060:<br>00061:<br>00062:<br>00063:<br>00064:<br>00065:<br>00066:<br>00067:<br>00068:<br>00069:<br>00070:<br>00071:<br>00072:<br>00073:<br>00074:<br>00075:<br>
 <!--end line numbers-->
 </div><div class="cpphtmlcmnt">
 <!--start collapse columns-->
-<img src="../../../../content/tree/min.gif" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<img src="../../../../content/tree/min.gif" alt="Min/Max" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <!--end collapse columns-->
 </div><div class="cpphtml" style="margin-left:3em;">
 <!--start highlighted code-->
@@ -63,10 +63,6 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <font class="syn_pre">#include &lt;<a href="../../omni/sync/lock.hpp.html">omni/sync/lock.hpp</a>&gt;</font><br>
 <font class="syn_pre">#include &lt;<a href="../../omni/sync/scoped_lock.hpp.html">omni/sync/scoped_lock.hpp</a>&gt;</font><br>
 <font class="syn_pre">#include &lt;<a href="../../omni/chrono/tick.hpp.html">omni/chrono/tick.hpp</a>&gt;</font><br>
-<br>
-<font class="syn_pre">#if !defined(<a href="../../../options/omni_os_win.html">OMNI_OS_WIN</a>)</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;errno.h&gt; <font class="syn_cmt">// errno</font></font><br>
-<font class="syn_pre">#endif</font><br>
 <br>
 <font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../options/omni_32bit_conditional.html">OMNI_32BIT_CONDITIONAL</a>)</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_COND_INT_FW uint32_t</font><br>
@@ -100,16 +96,16 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MEMBERS_FW(<a href="../../../classes/omni-sync-conditional.html">omni::sync::conditional</a>) <font class="syn_cmt">// disposing,name,type(),hash()</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">private</font>:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// defined but not implemented, does not make sense to copy</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;conditional(<font class="syn_typ">const</font> <a href="../../../classes/omni-sync-conditional.html">omni::sync::conditional</a> &amp;cp);<br>
-<a name="omni::sync::conditional::operator="></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-sync-conditional.html">omni::sync::conditional</a>&amp; <font class="syn_ins">operator</font>=(<font class="syn_typ">const</font> <a href="../../../classes/omni-sync-conditional.html">omni::sync::conditional</a>&amp; other);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-<a name="omni::sync::conditional::_init"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> _init();<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
 <a name="omni::sync::conditional::m_signal"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-sync-cond_t.html">omni::sync::cond_t</a> m_signal;<br>
 <a name="omni::sync::conditional::m_wait"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">mutable</font> <a href="../../../classes/omni-sync-mutex_t.html">omni::sync::mutex_t</a> m_wait;<br>
 <a name="omni::sync::conditional::m_waitreq"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_COND_INT_FW m_waitreq;<br>
 <a name="omni::sync::conditional::m_signaled"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">volatile</font> <font class="syn_typ">mutable</font> OMNI_COND_INT_FW m_signaled;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// defined but not implemented, does not make sense to copy</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;conditional(<font class="syn_typ">const</font> <a href="../../../classes/omni-sync-conditional.html">omni::sync::conditional</a>&amp; cp);<br>
+<a name="omni::sync::conditional::operator="></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-sync-conditional.html">omni::sync::conditional</a>&amp; <font class="syn_ins">operator</font>=(<font class="syn_typ">const</font> <a href="../../../classes/omni-sync-conditional.html">omni::sync::conditional</a>&amp; other);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+<a name="omni::sync::conditional::_init"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> _init();<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};<br>
 &nbsp;&nbsp;&nbsp;&nbsp;}<br>
 }<br>

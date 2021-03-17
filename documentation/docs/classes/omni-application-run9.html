@@ -27,49 +27,24 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
     omni::application::run
     </a></code><br>
 <br>A function of <a href="omni-application.html" class="code">omni::application</a><br><br>
-    <code><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/application.hpp.html">omni/application.hpp</a>&gt;</font></code><br><code><font class="syn_typ">int</font> omni::application::run(<font class="syn_typ">const</font> <font class="syn_typ">int</font>&amp; argc, <font class="syn_typ">const</font> <font class="syn_typ">wchar_t</font>** argv, <font class="syn_typ">const</font> <a href="../classes/omni-sync-thread_start.html">omni::sync::thread_start</a>&amp; start_func, <font class="syn_typ">bool</font> exit_with_work_thread, <font class="syn_typ">bool</font> kill_worker_on_signal)</code>
+    <code><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/application.hpp.html">omni/application.hpp</a>&gt;</font></code><br><code><font class="syn_ins">inline</font> <font class="syn_typ">int</font> omni::application::run(<font class="syn_typ">const</font> <font class="syn_typ">int</font>&amp; argc, <font class="syn_typ">const</font> <font class="syn_typ">char</font>** argv, <font class="syn_typ">const</font> <a href="../classes/omni-sync-thread_start.html">omni::sync::thread_start</a>&amp; start_func, <font class="syn_typ">const</font> <a href="../classes/omni-application-run_type.html">omni::application::run_type</a>&amp; run_type)</code>
 </div><br>
 <div class="docdiv"><a name="syn"></a>
 <font class="docu">SYNOPSIS</font><br><br>
-Starts the main application thread loop.
+No synopsis.
 <br><br><a class="toppg" href="#topopage">top</a>
 </div><br>
 <div class="docdiv"><a name="desc"></a>
 <font class="docu">DESCRIPTION</font><br><br>
-This function is part of the application framework that allows you to hook in to certain system level functionality, as well as have access to other long running application contexts. This function will pause the main application until one of either <code><a href="omni-application-exit.html">omni::application::exit</a></code> or <code><a href="omni-application-stop.html">omni::application::stop</a></code> are called, or an exception is thrown and not caught. Along with the other variants of the run function, you can simplify argument and main program loop handling for global and multi-threaded environments in a more simplified way.
+No description.
 <br><br><a class="toppg" href="#topopage">top</a>
 </div><br>
-<div class="docdiv"><a name="ret"></a>
-<font class="docu">RETURN VALUES</font><br><br>
-The exit code set by <code><a href="omni-application-set_return_code.html">omni::application::set_return_code</a></code>, or 0 if none is set. 
-<br><br><a class="toppg" href="#topopage">top</a>
-</div><br>
-<br>
-<div class="docdiv"><a name="param"></a>
-<font class="docu">PARAMETERS</font><br><br>
-<code>argc</code> - Passes the argument count from the command line to the underlying <code><a href="omni-application-argparser.html">omni::application::argparser</a></code> instance. <code>argv</code> - Passes the argument array from the command line to the underlying <code><a href="omni-application-argparser.html">omni::application::argparser</a></code> instance. <code>start_func</code> - An <code><a href="omni-sync-thread_start.html">omni::sync::thread_start</a></code> function object that will be called after the application context has been successfully created and started. <code>exit_with_work_thread</code> - If this is <code>true</code> then the main application loop will exit when the user function passed in has completed. If this is <code>false</code> then the main application loop will not exit until it is signaled via the system (i.e. SIGINT, etc.), or until <code><a href="omni-application-exit.html">omni::application::exit</a></code> or <code><a href="omni-application-stop.html">omni::application::stop</a></code> are called. <code>kill_worker_on_signal</code> - If this is <code>true</code> and the background application thread is still active when a signal is received, it is forcefully killed. If this happens, the application will be in an undefined state as forcefully killing a thread is not guaranteed to stop the thread. 
-<br><br><a class="toppg" href="#topopage">top</a>
-</div><br>
-<br>
-<div class="docdiv"><a name="err"></a>
-<font class="docu">ERRORS</font><br><br>
-Since run need only be called once, if it is called again after being called at program start, it will throw an <code><a href="omni-exceptions-invalid_application_state.html">omni::exceptions::invalid_application_state</a></code> as calling run more than once will cause the system to get into an undefined state. 
-<br><br><a class="toppg" href="#topopage">top</a>
-</div><br>
-<br>
-<div class="docdiv"><a name="con"></a>
-<font class="docu">CONSIDERATIONS</font><br><br>
-You cannot utilize the signal or application handlers unless this or one of its variants are called in the main function of your code or library initialization routine. 
-<br><br><a class="toppg" href="#topopage">top</a>
-</div><br>
-<br>
 
-<div class="docdiv"><a name="notes"></a>
-<font class="docu">NOTES</font><br><br>
-If <code><a href="../options/omni_no_base_setlocale.html">OMNI_NO_BASE_SETLOCALE</a></code> is not defined, then the setlocale function is called with a category LC_ALL and an empty locale. If you wish to specify which category and locale to utilize, you can define <code><a href="../options/omni_base_locale_category.html">OMNI_BASE_LOCALE_CATEGORY</a></code> and <code><a href="../options/omni_base_locale.html">OMNI_BASE_LOCALE</a></code> 
-<br><br><a class="toppg" href="#topopage">top</a>
-</div><br>
-<br>
+
+
+
+
+
 
 
 <!--end content-->

@@ -11,4 +11,5 @@ To use a shortened version of this macro, you can use OMNI_STRW.</Description>
   <Synopsis>A helper macro used to 'widen' strings based on Unicode definitions (if non-Unicode build this expands to the value passed in)</Synopsis>
   <IsHelper>true</IsHelper>
   <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
 </MacroOp>

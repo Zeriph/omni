@@ -148,6 +148,7 @@ namespace OmniDocuGen
         void _GenerateTempHelp(std::string thelp);
         void _CreateAndMoveZips(const std::string& tpath, const std::string& srcdir, const std::string& thelp, const std::string& fsz, const std::string& fhz, const std::string& foz, const std::string& fbz, const std::string& fez, const std::string& frz);
         void _SetHashInFile(const std::string& file, const std::string& hsh);
+        void _WriteIndexHtmlExampleCPP();
         void _DoAPI(void_t parm);
         void _DoFilesView(void_t parm);
         void _DoClassIndex(void_t parm);

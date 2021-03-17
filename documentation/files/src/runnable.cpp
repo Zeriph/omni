@@ -17,6 +17,9 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include <omni/sync/runnable_thread.hpp>
+#include <omni/chrono/tick.hpp>
+#include <omni/consts/cconsts.hpp>
+#include <omni/exception.hpp>
 #if !defined(OMNI_OS_WIN)
     // need the following for POSIX thread set prio/join
     #include <unistd.h>
@@ -24,9 +27,6 @@
     #include <ctime>
     #include <cstring>
 #endif
-#include <omni/chrono/tick.hpp>
-#include <omni/consts/cconsts.hpp>
-#include <omni/exception.hpp>
 
 #if defined(OMNI_NON_PORTABLE)
     #define OMNI_RPRIO_FW  m_priority(omni::sync::thread_priority::NORMAL),
@@ -143,7 +143,7 @@ omni::sync::runnable_thread::runnable_thread() :
     OMNI_D5_FW("thread created");
 }
 
-omni::sync::runnable_thread::runnable_thread(const omni::sync::runnable_thread &cp) : 
+omni::sync::runnable_thread::runnable_thread(const omni::sync::runnable_thread& cp) : 
     omni::sync::runnable(cp),
     state_changed(cp.state_changed),
     OMNI_CPCTOR_FW(cp)
@@ -160,7 +160,7 @@ omni::sync::runnable_thread::runnable_thread(const omni::sync::runnable_thread &
     OMNI_D5_FW("thread copied");
 }
 
-omni::sync::runnable_thread::runnable_thread(const omni::sync::thread_flags &ops) : 
+omni::sync::runnable_thread::runnable_thread(const omni::sync::thread_flags& ops) : 
     state_changed(),
     OMNI_CTOR_FW(omni::sync::runnable_thread)
     OMNI_SAFE_RMTX_FW
@@ -418,7 +418,7 @@ bool omni::sync::runnable_thread::is_alive() const
 
 bool omni::sync::runnable_thread::join()
 {
-    return this->join(omni::sync::INFINITE_TIMEOUT);
+    return this->join(OMNI_INFINITE_TIMEOUT);
 }
 
 bool omni::sync::runnable_thread::join(uint32_t timeout)
@@ -436,7 +436,7 @@ bool omni::sync::runnable_thread::join(uint32_t timeout)
     omni::sync::thread_handle_t hndl = this->m_thread;
     if (hndl == omni::sync::thread_handle()) {
         OMNI_SAFE_RUNLOCK_FW
-        OMNI_ERR_RETV_FW(OMNI_INVALID_THREAD_OWNER, omni::exceptions::invalid_thread_owner(), false)
+        OMNI_ERR_RETV_FW(OMNI_INVALID_THREAD_OWNER_STR, omni::exceptions::invalid_thread_owner(), false)
     }
     #if defined(OMNI_OS_WIN)
         this->m_isjoined = 1;
@@ -455,7 +455,7 @@ bool omni::sync::runnable_thread::join(uint32_t timeout)
         a seperate variable based on system, so we implement a timeout loop*/
         this->m_isjoined = 1;
         OMNI_SAFE_RUNLOCK_FW
-        if (timeout != omni::sync::INFINITE_TIMEOUT) {
+        if (timeout != OMNI_INFINITE_TIMEOUT) {
             OMNI_SLEEP_INIT();
             volatile bool iav = true;
             omni::chrono::tick_t ts = omni::chrono::monotonic_tick();
@@ -497,7 +497,7 @@ bool omni::sync::runnable_thread::kill()
     omni::sync::thread_handle_t hndl = this->m_thread;
     if (hndl == omni::sync::thread_handle()) {
         OMNI_SAFE_RUNLOCK_FW
-        OMNI_ERR_RETV_FW(OMNI_INVALID_THREAD_OWNER, omni::exceptions::invalid_thread_owner(), false)
+        OMNI_ERR_RETV_FW(OMNI_INVALID_THREAD_OWNER_STR, omni::exceptions::invalid_thread_owner(), false)
     }
     OMNI_SAFE_RUNLOCK_FW
     this->_state_changed(omni::sync::thread_state::STOP_REQUESTED);

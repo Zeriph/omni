@@ -18,7 +18,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <li title="Search the source and documentation" id="srchli" name="srchli"><a href="../search.html">Search the Library</a>
 </li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
 <input name="omnisrch" id="omnisrch" type="text" /><img src="content/search.gif" /></form></li></ul></li>
-</ul><div class="ftr"><div>(C) <a href="http://www.zeriph.com">Zeriph Enterprises, LLC</a></div></div></div></div><div class="info">
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
 <!--start content-->
 <div class="ptitle"><a name="considerations"></a>Considerations and Notes</div><div class="content"><div>
 While building, deploying, and working with Omni you might experience certain issues that would initially appear
@@ -31,6 +31,18 @@ other considerations to take note of while using Omni.<br><br>
 If you feel an issue is indeed a bug, please <a href="mailto:omniqa@zeriph.com">email</a> or
 <a href="https://zeriph.com/contact.php">contact us</a> to let us know so we can resolve the issue.<br><br>
 <font class="hdr">Developer Notes</font><br><br>
+
+<div class="consider"><input type="checkbox" id="issue_doctheme" name="issue_doctheme" />
+<label class="code" for="issue_doctheme"> details</label><table class="code"><tr>
+<td>Issue</td><td>
+Documentation light/dark theme
+</td></tr><tr><td>Description</td><td>
+To change the color theme of the offline documentation, change the first line of the main CSS file (located under
+'content/main.css') from `@import url("themes/dark.css");` to `@import url("themes/light.css");` or vice versa
+to change between a dark and light color theme.
+</td></tr><tr><td>Resolution</td><td>
+None; change the theme via the 'main.css' file.
+</td></tr></table></div>
 
 <div class="consider"><input type="checkbox" id="issue_padding" name="issue_padding" />
 <label class="code" for="issue_padding"> details</label><table class="code"><tr>
@@ -46,6 +58,19 @@ flag to have certain classes compile with 32-bit integer types to reduce or get 
 </td></tr><tr><td>Resolution</td><td>
 If padding and alignment are of concern, be aware that you can specify the <a href="options/omni_32bit.html">OMNI_32BIT</a> flag
 for the entire library or individual classes.
+</td></tr></table></div>
+
+<div class="consider"><input type="checkbox" id="issue_intbool" name="issue_intbool" />
+<label class="code" for="issue_intbool"> details</label><table class="code"><tr>
+<td>Issue</td><td>
+Integer types utilized as boolean values
+</td></tr><tr><td>Description</td><td>
+Due to the underlying types utilized in a lot of the classes, as they are not simple types that could be represented as bit fields,
+a lot of the classes utilize an integer type that is bit mapped against constant values, versus utilizing numerous boolean fields.
+In doing this, the library can be more memory and runtime efficient since the class is memory aligned.
+</td></tr><tr><td>Resolution</td><td>
+No resolution is needed, but it should be understood regarding the padding and alignment of the classes. For more information,
+refer to the issue above regarding struct/class padding.
 </td></tr></table></div>
 
 <div class="consider"><input type="checkbox" id="issue_vthunk" name="issue_vthunk" />
@@ -78,8 +103,21 @@ not a memory leak in the sense that there is no <code>delete</code> for a call t
 </td></tr><tr><td>Resolution</td><td>
 None, just be aware that some areas of code had to be designed a certain way to overcome certain constructs within
 the C++ language; while some of these limitations are not necessarily an issue in newer versions of the C++
-language, Omni does aim to be compatible with C++03 and above, so this must be taken into consideration for older
+language, Omni does aim to be compatible with C++98 and above, so this must be taken into consideration for older
 platforms or compilers.
+</td></tr></table></div>
+
+<div class="consider"><input type="checkbox" id="issue_trunc" name="issue_trunc" />
+<label class="code" for="issue_trunc"> details</label><table class="code"><tr>
+<td>Issue</td><td>
+Certain areas of the library may result in truncation of the output based on input type.
+</td></tr><tr><td>Description</td><td>
+Many areas of the library utilize templates or return values that could truncate the output of the floating point
+value. For example, calling <code>omni::math::point_on_circle</code> with a template type that is not a floating
+point type could give a result that is not precise due to integer conversion and truncation.
+</td></tr><tr><td>Resolution</td><td>
+Ensure you understand the precision of the types you are using in templated functions or explicitly define
+that the function use a floating point type.
 </td></tr></table></div>
 
 <div class="consider"><input type="checkbox" id="issue_smartptr" name="issue_smartptr" />

@@ -25,10 +25,6 @@
 #include <omni/sync/scoped_lock.hpp>
 #include <omni/chrono/tick.hpp>
 
-#if !defined(OMNI_OS_WIN)
-    #include <errno.h> // errno
-#endif
-
 #if defined(OMNI_32BIT_CONDITIONAL)
     #define OMNI_COND_INT_FW uint32_t
 #else
@@ -61,16 +57,16 @@ namespace omni {
                 OMNI_MEMBERS_FW(omni::sync::conditional) // disposing,name,type(),hash()
                 
             private:
-                // defined but not implemented, does not make sense to copy
-                conditional(const omni::sync::conditional &cp);
-                omni::sync::conditional& operator=(const omni::sync::conditional& other);
-                
-                void _init();
-                
                 omni::sync::cond_t m_signal;
                 mutable omni::sync::mutex_t m_wait;
                 OMNI_COND_INT_FW m_waitreq;
                 volatile mutable OMNI_COND_INT_FW m_signaled;
+                
+                // defined but not implemented, does not make sense to copy
+                conditional(const omni::sync::conditional& cp);
+                omni::sync::conditional& operator=(const omni::sync::conditional& other);
+                
+                void _init();
         };
     }
 }

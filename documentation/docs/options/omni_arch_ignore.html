@@ -24,24 +24,30 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <div class="docdiv">
     <font class="docu">MACRO</font><br><br>
     <code><font style="font-size:16px;">
-    <code>OMNI_ARCH_IGNORE</code> - A framework macro/option
+    <code>OMNI_ARCH_IGNORE</code> - Do not attempt to guess the architecture type based on compiler macros.
     </font></code>
 </div><br>
 <div class="docdiv">
     <font class="docu">SYNOPSIS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    A framework macro/option
+    <code>#define <a href="omni_arch_ignore.html">OMNI_ARCH_IGNORE</a></code><br>
+<br>
+Signifies to not use preprocessor macros to attempt to discover what architecture is being compiled for.
 </div><br>
 <div class="docdiv">
     <font class="docu">DESCRIPTION</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    A framework macro/option that changes certain functionality
+    By specifying the <code><a href="omni_arch_ignore.html">OMNI_ARCH_IGNORE</a></code> preprocessor flag, the library will not attempt to detect what architecture is being compiled against via certain preprocessor flags, and instead the user can specify what architecture to compile for (useful for cross platform compilation).<br>
+<br>
+There are currently no areas of Omni that utilize architecture specific code and, as a rule-of-thumb for Omni, we try to avoid architecture specific code to be as cross-system compatible as possible. However, that does not preclude one from using architecture specific code if it makes sense to enable certain optimizations in the source.<br>
+<br>
+If nothing is defined, the default is an unknown architecture type.
 </div><br>
 <div class="docdiv">
     <font class="docu">CONSIDERATIONS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    No special considerations
+    No special considerations.
 </div><br>
 <div class="docdiv">
     <font class="docu">PLATFORM SPECIFIC</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    No platform specific notes.
+    This flag is not platform specific but can be used to determine what architecture to be compiled for.
 </div><br>
 <div class="docdiv">
     <font class="docu">NOTES</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>

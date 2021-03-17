@@ -39,11 +39,11 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 0000260:<br>0000261:<br>0000262:<br>0000263:<br>0000264:<br>0000265:<br>0000266:<br>0000267:<br>0000268:<br>0000269:<br>0000270:<br>0000271:<br>0000272:<br>0000273:<br>0000274:<br>0000275:<br>0000276:<br>0000277:<br>0000278:<br>0000279:<br>
 0000280:<br>0000281:<br>0000282:<br>0000283:<br>0000284:<br>0000285:<br>0000286:<br>0000287:<br>0000288:<br>0000289:<br>0000290:<br>0000291:<br>0000292:<br>0000293:<br>0000294:<br>0000295:<br>0000296:<br>0000297:<br>0000298:<br>0000299:<br>
 0000300:<br>0000301:<br>0000302:<br>0000303:<br>0000304:<br>0000305:<br>0000306:<br>0000307:<br>0000308:<br>0000309:<br>0000310:<br>0000311:<br>0000312:<br>0000313:<br>0000314:<br>0000315:<br>0000316:<br>0000317:<br>0000318:<br>0000319:<br>
-0000320:<br>0000321:<br>0000322:<br>0000323:<br>0000324:<br>0000325:<br>0000326:<br>0000327:<br>0000328:<br>0000329:<br>0000330:<br>0000331:<br>0000332:<br>
+0000320:<br>0000321:<br>0000322:<br>0000323:<br>0000324:<br>0000325:<br>0000326:<br>0000327:<br>0000328:<br>0000329:<br>0000330:<br>0000331:<br>
 <!--end line numbers-->
 </div><div class="cpphtmlcmnt">
 <!--start collapse columns-->
-<img src="../../content/tree/min.gif" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<img src="../../content/tree/min.gif" alt="Min/Max" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -59,7 +59,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br>
 <!--end collapse columns-->
 </div><div class="cpphtml" style="margin-left:3.75em;">
 <!--start highlighted code-->
@@ -316,13 +316,12 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> ret = <font class="syn_num">0</font>;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">struct</font> timespec tm;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../options/omni_os_apple.html">OMNI_OS_APPLE</a>)</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">struct</font> timeval tv;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (::<a href="http://pubs.opengroup.org/onlinepubs/009695399/functions/gettimeofday.html">gettimeofday</a>(&amp;tv, <font class="syn_typ">NULL</font>) != <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">struct</font> timeval atv;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (::<a href="http://pubs.opengroup.org/onlinepubs/009695399/functions/gettimeofday.html">gettimeofday</a>(&amp;atv, <font class="syn_typ">NULL</font>) != <font class="syn_num">0</font>) {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERRV_RETV_FW(<font class="syn_str">&quot;An error occurred getting the clock time: &quot;</font>, errno, <a href="../classes/omni-exceptions-clock_exception.html">omni::exceptions::clock_exception</a>(errno), <font class="syn_ins">false</font>)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// TODO: what was the point of this?</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">//tm.tv_sec = tv.tv_sec + 0;</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">//tm.tv_nsec = 0;</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tm.tv_sec = atv.tv_sec;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tm.tv_nsec = atv.tv_usec * <font class="syn_num">1000</font>;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (::<a href="http://pubs.opengroup.org/onlinepubs/9699919799/functions/clock_getres.html">clock_gettime</a>(CLOCK_REALTIME, &amp;tm) != <font class="syn_num">0</font>) {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERRV_RETV_FW(<font class="syn_str">&quot;An error occurred getting the clock time: &quot;</font>, errno, <a href="../classes/omni-exceptions-clock_exception.html">omni::exceptions::clock_exception</a>(errno), <font class="syn_ins">false</font>)<br>

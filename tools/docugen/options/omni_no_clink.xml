@@ -1,18 +1,12 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_NO_CLINK</Name>
-  <Brief>Does not link certain portions of the framework with @c C linkage
-</Brief>
-  <Considerations>No special considerations
-</Considerations>
-  <Description>None.
-</Description>
-  <Notes>None.
-</Notes>
-  <PlatformSpecific>No platform specific notes.
-</PlatformSpecific>
-  <Synopsis>Does not link certain portions of the framework (like omni::application) with @c C linkage
-</Synopsis>
+  <Brief>Does not link certain portions of the library with @c C linkage</Brief>
+  <Considerations>No special considerations</Considerations>
+  <Description>None.</Description>
+  <Notes>None.</Notes>
+  <PlatformSpecific>No platform specific notes.</PlatformSpecific>
+  <Synopsis>Does not link certain portions of the library (like omni::application) with @c C linkage</Synopsis>
   <IsHelper>false</IsHelper>
   <IsConstant>false</IsConstant>
   <IsFWHelp>false</IsFWHelp>

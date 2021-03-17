@@ -1,12 +1,13 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_FW_VER_USE_TIME</Name>
-  <Brief>The framework will use the build time in framework version string.</Brief>
+  <Brief>the library will use the build time in the library version string.</Brief>
   <Considerations>No special consideration.</Considerations>
   <Description>None additional information.</Description>
   <Notes>None.</Notes>
   <PlatformSpecific>No special consideration.</PlatformSpecific>
-  <Synopsis>If this macro is defined, then the build date/time of the framework will be included in the OMNI_FW_VER_STR.</Synopsis>
+  <Synopsis>If this macro is defined, then the build date/time of the library will be included in the OMNI_FW_VER_STR.</Synopsis>
   <IsHelper>false</IsHelper>
   <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
 </MacroOp>

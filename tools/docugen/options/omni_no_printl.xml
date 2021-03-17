@@ -9,4 +9,5 @@
   <Synopsis>None.</Synopsis>
   <IsHelper>false</IsHelper>
   <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
 </MacroOp>

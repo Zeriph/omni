@@ -1,10 +1,8 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_XOR_SWAP</Name>
-  <Brief>A helper macro defining an XOR swap
-</Brief>
-  <Considerations>This macro does not check if &lt;code&gt;a == b&lt;/code&gt;
-</Considerations>
+  <Brief>A helper macro defining an XOR swap</Brief>
+  <Considerations>This macro does not check if &lt;code&gt;a == b&lt;/code&gt;</Considerations>
   <Description>Swap two objects via an XOR swap, defined as such:
 
 @code
@@ -28,12 +26,9 @@ The output would be:
 255, 10
 @code
 </Description>
-  <Notes>An XOR swap might be efficient on memory since it does not utilize temporaries, but it might not be as fast in CPU time as one might initially expect, especially for different types or types that do not fall on a clean word boundary. Test your swaps in a tight loop to verify if an XOR swap is any faster than a std::swap or copy-swap.
-</Notes>
-  <PlatformSpecific>No platform specific notes.
-</PlatformSpecific>
-  <Synopsis>A simple helper macro to swap 2 objects via an XOR swap.
-</Synopsis>
+  <Notes>An XOR swap might be efficient on memory since it does not utilize temporaries, but it might not be as fast in CPU time as one might initially expect, especially for different types or types that do not fall on a clean word boundary. Test your swaps in a tight loop to verify if an XOR swap is any faster than a std::swap or copy-swap.</Notes>
+  <PlatformSpecific>No platform specific notes.</PlatformSpecific>
+  <Synopsis>A simple helper macro to swap 2 objects via an XOR swap.</Synopsis>
   <IsHelper>true</IsHelper>
   <IsConstant>false</IsConstant>
   <IsFWHelp>false</IsFWHelp>

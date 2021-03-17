@@ -103,7 +103,7 @@ namespace omni {
             return std::equal(a.begin(), a.end(), b.begin());
         }
 
-        template < class InputIterator >
+        template < typename InputIterator >
         inline bool equal(InputIterator start1, InputIterator end1, InputIterator start2, InputIterator end2)
         {
             while ((start1 != end1) && (start2 != end2)) {
@@ -115,7 +115,7 @@ namespace omni {
             }
             return (start1 == end1) && (start2 == end2);
         }
-        template < class InputIterator >
+        template < typename InputIterator >
         inline bool equals(InputIterator start1, InputIterator end1, InputIterator start2, InputIterator end2)
         {
             while ((start1 != end1) && (start2 != end2)) {

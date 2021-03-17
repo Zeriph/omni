@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_NO_FW_VER</Name>
-  <Brief>Disables the framework version header from being baked into the framework.</Brief>
+  <Brief>Disables the library version header from being baked into the library.</Brief>
   <Considerations>No special consideration.</Considerations>
   <Description>None.</Description>
   <Notes>None.</Notes>
@@ -9,4 +9,5 @@
   <Synopsis>None.</Synopsis>
   <IsHelper>false</IsHelper>
   <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
 </MacroOp>

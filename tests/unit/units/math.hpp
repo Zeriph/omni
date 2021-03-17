@@ -23,6 +23,7 @@ class UT_CLASS_DEF
             M_LIST_ADD(area_of_circle_sector, "tests the omni::math::area_of_circle_sector");
             M_LIST_ADD(arc_length, "tests the omni::math::arc_length");
             M_LIST_ADD(calculate_point, "tests the omni::math::calculate_point");
+            M_LIST_ADD(clamp, "tests the omni::math::clamp");
             M_LIST_ADD(deg_to_rad, "tests the omni::math::deg_to_rad");
             M_LIST_ADD(delta, "tests the omni::math::delta");
             M_LIST_ADD(distance_between_2_points, "tests the omni::math::distance_between_2_points");
@@ -49,20 +50,38 @@ class UT_CLASS_DEF
         
         void info_test()
         {
-            printv("omni::math::E = ", omni::math::E);
-            printv("omni::math::E_L = ", omni::math::E_L);
-            printv("omni::math::E_F = ", omni::math::E_F);
-            printv("omni::math::PI = ", omni::math::PI);
-            printv("omni::math::PI_L = ", omni::math::PI_L);
-            printv("omni::math::PI_F = ", omni::math::PI_F);
-            printv("omni::math::PI_180 = ", omni::math::PI_180);
-            printv("omni::math::PI_L_180 = ", omni::math::PI_L_180);
-            printv("omni::math::PI_F_180 = ", omni::math::PI_F_180);
-            for (int i = 0; i < 361; ++i) {
-                printl("RADS[" << i << "] = " << omni::math::RADS[i]);
-                printl("RADS_SIN[" << i << "] = " << omni::math::RADS_SIN[i]);
-                printl("RADS_COS[" << i << "] = " << omni::math::RADS_COS[i]);
-            }
+            printv("omni::math::E = ", OMNI_E);
+            printv("omni::math::E_L = ", OMNI_E_L);
+            printv("omni::math::E_F = ", OMNI_E_F);
+            printv("omni::math::PI = ", OMNI_PI);
+            printv("omni::math::PI_L = ", OMNI_PI_L);
+            printv("omni::math::PI_F = ", OMNI_PI_F);
+            printv("omni::math::PI_180 = ", OMNI_PI_180);
+            printv("omni::math::PI_L_180 = ", OMNI_PI_L_180);
+            printv("omni::math::PI_F_180 = ", OMNI_PI_F_180);
+            printv("omni::math::TAU = ", OMNI_TAU);
+            printv("omni::math::TAU_L = ", OMNI_TAU_L);
+            printv("omni::math::TAU_F = ", OMNI_TAU_F);
+            printv("omni::math::compat::E = ", OMNI_E);
+            printv("omni::math::compat::PI = ", OMNI_PI);
+            printv("omni::math::compat::TAU = ", OMNI_TAU);
+
+            #if !defined(OMNI_NO_CONSTS)
+                for (int i = 0; i < 361; ++i) {
+                    printl("RADS[" << i << "] = " << omni::math::RADS[i]);
+                    printl("RADS_SIN[" << i << "] = " << omni::math::RADS_SIN[i]);
+                    printl("RADS_COS[" << i << "] = " << omni::math::RADS_COS[i]);
+                }
+            #else
+                double r[] = OMNI_MATH_RADS;
+                double s[] = OMNI_MATH_RADS_SIN;
+                double c[] = OMNI_MATH_RADS_COS;
+                for (int i = 0; i < 361; ++i) {
+                    printl("RADS[" << i << "] = " << r[i]);
+                    printl("RADS_SIN[" << i << "] = " << s[i]);
+                    printl("RADS_COS[" << i << "] = " << c[i]);
+                }
+            #endif
 
             uint8_t xx[3] = {1,2,3};
             uint8_t yy[4] = {4,3,2,1};
@@ -255,6 +274,15 @@ class UT_CLASS_DEF
             
             //inline double radius_from_area(T area)
             test("radius_from_area(100)", omni::math::radius_from_area(100), "5.6419");
+        }
+
+        void clamp()
+        {
+            // template < typename T >
+            // inline T& clamp(const T& value, const T& min_val, const T& max_val)
+
+            // template < typename T >
+            //inline T& clamp(const T& value, const T& min_val, const T& max_val, const omni::delegate<bool, T, T>& comp)
         }
 
         void lines()

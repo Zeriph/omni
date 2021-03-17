@@ -72,6 +72,7 @@ fwsrc="${fwsrc} ${common}/async_timer.cpp"
 fwsrc="${fwsrc} ${common}/basic_thread.cpp"
 fwsrc="${fwsrc} ${common}/binary_semaphore.cpp"
 fwsrc="${fwsrc} ${common}/conditional.cpp"
+fwsrc="${fwsrc} ${common}/crypto.cpp"
 fwsrc="${fwsrc} ${common}/date_time.cpp"
 fwsrc="${fwsrc} ${common}/drop_timer.cpp"
 fwsrc="${fwsrc} ${common}/endpoint_descriptor.cpp"
@@ -110,10 +111,10 @@ libops="rvs"
 
 msg()
 {
-	echo "${1}"
-	if [ "$log_file" != "" ]; then
-		echo "${1}" >> ${log_file}
-	fi	
+    echo "${1}"
+    if [ "$log_file" != "" ]; then
+        echo "${1}" >> ${log_file}
+    fi    
 }
 
 msgv()
@@ -133,31 +134,31 @@ msgp()
 
 usage()
 {
-	echo "usage: compile [options]"
-	echo
-	echo "OPTIONS:"
+    echo "usage: compile [options]"
+    echo
+    echo "OPTIONS:"
     echo
     echo "compile script options:"
-	echo "       -s [source] The main source file(s) to compile (files other than"
-	echo "                   the library source). If this flag is not set, this"
-	echo "                   script will build Omni as a library."
-	echo "                   Specified source must be enclosed in quotes \"\" and"
-	echo "                   separated by spaces."
-	echo "                   Example:"
-	echo "                   compile -s \"file1.cpp file2.cpp file3.cpp\" -o main"
+    echo "       -s [source] The main source file(s) to compile (files other than"
+    echo "                   the library source). If this flag is not set, this"
+    echo "                   script will build Omni as a library."
+    echo "                   Specified source must be enclosed in quotes \"\" and"
+    echo "                   separated by spaces."
+    echo "                   Example:"
+    echo "                   compile -s \"file1.cpp file2.cpp file3.cpp\" -o main"
     echo "       -fw [path]  The Omni Library path (default of '${omni_lib_loc}')"
     echo "       -out [path] The output build path to put the lib/bin/obj/asm files"
     echo "       -i [path]   Includes [path] in the compiler include path"
-	echo "       -o [name]   The file you wish to compile (without an extension)"
-	echo "       -c [opts]   Pass extra arguments to the compiler"
+    echo "       -o [name]   The file you wish to compile (without an extension)"
+    echo "       -c [opts]   Pass extra arguments to the compiler"
     echo "       -d [define] Pass extra defines to the compiler"
-	echo "       -u          Specifying this will clean up any .o files"
+    echo "       -u          Specifying this will clean up any .o files"
     echo "       -single     Specifying this will build library.cpp (single file library)"
     echo "       -lib        Specifying this will compile as a library instead of an executable"
     echo "       -log [log]  Write console output to a log file"
-	echo "       -elog [log] Write the error log to [log], default"
-	echo "       -v          Show verbose output (-v = 1, -vv = 2, -vvv = 3)"
-	echo "       -po         Parse the compile script only"
+    echo "       -elog [log] Write the error log to [log], default"
+    echo "       -v          Show verbose output (-v = 1, -vv = 2, -vvv = 3)"
+    echo "       -po         Parse the compile script only"
     echo "       -oo [ops]   Enables library features"
     echo "       -dbg [ops]  Enables library debug features"
     echo "       -co [ops]   Enables compiler/linker features"
@@ -165,8 +166,8 @@ usage()
     echo "       -lc [lc]    specify the library build system to use (default of '${libchain}')"
     echo
     echo "library options (-oo):"
-	echo "       lite        Defines the OMNI_LITE flag which trims down the code and gets rid"
-	echo "                   of some functionality"
+    echo "       lite        Defines the OMNI_LITE flag which trims down the code and gets rid"
+    echo "                   of some functionality"
     echo "       heavy       Defines the OMNI_DISPOSE_EVENT, OMNI_OBJECT_NAME and OMNI_TYPE_INFO macros"
     echo "       uni         Sets the UNICODE flags (builds using unicode)"
     echo "       np          Sets the OMNI_NON_PORTABLE compiler flag and enables"
@@ -177,7 +178,7 @@ usage()
     echo "                   example: 'safe APPLICATION' will define OMNI_SAFE_APPLICATION"
     echo "       no [op]     Defines one of the following for [op]:"
     echo "                   throw     Sets the OMNI_NO_THROW flag and the -fno-exceptions"
-	echo "                             compiler and linker flag"
+    echo "                             compiler and linker flag"
     echo "                   extc      Defines the OMNI_NO_EXTERN_CONSTS macro"
     echo
     echo "library debug options (-dbg):"
@@ -191,9 +192,9 @@ usage()
     echo
     echo "compiler options (-co):"
     echo "       effc        Sets the -Weffc++ flag which warns about style guidelines"
-	echo "                   violations from Scott Meyers' Effective C++ book"
+    echo "                   violations from Scott Meyers' Effective C++ book"
     echo "       we          Treat all warnings as errors"
-	echo "       se          Stop on first error (instead of trying to continue)"
+    echo "       se          Stop on first error (instead of trying to continue)"
     echo "       stats       Sets the -Q flag when compiling which shows statistics of the"
     echo "                   compilation unit"
     echo "       pe          Sets the -pedantic-errors flag"
@@ -202,7 +203,7 @@ usage()
     echo "       nopthread   Disables the -pthread compiler/linker flag"
     echo "       nortti      Disables RTTI (run-time type information) for C++"
     echo "       noconsole   Specifies to not define the _CONSOLE flag"
-	echo "       xtra        Use the extra compiler/linker flags (can generate erroneous errors)"
+    echo "       xtra        Use the extra compiler/linker flags (can generate erroneous errors)"
     echo "       pad         Use the -Wpadded (can generate erroneous errors)"
     echo "       opt [op]    Enable global optimization based on [op] where [op] is 0, 1, 2, 3 or s"
     echo "       asm         Generate the assembly output (.s file)"
@@ -222,7 +223,7 @@ usage()
 
 parse_args()
 {
-	while [ "$*" != "" ]; do
+    while [ "$*" != "" ]; do
         case $1 in
             "-s") source="${source} ${2}"; shift ;;
             "-out") odir="${2}"; shift ;;
@@ -388,26 +389,26 @@ if [ ! -d ${asmdir} ]; then
 fi
 
 if [ $docleanup -eq 1 ]; then
-	msg ""
-	msg "Removing old files"
+    msg ""
+    msg "Removing old files"
     msg ""
     
     if [ -f ${utofile} ]; then
         msgp 1 "rm -f ${utofile}"
-	fi
-	if [ -f ${prog} ]; then
+    fi
+    if [ -f ${prog} ]; then
         msgp 1 "rm -f ${prog}"
-	fi
-	if [ -f ${err_log_file} ]; then
+    fi
+    if [ -f ${err_log_file} ]; then
         if [ "$err_log_file" != "" ]; then
             msgp 1 "rm -f ${err_log_file}"
         fi
-	fi
-	if [ -f ${log_file} ]; then
+    fi
+    if [ -f ${log_file} ]; then
         if [ "$log_file" != "" ]; then
             msgp 1 "rm -f ${log_file}"
         fi
-	fi
+    fi
     if [ -d ${objdir} ]; then
         msgp 1 "rm -f ${objdir}/*.o"
     fi
@@ -431,19 +432,19 @@ if [ ! -d ${pdnm} ]; then
 fi
 
 if [ $verbose -gt 2 ]; then
-	msg "---Settings---"
-	msg "Toolchain: ${toolchain}"
+    msg "---Settings---"
+    msg "Toolchain: ${toolchain}"
     if [ $islib -eq 1 ]; then
         msg "Libchain: ${libchain}"
         msg "Libops: ${libops}"
     fi
-	msg "Prog name: ${prog}"
-	msg "Defines: ${defines}"
-	msg "Includes: ${includes}"
-	msg "Extra options: ${extraopts}"
-	msg ""
-	msg "---Source Files---"
-	msg "${source}"
+    msg "Prog name: ${prog}"
+    msg "Defines: ${defines}"
+    msg "Includes: ${includes}"
+    msg "Extra options: ${extraopts}"
+    msg ""
+    msg "---Source Files---"
+    msg "${source}"
     msg ""
 fi
 

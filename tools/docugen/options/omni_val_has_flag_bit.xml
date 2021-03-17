@@ -1,10 +1,8 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_VAL_HAS_FLAG_BIT</Name>
-  <Brief>Determines if a flag bit is set in a value
-</Brief>
-  <Considerations>No special considerations
-</Considerations>
+  <Brief>Determines if a flag bit is set in a value</Brief>
+  <Considerations>No special considerations</Considerations>
   <Description>You can utilize this macro if you wish to test if a specific bit flag is set within a specified numeric value.
 
 Example:
@@ -30,15 +28,10 @@ The output for this would be:
 VAL2 is set
 VAL3 is NOT set
 @code
-
-
 </Description>
-  <Notes>None.
-</Notes>
-  <PlatformSpecific>No platform specific notes.
-</PlatformSpecific>
-  <Synopsis>A helper macro used to determine if a bit flag is set within a specified value.
-</Synopsis>
+  <Notes>None.</Notes>
+  <PlatformSpecific>No platform specific notes.</PlatformSpecific>
+  <Synopsis>A helper macro used to determine if a bit flag is set within a specified value.</Synopsis>
   <IsHelper>true</IsHelper>
   <IsConstant>false</IsConstant>
   <IsFWHelp>false</IsFWHelp>

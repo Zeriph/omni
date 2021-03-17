@@ -1,10 +1,8 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_SIZEOF_BITS</Name>
-  <Brief>Gets the @c sizeof a type in bits
-</Brief>
-  <Considerations>This macro is not affected by the platform architecture (i.e. @c x86 vs. @c x86_64 etc.)
-</Considerations>
+  <Brief>Gets the @c sizeof a type in bits</Brief>
+  <Considerations>This macro is not affected by the platform architecture (i.e. @c x86 vs. @c x86_64 etc.)</Considerations>
   <Description>This macro is defined as the following:
 
 @code
@@ -38,12 +36,9 @@ OMNI_SIZEOF_BITS(unsigned long) = 32
 OMNI_SIZEOF_BITS(double) = 64
 &lt;/code&gt;
 </Description>
-  <Notes>None.
-</Notes>
-  <PlatformSpecific>The size of the type is multiplied by @c CHAR_BIT to get the number of bits representative of a byte on the specific platform (usually @c CHAR_BIT is 8). If you rely on the size of the bits to be a specific size, you will need to take note of this.
-</PlatformSpecific>
-  <Synopsis>This macro can be utilized to get the size of an object in bits.
-</Synopsis>
+  <Notes>None.</Notes>
+  <PlatformSpecific>The size of the type is multiplied by @c CHAR_BIT to get the number of bits representative of a byte on the specific platform (usually @c CHAR_BIT is 8). If you rely on the size of the bits to be a specific size, you will need to take note of this.</PlatformSpecific>
+  <Synopsis>This macro can be utilized to get the size of an object in bits.</Synopsis>
   <IsHelper>true</IsHelper>
   <IsConstant>false</IsConstant>
   <IsFWHelp>false</IsFWHelp>

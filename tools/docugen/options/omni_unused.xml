@@ -1,10 +1,8 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_UNUSED</Name>
-  <Brief>Can be used to avoid 'unused' warnings in user code.
-</Brief>
-  <Considerations>No special consideration.
-</Considerations>
+  <Brief>Can be used to avoid 'unused' warnings in user code.</Brief>
+  <Considerations>No special consideration.</Considerations>
   <Description>This helper macro can be used to avoid "unused warnings". Though it's typically a good idea to just remove unused variables, there are instances where one might wish to have a variable without use (maybe for upgrades or future use). To this, if you have certain compiler options enabled, you might see erroneous warnings to 'unused variables' in your code, to avoid this you can wrap the variable in this macro and search for it later should you need to refactor, example:
 
 @code
@@ -16,10 +14,8 @@ int some_function(int var1, int var2, int var3)
 }
 @code
 </Description>
-  <Notes>This flag has no effect on the Omni framework itself; it does not change any code and is simply for user code (i.e. code not within the Omni framework).
-</Notes>
-  <PlatformSpecific>No special consideration.
-</PlatformSpecific>
+  <Notes>This flag has no effect on the library itself; it does not change any code and is simply for user code (i.e. code not within the library).</Notes>
+  <PlatformSpecific>No special consideration.</PlatformSpecific>
   <Synopsis>This helper macro is simply defined as the following:
 
 @code

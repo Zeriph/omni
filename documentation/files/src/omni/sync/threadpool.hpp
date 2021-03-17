@@ -56,29 +56,18 @@ namespace omni {
                 OMNI_MEMBERS_FW(omni::sync::threadpool) // disposing,name,type(),hash()
                 
             private:
-                // if copy then 2 sets of the same tasks exits, that does not make sense
-                threadpool(const threadpool &cp); // = delete
-                omni::sync::threadpool& operator=(const omni::sync::threadpool &other); // = delete
-                
                 typedef std::list<omni::sync::basic_thread>::iterator omni_threadpool_itr;
-                
-                // Methods
-                void _add_queue(const omni::sync::threadpool_task& task);
-                omni_threadpool_itr _create_thread();
-                void _initialize_min(std::size_t tmin);
-                void _thread_fn();
-                
-                // Members
+
                 std::size_t m_act; // current active
                 std::size_t m_min; // minimum thread count
                 std::size_t m_max; // maximum thread count
                 mutable omni::sync::basic_lock m_mtx; // threadpool lock
 
                 /*
-                DEV_NOTE: threadpool uses a list for efficient removal of threads in the pool
-                if you define the following, it will use the sequence container used through
-                out the library, but if it is not a list, the deletion from the container
-                could have a performance impact if the element is not at the end or beginning
+                    DEV_NOTE: threadpool uses a list for efficient removal of threads in the pool
+                    if you define the following, it will use the sequence container used through
+                    out the library, but if it is not a list, the deletion from the container
+                    could have a performance impact if the element is not at the end or beginning
                 */
                 #if defined(OMNI_THREADPOOL_USE_SEQ_T)
                     omni_sequence_t<omni::sync::basic_thread> m_threads;
@@ -89,6 +78,14 @@ namespace omni {
                 #endif
                 
                 volatile OMNI_TPOOL_INT_FW m_isdestroy;
+
+                // if copy then 2 sets of the same tasks exits, that does not make sense
+                threadpool(const threadpool& cp); // = delete
+                omni::sync::threadpool& operator=(const omni::sync::threadpool& other); // = delete
+                void _add_queue(const omni::sync::threadpool_task& task);
+                omni_threadpool_itr _create_thread();
+                void _initialize_min(std::size_t tmin);
+                void _thread_fn();
         };
     }
 }

@@ -35,7 +35,7 @@ Signifies to use the Microsoft C Runtime Library where applicable.
 </div><br>
 <div class="docdiv">
     <font class="docu">DESCRIPTION</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    By specifying the <code><a href="omni_no_win_api.html">OMNI_NO_WIN_API</a></code> preprocessor flag, the framework will not use WinAPI calls but use their CRT equivalents instead; <code><a href="https://msdn.microsoft.com/en-us/library/kdzttdcb.aspx">_beginthreadex</a></code> over calling <code><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms682453%28v=vs.85%29.aspx">CreateThread</a></code> for example.
+    By specifying the <code><a href="omni_no_win_api.html">OMNI_NO_WIN_API</a></code> preprocessor flag, the library will not use WinAPI calls but use their CRT equivalents instead; <code><a href="https://msdn.microsoft.com/en-us/library/kdzttdcb.aspx">_beginthreadex</a></code> over calling <code><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms682453%28v=vs.85%29.aspx">CreateThread</a></code> for example.
 </div><br>
 <div class="docdiv">
     <font class="docu">CONSIDERATIONS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
@@ -43,7 +43,7 @@ Signifies to use the Microsoft C Runtime Library where applicable.
 </div><br>
 <div class="docdiv">
     <font class="docu">PLATFORM SPECIFIC</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    This flag only applies to a Windows based build; it has no affect on the framework if compiled for different platform.
+    This flag only applies to a Windows based build; it has no affect on the library if compiled for different platform.
 </div><br>
 <div class="docdiv">
     <font class="docu">NOTES</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>

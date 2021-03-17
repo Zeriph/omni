@@ -1,11 +1,9 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_DEF2STR</Name>
-  <Brief>String-izes the value passed in
-</Brief>
-  <Considerations>No special considerations.
-</Considerations>
-  <Description>OMNI_DEF2STR expands the value passed into a string value.
+  <Brief>String-izes the macro value passed in.</Brief>
+  <Considerations>No special considerations.</Considerations>
+  <Description>OMNI_DEF2STR expands the macro value passed into a string value.
 
 Example:
 
@@ -17,12 +15,9 @@ std::cout &lt;&lt; h &lt;&lt; std::endl;
 // output will be 'hello world' on the standard output
 @code
 </Description>
-  <Notes>None.
-</Notes>
-  <PlatformSpecific>No platform specific notes.
-</PlatformSpecific>
-  <Synopsis>A helper macro that turns a @c #defined macro value into a string literal.
-</Synopsis>
+  <Notes>None.</Notes>
+  <PlatformSpecific>No platform specific notes.</PlatformSpecific>
+  <Synopsis>A helper macro that turns a @c #defined macro value into a string literal.</Synopsis>
   <IsHelper>true</IsHelper>
   <IsConstant>false</IsConstant>
   <IsFWHelp>false</IsFWHelp>

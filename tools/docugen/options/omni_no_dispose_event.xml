@@ -1,18 +1,12 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_NO_DISPOSE_EVENT</Name>
-  <Brief>Disables the OMNI_DISPOSE_EVENT macro
-</Brief>
-  <Considerations>No special considerations
-</Considerations>
-  <Description>None.
-</Description>
-  <Notes>None.
-</Notes>
-  <PlatformSpecific>No platform specific notes.
-</PlatformSpecific>
-  <Synopsis>Disables the OMNI_DISPOSE_EVENT macro
-</Synopsis>
+  <Brief>Disables the OMNI_DISPOSE_EVENT macro</Brief>
+  <Considerations>No special considerations</Considerations>
+  <Description>None.</Description>
+  <Notes>None.</Notes>
+  <PlatformSpecific>No platform specific notes.</PlatformSpecific>
+  <Synopsis>Disables the OMNI_DISPOSE_EVENT macro</Synopsis>
   <IsHelper>false</IsHelper>
   <IsConstant>false</IsConstant>
   <IsFWHelp>false</IsFWHelp>

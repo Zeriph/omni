@@ -23,7 +23,7 @@
 #include <omni/sync/scoped_lock.hpp>
 
 /*
-    TODO: make docugen note about how smart_ptr to an array pointer will not call delete[]
+    make note about how smart_ptr to an array pointer will not call delete[]
     (smart_ptr<obj[]> has to be smart_ptr<obj*>), if you want a smart_ptr<obj[]> use an STL
     container instead (like a std::vector<obj> or std::deque<obj>)
 */

@@ -97,6 +97,16 @@ namespace omni {
                     // if CXX buffer.data
                     return this->_receive(&buffer[0], (buffer.size() * sizeof(T)), flags, received);
                 }
+                template < size_t SZ >
+                omni::net::socket_error receive(char (&buffer)[SZ], uint32_t& received)
+                {
+                    return this->_receive(buffer, SZ, omni::net::socket_flags::NONE, received);
+                }
+                template < size_t SZ >
+                omni::net::socket_error receive(char (&buffer)[SZ], omni::net::socket_flags flags, uint32_t& received)
+                {
+                    return this->_receive(buffer, SZ, flags, received);
+                }
                 omni::net::socket_error unsafe_receive(char* buffer, uint32_t buffer_size, uint32_t& received)
                 {
                     return this->_receive(buffer, buffer_size, omni::net::socket_flags::NONE, received);
@@ -153,6 +163,30 @@ namespace omni {
                 {
                     return this->_receive_from(&buffer[0], (buffer.size() * sizeof(T)), flags, from_ip, from_port, received);
                 }
+                template < size_t SZ >
+                omni::net::socket_error receive_from(char (&buffer)[SZ], uint32_t& received)
+                {
+                    uint16_t fport = 0;
+                    std::string fip;
+                    return this->_receive_from(buffer, SZ, omni::net::socket_flags::NONE, fip, fport, received); 
+                }
+                template < size_t SZ >
+                omni::net::socket_error receive_from(char (&buffer)[SZ], omni::net::socket_flags flags, uint32_t& received)
+                {
+                    uint16_t fport = 0;
+                    std::string fip;
+                    return this->_receive_from(buffer, SZ, flags, fip, fport, received); 
+                }
+                template < size_t SZ >
+                omni::net::socket_error receive_from(char (&buffer)[SZ], std::string& from_ip, uint16_t& from_port, uint32_t& received)
+                {
+                    return this->_receive_from(buffer, SZ, omni::net::socket_flags::NONE, from_ip, from_port, received);
+                }
+                template < size_t SZ >
+                omni::net::socket_error receive_from(char (&buffer)[SZ], omni::net::socket_flags flags, std::string& from_ip, uint16_t& from_port, uint32_t& received)
+                {
+                    return this->_receive_from(buffer, SZ, flags, from_ip, from_port, received);
+                }
                 omni::net::socket_error unsafe_receive_from(char* buffer, uint32_t buffer_size, uint32_t& received)
                 {
                     uint16_t fport = 0;
@@ -173,25 +207,35 @@ namespace omni {
                 {
                     return this->_receive_from(buffer, buffer_size, flags, from_ip, from_port, received);
                 }
-                template < typename T, uint16_t SZ >
-                omni::net::socket_error send(const omni::stack_buffer<T, SZ>& buffer, uint32_t& sent)
-                {
-                    return this->_send(buffer.data(), buffer.capacity(), omni::net::socket_flags::NONE, sent);
-                }
                 template < typename T >
                 omni::net::socket_error send(const std::vector<T>& buffer, uint32_t& sent)
                 {
                     return this->_send(&buffer[0], (buffer.size() * sizeof(T)), omni::net::socket_flags::NONE, sent);
+                }
+                template < typename T >
+                omni::net::socket_error send(const std::vector<T>& buffer, omni::net::socket_flags flags, uint32_t& sent)
+                {
+                    return this->_send(&buffer[0], (buffer.size() * sizeof(T)), flags, sent);
+                }
+                template < typename T, uint16_t SZ >
+                omni::net::socket_error send(const omni::stack_buffer<T, SZ>& buffer, uint32_t& sent)
+                {
+                    return this->_send(buffer.data(), buffer.capacity(), omni::net::socket_flags::NONE, sent);
                 }
                 template < typename T, uint16_t SZ >
                 omni::net::socket_error send(const omni::stack_buffer<T, SZ>& buffer, omni::net::socket_flags flags, uint32_t& sent)
                 {
                     return this->_send(buffer.data(), buffer.capacity(), flags, sent);
                 }
-                template < typename T >
-                omni::net::socket_error send(const std::vector<T>& buffer, omni::net::socket_flags flags, uint32_t& sent)
+                template < size_t SZ >
+                omni::net::socket_error send(const char (&buffer)[SZ], uint32_t& sent)
                 {
-                    return this->_send(&buffer[0], (buffer.size() * sizeof(T)), flags, sent);
+                    return this->_send(buffer, SZ, omni::net::socket_flags::NONE, sent);
+                }
+                template < size_t SZ >
+                omni::net::socket_error send(const char (&buffer)[SZ], omni::net::socket_flags flags, uint32_t& sent)
+                {
+                    return this->_send(buffer, SZ, flags, sent);
                 }
                 omni::net::socket_error unsafe_send(const char* buffer, uint32_t buffer_size, uint32_t& sent)
                 {
@@ -220,6 +264,16 @@ namespace omni {
                 omni::net::socket_error send_to(const std::vector<T>& buffer, uint32_t len, omni::net::socket_flags flags, const std::string& ip, uint16_t port, uint32_t& sent)
                 {
                     return this->_send_to(buffer, len, flags, ip, port, sent);
+                }
+                template < size_t SZ >
+                omni::net::socket_error send_to(const char (&buffer)[SZ], const std::string& ip, uint16_t port, uint32_t& sent)
+                {
+                    return this->_send_to(buffer, SZ, omni::net::socket_flags::NONE, ip, port, sent);
+                }
+                template < size_t SZ >
+                omni::net::socket_error send_to(const char (&buffer)[SZ], omni::net::socket_flags flags, const std::string& ip, uint16_t port, uint32_t& sent)
+                {
+                    return this->_send_to(buffer, SZ, flags, ip, port, sent);
                 }
                 omni::net::socket_error unsafe_send_to(const char* buffer, uint32_t len, const std::string& ip, uint16_t port, uint32_t& sent)
                 {
@@ -257,10 +311,6 @@ namespace omni {
                 OMNI_OSTREAM_FW(omni::net::socket)
 
             private:
-                socket(); // = delete
-                socket(const omni::net::socket &cp); // = delete
-                omni::net::socket& operator= (const omni::net::socket &other); // = delete
-                
                 omni::net::socket_t m_socket;
                 omni::net::sockaddr_in_t m_addr;
                 omni::net::address_family m_family;
@@ -278,6 +328,10 @@ namespace omni {
                     mutable omni::sync::basic_lock m_mtx;
                 #endif
 
+                socket(); // = delete
+                socket(const omni::net::socket& cp); // = delete
+                omni::net::socket& operator= (const omni::net::socket& other); // = delete
+                
                 omni::net::socket_error _close(uint16_t timeout, bool shutdown);
                 omni::net::socket_error _receive(void* buffer, uint32_t buffer_size, omni::net::socket_flags flags, uint32_t& received);
                 omni::net::socket_error _receive_from(void* buffer, uint32_t buffer_size, omni::net::socket_flags flags, std::string& from_ip, uint16_t& from_port, uint32_t& received);

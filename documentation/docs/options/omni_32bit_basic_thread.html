@@ -24,16 +24,18 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <div class="docdiv">
     <font class="docu">MACRO</font><br><br>
     <code><font style="font-size:16px;">
-    <code>OMNI_32BIT_BASIC_THREAD</code> - A library macro/option
+    <code>OMNI_32BIT_BASIC_THREAD</code> - If defined, uses 32-bit types in the <code><a href="../classes/omni-sync-basic_thread.html">omni::sync::basic_thread</a></code> class.
     </font></code>
 </div><br>
 <div class="docdiv">
     <font class="docu">SYNOPSIS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    A library macro/option
+    <code>#define <a href="omni_32bit_basic_thread.html">OMNI_32BIT_BASIC_THREAD</a></code><br>
+<br>
+Signifies to enable the <code><a href="omni_32bit_basic_thread.html">OMNI_32BIT_BASIC_THREAD</a></code> flag and utilize 32-bit types.
 </div><br>
 <div class="docdiv">
     <font class="docu">DESCRIPTION</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    A library macro/option that changes certain functionality
+    If defined, the <code><a href="../classes/omni-sync-basic_thread.html">omni::sync::basic_thread</a></code> class will utilize a 32-bit intergral type for its underlying status, versus a 64-bit type. This underlying value is not user accesable or settable, regardless if this flag is set.
 </div><br>
 <div class="docdiv">
     <font class="docu">CONSIDERATIONS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
@@ -45,7 +47,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 </div><br>
 <div class="docdiv">
     <font class="docu">NOTES</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    None.
+    This is an optimization flag and does not have an effect on the classes functionality.
 </div><br>
 <!--end content-->
 </div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

@@ -125,12 +125,12 @@ namespace omni {
                 OMNI_MEMBERS_FW(omni::sync::basic_lock) // disposing,name,type(),hash()
                 
             private:
-                // defined but not implemented, should not be copied
-                basic_lock(const omni::sync::basic_lock &cp);
-                omni::sync::basic_lock& operator=(const omni::sync::basic_lock& other);
-                
                 volatile OMNI_BL_INT_FW m_lokd;
                 omni::sync::mutex_t m_mtx;
+                
+                // defined but not implemented, should not be copied
+                basic_lock(const omni::sync::basic_lock& cp);
+                omni::sync::basic_lock& operator=(const omni::sync::basic_lock& other);
         };
         
         /** Auto basic lock */

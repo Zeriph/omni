@@ -15,4 +15,5 @@ For more details on this please see the documentation for omni::sync::conditiona
 The default is that this flag is NOT defined.</Synopsis>
   <IsHelper>false</IsHelper>
   <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
 </MacroOp>

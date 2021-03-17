@@ -33,11 +33,11 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 </div><br>
 <div class="docdiv">
     <font class="docu">DESCRIPTION</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    It&#39;s is undefined behavior for a thread that does not own the mutex to unlock it. If an unlock is called in such a manner, the application is likely to crash; to be able to catch this, defining this macro will add an <code><a href="../classes/omni-sync-thread_t.html">omni::sync::thread_t</a></code> to the mutex object to keep track of which thread called it (i.e. which thread owns the lock).
+    It is undefined behaviour for a thread that does not own the mutex to unlock it. If an unlock is called in such a manner, the application is likely to crash; to be able to catch this, defining this macro will add an <code><a href="../classes/omni-sync-thread_t.html">omni::sync::thread_t</a></code> to the mutex object to keep track of which thread called it (i.e. which thread owns the lock).
 </div><br>
 <div class="docdiv">
     <font class="docu">CONSIDERATIONS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    No special considerations
+    No special considerations.
 </div><br>
 <div class="docdiv">
     <font class="docu">PLATFORM SPECIFIC</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>

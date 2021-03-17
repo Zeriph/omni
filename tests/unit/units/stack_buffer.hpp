@@ -9,6 +9,7 @@ class UT_CLASS_DEF
     public:
         UT_CLASS_CTOR()
         {
+            M_LIST_ADD(iterator_test, "tests the capabilities of the iterator functionality");
             M_LIST_ADD(template_test, "tests the capabilities of the template functionality");
         }
         
@@ -36,7 +37,7 @@ class UT_CLASS_DEF
             iterate_write(sbuf.begin(), sbuf.end());
 
             printl("iterating read");
-            iterate_read(sbuf.cbegin(), sbuf.cend());
+            iterate_read(sbuf.begin(), sbuf.end());
 
 
             printl("modifying via 'operator char*'");
@@ -84,6 +85,33 @@ class UT_CLASS_DEF
             printl("assigning one smaller");
             sbuf = "ZZ";
             iterate_read(sbuf.begin(), sbuf.end());
+        }
+
+        void iterator_test()
+        {
+            typedef omni::stack_buffer<uint32_t, 4> buf_t;
+            buf_t buf(10, 20, 30, 40);
+
+            printl("iterator");
+            buf_t::iterator itr = buf.begin();
+            while (itr != buf.end()) {
+                std::cout << *itr;
+                *itr += 10;
+                if (++itr != buf.end()) {
+                    std::cout << ", ";
+                }
+            }
+            std::cout << std::endl;
+
+            printl("const_iterator");
+            buf_t::const_iterator citr = buf.begin();
+            while (citr != buf.end()) {
+                std::cout << *citr;
+                if (++citr != buf.end()) {
+                    std::cout << ", ";
+                }
+            }
+            std::cout << std::endl;
         }
 
         void template_test()

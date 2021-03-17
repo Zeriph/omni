@@ -23,34 +23,44 @@
 
 namespace omni {
     namespace chrono {
-        OMNI_CONSTEXT_FW const int64_t DAYS_PER_YEAR OMNI_EXT_ASSN_FW(365); // non-leap
-        OMNI_CONSTEXT_FW const int64_t DAYS_PER_4_YEARS OMNI_EXT_ASSN_FW(1461); // 365 * 4 + 1 leap day
-        
-        // DEV_NOTE: These values are to keep in line with the .NET library
-        OMNI_CONSTEXT_FW const int64_t DAYS_PER_100_YEARS OMNI_EXT_ASSN_FW(36524); // DAYS_PER_4_YEARS * 25 - 1
-        OMNI_CONSTEXT_FW const int64_t DAYS_PER_400_YEARS OMNI_EXT_ASSN_FW(146097); // DAYS_PER_100_YEARS * 4 + 1
-        OMNI_CONSTEXT_FW const int64_t DAYS_TO_1601AD OMNI_EXT_ASSN_FW(584388); // Number of days from 1/1/0001 to 12/31/1600 -> DAYS_PER_400_YEARS * 4
-        OMNI_CONSTEXT_FW const int64_t DAYS_TO_1899AD OMNI_EXT_ASSN_FW(693593); // Number of days from 1/1/0001 to 12/30/1899 -> DAYS_PER_400_YEARS * 4 + DAYS_PER_100_YEARS * 3 - 367;
-        OMNI_CONSTEXT_FW const int64_t DAYS_TO_10000AD OMNI_EXT_ASSN_FW(3652059); // Number of days from 1/1/0001 to 12/31/9999 -> DAYS_PER_400_YEARS * 25 - 366
-        OMNI_CONSTEXT_FW const int64_t DAYS_TO_EPOCH OMNI_EXT_ASSN_FW(719527); // Number of days from 1/1/0001 to 12/31/1969 -> DAYS_TO_1601AD + (DAYS_PER_100_YEARS * 3) + (DAYS_PER_4_YEARS * 17) + (DAYS_PER_YEAR * 2)
-        OMNI_CONSTEXT_FW const int64_t TICKS_TO_10000AD OMNI_EXT_ASSN_FW(3155378975999999999); // DAYS_TO_10000AD * TICKS_PER_DAY - 1;
-        OMNI_CONSTEXT_FW const int64_t MILLISECONDS_TO_10000AD OMNI_EXT_ASSN_FW(315537897600000); // DAYS_TO_10000AD * MILLISECONDS_PER_DAY;
+        typedef omni::chrono::span<int64_t> time_span;
 
-        OMNI_CONSTEXT_FW const int64_t FILE_TIME_OFFSET OMNI_EXT_ASSN_FW(504911232000000000); // DAYS_TO_1601AD * TICKS_PER_DAY;
-        OMNI_CONSTEXT_FW const int64_t DOUBLE_DATE_OFFSET OMNI_EXT_ASSN_FW(599264352000000000); // DAYS_TO_1899AD * TICKS_PER_DAY;
-        OMNI_CONSTEXT_FW const int64_t EPOCH_OFFSET OMNI_EXT_ASSN_FW(621671328000000000); // DAYS_TO_EPOCH * TICKS_PER_DAY;
+        #if !defined(OMNI_NO_CONSTS)
+        
+        OMNI_CONSTEXT_FW const int64_t DAYS_PER_YEAR OMNI_EXT_ASSN_FW(OMNI_DAYS_PER_YEAR); // non-leap
+        OMNI_CONSTEXT_FW const int64_t DAYS_PER_LEAP_YEAR OMNI_EXT_ASSN_FW(OMNI_DAYS_PER_LEAP_YEAR);
+        OMNI_CONSTEXT_FW const int64_t DAYS_PER_4_YEARS OMNI_EXT_ASSN_FW(OMNI_DAYS_PER_4_YEARS); // 365 * 4 + 1 leap day
+
+        // TODO: from https://www.grc.nasa.gov/www/k-12/Numbers/Math/Mathematical_Thinking/calendar_calculations.htm
+        OMNI_CONSTEXT_FW const double DAYS_PER_TROPICAL_YEAR OMNI_EXT_ASSN_FW(OMNI_DAYS_PER_TROPICAL_YEAR);
+
+        // DEV_NOTE: These values are to keep in line with the .NET library
+        OMNI_CONSTEXT_FW const int64_t DAYS_PER_100_YEARS OMNI_EXT_ASSN_FW(OMNI_DAYS_PER_100_YEARS); // DAYS_PER_4_YEARS * 25 - 1
+        OMNI_CONSTEXT_FW const int64_t DAYS_PER_400_YEARS OMNI_EXT_ASSN_FW(OMNI_DAYS_PER_400_YEARS); // DAYS_PER_100_YEARS * 4 + 1
+        OMNI_CONSTEXT_FW const int64_t DAYS_TO_1601AD OMNI_EXT_ASSN_FW(OMNI_DAYS_TO_1601AD); // Number of days from 1/1/0001 to 12/31/1600 -> DAYS_PER_400_YEARS * 4
+        OMNI_CONSTEXT_FW const int64_t DAYS_TO_1899AD OMNI_EXT_ASSN_FW(OMNI_DAYS_TO_1899AD); // Number of days from 1/1/0001 to 12/30/1899 -> DAYS_PER_400_YEARS * 4 + DAYS_PER_100_YEARS * 3 - 367;
+        OMNI_CONSTEXT_FW const int64_t DAYS_TO_10000AD OMNI_EXT_ASSN_FW(OMNI_DAYS_TO_10000AD); // Number of days from 1/1/0001 to 12/31/9999 -> DAYS_PER_400_YEARS * 25 - 366
+        OMNI_CONSTEXT_FW const int64_t DAYS_TO_EPOCH OMNI_EXT_ASSN_FW(OMNI_DAYS_TO_EPOCH); // Number of days from 1/1/0001 to 12/31/1969 -> DAYS_TO_1601AD + (DAYS_PER_100_YEARS * 3) + (DAYS_PER_4_YEARS * 17) + (DAYS_PER_YEAR * 2)
+        OMNI_CONSTEXT_FW const int64_t TICKS_TO_10000AD OMNI_EXT_ASSN_FW(OMNI_TICKS_TO_10000AD); // DAYS_TO_10000AD * TICKS_PER_DAY - 1;
+        OMNI_CONSTEXT_FW const int64_t MILLISECONDS_TO_10000AD OMNI_EXT_ASSN_FW(OMNI_MILLISECONDS_TO_10000AD); // DAYS_TO_10000AD * MILLISECONDS_PER_DAY;
+
+        OMNI_CONSTEXT_FW const int64_t FILE_TIME_OFFSET OMNI_EXT_ASSN_FW(OMNI_FILE_TIME_OFFSET); // DAYS_TO_1601AD * TICKS_PER_DAY;
+        OMNI_CONSTEXT_FW const int64_t DOUBLE_DATE_OFFSET OMNI_EXT_ASSN_FW(OMNI_DOUBLE_DATE_OFFSET); // DAYS_TO_1899AD * TICKS_PER_DAY;
+        OMNI_CONSTEXT_FW const int64_t EPOCH_OFFSET OMNI_EXT_ASSN_FW(OMNI_EPOCH_OFFSET); // DAYS_TO_EPOCH * TICKS_PER_DAY;
         // The minimum OA date is 0100/01/01 (Note it is year 100).
         // The maximum OA date is 9999/12/31
-        OMNI_CONSTEXT_FW const int64_t OA_DATE_MIN_AS_TICKS OMNI_EXT_ASSN_FW(31241376000000000); // (DAYS_PER_100_YEARS - DAYS_PER_YEAR) * TICKS_PER_DAY;
-        OMNI_CONSTEXT_FW const double  OA_DATE_MIN_AS_DOUBLE OMNI_EXT_ASSN_FW(-657435.0); // All OA dates must be greater than (not >=) OA_DATE_MIN_AS_DOUBLE
-        OMNI_CONSTEXT_FW const double  OA_DATE_MAX_AS_DOUBLE OMNI_EXT_ASSN_FW(2958466.0); // All OA dates must be less than (not <=) OA_DATE_MAX_AS_DOUBLE
+        OMNI_CONSTEXT_FW const int64_t OA_DATE_MIN_AS_TICKS OMNI_EXT_ASSN_FW(OMNI_OA_DATE_MIN_AS_TICKS); // (DAYS_PER_100_YEARS - DAYS_PER_YEAR) * TICKS_PER_DAY;
+        OMNI_CONSTEXT_FW const double  OA_DATE_MIN_AS_DOUBLE OMNI_EXT_ASSN_FW(OMNI_OA_DATE_MIN_AS_DOUBLE); // All OA dates must be greater than (not >=) OA_DATE_MIN_AS_DOUBLE
+        OMNI_CONSTEXT_FW const double  OA_DATE_MAX_AS_DOUBLE OMNI_EXT_ASSN_FW(OMNI_OA_DATE_MAX_AS_DOUBLE); // All OA dates must be less than (not <=) OA_DATE_MAX_AS_DOUBLE
 
         #if defined(OMNI_NO_EXTERN_CONSTS)
-            const int32_t DAYS_TO_MONTH_365[] = { 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365 };
-            const int32_t DAYS_TO_MONTH_366[] = { 0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366 };
+            const int32_t DAYS_TO_MONTH_365[] = OMNI_DAYS_TO_MONTH_365;
+            const int32_t DAYS_TO_MONTH_366[] = OMNI_DAYS_TO_MONTH_366;
         #else
             extern const int32_t DAYS_TO_MONTH_365[13];
             extern const int32_t DAYS_TO_MONTH_366[13];
+        #endif
+
         #endif
 
         /** The date_time_kind enum class */
@@ -344,7 +354,7 @@ namespace omni {
                 }
         };
 
-        /** The enum template */
+        /** The date_time_styles enum class */
         class date_time_styles
         {
             public:
@@ -444,7 +454,7 @@ namespace omni {
                 }
                 
                 date_time_styles() :
-                    OMNI_CTOR_FW(omni::sync::date_time_styles)
+                    OMNI_CTOR_FW(omni::chrono::date_time_styles)
                     m_val(DEFAULT_VALUE())
                 { }
 
@@ -454,7 +464,7 @@ namespace omni {
                 { }
 
                 date_time_styles(enum_t val) : 
-                    OMNI_CTOR_FW(omni::sync::date_time_styles)
+                    OMNI_CTOR_FW(omni::chrono::date_time_styles)
                     m_val(val)
                 { }
 
@@ -794,7 +804,7 @@ namespace omni {
                 {
                     enum_t ret;
                     if (_try_parse(val, ret)) { return ret; }
-                    OMNI_ERRV_FW("invalid enum parse: ", val, omni::exceptions::invalid_enum())
+                    OMNI_ERR_FW("invalid enum parse", omni::exceptions::invalid_enum())
                     return DEFAULT_VALUE();
                 }
 
@@ -1196,8 +1206,6 @@ namespace omni {
                     );
                 }
         };
-
-        typedef omni::chrono::span<int64_t> time_span;
     }
 }
 

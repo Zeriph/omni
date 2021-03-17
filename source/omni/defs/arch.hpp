@@ -76,7 +76,7 @@
         #define OMNI_ARCH_ARM
     #endif
     
-    //ARM64
+    // ARM64
     #if defined(__aarch64__)
         #define OMNI_ARCH_ARM64
     #endif
@@ -154,7 +154,7 @@
     // RS/6000
     #if defined(__THW_RS6000) || defined(_IBMR2) || defined(_POWER) || defined(_ARCH_PWR) || \
         defined(_ARCH_PWR2) || defined(_ARCH_PWR3) || defined(_ARCH_PWR4)
-        #define OMNI_ARCH_RS600
+        #define OMNI_ARCH_RS6000
     #endif
 
     // SPARC

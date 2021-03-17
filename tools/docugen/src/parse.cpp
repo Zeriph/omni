@@ -70,7 +70,8 @@ void OmniDocuGen::DocuGen::_ScanSourcedir(const std::string& srcdir)
     up(1, "Scanning directory {0}", srcdir);
     std::string ext;
     std::string exlow = omni::string::to_lower(OmniDocuGen::Program::Settings.Excluded);
-    omni::seq::std_string_t vals = omni::io::directory::get_files(srcdir);
+    omni::seq::std_string_t vals;
+    omni::io::directory::get_files(srcdir, vals);
     up(1, "Found {0} files", omni::string::to_string(vals.size()));
     omni::seq::std_string_t::iterator f;
     for (f = vals.begin(); f != vals.end(); ++f) {
@@ -92,7 +93,9 @@ void OmniDocuGen::DocuGen::_ScanSourcedir(const std::string& srcdir)
         }
     }
     if (OmniDocuGen::Program::StopReq) { return; }
-    vals = omni::io::directory::get_directories(srcdir);
+    vals.clear();
+    omni::io::directory::get_directories(srcdir, vals);
+    up(1, "Found {0} subdirectories", omni::string::to_string(vals.size()));
     for (f = vals.begin(); f != vals.end(); ++f) {
         if (omni::string::contains(exlow, omni::string::to_lower(*f))) { continue; }
         OmniDocuGen::DocuGen::_ScanSourcedir(*f);
@@ -129,7 +132,8 @@ void OmniDocuGen::DocuGen::CheckClassDir()
     } else {
         up("Removing old class files from {0}", OmniDocuGen::DocuGen::Classes);
         List<std::string> acd = DocuGen::GetMtiClassFilePath(OmniDocuGen::DocuGen::AllMti);
-        omni::seq::std_string_t cd = omni::io::directory::get_files(OmniDocuGen::DocuGen::Classes);
+        omni::seq::std_string_t cd;
+        omni::io::directory::get_files(OmniDocuGen::DocuGen::Classes, cd);
         omni_foreach (std::string, c, cd) {
             if (OmniDocuGen::Program::StopReq) { return; }
             if (c->empty() || omni::string::ends_with(*c, "index.html")) { continue; }
@@ -254,7 +258,8 @@ void OmniDocuGen::DocuGen::LoadMacros(const std::string& macdir)
     up("Loading macro's from '{0}'", macdir);
     OmniDocuGen::DocuGen::Macros.clear();
     if (omni::io::directory::exists(macdir)) {
-        omni::seq::std_string_t files = omni::io::directory::get_files(macdir);
+        omni::seq::std_string_t files;
+        omni::io::directory::get_files(macdir, files);
         foreach_t (omni::seq::std_string_t, f, files) {
             OmniDocuGen::DocuGen::Macros.push_back(MacroOp(*f));
             if (OmniDocuGen::Program::StopReq) { return; }
@@ -273,7 +278,8 @@ void OmniDocuGen::DocuGen::LoadSystemAPI(const std::string& apidir)
     up("Loading system API's from '{0}'", apidir);
     OmniDocuGen::DocuGen::SysAPIs.clear();
     if (omni::io::directory::exists(apidir)) {
-        omni::seq::std_string_t files = omni::io::directory::get_files(apidir);
+        omni::seq::std_string_t files;
+        omni::io::directory::get_files(apidir, files);
         foreach_t (omni::seq::std_string_t, f, files) {
             OmniDocuGen::DocuGen::SysAPIs.push_back(SysAPI(*f));
             if (OmniDocuGen::Program::StopReq) { return; }

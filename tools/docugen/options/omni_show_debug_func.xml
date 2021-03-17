@@ -10,4 +10,5 @@
 Signifies to format the debug output to display the function name in front of the output.</Synopsis>
   <IsHelper>false</IsHelper>
   <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
 </MacroOp>

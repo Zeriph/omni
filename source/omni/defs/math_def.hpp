@@ -22,31 +22,15 @@
 #define OMNI_MATH_MAX_ROUND_DIGITS_FW 15
 #define OMNI_MATH_ROUND_LIMIT_FW 1e16
 
-#if !defined(OMNI_E_F) // float
+// float
+#if !defined(OMNI_E_F)
     #if (defined(OMNI_USE_M_E_F) || defined(OMNI_USE_MATH_DEFS)) && defined(M_E)
         #define OMNI_E_F static_cast<float>(M_E)
     #else
         #define OMNI_E_F 2.7182818F
     #endif
 #endif
-
-#if !defined(OMNI_E) // double
-    #if (defined(OMNI_USE_M_E) || defined(OMNI_USE_MATH_DEFS)) && defined(M_E)
-        #define OMNI_E M_E
-    #else
-        #define OMNI_E 2.71828182845904523536
-    #endif
-#endif
-
-#if !defined(OMNI_E_L) // long double
-    #if (defined(OMNI_USE_M_E_L) || defined(OMNI_USE_MATH_DEFS)) && defined(M_El)
-        #define OMNI_E_L M_El
-    #else
-        #define OMNI_E_L 2.71828182845904523536028747135266250L
-    #endif
-#endif
-
-#if !defined(OMNI_PI_F) // float
+#if !defined(OMNI_PI_F)
     #if (defined(OMNI_USE_M_PI_F) || defined(OMNI_USE_MATH_DEFS)) && defined(M_PI)
         #define OMNI_PI_F static_cast<float>(M_PI)
     #else
@@ -55,8 +39,19 @@
     #define OMNI_PI_F_180 0.0174533F
     #define OMNI_180_PI_F 57.2957805F
 #endif
+#if !defined(OMNI_TAU_F)
+    #define OMNI_TAU_F 6.2831852F
+#endif
 
-#if !defined(OMNI_PI) // double
+// double
+#if !defined(OMNI_E)
+    #if (defined(OMNI_USE_M_E) || defined(OMNI_USE_MATH_DEFS)) && defined(M_E)
+        #define OMNI_E M_E
+    #else
+        #define OMNI_E 2.71828182845904523536
+    #endif
+#endif
+#if !defined(OMNI_PI)
     #if (defined(OMNI_USE_M_PI) || defined(OMNI_USE_MATH_DEFS)) && defined(M_PI)
         #define OMNI_PI M_PI
     #else
@@ -65,8 +60,32 @@
     #define OMNI_PI_180 0.01745329251994329577
     #define OMNI_180_PI 57.29577951308232087684
 #endif
+#if !defined(OMNI_TAU)
+    #define OMNI_TAU 6.28318530717958647692
+#endif
 
-#if !defined(OMNI_PI_L) // long double
+/*
+    DEV_NOTE: these are the exact values from the .NET lib, links:
+    https://docs.microsoft.com/en-us/dotnet/api/system.math.pi?view=net-5.0
+    public const double PI = 3.1415926535897931;
+    https://docs.microsoft.com/en-us/dotnet/api/system.math.e?view=net-5.0
+    public const double E = 2.7182818284590451;
+    https://docs.microsoft.com/en-us/dotnet/api/system.math.tau?view=net-5.0
+    public const double Tau = 6.2831853071795862;
+*/
+#define OMNI_MATH_COMPAT_PI 3.1415926535897931
+#define OMNI_MATH_COMPAT_E 2.7182818284590451
+#define OMNI_MATH_COMPAT_TAU 6.2831853071795862
+
+// long double
+#if !defined(OMNI_E_L)
+    #if (defined(OMNI_USE_M_E_L) || defined(OMNI_USE_MATH_DEFS)) && defined(M_El)
+        #define OMNI_E_L M_El
+    #else
+        #define OMNI_E_L 2.71828182845904523536028747135266250L
+    #endif
+#endif
+#if !defined(OMNI_PI_L)
     #if (defined(OMNI_USE_M_PI_L) || defined(OMNI_USE_MATH_DEFS)) && defined(M_PIl)
         #define OMNI_PI_L M_PIl
     #else
@@ -75,12 +94,33 @@
     #define OMNI_PI_L_180 0.017453292519943295769236907684886127L
     #define OMNI_180_PI_L 57.295779513082320876798154814105170336L
 #endif
+#if !defined(OMNI_TAU_L)
+    #define OMNI_TAU_L 6.283185307179586476925286766559005768L
+#endif
+
+/*
+TODO: finish implementing these
+see: /Code/omni/references/kernel_sources/Apple/MacOSX10.14_include/math.h
+
+#define M_LOG2E     1.44269504088896340735992468100189214   // log2(e)
+#define M_LOG10E    0.434294481903251827651128918916605082  // log10(e)
+#define M_LN2       0.693147180559945309417232121458176568  // loge(2)
+#define M_LN10      2.30258509299404568401799145468436421   // loge(10)
+#define M_PI_2      1.57079632679489661923132169163975144   // pi/2
+#define M_PI_4      0.785398163397448309615660845819875721  // pi/4
+#define M_1_PI      0.318309886183790671537767526745028724  // 1/pi
+#define M_2_PI      0.636619772367581343075535053490057448  // 2/pi
+#define M_2_SQRTPI  1.12837916709551257389615890312154517   // 2/sqrt(pi)
+#define M_SQRT2     1.41421356237309504880168872420969808   // sqrt(2)
+#define M_SQRT1_2   0.707106781186547524400844362104849039  // 1/sqrt(2)
+*/
+
 
 // radians =  degrees * π / 180
-#define OMNI_DEG_TO_RAD(deg) deg * OMNI_PI_180
+#define OMNI_DEG_TO_RAD(deg) (deg) * OMNI_PI_180
 
 // degrees = radians * 180 / π
-#define OMNI_RAD_TO_DEG(rad) rad * OMNI_180_PI
+#define OMNI_RAD_TO_DEG(rad) (rad) * OMNI_180_PI
 
 #define OMNI_MATH_DELTA(a,b) ((a) - (b))
 

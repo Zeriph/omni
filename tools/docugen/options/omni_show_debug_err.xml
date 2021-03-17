@@ -1,17 +1,13 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_SHOW_DEBUG_ERR</Name>
-  <Brief>Displays errors as part of the debug output.
-</Brief>
-  <Considerations>No special considerations
-</Considerations>
-  <Description>When specified, all error debug output will be displayed.
-</Description>
-  <Notes>OMNI_SHOW_DEBUG must be specified for this flag to work.
-</Notes>
-  <PlatformSpecific>No platform specific notes.
-</PlatformSpecific>
+  <Brief>Displays errors as part of the debug output.</Brief>
+  <Considerations>No special considerations</Considerations>
+  <Description>When specified, all error debug output will be displayed.</Description>
+  <Notes>OMNI_SHOW_DEBUG must be specified for this flag to work.</Notes>
+  <PlatformSpecific>No platform specific notes.</PlatformSpecific>
   <Synopsis>&lt;code&gt;#define OMNI_SHOW_DEBUG_ERR&lt;/code&gt;
+
 Signifies to show any error output.
 </Synopsis>
   <IsHelper>false</IsHelper>

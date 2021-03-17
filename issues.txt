@@ -5,14 +5,9 @@ an all encompassing 'future' and 'todo' list noted and posted in the code repo.
 
 Current version: 0.8.3
 
--A few current test of Debian in a VM no longer work as expected (even though
-they previously did work). The tests build and run, but nothing is printed
-regarding actual results, though some tests do run as expected.
-
 -The omni::net::socket/endpoint classes only support IP4 (no IP6/Unix yet).
 
--The date_time class is still being worked on.
+-The date_time class is still being worked on (erroneous warnings might occur).
 
 -The library does not account for arithmetic over/under-flow errors and
 trusts the user of the code will do proper error handling above.
-

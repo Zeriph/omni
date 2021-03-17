@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_RL</Name>
+  <Brief>If defined, uses the \r new line instead of \n or \r\n.</Brief>
+  <Considerations>No special consideration.</Considerations>
+  <Description>Most Unix and Linux platforms use \n (new line) as a new line character while Windows platforms will typically use \r\n (form feed + new line); Apple platforms are typically Unix based and will adhere to the de-facto \n new line constant (at least honor it as a new line), but some platforms will use only the \r character to mean a new line (versus form feed). If you are targeting a platform, like some older Apple platforms for instance, that use \r as their de-factor, define this option and the OMNI_NEW_LINE macro will be a \r instead of the default for the platform (\r\n for Windows and \n for all others).</Description>
+  <Notes>None.</Notes>
+  <PlatformSpecific>This option is only valid on non Windows platforms. If you wish to force the OMNI_NEW_LINE macro to be \r for all platforms, then you must define OMNI_NEW_LINE as \r in your compilation options (e.g. via /DOMNI_NEW_LINE=\r)</PlatformSpecific>
+  <Synopsis>The OMNI_NEW_LINE macro is defined as \r\n on Windows platforms and \n on all other detected platforms (via certain platform specific macro definitions). If the OMNNI_APLNL macro is defined, then the default \n newline character will instead be \r.</Synopsis>
+  <IsHelper>false</IsHelper>
+  <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
+</MacroOp>

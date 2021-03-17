@@ -59,7 +59,7 @@ namespace OmniDocuGen
         void CheckAndCreateDirWithRedir(const std::string& dir, const std::string& redir, uint32_t idx);
         void CheckAndCreateDir(const std::string& dir);
         void WriteRedirectDirectories(const std::string& dir, const std::string& redir, uint32_t idx);
-        bool ZipDirectory(const std::string& dir, const std::string& z, bool id);
+        bool ZipDirectory(const std::string& dir, const std::string& z, bool no_html);
         bool ZipDirectory(const std::string& dir, const std::string& z);
         bool RemoveEntryFromZip(const std::string& z, const std::string& f);
         std::string LastWriteTime(const std::string& file);

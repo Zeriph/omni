@@ -3,11 +3,11 @@
   <Name>OMNI_TYPE_INFO</Name>
   <Brief>Defines if the omni::type class should be used in other classes.</Brief>
   <Considerations>The underlying ID type for the omni::type class is a std::size_t type. As such, if you enable this option, any classes that utilize this functionality will increase by &lt;code&gt;sizeof(std::size_t)&lt;/code&gt;.</Considerations>
-  <Description>If you wish to use the Omni type system (for platforms or builds that do not use RTTI), you must explicitly call the omni::type_id and omni::type_of functions to garner information about a specific object.
-</Description>
+  <Description>If you wish to use the Omni type system (for platforms or builds that do not use RTTI), you must explicitly call the omni::type_id and omni::type_of functions to garner information about a specific object.</Description>
   <Notes>None.</Notes>
   <PlatformSpecific>No platform specific notes.</PlatformSpecific>
-  <Synopsis>If this macro is defined, then any classes in the Omni framework that can be instantiated (e.g. non-abstract classes and non-POD types) will have an omni::type as a member as well a @c hash and @c type function associated with it so that you can retrieve the object's underlying type/hash without having to explicitly call omni::type_id on the object.</Synopsis>
+  <Synopsis>If this macro is defined, then any classes in the library that can be instantiated (e.g. non-abstract classes and non-POD types) will have an omni::type as a member as well a @c hash and @c type function associated with it so that you can retrieve the object's underlying type/hash without having to explicitly call omni::type_id on the object.</Synopsis>
   <IsHelper>false</IsHelper>
   <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
 </MacroOp>

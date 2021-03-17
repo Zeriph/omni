@@ -33,11 +33,12 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 0000140:<br>0000141:<br>0000142:<br>0000143:<br>0000144:<br>0000145:<br>0000146:<br>0000147:<br>0000148:<br>0000149:<br>0000150:<br>0000151:<br>0000152:<br>0000153:<br>0000154:<br>0000155:<br>0000156:<br>0000157:<br>0000158:<br>0000159:<br>
 0000160:<br>0000161:<br>0000162:<br>0000163:<br>0000164:<br>0000165:<br>0000166:<br>0000167:<br>0000168:<br>0000169:<br>0000170:<br>0000171:<br>0000172:<br>0000173:<br>0000174:<br>0000175:<br>0000176:<br>0000177:<br>0000178:<br>0000179:<br>
 0000180:<br>0000181:<br>0000182:<br>0000183:<br>0000184:<br>0000185:<br>0000186:<br>0000187:<br>0000188:<br>0000189:<br>0000190:<br>0000191:<br>0000192:<br>0000193:<br>0000194:<br>0000195:<br>0000196:<br>0000197:<br>0000198:<br>0000199:<br>
-0000200:<br>0000201:<br>0000202:<br>0000203:<br>0000204:<br>0000205:<br><div id="cmntl2" name="cmntl2">0000206:<br>0000207:<br>0000208:<br></div>0000209:<br>0000210:<br>0000211:<br>
+0000200:<br>0000201:<br>0000202:<br>0000203:<br>0000204:<br>0000205:<br>0000206:<br>0000207:<br>0000208:<br>0000209:<br>0000210:<br>0000211:<br>0000212:<br>0000213:<br>0000214:<br>0000215:<br>0000216:<br><div id="cmntl2" name="cmntl2">0000217:<br>0000218:<br>0000219:<br></div>
+0000220:<br>0000221:<br>0000222:<br>
 <!--end line numbers-->
 </div><div class="cpphtmlcmnt">
 <!--start collapse columns-->
-<img src="../../../../content/tree/min.gif" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<img src="../../../../content/tree/min.gif" alt="Min/Max" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -47,7 +48,8 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><img src="../../../../content/tree/min.gif" id="cmnti2" name="cmnti2" onclick="collapse('2', '../../../../');" /><br><div id="cmnts2" name="cmnts2"><br><br><br></div><div></div><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><img src="../../../../content/tree/min.gif" alt="Min/Max" id="cmnti2" name="cmnti2" onclick="collapse('2', '../../../../');" /><br><div id="cmnts2" name="cmnts2"><br><br><br></div><div></div>
+<br><br><br>
 <!--end collapse columns-->
 </div><div class="cpphtml" style="margin-left:3.75em;">
 <!--start highlighted code-->
@@ -165,14 +167,15 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <font class="syn_pre">#define <a href="../../../options/omni_free.html">OMNI_FREE</a>(v) delete v; v = <a href="../../../options/omni_null.html">OMNI_NULL</a></font><br>
 <font class="syn_pre">#define <a href="../../../options/omni_free_arr.html">OMNI_FREE_ARR</a>(v) delete[] v; v = <a href="../../../options/omni_null.html">OMNI_NULL</a></font><br>
 <br>
+<font class="syn_cmt">// For a list of error codes: see errno.h</font><br>
+<font class="syn_pre">#include &lt;cerrno&gt;  <font class="syn_cmt">// C++ defs, but some impls do not have errno defined here</font></font><br>
+<font class="syn_pre">#include &lt;errno.h&gt; <font class="syn_cmt">// so also include C defs ... (this happens a lot more than we would like)</font></font><br>
+<br>
 <font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../options/omni_win_api.html">OMNI_WIN_API</a>)</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// For a list of error codes: http://msdn.microsoft.com/en-us/library/ms681381(VS.85).aspx</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_gle.html">OMNI_GLE</a> ::<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms679360%28v=vs.85%29.aspx">GetLastError</a>()</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_gle_prnt.html">OMNI_GLE_PRNT</a> static_cast&lt;long&gt;(::<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms679360%28v=vs.85%29.aspx">GetLastError</a>())</font><br>
 <font class="syn_pre">#else</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// For a list of error codes: see errno.h</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;cerrno&gt;  <font class="syn_cmt">// C++ defs, but some impls do not have errno defined here</font></font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;errno.h&gt; <font class="syn_cmt">// so also include C defs ... (this happens a lot more than we would like)</font></font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_gle.html">OMNI_GLE</a> errno</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_gle_prnt.html">OMNI_GLE_PRNT</a> errno</font><br>
 <font class="syn_pre">#endif</font><br>
@@ -193,6 +196,10 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_CLINKC_FW }</font><br>
 <font class="syn_pre">#endif</font><br>
 <br>
+<font class="syn_pre">#if !defined(<a href="../../../options/omni_sigcall.html">OMNI_SIGCALL</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_sigcall.html">OMNI_SIGCALL</a></font><br>
+<font class="syn_pre">#endif</font><br>
+<br>
 <font class="syn_pre">#if !defined(<a href="../../../options/omni_code_page.html">OMNI_CODE_PAGE</a>)</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../options/omni_os_win.html">OMNI_OS_WIN</a>) || defined(CP_UTF8)</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_code_page.html">OMNI_CODE_PAGE</a> CP_UTF8</font><br>
@@ -210,10 +217,14 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <br>
 <font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../options/omni_enable_cxx.html">OMNI_ENABLE_CXX</a>) || defined(<a href="../../../options/omni_enable_noexcept.html">OMNI_ENABLE_NOEXCEPT</a>)</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_dtor_throws.html">OMNI_DTOR_THROWS</a> noexcept(false)</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_dtor_no_throws.html">OMNI_DTOR_NO_THROWS</a> noexcept(true)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_func_throws.html">OMNI_FUNC_THROWS</a> noexcept(false)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_dtor_no_throw.html">OMNI_DTOR_NO_THROW</a> noexcept(true)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_func_no_throw.html">OMNI_FUNC_NO_THROW</a> noexcept(true)</font><br>
 <font class="syn_pre">#else</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_dtor_throws.html">OMNI_DTOR_THROWS</a></font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_dtor_no_throws.html">OMNI_DTOR_NO_THROWS</a> throw()</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_func_throws.html">OMNI_FUNC_THROWS</a></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_dtor_no_throw.html">OMNI_DTOR_NO_THROW</a> throw()</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_func_no_throw.html">OMNI_FUNC_NO_THROW</a> throw()</font><br>
 <font class="syn_pre">#endif</font><br>
 <br>
 <font class="syn_cmt">// if debug is not defined, this will not get included</font><br>
@@ -234,7 +245,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_path_root.html">OMNI_PATH_ROOT</a> <font class="syn_str">&quot;C:\\&quot;</font></font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_wpath_root.html">OMNI_WPATH_ROOT</a> L<font class="syn_str">&quot;C:\\&quot;</font></font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../options/omni_aplnl.html">OMNI_APLNL</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../options/omni_rl.html">OMNI_RL</a>)</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_new_line.html">OMNI_NEW_LINE</a> <font class="syn_str">&quot;\r&quot;</font></font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_wnew_line.html">OMNI_WNEW_LINE</a> L<font class="syn_str">&quot;\r&quot;</font></font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
@@ -250,6 +261,8 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <br>
 <font class="syn_cmt">// DEV_NOTE: this is triple included to enclose the header and cancel all defines that need be</font><br>
 <font class="syn_pre">#include &lt;<a href="../../omni/defs/cancel_check_def.hpp.html">omni/defs/cancel_check_def.hpp</a>&gt;</font><br>
+<br>
+<font class="syn_pre">#include &lt;<a href="../../omni/defs/stdinc.hpp.html">omni/defs/stdinc.hpp</a>&gt;</font><br>
 <br>
 <font class="syn_ins">namespace</font> omni {<br>
 <a name="omni::unsafe_t"></a>&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">typedef</font> <font class="syn_typ">void</font>* unsafe_t;<br>

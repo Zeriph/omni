@@ -37,10 +37,11 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 0000220:<br>0000221:<br>0000222:<br>0000223:<br>0000224:<br>0000225:<br>0000226:<br>0000227:<br>0000228:<br>0000229:<br>0000230:<br>0000231:<br>0000232:<br>0000233:<br>0000234:<br>0000235:<br>0000236:<br>0000237:<br>0000238:<br>0000239:<br>
 0000240:<br>0000241:<br>0000242:<br>0000243:<br>0000244:<br>0000245:<br>0000246:<br>0000247:<br>0000248:<br>0000249:<br>0000250:<br>0000251:<br>0000252:<br>0000253:<br>0000254:<br>0000255:<br>0000256:<br>0000257:<br>0000258:<br>0000259:<br>
 0000260:<br>0000261:<br>0000262:<br>0000263:<br>0000264:<br>0000265:<br>0000266:<br>0000267:<br>0000268:<br>0000269:<br>0000270:<br>0000271:<br>0000272:<br>0000273:<br>0000274:<br>0000275:<br>0000276:<br>0000277:<br>0000278:<br>0000279:<br>
+0000280:<br>0000281:<br>0000282:<br>0000283:<br>0000284:<br>0000285:<br>0000286:<br>0000287:<br>0000288:<br>0000289:<br>0000290:<br>0000291:<br>0000292:<br>0000293:<br>0000294:<br>
 <!--end line numbers-->
 </div><div class="cpphtmlcmnt">
 <!--start collapse columns-->
-<img src="../../../../content/tree/min.gif" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<img src="../../../../content/tree/min.gif" alt="Min/Max" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -54,6 +55,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <!--end collapse columns-->
 </div><div class="cpphtml" style="margin-left:3.75em;">
 <!--start highlighted code-->
@@ -115,6 +117,12 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_no_safe_chrono.html">OMNI_NO_SAFE_CHRONO</a></font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
 <font class="syn_pre">#endif</font><br>
+<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../options/omni_safe_crypto.html">OMNI_SAFE_CRYPTO</a>) &amp;&amp; (defined(<a href="../../../options/omni_no_safe_crypto.html">OMNI_NO_SAFE_CRYPTO</a>) || defined(<a href="../../../options/omni_no_safe_library.html">OMNI_NO_SAFE_LIBRARY</a>))</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#undef <a href="../../../options/omni_safe_crypto.html">OMNI_SAFE_CRYPTO</a></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#if !defined(<a href="../../../options/omni_no_safe_crypto.html">OMNI_NO_SAFE_CRYPTO</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_no_safe_crypto.html">OMNI_NO_SAFE_CRYPTO</a></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+<font class="syn_pre">#endif</font><br>
 <font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../options/omni_safe_locks.html">OMNI_SAFE_LOCKS</a>) &amp;&amp; (defined(<a href="../../../options/omni_no_safe_locks.html">OMNI_NO_SAFE_LOCKS</a>) || defined(<a href="../../../options/omni_no_safe_library.html">OMNI_NO_SAFE_LIBRARY</a>))</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#undef <a href="../../../options/omni_safe_locks.html">OMNI_SAFE_LOCKS</a></font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#if !defined(<a href="../../../options/omni_no_safe_locks.html">OMNI_NO_SAFE_LOCKS</a>)</font><br>
@@ -138,6 +146,12 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_safe_span.html">OMNI_SAFE_SPAN</a></font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_safe_stopwatch.html">OMNI_SAFE_STOPWATCH</a></font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_safe_datetime.html">OMNI_SAFE_DATETIME</a></font><br>
+<font class="syn_pre">#endif</font><br>
+<br>
+<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../options/omni_safe_crypto.html">OMNI_SAFE_CRYPTO</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_safe_sha256.html">OMNI_SAFE_SHA256</a></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_safe_md5.html">OMNI_SAFE_MD5</a></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_safe_sha1.html">OMNI_SAFE_SHA1</a></font><br>
 <font class="syn_pre">#endif</font><br>
 <br>
 <font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../options/omni_safe_locks.html">OMNI_SAFE_LOCKS</a>)</font><br>
@@ -170,6 +184,9 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../options/omni_safe_net.html">OMNI_SAFE_NET</a>)</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_safe_socket.html">OMNI_SAFE_SOCKET</a></font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_safe_socket_ep.html">OMNI_SAFE_SOCKET_EP</a></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// TODO: see note in client.hpp</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_safe_net_client.html">OMNI_SAFE_NET_CLIENT</a></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_safe_net_server.html">OMNI_SAFE_NET_SERVER</a></font><br>
 <font class="syn_pre">#endif</font><br>
 <br>
 <font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../options/omni_safe_application.html">OMNI_SAFE_APPLICATION</a>) &amp;&amp; (defined(<a href="../../../options/omni_no_safe_application.html">OMNI_NO_SAFE_APPLICATION</a>) || defined(<a href="../../../options/omni_no_safe_library.html">OMNI_NO_SAFE_LIBRARY</a>))</font><br>

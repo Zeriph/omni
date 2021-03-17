@@ -35,7 +35,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <!--end line numbers-->
 </div><div class="cpphtmlcmnt">
 <!--start collapse columns-->
-<img src="../../../../content/tree/min.gif" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<img src="../../../../content/tree/min.gif" alt="Min/Max" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -137,16 +137,16 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_invalid_socket.html">OMNI_INVALID_SOCKET</a> INVALID_SOCKET</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_SYSERR_FW SOCKET_ERROR</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCKET_ERR_FW ::WSAGetLastError()</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#if !defined(<a href="../../../options/omni_winsock_high.html">OMNI_WINSOCK_HIGH</a>)</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_winsock_high.html">OMNI_WINSOCK_HIGH</a> 2</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#if !defined(OMNI_WINSOCK_HIGH_FW)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_WINSOCK_HIGH_FW 2</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#if !defined(<a href="../../../options/omni_winsock_low.html">OMNI_WINSOCK_LOW</a>)</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_winsock_low.html">OMNI_WINSOCK_LOW</a> 2</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#if !defined(OMNI_WINSOCK_LOW_FW)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_WINSOCK_LOW_FW 2</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_RECEIVE_FW SD_RECEIVE</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_SEND_FW SD_SEND</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_BOTH_FW SD_BOTH</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_msg_eor.html">OMNI_MSG_EOR</a> 0</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_MSG_EOR_FW 0</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SIN_FAMILY_FW ADDRESS_FAMILY</font><br>
 <font class="syn_pre">#else</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCKET_T_FW int</font><br>
@@ -158,7 +158,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_RECEIVE_FW SHUT_RD</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_SEND_FW SHUT_WR</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_BOTH_FW SHUT_RDWR</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_msg_eor.html">OMNI_MSG_EOR</a> MSG_EOR</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_MSG_EOR_FW MSG_EOR</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../options/omni_os_apple.html">OMNI_OS_APPLE</a>)</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SIN_FAMILY_FW sa_family_t</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
@@ -173,7 +173,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <a name="omni::net::wsa_init"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">int</font> wsa_init()<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WSADATA sdata;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> serr = ::WSAStartup(MAKEWORD(<a href="../../../options/omni_winsock_high.html">OMNI_WINSOCK_HIGH</a>, <a href="../../../options/omni_winsock_low.html">OMNI_WINSOCK_LOW</a>), &amp;sdata);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> serr = ::WSAStartup(MAKEWORD(OMNI_WINSOCK_HIGH_FW, OMNI_WINSOCK_LOW_FW), &amp;sdata);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (serr != <font class="syn_num">0</font>) {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// Could not get the winsock dll, fail since cannot create socket</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../options/omni_dbgev.html">OMNI_DBGEV</a>(<font class="syn_str">&quot;a system error occurred in WSAStartUp: &quot;</font>, serr)<br>

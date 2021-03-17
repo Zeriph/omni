@@ -1,18 +1,12 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_NON_PORTABLE</Name>
-  <Brief>If defined, the framework will enable non-portable code.
-</Brief>
-  <Considerations>No special considerations
-</Considerations>
-  <Description>Defining this macro enables certain function blocks and portability across the different platforms and even across version lines cannot be guaranteed. To which it is up to the user to determine if they need the areas determined to be 'non-portable' with no work around to be enabled.
-</Description>
-  <Notes>None.
-</Notes>
-  <PlatformSpecific>No platform specific notes.
-</PlatformSpecific>
-  <Synopsis>Certain functionality in the Omni framework cannot be guaranteed across platforms (like thread prioritization). As such, those areas of code must be explicitly enabled to ensure the framework stays as much equivalent across platforms as possible.
-</Synopsis>
+  <Brief>If defined, the library will enable non-portable code.</Brief>
+  <Considerations>No special considerations</Considerations>
+  <Description>Defining this macro enables certain function blocks and portability across the different platforms and even across version lines cannot be guaranteed. To which it is up to the user to determine if they need the areas determined to be 'non-portable' with no work around to be enabled.</Description>
+  <Notes>None.</Notes>
+  <PlatformSpecific>No platform specific notes.</PlatformSpecific>
+  <Synopsis>Certain functionality in the library cannot be guaranteed across platforms (like thread prioritization). As such, those areas of code must be explicitly enabled to ensure the library stays as much equivalent across platforms as possible.</Synopsis>
   <IsHelper>false</IsHelper>
   <IsConstant>false</IsConstant>
   <IsFWHelp>false</IsFWHelp>

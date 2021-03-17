@@ -1,12 +1,18 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_ARCH_IGNORE</Name>
-  <Brief>A framework macro/option</Brief>
-  <Considerations>No special considerations</Considerations>
-  <Description>A framework macro/option that changes certain functionality</Description>
+  <Brief>Do not attempt to guess the architecture type based on compiler macros.</Brief>
+  <Considerations>No special considerations.</Considerations>
+  <Description>By specifying the OMNI_ARCH_IGNORE preprocessor flag, the library will not attempt to detect what architecture is being compiled against via certain preprocessor flags, and instead the user can specify what architecture to compile for (useful for cross platform compilation).
+
+There are currently no areas of Omni that utilize architecture specific code and, as a rule-of-thumb for Omni, we try to avoid architecture specific code to be as cross-system compatible as possible. However, that does not preclude one from using architecture specific code if it makes sense to enable certain optimizations in the source.
+
+If nothing is defined, the default is an unknown architecture type.</Description>
   <Notes>None.</Notes>
-  <PlatformSpecific>No platform specific notes.</PlatformSpecific>
-  <Synopsis>A framework macro/option</Synopsis>
+  <PlatformSpecific>This flag is not platform specific but can be used to determine what architecture to be compiled for.</PlatformSpecific>
+  <Synopsis>&lt;code&gt;#define OMNI_ARCH_IGNORE&lt;/code&gt;
+
+Signifies to not use preprocessor macros to attempt to discover what architecture is being compiled for.</Synopsis>
   <IsHelper>false</IsHelper>
   <IsConstant>false</IsConstant>
   <IsFWHelp>false</IsFWHelp>

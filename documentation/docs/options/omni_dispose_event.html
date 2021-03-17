@@ -24,16 +24,16 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <div class="docdiv">
     <font class="docu">MACRO</font><br><br>
     <code><font style="font-size:16px;">
-    <code>OMNI_DISPOSE_EVENT</code> - If defined, classes within the framework will have a disposing event.
+    <code>OMNI_DISPOSE_EVENT</code> - If defined, classes within the library will have a disposing event.
     </font></code>
 </div><br>
 <div class="docdiv">
     <font class="docu">SYNOPSIS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    If this macro is defined, then any classes in the Omni framework that can be instantiated (e.g. non-abstract classes and non-POD types) will have an <code><a href="../classes/omni-event.html">omni::event</a></code> as a member that will be raised when the objects destructor is called.
+    If this macro is defined, then any classes in the library that can be instantiated (e.g. non-abstract classes and non-POD types) will have an <code><a href="../classes/omni-event.html">omni::event</a></code> as a member that will be raised when the objects destructor is called.
 </div><br>
 <div class="docdiv">
     <font class="docu">DESCRIPTION</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    Classes in C++ are deterministic by scope lifetime in that they have a start (constructor) and end (destructor). To this, if this macro is defined then any classes that can be instantiated within the framework will have an <code><a href="../classes/omni-event.html">omni::event</a></code> called <code>disposing</code> that will be invoked upon destruction of the Omni class. Example:<br>
+    Classes in C++ are deterministic by scope lifetime in that they have a start (constructor) and end (destructor). To this, if this macro is defined then any classes that can be instantiated within the library will have an <code><a href="../classes/omni-event.html">omni::event</a></code> called <code>disposing</code> that will be invoked upon destruction of the Omni class. Example:<br>
 <div class="sntx"><input type="checkbox" id="c0" name="c0" checked /><label for="c0">&nbsp;</label><pre>static <font class="syn_typ">bool</font> some_condition = <font class="syn_ins">false</font>;
 
 <font class="syn_typ">void</font> thread_disposed(<font class="syn_typ">const</font> omni::thread* sender)

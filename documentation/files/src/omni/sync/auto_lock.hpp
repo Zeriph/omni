@@ -100,11 +100,11 @@ namespace omni {
                 }
                 
             private:
+                T* m_hndl;
+                
                 auto_lock();
                 auto_lock(const auto_lock& cp);
                 auto_lock& operator=(const auto_lock& cp);
-                
-                T* m_hndl;
         };
         
         template <>
@@ -185,11 +185,11 @@ namespace omni {
                 }
                 
             private:
+                omni::sync::mutex_t* m_hndl;
+
                 auto_lock();
                 auto_lock(const auto_lock& cp);
                 auto_lock& operator=(const auto_lock& cp);
-                
-                omni::sync::mutex_t* m_hndl;
         };
     }
 }

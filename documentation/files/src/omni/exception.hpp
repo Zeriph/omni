@@ -19,6 +19,7 @@
 #if !defined(OMNI_EXCEPTIONS_HPP)
 #define OMNI_EXCEPTIONS_HPP 1
 
+#include <omni/defs/global.hpp>
 // for the order of exception handling, see the following header
 #include <omni/defs/except_def.hpp>
 
@@ -35,8 +36,8 @@
     #endif
     #define OMNI_ERR_APPEND_FW(val) std::stringstream cval; cval << val; this->m_what.append(cval.str())
 
-    #define OMNI_CTOR_TRY try
-    #define OMNI_CTOR_CATCH catch(...) { OMNI_DBGE("A general unhandled exception occurred"); OMNI_EXCEPTION_TERMINATE }
+    #define OMNI_CTOR_TRY_FW try
+    #define OMNI_CTOR_CATCH_FW catch(...) { OMNI_DBGE("A general unhandled exception occurred"); OMNI_EXCEPTION_TERMINATE }
 
     // DEV_NOTE: the exception specification for throw() is an implicit noexcept(false)
     // DEV_NOTE: all exceptions in Omni will be explicit for single parameter ctor's to avoid any collision
@@ -45,9 +46,9 @@
         class exception : virtual public std::exception
         {
             public:
-                exception() throw() : m_what(OMNI_GENERAL_EXCEPTION_STR) {}
+                exception() OMNI_FUNC_NO_THROW : m_what(OMNI_GENERAL_EXCEPTION_STR) {}
 
-                explicit exception(const char* reason) throw() : m_what("")
+                explicit exception(const char* reason) OMNI_FUNC_NO_THROW : m_what("")
                 {
                     if (reason) { this->m_what.append(reason); }
                     else {
@@ -56,9 +57,9 @@
                     }
                 }
                 
-                explicit exception(const std::string& reason) throw() : m_what(reason) {}
+                explicit exception(const std::string& reason) OMNI_FUNC_NO_THROW : m_what(reason) {}
                 
-                exception(const char* reason, const char* extra) throw() : m_what("")
+                exception(const char* reason, const char* extra) OMNI_FUNC_NO_THROW : m_what("")
                 {
                     if (reason) { this->m_what.append(reason); }
                     else {
@@ -72,7 +73,7 @@
                     }
                 }
                 
-                exception(const char* reason, const char* extra, int errnum) throw() : m_what("")
+                exception(const char* reason, const char* extra, int errnum) OMNI_FUNC_NO_THROW : m_what("")
                 {
                     if (reason) { this->m_what.append(reason); }
                     else {
@@ -87,7 +88,7 @@
                     OMNI_ERR_APPEND_FW(errnum);
                 }
                 
-                exception(const char* reason, const char* extra, long errnum) throw() : m_what("")
+                exception(const char* reason, const char* extra, long errnum) OMNI_FUNC_NO_THROW : m_what("")
                 {
                     if (reason) { this->m_what.append(reason); }
                     else {
@@ -102,7 +103,7 @@
                     OMNI_ERR_APPEND_FW(errnum);
                 }
 
-                exception(const char* reason, const char* extra, std::size_t errnum) throw() : m_what("")
+                exception(const char* reason, const char* extra, std::size_t errnum) OMNI_FUNC_NO_THROW : m_what("")
                 {
                     if (reason) { this->m_what.append(reason); }
                     else {
@@ -117,30 +118,30 @@
                     OMNI_ERR_APPEND_FW(errnum);
                 }
 
-                exception(const std::string& reason, const std::string& extra) throw() : m_what(reason)
+                exception(const std::string& reason, const std::string& extra) OMNI_FUNC_NO_THROW : m_what(reason)
                 {
                     this->m_what.append(extra);
                 }
                 
-                exception(const std::string& reason, const std::string& extra, int errnum) throw() : m_what(reason)
+                exception(const std::string& reason, const std::string& extra, int errnum) OMNI_FUNC_NO_THROW : m_what(reason)
                 {
                     this->m_what.append(extra);
                     OMNI_ERR_APPEND_FW(errnum);
                 }
 
-                exception(const std::string& reason, const std::string& extra, long errnum) throw() : m_what(reason)
+                exception(const std::string& reason, const std::string& extra, long errnum) OMNI_FUNC_NO_THROW : m_what(reason)
                 {
                     this->m_what.append(extra);
                     OMNI_ERR_APPEND_FW(errnum);
                 }
 
-                exception(const std::string& reason, const std::string& extra, std::size_t errnum) throw() : m_what(reason)
+                exception(const std::string& reason, const std::string& extra, std::size_t errnum) OMNI_FUNC_NO_THROW : m_what(reason)
                 {
                     this->m_what.append(extra);
                     OMNI_ERR_APPEND_FW(errnum);
                 }
 
-                exception(const char* reason, int errnum) throw() : m_what("")
+                exception(const char* reason, int errnum) OMNI_FUNC_NO_THROW : m_what("")
                 {
                     if (reason) { this->m_what.append(reason); }
                     else {
@@ -150,12 +151,12 @@
                     OMNI_ERR_APPEND_FW(errnum);
                 }
                 
-                exception(const std::string& reason, int errnum) throw() : m_what(reason)
+                exception(const std::string& reason, int errnum) OMNI_FUNC_NO_THROW : m_what(reason)
                 {
                     OMNI_ERR_APPEND_FW(errnum);
                 }
 
-                exception(const char* reason, long errnum) throw() : m_what("") 
+                exception(const char* reason, long errnum) OMNI_FUNC_NO_THROW : m_what("") 
                 {
                     if (reason) { this->m_what.append(reason); }
                     else {
@@ -165,12 +166,12 @@
                     OMNI_ERR_APPEND_FW(errnum);
                 }
                 
-                exception(const std::string& reason, long errnum) throw() : m_what(reason)
+                exception(const std::string& reason, long errnum) OMNI_FUNC_NO_THROW : m_what(reason)
                 {
                     OMNI_ERR_APPEND_FW(errnum);
                 }
                 
-                exception(const char* reason, std::size_t errnum) throw() : m_what("")
+                exception(const char* reason, std::size_t errnum) OMNI_FUNC_NO_THROW : m_what("")
                 {
                     if (reason) { this->m_what.append(reason); }
                     else {
@@ -180,12 +181,12 @@
                     OMNI_ERR_APPEND_FW(errnum);
                 }
                 
-                exception(const std::string& reason, std::size_t errnum) throw() : m_what(reason)
+                exception(const std::string& reason, std::size_t errnum) OMNI_FUNC_NO_THROW : m_what(reason)
                 {
                     OMNI_ERR_APPEND_FW(errnum);
                 }
                 
-                virtual ~exception() OMNI_DTOR_NO_THROWS
+                virtual ~exception() OMNI_DTOR_NO_THROW
                 {
 
                 }

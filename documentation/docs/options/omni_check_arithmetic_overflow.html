@@ -24,20 +24,26 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <div class="docdiv">
     <font class="docu">MACRO</font><br><br>
     <code><font style="font-size:16px;">
-    <code>OMNI_CHECK_ARITHMETIC_OVERFLOW</code> - A framework macro/option
+    <code>OMNI_CHECK_ARITHMETIC_OVERFLOW</code> - If defined, the library will check for aritmetic over/under flow.
     </font></code>
 </div><br>
 <div class="docdiv">
     <font class="docu">SYNOPSIS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    A framework macro/option
+    <code>#define <a href="omni_check_arithmetic_overflow.html">OMNI_CHECK_ARITHMETIC_OVERFLOW</a></code><br>
+<br>
+If enabled, the library will check for aritmetic over/under flow and throw an exception if one is detected.
 </div><br>
 <div class="docdiv">
     <font class="docu">DESCRIPTION</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    A framework macro/option that changes certain functionality
+    If this flag is defined, areas of code that preform aritmetic operations will check for overflow and underflow conditions.<br>
+<br>
+If an over/under flow is detected, an exception will be thrown to that fact.<br>
+<br>
+Utilizing this flag will increase computational time in the library due to the fact that the checks must be preformed before the aritmetic operation can take place.
 </div><br>
 <div class="docdiv">
     <font class="docu">CONSIDERATIONS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    No special considerations
+    If defined, additional checks will be performed, and thus additional computational time will be used.
 </div><br>
 <div class="docdiv">
     <font class="docu">PLATFORM SPECIFIC</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>

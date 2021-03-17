@@ -23,6 +23,8 @@
 #include <omni/consts/cconsts.hpp>
 #include <omni/consts/wconsts.hpp>
 
+#if !defined(OMNI_NO_CONSTS)
+
 #if defined(OMNI_UNICODE)
     #define OMNI_CONSTS_NS_FW omni::wconsts
 #else
@@ -36,20 +38,28 @@ namespace omni {
         namespace size {
             namespace binary {
                 namespace string = OMNI_CONSTS_NS_FW::size::binary::string;
-                OMNI_CONSTEXT_FW const uint32_t KB OMNI_EXT_ASSN_FW(OMNI_KIB_IVAL);
-                OMNI_CONSTEXT_FW const uint32_t MB OMNI_EXT_ASSN_FW(OMNI_MIB_IVAL);
-                OMNI_CONSTEXT_FW const uint32_t GB OMNI_EXT_ASSN_FW(OMNI_GIB_IVAL);
+                OMNI_CONSTEXT_FW const uint64_t KB OMNI_EXT_ASSN_FW(OMNI_KIB_IVAL);
+                OMNI_CONSTEXT_FW const uint64_t MB OMNI_EXT_ASSN_FW(OMNI_MIB_IVAL);
+                OMNI_CONSTEXT_FW const uint64_t GB OMNI_EXT_ASSN_FW(OMNI_GIB_IVAL);
+                OMNI_CONSTEXT_FW const uint64_t TB OMNI_EXT_ASSN_FW(OMNI_TIB_IVAL);
+                OMNI_CONSTEXT_FW const uint64_t PB OMNI_EXT_ASSN_FW(OMNI_PIB_IVAL);
+                OMNI_CONSTEXT_FW const uint64_t EB OMNI_EXT_ASSN_FW(OMNI_EIB_IVAL);
             }
             namespace decimal {
                 namespace string = OMNI_CONSTS_NS_FW::size::decimal::string;
-                OMNI_CONSTEXT_FW const uint32_t KB OMNI_EXT_ASSN_FW(OMNI_KB_IVAL); 
-                OMNI_CONSTEXT_FW const uint32_t MB OMNI_EXT_ASSN_FW(OMNI_MB_IVAL);
-                OMNI_CONSTEXT_FW const uint32_t GB OMNI_EXT_ASSN_FW(OMNI_GB_IVAL);
+                OMNI_CONSTEXT_FW const uint64_t KB OMNI_EXT_ASSN_FW(OMNI_KB_IVAL); 
+                OMNI_CONSTEXT_FW const uint64_t MB OMNI_EXT_ASSN_FW(OMNI_MB_IVAL);
+                OMNI_CONSTEXT_FW const uint64_t GB OMNI_EXT_ASSN_FW(OMNI_GB_IVAL);
+                OMNI_CONSTEXT_FW const uint64_t TB OMNI_EXT_ASSN_FW(OMNI_TB_IVAL);
+                OMNI_CONSTEXT_FW const uint64_t PB OMNI_EXT_ASSN_FW(OMNI_PB_IVAL);
+                OMNI_CONSTEXT_FW const uint64_t EB OMNI_EXT_ASSN_FW(OMNI_EB_IVAL);
             }
         }
     }
 }
 
 #undef OMNI_CONSTS_NS_FW
+
+#endif
 
 #endif // OMNI_CONSTANTS_HPP

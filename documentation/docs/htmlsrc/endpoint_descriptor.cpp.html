@@ -43,11 +43,11 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 0000340:<br>0000341:<br>0000342:<br>0000343:<br>0000344:<br>0000345:<br>0000346:<br>0000347:<br>0000348:<br>0000349:<br>0000350:<br>0000351:<br>0000352:<br>0000353:<br>0000354:<br>0000355:<br>0000356:<br>0000357:<br>0000358:<br>0000359:<br>
 0000360:<br>0000361:<br>0000362:<br>0000363:<br>0000364:<br>0000365:<br>0000366:<br>0000367:<br>0000368:<br>0000369:<br>0000370:<br>0000371:<br>0000372:<br>0000373:<br>0000374:<br>0000375:<br>0000376:<br>0000377:<br>0000378:<br>0000379:<br>
 0000380:<br>0000381:<br>0000382:<br>0000383:<br>0000384:<br>0000385:<br>0000386:<br>0000387:<br>0000388:<br>0000389:<br>0000390:<br>0000391:<br>0000392:<br>0000393:<br>0000394:<br>0000395:<br>0000396:<br>0000397:<br>0000398:<br>0000399:<br>
-0000400:<br>0000401:<br>0000402:<br>0000403:<br>0000404:<br>0000405:<br>
+0000400:<br>0000401:<br>0000402:<br>0000403:<br>0000404:<br>0000405:<br>0000406:<br>
 <!--end line numbers-->
 </div><div class="cpphtmlcmnt">
 <!--start collapse columns-->
-<img src="../../content/tree/min.gif" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<img src="../../content/tree/min.gif" alt="Min/Max" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -67,7 +67,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br>
+<br><br><br><br><br><br><br>
 <!--end collapse columns-->
 </div><div class="cpphtml" style="margin-left:3.75em;">
 <!--start highlighted code-->
@@ -444,10 +444,11 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> s.str();<br>
 }<br>
 <br>
-<a href="../classes/omni-net-endpoint_descriptor.html">omni::net::endpoint_descriptor</a>&amp; omni::net::endpoint_descriptor::<font class="syn_ins">operator</font>=(<a href="../classes/omni-net-endpoint_descriptor.html">omni::net::endpoint_descriptor</a> &amp;other)<br>
+<a href="../classes/omni-net-endpoint_descriptor.html">omni::net::endpoint_descriptor</a>&amp; omni::net::endpoint_descriptor::<font class="syn_ins">operator</font>=(<a href="../classes/omni-net-endpoint_descriptor.html">omni::net::endpoint_descriptor</a>&amp; other)<br>
 {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SOCKEPALOCK_FW<br>
 &nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SOCKEPOALOCK_FW(other)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ASSIGN_FW(other)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_socket = other.m_socket;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">//this-&gt;m_addr = other.m_addr;</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/cstring/memcpy/">std::memcpy</a>(&amp;<font class="syn_typ">this</font>-&gt;m_addr, &amp;other.m_addr, <font class="syn_ins">sizeof</font>(<font class="syn_typ">this</font>-&gt;m_addr));<br>
@@ -459,13 +460,13 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> *<font class="syn_typ">this</font>;<br>
 }<br>
 <br>
-<font class="syn_typ">bool</font> omni::net::endpoint_descriptor::<font class="syn_ins">operator</font>==(<font class="syn_typ">const</font> <a href="../classes/omni-net-endpoint_descriptor.html">omni::net::endpoint_descriptor</a> &amp;other) <font class="syn_typ">const</font><br>
+<font class="syn_typ">bool</font> omni::net::endpoint_descriptor::<font class="syn_ins">operator</font>==(<font class="syn_typ">const</font> <a href="../classes/omni-net-endpoint_descriptor.html">omni::net::endpoint_descriptor</a>&amp; other) <font class="syn_typ">const</font><br>
 {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="../options/omni_unused.html">OMNI_UNUSED</a>(other);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
 }<br>
 <br>
-<font class="syn_typ">bool</font> omni::net::endpoint_descriptor::<font class="syn_ins">operator</font>==(<font class="syn_typ">const</font> <a href="../classes/omni-net-socket_t.html">omni::net::socket_t</a> &amp;sock) <font class="syn_typ">const</font><br>
+<font class="syn_typ">bool</font> omni::net::endpoint_descriptor::<font class="syn_ins">operator</font>==(<font class="syn_typ">const</font> <a href="../classes/omni-net-socket_t.html">omni::net::socket_t</a>&amp; sock) <font class="syn_typ">const</font><br>
 {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SOCKEPALOCK_FW<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;m_socket == sock;<br>

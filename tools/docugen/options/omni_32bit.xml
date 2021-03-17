@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_32BIT</Name>
+  <Brief>If defined, enables all @c OMNI_32BIT_X flags.</Brief>
+  <Considerations>The classes in which an OMNI_32BIT flag exist will use 32-bit types, thus limiting their minimum and maximum values.</Considerations>
+  <Description>If defined, various classes in the library will utilize a 32-bit intergral type, versus a 64-bit type for their undelying values. This can reduce the size of some classes due to alignment and padding, as well as make the usage of the classes more CPU effecient depending on architecture.
+
+
+</Description>
+  <Notes>None.</Notes>
+  <PlatformSpecific>No platform specific notes.</PlatformSpecific>
+  <Synopsis>&lt;code&gt;#define OMNI_32BIT&lt;/code&gt;
+
+Signifies to enable all OMNI_32BIT_X flags.</Synopsis>
+  <IsHelper>false</IsHelper>
+  <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
+</MacroOp>

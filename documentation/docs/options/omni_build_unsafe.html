@@ -24,20 +24,25 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <div class="docdiv">
     <font class="docu">MACRO</font><br><br>
     <code><font style="font-size:16px;">
-    <code>OMNI_BUILD_UNSAFE</code> - A framework macro/option
+    <code>OMNI_BUILD_UNSAFE</code> - If defined, the library will build without checks for certain undefiend behaviour.
     </font></code>
 </div><br>
 <div class="docdiv">
     <font class="docu">SYNOPSIS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    A framework macro/option
+    <code>#define <a href="omni_build_unsafe.html">OMNI_BUILD_UNSAFE</a></code><br>
+<br>
+Defines that the library should build with unsafe options and thus undefined behaviour allowed.
 </div><br>
 <div class="docdiv">
     <font class="docu">DESCRIPTION</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    A framework macro/option that changes certain functionality
+    If defined, the following additional flags are defined in the library:<br>
+<div class="sntx"><input type="checkbox" id="c0" name="c0" checked /><label for="c0">&nbsp;</label><pre><font class="syn_pre">#define <a href="../options/omni_no_mutex_owner.html">OMNI_NO_MUTEX_OWNER</a></font>
+<font class="syn_pre">#define <a href="../options/omni_no_safe_library.html">OMNI_NO_SAFE_LIBRARY</a></font>
+<font class="syn_pre">#define <a href="../options/omni_no_throw.html">OMNI_NO_THROW</a></font></pre></div>
 </div><br>
 <div class="docdiv">
     <font class="docu">CONSIDERATIONS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    No special considerations
+    If defined, you will need to ensure all of your code handles exceptional code (such as division by 0), and that your locks are not re-entrant.
 </div><br>
 <div class="docdiv">
     <font class="docu">PLATFORM SPECIFIC</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
@@ -45,7 +50,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 </div><br>
 <div class="docdiv">
     <font class="docu">NOTES</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    None.
+    You might need to define <code><a href="omni_allow_ub.html">OMNI_ALLOW_UB</a></code> to enable undefined behaviour.
 </div><br>
 <!--end content-->
 </div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

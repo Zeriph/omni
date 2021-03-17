@@ -735,7 +735,7 @@ namespace omni {
             }
             // char buf[]/wchar_t buf[]/uintX_t buf[]
             template < typename T, std::size_t SZ >
-            uint64_t read(const std::wstring &file, T (&buffer)[SZ])
+            uint64_t read(const std::wstring& file, T (&buffer)[SZ])
             {
                 return omni::io::file_internal::rd< std::wstring, std::wifstream, T, SZ >(file, buffer, 0, 0, 0, std::ios_base::beg);
             }
@@ -745,7 +745,7 @@ namespace omni {
                 return omni::io::file_internal::rd< std::wstring, std::wifstream, T, SZ >(std::wstring(file), buffer, 0, 0, 0, std::ios_base::beg);
             }
             template < typename T, std::size_t SZ >
-            uint64_t read(const std::wstring &file, T (&buffer)[SZ], std::streamoff file_offset, std::ios_base::seekdir offset_direction)
+            uint64_t read(const std::wstring& file, T (&buffer)[SZ], std::streamoff file_offset, std::ios_base::seekdir offset_direction)
             {
                 return omni::io::file_internal::rd< std::wstring, std::wifstream, T, SZ >(file, buffer, 0, 0, file_offset, offset_direction);
             }
@@ -755,7 +755,7 @@ namespace omni {
                 return omni::io::file_internal::rd< std::wstring, std::wifstream, T, SZ >(std::wstring(file), buffer, 0, 0, file_offset, offset_direction);
             }
             template < typename T, std::size_t SZ >
-            uint64_t read(const std::wstring &file, T (&buffer)[SZ], uint64_t length, std::streamoff file_offset, std::ios_base::seekdir offset_direction)
+            uint64_t read(const std::wstring& file, T (&buffer)[SZ], uint64_t length, std::streamoff file_offset, std::ios_base::seekdir offset_direction)
             {
                 return omni::io::file_internal::rd< std::wstring, std::wifstream, T, SZ >(file, buffer, length, 0, file_offset, offset_direction);
             }
@@ -765,7 +765,7 @@ namespace omni {
                 return omni::io::file_internal::rd< std::wstring, std::wifstream, T, SZ >(std::wstring(file), buffer, length, 0, file_offset, offset_direction);
             }
             template < typename T, std::size_t SZ >
-            uint64_t read(const std::wstring &file, T (&buffer)[SZ], uint64_t length, std::size_t buffer_offset, std::streamoff file_offset, std::ios_base::seekdir offset_direction)
+            uint64_t read(const std::wstring& file, T (&buffer)[SZ], uint64_t length, std::size_t buffer_offset, std::streamoff file_offset, std::ios_base::seekdir offset_direction)
             {
                 return omni::io::file_internal::rd< std::wstring, std::wifstream, T, SZ >(file, buffer, length, buffer_offset, file_offset, offset_direction);
             }
@@ -776,7 +776,7 @@ namespace omni {
             }
             // omni::stack_buffer
             template < typename T, uint16_t SZ >
-            uint64_t read(const std::wstring &file, omni::stack_buffer<T, SZ>& buffer)
+            uint64_t read(const std::wstring& file, omni::stack_buffer<T, SZ>& buffer)
             {
                 return omni::io::file_internal::rd< std::wstring, std::wifstream, T, SZ >(file, buffer, 0, 0, 0, std::ios_base::beg);
             }
@@ -786,7 +786,7 @@ namespace omni {
                 return omni::io::file_internal::rd< std::wstring, std::wifstream, T, SZ >(std::wstring(file), buffer, 0, 0, 0, std::ios_base::beg);
             }
             template < typename T, uint16_t SZ >
-            uint64_t read(const std::wstring &file, omni::stack_buffer<T, SZ>& buffer, std::streamoff file_offset, std::ios_base::seekdir offset_direction)
+            uint64_t read(const std::wstring& file, omni::stack_buffer<T, SZ>& buffer, std::streamoff file_offset, std::ios_base::seekdir offset_direction)
             {
                 return omni::io::file_internal::rd< std::wstring, std::wifstream, T, SZ >(file, buffer, 0, 0, file_offset, offset_direction);
             }
@@ -796,7 +796,7 @@ namespace omni {
                 return omni::io::file_internal::rd< std::wstring, std::wifstream, T, SZ >(std::wstring(file), buffer, 0, 0, file_offset, offset_direction);
             }
             template < typename T, uint16_t SZ >
-            uint64_t read(const std::wstring &file, omni::stack_buffer<T, SZ>& buffer, uint64_t length, std::streamoff file_offset, std::ios_base::seekdir offset_direction)
+            uint64_t read(const std::wstring& file, omni::stack_buffer<T, SZ>& buffer, uint64_t length, std::streamoff file_offset, std::ios_base::seekdir offset_direction)
             {
                 return omni::io::file_internal::rd< std::wstring, std::wifstream, T, SZ >(file, buffer, length, 0, file_offset, offset_direction);
             }
@@ -806,7 +806,7 @@ namespace omni {
                 return omni::io::file_internal::rd< std::wstring, std::wifstream, T, SZ >(std::wstring(file), buffer, length, 0, file_offset, offset_direction);
             }
             template < typename T, uint16_t SZ >
-            uint64_t read(const std::wstring &file, omni::stack_buffer<T, SZ>& buffer, uint64_t length, std::size_t buffer_offset, std::streamoff file_offset, std::ios_base::seekdir offset_direction)
+            uint64_t read(const std::wstring& file, omni::stack_buffer<T, SZ>& buffer, uint64_t length, std::size_t buffer_offset, std::streamoff file_offset, std::ios_base::seekdir offset_direction)
             {
                 return omni::io::file_internal::rd< std::wstring, std::wifstream, T, SZ >(file, buffer, length, buffer_offset, file_offset, offset_direction);
             }
@@ -2050,7 +2050,7 @@ namespace omni {
             }
             // char buf[]/wchar_t buf[]/uintX_t buf[]
             template < typename T, std::size_t SZ >
-            uint64_t read(const std::wstring &file, T (&buffer)[SZ])
+            uint64_t read(const std::wstring& file, T (&buffer)[SZ])
             {
                 return omni::io::file_internal::rd< std::wstring, std::wifstream, T, SZ >(file, buffer, 0, 0, 0, std::ios_base::beg);
             }
@@ -2060,7 +2060,7 @@ namespace omni {
                 return omni::io::file_internal::rd< std::wstring, std::wifstream, T, SZ >(std::wstring(file), buffer, 0, 0, 0, std::ios_base::beg);
             }
             template < typename T, std::size_t SZ >
-            uint64_t read(const std::wstring &file, T (&buffer)[SZ], std::streamoff file_offset, std::ios_base::seekdir offset_direction)
+            uint64_t read(const std::wstring& file, T (&buffer)[SZ], std::streamoff file_offset, std::ios_base::seekdir offset_direction)
             {
                 return omni::io::file_internal::rd< std::wstring, std::wifstream, T, SZ >(file, buffer, 0, 0, file_offset, offset_direction);
             }
@@ -2070,7 +2070,7 @@ namespace omni {
                 return omni::io::file_internal::rd< std::wstring, std::wifstream, T, SZ >(std::wstring(file), buffer, 0, 0, file_offset, offset_direction);
             }
             template < typename T, std::size_t SZ >
-            uint64_t read(const std::wstring &file, T (&buffer)[SZ], uint64_t length, std::streamoff file_offset, std::ios_base::seekdir offset_direction)
+            uint64_t read(const std::wstring& file, T (&buffer)[SZ], uint64_t length, std::streamoff file_offset, std::ios_base::seekdir offset_direction)
             {
                 return omni::io::file_internal::rd< std::wstring, std::wifstream, T, SZ >(file, buffer, length, 0, file_offset, offset_direction);
             }
@@ -2080,7 +2080,7 @@ namespace omni {
                 return omni::io::file_internal::rd< std::wstring, std::wifstream, T, SZ >(std::wstring(file), buffer, length, 0, file_offset, offset_direction);
             }
             template < typename T, std::size_t SZ >
-            uint64_t read(const std::wstring &file, T (&buffer)[SZ], uint64_t length, std::size_t buffer_offset, std::streamoff file_offset, std::ios_base::seekdir offset_direction)
+            uint64_t read(const std::wstring& file, T (&buffer)[SZ], uint64_t length, std::size_t buffer_offset, std::streamoff file_offset, std::ios_base::seekdir offset_direction)
             {
                 return omni::io::file_internal::rd< std::wstring, std::wifstream, T, SZ >(file, buffer, length, buffer_offset, file_offset, offset_direction);
             }
@@ -2091,7 +2091,7 @@ namespace omni {
             }
             // omni::stack_buffer
             template < typename T, uint16_t SZ >
-            uint64_t read(const std::wstring &file, omni::stack_buffer<T, SZ>& buffer)
+            uint64_t read(const std::wstring& file, omni::stack_buffer<T, SZ>& buffer)
             {
                 return omni::io::file_internal::rd< std::wstring, std::wifstream, T, SZ >(file, buffer, 0, 0, 0, std::ios_base::beg);
             }
@@ -2101,7 +2101,7 @@ namespace omni {
                 return omni::io::file_internal::rd< std::wstring, std::wifstream, T, SZ >(std::wstring(file), buffer, 0, 0, 0, std::ios_base::beg);
             }
             template < typename T, uint16_t SZ >
-            uint64_t read(const std::wstring &file, omni::stack_buffer<T, SZ>& buffer, std::streamoff file_offset, std::ios_base::seekdir offset_direction)
+            uint64_t read(const std::wstring& file, omni::stack_buffer<T, SZ>& buffer, std::streamoff file_offset, std::ios_base::seekdir offset_direction)
             {
                 return omni::io::file_internal::rd< std::wstring, std::wifstream, T, SZ >(file, buffer, 0, 0, file_offset, offset_direction);
             }
@@ -2111,7 +2111,7 @@ namespace omni {
                 return omni::io::file_internal::rd< std::wstring, std::wifstream, T, SZ >(std::wstring(file), buffer, 0, 0, file_offset, offset_direction);
             }
             template < typename T, uint16_t SZ >
-            uint64_t read(const std::wstring &file, omni::stack_buffer<T, SZ>& buffer, uint64_t length, std::streamoff file_offset, std::ios_base::seekdir offset_direction)
+            uint64_t read(const std::wstring& file, omni::stack_buffer<T, SZ>& buffer, uint64_t length, std::streamoff file_offset, std::ios_base::seekdir offset_direction)
             {
                 return omni::io::file_internal::rd< std::wstring, std::wifstream, T, SZ >(file, buffer, length, 0, file_offset, offset_direction);
             }
@@ -2121,7 +2121,7 @@ namespace omni {
                 return omni::io::file_internal::rd< std::wstring, std::wifstream, T, SZ >(std::wstring(file), buffer, length, 0, file_offset, offset_direction);
             }
             template < typename T, uint16_t SZ >
-            uint64_t read(const std::wstring &file, omni::stack_buffer<T, SZ>& buffer, uint64_t length, std::size_t buffer_offset, std::streamoff file_offset, std::ios_base::seekdir offset_direction)
+            uint64_t read(const std::wstring& file, omni::stack_buffer<T, SZ>& buffer, uint64_t length, std::size_t buffer_offset, std::streamoff file_offset, std::ios_base::seekdir offset_direction)
             {
                 return omni::io::file_internal::rd< std::wstring, std::wifstream, T, SZ >(file, buffer, length, buffer_offset, file_offset, offset_direction);
             }

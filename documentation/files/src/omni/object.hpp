@@ -96,6 +96,12 @@ namespace omni {
                 OMNI_D5_FW("destroyed");
             }
 
+            omni::action disposing;
+            
+            omni::string_t name;
+
+            omni::generic_ptr tag;
+
             virtual omni::string_t to_string_t() const { return this->name; }
 
             uint64_t type() const { return omni::type_id<omni::object>(); }
@@ -126,10 +132,6 @@ namespace omni {
             {
                 return !(*this == o);
             }
-
-            omni::action disposing;
-            omni::string_t name;
-            omni::generic_ptr tag;
 
             friend std::ostream& operator<<(std::ostream& s, const omni::object& c)
             {

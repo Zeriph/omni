@@ -1,0 +1,54 @@
+body, table { color: #CACACA; }
+body { background-color: #101010; }
+noscript { color: #FF5555; }
+a:link, a:visited { color: #2E93D6; }
+a:hover { color: #34B2E9; }
+/* menu */
+div.menu { border-right: 1px solid #1174D6; }
+/* menu headers */
+div.menu ul li > div { background: #0C549C; color: #E0E0E0; text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.75); }
+/* menu items */
+div.menu li a { color: #F0F0FF; text-shadow: 1px 1px 2px rgba(35, 35, 35, 0.8); }
+div.menu li a:hover, div.menu li a.current { background: #1174D6; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); }
+/* menu search area (javascript enabled) */
+div.menu li .search_js input { border: 1px solid #EEEEEE; }
+/* info title */
+div.content  { border-left: 1px solid #1174D6; }
+div.ptitle { color: #E0E0E0; border-bottom: 2px solid #5C81A3; text-shadow: 1px 1px 2px rgba(180,180,200,0.5); }
+/* api list */
+div.apilist > ol > li > input+label+ul > li > a { color: #18D28F; }
+div.apilist > ol > li > input+label+ul > li > a:hover { color: #18F28F; }
+/* syntax highlight */
+div.sntx { background-color: #272727; border: 1px solid #CACACA; box-shadow: 0 0 4px #999999; }
+div.cpphtmllines { border-right: 1px solid #1174D6; }
+div.cpphtmlcmnt { border-right: 1px solid #1174D6; }
+div.cpphtmlcmnt > img+br+div { border-right: 1px solid #5A5A5A; }
+div.cpphtmlcmnt > img+br+div+div { border-top: 1px solid #5A5A5A; }
+div.syn_ex + div.c { border-bottom: 1px solid #5A5A5A; }
+/* font keyword syntax highlights */
+font.syn_doc { color: #8080FF; } /* doxy comments: /** */
+font.syn_ins { color: #FF853E; } /* instruction words: if, then */
+font.syn_typ { color: #18D28F; } /* type words: int, char */
+font.syn_pre { color: #C0C0C0; } /* preprocessor: #def */
+font.syn_num { color: #B1B76B; } /* numbers: 42 */
+font.syn_str { color: #D7DC00; } /* strings: "string" */
+font.syn_chr { color: #FF8080; } /* characters: 'c' */
+font.syn_opr { color: #FFCC00; } /* operators: ==, + */
+font.syn_cmt { color: #00FF00; } /* comments: //,/* */
+font.syn_dkw { color: #FF80FF; } /* doxy keywords: @see,@brieff */
+/* class tree */
+div.classtree li a { color: #EEEEEE; }
+/* file tree */
+div.ftree li a { color: #EEEEEE; }
+/* download (for the table) */
+div.dlzip { border-top: 1px solid #B9B9B9; border-bottom: 1px solid #B9B9B9; }
+div.dltbl { border-bottom: 1px solid #B9B9B9; }
+div.dltbl > div { border-top: 1px solid #B9B9B9; }
+div.ozipprev > li > div { border: 1px solid #B9B9B9; }
+/* consideration table */
+div.consider table, div.consider table tr, div.consider table tr td { border: 1px solid #CACACA; }
+/* alert text */
+.alert { color: #FF0000; }
+/* solutions from getting_started */
+.solutions tr { border: 1px solid #7A7A7A; }
+.solutions td.f { border-right:1px solid #7A7A7A; }

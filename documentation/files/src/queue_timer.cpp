@@ -218,7 +218,7 @@ omni::chrono::queue_timer& omni::chrono::queue_timer::operator=(const omni::chro
     return *this;
 }
 
-bool omni::chrono::queue_timer::operator==(const omni::chrono::queue_timer &o) const
+bool omni::chrono::queue_timer::operator==(const omni::chrono::queue_timer& o) const
 {
     if (this == &o) { return true; }
     #if defined(OMNI_SAFE_QUEUE_TIMER)

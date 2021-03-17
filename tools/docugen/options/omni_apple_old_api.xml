@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_APPLE_OLD_API</Name>
+  <Brief>Defines whether to use older Apple API's or macOS API's.</Brief>
+  <Considerations>No special considerations.</Considerations>
+  <Description>If this macro is defined, then the older Apple API set will be utilized versus the newer macOS calls (useful for compiling on older OS X platforms).
+
+For example, in omni::sync::spin_lock when the object is locked, if this macro is defined then OSSpinLockLock is used, while if this macro is not defined then os_unfair_lock_lock is utilized.</Description>
+  <Notes>None.</Notes>
+  <PlatformSpecific>This macro option only applies to Apple platforms and will have no effect if defined on a non Apple platform.</PlatformSpecific>
+  <Synopsis>&lt;code&gt;#define OMNI_APPLE_OLD_API&lt;/code&gt;
+
+If defined, will change certain functions used.</Synopsis>
+  <IsHelper>false</IsHelper>
+  <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
+</MacroOp>

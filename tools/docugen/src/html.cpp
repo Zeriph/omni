@@ -267,14 +267,16 @@ std::string OmniDocuGen::DocuGen::_GetFolderViewTplate(const std::string& dir, c
     std::string r = Util::Format((isPlainText ? Constants::ViewFolderPlainTemplate : Constants::ViewFolderTemplate),
                                     omni::io::path::get_name(dir));
     std::string extol = omni::string::to_lower(Program::Settings.Excluded);
-    omni::seq::std_string_t dirs = omni::io::directory::get_directories(dir);
+    omni::seq::std_string_t dirs;
+    omni::io::directory::get_directories(dir, dirs);
     std::sort(dirs.begin(), dirs.end());
     foreach_t (omni::seq::std_string_t, subd, dirs) {
         if (OmniDocuGen::Program::StopReq) { return ""; }
         if (omni::string::contains(extol, omni::string::to_lower(*subd))) { continue; }
         r += DocuGen::_GetFolderViewTplate(*subd, srcdir, verbose, isPlainText);
     }
-    omni::seq::std_string_t files = omni::io::directory::get_files(dir);
+    omni::seq::std_string_t files;
+    omni::io::directory::get_files(dir, files);
     std::sort(files.begin(), files.end(), DocuGen::_CompareFileNames);
     foreach_t (omni::seq::std_string_t, fl, files) {
         if (OmniDocuGen::Program::StopReq) { return ""; }
@@ -295,7 +297,7 @@ std::string OmniDocuGen::DocuGen::_GenerateHtmlSyntaxFromTemplate(const std::str
     int32_t linecnt = splits.size();
     int32_t clen = (omni::string::to_string(linecnt)).size();
     std::string htfmt = "{0}:<br><div id=\"cmntl{1}\" name=\"cmntl{1}\">";
-    std::string cfmt = "<img src=\"../../content/tree/min.gif\" id=\"cmnti{0}\" name=\"cmnti{0}\" onclick=\"collapse('{0}', '../../');\" /><br><div id=\"cmnts{0}\" name=\"cmnts{0}\">";
+    std::string cfmt = "<img src=\"../../content/tree/min.gif\" alt=\"Min/Max\" id=\"cmnti{0}\" name=\"cmnti{0}\" onclick=\"collapse('{0}', '../../');\" /><br><div id=\"cmnts{0}\" name=\"cmnts{0}\">";
     std::string lvl = "";
     std::string htmllines = "";
     std::string collapse = "";
@@ -829,8 +831,9 @@ std::string OmniDocuGen::DocuGen::ReplaceKeywords(const std::string& code, bool 
 std::string OmniDocuGen::DocuGen::GetFileTree(bool verbose, bool isPlainText)
 {
     std::string ftree = "";
-    omni::seq::std_string_t dirs = omni::io::directory::get_directories(Program::Settings.SourceDirectory);
-    omni::seq::std_string_t files = omni::io::directory::get_files(Program::Settings.SourceDirectory);
+    omni::seq::std_string_t dirs, files;
+    omni::io::directory::get_directories(Program::Settings.SourceDirectory, dirs);
+    omni::io::directory::get_files(Program::Settings.SourceDirectory, files);
     std::sort(dirs.begin(), dirs.end());
     std::sort(files.begin(), files.end(), DocuGen::_CompareFileNames);
     std::string extol = omni::string::to_lower(Program::Settings.Excluded);

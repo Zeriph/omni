@@ -24,20 +24,25 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <div class="docdiv">
     <font class="docu">MACRO</font><br><br>
     <code><font style="font-size:16px;">
-    <code>OMNI_CODE_PAGE</code> - A framework macro/option
+    <code>OMNI_CODE_PAGE</code> - Defines the underlying code page used during character conversion.
     </font></code>
 </div><br>
 <div class="docdiv">
     <font class="docu">SYNOPSIS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    A framework macro/option
+    Defines the code page used during character and string conversion. Default value is CP_UTF8 if CP_UTF8 is defined by the compiler/linker or if the detected OS is Windows.
 </div><br>
 <div class="docdiv">
     <font class="docu">DESCRIPTION</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    A framework macro/option that changes certain functionality
+    This flag defines the underlying code page utilized by the string and character namespace functions to convert between wide and narrow characters.<br>
+<br>
+If the platform detected is Windows, or if the macro CP_UTF8 is already defined, then the defualt code page will be CP_UTF8, otherwise, it will be a 0, or whatever is defined in this macro.<br>
+<br>
+For example, you can define <code><a href="omni_code_page.html">OMNI_CODE_PAGE</a></code> as CP_UTF16:<br>
+<div class="sntx"><input type="checkbox" id="c0" name="c0" checked /><label for="c0">&nbsp;</label><pre><font class="syn_pre">#define <a href="../options/omni_code_page.html">OMNI_CODE_PAGE</a> CP_UTF16</font></pre></div>
 </div><br>
 <div class="docdiv">
     <font class="docu">CONSIDERATIONS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    No special considerations
+    No special considerations.
 </div><br>
 <div class="docdiv">
     <font class="docu">PLATFORM SPECIFIC</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>

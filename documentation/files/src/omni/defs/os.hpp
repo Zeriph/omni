@@ -338,16 +338,11 @@
     #endif
 
     // check for any invalid combo's
-    /*
-    TODO: check if this is legit
-    #if defined(__CYGWIN__) || defined(__MINGW32__)
+    #if defined(OMNI_OS_CYGWIN) || defined(OMNI_OS_MINGW)
         #if defined(OMNI_OS_WIN)
-            #define OMNI_OS_CYGWIN
-        #else
-            #error "OMNI_OS_WIN in Cygwin environment" 
+            #warning "OMNI_OS_WIN in Cygwin environment" 
         #endif
     #endif
-    */
 
 #endif // OMNI_OS_IGNORE
 

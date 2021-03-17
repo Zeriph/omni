@@ -168,7 +168,7 @@ bool omni::sync::binary_semaphore::trylock()
     return this->lock(0);
 }
 
-bool omni::sync::binary_semaphore::operator==(const omni::sync::binary_semaphore &o) const
+bool omni::sync::binary_semaphore::operator==(const omni::sync::binary_semaphore& o) const
 {
     if (this == &o) { return true; }
     return (this->m_lokd == o.m_lokd &&
@@ -176,7 +176,7 @@ bool omni::sync::binary_semaphore::operator==(const omni::sync::binary_semaphore
             OMNI_EQUAL_FW(o);
 }
 
-bool omni::sync::binary_semaphore::operator!=(const omni::sync::binary_semaphore &o) const
+bool omni::sync::binary_semaphore::operator!=(const omni::sync::binary_semaphore& o) const
 {
     return !(*this == o);
 }

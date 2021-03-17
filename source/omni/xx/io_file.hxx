@@ -46,7 +46,7 @@
             std::string name = "\\\\?\\";
             long length = ::GetShortPathNameA(file.c_str(), NULL, 0);
             if (length > 0) {
-                char *buffer = new char[length];
+                char* buffer = new char[length];
                 length = ::GetShortPathNameA(file.c_str(), buffer, length);
                 if (length > 0) {
                     std::string npath(buffer);
@@ -67,7 +67,7 @@
             std::wstring name = L"\\\\?\\";
             long length = ::GetShortPathNameW(file.c_str(), NULL, 0);
             if (length > 0) {
-                wchar_t *buffer = new wchar_t[length];
+                wchar_t* buffer = new wchar_t[length];
                 length = ::GetShortPathNameW(file.c_str(), buffer, length);
                 if (length > 0) {
                     std::wstring npath(buffer);
@@ -398,7 +398,7 @@
         bool overwrite = ((io_ops & omni::io::options::OVERWRITE) == omni::io::options::OVERWRITE);
         bool create_path = ((io_ops & omni::io::options::CREATE_PATH) == omni::io::options::CREATE_PATH);
         if (!omni::io::wfile::exists(file)) {
-            OMNI_DV1_FW("file does not exists:", file);
+            OMNI_DV1_FW("file does not exists:", omni::string::to_string_t(file));
             return false;
         }
         if (!overwrite && omni::io::file_internal::exists(new_name)) {
@@ -861,7 +861,7 @@
 bool omni::io::OMNI_PATH_FW::copy(const OMNI_STRING_T_FW& file, const OMNI_STRING_T_FW& new_name, const omni::io::options& io_ops)
 {
     if (file.empty() || new_name.empty()) {
-        OMNI_ERR_RETV_FW(OMNI_PATH_EMPTY, omni::exceptions::path_exception(OMNI_PATH_EMPTY), false);
+        OMNI_ERR_RETV_FW(OMNI_PATH_EMPTY_STR, omni::exceptions::path_exception(OMNI_PATH_EMPTY_STR), false);
     }
     if (!omni::io::file_internal::exists(file)) {
         OMNI_ERRV_RETV_FW(OMNI_FILE_NOT_FOUND_STR, omni::string::to_string_t(file), omni::exceptions::file_not_found(omni::string::to_string(file)), false);

@@ -27,7 +27,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
     omni::application::run
     </a></code><br>
 <br>A function of <a href="omni-application.html" class="code">omni::application</a><br><br>
-    <code><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/application.hpp.html">omni/application.hpp</a>&gt;</font></code><br><code><font class="syn_typ">int</font> omni::application::run(<font class="syn_typ">const</font> <a href="../classes/omni-sync-parameterized_thread_start.html">omni::sync::parameterized_thread_start</a>&amp; start_func)</code>
+    <code><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/application.hpp.html">omni/application.hpp</a>&gt;</font></code><br><code><font class="syn_typ">int</font> omni::application::run(<font class="syn_typ">const</font> <font class="syn_typ">int</font>&amp; argc, <font class="syn_typ">const</font> <font class="syn_typ">wchar_t</font>** argv, <font class="syn_typ">const</font> <a href="../classes/omni-sync-thread_start.html">omni::sync::thread_start</a>&amp; start_func, <font class="syn_typ">bool</font> exit_with_work_thread)</code>
 </div><br>
 <div class="docdiv"><a name="syn"></a>
 <font class="docu">SYNOPSIS</font><br><br>
@@ -47,7 +47,7 @@ The exit code set by <code><a href="omni-application-set_return_code.html">omni:
 <br>
 <div class="docdiv"><a name="param"></a>
 <font class="docu">PARAMETERS</font><br><br>
-<code>start_func</code> - An <code><a href="omni-sync-parameterized_thread_start.html">omni::sync::parameterized_thread_start</a></code> function object that will be called after the application context has been successfully created and started. A null value will be passed to the start function on invocation. 
+<code>argc</code> - Passes the argument count from the command line to the underlying <code><a href="omni-application-argparser.html">omni::application::argparser</a></code> instance. <code>argv</code> - Passes the argument array from the command line to the underlying <code><a href="omni-application-argparser.html">omni::application::argparser</a></code> instance. <code>start_func</code> - An <code><a href="omni-sync-thread_start.html">omni::sync::thread_start</a></code> function object that will be called after the application context has been successfully created and started. <code>exit_with_work_thread</code> - If this is <code>true</code> then the main application loop will exit when the user function passed in has completed. If this is <code>false</code> then the main application loop will not exit until it is signaled via the system (i.e. SIGINT, etc.), or until <code><a href="omni-application-exit.html">omni::application::exit</a></code> or <code><a href="omni-application-stop.html">omni::application::stop</a></code> are called. 
 <br><br><a class="toppg" href="#topopage">top</a>
 </div><br>
 <br>

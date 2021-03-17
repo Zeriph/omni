@@ -165,7 +165,7 @@ bool omni::sync::mutex::trylock()
     return false;
 }
 
-bool omni::sync::mutex::operator==(const omni::sync::mutex &o) const
+bool omni::sync::mutex::operator==(const omni::sync::mutex& o) const
 {
     if (this == &o) { return true; }
     OMNI_SAFE_XALOCK_FW
@@ -174,7 +174,7 @@ bool omni::sync::mutex::operator==(const omni::sync::mutex &o) const
             OMNI_EQUAL_FW(o);
 }
 
-bool omni::sync::mutex::operator!=(const omni::sync::mutex &o) const
+bool omni::sync::mutex::operator!=(const omni::sync::mutex& o) const
 {
     return !(*this == o);
 }

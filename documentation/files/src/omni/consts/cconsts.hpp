@@ -22,6 +22,8 @@
 #include <omni/defs/consts.hpp>
 #include <string>
 
+#if !defined(OMNI_NO_CONSTS)
+
 namespace omni {
     namespace cconsts {
         #define OMNI_MISC_T_FW 1
@@ -33,5 +35,7 @@ namespace omni {
         #undef OMNI_MISC_T_FW
     }
 }
+
+#endif
 
 #endif // OMNI_CCONSTANTS_HPP

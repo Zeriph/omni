@@ -202,11 +202,12 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 000003520:<br>000003521:<br>000003522:<br>000003523:<br>000003524:<br>000003525:<br>000003526:<br>000003527:<br>000003528:<br>000003529:<br>000003530:<br>000003531:<br>000003532:<br>000003533:<br>000003534:<br>000003535:<br>000003536:<br>000003537:<br>000003538:<br>000003539:<br>
 000003540:<br>000003541:<br>000003542:<br>000003543:<br>000003544:<br>000003545:<br>000003546:<br>000003547:<br>000003548:<br>000003549:<br>000003550:<br>000003551:<br>000003552:<br>000003553:<br>000003554:<br>000003555:<br>000003556:<br>000003557:<br>000003558:<br>000003559:<br>
 000003560:<br>000003561:<br>000003562:<br>000003563:<br>000003564:<br>000003565:<br>000003566:<br>000003567:<br>000003568:<br>000003569:<br>000003570:<br>000003571:<br>000003572:<br>000003573:<br>000003574:<br>000003575:<br>000003576:<br>000003577:<br>000003578:<br>000003579:<br>
-000003580:<br>000003581:<br>000003582:<br>000003583:<br>000003584:<br>000003585:<br>000003586:<br>000003587:<br>000003588:<br>000003589:<br>000003590:<br>000003591:<br>000003592:<br>000003593:<br>000003594:<br>
+000003580:<br>000003581:<br>000003582:<br>000003583:<br>000003584:<br>000003585:<br>000003586:<br>000003587:<br>000003588:<br>000003589:<br>000003590:<br>000003591:<br>000003592:<br>000003593:<br>000003594:<br>000003595:<br>000003596:<br>000003597:<br>000003598:<br>000003599:<br>
+000003600:<br>000003601:<br>000003602:<br>
 <!--end line numbers-->
 </div><div class="cpphtmlcmnt">
 <!--start collapse columns-->
-<img src="../../../../content/tree/min.gif" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<img src="../../../../content/tree/min.gif" alt="Min/Max" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -385,7 +386,8 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br>
 <!--end collapse columns-->
 </div><div class="cpphtml" style="margin-left:4.3em;">
 <!--start highlighted code-->
@@ -411,37 +413,45 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <font class="syn_pre">#define OMNI_MATH_T_HPP 1</font><br>
 <font class="syn_pre">#include &lt;<a href="../../omni/defs/global.hpp.html">omni/defs/global.hpp</a>&gt;</font><br>
 <font class="syn_pre">#include &lt;<a href="../../omni/defs/math_def.hpp.html">omni/defs/math_def.hpp</a>&gt;</font><br>
+<font class="syn_pre">#include &lt;<a href="../../omni/defs/math_radmap_def.hpp.html">omni/defs/math_radmap_def.hpp</a>&gt;</font><br>
+<font class="syn_pre">#include &lt;<a href="../../omni/defs/class_macros.hpp.html">omni/defs/class_macros.hpp</a>&gt;</font><br>
+<font class="syn_pre">#include &lt;<a href="../../omni/string/util.hpp.html">omni/string/util.hpp</a>&gt;</font><br>
 <font class="syn_pre">#include &lt;functional&gt;</font><br>
 <font class="syn_pre">#include &lt;cstdarg&gt;</font><br>
 <br>
 <font class="syn_ins">namespace</font> omni {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">namespace</font> math {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#if !defined(<a href="../../../options/omni_no_extern_consts.html">OMNI_NO_EXTERN_CONSTS</a>)</font><br>
-<a name="omni::math::E"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">extern</font> <font class="syn_typ">const</font> <font class="syn_typ">double</font>&nbsp;&nbsp;&nbsp;&nbsp;  E;<br>
-<a name="omni::math::double E_L"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">extern</font> <font class="syn_typ">const</font> <font class="syn_typ">long</font> <font class="syn_typ">double</font> E_L;<br>
-<a name="omni::math::E_F"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">extern</font> <font class="syn_typ">const</font> <font class="syn_typ">float</font>&nbsp;&nbsp;&nbsp;&nbsp;   E_F;<br>
-<a name="omni::math::PI"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">extern</font> <font class="syn_typ">const</font> <font class="syn_typ">double</font>&nbsp;&nbsp;&nbsp;&nbsp;  PI;<br>
-<a name="omni::math::double PI_L"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">extern</font> <font class="syn_typ">const</font> <font class="syn_typ">long</font> <font class="syn_typ">double</font> PI_L;<br>
-<a name="omni::math::PI_F"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">extern</font> <font class="syn_typ">const</font> <font class="syn_typ">float</font>&nbsp;&nbsp;&nbsp;&nbsp;   PI_F;<br>
-<a name="omni::math::PI_180"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">extern</font> <font class="syn_typ">const</font> <font class="syn_typ">double</font>&nbsp;&nbsp;&nbsp;&nbsp;  PI_180;<br>
-<a name="omni::math::double PI_L_180"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">extern</font> <font class="syn_typ">const</font> <font class="syn_typ">long</font> <font class="syn_typ">double</font> PI_L_180;<br>
-<a name="omni::math::PI_F_180"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">extern</font> <font class="syn_typ">const</font> <font class="syn_typ">float</font>&nbsp;&nbsp;&nbsp;&nbsp;   PI_F_180;<br>
-<a name="omni::math::RADS"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">extern</font> <font class="syn_typ">const</font> <font class="syn_typ">double</font>&nbsp;&nbsp;&nbsp;&nbsp;  RADS[<font class="syn_num">361</font>];<br>
-<a name="omni::math::RADS_SIN"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">extern</font> <font class="syn_typ">const</font> <font class="syn_typ">double</font>&nbsp;&nbsp;&nbsp;&nbsp;  RADS_SIN[<font class="syn_num">361</font>];<br>
-<a name="omni::math::RADS_COS"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">extern</font> <font class="syn_typ">const</font> <font class="syn_typ">double</font>&nbsp;&nbsp;&nbsp;&nbsp;  RADS_COS[<font class="syn_num">361</font>];<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">const</font> <font class="syn_typ">double</font>&nbsp;&nbsp;&nbsp;&nbsp;  E = <a href="../../../options/omni_e.html">OMNI_E</a>;<br>
-<a name="omni::math::E_L"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">const</font> <font class="syn_typ">long</font> <font class="syn_typ">double</font> E_L = <a href="../../../options/omni_e_l.html">OMNI_E_L</a>;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">const</font> <font class="syn_typ">float</font>&nbsp;&nbsp;&nbsp;&nbsp;   E_F = <a href="../../../options/omni_e_f.html">OMNI_E_F</a>;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">const</font> <font class="syn_typ">double</font>&nbsp;&nbsp;&nbsp;&nbsp;  PI = <a href="../../../options/omni_pi.html">OMNI_PI</a>;<br>
-<a name="omni::math::PI_L"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">const</font> <font class="syn_typ">long</font> <font class="syn_typ">double</font> PI_L = <a href="../../../options/omni_pi_l.html">OMNI_PI_L</a>;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">const</font> <font class="syn_typ">float</font>&nbsp;&nbsp;&nbsp;&nbsp;   PI_F = <a href="../../../options/omni_pi_f.html">OMNI_PI_F</a>;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">const</font> <font class="syn_typ">double</font>&nbsp;&nbsp;&nbsp;&nbsp;  PI_180 = <a href="../../../options/omni_pi_180.html">OMNI_PI_180</a>;<br>
-<a name="omni::math::PI_L_180"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">const</font> <font class="syn_typ">long</font> <font class="syn_typ">double</font> PI_L_180 = <a href="../../../options/omni_pi_l_180.html">OMNI_PI_L_180</a>;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">const</font> <font class="syn_typ">float</font>&nbsp;&nbsp;&nbsp;&nbsp;   PI_F_180 = <a href="../../../options/omni_pi_f_180.html">OMNI_PI_F_180</a>;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_MATH_RAD_MAP_FW</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;<a href="../../omni/xx/math_radmap.hxx.html">omni/xx/math_radmap.hxx</a>&gt;</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#undef OMNI_MATH_RAD_MAP_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#if !defined(<a href="../../../options/omni_no_consts.html">OMNI_NO_CONSTS</a>)</font><br>
+<a name="omni::math::compat"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">namespace</font> compat {<br>
+<a name="omni::math::compat::PI"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> <font class="syn_typ">double</font> PI OMNI_EXT_ASSN_FW(<a href="../../../options/omni_math_compat_pi.html">OMNI_MATH_COMPAT_PI</a>);<br>
+<a name="omni::math::compat::E"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> <font class="syn_typ">double</font> E OMNI_EXT_ASSN_FW(<a href="../../../options/omni_math_compat_e.html">OMNI_MATH_COMPAT_E</a>);<br>
+<a name="omni::math::compat::TAU"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> <font class="syn_typ">double</font> TAU OMNI_EXT_ASSN_FW(<a href="../../../options/omni_math_compat_tau.html">OMNI_MATH_COMPAT_TAU</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+<a name="omni::math::E"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> <font class="syn_typ">double</font> E OMNI_EXT_ASSN_FW(<a href="../../../options/omni_e.html">OMNI_E</a>);<br>
+<a name="omni::math::PI"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> <font class="syn_typ">double</font> PI OMNI_EXT_ASSN_FW(<a href="../../../options/omni_pi.html">OMNI_PI</a>);<br>
+<a name="omni::math::PI_180"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> <font class="syn_typ">double</font> PI_180 OMNI_EXT_ASSN_FW(<a href="../../../options/omni_pi_180.html">OMNI_PI_180</a>);<br>
+<a name="omni::math::TAU"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> <font class="syn_typ">double</font> TAU OMNI_EXT_ASSN_FW(<a href="../../../options/omni_tau.html">OMNI_TAU</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+<a name="omni::math::double"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> <font class="syn_typ">long</font> <font class="syn_typ">double</font> E_L OMNI_EXT_ASSN_FW(<a href="../../../options/omni_e_l.html">OMNI_E_L</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> <font class="syn_typ">long</font> <font class="syn_typ">double</font> PI_L OMNI_EXT_ASSN_FW(<a href="../../../options/omni_pi_l.html">OMNI_PI_L</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> <font class="syn_typ">long</font> <font class="syn_typ">double</font> PI_L_180 OMNI_EXT_ASSN_FW(<a href="../../../options/omni_pi_l_180.html">OMNI_PI_L_180</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> <font class="syn_typ">long</font> <font class="syn_typ">double</font> TAU_L OMNI_EXT_ASSN_FW(<a href="../../../options/omni_tau_l.html">OMNI_TAU_L</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+<a name="omni::math::E_F"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> <font class="syn_typ">float</font> E_F OMNI_EXT_ASSN_FW(<a href="../../../options/omni_e_f.html">OMNI_E_F</a>);<br>
+<a name="omni::math::PI_F"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> <font class="syn_typ">float</font> PI_F OMNI_EXT_ASSN_FW(<a href="../../../options/omni_pi_f.html">OMNI_PI_F</a>);<br>
+<a name="omni::math::PI_F_180"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> <font class="syn_typ">float</font> PI_F_180 OMNI_EXT_ASSN_FW(<a href="../../../options/omni_pi_f_180.html">OMNI_PI_F_180</a>);<br>
+<a name="omni::math::TAU_F"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> <font class="syn_typ">float</font> TAU_F OMNI_EXT_ASSN_FW(<a href="../../../options/omni_tau_f.html">OMNI_TAU_F</a>);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#if !defined(<a href="../../../options/omni_no_extern_consts.html">OMNI_NO_EXTERN_CONSTS</a>)</font><br>
+<a name="omni::math::RADS"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">extern</font> <font class="syn_typ">const</font> <font class="syn_typ">double</font>&nbsp;&nbsp;&nbsp;&nbsp;  RADS[<font class="syn_num">361</font>];<br>
+<a name="omni::math::RADS_SIN"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">extern</font> <font class="syn_typ">const</font> <font class="syn_typ">double</font>&nbsp;&nbsp;&nbsp;&nbsp;  RADS_SIN[<font class="syn_num">361</font>];<br>
+<a name="omni::math::RADS_COS"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">extern</font> <font class="syn_typ">const</font> <font class="syn_typ">double</font>&nbsp;&nbsp;&nbsp;&nbsp;  RADS_COS[<font class="syn_num">361</font>];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">const</font> <font class="syn_typ">double</font>&nbsp;&nbsp;&nbsp;&nbsp;  RADS[] = <a href="../../../options/omni_math_rads.html">OMNI_MATH_RADS</a>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">const</font> <font class="syn_typ">double</font>&nbsp;&nbsp;&nbsp;&nbsp;  RADS_SIN[] = <a href="../../../options/omni_math_rads_sin.html">OMNI_MATH_RADS_SIN</a>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">const</font> <font class="syn_typ">double</font>&nbsp;&nbsp;&nbsp;&nbsp;  RADS_COS[] = <a href="../../../options/omni_math_rads_cos.html">OMNI_MATH_RADS_COS</a>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
 <br>
 <a name="omni::math::are_equal"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt;<br>

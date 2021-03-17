@@ -70,8 +70,8 @@ namespace omni {
                  * number of 100-nanosecond intervals that have elapsed since 1/1/0001 12:00am (or 0 ticks), and
                  * go up to a maximum value of 3155378975999999999 ticks (which is 12/31/9999 23:59:59.9999999).
                  */
-                OMNI_EXPLICIT date_time(int64_t ticks);
-                date_time(int64_t ticks, const omni::chrono::date_time_kind& kind);
+                OMNI_EXPLICIT date_time(uint64_t ticks);
+                date_time(uint64_t ticks, const omni::chrono::date_time_kind& kind);
                 date_time(uint16_t year, uint8_t month, uint8_t day);
                 date_time(uint16_t year, uint8_t month, uint8_t day, uint8_t hour, uint8_t minute, uint8_t second);
                 date_time(uint16_t year, uint8_t month, uint8_t day, uint8_t hour, uint8_t minute, uint8_t second, const omni::chrono::date_time_kind& kind);
@@ -84,7 +84,7 @@ namespace omni {
                 omni::chrono::date_time add_hours(double value);
                 omni::chrono::date_time add_milliseconds(double value);
                 omni::chrono::date_time add_minutes(double value);
-                omni::chrono::date_time add_months(uint32_t months);
+                omni::chrono::date_time add_months(int32_t months);
                 omni::chrono::date_time add_seconds(double value);
                 omni::chrono::date_time add_ticks(int64_t value);
                 omni::chrono::date_time add_years(int16_t value);
@@ -156,14 +156,14 @@ namespace omni {
                 OMNI_MEMBERS_FW(omni::chrono::date_time) // disposing,name,type(),hash()
                 OMNI_OSTREAM_FW(omni::chrono::date_time)
 
-                static inline date_time min_value()
+                static inline omni::chrono::date_time min_value()
                 {
-                    return date_time();
+                    return omni::chrono::date_time();
                 }
 
-                static inline date_time max_value()
+                static inline omni::chrono::date_time max_value()
                 {
-                    return date_time(omni::chrono::TICKS_TO_10000AD, omni::chrono::date_time_kind::UNSPECIFIED);
+                    return omni::chrono::date_time(OMNI_TICKS_TO_10000AD, omni::chrono::date_time_kind::UNSPECIFIED);
                 }
 
                 static uint16_t days_in_month(uint16_t year, uint8_t month);
@@ -171,7 +171,7 @@ namespace omni {
                 static omni::chrono::date_time from_file_time(int64_t file_time);
                 static omni::chrono::date_time from_file_time_utc(int64_t file_time);
                 static omni::chrono::date_time from_oa_date(double d);
-                static omni::chrono::date_time specify_kind(const date_time& value, const omni::chrono::date_time_kind& kind);
+                static omni::chrono::date_time specify_kind(const omni::chrono::date_time& value, const omni::chrono::date_time_kind& kind);
                 static omni::chrono::date_time now();
                 static omni::chrono::date_time utc_now();
                 static omni::chrono::date_time today();
@@ -208,6 +208,14 @@ namespace omni {
                 int64_t _get_date_part(uint8_t part) const;
                 bool _is_ambiguous_daylight_saving_time() const;
                 omni::chrono::date_time _to_local_time(bool throw_on_overflow) const;
+
+                inline uint64_t _date_value() const
+                {
+                    #if defined(OMNI_SAFE_DATETIME)
+                        omni::sync::scoped_lock<omni::sync::basic_lock> uuid12345(&this->m_mtx);
+                    #endif
+                    return this->m_date;
+                }
 
                 inline int64_t _ticks() const
                 {

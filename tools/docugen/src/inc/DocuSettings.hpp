@@ -242,8 +242,10 @@ namespace OmniDocuGen
         {
             omni::seq::std_string_t r;
             if (includeDir) { r.push_back(dir); }
-            omni::seq::std_string_t dirs = omni::io::directory::get_directories(dir);
-            omni::seq::std_string_t files = omni::io::directory::get_files(dir);
+            omni::seq::std_string_t dirs;
+            omni::seq::std_string_t files;
+            omni::io::directory::get_directories(dir, dirs);
+            omni::io::directory::get_files(dir, files);
             omni_foreach (std::string, d, dirs) {
                 if (OmniDocuGen::Program::StopReq) { return r; }
                 if (omni::string::contains(omni::string::to_lower(Program::Settings.Excluded), omni::string::to_lower(*d))) { continue; }

@@ -2,18 +2,15 @@
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_ERR_PROC_PRI_STR</Name>
   <Brief>"Error retrieving the process' priority class"</Brief>
-  <Considerations>No special considerations
-</Considerations>
-  <Description>If not already defined, defines the framework constant of:
+  <Considerations>No special considerations</Considerations>
+  <Description>If not already defined, defines the library macro constant of:
 @code
 "Error retrieving the process' priority class"
 @code
 </Description>
-  <Notes>None.
-</Notes>
-  <PlatformSpecific>No platform specific notes.
-</PlatformSpecific>
-  <Synopsis>Defines a framework constant of:
+  <Notes>None.</Notes>
+  <PlatformSpecific>No platform specific notes.</PlatformSpecific>
+  <Synopsis>Defines a library macro constant of:
 @code
 "Error retrieving the process' priority class"
 @code

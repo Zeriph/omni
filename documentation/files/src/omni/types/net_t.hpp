@@ -1984,7 +1984,7 @@ namespace omni {
                     OUT_OF_BAND = MSG_OOB,          // 1
                     PEEK = MSG_PEEK,                // 2
                     DONT_ROUTE = MSG_DONTROUTE,     // 4
-                    END_OF_RECORD = OMNI_MSG_EOR,   // 8 (0 for Windows)
+                    END_OF_RECORD = OMNI_MSG_EOR_FW,   // 8 (0 for Windows)
                 } enum_t;
 
                 static inline unsigned short COUNT()

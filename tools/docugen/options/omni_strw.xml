@@ -9,4 +9,5 @@
   <Synopsis>A shortened form of the OMNI_STR_WIDEN macro.</Synopsis>
   <IsHelper>true</IsHelper>
   <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
 </MacroOp>

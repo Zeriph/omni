@@ -38,7 +38,9 @@
 namespace omni {
     namespace environment {
 
-        OMNI_CONSTEXT_FW const omni::char_t NEW_LINE[] OMNI_EXT_ASSN_FW(OMNI_STRW(OMNI_NEW_LINE));
+        #if !defined(OMNI_NO_CONSTS)
+            OMNI_CONSTEXT_FW const omni::char_t NEW_LINE[] OMNI_EXT_ASSN_FW(OMNI_STRW(OMNI_NEW_LINE));
+        #endif
         
         bool create_var(const std::string& name);
         bool create_var(const std::wstring& name);

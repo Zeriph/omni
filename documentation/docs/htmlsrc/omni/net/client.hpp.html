@@ -29,17 +29,17 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 000060:<br>000061:<br>000062:<br>000063:<br>000064:<br>000065:<br>000066:<br>000067:<br>000068:<br>000069:<br>000070:<br>000071:<br>000072:<br>000073:<br>000074:<br>000075:<br>000076:<br>000077:<br>000078:<br>000079:<br>
 000080:<br>000081:<br>000082:<br>000083:<br>000084:<br>000085:<br>000086:<br>000087:<br>000088:<br>000089:<br>000090:<br>000091:<br>000092:<br>000093:<br>000094:<br>000095:<br>000096:<br>000097:<br>000098:<br>000099:<br>
 0000100:<br>0000101:<br>0000102:<br>0000103:<br>0000104:<br>0000105:<br>0000106:<br>0000107:<br>0000108:<br>0000109:<br>0000110:<br>0000111:<br>0000112:<br>0000113:<br>0000114:<br>0000115:<br>0000116:<br>0000117:<br>0000118:<br>0000119:<br>
-0000120:<br>0000121:<br>0000122:<br>0000123:<br>0000124:<br>0000125:<br>0000126:<br>
+0000120:<br>0000121:<br>0000122:<br>0000123:<br>0000124:<br>0000125:<br>
 <!--end line numbers-->
 </div><div class="cpphtmlcmnt">
 <!--start collapse columns-->
-<img src="../../../../content/tree/min.gif" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<img src="../../../../content/tree/min.gif" alt="Min/Max" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br>
+<br><br><br><br><br><br>
 <!--end collapse columns-->
 </div><div class="cpphtml" style="margin-left:3.75em;">
 <!--start highlighted code-->
@@ -101,9 +101,6 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <a name="omni::net::client::receive"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T, <font class="syn_typ">uint16_t</font> SZ &gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> receive(<a href="../../../classes/omni-stack_buffer.html">omni::stack_buffer</a>&lt;T, SZ&gt; buffer, <font class="syn_typ">uint32_t</font>&amp; rcvd);<br>
 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> receive(omni::heap_buffer&lt;T&gt; buffer, <font class="syn_typ">uint32_t</font>&amp; rcvd);<br>
-<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> receive(<font class="syn_typ">char</font>* buffer, <font class="syn_typ">uint32_t</font> len, <font class="syn_typ">uint32_t</font>&amp; rcvd);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> receive(int8_t* buffer, <font class="syn_typ">uint32_t</font> len, <font class="syn_typ">uint32_t</font>&amp; rcvd);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> receive(<font class="syn_typ">uint8_t</font>* buffer, <font class="syn_typ">uint32_t</font> len, <font class="syn_typ">uint32_t</font>&amp; rcvd);<br>
@@ -126,14 +123,16 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <a name="omni::net::client::to_string"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::string</a> to_string() <font class="syn_typ">const</font>;<br>
 <a name="omni::net::client::to_wstring"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a> to_wstring() <font class="syn_typ">const</font>;<br>
 <br>
-<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// TODO: <a href="../../../classes/omni-delegate2.html">omni::delegate2</a>&lt;void, char*, uint32_t&gt; data_received;</font><br>
 <br>
-<br>
-<a name="omni::net::client::operator="></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-net-client.html">omni::net::client</a>&amp; <font class="syn_ins">operator</font>=(<a href="../../../classes/omni-net-client.html">omni::net::client</a> &amp;other);<br>
-<a name="omni::net::client::operator=="></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> <font class="syn_ins">operator</font>==(<font class="syn_typ">const</font> <a href="../../../classes/omni-net-client.html">omni::net::client</a> &amp;other) <font class="syn_typ">const</font>;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> <font class="syn_ins">operator</font>==(<font class="syn_typ">const</font> <a href="../../../classes/omni-net-socket_t.html">omni::net::socket_t</a> &amp;sock) <font class="syn_typ">const</font>;<br>
+<a name="omni::net::client::operator="></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-net-client.html">omni::net::client</a>&amp; <font class="syn_ins">operator</font>=(<a href="../../../classes/omni-net-client.html">omni::net::client</a>&amp; other);<br>
+<a name="omni::net::client::operator=="></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> <font class="syn_ins">operator</font>==(<font class="syn_typ">const</font> <a href="../../../classes/omni-net-client.html">omni::net::client</a>&amp; other) <font class="syn_typ">const</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> <font class="syn_ins">operator</font>==(<font class="syn_typ">const</font> <a href="../../../classes/omni-net-socket_t.html">omni::net::socket_t</a>&amp; sock) <font class="syn_typ">const</font>;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> <font class="syn_ins">operator</font>==(<font class="syn_typ">uint32_t</font> ep) <font class="syn_typ">const</font>;<br>
+<br>
+<a name="omni::net::client::operator!="></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> <font class="syn_ins">operator</font>!=(<font class="syn_typ">const</font> <a href="../../../classes/omni-net-client.html">omni::net::client</a>&amp; other) <font class="syn_typ">const</font> { <font class="syn_ins">return</font> !(*<font class="syn_typ">this</font> == other); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> <font class="syn_ins">operator</font>!=(<font class="syn_typ">const</font> <a href="../../../classes/omni-net-socket_t.html">omni::net::socket_t</a>&amp; sock) <font class="syn_typ">const</font> { <font class="syn_ins">return</font> !(*<font class="syn_typ">this</font> == sock); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> <font class="syn_ins">operator</font>!=(<font class="syn_typ">uint32_t</font> ep) <font class="syn_typ">const</font> { <font class="syn_ins">return</font> !(*<font class="syn_typ">this</font> == ep); }<br>
 <br>
 <a name="omni::net::client::operator std::string"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">operator</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>() <font class="syn_typ">const</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>

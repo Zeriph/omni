@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_BASE_LOCALE_CATEGORY</Name>
-  <Brief>Defines</Brief>
-  <Considerations>No special considerations</Considerations>
-  <Description>A library macro/option that changes certain functionality</Description>
+  <Brief>Defines the underlying locale category to utilize.</Brief>
+  <Considerations>No special considerations.</Considerations>
+  <Description>If OMNI_NO_BASE_SETLOCALE is not defined, then the setlocale function is called with a category of LC_ALL and an empty locale. If you wish to specify which category and locale to utilize, you can define OMNI_BASE_LOCALE_CATEGORY and OMNI_BASE_LOCALE.</Description>
   <Notes>None.</Notes>
   <PlatformSpecific>No platform specific notes.</PlatformSpecific>
-  <Synopsis>A library macro/option</Synopsis>
+  <Synopsis>Defines which system locale category to utilize throughout the application; default of LC_ALL.</Synopsis>
   <IsHelper>false</IsHelper>
   <IsConstant>false</IsConstant>
   <IsFWHelp>false</IsFWHelp>

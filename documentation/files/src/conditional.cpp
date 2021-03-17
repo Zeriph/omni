@@ -251,13 +251,12 @@ bool omni::sync::conditional::wait(uint32_t timeout_ms)
         int ret = 0;
         struct timespec tm;
         #if defined(OMNI_OS_APPLE)
-            struct timeval tv;
-            if (::gettimeofday(&tv, NULL) != 0) {
+            struct timeval atv;
+            if (::gettimeofday(&atv, NULL) != 0) {
                 OMNI_ERRV_RETV_FW("An error occurred getting the clock time: ", errno, omni::exceptions::clock_exception(errno), false)
             }
-            // TODO: what was the point of this?
-            //tm.tv_sec = tv.tv_sec + 0;
-            //tm.tv_nsec = 0;
+            tm.tv_sec = atv.tv_sec;
+            tm.tv_nsec = atv.tv_usec * 1000;
         #else
             if (::clock_gettime(CLOCK_REALTIME, &tm) != 0) {
                 OMNI_ERRV_RETV_FW("An error occurred getting the clock time: ", errno, omni::exceptions::clock_exception(errno), false)

@@ -34,11 +34,11 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 0000160:<br>0000161:<br>0000162:<br>0000163:<br>0000164:<br>0000165:<br>0000166:<br>0000167:<br>0000168:<br>0000169:<br>0000170:<br>0000171:<br>0000172:<br>0000173:<br>0000174:<br>0000175:<br>0000176:<br>0000177:<br>0000178:<br>0000179:<br>
 0000180:<br>0000181:<br>0000182:<br>0000183:<br>0000184:<br>0000185:<br>0000186:<br>0000187:<br>0000188:<br>0000189:<br>0000190:<br>0000191:<br>0000192:<br>0000193:<br>0000194:<br>0000195:<br>0000196:<br>0000197:<br>0000198:<br>0000199:<br>
 0000200:<br>0000201:<br>0000202:<br>0000203:<br>0000204:<br>0000205:<br>0000206:<br>0000207:<br>0000208:<br>0000209:<br>0000210:<br>0000211:<br>0000212:<br>0000213:<br>0000214:<br>0000215:<br>0000216:<br>0000217:<br>0000218:<br>0000219:<br>
-0000220:<br>0000221:<br>0000222:<br>0000223:<br>0000224:<br>
+0000220:<br>0000221:<br>0000222:<br>0000223:<br>0000224:<br>0000225:<br>0000226:<br>0000227:<br>0000228:<br>0000229:<br>0000230:<br>0000231:<br>0000232:<br>0000233:<br>
 <!--end line numbers-->
 </div><div class="cpphtmlcmnt">
 <!--start collapse columns-->
-<img src="../../../content/tree/min.gif" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<img src="../../../content/tree/min.gif" alt="Min/Max" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -49,7 +49,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <!--end collapse columns-->
 </div><div class="cpphtml" style="margin-left:3.75em;">
 <!--start highlighted code-->
@@ -77,10 +77,19 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <font class="syn_pre">#include &lt;climits&gt;</font><br>
 <br>
 <font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../options/omni_check_arithmetic_overflow.html">OMNI_CHECK_ARITHMETIC_OVERFLOW</a>)</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// TODO: finish this </font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_BITS_WILL_ADD_OVER_FW if (<a href="../../classes/omni-bits-will_addition_overflow.html">omni::bits::will_addition_overflow</a>(a,b)) { error }</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_BITS_WILL_ADD_OVER_FW(a,b) if (<a href="../../classes/omni-bits-will_addition_overflow.html">omni::bits::will_addition_overflow</a>(a,b)) { OMNI_ERR_FW(<font class="syn_str">&quot;An addition overflow exception occurred.&quot;</font>, <a href="../../classes/omni-exceptions-overflow_error.html">omni::exceptions::overflow_error</a>()) }</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_BITS_WILL_SUB_OVER_FW(a,b) if (<a href="../../classes/omni-bits-will_subtraction_overflow.html">omni::bits::will_subtraction_overflow</a>(a,b)) { OMNI_ERR_FW(<font class="syn_str">&quot;An subtraction overflow exception occurred.&quot;</font>, <a href="../../classes/omni-exceptions-overflow_error.html">omni::exceptions::overflow_error</a>()) }</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_BITS_WILL_MUL_OVER_FW(a,b) if (<a href="../../classes/omni-bits-will_multiplication_overflow.html">omni::bits::will_multiplication_overflow</a>(a,b)) { OMNI_ERR_FW(<font class="syn_str">&quot;An multiplication overflow exception occurred.&quot;</font>, <a href="../../classes/omni-exceptions-overflow_error.html">omni::exceptions::overflow_error</a>()) }</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_BITS_WILL_ADD_UNDER_FW(a,b) if (<a href="../../classes/omni-bits-will_addition_underflow.html">omni::bits::will_addition_underflow</a>(a,b)) { OMNI_ERR_FW(<font class="syn_str">&quot;An addition underflow exception occurred.&quot;</font>, <a href="../../classes/omni-exceptions-underflow_error.html">omni::exceptions::underflow_error</a>()) }</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_BITS_WILL_SUB_UNDER_FW(a,b) if (<a href="../../classes/omni-bits-will_subtraction_underflow.html">omni::bits::will_subtraction_underflow</a>(a,b)) { OMNI_ERR_FW(<font class="syn_str">&quot;An subtraction underflow exception occurred.&quot;</font>, <a href="../../classes/omni-exceptions-underflow_error.html">omni::exceptions::underflow_error</a>()) }</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_BITS_WILL_MUL_UNDER_FW(a,b) if (<a href="../../classes/omni-bits-will_multiplication_underflow.html">omni::bits::will_multiplication_underflow</a>(a,b)) { OMNI_ERR_FW(<font class="syn_str">&quot;An multiplication underflow exception occurred.&quot;</font>, <a href="../../classes/omni-exceptions-underflow_error.html">omni::exceptions::underflow_error</a>()) }</font><br>
 <font class="syn_pre">#else</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_BITS_WILL_ADD_OVER_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_BITS_WILL_ADD_OVER_FW(a,b)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_BITS_WILL_SUB_OVER_FW(a,b)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_BITS_WILL_MUL_OVER_FW(a,b)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_BITS_WILL_ADD_UNDER_FW(a,b)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_BITS_WILL_SUB_UNDER_FW(a,b)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_BITS_WILL_MUL_UNDER_FW(a,b)</font><br>
 <font class="syn_pre">#endif</font><br>
 <br>
 <font class="syn_pre">#define <a href="../../options/omni_xor_swap.html">OMNI_XOR_SWAP</a>(a, b) a ^= b; b ^= a; a ^= b</font><br>
@@ -237,41 +246,41 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 <br>
-<a name="omni::bits::will_addition_overflow"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_addition_overflow(int8_t a, int8_t b) { <font class="syn_ins">return</font> test_overflow&lt;int8_t&gt;(a, b, <font class="syn_chr">&#39;+&#39;</font>); }<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_addition_overflow(int16_t a, int16_t b) { <font class="syn_ins">return</font> test_overflow&lt;int16_t&gt;(a, b, <font class="syn_chr">&#39;+&#39;</font>); }<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_addition_overflow(int32_t a, int32_t b) { <font class="syn_ins">return</font> test_overflow&lt;int32_t&gt;(a, b, <font class="syn_chr">&#39;+&#39;</font>); }<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_addition_overflow(int64_t a, int64_t b) { <font class="syn_ins">return</font> test_overflow&lt;int64_t&gt;(a, b, <font class="syn_chr">&#39;+&#39;</font>); }<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_addition_overflow(<font class="syn_typ">char</font> a, <font class="syn_typ">char</font> b) { <font class="syn_ins">return</font> test_overflow&lt;<font class="syn_typ">char</font>&gt;(a, b, <font class="syn_chr">&#39;+&#39;</font>); }<br>
+<a name="omni::bits::will_addition_overflow"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_addition_overflow(T a, T b)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> test_overflow&lt;T&gt;(a, b, <font class="syn_chr">&#39;+&#39;</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 <br>
-<a name="omni::bits::will_addition_underflow"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_addition_underflow(int8_t a, int8_t b) { <font class="syn_ins">return</font> test_underflow&lt;int8_t&gt;(a, b, <font class="syn_chr">&#39;+&#39;</font>); }<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_addition_underflow(int16_t a, int16_t b) { <font class="syn_ins">return</font> test_underflow&lt;int16_t&gt;(a, b, <font class="syn_chr">&#39;+&#39;</font>); }<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_addition_underflow(int32_t a, int32_t b) { <font class="syn_ins">return</font> test_underflow&lt;int32_t&gt;(a, b, <font class="syn_chr">&#39;+&#39;</font>); }<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_addition_underflow(int64_t a, int64_t b) { <font class="syn_ins">return</font> test_underflow&lt;int64_t&gt;(a, b, <font class="syn_chr">&#39;+&#39;</font>); }<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_addition_underflow(<font class="syn_typ">char</font> a, <font class="syn_typ">char</font> b) { <font class="syn_ins">return</font> test_underflow&lt;<font class="syn_typ">char</font>&gt;(a, b, <font class="syn_chr">&#39;+&#39;</font>); }<br>
+<a name="omni::bits::will_subtraction_overflow"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_subtraction_overflow(T a, T b)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> test_overflow&lt;T&gt;(a, b, <font class="syn_chr">&#39;-&#39;</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 <br>
-<a name="omni::bits::will_subtraction_overflow"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_subtraction_overflow(int8_t a, int8_t b) { <font class="syn_ins">return</font> test_overflow&lt;int8_t&gt;(a, b, <font class="syn_chr">&#39;-&#39;</font>); }<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_subtraction_overflow(int16_t a, int16_t b) { <font class="syn_ins">return</font> test_overflow&lt;int16_t&gt;(a, b, <font class="syn_chr">&#39;-&#39;</font>); }<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_subtraction_overflow(int32_t a, int32_t b) { <font class="syn_ins">return</font> test_overflow&lt;int32_t&gt;(a, b, <font class="syn_chr">&#39;-&#39;</font>); }<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_subtraction_overflow(int64_t a, int64_t b) { <font class="syn_ins">return</font> test_overflow&lt;int64_t&gt;(a, b, <font class="syn_chr">&#39;-&#39;</font>); }<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_subtraction_overflow(<font class="syn_typ">char</font> a, <font class="syn_typ">char</font> b) { <font class="syn_ins">return</font> test_overflow&lt;<font class="syn_typ">char</font>&gt;(a, b, <font class="syn_chr">&#39;-&#39;</font>); }<br>
+<a name="omni::bits::will_multiplication_overflow"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_multiplication_overflow(T a, T b)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> test_overflow&lt;T&gt;(a, b, <font class="syn_chr">&#39;*&#39;</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 <br>
-<a name="omni::bits::will_subtraction_underflow"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_subtraction_underflow(int8_t a, int8_t b) { <font class="syn_ins">return</font> test_underflow&lt;int8_t&gt;(a, b, <font class="syn_chr">&#39;-&#39;</font>); }<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_subtraction_underflow(int16_t a, int16_t b) { <font class="syn_ins">return</font> test_underflow&lt;int16_t&gt;(a, b, <font class="syn_chr">&#39;-&#39;</font>); }<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_subtraction_underflow(int32_t a, int32_t b) { <font class="syn_ins">return</font> test_underflow&lt;int32_t&gt;(a, b, <font class="syn_chr">&#39;-&#39;</font>); }<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_subtraction_underflow(int64_t a, int64_t b) { <font class="syn_ins">return</font> test_underflow&lt;int64_t&gt;(a, b, <font class="syn_chr">&#39;-&#39;</font>); }<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_subtraction_underflow(<font class="syn_typ">char</font> a, <font class="syn_typ">char</font> b) { <font class="syn_ins">return</font> test_underflow&lt;<font class="syn_typ">char</font>&gt;(a, b, <font class="syn_chr">&#39;-&#39;</font>); }<br>
+<a name="omni::bits::will_addition_underflow"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_addition_underflow(T a, T b)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> test_underflow&lt;T&gt;(a, b, <font class="syn_chr">&#39;+&#39;</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 <br>
-<a name="omni::bits::will_multiplication_overflow"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_multiplication_overflow(int8_t a, int8_t b) { <font class="syn_ins">return</font> test_overflow&lt;int8_t&gt;(a, b, <font class="syn_chr">&#39;*&#39;</font>); }<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_multiplication_overflow(int16_t a, int16_t b) { <font class="syn_ins">return</font> test_overflow&lt;int16_t&gt;(a, b, <font class="syn_chr">&#39;*&#39;</font>); }<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_multiplication_overflow(int32_t a, int32_t b) { <font class="syn_ins">return</font> test_overflow&lt;int32_t&gt;(a, b, <font class="syn_chr">&#39;*&#39;</font>); }<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_multiplication_overflow(int64_t a, int64_t b) { <font class="syn_ins">return</font> test_overflow&lt;int64_t&gt;(a, b, <font class="syn_chr">&#39;*&#39;</font>); }<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_multiplication_overflow(<font class="syn_typ">char</font> a, <font class="syn_typ">char</font> b) { <font class="syn_ins">return</font> test_overflow&lt;<font class="syn_typ">char</font>&gt;(a, b, <font class="syn_chr">&#39;*&#39;</font>); }<br>
+<a name="omni::bits::will_subtraction_underflow"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_subtraction_underflow(T a, T b)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> test_underflow&lt;T&gt;(a, b, <font class="syn_chr">&#39;-&#39;</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 <br>
-<a name="omni::bits::will_multiplication_underflow"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_multiplication_underflow(int8_t a, int8_t b) { <font class="syn_ins">return</font> test_underflow&lt;int8_t&gt;(a, b, <font class="syn_chr">&#39;*&#39;</font>); }<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_multiplication_underflow(int16_t a, int16_t b) { <font class="syn_ins">return</font> test_underflow&lt;int16_t&gt;(a, b, <font class="syn_chr">&#39;*&#39;</font>); }<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_multiplication_underflow(int32_t a, int32_t b) { <font class="syn_ins">return</font> test_underflow&lt;int32_t&gt;(a, b, <font class="syn_chr">&#39;*&#39;</font>); }<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_multiplication_underflow(int64_t a, int64_t b) { <font class="syn_ins">return</font> test_underflow&lt;int64_t&gt;(a, b, <font class="syn_chr">&#39;*&#39;</font>); }<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_multiplication_underflow(<font class="syn_typ">char</font> a, <font class="syn_typ">char</font> b) { <font class="syn_ins">return</font> test_underflow&lt;<font class="syn_typ">char</font>&gt;(a, b, <font class="syn_chr">&#39;*&#39;</font>); }<br>
+<a name="omni::bits::will_multiplication_underflow"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> will_multiplication_underflow(T a, T b)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> test_underflow&lt;T&gt;(a, b, <font class="syn_chr">&#39;*&#39;</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_cmt">// namespace bits</font><br>
 }<br>
 <br>

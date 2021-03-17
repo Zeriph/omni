@@ -121,6 +121,9 @@
 #if !defined(OMNI_GENERAL_EXCEPTION_STR)
     #define OMNI_GENERAL_EXCEPTION_STR "General library exception"
 #endif
+#if !defined(OMNI_IO_ERROR_STR)
+    #define OMNI_IO_ERROR_STR "General I/O error"
+#endif
 #if !defined(OMNI_INDEX_OOR_STR)
     #define OMNI_INDEX_OOR_STR "Index out of range"
 #endif
@@ -148,8 +151,8 @@
 #if !defined(OMNI_INVALID_OPTION_STR)
     #define OMNI_INVALID_OPTION_STR "An invalid thread option was specified"
 #endif
-#if !defined(OMNI_INVALID_ENUM)
-    #define OMNI_INVALID_ENUM "An invalid enumeration was specified"
+#if !defined(OMNI_INVALID_ENUM_STR)
+    #define OMNI_INVALID_ENUM_STR "An invalid enumeration was specified"
 #endif
 #if !defined(OMNI_INVALID_SETTING_STR)
     #define OMNI_INVALID_SETTING_STR "An invalid setting was specified"
@@ -160,8 +163,8 @@
 #if !defined(OMNI_INVALID_THREAD_HANDLE_STR)
     #define OMNI_INVALID_THREAD_HANDLE_STR "Invalid thread handle"
 #endif
-#if !defined(OMNI_INVALID_THREAD_OWNER)
-    #define OMNI_INVALID_THREAD_OWNER "Current thread invoking non-owning operation"
+#if !defined(OMNI_INVALID_THREAD_OWNER_STR)
+    #define OMNI_INVALID_THREAD_OWNER_STR "Current thread invoking non-owning operation"
 #endif
 #if !defined(OMNI_INVALID_THREAD_PRIORITY_STR)
     #define OMNI_INVALID_THREAD_PRIORITY_STR "Invalid thread priority"
@@ -199,11 +202,11 @@
 #if !defined(OMNI_PATH_NOT_ACCESSIBLE_STR)
     #define OMNI_PATH_NOT_ACCESSIBLE_STR "Path not accessible"
 #endif
-#if !defined(OMNI_PATH_EMPTY)
-    #define OMNI_PATH_EMPTY "Path is empty"
+#if !defined(OMNI_PATH_EMPTY_STR)
+    #define OMNI_PATH_EMPTY_STR "Path is empty"
 #endif
-#if !defined(OMNI_PATH_ERROR)
-    #define OMNI_PATH_ERROR "An error occurred with the specified path"
+#if !defined(OMNI_PATH_ERROR_STR)
+    #define OMNI_PATH_ERROR_STR "An error occurred with the specified path"
 #endif
 #if !defined(OMNI_SET_PRI_UNSUPPORTED_STR)
     #define OMNI_SET_PRI_UNSUPPORTED_STR "Setting thread priority is not supported on this system"
@@ -381,6 +384,15 @@
 #if !defined(OMNI_GIB_IVAL)
     #define OMNI_GIB_IVAL 1073741824
 #endif
+#if !defined(OMNI_TIB_IVAL)
+    #define OMNI_TIB_IVAL 1099511627776
+#endif
+#if !defined(OMNI_PIB_IVAL)
+    #define OMNI_PIB_IVAL 1125899906842624
+#endif
+#if !defined(OMNI_EIB_IVAL)
+    #define OMNI_EIB_IVAL 1152921504606846976
+#endif
 
 #if !defined(OMNI_KB_IVAL)
     #define OMNI_KB_IVAL 1000
@@ -390,6 +402,15 @@
 #endif
 #if !defined(OMNI_GB_IVAL)
     #define OMNI_GB_IVAL 1000000000
+#endif
+#if !defined(OMNI_TB_IVAL)
+    #define OMNI_TB_IVAL 1000000000000
+#endif
+#if !defined(OMNI_PB_IVAL)
+    #define OMNI_PB_IVAL 1000000000000000
+#endif
+#if !defined(OMNI_EB_IVAL)
+    #define OMNI_EB_IVAL 1000000000000000000
 #endif
 
 #endif // OMNI_CONSTS_DEF_HPP

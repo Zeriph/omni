@@ -36,7 +36,8 @@
 
 // helper macros used to define a friend function of a class that can be used to output to a stream
 
-// TODO: why the variadic macro's for these?
+// DEV_NOTE: the variadic macro's are to capture all values passed even with comma's, e.g. OMNI_OSTREAM_OPERATOR(some_class<X, Y, Z>)
+// will pass the whole X,Y,Z instead of splitting it and passing 'some_class<X' then 'Y' and 'Z'.
 
 #define OMNI_FOSTREAM_OPC_FW(v, ...) friend std::ostream& operator<<(std::ostream& _s, const __VA_ARGS__& _c) { _s << _c.v; return _s; }
 #define OMNI_FOSTREAM_OPW_FW(v, ...) friend std::wostream& operator<<(std::wostream& _s, const __VA_ARGS__& _c) { _s << _c.v; return _s; }

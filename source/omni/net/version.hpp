@@ -170,7 +170,7 @@ namespace omni {
 
                 int32_t hash_code() const
                 {
-                    OMNI_VER_ALOCK_FW
+                    OMNI_NVER_ALOCK_FW
                     // DEV_NOTE: this is a comment from the .NET source on the Version class
                     // Let's assume that most version numbers will be pretty small and just
                     // OR some lower order bits together.
@@ -322,7 +322,17 @@ namespace omni {
                             OMNI_EQUAL_FW(o);
                 }
 
-                bool operator!=(const omni::net::version &o) const
+                bool operator!=(const std::string& o) const
+                {
+                    return !(*this == o);
+                }
+                
+                bool operator!=(const std::wstring& o) const
+                {
+                    return !(*this == o);
+                }
+
+                bool operator!=(const omni::net::version& o) const
                 {
                     return !(*this == o);
                 }

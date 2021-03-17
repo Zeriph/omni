@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_DISPOSE_EVENT</Name>
-  <Brief>If defined, classes within the framework will have a disposing event.</Brief>
+  <Brief>If defined, classes within the library will have a disposing event.</Brief>
   <Considerations>If you enable this option, any classes that utilize this functionality will increase by &lt;code&gt;sizeof(omni::event1)&lt;/code&gt;.</Considerations>
-  <Description>Classes in C++ are deterministic by scope lifetime in that they have a start (constructor) and end (destructor). To this, if this macro is defined then any classes that can be instantiated within the framework will have an omni::event called @c disposing that will be invoked upon destruction of the Omni class. Example:
+  <Description>Classes in C++ are deterministic by scope lifetime in that they have a start (constructor) and end (destructor). To this, if this macro is defined then any classes that can be instantiated within the library will have an omni::event called @c disposing that will be invoked upon destruction of the Omni class. Example:
 
 @code
 static bool some_condition = false;
@@ -52,7 +52,8 @@ after
 Where @c 0x00011 would be the thread id given by the system.</Description>
   <Notes>None.</Notes>
   <PlatformSpecific>No platform specific notes.</PlatformSpecific>
-  <Synopsis>If this macro is defined, then any classes in the Omni framework that can be instantiated (e.g. non-abstract classes and non-POD types) will have an omni::event as a member that will be raised when the objects destructor is called.</Synopsis>
+  <Synopsis>If this macro is defined, then any classes in the library that can be instantiated (e.g. non-abstract classes and non-POD types) will have an omni::event as a member that will be raised when the objects destructor is called.</Synopsis>
   <IsHelper>false</IsHelper>
   <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
 </MacroOp>

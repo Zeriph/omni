@@ -16,8 +16,8 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#if !defined(OMNI_POINT_T_HPP)
-#define OMNI_POINT_T_HPP 1
+#if !defined(OMNI_GEOMETRY_TYPES_HPP)
+#define OMNI_GEOMETRY_TYPES_HPP 1
 
 #include <omni/geometry/size.hpp>
 #include <omni/geometry/size3d.hpp>
@@ -32,4 +32,4 @@
 #include <omni/geometry/path.hpp>
 #include <omni/geometry/util.hpp>
 
-#endif // OMNI_POINT_T_HPP
+#endif // OMNI_GEOMETRY_TYPES_HPP

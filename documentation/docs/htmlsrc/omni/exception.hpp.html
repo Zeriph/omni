@@ -40,11 +40,11 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 0000280:<br>0000281:<br>0000282:<br>0000283:<br>0000284:<br>0000285:<br>0000286:<br>0000287:<br>0000288:<br>0000289:<br>0000290:<br>0000291:<br>0000292:<br>0000293:<br>0000294:<br>0000295:<br>0000296:<br>0000297:<br>0000298:<br>0000299:<br>
 0000300:<br>0000301:<br>0000302:<br>0000303:<br>0000304:<br>0000305:<br>0000306:<br>0000307:<br>0000308:<br>0000309:<br>0000310:<br>0000311:<br>0000312:<br>0000313:<br>0000314:<br>0000315:<br>0000316:<br>0000317:<br>0000318:<br>0000319:<br>
 0000320:<br>0000321:<br>0000322:<br>0000323:<br>0000324:<br>0000325:<br>0000326:<br>0000327:<br>0000328:<br>0000329:<br>0000330:<br>0000331:<br>0000332:<br>0000333:<br>0000334:<br>0000335:<br>0000336:<br>0000337:<br>0000338:<br>0000339:<br>
-0000340:<br>0000341:<br>0000342:<br>0000343:<br>0000344:<br>0000345:<br>0000346:<br>0000347:<br>0000348:<br>0000349:<br>0000350:<br>0000351:<br>
+0000340:<br>0000341:<br>0000342:<br>0000343:<br>0000344:<br>0000345:<br>0000346:<br>0000347:<br>0000348:<br>0000349:<br>0000350:<br>0000351:<br>0000352:<br>
 <!--end line numbers-->
 </div><div class="cpphtmlcmnt">
 <!--start collapse columns-->
-<img src="../../../content/tree/min.gif" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<img src="../../../content/tree/min.gif" alt="Min/Max" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -61,7 +61,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br>
 <!--end collapse columns-->
 </div><div class="cpphtml" style="margin-left:3.75em;">
 <!--start highlighted code-->
@@ -86,6 +86,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <font class="syn_pre">#if !defined(OMNI_EXCEPTIONS_HPP)</font><br>
 <font class="syn_pre">#define OMNI_EXCEPTIONS_HPP 1</font><br>
 <br>
+<font class="syn_pre">#include &lt;<a href="../omni/defs/global.hpp.html">omni/defs/global.hpp</a>&gt;</font><br>
 <font class="syn_cmt">// for the order of exception handling, see the following header</font><br>
 <font class="syn_pre">#include &lt;<a href="../omni/defs/except_def.hpp.html">omni/defs/except_def.hpp</a>&gt;</font><br>
 <br>
@@ -102,8 +103,8 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_ERR_APPEND_FW(val) std::stringstream cval; cval &lt;&lt; val; this-&gt;m_what.append(cval.str())</font><br>
 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../options/omni_ctor_try.html">OMNI_CTOR_TRY</a> try</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../options/omni_ctor_catch.html">OMNI_CTOR_CATCH</a> catch(...) { <a href="../../options/omni_dbge.html">OMNI_DBGE</a>(<font class="syn_str">&quot;A general unhandled exception occurred&quot;</font>); <a href="../../options/omni_exception_terminate.html">OMNI_EXCEPTION_TERMINATE</a> }</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_CTOR_TRY_FW try</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_CTOR_CATCH_FW catch(...) { <a href="../../options/omni_dbge.html">OMNI_DBGE</a>(<font class="syn_str">&quot;A general unhandled exception occurred&quot;</font>); <a href="../../options/omni_exception_terminate.html">OMNI_EXCEPTION_TERMINATE</a> }</font><br>
 <br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// DEV_NOTE: the exception specification for throw() is an implicit noexcept(false)</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// DEV_NOTE: all exceptions in Omni will be explicit for single parameter ctor&#39;s to avoid any collision</font><br>
@@ -112,9 +113,9 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <a name="omni::exception"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">class</font> exception : <font class="syn_ins">virtual</font> <font class="syn_ins">public</font> <a href="http://www.cplusplus.com/reference/exception/exception/">std::exception</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">public</font>:<br>
-<a name="omni::exception::exception"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exception() <font class="syn_ins">throw</font>() : m_what(<a href="../../options/omni_general_exception_str.html">OMNI_GENERAL_EXCEPTION_STR</a>) {}<br>
+<a name="omni::exception::exception"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exception() <a href="../../options/omni_func_no_throw.html">OMNI_FUNC_NO_THROW</a> : m_what(<a href="../../options/omni_general_exception_str.html">OMNI_GENERAL_EXCEPTION_STR</a>) {}<br>
 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">explicit</font> exception(<font class="syn_typ">const</font> <font class="syn_typ">char</font>* reason) <font class="syn_ins">throw</font>() : m_what(<font class="syn_str">&quot;&quot;</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">explicit</font> exception(<font class="syn_typ">const</font> <font class="syn_typ">char</font>* reason) <a href="../../options/omni_func_no_throw.html">OMNI_FUNC_NO_THROW</a> : m_what(<font class="syn_str">&quot;&quot;</font>)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (reason) { <font class="syn_typ">this</font>-&gt;m_what.append(reason); }<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">else</font> {<br>
@@ -123,9 +124,9 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">explicit</font> exception(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; reason) <font class="syn_ins">throw</font>() : m_what(reason) {}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">explicit</font> exception(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; reason) <a href="../../options/omni_func_no_throw.html">OMNI_FUNC_NO_THROW</a> : m_what(reason) {}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exception(<font class="syn_typ">const</font> <font class="syn_typ">char</font>* reason, <font class="syn_typ">const</font> <font class="syn_typ">char</font>* extra) <font class="syn_ins">throw</font>() : m_what(<font class="syn_str">&quot;&quot;</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exception(<font class="syn_typ">const</font> <font class="syn_typ">char</font>* reason, <font class="syn_typ">const</font> <font class="syn_typ">char</font>* extra) <a href="../../options/omni_func_no_throw.html">OMNI_FUNC_NO_THROW</a> : m_what(<font class="syn_str">&quot;&quot;</font>)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (reason) { <font class="syn_typ">this</font>-&gt;m_what.append(reason); }<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">else</font> {<br>
@@ -139,7 +140,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exception(<font class="syn_typ">const</font> <font class="syn_typ">char</font>* reason, <font class="syn_typ">const</font> <font class="syn_typ">char</font>* extra, <font class="syn_typ">int</font> errnum) <font class="syn_ins">throw</font>() : m_what(<font class="syn_str">&quot;&quot;</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exception(<font class="syn_typ">const</font> <font class="syn_typ">char</font>* reason, <font class="syn_typ">const</font> <font class="syn_typ">char</font>* extra, <font class="syn_typ">int</font> errnum) <a href="../../options/omni_func_no_throw.html">OMNI_FUNC_NO_THROW</a> : m_what(<font class="syn_str">&quot;&quot;</font>)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (reason) { <font class="syn_typ">this</font>-&gt;m_what.append(reason); }<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">else</font> {<br>
@@ -154,7 +155,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_APPEND_FW(errnum);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exception(<font class="syn_typ">const</font> <font class="syn_typ">char</font>* reason, <font class="syn_typ">const</font> <font class="syn_typ">char</font>* extra, <font class="syn_typ">long</font> errnum) <font class="syn_ins">throw</font>() : m_what(<font class="syn_str">&quot;&quot;</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exception(<font class="syn_typ">const</font> <font class="syn_typ">char</font>* reason, <font class="syn_typ">const</font> <font class="syn_typ">char</font>* extra, <font class="syn_typ">long</font> errnum) <a href="../../options/omni_func_no_throw.html">OMNI_FUNC_NO_THROW</a> : m_what(<font class="syn_str">&quot;&quot;</font>)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (reason) { <font class="syn_typ">this</font>-&gt;m_what.append(reason); }<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">else</font> {<br>
@@ -169,7 +170,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_APPEND_FW(errnum);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exception(<font class="syn_typ">const</font> <font class="syn_typ">char</font>* reason, <font class="syn_typ">const</font> <font class="syn_typ">char</font>* extra, <a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a> errnum) <font class="syn_ins">throw</font>() : m_what(<font class="syn_str">&quot;&quot;</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exception(<font class="syn_typ">const</font> <font class="syn_typ">char</font>* reason, <font class="syn_typ">const</font> <font class="syn_typ">char</font>* extra, <a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a> errnum) <a href="../../options/omni_func_no_throw.html">OMNI_FUNC_NO_THROW</a> : m_what(<font class="syn_str">&quot;&quot;</font>)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (reason) { <font class="syn_typ">this</font>-&gt;m_what.append(reason); }<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">else</font> {<br>
@@ -184,30 +185,30 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_APPEND_FW(errnum);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exception(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; reason, <font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; extra) <font class="syn_ins">throw</font>() : m_what(reason)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exception(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; reason, <font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; extra) <a href="../../options/omni_func_no_throw.html">OMNI_FUNC_NO_THROW</a> : m_what(reason)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_what.append(extra);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exception(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; reason, <font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; extra, <font class="syn_typ">int</font> errnum) <font class="syn_ins">throw</font>() : m_what(reason)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exception(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; reason, <font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; extra, <font class="syn_typ">int</font> errnum) <a href="../../options/omni_func_no_throw.html">OMNI_FUNC_NO_THROW</a> : m_what(reason)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_what.append(extra);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_APPEND_FW(errnum);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exception(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; reason, <font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; extra, <font class="syn_typ">long</font> errnum) <font class="syn_ins">throw</font>() : m_what(reason)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exception(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; reason, <font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; extra, <font class="syn_typ">long</font> errnum) <a href="../../options/omni_func_no_throw.html">OMNI_FUNC_NO_THROW</a> : m_what(reason)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_what.append(extra);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_APPEND_FW(errnum);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exception(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; reason, <font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; extra, <a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a> errnum) <font class="syn_ins">throw</font>() : m_what(reason)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exception(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; reason, <font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; extra, <a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a> errnum) <a href="../../options/omni_func_no_throw.html">OMNI_FUNC_NO_THROW</a> : m_what(reason)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_what.append(extra);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_APPEND_FW(errnum);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exception(<font class="syn_typ">const</font> <font class="syn_typ">char</font>* reason, <font class="syn_typ">int</font> errnum) <font class="syn_ins">throw</font>() : m_what(<font class="syn_str">&quot;&quot;</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exception(<font class="syn_typ">const</font> <font class="syn_typ">char</font>* reason, <font class="syn_typ">int</font> errnum) <a href="../../options/omni_func_no_throw.html">OMNI_FUNC_NO_THROW</a> : m_what(<font class="syn_str">&quot;&quot;</font>)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (reason) { <font class="syn_typ">this</font>-&gt;m_what.append(reason); }<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">else</font> {<br>
@@ -217,12 +218,12 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_APPEND_FW(errnum);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exception(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; reason, <font class="syn_typ">int</font> errnum) <font class="syn_ins">throw</font>() : m_what(reason)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exception(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; reason, <font class="syn_typ">int</font> errnum) <a href="../../options/omni_func_no_throw.html">OMNI_FUNC_NO_THROW</a> : m_what(reason)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_APPEND_FW(errnum);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exception(<font class="syn_typ">const</font> <font class="syn_typ">char</font>* reason, <font class="syn_typ">long</font> errnum) <font class="syn_ins">throw</font>() : m_what(<font class="syn_str">&quot;&quot;</font>) <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exception(<font class="syn_typ">const</font> <font class="syn_typ">char</font>* reason, <font class="syn_typ">long</font> errnum) <a href="../../options/omni_func_no_throw.html">OMNI_FUNC_NO_THROW</a> : m_what(<font class="syn_str">&quot;&quot;</font>) <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (reason) { <font class="syn_typ">this</font>-&gt;m_what.append(reason); }<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">else</font> {<br>
@@ -232,12 +233,12 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_APPEND_FW(errnum);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exception(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; reason, <font class="syn_typ">long</font> errnum) <font class="syn_ins">throw</font>() : m_what(reason)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exception(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; reason, <font class="syn_typ">long</font> errnum) <a href="../../options/omni_func_no_throw.html">OMNI_FUNC_NO_THROW</a> : m_what(reason)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_APPEND_FW(errnum);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exception(<font class="syn_typ">const</font> <font class="syn_typ">char</font>* reason, <a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a> errnum) <font class="syn_ins">throw</font>() : m_what(<font class="syn_str">&quot;&quot;</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exception(<font class="syn_typ">const</font> <font class="syn_typ">char</font>* reason, <a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a> errnum) <a href="../../options/omni_func_no_throw.html">OMNI_FUNC_NO_THROW</a> : m_what(<font class="syn_str">&quot;&quot;</font>)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (reason) { <font class="syn_typ">this</font>-&gt;m_what.append(reason); }<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">else</font> {<br>
@@ -247,12 +248,12 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_APPEND_FW(errnum);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exception(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; reason, <a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a> errnum) <font class="syn_ins">throw</font>() : m_what(reason)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exception(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; reason, <a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a> errnum) <a href="../../options/omni_func_no_throw.html">OMNI_FUNC_NO_THROW</a> : m_what(reason)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_APPEND_FW(errnum);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-<a name="omni::exception::~exception"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">virtual</font> ~exception() <a href="../../options/omni_dtor_no_throws.html">OMNI_DTOR_NO_THROWS</a><br>
+<a name="omni::exception::~exception"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">virtual</font> ~exception() <a href="../../options/omni_dtor_no_throw.html">OMNI_DTOR_NO_THROW</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
 <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>

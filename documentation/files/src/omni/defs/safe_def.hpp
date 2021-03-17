@@ -56,6 +56,12 @@
         #define OMNI_NO_SAFE_CHRONO
     #endif
 #endif
+#if defined(OMNI_SAFE_CRYPTO) && (defined(OMNI_NO_SAFE_CRYPTO) || defined(OMNI_NO_SAFE_LIBRARY))
+    #undef OMNI_SAFE_CRYPTO
+    #if !defined(OMNI_NO_SAFE_CRYPTO)
+        #define OMNI_NO_SAFE_CRYPTO
+    #endif
+#endif
 #if defined(OMNI_SAFE_LOCKS) && (defined(OMNI_NO_SAFE_LOCKS) || defined(OMNI_NO_SAFE_LIBRARY))
     #undef OMNI_SAFE_LOCKS
     #if !defined(OMNI_NO_SAFE_LOCKS)
@@ -79,6 +85,12 @@
     #define OMNI_SAFE_SPAN
     #define OMNI_SAFE_STOPWATCH
     #define OMNI_SAFE_DATETIME
+#endif
+
+#if defined(OMNI_SAFE_CRYPTO)
+    #define OMNI_SAFE_SHA256
+    #define OMNI_SAFE_MD5
+    #define OMNI_SAFE_SHA1
 #endif
 
 #if defined(OMNI_SAFE_LOCKS)
@@ -111,6 +123,9 @@
 #if defined(OMNI_SAFE_NET)
     #define OMNI_SAFE_SOCKET
     #define OMNI_SAFE_SOCKET_EP
+    // TODO: see note in client.hpp
+    #define OMNI_SAFE_NET_CLIENT
+    #define OMNI_SAFE_NET_SERVER
 #endif
 
 #if defined(OMNI_SAFE_APPLICATION) && (defined(OMNI_NO_SAFE_APPLICATION) || defined(OMNI_NO_SAFE_LIBRARY))

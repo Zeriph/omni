@@ -51,15 +51,15 @@ namespace omni {
                 OMNI_MEMBERS_FW(omni::sync::binary_semaphore) // disposing,name,type(),hash()
                 
             private:
+                volatile OMNI_BINSEM_INT_FW m_lokd;
+                omni::sync::semaphore_t m_sem;
+                
                 // defined but not implemented, should not be copied
                 binary_semaphore(const omni::sync::binary_semaphore& cp);
                 omni::sync::binary_semaphore& operator=(const omni::sync::binary_semaphore& other);
                 
                 void _init();
                 void _dispose();
-
-                volatile OMNI_BINSEM_INT_FW m_lokd;
-                omni::sync::semaphore_t m_sem;
         };
         
         typedef omni::sync::auto_lock<omni::sync::binary_semaphore> auto_binary_semaphore;

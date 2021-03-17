@@ -56,13 +56,15 @@ void OmniDocuGen::Util::CopyDirectory(const std::string& s, const std::string& s
         return;
     }
     if (r) {
-        omni::seq::std_string_t dirs = omni::io::directory::get_directories(s);
+        omni::seq::std_string_t dirs;
+        omni::io::directory::get_directories(s, dirs);
         foreach_t (omni::seq::std_string_t, subd, dirs) {
             if (OmniDocuGen::Program::StopReq) { return; }
             OmniDocuGen::Util::CopyDirectory(*subd, sp, d, r, o);
         }
     }
-    omni::seq::std_string_t files = omni::io::directory::get_files(s);
+    omni::seq::std_string_t files;
+    omni::io::directory::get_files(s, files);
     foreach_t (omni::seq::std_string_t, f, files) {
         if (OmniDocuGen::Program::StopReq) { return; }
         OmniDocuGen::Util::CopyFile(*f, omni::string::replace(*f, sp, d), o);
@@ -163,19 +165,21 @@ void OmniDocuGen::Util::CheckAndCreateDir(const std::string& dir)
 void OmniDocuGen::Util::WriteRedirectDirectories(const std::string& dir, const std::string& redir, uint32_t idx)
 {
     OmniDocuGen::Util::WriteRedirect(dir, redir, idx);
-    omni::seq::std_string_t dirs = omni::io::directory::get_directories(dir);
+    omni::seq::std_string_t dirs;
+    omni::io::directory::get_directories(dir, dirs);
     omni_foreach (std::string, sdir, dirs) {
         if (OmniDocuGen::Program::StopReq) { return; }
         OmniDocuGen::Util::WriteRedirectDirectories(*sdir, redir, (idx + 1));
     }
 }
 
-bool OmniDocuGen::Util::ZipDirectory(const std::string& dir, const std::string& z, bool id)
+bool OmniDocuGen::Util::ZipDirectory(const std::string& dir, const std::string& z, bool no_html)
 {
     if (OmniDocuGen::Program::Profile) {
         up(1, "Profile mode enabled, skipping zip dir ('{0}'..", dir);
         return true;
     }
+    bool id = true; // TODO: what the hell was this for?
     std::string zip;
     List<std::string> zpaths;
     zpaths.push_back("/usr/local/bin/7z");
@@ -200,22 +204,30 @@ bool OmniDocuGen::Util::ZipDirectory(const std::string& dir, const std::string& 
     try {
         std::string args, cmd;
         int rv = 0;
+        cmd = "chmod -R 777 '" + dir + "'";
+        up(2, "Executing zip command '{0}'", cmd);
+        system(cmd.c_str());
         if (id) {
-            args = Util::Format("a -tzip \"{0}\" \"{1}\"", z, dir);
+            if (no_html) {
+                args = Util::Format("a -tzip \"{0}\" \"{1}\" -x!*.html", z, dir);
+            } else {
+                args = Util::Format("a -tzip \"{0}\" \"{1}\"", z, dir);
+            }
             cmd = zip + " " + args;
-            if (Program::Verbosity < 2) { cmd += " > /dev/null"; }
-            up(3, "Executing zip command '{0}'", cmd);
+            if (Program::Verbosity < 1) { cmd += " > /dev/null"; }
+            up(2, "Executing zip command '{0}'", cmd);
             system(cmd.c_str());
         } else {
-            omni::seq::std_string_t dirs = omni::io::directory::get_directories(dir);
-            omni::seq::std_string_t files = omni::io::directory::get_files(dir);
+            omni::seq::std_string_t dirs, files;
+            omni::io::directory::get_directories(dir, dirs);
+            omni::io::directory::get_files(dir, files);
             omni_foreach (std::string, d, dirs) {
                 if (OmniDocuGen::Program::StopReq) { return false; }
                 if (omni::string::contains(omni::string::to_lower(Program::Settings.Excluded), omni::string::to_lower(*d))) { continue; }
                 args = Util::Format("a -tzip \"{0}\" \"{1}\"", z, *d);
                 cmd = zip + " " + args;
                 if (Program::Verbosity < 2) { cmd += " > /dev/null"; }
-                up(3, "Executing zip command '{0}'", cmd);
+                up(2, "Executing zip command '{0}'", cmd);
                 if ((rv = system(cmd.c_str())) != 0) {
                     up("Return value for command returned non zero value: {0}", omni::string::to_string(rv));
                 }
@@ -226,7 +238,7 @@ bool OmniDocuGen::Util::ZipDirectory(const std::string& dir, const std::string& 
                 args = Util::Format("a -tzip \"{0}\" \"{1}\"", z, *f);
                 cmd = zip + " " + args;
                 if (Program::Verbosity < 2) { cmd += " > /dev/null"; }
-                up(3, "Executing zip command '{0}'", cmd);
+                up(2, "Executing zip command '{0}'", cmd);
                 if ((rv = system(cmd.c_str())) != 0) {
                     up("Return value for command returned non zero value: {0}", omni::string::to_string(rv));
                 }
@@ -241,7 +253,7 @@ bool OmniDocuGen::Util::ZipDirectory(const std::string& dir, const std::string& 
 
 bool OmniDocuGen::Util::ZipDirectory(const std::string& dir, const std::string& z)
 {
-    return OmniDocuGen::Util::ZipDirectory(dir, z, true);
+    return OmniDocuGen::Util::ZipDirectory(dir, z, false);
 }
 
 bool OmniDocuGen::Util::RemoveEntryFromZip(const std::string& z, const std::string& f)

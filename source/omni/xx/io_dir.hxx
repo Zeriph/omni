@@ -122,8 +122,7 @@
                 }
             }
             if (omni::io::dir_internal::exists(new_name) && !overwrite) {
-                // TODO: shoudl this be false?
-                return true;
+                return false;
             }
             #if defined(OMNI_OS_WIN)
                 #if defined(OMNI_WIN_API)
@@ -311,7 +310,43 @@ bool omni::io::OMNI_PATH_FW::exists(const OMNI_STRING_T_FW& folder)
 
 bool omni::io::OMNI_PATH_FW::move(const OMNI_STRING_T_FW& folder, const OMNI_STRING_T_FW& new_name, const omni::io::options& io_ops)
 {
-    // TODO: does it make sense to add a 'bool do_copy' var, and if false, do a 'move only'??
+    // TODO: add a 'copy_first'
+    /*
+        TODO: exceptions for the following -> 
+
+        Exceptions
+        IOException
+
+        An attempt was made to move a directory to a different volume.
+
+        -or-
+
+        destDirName already exists. See the Note in the Remarks section.
+
+        -or-
+
+        The sourceDirName and destDirName parameters refer to the same file or directory.
+
+        -or-
+
+        The directory or a file within it is being used by another process.
+        UnauthorizedAccessException
+
+        The caller does not have the required permission.
+        ArgumentException
+
+        sourceDirName or destDirName is a zero-length string, contains only white space, or contains one or more invalid characters. You can query for invalid characters with the GetInvalidPathChars() method.
+        ArgumentNullException
+
+        sourceDirName or destDirName is null.
+        PathTooLongException
+
+        The specified path, file name, or both exceed the system-defined maximum length.
+        DirectoryNotFoundException
+
+        The path specified by sourceDirName is invalid (for example, it is on an unmapped drive).
+    */
+    // TODO: change this to 'omni::io::dir_internal::mv(folder, new_name, io_ops)
     if (!omni::io::OMNI_PATH_FW::copy(folder, new_name, true, io_ops)) {
         return false;
     }

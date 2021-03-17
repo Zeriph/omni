@@ -22,10 +22,19 @@
 #include <climits>
 
 #if defined(OMNI_CHECK_ARITHMETIC_OVERFLOW)
-    // TODO: finish this 
-    #define OMNI_BITS_WILL_ADD_OVER_FW if (omni::bits::will_addition_overflow(a,b)) { error }
+    #define OMNI_BITS_WILL_ADD_OVER_FW(a,b) if (omni::bits::will_addition_overflow(a,b)) { OMNI_ERR_FW("An addition overflow exception occurred.", omni::exceptions::overflow_error()) }
+    #define OMNI_BITS_WILL_SUB_OVER_FW(a,b) if (omni::bits::will_subtraction_overflow(a,b)) { OMNI_ERR_FW("An subtraction overflow exception occurred.", omni::exceptions::overflow_error()) }
+    #define OMNI_BITS_WILL_MUL_OVER_FW(a,b) if (omni::bits::will_multiplication_overflow(a,b)) { OMNI_ERR_FW("An multiplication overflow exception occurred.", omni::exceptions::overflow_error()) }
+    #define OMNI_BITS_WILL_ADD_UNDER_FW(a,b) if (omni::bits::will_addition_underflow(a,b)) { OMNI_ERR_FW("An addition underflow exception occurred.", omni::exceptions::underflow_error()) }
+    #define OMNI_BITS_WILL_SUB_UNDER_FW(a,b) if (omni::bits::will_subtraction_underflow(a,b)) { OMNI_ERR_FW("An subtraction underflow exception occurred.", omni::exceptions::underflow_error()) }
+    #define OMNI_BITS_WILL_MUL_UNDER_FW(a,b) if (omni::bits::will_multiplication_underflow(a,b)) { OMNI_ERR_FW("An multiplication underflow exception occurred.", omni::exceptions::underflow_error()) }
 #else
-    #define OMNI_BITS_WILL_ADD_OVER_FW
+    #define OMNI_BITS_WILL_ADD_OVER_FW(a,b)
+    #define OMNI_BITS_WILL_SUB_OVER_FW(a,b)
+    #define OMNI_BITS_WILL_MUL_OVER_FW(a,b)
+    #define OMNI_BITS_WILL_ADD_UNDER_FW(a,b)
+    #define OMNI_BITS_WILL_SUB_UNDER_FW(a,b)
+    #define OMNI_BITS_WILL_MUL_UNDER_FW(a,b)
 #endif
 
 #define OMNI_XOR_SWAP(a, b) a ^= b; b ^= a; a ^= b
@@ -203,41 +212,41 @@ namespace omni {
             return false;
         }
 
-        inline bool will_addition_overflow(int8_t a, int8_t b) { return test_overflow<int8_t>(a, b, '+'); }
-        inline bool will_addition_overflow(int16_t a, int16_t b) { return test_overflow<int16_t>(a, b, '+'); }
-        inline bool will_addition_overflow(int32_t a, int32_t b) { return test_overflow<int32_t>(a, b, '+'); }
-        inline bool will_addition_overflow(int64_t a, int64_t b) { return test_overflow<int64_t>(a, b, '+'); }
-        inline bool will_addition_overflow(char a, char b) { return test_overflow<char>(a, b, '+'); }
+        template < typename T >
+        inline bool will_addition_overflow(T a, T b)
+        {
+            return test_overflow<T>(a, b, '+');
+        }
 
-        inline bool will_addition_underflow(int8_t a, int8_t b) { return test_underflow<int8_t>(a, b, '+'); }
-        inline bool will_addition_underflow(int16_t a, int16_t b) { return test_underflow<int16_t>(a, b, '+'); }
-        inline bool will_addition_underflow(int32_t a, int32_t b) { return test_underflow<int32_t>(a, b, '+'); }
-        inline bool will_addition_underflow(int64_t a, int64_t b) { return test_underflow<int64_t>(a, b, '+'); }
-        inline bool will_addition_underflow(char a, char b) { return test_underflow<char>(a, b, '+'); }
+        template < typename T >
+        inline bool will_subtraction_overflow(T a, T b)
+        {
+            return test_overflow<T>(a, b, '-');
+        }
 
-        inline bool will_subtraction_overflow(int8_t a, int8_t b) { return test_overflow<int8_t>(a, b, '-'); }
-        inline bool will_subtraction_overflow(int16_t a, int16_t b) { return test_overflow<int16_t>(a, b, '-'); }
-        inline bool will_subtraction_overflow(int32_t a, int32_t b) { return test_overflow<int32_t>(a, b, '-'); }
-        inline bool will_subtraction_overflow(int64_t a, int64_t b) { return test_overflow<int64_t>(a, b, '-'); }
-        inline bool will_subtraction_overflow(char a, char b) { return test_overflow<char>(a, b, '-'); }
+        template < typename T >
+        inline bool will_multiplication_overflow(T a, T b)
+        {
+            return test_overflow<T>(a, b, '*');
+        }
 
-        inline bool will_subtraction_underflow(int8_t a, int8_t b) { return test_underflow<int8_t>(a, b, '-'); }
-        inline bool will_subtraction_underflow(int16_t a, int16_t b) { return test_underflow<int16_t>(a, b, '-'); }
-        inline bool will_subtraction_underflow(int32_t a, int32_t b) { return test_underflow<int32_t>(a, b, '-'); }
-        inline bool will_subtraction_underflow(int64_t a, int64_t b) { return test_underflow<int64_t>(a, b, '-'); }
-        inline bool will_subtraction_underflow(char a, char b) { return test_underflow<char>(a, b, '-'); }
+        template < typename T >
+        inline bool will_addition_underflow(T a, T b)
+        {
+            return test_underflow<T>(a, b, '+');
+        }
 
-        inline bool will_multiplication_overflow(int8_t a, int8_t b) { return test_overflow<int8_t>(a, b, '*'); }
-        inline bool will_multiplication_overflow(int16_t a, int16_t b) { return test_overflow<int16_t>(a, b, '*'); }
-        inline bool will_multiplication_overflow(int32_t a, int32_t b) { return test_overflow<int32_t>(a, b, '*'); }
-        inline bool will_multiplication_overflow(int64_t a, int64_t b) { return test_overflow<int64_t>(a, b, '*'); }
-        inline bool will_multiplication_overflow(char a, char b) { return test_overflow<char>(a, b, '*'); }
+        template < typename T >
+        inline bool will_subtraction_underflow(T a, T b)
+        {
+            return test_underflow<T>(a, b, '-');
+        }
 
-        inline bool will_multiplication_underflow(int8_t a, int8_t b) { return test_underflow<int8_t>(a, b, '*'); }
-        inline bool will_multiplication_underflow(int16_t a, int16_t b) { return test_underflow<int16_t>(a, b, '*'); }
-        inline bool will_multiplication_underflow(int32_t a, int32_t b) { return test_underflow<int32_t>(a, b, '*'); }
-        inline bool will_multiplication_underflow(int64_t a, int64_t b) { return test_underflow<int64_t>(a, b, '*'); }
-        inline bool will_multiplication_underflow(char a, char b) { return test_underflow<char>(a, b, '*'); }
+        template < typename T >
+        inline bool will_multiplication_underflow(T a, T b)
+        {
+            return test_underflow<T>(a, b, '*');
+        }
     } // namespace bits
 }
 

@@ -19,12 +19,10 @@
 #if !defined(OMNI_SYSTEM_HPP)
 #define OMNI_SYSTEM_HPP
 #include <omni/defs/global.hpp>
-#include <iostream>
-#include <string>
+#include <omni/defs/class_macros.hpp>
 #include <omni/strings.hpp>
 
 namespace omni {
-    
     namespace system {
         class architecture_type
         {
@@ -32,18 +30,18 @@ namespace omni {
                 typedef enum enum_t {
                     // Unknown architecture type
                     UNKNOWN = 0,
-                    // DEC-Alpha
-                    DEC_ALPHA,
                     // AMD64
                     AMD64,
                     // ARM
                     ARM,
-                    //ARM64
+                    // ARM64
                     ARM64,
                     // Blackfin
                     BLACKFIN,
                     // Convex
                     CONVEX,
+                    // DEC-Alpha
+                    DEC_ALPHA,
                     // Epiphany
                     EPIPHANY,
                     // HP/PA RISC
@@ -61,7 +59,7 @@ namespace omni {
                     // Pyramid 9810
                     PYRAMID_9810,
                     // RS/6000
-                    RS600,
+                    RS6000,
                     // SPARC
                     SPARC,
                     // SuperH
@@ -282,7 +280,7 @@ namespace omni {
                 {
                     enum_t ret;
                     if (_try_parse(val, ret)) { return ret; }
-                    OMNI_ERRV_FW("invalid enum parse: ", val, omni::exceptions::invalid_enum())
+                    OMNI_ERR_FW("invalid enum parse", omni::exceptions::invalid_enum())
                     return DEFAULT_VALUE();
                 }
 
@@ -326,7 +324,7 @@ namespace omni {
                         OMNI_S2E_FW(MIPS)
                         OMNI_S2E_FW(POWER_PC)
                         OMNI_S2E_FW(PYRAMID_9810)
-                        OMNI_S2E_FW(RS600)
+                        OMNI_S2E_FW(RS6000)
                         OMNI_S2E_FW(SPARC)
                         OMNI_S2E_FW(SUPER_H)
                         OMNI_S2E_FW(SYSTEM_Z)
@@ -356,7 +354,7 @@ namespace omni {
                         OMNI_E2SS_FW(MIPS);
                         OMNI_E2SS_FW(POWER_PC);
                         OMNI_E2SS_FW(PYRAMID_9810);
-                        OMNI_E2SS_FW(RS600);
+                        OMNI_E2SS_FW(RS6000);
                         OMNI_E2SS_FW(SPARC);
                         OMNI_E2SS_FW(SUPER_H);
                         OMNI_E2SS_FW(SYSTEM_Z);
@@ -387,7 +385,7 @@ namespace omni {
                         MIPS ||
                         POWER_PC ||
                         PYRAMID_9810 ||
-                        RS600 ||
+                        RS6000 ||
                         SPARC ||
                         SUPER_H ||
                         SYSTEM_Z ||

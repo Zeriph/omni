@@ -24,24 +24,28 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <div class="docdiv">
     <font class="docu">MACRO</font><br><br>
     <code><font style="font-size:16px;">
-    <code>OMNI_APPLE_OLD_API</code> - A library macro/option
+    <code>OMNI_APPLE_OLD_API</code> - Defines whether to use older Apple API&#39;s or macOS API&#39;s.
     </font></code>
 </div><br>
 <div class="docdiv">
     <font class="docu">SYNOPSIS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    A library macro/option
+    <code>#define <a href="omni_apple_old_api.html">OMNI_APPLE_OLD_API</a></code><br>
+<br>
+If defined, will change certain functions used.
 </div><br>
 <div class="docdiv">
     <font class="docu">DESCRIPTION</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    A library macro/option that changes certain functionality
+    If this macro is defined, then the older Apple API set will be utilized versus the newer macOS calls (useful for compiling on older OS X platforms).<br>
+<br>
+For example, in <code><a href="../classes/omni-sync-spin_lock.html">omni::sync::spin_lock</a></code> when the object is locked, if this macro is defined then <code><a href="https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man3/OSSpinLockLock.3.html">OSSpinLockLock</a></code> is used, while if this macro is not defined then os_unfair_lock_lock is utilized.
 </div><br>
 <div class="docdiv">
     <font class="docu">CONSIDERATIONS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    No special considerations
+    No special considerations.
 </div><br>
 <div class="docdiv">
     <font class="docu">PLATFORM SPECIFIC</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    No platform specific notes.
+    This macro option only applies to Apple platforms and will have no effect if defined on a non Apple platform.
 </div><br>
 <div class="docdiv">
     <font class="docu">NOTES</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>

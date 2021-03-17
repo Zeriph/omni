@@ -1,11 +1,9 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_INFINITE_TIMEOUT</Name>
-  <Brief>Defines the infinite timeout value
-</Brief>
-  <Considerations>No special considerations
-</Considerations>
-  <Description>A framework constant that defines the infinite timeout used when joining a thread or waiting for a specific object. Defined as such:
+  <Brief>Defines the infinite timeout value</Brief>
+  <Considerations>No special considerations</Considerations>
+  <Description>A library macro constant that defines the infinite timeout used when joining a thread or waiting for a specific object. Defined as such:
 @code
 #if defined(OMNI_OS_WIN)
     #define OMNI_INFINITE_TIMEOUT INFINITE
@@ -14,12 +12,9 @@
 #endif
 @code
 </Description>
-  <Notes>None.
-</Notes>
-  <PlatformSpecific>On Windows based platforms this is a synonym for the @c INFINITE macro defined in @c WinBase.h and on other platforms it is defined as the @c INFINITE macro is (that of a max @c DWORD value of  @c 0xFFFFFFFF)
-</PlatformSpecific>
-  <Synopsis>Defines the infinite timeout value used for waiting on a thread. 
-</Synopsis>
+  <Notes>None.</Notes>
+  <PlatformSpecific>On Windows based platforms this is a synonym for the @c INFINITE macro defined in @c WinBase.h and on other platforms it is defined as the @c INFINITE macro is (that of a max @c DWORD value of  @c 0xFFFFFFFF)</PlatformSpecific>
+  <Synopsis>Defines the infinite timeout value used for waiting on a thread. </Synopsis>
   <IsHelper>true</IsHelper>
   <IsConstant>true</IsConstant>
   <IsFWHelp>false</IsFWHelp>

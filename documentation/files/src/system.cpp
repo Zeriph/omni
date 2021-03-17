@@ -17,6 +17,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include <omni/system.hpp>
+#include <omni/defs/consts.hpp>
 #include <iostream>
 #include <string>
 #if !defined(OMNI_WIN_API)
@@ -39,13 +40,10 @@
     #endif
 #endif
 #include <csignal>
-#include <cerrno>
 #include <signal.h>
-#include <errno.h>
 #include <cstdlib>
 #include <climits>
 #include <cstring>
-#include <omni/defs/consts.hpp>
 
 bool omni::system::is_big_endian()
 {
@@ -67,85 +65,69 @@ std::string omni::system::last_error_str()
 
 omni::system::architecture_type omni::system::architecture()
 {
-    #if defined(OMNI_ARCH_DEC_ALPHA)
-        // DEC-Alpha
-        return omni::system::architecture_type::DEC_ALPHA;
-    #endif
     #if defined(OMNI_ARCH_AMD64)
         // AMD64
         return omni::system::architecture_type::AMD64;
-    #endif
-    #if defined(OMNI_ARCH_ARM)
+    #elif defined(OMNI_ARCH_ARM)
         // ARM
         return omni::system::architecture_type::ARM;
-    #endif
-    #if defined(OMNI_ARCH_ARM64)
+    #elif defined(OMNI_ARCH_ARM64)
         //ARM64
         return omni::system::architecture_type::ARM64;
-    #endif
-    #if defined(OMNI_ARCH_BLACKFIN)
+    #elif defined(OMNI_ARCH_BLACKFIN)
         // Blackfin
         return omni::system::architecture_type::BLACKFIN;
-    #endif
-    #if defined(OMNI_ARCH_CONVEX)
+    #elif defined(OMNI_ARCH_CONVEX)
         // Convex
         return omni::system::architecture_type::CONVEX;
-    #endif
-    #if defined(OMNI_ARCH_EPIPHANY)
+    #elif defined(OMNI_ARCH_DEC_ALPHA)
+        // DEC-Alpha
+        return omni::system::architecture_type::DEC_ALPHA;
+    #elif defined(OMNI_ARCH_EPIPHANY)
         // Epiphany
         return omni::system::architecture_type::EPIPHANY;
-    #endif
-    #if defined(OMNI_ARCH_HPPA_RISC)
+    #elif defined(OMNI_ARCH_HPPA_RISC)
         // HP/PA RISC
         return omni::system::architecture_type::HPPA_RISC;
-    #endif
-    #if defined(OMNI_ARCH_INTEL_X86)
+    #elif defined(OMNI_ARCH_INTEL_X86)
         // Intel x86
         return omni::system::architecture_type::INTEL_X86;
-    #endif
-    #if defined(OMNI_ARCH_INTEL_IA64)
+    #elif defined(OMNI_ARCH_INTEL_IA64)
         // Intel Itanium (IA-64)
         return omni::system::architecture_type::INTEL_IA64;
-    #endif
-    #if defined(OMNI_ARCH_MOTOROLA_68K)
+    #elif defined(OMNI_ARCH_MOTOROLA_68K)
         // Motorola 68k
         return omni::system::architecture_type::MOTOROLA_68K;
-    #endif
-    #if defined(OMNI_ARCH_MIPS)
+    #elif defined(OMNI_ARCH_MIPS)
         // MIPS
         return omni::system::architecture_type::MIPS;
-    #endif
-    #if defined(OMNI_ARCH_POWER_PC)
+    #elif defined(OMNI_ARCH_POWER_PC)
         // PowerPC
         return omni::system::architecture_type::POWER_PC;
-    #endif
-    #if defined(OMNI_ARCH_PYRAMID_9810)
+    #elif defined(OMNI_ARCH_PYRAMID_9810)
         // Pyramid 9810
         return omni::system::architecture_type::PYRAMID_9810;
-    #endif
-    #if defined(OMNI_ARCH_RS600)
+    #elif defined(OMNI_ARCH_RS6000)
         // RS/6000
-        return omni::system::architecture_type::RS600;
-    #endif
-    #if defined(OMNI_ARCH_SPARC)
+        return omni::system::architecture_type::RS6000;
+    #elif defined(OMNI_ARCH_SPARC)
         // SPARC
         return omni::system::architecture_type::SPARC;
-    #endif
-    #if defined(OMNI_ARCH_SUPER_H)
+    #elif defined(OMNI_ARCH_SUPER_H)
         // SuperH
         return omni::system::architecture_type::SUPER_H;
-    #endif
-    #if defined(OMNI_ARCH_SYSTEM_Z)
+    #elif defined(OMNI_ARCH_SYSTEM_Z)
         // SystemZ
         return omni::system::architecture_type::SYSTEM_Z;
-    #endif
-    #if defined(OMNI_ARCH_TMS320)
+    #elif defined(OMNI_ARCH_TMS320)
         // TMS320
         return omni::system::architecture_type::TMS320;
-    #endif
-    #if defined(OMNI_ARCH_TMS470)
+    #elif defined(OMNI_ARCH_TMS470)
         // TMS470
         return omni::system::architecture_type::TMS470;
+    #else
+        // Unknown
+        return omni::system::architecture_type::UNKNOWN;
     #endif
 }
 
@@ -184,7 +166,7 @@ omni::string_t omni::system::cwd()
 std::string omni::system::error_str(int code)
 {
     #if defined(OMNI_WIN_API)//defined(OMNI_OS_WIN)
-        OMNI_CHAR_T *serr = new OMNI_CHAR_T[65535];
+        OMNI_CHAR_T* serr = new OMNI_CHAR_T[65535];
         // not a direct system message, must use IGNORE_INSERTS
         DWORD ret = ::FormatMessage(
             FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,

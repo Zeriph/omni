@@ -1,22 +1,17 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_DWSTR</Name>
-  <Brief>Widens a string-ized macro
-</Brief>
-  <Considerations>No special considerations
-</Considerations>
+  <Brief>Widens a string-ized macro.</Brief>
+  <Considerations>No special considerations.</Considerations>
   <Description>Expands a macro value to a wide string. Defined as the following
 
 @code
 #define OMNI_DWSTR(v) L#v
 @code
 </Description>
-  <Notes>None.
-</Notes>
-  <PlatformSpecific>No platform specific notes.
-</PlatformSpecific>
-  <Synopsis>Expands a macro to a wide string.
-</Synopsis>
+  <Notes>None.</Notes>
+  <PlatformSpecific>No platform specific notes.</PlatformSpecific>
+  <Synopsis>Expands a macro to a wide string.</Synopsis>
   <IsHelper>true</IsHelper>
   <IsConstant>false</IsConstant>
   <IsFWHelp>false</IsFWHelp>

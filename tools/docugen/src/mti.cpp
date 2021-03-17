@@ -1811,7 +1811,8 @@ void OmniDocuGen::MemberTypeInformation::_ParseFunctionInfo(const std::string& c
                 t = omni::string::trim_end(t.substr(0, tmpx));
             }
             if (omni::string::ends_with(t, "throw()")) { t = omni::string::trim_end(t.substr(0, t.rfind("throw()"))); }
-            if (omni::string::ends_with(t, "OMNI_DTOR_NO_THROWS")) { t = omni::string::trim_end(t.substr(0, t.rfind("OMNI_DTOR_NO_THROWS"))); }
+            if (omni::string::ends_with(t, "OMNI_FUNC_NO_THROW")) { t = omni::string::trim_end(t.substr(0, t.rfind("OMNI_FUNC_NO_THROW"))); }
+            if (omni::string::ends_with(t, "OMNI_DTOR_NO_THROW")) { t = omni::string::trim_end(t.substr(0, t.rfind("OMNI_DTOR_NO_THROW"))); }
             if (omni::string::ends_with(t, "const")) { t = omni::string::trim_end(t.substr(0, t.rfind("const"))); }
             tcode = t;
             if (!dc.empty()) {

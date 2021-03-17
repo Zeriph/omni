@@ -145,6 +145,7 @@ set fwsrc=!fwsrc! !common!\async_timer.cpp
 set fwsrc=!fwsrc! !common!\basic_thread.cpp
 set fwsrc=!fwsrc! !common!\binary_semaphore.cpp
 set fwsrc=!fwsrc! !common!\conditional.cpp
+set fwsrc=!fwsrc! !common!\crypto.cpp
 set fwsrc=!fwsrc! !common!\date_time.cpp
 set fwsrc=!fwsrc! !common!\drop_timer.cpp
 set fwsrc=!fwsrc! !common!\endpoint_descriptor.cpp

@@ -44,11 +44,11 @@ namespace OmniDocuGen
                         if (omni::io::file::exists(file)) {
                             switch (ht) {
                                 case Types::HashType::SHA256:
-                                    return omni::crypto::SHA256::compute_hash(file);
+                                    return omni::crypto::sha256::compute_file_hash(file);
                                 case Types::HashType::SHA1:
-                                    return omni::crypto::SHA1::compute_hash(file);
+                                    return omni::crypto::sha1::compute_file_hash(file);
                                 case Types::HashType::MD5:
-                                    return omni::crypto::MD5::compute_hash(file);
+                                    return omni::crypto::md5::compute_file_hash(file);
                             }
                         }
                     } catch (const std::exception& ex) {
@@ -321,297 +321,303 @@ std::string OmniDocuGen::DocuGen::_GenBuildFileFromSrcs(const List<std::string>&
 
 void OmniDocuGen::DocuGen::_GenBuildFile(const List<std::string>& hdrs, const List<std::string>& srcs, const std::string& srcdir, const std::string& file, const std::string& odir)
 {
-    // Read file
-    std::string all = omni::io::file::get_contents(file);
-    std::string tmp = "", tmp2 = "", rep = "";
-    bool isnlwin = ((all.find('\r') > 0) && (all.find('\n') > 0));
-    bool isxcode = omni::string::contains(all, OmniDocuGen::Constants::Tags::XCODE_PARSE);
-    bool ismake = omni::string::contains(all, OmniDocuGen::Constants::Tags::MAKE_FILE);
-    if (!isxcode) {
-        if (ismake) {
-            //#region "<zeriph_inline_makefile_source>"
-            tmp = Util::GetTag(all, OmniDocuGen::Constants::Tags::MAKE_FILE);
-            if (!tmp.empty()) {
-                tmp2 = Util::GetTagData(tmp, OmniDocuGen::Constants::Tags::MAKE_FILE);
-                rep = DocuGen::_GenBuildFileFromSrcs(srcs, srcdir, "", tmp2, isnlwin, true, true);
-                rep = omni::string::replace_all(omni::string::replace_all(rep, "\\", ""), "\n", "\n\t");
-                all = omni::string::replace_all(all, tmp, rep);
-                tmp = tmp2 = rep = "";
-            }
-        } else {
-            // parse as 'regular' build file
-            //#region inline parsing
-
-            /*
-                <zeriph_inline_source>src="${src} ${omni_src_dir}/{0.nm_path}"</zeriph_inline_source>
-                <zeriph_inline_source>    $$OMNI_SRC_DIR/{0.nm_path} \</zeriph_inline_source>
-                <zeriph_inline_header>    $$OMNI_SRC_DIR/{0.nm_path} \</zeriph_inline_header>
-                OBJ  = <zeriph_inline_source_nonl>obj/{0.nm}.o</zeriph_inline_source_nonl> $(RES)
-
-                {0} = full path (/sourc/omni/application.cpp or /sourc/omni/omni_impl/thread/sys_thread_impl.cxx) <- cxx's aren't allowed though
-                {0.nm} = name only (sys_thread_impl or application)
-                {0.nm_path} = name/path (minus the source directory), i.e. omni/thread.hpp in /source/omni/omni/thread.hpp
-            */
-
-            //#region "<zeriph_inline_source>"
-            tmp = Util::GetTag(all, OmniDocuGen::Constants::Tags::IL_SRC);
-            if (!tmp.empty()) {
-                tmp2 = Util::GetTagData(tmp, OmniDocuGen::Constants::Tags::IL_SRC);
-                rep = DocuGen::_GenBuildFileFromSrcs(srcs, srcdir, tmp2.substr(0, 1), tmp2.substr(1), isnlwin, true, true);
-                all = omni::string::replace_all(all, tmp, rep);
-                tmp = tmp2 = rep = "";
-            }
-            //#endregion
-            //#region "<zeriph_inline_header>"
-            tmp = Util::GetTag(all, OmniDocuGen::Constants::Tags::IL_HDR);
-            if (!tmp.empty()) {
-                tmp2 = Util::GetTagData(tmp, OmniDocuGen::Constants::Tags::IL_HDR);
-                rep = DocuGen::_GenBuildFileFromSrcs(hdrs, srcdir, tmp2.substr(0, 1), tmp2.substr(1), isnlwin, true, true);
-                all = omni::string::replace_all(all, tmp, rep);
-                tmp = tmp2 = rep = "";
-            }
-            //#endregion
-            //#region "<zeriph_inline_source_nonl>"
-            tmp = Util::GetTag(all, OmniDocuGen::Constants::Tags::IL_SRC_NONL);
-            if (!tmp.empty()) {
-                tmp2 = Util::GetTagData(tmp, OmniDocuGen::Constants::Tags::IL_SRC_NONL);
-                rep = DocuGen::_GenBuildFileFromSrcs(srcs, srcdir, tmp2.substr(0, 1), tmp2.substr(1));
-                all = omni::string::replace_all(all, tmp, rep);
-                tmp = tmp2 = rep = "";
-            }
-            
-            //#region omni full section parsing
-
-            /*
-                <--- start zeriph omni section --->
-                {x.int_inc}
-                <zeriph_source_format>
-                <Unit filename="{0}" />
-                </zeriph_source_format>
-                <zeriph_header_format>
-                <Unit filename="{0}" />
-                </zeriph_header_format>
-                <zeriph_slash>/</zeriph_slash>
-                <zeriph_path>/source/omni/</zeriph_path>
-                <zeriph_tabspace>		</zeriph_tabspace>
-                <zeriph_virt_folder></zeriph_virt_folder>
-                <zeriph_virt_folder_rec>false</zeriph_virt_folder_rec>
-                <--- end zeriph omni section --->
-            */
-
-            //#region "<--- start zeriph omni section --->"
-            tmp = Util::GetTag(all, OmniDocuGen::Constants::Tags::OMNI_SECTION);
-            if (!tmp.empty()) {
-                rep = "";
-                tmp2 = omni::string::trim(Util::GetTagData(tmp, OmniDocuGen::Constants::Tags::OMNI_SECTION));
-                std::string nl = (isnlwin ? Util::WinLe : Util::NixLe);
-                List<std::string> splits;
-                std::string src_fmt = Util::GetTagData(tmp2, "zeriph_source_format");
-                std::string hdr_fmt = Util::GetTagData(tmp2, "zeriph_header_format");
-                std::string slash = Util::GetTagData(tmp2, "zeriph_slash");
-                std::string oslash = ((slash == "/") ? "\\" : "/");
-                std::string sdir = Util::GetTagData(tmp2, "zeriph_path");
-                std::string tbspc = Util::GetTagData(tmp2, "zeriph_tabspace");
-                std::string vfldr = Util::GetTagData(tmp2, "zeriph_virt_folder");
-                std::string vfldr_rec_data = Util::GetTagData(tmp2, "zeriph_virt_folder_rec");
-                bool has_vfldr = !vfldr.empty();
-                bool vfldr_rec = (vfldr_rec_data == "true");
-                bool has_int_inc = omni::string::contains(src_fmt, "{x.int_inc}");
-                bool src_only = hdr_fmt.empty() || hdr_fmt == "SOURCE_ONLY";
-                if (has_vfldr && !vfldr_rec) {
-                    rep += omni::string::replace_all(vfldr, "{0}", "omni");
-                    rep += omni::string::replace_all(vfldr, "{0}", "omni/omni");
-                    vfldr = "";
-                    has_vfldr = false;
+    if (omni::io::file::exist(file)) {
+        // Read file
+        std::string all = omni::io::file::get_contents(file);
+        std::string tmp = "", tmp2 = "", rep = "";
+        bool isnlwin = ((all.find('\r') > 0) && (all.find('\n') > 0));
+        bool isxcode = omni::string::contains(all, OmniDocuGen::Constants::Tags::XCODE_PARSE);
+        bool ismake = omni::string::contains(all, OmniDocuGen::Constants::Tags::MAKE_FILE);
+        if (!isxcode) {
+            if (ismake) {
+                //#region "<zeriph_inline_makefile_source>"
+                tmp = Util::GetTag(all, OmniDocuGen::Constants::Tags::MAKE_FILE);
+                if (!tmp.empty()) {
+                    tmp2 = Util::GetTagData(tmp, OmniDocuGen::Constants::Tags::MAKE_FILE);
+                    rep = DocuGen::_GenBuildFileFromSrcs(srcs, srcdir, "", tmp2, isnlwin, true, true);
+                    rep = omni::string::replace_all(omni::string::replace_all(rep, "\\", ""), "\n", "\n\t");
+                    all = omni::string::replace_all(all, tmp, rep);
+                    tmp = tmp2 = rep = "";
                 }
-                std::string tval = "", t2 = "", pth = "";
-                if (!has_int_inc) {
-                    //#region no_int_inc
-                    // no integer incremental values
-                    foreach_c (std::string, src, srcs) {
-                        if (OmniDocuGen::Program::StopReq) { return; }
-                        if (omni::string::to_lower(omni::io::path::get_extension(*src)) == ".cxx") { continue; }
-                        pth = omni::string::replace_all(omni::string::replace_all(*src, srcdir, ""), oslash, slash);
-                        tmp2 = omni::string::replace_all(src_fmt, "{0}", (sdir + pth));
-                        tmp2 = omni::string::replace_all(tmp2, "{0.nm}", omni::io::path::get_name_without_extension(pth));
-                        tmp2 = omni::string::replace_all(tmp2, "{0.nm_path}", pth);
-                        if (has_vfldr) { tval += tmp2; } else { rep += tmp2; }
+            } else {
+                // parse as 'regular' build file
+                //#region inline parsing
+
+                /*
+                    <zeriph_inline_source>src="${src} ${omni_src_dir}/{0.nm_path}"</zeriph_inline_source>
+                    <zeriph_inline_source>    $$OMNI_SRC_DIR/{0.nm_path} \</zeriph_inline_source>
+                    <zeriph_inline_header>    $$OMNI_SRC_DIR/{0.nm_path} \</zeriph_inline_header>
+                    OBJ  = <zeriph_inline_source_nonl>obj/{0.nm}.o</zeriph_inline_source_nonl> $(RES)
+
+                    {0} = full path (/sourc/omni/application.cpp or /sourc/omni/omni_impl/thread/sys_thread_impl.cxx) <- cxx's aren't allowed though
+                    {0.nm} = name only (sys_thread_impl or application)
+                    {0.nm_path} = name/path (minus the source directory), i.e. omni/thread.hpp in /source/omni/omni/thread.hpp
+                */
+
+                //#region "<zeriph_inline_source>"
+                tmp = Util::GetTag(all, OmniDocuGen::Constants::Tags::IL_SRC);
+                if (!tmp.empty()) {
+                    tmp2 = Util::GetTagData(tmp, OmniDocuGen::Constants::Tags::IL_SRC);
+                    rep = DocuGen::_GenBuildFileFromSrcs(srcs, srcdir, tmp2.substr(0, 1), tmp2.substr(1), isnlwin, true, true);
+                    all = omni::string::replace_all(all, tmp, rep);
+                    tmp = tmp2 = rep = "";
+                }
+                //#endregion
+                //#region "<zeriph_inline_header>"
+                tmp = Util::GetTag(all, OmniDocuGen::Constants::Tags::IL_HDR);
+                if (!tmp.empty()) {
+                    tmp2 = Util::GetTagData(tmp, OmniDocuGen::Constants::Tags::IL_HDR);
+                    rep = DocuGen::_GenBuildFileFromSrcs(hdrs, srcdir, tmp2.substr(0, 1), tmp2.substr(1), isnlwin, true, true);
+                    all = omni::string::replace_all(all, tmp, rep);
+                    tmp = tmp2 = rep = "";
+                }
+                //#endregion
+                //#region "<zeriph_inline_source_nonl>"
+                tmp = Util::GetTag(all, OmniDocuGen::Constants::Tags::IL_SRC_NONL);
+                if (!tmp.empty()) {
+                    tmp2 = Util::GetTagData(tmp, OmniDocuGen::Constants::Tags::IL_SRC_NONL);
+                    rep = DocuGen::_GenBuildFileFromSrcs(srcs, srcdir, tmp2.substr(0, 1), tmp2.substr(1));
+                    all = omni::string::replace_all(all, tmp, rep);
+                    tmp = tmp2 = rep = "";
+                }
+                
+                //#region omni full section parsing
+
+                /*
+                    <--- start zeriph omni section --->
+                    {x.int_inc}
+                    <zeriph_source_format>
+                    <Unit filename="{0}" />
+                    </zeriph_source_format>
+                    <zeriph_header_format>
+                    <Unit filename="{0}" />
+                    </zeriph_header_format>
+                    <zeriph_slash>/</zeriph_slash>
+                    <zeriph_path>/source/omni/</zeriph_path>
+                    <zeriph_tabspace>		</zeriph_tabspace>
+                    <zeriph_virt_folder></zeriph_virt_folder>
+                    <zeriph_virt_folder_rec>false</zeriph_virt_folder_rec>
+                    <--- end zeriph omni section --->
+                */
+
+                //#region "<--- start zeriph omni section --->"
+                tmp = Util::GetTag(all, OmniDocuGen::Constants::Tags::OMNI_SECTION);
+                if (!tmp.empty()) {
+                    rep = "";
+                    tmp2 = omni::string::trim(Util::GetTagData(tmp, OmniDocuGen::Constants::Tags::OMNI_SECTION));
+                    std::string nl = (isnlwin ? Util::WinLe : Util::NixLe);
+                    List<std::string> splits;
+                    std::string src_fmt = Util::GetTagData(tmp2, "zeriph_source_format");
+                    std::string hdr_fmt = Util::GetTagData(tmp2, "zeriph_header_format");
+                    std::string slash = Util::GetTagData(tmp2, "zeriph_slash");
+                    std::string oslash = ((slash == "/") ? "\\" : "/");
+                    std::string sdir = Util::GetTagData(tmp2, "zeriph_path");
+                    std::string tbspc = Util::GetTagData(tmp2, "zeriph_tabspace");
+                    std::string vfldr = Util::GetTagData(tmp2, "zeriph_virt_folder");
+                    std::string vfldr_rec_data = Util::GetTagData(tmp2, "zeriph_virt_folder_rec");
+                    bool has_vfldr = !vfldr.empty();
+                    bool vfldr_rec = (vfldr_rec_data == "true");
+                    bool has_int_inc = omni::string::contains(src_fmt, "{x.int_inc}");
+                    bool src_only = hdr_fmt.empty() || hdr_fmt == "SOURCE_ONLY";
+                    if (has_vfldr && !vfldr_rec) {
+                        rep += omni::string::replace_all(vfldr, "{0}", "omni");
+                        rep += omni::string::replace_all(vfldr, "{0}", "omni/omni");
+                        vfldr = "";
+                        has_vfldr = false;
                     }
-                    if (!src_only) {
-                        std::string tval2 = "";
-                        foreach_c (std::string, src, hdrs) {
+                    std::string tval = "", t2 = "", pth = "";
+                    if (!has_int_inc) {
+                        //#region no_int_inc
+                        // no integer incremental values
+                        foreach_c (std::string, src, srcs) {
                             if (OmniDocuGen::Program::StopReq) { return; }
+                            if (omni::string::to_lower(omni::io::path::get_extension(*src)) == ".cxx") { continue; }
                             pth = omni::string::replace_all(omni::string::replace_all(*src, srcdir, ""), oslash, slash);
-                            tmp2 = omni::string::replace_all(hdr_fmt, "{0}", (sdir + pth));
+                            tmp2 = omni::string::replace_all(src_fmt, "{0}", (sdir + pth));
                             tmp2 = omni::string::replace_all(tmp2, "{0.nm}", omni::io::path::get_name_without_extension(pth));
                             tmp2 = omni::string::replace_all(tmp2, "{0.nm_path}", pth);
-                            if (has_vfldr) { tval2 += tmp2; } else { rep += tmp2; }
+                            if (has_vfldr) { tval += tmp2; } else { rep += tmp2; }
+                        }
+                        if (!src_only) {
+                            std::string tval2 = "";
+                            foreach_c (std::string, src, hdrs) {
+                                if (OmniDocuGen::Program::StopReq) { return; }
+                                pth = omni::string::replace_all(omni::string::replace_all(*src, srcdir, ""), oslash, slash);
+                                tmp2 = omni::string::replace_all(hdr_fmt, "{0}", (sdir + pth));
+                                tmp2 = omni::string::replace_all(tmp2, "{0.nm}", omni::io::path::get_name_without_extension(pth));
+                                tmp2 = omni::string::replace_all(tmp2, "{0.nm_path}", pth);
+                                if (has_vfldr) { tval2 += tmp2; } else { rep += tmp2; }
+                            }
+                            if (has_vfldr) {
+                                t2 = omni::string::replace_all(vfldr, "{0}", "omni/omni");
+                                splits = Util::Split(tval2, nl);
+                                tval2 = "";
+                                for (int z = 0; z < splits.size(); z++) {
+                                    tval2 += (tbspc + splits[z]);
+                                    if ((z + 1) < splits.size()) { tval2 += nl[0]; }
+                                }
+                                tval += omni::string::replace_all(t2, "{1}", tval2);
+                            }
                         }
                         if (has_vfldr) {
-                            t2 = omni::string::replace_all(vfldr, "{0}", "omni/omni");
-                            splits = Util::Split(tval2, nl);
-                            tval2 = "";
+                            t2 = omni::string::replace_all(vfldr, "{0}", "omni");
+                            splits = Util::Split(tval, nl);
+                            tval = "";
                             for (int z = 0; z < splits.size(); z++) {
-                                tval2 += (tbspc + splits[z]);
-                                if ((z + 1) < splits.size()) { tval2 += nl[0]; }
+                                tval += (tbspc + splits[z]);
+                                if ((z + 1) < splits.size()) { tval += nl[0]; }
                             }
-                            tval += omni::string::replace_all(t2, "{1}", tval2);
+                            rep += omni::string::replace_all(t2, "{1}", tval);
                         }
-                    }
-                    if (has_vfldr) {
-                        t2 = omni::string::replace_all(vfldr, "{0}", "omni");
-                        splits = Util::Split(tval, nl);
-                        tval = "";
-                        for (int z = 0; z < splits.size(); z++) {
-                            tval += (tbspc + splits[z]);
-                            if ((z + 1) < splits.size()) { tval += nl[0]; }
-                        }
-                        rep += omni::string::replace_all(t2, "{1}", tval);
-                    }
-                    //#endregion
-                } else {
-                    //#region int_inc
-                    int i = 0;
-                    for (; i < srcs.size(); i++) {
-                        if (omni::string::to_lower(omni::io::path::get_extension(srcs[i])) == ".cxx") { continue; }
-                        pth = omni::string::replace_all(omni::string::replace_all(srcs[i], srcdir, ""), oslash, slash);
-                        tmp2 = omni::string::replace_all(src_fmt, "{x.int_inc}", omni::string::to_string(i));
-                        tmp2 = omni::string::replace_all(tmp2, "{0}", (sdir + pth));
-                        tmp2 = omni::string::replace_all(tmp2, "{0.nm}", omni::io::path::get_name_without_extension(pth));
-                        tmp2 = omni::string::replace_all(tmp2, "{0.nm_path}", pth);
-                        if (has_vfldr) { tval += tmp2; } else { rep += tmp2; }
-                    }
-                    if (!src_only) {
-                        std::string tval2 = "";
-                        int x = 0;
-                        for (; x < hdrs.size(); x++, i++) {
-                            pth = omni::string::replace_all(omni::string::replace_all(hdrs[x], srcdir, ""), oslash, slash);
-                            tmp2 = omni::string::replace_all(hdr_fmt, "{x.int_inc}", omni::string::to_string(i));
+                        //#endregion
+                    } else {
+                        //#region int_inc
+                        int i = 0;
+                        for (; i < srcs.size(); i++) {
+                            if (omni::string::to_lower(omni::io::path::get_extension(srcs[i])) == ".cxx") { continue; }
+                            pth = omni::string::replace_all(omni::string::replace_all(srcs[i], srcdir, ""), oslash, slash);
+                            tmp2 = omni::string::replace_all(src_fmt, "{x.int_inc}", omni::string::to_string(i));
                             tmp2 = omni::string::replace_all(tmp2, "{0}", (sdir + pth));
                             tmp2 = omni::string::replace_all(tmp2, "{0.nm}", omni::io::path::get_name_without_extension(pth));
                             tmp2 = omni::string::replace_all(tmp2, "{0.nm_path}", pth);
-                            if (has_vfldr) { tval2 += tmp2; } else { rep += tmp2; }
+                            if (has_vfldr) { tval += tmp2; } else { rep += tmp2; }
+                        }
+                        if (!src_only) {
+                            std::string tval2 = "";
+                            int x = 0;
+                            for (; x < hdrs.size(); x++, i++) {
+                                pth = omni::string::replace_all(omni::string::replace_all(hdrs[x], srcdir, ""), oslash, slash);
+                                tmp2 = omni::string::replace_all(hdr_fmt, "{x.int_inc}", omni::string::to_string(i));
+                                tmp2 = omni::string::replace_all(tmp2, "{0}", (sdir + pth));
+                                tmp2 = omni::string::replace_all(tmp2, "{0.nm}", omni::io::path::get_name_without_extension(pth));
+                                tmp2 = omni::string::replace_all(tmp2, "{0.nm_path}", pth);
+                                if (has_vfldr) { tval2 += tmp2; } else { rep += tmp2; }
+                            }
+                            if (has_vfldr) {
+                                t2 = omni::string::replace_all(vfldr, "{0}", "omni/omni");
+                                splits = Util::Split(tval2, nl);
+                                tval2 = "";
+                                for (int z = 0; z < splits.size(); z++) {
+                                    tval2 += (tbspc + splits[z]);
+                                    if ((z + 1) < splits.size()) { tval2 += nl[0]; }
+                                }
+                                tval += omni::string::replace_all(t2, "{1}", tval2);
+                            }
                         }
                         if (has_vfldr) {
-                            t2 = omni::string::replace_all(vfldr, "{0}", "omni/omni");
-                            splits = Util::Split(tval2, nl);
-                            tval2 = "";
+                            t2 = omni::string::replace_all(vfldr, "{0}", "omni");
+                            splits = Util::Split(tval, nl);
+                            tval = "";
                             for (int z = 0; z < splits.size(); z++) {
-                                tval2 += (tbspc + splits[z]);
-                                if ((z + 1) < splits.size()) { tval2 += nl[0]; }
+                                tval += (tbspc + splits[z]);
+                                if ((z + 1) < splits.size()) { tval += nl[0]; }
                             }
-                            tval += omni::string::replace_all(t2, "{1}", tval2);
+                            rep += omni::string::replace_all(t2, "{1}", tval);
                         }
                     }
-                    if (has_vfldr) {
-                        t2 = omni::string::replace_all(vfldr, "{0}", "omni");
-                        splits = Util::Split(tval, nl);
-                        tval = "";
-                        for (int z = 0; z < splits.size(); z++) {
-                            tval += (tbspc + splits[z]);
-                            if ((z + 1) < splits.size()) { tval += nl[0]; }
-                        }
-                        rep += omni::string::replace_all(t2, "{1}", tval);
+                    splits = Util::Split(rep, nl);
+                    rep = "";
+                    for (int z = 0; z < splits.size(); z++) {
+                        rep += (tbspc + splits[z]);
+                        if ((z + 1) < splits.size()) { rep += nl[0]; }
                     }
+                    all = omni::string::replace_all(all, tmp, rep);
                 }
-                splits = Util::Split(rep, nl);
-                rep = "";
-                for (int z = 0; z < splits.size(); z++) {
-                    rep += (tbspc + splits[z]);
-                    if ((z + 1) < splits.size()) { rep += nl[0]; }
+            }
+        } else {
+            // xcode project files require some 'special' handling :/
+            //#region xcode parsing
+
+            /*
+                <zeriph_xcode_source_ref>
+                <zeriph_xcode_file_ref>
+                <zeriph_xcode_fref_hex>
+                <zeriph_xcode_sref_hex>
+                <zeriph_xcode_parse>
+                
+                {0.src_ref}, {0.file_ref}, {0} = full path,
+                {0.nm_path} = name/path (minus the source directory)
+                */
+            List<Types::xcodeprojfile> xps;
+            std::string trep = "";
+            foreach_c (std::string, src, srcs) {
+                if (omni::string::to_lower(omni::io::path::get_extension(*src)) == ".cxx") { continue; }
+                if (xps.size() == 0) {
+                    xps.push_back(Types::xcodeprojfile(omni::string::replace_all(*src, srcdir, "/source/omni/"),
+                                            "B729DBC00000000000000000",
+                                            "B729DBD00000000000000000"));
+                } else {
+                    xps.push_back(Types::xcodeprojfile(omni::string::replace_all(*src, srcdir, "/source/omni/"),
+                                            xps[xps.size() - 1].src_ref,
+                                            xps[xps.size() - 1].file_ref));
+                }
+            }
+            rep = "";
+            all = Util::GetTagData(all, OmniDocuGen::Constants::Tags::XCODE_PARSE);
+
+            //#region XCODE_SREF
+            tmp = Util::GetTag(all, OmniDocuGen::Constants::Tags::XCODE_SREF);
+            if (!tmp.empty()) {
+                trep = "";
+                tmp2 = Util::GetTagData(tmp, OmniDocuGen::Constants::Tags::XCODE_SREF);
+                foreach (Types::xcodeprojfile, x, xps) {
+                    rep += omni::string::replace_all(omni::string::replace_all(omni::string::replace_all(omni::string::replace_all(tmp2, "{0.src_ref}", x->src_ref), "{0.file_ref}", x->file_ref), "{0}", x->full_path), "{0.nm_path}", x->nm_path);
                 }
                 all = omni::string::replace_all(all, tmp, rep);
+                tmp = tmp2 = rep = "";
             }
+            //#region XCODE_FREF
+            tmp = Util::GetTag(all, OmniDocuGen::Constants::Tags::XCODE_FREF);
+            if (!tmp.empty()) {
+                trep = "";
+                tmp2 = Util::GetTagData(tmp, OmniDocuGen::Constants::Tags::XCODE_FREF);
+                foreach (Types::xcodeprojfile, x, xps) {
+                    rep += omni::string::replace_all(omni::string::replace_all(omni::string::replace_all(omni::string::replace_all(tmp2, "{0.src_ref}", x->src_ref), "{0.file_ref}", x->file_ref), "{0}", x->full_path), "{0.nm_path}", x->nm_path);
+                }
+                all = omni::string::replace_all(all, tmp, rep);
+                tmp = tmp2 = rep = "";
+            }
+            //#region XCODE_FHEX
+            tmp = Util::GetTag(all, OmniDocuGen::Constants::Tags::XCODE_FHEX);
+            if (!tmp.empty()) {
+                trep = "";
+                tmp2 = Util::GetTagData(tmp, OmniDocuGen::Constants::Tags::XCODE_FHEX);
+                foreach (Types::xcodeprojfile, x, xps) {
+                    rep += omni::string::replace_all(omni::string::replace_all(omni::string::replace_all(omni::string::replace_all(tmp2, "{0.src_ref}", x->src_ref), "{0.file_ref}", x->file_ref), "{0}", x->full_path), "{0.nm_path}", x->nm_path);
+                }
+                all = omni::string::replace_all(all, tmp, rep);
+                tmp = tmp2 = rep = "";
+            }
+            //#region XCODE_SHEX
+            tmp = Util::GetTag(all, OmniDocuGen::Constants::Tags::XCODE_SHEX);
+            if (!tmp.empty()) {
+                trep = "";
+                tmp2 = Util::GetTagData(tmp, OmniDocuGen::Constants::Tags::XCODE_SHEX);
+                foreach (Types::xcodeprojfile, x, xps) {
+                    rep += omni::string::replace_all(omni::string::replace_all(omni::string::replace_all(omni::string::replace_all(tmp2, "{0.src_ref}", x->src_ref), "{0.file_ref}", x->file_ref), "{0}", x->full_path), "{0.nm_path}", x->nm_path);
+                }
+                all = omni::string::replace_all(all, tmp, rep);
+                tmp = tmp2 = rep = "";
+            }
+
         }
+        Util::WriteFile(omni::io::path::combine(odir, omni::io::path::get_name(file)), all);
     } else {
-        // xcode project files require some 'special' handling :/
-        //#region xcode parsing
-
-        /*
-            <zeriph_xcode_source_ref>
-            <zeriph_xcode_file_ref>
-            <zeriph_xcode_fref_hex>
-            <zeriph_xcode_sref_hex>
-            <zeriph_xcode_parse>
-            
-            {0.src_ref}, {0.file_ref}, {0} = full path,
-            {0.nm_path} = name/path (minus the source directory)
-            */
-        List<Types::xcodeprojfile> xps;
-        std::string trep = "";
-        foreach_c (std::string, src, srcs) {
-            if (omni::string::to_lower(omni::io::path::get_extension(*src)) == ".cxx") { continue; }
-            if (xps.size() == 0) {
-                xps.push_back(Types::xcodeprojfile(omni::string::replace_all(*src, srcdir, "/source/omni/"),
-                                        "B729DBC00000000000000000",
-                                        "B729DBD00000000000000000"));
-            } else {
-                xps.push_back(Types::xcodeprojfile(omni::string::replace_all(*src, srcdir, "/source/omni/"),
-                                        xps[xps.size() - 1].src_ref,
-                                        xps[xps.size() - 1].file_ref));
-            }
-        }
-        rep = "";
-        all = Util::GetTagData(all, OmniDocuGen::Constants::Tags::XCODE_PARSE);
-
-        //#region XCODE_SREF
-        tmp = Util::GetTag(all, OmniDocuGen::Constants::Tags::XCODE_SREF);
-        if (!tmp.empty()) {
-            trep = "";
-            tmp2 = Util::GetTagData(tmp, OmniDocuGen::Constants::Tags::XCODE_SREF);
-            foreach (Types::xcodeprojfile, x, xps) {
-                rep += omni::string::replace_all(omni::string::replace_all(omni::string::replace_all(omni::string::replace_all(tmp2, "{0.src_ref}", x->src_ref), "{0.file_ref}", x->file_ref), "{0}", x->full_path), "{0.nm_path}", x->nm_path);
-            }
-            all = omni::string::replace_all(all, tmp, rep);
-            tmp = tmp2 = rep = "";
-        }
-        //#region XCODE_FREF
-        tmp = Util::GetTag(all, OmniDocuGen::Constants::Tags::XCODE_FREF);
-        if (!tmp.empty()) {
-            trep = "";
-            tmp2 = Util::GetTagData(tmp, OmniDocuGen::Constants::Tags::XCODE_FREF);
-            foreach (Types::xcodeprojfile, x, xps) {
-                rep += omni::string::replace_all(omni::string::replace_all(omni::string::replace_all(omni::string::replace_all(tmp2, "{0.src_ref}", x->src_ref), "{0.file_ref}", x->file_ref), "{0}", x->full_path), "{0.nm_path}", x->nm_path);
-            }
-            all = omni::string::replace_all(all, tmp, rep);
-            tmp = tmp2 = rep = "";
-        }
-        //#region XCODE_FHEX
-        tmp = Util::GetTag(all, OmniDocuGen::Constants::Tags::XCODE_FHEX);
-        if (!tmp.empty()) {
-            trep = "";
-            tmp2 = Util::GetTagData(tmp, OmniDocuGen::Constants::Tags::XCODE_FHEX);
-            foreach (Types::xcodeprojfile, x, xps) {
-                rep += omni::string::replace_all(omni::string::replace_all(omni::string::replace_all(omni::string::replace_all(tmp2, "{0.src_ref}", x->src_ref), "{0.file_ref}", x->file_ref), "{0}", x->full_path), "{0.nm_path}", x->nm_path);
-            }
-            all = omni::string::replace_all(all, tmp, rep);
-            tmp = tmp2 = rep = "";
-        }
-        //#region XCODE_SHEX
-        tmp = Util::GetTag(all, OmniDocuGen::Constants::Tags::XCODE_SHEX);
-        if (!tmp.empty()) {
-            trep = "";
-            tmp2 = Util::GetTagData(tmp, OmniDocuGen::Constants::Tags::XCODE_SHEX);
-            foreach (Types::xcodeprojfile, x, xps) {
-                rep += omni::string::replace_all(omni::string::replace_all(omni::string::replace_all(omni::string::replace_all(tmp2, "{0.src_ref}", x->src_ref), "{0.file_ref}", x->file_ref), "{0}", x->full_path), "{0.nm_path}", x->nm_path);
-            }
-            all = omni::string::replace_all(all, tmp, rep);
-            tmp = tmp2 = rep = "";
-        }
-
+        up("Error with file '{0}': not found", file);
     }
-    Util::WriteFile(omni::io::path::combine(odir, omni::io::path::get_name(file)), all);
 }
 
 void OmniDocuGen::DocuGen::_GenBuildExamples(const List<std::string>& hdrs, const List<std::string>& srcs, const std::string& srcdir, const std::string& bdir, const std::string& odir)
 {
     if (!omni::io::directory::exists(odir)) { omni::io::directory::create(odir); }
-    omni::seq::std_string_t vals = omni::io::directory::get_directories(bdir);
+    omni::seq::std_string_t vals;
+    omni::io::directory::get_directories(bdir, vals);
     omni_foreach (std::string, d, vals) {
         if (OmniDocuGen::Program::StopReq) { return; }
         DocuGen::_GenBuildExamples(hdrs, srcs, srcdir, *d, omni::io::path::combine(odir, omni::io::path::get_name(*d)));
     }
-    vals = omni::io::directory::get_files(bdir);
+    vals.clear();
+    omni::io::directory::get_files(bdir, vals);
     omni_foreach (std::string, f, vals) {
         if (OmniDocuGen::Program::StopReq) { return; }
         DocuGen::_GenBuildFile(hdrs, srcs, srcdir, *f, odir);
@@ -621,7 +627,8 @@ void OmniDocuGen::DocuGen::_GenBuildExamples(const List<std::string>& hdrs, cons
 void OmniDocuGen::DocuGen::_GenBF(const std::string& t, const std::string& o, const List<std::string>& hdrs, const List<std::string>& srcs, const std::string& srcdir)
 {
     Util::WriteRedirect(o, "index.html", 1);
-    omni::seq::std_string_t dirs = omni::io::directory::get_directories(o);
+    omni::seq::std_string_t dirs;
+    omni::io::directory::get_directories(o, dirs);
     omni_foreach (std::string, dir, dirs) {
         std::string tsz = omni::io::path::combine(o, (omni::io::path::get_name(*dir) + ".zip"));
         Util::DeleteFile(tsz);
@@ -646,7 +653,8 @@ void OmniDocuGen::DocuGen::_GenerateTempHelp(std::string thelp)
     std::string html;
     std::string idx = omni::io::path::combine(DocuGen::Root, "index.html");
     std::string dl = omni::io::path::combine(DocuGen::Root, "download.html");
-    omni::seq::std_string_t files = omni::io::directory::get_files(DocuGen::Root);
+    omni::seq::std_string_t files;
+    omni::io::directory::get_files(DocuGen::Root, files);
     Util::CopyDirectory(DocuGen::Build, omni::string::replace(DocuGen::Build, DocuGen::Root, thelp), true);
     files.push_back(omni::io::path::combine(DocuGen::Docs, "index.html"));
     files.push_back(omni::io::path::combine(DocuGen::Build, "index.html"));
@@ -833,13 +841,13 @@ void OmniDocuGen::DocuGen::_CreateAndMoveZips(const std::string& tpath, const st
     up("Compressing {0} -> src.zip", srcdir);
     Util::DeleteFile(tsz);
     sw.start();
-    Util::ZipDirectory(srcdir, tsz);
+    Util::ZipDirectory(srcdir, tsz, true);
     up("Finished src.zip in {0}s", omni::string::to_string(sw.elapsed_s()));
 
     up("Compressing {0} -> raw_src.zip", Program::Settings.SourceDirectory);
     Util::DeleteFile(trz);
     sw.restart();
-    Util::ZipDirectory(Program::Settings.SourceDirectory, trz);
+    Util::ZipDirectory(Program::Settings.SourceDirectory, trz, true);
     up("Finished raw_src.zip in {0}s", omni::string::to_string(sw.elapsed_s()));
 
     up("Compressing {0} -> help.zip", thelp);
@@ -883,6 +891,37 @@ void OmniDocuGen::DocuGen::_SetHashInFile(const std::string& file, const std::st
             html = t.insert(tend, hsh);
         }
         Util::WriteFile(file, html);
+    }
+}
+
+void OmniDocuGen::DocuGen::_WriteIndexHtmlExampleCPP()
+{
+    // write the /index.html example
+    std::string cpp = omni::io::path::combine(OmniDocuGen::Program::Settings.FrameworkExampleDirectory(), "index_html.cpp");
+    if (omni::io::file::exists(cpp)) {
+        std::string file = omni::io::path::combine(DocuGen::Root, "index.html");
+        std::string t = omni::io::file::get_contents(file);
+        std::string tmp = "<!--start index example-->";
+        int tstrt = t.find(tmp) + tmp.size() + 1;
+        if (tstrt >= 0) {
+            int tend = t.find("<!--end index example-->");
+            std::string html = "";
+            std::string hsh =
+                "<div class=\"sntx\"><input type=\"checkbox\" id=\"c0\" name=\"c0\" checked /><label for=\"c0\"> example</label><pre>" +
+                OmniDocuGen::DocuGen::GenerateHtmlSyntaxHighlight(omni::io::file::get_contents(cpp), "", "", OmniDocuGen::DocuGen::AllMti, true) +
+                "</pre></div>";
+            if (tend > tstrt) {
+                html = t.substr(0, tstrt) + hsh + t.substr(tend);
+            } else if (tend == tstrt) {
+                html = t.insert(tend, hsh);
+            }
+
+            if (Util::WriteFile(file, html)) {
+                up("Wrote {0} to index.html example", cpp);
+            } else {
+                OmniDocuGen::Program::AddError("Could not write index.html example");
+            }
+        }
     }
 }
 
@@ -1003,9 +1042,25 @@ void OmniDocuGen::DocuGen::GenerateBuildFiles()
     Util::CheckAndCreateDir(on);
     Util::CheckAndCreateDir(oo);
     Util::CheckAndCreateDir(ow);
-    DocuGen::_GenBuildExamples(DocuGen::HeaderFiles, DocuGen::SourceFiles, Program::Settings.SourceDirectory, bn, on);
-    DocuGen::_GenBuildExamples(DocuGen::HeaderFiles, DocuGen::SourceFiles, Program::Settings.SourceDirectory, bo, oo);
-    DocuGen::_GenBuildExamples(DocuGen::HeaderFiles, DocuGen::SourceFiles, Program::Settings.SourceDirectory, bw, ow);
+
+    try {
+        DocuGen::_GenBuildExamples(DocuGen::HeaderFiles, DocuGen::SourceFiles, Program::Settings.SourceDirectory, bn, on);
+    } catch (const std::exception& ex) {
+        Program::AddError(ex, "Here1");
+    }
+    
+    try {
+        DocuGen::_GenBuildExamples(DocuGen::HeaderFiles, DocuGen::SourceFiles, Program::Settings.SourceDirectory, bo, oo);
+    } catch (const std::exception& ex) {
+        Program::AddError(ex, "Here2");
+    }
+    
+    try {
+        DocuGen::_GenBuildExamples(DocuGen::HeaderFiles, DocuGen::SourceFiles, Program::Settings.SourceDirectory, bw, ow);
+    } catch (const std::exception& ex) {
+        Program::AddError(ex, "Here3");
+    }
+    
     up("Example files generated, zipping.");
     Util::ZipDirectory(DocuGen::Build, bz);
     Util::RemoveEntryFromZip(bz, "index.html");
@@ -1104,6 +1159,8 @@ void OmniDocuGen::DocuGen::GenerateExamplesZipFile()
 
 void OmniDocuGen::DocuGen::GenerateExampleIndexHtml(bool writeHtml)
 {
+    DocuGen::_WriteIndexHtmlExampleCPP();
+
     std::string exhtml = "The following are examples and use cases of the Omni library. "
         "The <a href=\"../../files/examples.zip\">full set of examples</a> can be downloaded from the "
         "<a href=\"../../download.html\">files</a> section.<br><br>If you're just starting with the library "
@@ -1111,7 +1168,8 @@ void OmniDocuGen::DocuGen::GenerateExampleIndexHtml(bool writeHtml)
         "classes and options to get you building with Omni quicker.<br><br>";
     std::string fname = "";
     List<FrameworkExample> exs;
-    omni::seq::std_string_t dirs = omni::io::directory::get_directories(OmniDocuGen::Program::Settings.FrameworkExampleDirectory());
+    omni::seq::std_string_t dirs;
+    omni::io::directory::get_directories(OmniDocuGen::Program::Settings.FrameworkExampleDirectory(), dirs);
     std::sort(dirs.begin(), dirs.end(), _CompareExampleDirectoryNames);
     omni_foreach (std::string, dir, dirs) {
         if (OmniDocuGen::Program::StopReq) { return; }
@@ -1280,7 +1338,9 @@ void OmniDocuGen::DocuGen::GenerateJavaScriptSearchList()
             if (*dir == srcdocs) {
                 omni::sequence::add_range(jsfiles, Util::GetFileList(srcdocs, false));
             } else {
-                omni::sequence::add_range(jsfiles, omni::io::directory::get_files(*dir));
+                omni::seq::std_string_t tfiles;
+                omni::io::directory::get_files(*dir, tfiles);
+                omni::sequence::add_range(jsfiles, tfiles);
             }
         }
     }

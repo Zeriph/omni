@@ -18,7 +18,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <li title="Search the source and documentation" id="srchli" name="srchli"><a href="../search.html">Search the Library</a>
 </li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
 <input name="omnisrch" id="omnisrch" type="text" /><img src="../content/search.gif" /></form></li></ul></li>
-</ul><div class="ftr"><div>(C) <a href="http://www.zeriph.com">Zeriph Enterprises, LLC</a></div></div></div></div><div class="info">
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
 <!--start content-->
 <div class="ptitle"><a name="codestyle"></a>Coding Style, Standards and Best Practices</div><div class="content"><div style="padding-left:1em;">
 <table style="border:1px solid white;text-align:center;width:40em;margin:auto;">
@@ -33,9 +33,11 @@ Confirm the correct version by checking the on-line version of the document, the
 <li><a href="#s1">Introduction</a></li>
 <li><a href="#s2">General Rules</a></li>
 <li><a href="#s3">Notes</a></li>
-<li><a href="#s4">Program Files</a><ol>
-<li><a href="#s4a">Source Files</a></li>
-<li><a href="#s4b">Header Files</a></li></ol></li>
+<li><a href="#s4">General Layout</a><ol>
+<li><a href="#s4a">Source File Layout</a></li>
+<li><a href="#s4b">Header File Layout</a></li>
+<li><a href="#s4c">Namespace Layout</a></li>
+<li><a href="#s4d">Class Layout</a></li></ol></li>
 <li><a href="#s5">Formatting</a><ol>
 <li><a href="#s5a">Indentations</a></li>
 <li><a href="#s5b">Braces</a></li>
@@ -52,7 +54,7 @@ Confirm the correct version by checking the on-line version of the document, the
 <li><a href="#s7">Functions</a><ol>
 <li><a href="#s7a">Use of <code>goto()</code></a></li></ol></li>
 <li><a href="#s8">Comments</a><ol>
-<li><a href="#s8a">JavaDoc/Doxygen Comments</a></li></ol></li>
+<li><a href="#s8a">Function Comments</a></li></ol></li>
 <li><a href="#s9">Naming</a><ol>
 <li><a href="#s9a">File Names</a></li></ol></li>
 <li><a href="#s10">Continuation Lines</a></li>
@@ -60,7 +62,8 @@ Confirm the correct version by checking the on-line version of the document, the
 <li><a href="#s11a">Constructor Logic</a></li></ol></li>
 <li><a href="#s12">Macros, Enums and Constants</a></li>
 <li><a href="#s13">Error handling and Exceptions</a></li>
-<li><a href="#s14">Appendix A: Other Considerations</a></li></ol><hr>
+<li><a href="#s14">Optimizations</a></li>
+<li><a href="#s15">Appendix A: Other Considerations</a></li></ol><hr>
 
 <a name="s1"></a><font class="hdr">1. Introduction</font>
 <div class="csec">
@@ -98,30 +101,28 @@ not the technicalities of the actual code, but the idea presented (syntax layout
 to throughout this style document.
 </div>
 
-<a name="s4"></a><font class="hdr">4. Program Files</font><br><br>
-<a name="s4a"></a><font class="hdr">4a. Source Files</font><br>
+<a name="s4"></a><font class="hdr">4. General Layout</font><br><br>
+<a name="s4a"></a><font class="hdr">4a. Source File Layout</font><br>
 <div class="csec">
 Program/implementation (.c/.cpp/etc.) files should be organized in the following manner:
 <ul>
 <li>A comment with the copyright notice (unless it is 3rd party code that does not allow copyright).
 Be sure to include any other copyright notices that may be required (i.e. the GPL if using code that
 comes direct from GPL copyrighted code).</li>
-<li>System imported functionality before local imported functionality (e.g. system <code>#include</code>'s before local).</li>
-<li>Member variables or properties and any forward declarations that may be needed.</li>
-<li>Public member function implementations.</li>
-<li>Protected member functions implementations.</li>
-<li>Private member function implementations.</li>
-<li>Public static/extern functions.</li>
-<li>Protected static functions.</li>
-<li>Private static/extern functions.</li>
+<li>The <code>omni/global.hpp</code> include if necessary.</li>
+<li>Library imported functionality (e.g. <code>#include &lt;omni/...&gt;</code>).</li>
+<li>System imported functionality (e.g. <code>#include &lt;map&gt;</code>).</li>
+<li><code>#define</code> statements.</li>
+<li>File local members and functions.</li>
+<li>File local externally linked function or member declarations.</li>
+<li>Class member variable or property instantiations and any forward declarations that may be needed.</li>
+<li>Static or externally linked class member variables or function implementations.</li>
+<li>Public class function implementations.</li>
+<li>Protected class functions implementations.</li>
+<li>Private class function implementations.</li>
 </ul>
 
-All functions should try and be arranged in alphabetical order when feasible.<br>
-<br>Any member properties/variables should also be arranged alphabetical unless doing so will cause
-additional padding of the class/struct. In which case, the member variables should be ordered in such
-a way as to reduce the padding, and initialized in the constructor appropriately.<br><br>
-
-Notes on program/code file implementation:
+Additionally:
 <ul>
 <li>If implementing code from a header file, follow the layout of the header file. For instance,
 if a class is defined with 4 functions, those 4 functions will be implemented in the same order in the program file.</li>
@@ -129,47 +130,117 @@ if a class is defined with 4 functions, those 4 functions will be implemented in
 <code>enum</code> types, global/local variables, <code>class</code> or <code>struct</code> definitions, etc.) will be
 in the header file.</li>
 <li>It is OK to put forward declarations in program files that might be needed within the file.</li>
-<li>If any member functions are defined within a namespace only they will be treated as a <code>static member</code> of a
+<li>If any member functions are defined within a namespace only, they will be treated as a <code>static member</code> of a
 class and will be put in the <code>global/static member</code> area of the file.</li>
 <li>Any implementation in a header file (such as the case with templates and inline functions) will adhere
 to the standards put forth in this document.</li>
 </ul>
 
-<br>See <a href="#s9">Naming</a> for more information on how to name items within your header file.
+<br>See <a href="#s9">Naming</a> for more information on how to name items within your source file.
 </div>
 
-<a name="s4b"></a><font class="hdr">4b. Header Files</font><br>
+<a name="s4b"></a><font class="hdr">4b. Header File Layout</font><br>
 <div class="csec">
-Interface files (.h/.hpp/header files) should be organized in the following manner:
+Interface files (.h/.hpp/etc.) should be organized in the following manner:
 <ul>
 <li>A comment with the copyright notice (unless it is 3rd party code that does not allow copyright).
 Be sure to include any other copyright notices that may be required (i.e. the GPL if using code
 that comes direct from GPL copyrighted code).</li>
-<li>A comment describing the purpose of the file (unless the code is properly commented or clear from
-its intention). The comment should not contain revision information or revision control tags.</li>
-<li><code>#ifndef</code> that prevents accidental double inclusion.</li>
-<li>Other <code>#include</code>'s, if needed.</li>
+<li>A brief comment describing the purpose of the file if it is for something other than class or function definition.
+The comment should not contain revision information or revision control tags.</li>
+<li>The single inclusion define (e.g. <code>#if !defined(OMNI_HEADER_HPP)</code>) that prevents accidental double inclusion.</li>
+<li>Local <code>#include</code>'s, if needed (e.g. <code>#include &lt;omni/...&gt;</code>).</li>
+<li>System <code>#include</code>'s, if needed (e.g. <code>#include &lt;map&gt;</code>).</li>
+<li>Macro's and other <code>#define</code> constants.</li>
 <li>Opening brace of C++ guard (<code>#ifdef __cplusplus</code>), if needed.</li>
-<li><code>#define</code>'s and <code>enum</code> types.</li>
-<li>Data structures.</li>
 <li>Global variable declarations (using <code>extern</code> where needed).</li>
 <li>Global function declarations (using <code>extern</code> where needed).</li>
-<li>Classes and namespaces.</li>
+<li>Namespaces, classes and data structures.</li>
 <li>Closing brace of C++ guard if opening brace exists.</li>
-<li><code>#endif</code> for preventing accidental double inclusion.</li>
+<li>The complimenting <code>#endif</code> for preventing accidental double inclusion.</li>
 </ul>
 
 Notes on header file implementation:
 <ul>
-<li>Try and keep any actual implementation details (code) out of the header file, unless it cannot be avoided.</li>
-<li>Try and keep the definitions in alphabetical order.</li>
+<li>Try and keep any actual implementation details (code) out of the header file, unless it cannot be avoided (as with templated types).</li>
+<li>Try and keep the definitions in alphabetical order unless it cannot be avoided; for example, a static templated function named
+<code>foo</code> might use a static templated function named <code>more_foo</code>, so <code>more_foo</code> must be defined and declared
+before <code>foo</code>.</li>
 <li>Alphabetical ordering can be ignored if using a type within a declaration that uses another type below it
-and a forward declaration is not possible or would convolute the code.</li>
+and a forward declaration is not possible or would convolute the code (as can be the case with templated types).</li>
 <li>There may be instances where it is unavoidable to put implementation (code) in the header file (for instance,
-when making use of templating), this is OK but try and keep as much code as possible in the actual program file
-(the .c or .cpp file) for cleaner implementation and separation of problem domains.</li>
+when making use of templates); this is OK, but try and keep as much code as possible in the actual implementation file
+(the .c or .cpp file) for cleaner separation of implementation, declaration and problem domains.</li>
 </ul>
 See <a href="#s9">Naming</a> for more information on how to name items within your header file.
+</div>
+
+<a name="s4c"></a><font class="hdr">4c. Namespace Layout</font><br>
+<div class="csec">
+Namespaces within the library should be organized in the following manner:
+<ul>
+<li><code>typedef</code> declarations that do not require forward declarations.</li>
+<li>Constants.</li>
+<li>Child namespaces.<ul><li>Inner classes/namespaces (ad infinitum).</li><li>Inner functions (ad infinitum).</li></ul></li>
+<li>Classes and structures, to include enum class types.</li>
+<li>Namespace functions.</li>
+<li><code>typedef</code> declarations that utilizes classes within the namespace.</li>
+</ul>
+
+Note that these standards do not strictly need to be adhered to in the case that types or functions
+need to be used within a later declared/defined type or function. In these instances, <code>typedef</code>
+declartions, functions and classes can be placed where they need to be for the code to build, but should
+be grouped in the code as closely to these standards as possible.<br><br>
+
+See <a href="#s9">Naming</a> for more information on how to name items within a namespace.
+</div>
+
+<a name="s4d"></a><font class="hdr">4d. Class Layout</font><br>
+<div class="csec">
+Classes and structures within the library should be organized in the following manner:
+<ul>
+<li><code>typedef</code> declarations</li>
+<li>Rule of 3/5 constructors.</li>
+<li>Additional class constructors.</li>
+<li>The class destructor.</li>
+<li>Public members.</li>
+<li>Public functions.</li>
+<li>Public operators.</li>
+<li>The OMNI_MEMBERS_FW macro if applicable (should be in most classes).</li>
+<li>The OMNI_OSTREAM_FW macro if applicable (should be in most classes).</li>
+<li>Public friend operators.</li>
+<li>Public static members.</li>
+<li>Public static functions.</li>
+<li>Protected members.</li>
+<li>Protected functions.</li>
+<li>Protected operators.</li>
+<li>Protected friend operators.</li>
+<li>Protected static members.</li>
+<li>Protected static functions.</li>
+<li>Private members.</li>
+<li>Private functions.</li>
+<li>Private operators.</li>
+<li>Private friend operators.</li>
+<li>Private static members.</li>
+<li>Private static functions.</li>
+</ul>
+
+Note: this does not apply to the enum class types throughout Omni as they have a template
+that is followed for ease of reading the class code.<br><br>
+
+All functions should try and be arranged in alphabetical order when feasible.<br><br>
+
+Any member properties/variables should also be arranged alphabetical unless doing so will cause
+additional padding. In this case, the member variables should be ordered in such a way as to reduce
+the padding as much as possible, and initialized in the constructor member initialization list
+appropriately.<br><br>
+
+Note that these standards do not strictly need to be adhered to in the case that types or functions
+need to be used within a later declared/defined type or function. In these instances, <code>typedef</code>
+declartions, functions and classes can be placed where they need to be for the code to build, but should
+be grouped in the code as closely to these standards as possible.<br><br>
+
+<br>See <a href="#s9">Naming</a> for more information on how to name items within the class.
 </div>
 
 <a name="s5"></a><font class="hdr">5. Formatting</font><br><br>
@@ -258,7 +329,7 @@ Example:
 <pre>
 if (x == 1) { // space following control statement 'if'
     if (y > sizeof(object)) { // no space after 'sizeof'
-        exit 1; // no space after 'exit'
+        exit(1); // no space after 'exit'
     }
 }
 </pre>
@@ -338,8 +409,8 @@ Be sure to line up the entries accordingly.<br>
 Example:
 <pre>
 object(const char* name, int count) :
-	m_name(name),
-	m_count(count) {} // Braces can be here if nothing is to be done
+    m_name(name),
+    m_count(count) {} // Braces can be here if nothing is to be done
         // or here on next line
 </pre>
 Lastly, do not leave trailing whitespace at the ends of lines.
@@ -586,8 +657,8 @@ you meant to call; while it might lead to more verbosity throughout the library'
 ambiguity which leads to cleaner, less buggy code.<br>
 <br>
 Higher levels of scope may be applied where more clarity is needed, but typically 1 level of scope is sufficient. As an
-example, the following C# code illustrates how adding higher levels of scope can add clarity; this example uses C# due
-to the lack of examples across the library and C++ standards to illustrate this point:
+example, the following C# code illustrates how adding higher levels of scope can add clarity; this example uses part of the
+.NET Framework in C# to illustrate this point due to the lack of examples across the library and C++ standards:
 <pre>
 Thread.Sleep(1000);
 Thread.AddUserRequest(someObj);
@@ -612,12 +683,12 @@ variable or function, one is implicitly applied by the compiler (scope permittin
 The <code>this</code> operator has 0 impact on performance since it is simply referring to a scope, not an operation.<br>
 <br>
 For clarity the <code>this</code> operator will be put on all member variables and functions for immediate understanding
-of what scope the variable of method is a part of.<br>
+of what scope the variable or method is a part of.<br>
 <br>
 If the variable or function you are referencing within a child class is from its parent class, it is still preferred to
 reference it via the <code>this</code> operator. It is ok, in certain instances, to reference parent members and functions
-via the parent class; examples would be a specific languages rules requiring the use of the parent keyword or in an event
-when using the parent keyword would add clarity to code.<br>
+via the parent class; examples would be specific language rules requiring the use of the parent keyword or in an event
+when using the parent class would add clarity to code.<br>
 </div>
 
 <a name="s5h"></a><font class="hdr">5h. Examples</font><br>
@@ -747,7 +818,7 @@ switch (condition) {
 
 <a name="s6"></a><font class="hdr">6. Hierarchical Types</font><br>
 <div class="csec">
-Hierarchical types (<code>class</code>, <code>interface</code>, <code>enum</code>, etc.) shall be laid out in such a
+Hierarchical types (<code>class</code>, <code>struct</code>, <code>enum</code>, etc.) shall be laid out in such a
 manner that best suits the design needs of that specific type. This document will not cover design specifications,
 only general guidelines to certain idioms.<br>
 <br>
@@ -764,7 +835,7 @@ See <a href="#s9">Naming</a> for more information on how to name hierarchical ty
 
 <a name="s7"></a><font class="hdr">7. Functions</font><br>
 <div class="csec">
-Treat reserved keywords that can act like function as such (except for the exit and return statements).<br>
+Treat reserved keywords that can act like functions as such (except for the exit and return statements).<br>
 <br>
 Example: 
 <pre>
@@ -842,28 +913,31 @@ of this that commenting can be good and bad.<br>
 <br>
 To avoid excess commenting, it is typically best to leave comments out of the function bodies themselves. It is OK to
 comment areas of a function to warn about something in the code or to better explain why something is the way it is
-(as per the paragraph below). It is easier, however, to read the code if the function itself is commented (usually
-directly above the function definition) telling what it does and possibly why.<br>
+(as per the paragraph below). It is easier, however, to read the code if the function itself is commented (see the
+<a href="#s8a">section</a> below).<br>
 <br>
 Typically you do not want to try and explain how your code works, more so, what the code is supposed to do and
 potentially why you did something the way you did (if it's not overtly clear by the code).<br>
 <br>
-Commenting should be limited in scope to the particular area you are commenting on, it shouldn't include author names,
-bug tracking, or other items that do not directly reflect that area of code. In other words a comment should reflect
-and clarify the code it is being written for.<br>
+Commenting should be limited in scope to the particular area you are commenting on, it should not include author names,
+bug tracking information, or other items that do not directly reflect or refer to that specific area of code. In other words,
+a comment should reflect and clarify the code it is being written for.<br>
 <br>
 Both C89 <code>/*...*/</code> and C99 <code>//...</code> style commenting is acceptable.<br>
 <br>
 There are three styles of comments: block (multi-line), single-line, and trailing.<br>
 <br>
 For single-line comments, the C89 or C99 style is OK to use. Both styles are also OK for a trailing comment, if the
-trailing comment fits on the same line.<br>
+trailing comment fits on the same line. However, it should be noted that the C99 style <i>is</i> preferred.<br>
 <br>
 For block (multi-line) comments, if the comment is more than 2 lines, do no use the C99 style commenting, only use C89
 style. This is true for trailing comments as well.<br>
 <br>
-C89 style block comments should be in the form with the opening <code>/*</code> in columns 1-2, a <code>*</code> in
-column 2 before each line of comment text, and the closing <code>*/</code> in columns 2-3.<br>
+C89 style block comments should be in the form of having the opening <code>/*</code> followed by a new line, then either
+a single space followed by <code>*</code>, or 4 spaces, followed by the comment text, and the closing <code>*/</code>
+should be on a new line and should align with the previous lines <code>*</code> if asterisks are used, otherwise, it
+should be the only text on the line. Note: the "single space" is meant to indicate the indentation, so
+if the comment is double tabbed over (e.g. 8 spaces), the "single space" would be the 9th space.<br>
 <br>
 Example:
 <pre>
@@ -872,7 +946,18 @@ Example:
  * Here is a block comment.
  * The comment text should be tabbed or spaced over uniformly.
  * The opening slash-star and closing star-slash are alone on a line.
+ * The closing star-slash is aligned with the previous lines star.
  */
+</pre>
+Or the following:
+<pre>
+1234 &lt;- column
+/*
+    Here is a block comment.
+    The comment text should be tabbed or spaced over uniformly.
+    The opening slash-star and closing star-slash are alone on a line.
+    The closing star-slash is not tabbed or spaced over.
+*/
 </pre>
 <br>
 One-line comments alone on a line should be indented to that of the code that follows.<br>
@@ -882,7 +967,7 @@ Example:
 if (argc &lt; 3) {
     // Argument count is not the number we need, show the usage
     show_usage();
-    exit 1;
+    exit(1);
 }
 </pre>
 <br>
@@ -915,12 +1000,12 @@ This does not preclude the use of other commenting types, it is OK to mix and ma
 Example:
 <pre>
 if (a == 10) {
-	b = true; // Single line C99 style comment
-	/*
-	 * Mixed with longer C89 block style comments
-	 * is completely OK, just don't overly use
+    b = true; // Single line C99 style comment
+    /*
+     * Mixed with longer C89 block style comments
+     * is completely OK, just don't overly use
      * mix-and-match style.
-	 */
+     */
 }
 </pre>
 As stated above however, if single line comments are C99 style and multi line comments are C89 style, do not then
@@ -934,24 +1019,53 @@ Lastly, always remember, you never know who will be looking at the comments, so 
 comments that are insulting or degrading.
 </div>
 
-<a name="s8a"></a><font class="hdr">8a. JavaDoc/Doxygen Comments</font><br>
+<a name="s8a"></a><font class="hdr">8a. Function Comments</font><br>
 <div class="csec">
-JavaDoc/Doxygen<sup><a href="#ref4">[4]</a></sup> tagged comments should be used for the following:<br>
-<ul>
-<li>Source file description</li>
-<li>API usage including:<ul>
-<li>Defines</li>
-<li>Enums, overall description plus description of each value</li>
-<li>Data Structures, overall description plus description of each member</li>
-<li>Global Data</li>
-<li>Functions, including:<ul>
-<li>Brief description</li>
-<li>Detailed description (if necessary)</li>
-<li>Arguments, including whether it is an input or output</li>
-<li>Return values (if any)</li>
-</ul></li></ul></li></ul>
-Doxygen has the capability of parsing JavaDoc style comments, so JavaDoc style will be the style of commenting
-for the library.
+Since various tools have the capability to parse JavaDoc/Doxygen<sup><a href="#ref4">[4]</a></sup> style comments,
+as well, the custom Omni documentation tool expects the function comments to be in this style, all functions will
+utilize the JavaDoc style of commenting to document the function.<br><br>
+
+Each public facing function that can be utilized by user code will use the following template for commenting:<br>
+<pre>
+/**
+ * @brief          Brief description.
+ * 
+ * @details        A more detailed description of the function. This should describe what the function
+ *                 is supposed to do in more detail; it may not always be a longer description as some
+ *                 functions can be explained easy enough in the @brief. 
+ * 
+ * @return         [optional] A return value if any.
+ * 
+ * @param [name]   [optional] Each function parameter should be marked with this; this is the description
+ *                            of the input value, its range, and any other info. The [name] is the variable
+ *                            name in the function.
+ *
+ * @tparam [name]  [optional] Each template parameter should be marked with this; this is the description of
+ *                            the template parameter and what it represents in the function. The [name] is
+ *                            the template parameter name in the template declaration.
+ * 
+ * @exception      [optional] Any errors (or error conditions) specific to the context of the function. This
+ *                            should explain what error conditions can occur (e.g. division by 0, invalid
+ *                            range, etc.). This should also detail what Omni specific exceptions can be
+ *                            thrown in the code.
+ * 
+ * @warning        [optional] Any extra considerations to be aware of. This should explain any pre/post
+ *                            conditions to be aware of, especially if the conditions should cause
+ *                            undefined behavior. 
+ * 
+ * @attention      [optional] Any platform specific notes. This should explain any notes to be aware of
+ *                            if there are differences between certain architectures or platforms, like
+ *                            the differences that can arise between Windows and Linux, or for systems
+ *                            that might be big-endian versus little-endian.
+ * 
+ * @note           [optional] Any notes to be aware of (like system calls, order of operations, etc.).
+ *                            This section can be used for any addendum's specific to the function that
+ *                            other sections might not adequately cover or be appropriate in that section.
+ * 
+ * @invariant      [optional] This is the complexity of this function (e.g. O(1) for X conditions, etc.).
+ */
+</pre>
+
 </div>
 
 <a name="s9"></a><font class="hdr">9. Naming</font><br>
@@ -968,15 +1082,15 @@ than something like <code>int tcount</code>.<br>
 <br>
 The following is the naming convention to be used with this document:
 <ul>
-<li>Do not use “Hungarian notation” (types can change)</li>
-<li>Underscores are to be avoided in publicly available names (for any type)</li>
+<li>Do not use Hungarian notation (types can change)</li>
 <li>Names with leading and/or trailing underscores are reserved for system purposes and should not be
 used for any user-created names (does not apply to private members).</li>
 <li><code>#define</code> constants and variable constants should be in all CAPS.</li>
-<li>Enum constants are Capitalized (the first letter is) or in all CAPS (all letters are).</li>
-<li>Functions, typedef's, and variable names, as well as struct's, union's, and enum tag names should be lower case with
-an underscore for any spaces, example: <code>get_current_pid</code>, or <code>set_user_name</code></li>
-<li>Many macro "functions" are in all CAPS. Some macros (such as getchar and putchar) are in lower case since they may
+<li>Enum constants are CAPITALIZED.</li>
+<li>Functions, <code>typedef</code> values, and variable names, as well as <code>struct</code>, <code>union</code>, and
+<code>enum</code> type names should be lower case with an underscore for any spaces, example: <code>get_current_pid</code>, or
+<code>set_user_name</code></li>
+<li>Many macro functions are in all CAPS. Some macros (such as getchar and putchar) are in lower case since they may
 also exist as functions. Lower-case macro names are only acceptable if the macros behave like a function call, that is,
 they evaluate their parameters exactly once and do not assign values to named parameters. Sometimes it is impossible to
 write a macro that behaves like a function even though the arguments are evaluated exactly once.</li>
@@ -1009,12 +1123,12 @@ Avoid names that might conflict with various standard library names (like callin
 
 <a name="s9a"></a><font class="hdr">9a. File Names</font><br>
 <div class="csec">
-File names should be all lowercase with valid characters being 0-9, a-z, and the underscore “_”.<br>
+File names should be all lowercase with valid characters being 0-9, a-z, and the underscore "_".<br>
 <br>
 The following extensions will be used for the specific types:<br>
-<code>.hpp</code> – header file for C++<br>
-<code>.cpp</code> –C++ based source file<br>
-<code>.cxx</code> –C++ based source file specific to the library only<br>
+<code>.hpp</code> - header file for C++<br>
+<code>.cpp</code> - C++ based source file<br>
+<code>.hxx</code> - C++ based source file internal to the library<br>
 <br>
 The file names should reflect the functionality defined/implemented in that file.<br>
 <br>
@@ -1024,12 +1138,12 @@ their names wherever possible.<br>
 Files belonging to the same module should reflect that dependency by a short unique prefix to the filename,
 followed by an underscore. The following illustrates this convention:<br>
 <pre>
-Makefile		io_base.cpp
-server.c		io_base.h
-server_ioplug.h	io_file.h
-server_ioplug.c 	io_file.cpp
-io_cwrapper.h		io_stream.h
-io_cwrapper.c		io_stream.cpp
+Makefile            io_base.cpp
+server.c            io_base.h
+server_ioplug.h     io_file.h
+server_ioplug.c     io_file.cpp
+io_cwrapper.h       io_stream.h
+io_cwrapper.c       io_stream.cpp
 </pre>
 </div>
 
@@ -1047,7 +1161,7 @@ Example:
 <pre>
 if (long_logical_test_1 || long_logical_test_2 ||
     long_logical_test_3) {
-	statements;
+    statements;
 }
 
 // long_identifier_term3 is 5 spaces out instead of 2 to showcase
@@ -1077,8 +1191,8 @@ Example:
 int x = 0;
 some_struct s; 
 if (someval > 0) {
-	// Causes resources to be consumed and is only needed if <code>someval</code> > 0
-	object o;
+    // Causes resources to be consumed and is only needed if <code>someval</code> > 0
+    object o;
 }
 </pre>
 <br>
@@ -1098,7 +1212,7 @@ Multiple assignments are OK as well in the case when doing so does not sacrifice
 Example:
 <pre>
 int x, y, z, i, a, b, c; // temporary variables
-x = y = z = i = a = b =c = 0; // OK
+x = y = z = i = a = b = c = 0; // OK
 
 int rad, max, min, a, b, c;
 rad = max = min = a = b = c = 0; // Valid but unclear about rad, max and min are
@@ -1171,7 +1285,27 @@ controlling program flow, but instead a way of being notified when an area of co
 have and as a way of cleaning up after oneself.
 </div>
 
-<a name="s14"></a><font class="hdr">14. Appendix A: Other Considerations</font><br>
+<a name="s14"></a><font class="hdr">14. Optimizations</font><br>
+<div class="csec">
+There are many optimizations that a compiler can, and should, make in ones code. It is not advisable, however, to trust and
+expect the compiler to do what you want the code to do when you can explicitly tell the compiler what to do via your code.<br><br>
+
+As an example, most of the time the compiler should optimize the <code>i++</code> post increment operation to be a pre
+increment operation (i.e. <code>++i</code>) which is more efficient. However, this is a simple optimization that can be done
+by the human coder to explicitly define how the code should operate without relying on the optimizations of the compiler; this
+ensures that no matter the compiler, the same level of optimization is done across all platforms and architectures.<br><br>
+
+Additionally, it should be the goal to have code that is as CPU and memory efficient as possible; this means ensuring that
+the code is as optimized to the C++ standard as possible, thus ensuring that any compiler will adhere to the micro optimizations
+in the code.<br><br>
+
+Ways to achieve these standardized optimizations include, but are not limited to, preferring the <code>switch</code> statement
+to a large nested <code>if..else</code> branch where feasible, using the pre-increment operator where applicable, specifying 
+<code>inline</code> for single line and simple functions, and using idioms like return value optimization (a.k.a.
+<a href="https://en.wikipedia.org/wiki/Copy_elision">copy elision</a>).
+</div>
+
+<a name="s15"></a><font class="hdr">15. Appendix A: Other Considerations</font><br>
 <div class="csec">
 Please note that while there are many ideas and concepts covered in this outline, not everything can be taken into account.
 This document is meant as a general guideline and not as a must. If you're making a 10 line program to do a very simple task,

@@ -1,12 +1,21 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_BUILD_UNSAFE</Name>
-  <Brief>A framework macro/option</Brief>
-  <Considerations>No special considerations</Considerations>
-  <Description>A framework macro/option that changes certain functionality</Description>
-  <Notes>None.</Notes>
+  <Brief>If defined, the library will build without checks for certain undefiend behaviour.</Brief>
+  <Considerations>If defined, you will need to ensure all of your code handles exceptional code (such as division by 0), and that your locks are not re-entrant.</Considerations>
+  <Description>If defined, the following additional flags are defined in the library:
+
+@code
+#define OMNI_NO_MUTEX_OWNER
+#define OMNI_NO_SAFE_LIBRARY
+#define OMNI_NO_THROW
+@code
+</Description>
+  <Notes>You might need to define OMNI_ALLOW_UB to enable undefined behaviour.</Notes>
   <PlatformSpecific>No platform specific notes.</PlatformSpecific>
-  <Synopsis>A framework macro/option</Synopsis>
+  <Synopsis>&lt;code&gt;#define OMNI_BUILD_UNSAFE&lt;/code&gt;
+
+Defines that the library should build with unsafe options and thus undefined behaviour allowed.</Synopsis>
   <IsHelper>false</IsHelper>
   <IsConstant>false</IsConstant>
   <IsFWHelp>false</IsFWHelp>

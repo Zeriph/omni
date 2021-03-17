@@ -57,7 +57,7 @@ omni::stopwatch::stopwatch() :
     OMNI_D5_FW("created");
 }
 
-omni::stopwatch::stopwatch(const omni::stopwatch &cp) :
+omni::stopwatch::stopwatch(const omni::stopwatch& cp) :
     OMNI_CPCTOR_FW(cp)
     m_end(),
     m_init(),
@@ -261,7 +261,7 @@ std::wstring omni::stopwatch::to_wstring() const
     return ss.str();
 }
 
-omni::stopwatch& omni::stopwatch::operator=(const omni::stopwatch &other)
+omni::stopwatch& omni::stopwatch::operator=(const omni::stopwatch& other)
 {
     if (this != &other) {
         this->stop();
@@ -281,7 +281,7 @@ omni::stopwatch& omni::stopwatch::operator=(bool enable)
     return *this;
 }
 
-bool omni::stopwatch::operator==(const omni::stopwatch &o) const
+bool omni::stopwatch::operator==(const omni::stopwatch& o) const
 {
     if (this == &o) { return true; }
     OMNI_STOPWATCH_ALOCK_FW
@@ -291,7 +291,7 @@ bool omni::stopwatch::operator==(const omni::stopwatch &o) const
             OMNI_EQUAL_FW(o);
 }
 
-bool omni::stopwatch::operator!=(const omni::stopwatch &o) const
+bool omni::stopwatch::operator!=(const omni::stopwatch& o) const
 {
     return !(*this == o);
 }

@@ -34,7 +34,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <!--end line numbers-->
 </div><div class="cpphtmlcmnt">
 <!--start collapse columns-->
-<img src="../../../../content/tree/min.gif" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<img src="../../../../content/tree/min.gif" alt="Min/Max" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -162,7 +162,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <br>
 <font class="syn_pre">#define <a href="../../../options/omni_enum_assigned_parsers.html">OMNI_ENUM_ASSIGNED_PARSERS</a>(...) private: \<br>
 &nbsp;&nbsp;&nbsp;&nbsp;enum_t m_val; \<br>
-&nbsp;&nbsp;&nbsp;&nbsp;template &lt; typename S &gt; static enum_t _parse(const S&amp; val) { enum_t ret; if (_try_parse(val, ret)) { return ret; } OMNI_ERRV_FW(<font class="syn_str">&quot;invalid enum parse: &quot;</font>, val, <a href="../../../classes/omni-exceptions-invalid_enum.html">omni::exceptions::invalid_enum</a>()) return DEFAULT_VALUE(); } \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;template &lt; typename S &gt; static enum_t _parse(const S&amp; val) { enum_t ret; if (_try_parse(val, ret)) { return ret; } OMNI_ERR_FW(<font class="syn_str">&quot;invalid enum parse&quot;</font>, <a href="../../../classes/omni-exceptions-invalid_enum.html">omni::exceptions::invalid_enum</a>()) return DEFAULT_VALUE(); } \<br>
 &nbsp;&nbsp;&nbsp;&nbsp;template &lt; typename S &gt; static bool _try_parse(const S&amp; str, enum_t&amp; out) { return _try_parse(<a href="../../../classes/omni-string-util-to_upper.html">omni::string::util::to_upper</a>(str), out); } \<br>
 &nbsp;&nbsp;&nbsp;&nbsp;static bool _try_parse(const <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>&amp; val, enum_t&amp; out) { return _try_parse(<a href="../../../classes/omni-string-util-to_string.html">omni::string::util::to_string</a>(val), out); } \<br>
 &nbsp;&nbsp;&nbsp;&nbsp;static bool _try_parse(const <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; val, enum_t&amp; out) { if (!val.empty()) { \<br>

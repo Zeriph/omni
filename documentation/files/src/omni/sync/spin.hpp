@@ -141,8 +141,11 @@ namespace omni {
                 OMNI_MEMBERS_FW(omni::sync::spin_lock) // disposing,name,type(),hash()
                 
             private:
+                omni::sync::spin_lock_t m_lock;
+                volatile mutable OMNI_SPIN_INT_FW m_lokd;
+
                 // defined but not implemented, does not make sense to copy
-                spin_lock(const omni::sync::spin_lock &cp);
+                spin_lock(const omni::sync::spin_lock& cp);
                 omni::sync::spin_lock& operator=(const omni::sync::spin_lock& other);
                 
                 inline void _init()
@@ -156,9 +159,6 @@ namespace omni {
                         }
                     #endif
                 }
-                
-                omni::sync::spin_lock_t m_lock;
-                volatile mutable OMNI_SPIN_INT_FW m_lokd;
         };
         
         class spin_wait
@@ -241,14 +241,14 @@ namespace omni {
                     return (this->m_sig == 1);
                 }
                 
-                bool operator==(const omni::sync::spin_wait &o) const
+                bool operator==(const omni::sync::spin_wait& o) const
                 {
                     if (this == &o) { return true; }
                     return (this->m_sig == o.m_sig)
                     OMNI_EQUAL_FW(o);
                 }
 
-                bool operator!=(const omni::sync::spin_wait &o) const
+                bool operator!=(const omni::sync::spin_wait& o) const
                 {
                     return !(*this == o);
                 }
@@ -256,11 +256,11 @@ namespace omni {
                 OMNI_MEMBERS_FW(omni::sync::spin_wait) // disposing,name,type(),hash()
                 
             private:
-                // defined but not implemented. should not be copied
-                spin_wait(const omni::sync::spin_wait &cp); // C++1X delete 
-                omni::sync::spin_wait& operator=(const omni::sync::spin_wait &other); // C++1X delete
-                
                 volatile mutable OMNI_SPIN_INT_FW m_sig;
+
+                // defined but not implemented. should not be copied
+                spin_wait(const omni::sync::spin_wait& cp); // C++1X delete 
+                omni::sync::spin_wait& operator=(const omni::sync::spin_wait& other); // C++1X delete
         };
         
         class safe_spin_wait
@@ -391,7 +391,7 @@ namespace omni {
                     return false;
                 }
                 
-                bool operator==(const omni::sync::safe_spin_wait &o) const
+                bool operator==(const omni::sync::safe_spin_wait& o) const
                 {
                     if (this == &o) { return true; }
                     omni::sync::scoped_lock<omni::sync::mutex_t> alock(&this->m_mtx);
@@ -400,7 +400,7 @@ namespace omni {
                     OMNI_EQUAL_FW(o);
                 }
 
-                bool operator!=(const omni::sync::safe_spin_wait &o) const
+                bool operator!=(const omni::sync::safe_spin_wait& o) const
                 {
                     return !(*this == o);
                 }
@@ -408,12 +408,12 @@ namespace omni {
                 OMNI_MEMBERS_FW(omni::sync::safe_spin_wait) // disposing,name,type(),hash()
                 
             private:
-                // defined but not implemented. should not be copied
-                safe_spin_wait(const omni::sync::safe_spin_wait &cp); // C++1X delete 
-                omni::sync::safe_spin_wait& operator=(const omni::sync::safe_spin_wait &other); // C++1X delete
-                
                 mutable omni::sync::mutex_t m_mtx;
                 volatile mutable OMNI_SPIN_INT_FW m_sig;
+                
+                // defined but not implemented. should not be copied
+                safe_spin_wait(const omni::sync::safe_spin_wait& cp); // C++1X delete 
+                omni::sync::safe_spin_wait& operator=(const omni::sync::safe_spin_wait& other); // C++1X delete
         };
         
         typedef omni::sync::auto_lock<omni::sync::spin_lock> auto_spin_lock;

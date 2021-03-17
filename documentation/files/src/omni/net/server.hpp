@@ -19,6 +19,7 @@
 #if !defined(OMNI_NET_SERVER_HPP)
 #define OMNI_NET_SERVER_HPP 1
 #include <omni/types/net_t.hpp>
+#include <omni/net/socket.hpp>
 #include <omni/net/endpoint_descriptor.hpp>
 #include <omni/delegate/1.hpp>
 #if defined(OMNI_SAFE_NET_SERVER)
@@ -78,7 +79,7 @@ namespace omni {
                         client != this->m_clients.end();
                         ++client)
                     {
-                        (*client)->send("END", 4, xfr);
+                        (*client)->send("END", xfr);
                     }
                     this->m_run = false;
                 }

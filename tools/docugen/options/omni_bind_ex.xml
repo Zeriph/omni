@@ -1,10 +1,8 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_BIND_EX</Name>
-  <Brief>A helper macro for binding the omni::delegate
-</Brief>
-  <Considerations>This macro is only applicable to binding of non-static member functions (namespace functions are not non-static member functions and can be addressed the same as a non-member function).
-</Considerations>
+  <Brief>A helper macro for binding the omni::delegate.</Brief>
+  <Considerations>This macro is only applicable to binding of non-static member functions (namespace functions are not non-static member functions and can be addressed the same as a non-member function).</Considerations>
   <Description>When binding a function to an omni::delegate (or an omni::event), you can use the static bind function of the delegate class to attach a non-static class member function by specifying the full delegate signature and the class, it's function and the associated instance to bind to; as an example, using the omni::delegate1 which takes one parameter in the function signature:
 
 @code
@@ -61,11 +59,9 @@ delegate_t my_delegate = OMNI_BIND_EX(delegate_t, my_class, class_function, obj)
 my_event += my_delegate;
 @code
 </Description>
-  <Notes>None.
-</Notes>
-  <PlatformSpecific>No platform specific notes.
-</PlatformSpecific>
-  <Synopsis>This macro is a framework helper macro. It's purpose is to make binding to an omni::delegate less verbose when needing to bind to a non-static class member function.
+  <Notes>None.</Notes>
+  <PlatformSpecific>No platform specific notes.</PlatformSpecific>
+  <Synopsis>This macro is a helper macro. It's purpose is to make binding to an omni::delegate less verbose when needing to bind to a non-static class member function.
 
 This macro is similar to the OMNI_BIND macro except that it allows you to specify a delegate type (either an explicit delegate type or a typedef'd delegate)
 

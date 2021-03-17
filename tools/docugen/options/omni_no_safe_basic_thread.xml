@@ -1,18 +1,12 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_NO_SAFE_BASIC_THREAD</Name>
-  <Brief>Disables the OMNI_SAFE_BASIC_THREAD macro
-</Brief>
-  <Considerations>No special considerations.
-</Considerations>
-  <Description>None.
-</Description>
-  <Notes>None.
-</Notes>
-  <PlatformSpecific>No platform specific notes.
-</PlatformSpecific>
-  <Synopsis>None.
-</Synopsis>
+  <Brief>Disables the OMNI_SAFE_BASIC_THREAD macro</Brief>
+  <Considerations>No special considerations.</Considerations>
+  <Description>None.</Description>
+  <Notes>None.</Notes>
+  <PlatformSpecific>No platform specific notes.</PlatformSpecific>
+  <Synopsis>None.</Synopsis>
   <IsHelper>false</IsHelper>
   <IsConstant>false</IsConstant>
   <IsFWHelp>false</IsFWHelp>

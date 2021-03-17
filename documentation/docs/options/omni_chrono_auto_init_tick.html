@@ -29,7 +29,9 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 </div><br>
 <div class="docdiv">
     <font class="docu">SYNOPSIS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    When <code><a href="../classes/omni-chrono-monotonic-tick.html">omni::chrono::monotonic::tick</a></code> is first called, the underlying structures to the performance timers for the system clock are initialized.
+    <code>#define <a href="omni_chrono_auto_init_tick.html">OMNI_CHRONO_AUTO_INIT_TICK</a></code><br>
+<br>
+When <code><a href="../classes/omni-chrono-monotonic-tick.html">omni::chrono::monotonic::tick</a></code> is first called, the underlying structures to the performance timers for the system clock are initialized.
 </div><br>
 <div class="docdiv">
     <font class="docu">DESCRIPTION</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
@@ -39,7 +41,7 @@ If this macro is defined, the <code><a href="../classes/omni-chrono-monotonic-in
 </div><br>
 <div class="docdiv">
     <font class="docu">CONSIDERATIONS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    This macro is defined by default within the framework. If you wish to avoid the function call each time a call to <code><a href="../classes/omni-chrono-monotonic-tick.html">omni::chrono::monotonic::tick</a></code> is made, you can define <code><a href="omni_no_chrono_auto_init_tick.html">OMNI_NO_CHRONO_AUTO_INIT_TICK</a></code> and call <code><a href="../classes/omni-chrono-monotonic-initialize.html">omni::chrono::monotonic::initialize</a></code> in your own initialization code.
+    This macro is defined by default within the library. If you wish to avoid the function call each time a call to <code><a href="../classes/omni-chrono-monotonic-tick.html">omni::chrono::monotonic::tick</a></code> is made, you can define <code><a href="omni_no_chrono_auto_init_tick.html">OMNI_NO_CHRONO_AUTO_INIT_TICK</a></code> and call <code><a href="../classes/omni-chrono-monotonic-initialize.html">omni::chrono::monotonic::initialize</a></code> in your own initialization code.
 </div><br>
 <div class="docdiv">
     <font class="docu">PLATFORM SPECIFIC</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>

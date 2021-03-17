@@ -115,7 +115,7 @@
 
 #define OMNI_ENUM_ASSIGNED_PARSERS(...) private: \
     enum_t m_val; \
-    template < typename S > static enum_t _parse(const S& val) { enum_t ret; if (_try_parse(val, ret)) { return ret; } OMNI_ERRV_FW("invalid enum parse: ", val, omni::exceptions::invalid_enum()) return DEFAULT_VALUE(); } \
+    template < typename S > static enum_t _parse(const S& val) { enum_t ret; if (_try_parse(val, ret)) { return ret; } OMNI_ERR_FW("invalid enum parse", omni::exceptions::invalid_enum()) return DEFAULT_VALUE(); } \
     template < typename S > static bool _try_parse(const S& str, enum_t& out) { return _try_parse(omni::string::util::to_upper(str), out); } \
     static bool _try_parse(const std::wstring& val, enum_t& out) { return _try_parse(omni::string::util::to_string(val), out); } \
     static bool _try_parse(const std::string& val, enum_t& out) { if (!val.empty()) { \

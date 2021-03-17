@@ -7,28 +7,29 @@ OMNI_SDIR=$(OMNI_DIR)/source
 OMNI_ODIR=$(OMNI_DIR)/tests/build/obj
 # Omni library source files
 OMNI_SRC=application.cpp
-	argparser.cpp
-	async_timer.cpp
-	basic_thread.cpp
-	binary_semaphore.cpp
-	conditional.cpp
-	date_time.cpp
-	drop_timer.cpp
-	enpoint_descriptor.cpp
-	environment.cpp
-	externs.cpp
-	io.cpp
-#	library.cpp
-	mutex.cpp
-	queue_timer.cpp
-	runnable.cpp
-	semaphore.cpp
-	socket.cpp
-	stopwatch.cpp
-	sync_timer.cpp
-	system.cpp
-	thread.cpp
-	threadpool.cpp
+    argparser.cpp
+    async_timer.cpp
+    basic_thread.cpp
+    binary_semaphore.cpp
+    conditional.cpp
+    crypto.cpp
+    date_time.cpp
+    drop_timer.cpp
+    enpoint_descriptor.cpp
+    environment.cpp
+    externs.cpp
+    io.cpp
+#    library.cpp
+    mutex.cpp
+    queue_timer.cpp
+    runnable.cpp
+    semaphore.cpp
+    socket.cpp
+    stopwatch.cpp
+    sync_timer.cpp
+    system.cpp
+    thread.cpp
+    threadpool.cpp
 # translate the source to obj files
 OMNI_O=$(OMNI_SRC:%.cpp=$(OMNI_ODIR)/%.o)
 OMNI_LIB=$(OMNI_DIR)/test/bin/libomni.a
@@ -59,54 +60,54 @@ all: unicode
 
 # if this target is specified, then all options (except debug) are enabled
 full:
-	$(MAKE) OMNI_FLAGS="$(OMNI_DEF) $(OMNI_HEAVY) $(OMNI_SAFE) $(OMNI_NP)" libomni
+    $(MAKE) OMNI_FLAGS="$(OMNI_DEF) $(OMNI_HEAVY) $(OMNI_SAFE) $(OMNI_NP)" libomni
 
 full_debug:
-	$(MAKE) OMNI_FLAGS="$(OMNI_DEF) $(OMNI_HEAVY) $(OMNI_SAFE) $(OMNI_NP) $(OMNI_DEBUG)" libomni
+    $(MAKE) OMNI_FLAGS="$(OMNI_DEF) $(OMNI_HEAVY) $(OMNI_SAFE) $(OMNI_NP) $(OMNI_DEBUG)" libomni
 
 # default build with omni::string_t == std::wstring
 unicode:
-	$(MAKE) OMNI_FLAGS="$(OMNI_DEF)" libomni
+    $(MAKE) OMNI_FLAGS="$(OMNI_DEF)" libomni
 
 # build with omni::string_t == std::string
 ansi:
-	$(MAKE) OMNI_FLAGS="$(OMNI_FLAGS) $(OMNI_EX)" libomni
+    $(MAKE) OMNI_FLAGS="$(OMNI_FLAGS) $(OMNI_EX)" libomni
 
 # a basic debug build of the Omni library (debug level = 1)
 debug:
-	$(MAKE) OMNI_FLAGS="$(OMNI_DEF) $(OMNI_DEBUG)" libomni
+    $(MAKE) OMNI_FLAGS="$(OMNI_DEF) $(OMNI_DEBUG)" libomni
 
 debug_ansi:
-	$(MAKE) OMNI_FLAGS="$(OMNI_FLAGS) $(OMNI_EX) $(OMNI_DEBUG)" libomni
+    $(MAKE) OMNI_FLAGS="$(OMNI_FLAGS) $(OMNI_EX) $(OMNI_DEBUG)" libomni
 
 # Classes in the library will have additional helper members (hash/etc.)
 heavy:
-	$(MAKE) OMNI_FLAGS="$(OMNI_DEF) $(OMNI_HEAVY)" libomni
+    $(MAKE) OMNI_FLAGS="$(OMNI_DEF) $(OMNI_HEAVY)" libomni
 
 # Classes in the library will be thread safe
 thread_safe:
-	$(MAKE) OMNI_FLAGS="$(OMNI_DEF) $(OMNI_SAFE)" libomni
+    $(MAKE) OMNI_FLAGS="$(OMNI_DEF) $(OMNI_SAFE)" libomni
 
 # Non-portable code (like thread::set_priority) will be enabled in the library
 nonportable:
-	$(MAKE) OMNI_FLAGS="$(OMNI_DEF) $(OMNI_NP)" libomni
+    $(MAKE) OMNI_FLAGS="$(OMNI_DEF) $(OMNI_NP)" libomni
 
 # throw omni::exception, and try..catch will not be used
 nothrow:
-	$(MAKE) OMNI_FLAGS="$(OMNI_DEF_EX)" libomni
+    $(MAKE) OMNI_FLAGS="$(OMNI_DEF_EX)" libomni
 
 # std::terminate will be called instead of throw omni::exception, and try..catch will not be used
 terminate:
-	$(MAKE) OMNI_FLAGS="$(OMNI_DEF_EX) -DOMNI_TERMINATE" libomni
+    $(MAKE) OMNI_FLAGS="$(OMNI_DEF_EX) -DOMNI_TERMINATE" libomni
 
 # Main build: build source files then call ar to build the lib
 libomni: $(OMNI_SRC)
-	ar rvs $(OMNI_LIB) $(OMNI_O)
+    ar rvs $(OMNI_LIB) $(OMNI_O)
 
 # Source build: compiles the source files to object files (no link, just compile)
 $(OMNI_SRC):
-	$(CXX) -I$(OMNI_SDIR) $(OMNI_FLAGS) -c $(OMNI_SDIR)/$@ -o $(OMNI_ODIR)/$(@:%.cpp=%.o)
+    $(CXX) -I$(OMNI_SDIR) $(OMNI_FLAGS) -c $(OMNI_SDIR)/$@ -o $(OMNI_ODIR)/$(@:%.cpp=%.o)
 
 # make clean -> deletes the lib and obj files
 clean:
-	rm -rf $(OMNI_ODIR)/*.o $(OMNI_LIB)
+    rm -rf $(OMNI_ODIR)/*.o $(OMNI_LIB)

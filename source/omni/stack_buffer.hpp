@@ -19,13 +19,15 @@
 #if !defined(OMNI_STACK_BUFFER_HPP)
 #define OMNI_STACK_BUFFER_HPP 1
 #include <omni/defs/class_macros.hpp>
+#include <omni/string/util.hpp>
+#include <cstdarg>
 
 namespace omni {
     template < typename T, uint16_t SZ >
     class stack_buffer
     {
         public:
-            typedef const T *const const_iterator;
+            typedef const T* const_iterator;
             typedef T* iterator;
             typedef T value_type;
 
@@ -47,6 +49,22 @@ namespace omni {
                     OMNI_ERR_FW(OMNI_INDEX_OOR_STR, omni::exceptions::index_out_of_range())
                 }
                 std::memcpy(this->m_data, data, SZ);
+            }
+
+            stack_buffer(T val1, ...) : 
+                OMNI_CTOR_FW(omni::stack_buffer)
+                m_data()
+            {
+                if (SZ == 0) {
+                    OMNI_ERR_FW(OMNI_INDEX_OOR_STR, omni::exceptions::index_out_of_range())
+                }
+                va_list args;
+                va_start(args, val1);
+                this->m_data[0] = val1;
+                for (size_t i = 1; i < SZ; ++i) {
+                    this->m_data[i] = va_arg(args, value_type);
+                }
+                va_end(args);
             }
 
             template < uint16_t OTHER_SZ >
@@ -88,6 +106,11 @@ namespace omni {
                 return this->m_data[index];
             }
 
+            T* back()
+            {
+                return this->m_data + SZ;
+            }
+
             iterator begin()
             {
                 return this->m_data;
@@ -95,12 +118,7 @@ namespace omni {
 
             const_iterator begin() const
             {
-                return this->m_data;
-            }
-
-            const_iterator cbegin() const
-            {
-                return this->m_data;
+                return const_cast<const T*>(&this->m_data[0]);
             }
 
             size_t capacity() const
@@ -128,9 +146,9 @@ namespace omni {
                 return this->m_data + SZ;
             }
 
-            const_iterator cend() const
+            T* front()
             {
-                return this->m_data + SZ;
+                return this->m_data;
             }
 
             void swap(stack_buffer& other)
@@ -178,9 +196,10 @@ namespace omni {
                 return s.str();
             }           
 
-            stack_buffer& operator=(const stack_buffer &other)
+            stack_buffer& operator=(const stack_buffer& other)
             {
                 if (this != &other) {
+                    OMNI_ASSIGN_FW(other)
                     std::memcpy(this->m_data, other.m_data, SZ);
                 }
                 return *this;
@@ -205,7 +224,7 @@ namespace omni {
                 return *this;
             }
 
-            bool operator==(const stack_buffer &other) const
+            bool operator==(const stack_buffer& other) const
             {
                 if (this != &other) {
                     return (std::memcmp(this->m_data, other.m_data, SZ) == 0);
@@ -216,6 +235,104 @@ namespace omni {
             bool operator==(const T (&data)[SZ]) const
             {
                 return (std::memcmp(this->m_data, data, SZ) == 0);
+            }
+
+            inline bool operator!=(const stack_buffer& other) const
+            {
+                return !(*this == other);
+            }
+
+            inline bool operator!=(const T (&data)[SZ]) const
+            {
+                return !(*this == data);
+            }
+
+            bool operator<(const stack_buffer& other) const
+            {
+                if (this == &other) { return false; }
+                for (uint16_t i = 0; i < SZ; ++i) {
+                    if (this->m_data[i] >= other.m_data[i]) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            bool operator<(const T (&data)[SZ]) const
+            {
+                if (&this->m_data != &data) { return false; }
+                for (uint16_t i = 0; i < SZ; ++i) {
+                    if (this->m_data[i] >= data[i]) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            bool operator>(const stack_buffer& other) const
+            {
+                if (this == &other) { return false; }
+                for (uint16_t i = 0; i < SZ; ++i) {
+                    if (this->m_data[i] <= other.m_data[i]) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            bool operator>(const T (&data)[SZ]) const
+            {
+                if (&this->m_data != &data) { return false; }
+                for (uint16_t i = 0; i < SZ; ++i) {
+                    if (this->m_data[i] <= data[i]) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            bool operator<=(const stack_buffer& other) const
+            {
+                if (this == &other) { return true; }
+                for (uint16_t i = 0; i < SZ; ++i) {
+                    if (this->m_data[i] > other.m_data[i]) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            bool operator<=(const T (&data)[SZ]) const
+            {
+                if (&this->m_data != &data) { return true; }
+                for (uint16_t i = 0; i < SZ; ++i) {
+                    if (this->m_data[i] > data[i]) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            bool operator>=(const stack_buffer& other) const
+            {
+                if (this == &other) { return true; }
+                for (uint16_t i = 0; i < SZ; ++i) {
+                    if (this->m_data[i] < other.m_data[i]) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            bool operator>=(const T (&data)[SZ]) const
+            {
+                if (&this->m_data != &data) { return true; }
+                for (uint16_t i = 0; i < SZ; ++i) {
+                    if (this->m_data[i] < data[i]) {
+                        return false;
+                    }
+                }
+                return true;
             }
 
             operator std::string() const
@@ -263,6 +380,11 @@ namespace omni {
             OMNI_MEMBERS_FW(omni::stack_buffer<T, SZ>) // disposing,name,type(),hash()
 
             OMNI_OSTREAM_FW(omni::stack_buffer<T, SZ>)
+
+            static uint32_t max_size()
+            {
+                return std::numeric_limits<uint16_t>::max();
+            }
 
         private:
             T m_data[SZ];

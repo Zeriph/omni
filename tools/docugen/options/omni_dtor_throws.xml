@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_DTOR_THROWS</Name>
-  <Brief>Specifies</Brief>
-  <Considerations>No special considerations</Considerations>
-  <Description>A library macro/option that changes certain functionality</Description>
+  <Brief>A library helper defining the exception specifier of destructors.</Brief>
+  <Considerations>No special considerations.</Considerations>
+  <Description>If OMNI_ENABLE_CXX or OMNI_ENABLE_NOEXCEPT is defined, the C++ @c noexcept(false) specifier is applied to any destructors that need the exception specifier applied.</Description>
   <Notes>None.</Notes>
   <PlatformSpecific>No platform specific notes.</PlatformSpecific>
-  <Synopsis>A library macro/option</Synopsis>
+  <Synopsis>A library macro helper that defines the exception specifier of destructors that could throw an exception.</Synopsis>
   <IsHelper>false</IsHelper>
   <IsConstant>false</IsConstant>
   <IsFWHelp>true</IsFWHelp>

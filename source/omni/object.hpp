@@ -101,6 +101,15 @@ namespace omni {
                 OMNI_D5_FW("destroyed");
             }
 
+            /** Called when the instance is being destroyed (destructor is called) */
+            omni::action disposing;
+            
+            /** A property that allows you to assign a name to this object */
+            omni::string_t name;
+
+            /** A property allowing assignment of various objects and types. */
+            omni::generic_ptr tag;
+
             virtual omni::string_t to_string_t() const { return this->name; }
 
             uint64_t type() const { return omni::type_id<omni::object>(); }
@@ -131,13 +140,6 @@ namespace omni {
             {
                 return !(*this == o);
             }
-
-            /** Called when the instance is being destroyed (destructor is called) */
-            omni::action disposing;
-            /** A property that allows you to assign a name to this object */
-            omni::string_t name;
-            /** A property allowing assignment of various objects and types. */
-            omni::generic_ptr tag;
 
             friend std::ostream& operator<<(std::ostream& s, const omni::object& c)
             {

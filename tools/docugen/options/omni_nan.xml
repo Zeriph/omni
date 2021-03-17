@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_NAN</Name>
+  <Brief>A library macro/option</Brief>
+  <Considerations>No special considerations</Considerations>
+  <Description>A library macro/option that changes certain functionality</Description>
+  <Notes>None.</Notes>
+  <PlatformSpecific>No platform specific notes.</PlatformSpecific>
+  <Synopsis>A library macro/option</Synopsis>
+  <IsHelper>false</IsHelper>
+  <IsConstant>false</IsConstant>
+  <IsFWHelp>true</IsFWHelp>
+</MacroOp>

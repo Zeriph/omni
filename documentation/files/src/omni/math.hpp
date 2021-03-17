@@ -20,8 +20,147 @@
 #define OMNI_MATH_HPP 1
 
 #include <omni/types/math_t.hpp>
+#include <omni/delegate/1.hpp>
+#include <omni/delegate/2.hpp>
 
-// TODO: make notes in the docs here that using a non floating point type could result in truncation of values
+/*
+ 
+    Abs(X) - Returns the absolute value of a number.
+    std::abs
+    
+    Acos(Double) - Returns the angle whose cosine is the specified number.
+    std::acos
+    
+    Acosh(Double) - Returns the angle whose hyperbolic cosine is the specified number.
+    std::acosh - C++11
+
+    Asin(Double) - Returns the angle whose sine is the specified number.
+    std::asin
+
+    Asinh(Double) - Returns the angle whose hyperbolic sine is the specified number.
+    std::asinh - C++11
+
+    Atan(Double) - Returns the angle whose tangent is the specified number.
+    std::atan
+
+    Atan2(Double, Double) - Returns the angle whose tangent is the quotient of two specified numbers.
+    std::atan2
+    
+    Atanh(Double) - Returns the angle whose hyperbolic tangent is the specified number.
+    std::atanh - C++11
+
+    BigMul(Int32, Int32) - Produces the full product of two 32-bit numbers.
+    int64_t big_mul(int32_t x, int32_t y) { return static_cast<int64_t>(x) + static_cast<int64_t>(y); }
+    BigMul(Int64, Int64, Int64) - Produces the full product of two 64-bit numbers.
+    BigMul(UInt64, UInt64, UInt64) - Produces the full product of two unsigned 64-bit numbers.
+    --see https://stackoverflow.com/questions/28868367/getting-the-high-part-of-64-bit-integer-multiplication
+
+    BitDecrement(Double) - Returns the next smallest value that compares less than x.
+        double d = X;
+        while (d >= X) {
+            d -= std::numeric_limits(double)::epsilon();
+        }
+        return d;
+
+    BitIncrement(Double) - Returns the next largest value that compares greater than x.
+        double d = X;
+        while (d >= X) {
+            d += std::numeric_limits(double)::epsilon();
+        }
+        return d;
+
+    Cbrt(Double) - Returns the cube root of a specified number.
+    std::cbrt - C++11
+
+    Ceiling(X) - Returns the smallest integral value that is greater than or equal to the specified decimal number.
+    std::ceil
+
+    Clamp(X, X, X) - Returns value clamped to the inclusive range of min and max.
+    std::clamp - C++11
+
+    CopySign(Double, Double) - Returns a value with the magnitude of x and the sign of y.
+        template < typename T > inline T copy_sign(const T& x, const T& y)
+        (y>0) & (x<0) -> (-x)
+        (y<0) & (x>0) -> (-x)
+        {x,y} >= 0 -OR- {x,y} =< 0 -> x
+
+    Cos(Double) - Returns the cosine of the specified angle.
+    std::cos
+
+    Cosh(Double) - Returns the hyperbolic cosine of the specified angle.
+    std::cosh
+
+    DivRem(Int32, Int32, Int32) - Calculates the quotient of two 32-bit signed integers and also returns the remainder in an output parameter.
+    DivRem(Int64, Int64, Int64) - Calculates the quotient of two 64-bit signed integers and also returns the remainder in an output parameter.
+
+    Exp(Double) - Returns e raised to the specified power.
+    std::exp
+
+    Floor(X) - Returns the largest integral value less than or equal to the specified decimal number.
+    std::floor
+
+    FusedMultiplyAdd(Double, Double, Double) - Returns (x * y) + z, rounded as one ternary operation.
+
+    IEEERemainder(Double, Double) - Returns the remainder resulting from the division of a specified number by another specified number.
+
+    ILogB(Double) - Returns the base 2 integer logarithm of a specified number.
+    std::ilogb - C++11 {also just (int)(log(x)/log(2))}
+
+    Log(Double) - Returns the natural (base e) logarithm of a specified number.
+    std::log
+    
+    Log(Double, Double) - Returns the logarithm of a specified number in a specified base.
+    func = return log(x)/log(y)
+
+    Log10(Double) - Returns the base 10 logarithm of a specified number.
+    std::log10
+    
+    Log2(Double) - Returns the base 2 logarithm of a specified number.
+    std::log2 - C++11
+
+    Max(X, X) - Returns the larger of two decimal numbers.
+    std::max
+
+    MaxMagnitude(Double, Double) - Returns the larger magnitude of two double-precision floating-point numbers.
+
+    Min(X, X) - Returns the smaller of two decimal numbers.
+    std::min
+
+    MinMagnitude(Double, Double) - Returns the smaller magnitude of two double-precision floating-point numbers.
+
+    Pow(Double, Double) - Returns a specified number raised to the specified power.
+    std::pow
+
+    Round(X) - Rounds a double-precision floating-point value to the nearest integral value, and rounds midpoint values to the nearest even number.
+    std::round - C++11
+    
+    Round(Double, Int32) - Rounds a double-precision floating-point value to a specified number of fractional digits, and rounds midpoint values to the nearest even number.
+    Round(Double, Int32, MidpointRounding) - Rounds a double-precision floating-point value to a specified number of fractional digits, and uses the specified rounding convention for midpoint values.
+    Round(Double, MidpointRounding) - Rounds a double-precision floating-point value to the nearest integer, and uses the specified rounding convention for midpoint values.
+
+    ScaleB(Double, Int32) - Returns x * 2^n computed efficiently.
+    std::ldexp
+
+    Sign(X) - Returns an integer that indicates the sign of a number.
+
+    Sin(Double) - Returns the sine of the specified angle.
+    std::sin
+
+    Sinh(Double) - Returns the hyperbolic sine of the specified angle.
+    std::sinh
+
+    Sqrt(Double) - Returns the square root of a specified number.
+    std::sqrt
+
+    Tan(Double) - Returns the tangent of the specified angle.
+    std::tan
+
+    Tanh(Double) - Returns the hyperbolic tangent of the specified angle.
+    std::tanh
+
+    Truncate(X) - Calculates the integral part of a specified decimal number.
+    std::trunc - C++11
+*/
 
 namespace omni {
     namespace math {
@@ -382,6 +521,28 @@ namespace omni {
         inline bool circles_intersect(T x1, T y1, double r1, T x2, T y2, double r2)
         {
             return omni::math::circles_intersect<T>(x1, y1, r1, x2, y2, r2, true);
+        }
+
+        template < typename T >
+        inline T& clamp(const T& value, const T& min_val, const T& max_val)
+        {
+            if (min_val > max_val) {
+                OMNI_ERR_FW("max value must be greater than or equal to min value", omni::exceptions::invalid_range("max value must be greater than or equal to min value"))
+            }
+            if (value < min_val) { return min_val; }
+            if (value > max_val) { return max_val; }
+            return value;
+        }
+
+        template < typename T >
+        inline T& clamp(const T& value, const T& min_val, const T& max_val, const omni::delegate2<bool, T, T>& comp)
+        {
+            if (min_val > max_val) {
+                OMNI_ERR_FW("max value must be greater than or equal to min value", omni::exceptions::invalid_range("max value must be greater than or equal to min value"))
+            }
+            if (comp(value, min_val)) { return min_val; }
+            if (comp(value, max_val)) { return max_val; }
+            return value;
         }
 
         inline double deg_to_rad(double deg)
@@ -1313,6 +1474,7 @@ namespace omni {
 
         inline double truncate(double val)
         {
+            // TODO: if C++11 .. use std::trunc
             std::modf(val, &val);
             return val;
         }
@@ -1320,6 +1482,16 @@ namespace omni {
         inline double trunc(double val)
         {
             return omni::math::truncate(val);
+        }
+
+        inline double integral_part(double val)
+        {
+            return omni::math::truncate(val);
+        }
+
+        inline double fractional_part(double val)
+        {
+            return std::modf(val, &val);
         }
 
         template < typename T >

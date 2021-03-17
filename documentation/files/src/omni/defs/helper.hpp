@@ -25,11 +25,12 @@
 #define OMNI_DEF2STR_FW(...) # __VA_ARGS__
 #define OMNI_DEF2STR(...) OMNI_DEF2STR_FW( __VA_ARGS__ )
 
+
 #define OMNI_DEFCONCAT_FW(A, B) A ## B
 #define OMNI_DEFCONCAT(A, B) OMNI_DEFCONCAT_FW(A, B)
 
-#define OMNI_BOOL2STR(bval) (bval ? "true" : "false")
-#define OMNI_BOOL2WSTR(bval) (bval ? L"true" : L"false")
+#define OMNI_BOOL2STR(bval) ((bval) ? "true" : "false")
+#define OMNI_BOOL2WSTR(bval) ((bval) ? L"true" : L"false")
 #define OMNI_B2S(bval) OMNI_BOOL2STR(bval)
 #define OMNI_B2WS(bval) OMNI_BOOL2WSTR(bval)
 

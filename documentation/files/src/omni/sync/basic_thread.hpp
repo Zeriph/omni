@@ -123,20 +123,6 @@ namespace omni {
                 }
                 
             private:
-                // Methods
-                basic_thread(const omni::sync::thread_start& mthd, bool tpool);
-                void _chkmthd();
-                void _close_handle(bool allow_rejoin);
-                void _hreset(bool force, bool allow_rejoin);
-                bool _hvalid() const;
-                bool _state_running() const;
-                void _state_machine(const omni::sync::thread_t tid);
-                void _set_context(const omni::sync::basic_thread& t2);
-                #if defined(OMNI_NON_PORTABLE)
-                    void _set_prio();
-                #endif
-                
-                // Members
                 #if defined(OMNI_SAFE_BASIC_THREAD)
                     mutable omni::sync::basic_lock m_mtx;
                 #endif
@@ -151,6 +137,17 @@ namespace omni {
                 #endif
                 volatile OMNI_BTHRD_INT_FW m_status;
                 
+                basic_thread(const omni::sync::thread_start& mthd, bool tpool);
+                void _chkmthd();
+                void _close_handle(bool allow_rejoin);
+                void _hreset(bool force, bool allow_rejoin);
+                bool _hvalid() const;
+                bool _state_running() const;
+                void _state_machine(const omni::sync::thread_t tid);
+                void _set_context(const omni::sync::basic_thread& t2);
+                #if defined(OMNI_NON_PORTABLE)
+                    void _set_prio();
+                #endif
                 static OMNI_THREAD_FNPTR_T OMNI_THREAD_CALL_T _start(void* param);
                 
                 class manager

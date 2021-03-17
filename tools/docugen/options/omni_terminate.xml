@@ -1,18 +1,12 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_TERMINATE</Name>
-  <Brief>Defines the underlying terminate function to call.
-</Brief>
-  <Considerations>No special considerations
-</Considerations>
-  <Description>This macro is the underlying function called in the event the framework needs to terminate (i.e. an error occurred on destruction, etc.). For more information see @h omni/exception.hpp @h
-</Description>
-  <Notes>None.
-</Notes>
-  <PlatformSpecific>No platform specific notes.
-</PlatformSpecific>
-  <Synopsis>If not defined, will define the macro to be std::terminate unless OMNI_NO_TERMINATE is defined.
-</Synopsis>
+  <Brief>Defines the underlying terminate function to call.</Brief>
+  <Considerations>No special considerations</Considerations>
+  <Description>This macro is the underlying function called in the event the library needs to terminate (i.e. an error occurred on destruction, etc.). For more information see @h omni/exception.hpp @h</Description>
+  <Notes>None.</Notes>
+  <PlatformSpecific>No platform specific notes.</PlatformSpecific>
+  <Synopsis>If not defined, will define the macro to be std::terminate unless OMNI_NO_TERMINATE is defined.</Synopsis>
   <IsHelper>false</IsHelper>
   <IsConstant>false</IsConstant>
   <IsFWHelp>false</IsFWHelp>

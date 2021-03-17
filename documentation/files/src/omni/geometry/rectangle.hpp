@@ -964,7 +964,26 @@ namespace omni {
                 
                 bool operator!=(const omni::geometry::rectangle<T>& val) const
                 {
-                    // TODO: make sure for every operator== there is an operator!=
+                    return !(*this == val);
+                }
+
+                bool operator!=(const omni::geometry::point2d<T>& val) const
+                {
+                    return !(*this == val);
+                }
+
+                bool operator!=(const omni::geometry::raw_point2d<T>& val) const
+                {
+                    return !(*this == val);
+                }
+
+                bool operator!=(const omni::geometry::size<T>& val) const
+                {
+                    return !(*this == val);
+                }
+
+                bool operator!=(const omni::geometry::raw_size<T>& val) const
+                {
                     return !(*this == val);
                 }
                 
@@ -1316,6 +1335,7 @@ namespace omni {
 
                 bool _intersects_with(T left, T top, T right, T bottom) const
                 {
+                    // TODO: do line intersection instead
                     return (
                         OMNI_RECT_LTRB_CONTAINS_FW(this->m_loc.x, this->m_loc.y, this->m_edge.x, this->m_edge.y, left, top) ||
                         OMNI_RECT_LTRB_CONTAINS_FW(this->m_loc.x, this->m_loc.y, this->m_edge.x, this->m_edge.y, right, top) ||

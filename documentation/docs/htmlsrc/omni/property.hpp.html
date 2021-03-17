@@ -53,7 +53,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <!--end line numbers-->
 </div><div class="cpphtmlcmnt">
 <!--start collapse columns-->
-<img src="../../../content/tree/min.gif" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<img src="../../../content/tree/min.gif" alt="Min/Max" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -61,7 +61,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<img src="../../../content/tree/min.gif" id="cmnti2" name="cmnti2" onclick="collapse('2', '../../../');" /><br><div id="cmnts2" name="cmnts2"><br><br><br><br><br><br><br><br><br><br></div><div></div><br><br><br><br><br><br><br><br><br>
+<img src="../../../content/tree/min.gif" alt="Min/Max" id="cmnti2" name="cmnti2" onclick="collapse('2', '../../../');" /><br><div id="cmnts2" name="cmnts2"><br><br><br><br><br><br><br><br><br><br></div><div></div><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -129,7 +129,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <font class="syn_pre">#endif</font><br>
 <br>
 <font class="syn_ins">namespace</font> omni {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// TODO: does this make sense? helper class, sure ... but prop_get/set??</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// DEV_NOTE:  property == C# public get/set, property_getter == C# public get, property_setter == C# public set</font><br>
 <br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">class</font> property<br>
@@ -341,6 +341,11 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MEMBERS_FW(<a href="../../classes/omni-property.html">omni::property</a>&lt;T&gt;) <font class="syn_cmt">// disposing,name,type(),hash()</font><br>
 <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">private</font>:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_PROP_MTX_FW<br>
+<a name="omni::property_getter::m_get"></a><a name="omni::property::m_get"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get m_get;<br>
+<a name="omni::property_setter::m_set"></a><a name="omni::property::m_set"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set m_set;<br>
+<a name="omni::property_setter::m_val"></a><a name="omni::property_getter::m_val"></a><a name="omni::property::m_val"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value_t m_val;<br>
+<br>
 <a name="omni::property_getter::_vget"></a><a name="omni::property::_vget"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value_t _vget() <font class="syn_typ">const</font> {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_PROP_ALOCK_FW<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;m_get();<br>
@@ -354,11 +359,6 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <a name="omni::property_getter::_get"></a><a name="omni::property::_get"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value_t _get() <font class="syn_typ">const</font> { <font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;m_val; }<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
 <a name="omni::property_setter::_set"></a><a name="omni::property::_set"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> _set(value_t value) { <font class="syn_typ">this</font>-&gt;m_val = value; }<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_PROP_MTX_FW<br>
-<a name="omni::property_getter::m_get"></a><a name="omni::property::m_get"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get m_get;<br>
-<a name="omni::property_setter::m_set"></a><a name="omni::property::m_set"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set m_set;<br>
-<a name="omni::property_setter::m_val"></a><a name="omni::property_getter::m_val"></a><a name="omni::property::m_val"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value_t m_val;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;};<br>
 <br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt;<br>
@@ -436,6 +436,10 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MEMBERS_FW(<a href="../../classes/omni-property_getter.html">omni::property_getter</a>&lt;T&gt;) <font class="syn_cmt">// disposing,name,type(),hash()</font><br>
 <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">private</font>:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_PROP_MTX_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get m_get;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value_t m_val;<br>
+<br>
 <a name="omni::property_getter::operator="></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;property_t&amp; <font class="syn_ins">operator</font>=(property_getter&lt;T&gt;&amp; other); <font class="syn_cmt">// = delete</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;property_t&amp; <font class="syn_ins">operator</font>=(value_t other); <font class="syn_cmt">// = delete</font><br>
 <br>
@@ -445,10 +449,6 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value_t _get() <font class="syn_typ">const</font> { <font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;m_val; }<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_PROP_MTX_FW<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get m_get;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value_t m_val;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;};<br>
 <br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt;<br>
@@ -604,11 +604,11 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MEMBERS_FW(<a href="../../classes/omni-property_setter.html">omni::property_setter</a>&lt;T&gt;) <font class="syn_cmt">// disposing,name,type(),hash()</font><br>
 <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">private</font>:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> _set(value_t value) { <font class="syn_typ">this</font>-&gt;m_val = value; }<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_PROP_MTX_FW<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set m_set;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value_t m_val;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> _set(value_t value) { <font class="syn_typ">this</font>-&gt;m_val = value; }<br>
 &nbsp;&nbsp;&nbsp;&nbsp;};<br>
 }<br>
 <br>

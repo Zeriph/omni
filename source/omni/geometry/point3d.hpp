@@ -20,6 +20,7 @@
 #define OMNI_3D_POINT_HPP 1
 #include <omni/defs/global.hpp>
 #include <omni/defs/class_macros.hpp>
+#include <omni/math.hpp>
 
 #if defined(OMNI_SAFE_POINT3D)
     #include <omni/sync/basic_lock.hpp>
@@ -142,7 +143,7 @@ namespace omni {
 
                 void decrement(T x, T y, T z)
                 {
-                    OMNI_SAFE_P2ALOCK_FW
+                    OMNI_SAFE_P3ALOCK_FW
                     this->m_x -= x;
                     this->m_y -= y;
                     this->m_z -= z;
@@ -223,7 +224,7 @@ namespace omni {
 
                 void increment(T x, T y, T z)
                 {
-                    OMNI_SAFE_P2ALOCK_FW
+                    OMNI_SAFE_P3ALOCK_FW
                     this->m_x += x;
                     this->m_y += y;
                     this->m_z += z;
@@ -241,7 +242,7 @@ namespace omni {
 
                 void offset(T x, T y, T z)
                 {
-                    OMNI_SAFE_P2ALOCK_FW
+                    OMNI_SAFE_P3ALOCK_FW
                     this->m_x += x;
                     this->m_y += y;
                     this->m_z += z;
@@ -310,7 +311,7 @@ namespace omni {
 
                 omni::math::dimensional<T, 3> to_dimensional() const
                 {
-                    OMNI_SAFE_P2ALOCK_FW
+                    OMNI_SAFE_P3ALOCK_FW
                     T vals[3] = { this->m_x, this->m_y, this->m_z };
                     return omni::math::dimensional<T, 3>(vals);
                 }

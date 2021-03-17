@@ -1,18 +1,12 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_BIND_CONST_EX</Name>
-  <Brief>A helper macro for binding the omni::delegate to const members
-</Brief>
-  <Considerations>No special considerations.
-</Considerations>
-  <Description>See the documentation for OMNI_BIND_EX for more information.
-</Description>
-  <Notes>None.
-</Notes>
-  <PlatformSpecific>No platform specific notes.
-</PlatformSpecific>
-  <Synopsis>This macro is similar in to the OMNI_BIND_EX macro, except it calls the omni::delegate::bind_const function to bind to member functions with the const qualifier.
-</Synopsis>
+  <Brief>A helper macro for binding the omni::delegate to const members.</Brief>
+  <Considerations>No special considerations.</Considerations>
+  <Description>See the documentation for OMNI_BIND_EX for more information.</Description>
+  <Notes>None.</Notes>
+  <PlatformSpecific>No platform specific notes.</PlatformSpecific>
+  <Synopsis>This macro is similar in to the OMNI_BIND_EX macro, except it calls the omni::delegate::bind_const function to bind to member functions with the const qualifier.</Synopsis>
   <IsHelper>true</IsHelper>
   <IsConstant>false</IsConstant>
   <IsFWHelp>false</IsFWHelp>

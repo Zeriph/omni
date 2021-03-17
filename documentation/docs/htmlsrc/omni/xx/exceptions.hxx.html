@@ -49,12 +49,12 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 0000460:<br>0000461:<br>0000462:<br>0000463:<br>0000464:<br>0000465:<br>0000466:<br>0000467:<br>0000468:<br>0000469:<br>0000470:<br>0000471:<br>0000472:<br>0000473:<br>0000474:<br>0000475:<br>0000476:<br>0000477:<br>0000478:<br>0000479:<br>
 0000480:<br>0000481:<br>0000482:<br>0000483:<br>0000484:<br>0000485:<br>0000486:<br>0000487:<br>0000488:<br>0000489:<br>0000490:<br>0000491:<br>0000492:<br>0000493:<br>0000494:<br>0000495:<br>0000496:<br>0000497:<br>0000498:<br>0000499:<br>
 0000500:<br>0000501:<br>0000502:<br>0000503:<br>0000504:<br>0000505:<br>0000506:<br>0000507:<br>0000508:<br>0000509:<br>0000510:<br>0000511:<br>0000512:<br>0000513:<br>0000514:<br>0000515:<br>0000516:<br>0000517:<br>0000518:<br>0000519:<br>
-0000520:<br>0000521:<br>
+0000520:<br>0000521:<br>0000522:<br>0000523:<br>0000524:<br>0000525:<br>0000526:<br>0000527:<br>0000528:<br>0000529:<br>0000530:<br>0000531:<br>0000532:<br>0000533:<br>0000534:<br>0000535:<br>0000536:<br>0000537:<br>0000538:<br>0000539:<br>0000540:<br>
 <!--end line numbers-->
 </div><div class="cpphtmlcmnt">
 <!--start collapse columns-->
-<img src="../../../../content/tree/min.gif" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
-<img src="../../../../content/tree/min.gif" id="cmnti2" name="cmnti2" onclick="collapse('2', '../../../../');" /><br><div id="cmnts2" name="cmnts2"><br><br><br><br><br><br><br><br></div><div></div><br><br><br><br><br><br><br><br><br><br><br>
+<img src="../../../../content/tree/min.gif" alt="Min/Max" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<img src="../../../../content/tree/min.gif" alt="Min/Max" id="cmnti2" name="cmnti2" onclick="collapse('2', '../../../../');" /><br><div id="cmnts2" name="cmnts2"><br><br><br><br><br><br><br><br></div><div></div><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -79,7 +79,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <!--end collapse columns-->
 </div><div class="cpphtml" style="margin-left:3.75em;">
 <!--start highlighted code-->
@@ -334,8 +334,8 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <a name="omni::exceptions::invalid_enum"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">class</font> invalid_enum : <font class="syn_ins">public</font> <a href="../../../classes/omni-exception.html">omni::exception</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">public</font>:<br>
-<a name="omni::exceptions::invalid_enum::invalid_enum"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;invalid_enum() : <a href="../../../classes/omni-exception.html">omni::exception</a>(<a href="../../../options/omni_invalid_enum.html">OMNI_INVALID_ENUM</a>) {}<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">explicit</font> invalid_enum(<font class="syn_typ">const</font> <font class="syn_typ">char</font>* name) : <a href="../../../classes/omni-exception.html">omni::exception</a>(<a href="../../../options/omni_invalid_enum.html">OMNI_INVALID_ENUM</a>) {<br>
+<a name="omni::exceptions::invalid_enum::invalid_enum"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;invalid_enum() : <a href="../../../classes/omni-exception.html">omni::exception</a>(<a href="../../../options/omni_invalid_enum_str.html">OMNI_INVALID_ENUM_STR</a>) {}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">explicit</font> invalid_enum(<font class="syn_typ">const</font> <font class="syn_typ">char</font>* name) : <a href="../../../classes/omni-exception.html">omni::exception</a>(<a href="../../../options/omni_invalid_enum_str.html">OMNI_INVALID_ENUM_STR</a>) {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (name) {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_what.append(<font class="syn_str">&quot;: &quot;</font>);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_what.append(name);<br>
@@ -344,12 +344,12 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../options/omni_exception_terminate.html">OMNI_EXCEPTION_TERMINATE</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">explicit</font> invalid_enum(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; name) : <a href="../../../classes/omni-exception.html">omni::exception</a>(<a href="../../../options/omni_invalid_enum.html">OMNI_INVALID_ENUM</a>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">explicit</font> invalid_enum(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; name) : <a href="../../../classes/omni-exception.html">omni::exception</a>(<a href="../../../options/omni_invalid_enum_str.html">OMNI_INVALID_ENUM_STR</a>) {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_what.append(<font class="syn_str">&quot;: &quot;</font>);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_what.append(name);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">explicit</font> invalid_enum(<font class="syn_typ">int</font> val) : <a href="../../../classes/omni-exception.html">omni::exception</a>(<a href="../../../options/omni_invalid_enum.html">OMNI_INVALID_ENUM</a>, <font class="syn_str">&quot;: &quot;</font>, val) { }<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">explicit</font> invalid_enum(<font class="syn_typ">uint32_t</font> val) : <a href="../../../classes/omni-exception.html">omni::exception</a>(<a href="../../../options/omni_invalid_enum.html">OMNI_INVALID_ENUM</a>, <font class="syn_str">&quot;: &quot;</font>, <font class="syn_ins">static_cast</font>&lt;<a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a>&gt;(val)) { }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">explicit</font> invalid_enum(<font class="syn_typ">int</font> val) : <a href="../../../classes/omni-exception.html">omni::exception</a>(<a href="../../../options/omni_invalid_enum_str.html">OMNI_INVALID_ENUM_STR</a>, <font class="syn_str">&quot;: &quot;</font>, val) { }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">explicit</font> invalid_enum(<font class="syn_typ">uint32_t</font> val) : <a href="../../../classes/omni-exception.html">omni::exception</a>(<a href="../../../options/omni_invalid_enum_str.html">OMNI_INVALID_ENUM_STR</a>, <font class="syn_str">&quot;: &quot;</font>, <font class="syn_ins">static_cast</font>&lt;<a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a>&gt;(val)) { }<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};<br>
 <br>
 <a name="omni::exceptions::invalid_parse"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">class</font> invalid_parse : <font class="syn_ins">public</font> <a href="../../../classes/omni-exception.html">omni::exception</a><br>
@@ -425,7 +425,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <a name="omni::exceptions::invalid_thread_owner"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">class</font> invalid_thread_owner : <font class="syn_ins">public</font> <a href="../../../classes/omni-exceptions-thread_exception.html">omni::exceptions::thread_exception</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">public</font>:<br>
-<a name="omni::exceptions::invalid_thread_owner::invalid_thread_owner"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;invalid_thread_owner() : <a href="../../../classes/omni-exceptions-thread_exception.html">omni::exceptions::thread_exception</a>(<a href="../../../options/omni_invalid_thread_owner.html">OMNI_INVALID_THREAD_OWNER</a>) {}<br>
+<a name="omni::exceptions::invalid_thread_owner::invalid_thread_owner"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;invalid_thread_owner() : <a href="../../../classes/omni-exceptions-thread_exception.html">omni::exceptions::thread_exception</a>(<a href="../../../options/omni_invalid_thread_owner_str.html">OMNI_INVALID_THREAD_OWNER_STR</a>) {}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
 <a name="omni::exceptions::invalid_thread_start_type"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">class</font> invalid_thread_start_type : <font class="syn_ins">public</font> <a href="../../../classes/omni-exceptions-thread_exception.html">omni::exceptions::thread_exception</a><br>
@@ -493,8 +493,8 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <a name="omni::exceptions::path_exception"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">class</font> path_exception : <font class="syn_ins">public</font> <a href="../../../classes/omni-exception.html">omni::exception</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">public</font>:<br>
-<a name="omni::exceptions::path_exception::path_exception"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;path_exception() : <a href="../../../classes/omni-exception.html">omni::exception</a>(<a href="../../../options/omni_path_error.html">OMNI_PATH_ERROR</a>) {}<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">explicit</font> path_exception(<font class="syn_typ">const</font> <font class="syn_typ">char</font>* path) : <a href="../../../classes/omni-exception.html">omni::exception</a>(<a href="../../../options/omni_path_error.html">OMNI_PATH_ERROR</a>) {<br>
+<a name="omni::exceptions::path_exception::path_exception"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;path_exception() : <a href="../../../classes/omni-exception.html">omni::exception</a>(<a href="../../../options/omni_path_error_str.html">OMNI_PATH_ERROR_STR</a>) {}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">explicit</font> path_exception(<font class="syn_typ">const</font> <font class="syn_typ">char</font>* path) : <a href="../../../classes/omni-exception.html">omni::exception</a>(<a href="../../../options/omni_path_error_str.html">OMNI_PATH_ERROR_STR</a>) {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (path) {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_what.append(<font class="syn_str">&quot; on &quot;</font>);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_what.append(path);<br>
@@ -503,7 +503,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../options/omni_exception_terminate.html">OMNI_EXCEPTION_TERMINATE</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">explicit</font> path_exception(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; path) : <a href="../../../classes/omni-exception.html">omni::exception</a>(<a href="../../../options/omni_path_error.html">OMNI_PATH_ERROR</a>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">explicit</font> path_exception(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; path) : <a href="../../../classes/omni-exception.html">omni::exception</a>(<a href="../../../options/omni_path_error_str.html">OMNI_PATH_ERROR_STR</a>) {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_what.append(<font class="syn_str">&quot; on &quot;</font>);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_what.append(path);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
@@ -536,6 +536,25 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">explicit</font> file_not_found(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; path) : <a href="../../../classes/omni-exception.html">omni::exception</a>(<a href="../../../options/omni_file_not_found_str.html">OMNI_FILE_NOT_FOUND_STR</a>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_what.append(<font class="syn_str">&quot;: &quot;</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_what.append(path);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};<br>
+<br>
+<a name="omni::exceptions::io_exception"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">class</font> io_exception : <font class="syn_ins">public</font> <a href="../../../classes/omni-exception.html">omni::exception</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">public</font>:<br>
+<a name="omni::exceptions::io_exception::io_exception"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;io_exception() : <a href="../../../classes/omni-exception.html">omni::exception</a>(<a href="../../../options/omni_io_error_str.html">OMNI_IO_ERROR_STR</a>) {}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">explicit</font> io_exception(<font class="syn_typ">const</font> <font class="syn_typ">char</font>* path) : <a href="../../../classes/omni-exception.html">omni::exception</a>(<a href="../../../options/omni_io_error_str.html">OMNI_IO_ERROR_STR</a>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (path) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_what.append(<font class="syn_str">&quot;: &quot;</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_what.append(path);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../options/omni_dbge.html">OMNI_DBGE</a>(<a href="../../../options/omni_null_ptr_str.html">OMNI_NULL_PTR_STR</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../options/omni_exception_terminate.html">OMNI_EXCEPTION_TERMINATE</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">explicit</font> io_exception(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; path) : <a href="../../../classes/omni-exception.html">omni::exception</a>(<a href="../../../options/omni_io_error_str.html">OMNI_IO_ERROR_STR</a>) {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_what.append(<font class="syn_str">&quot;: &quot;</font>);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_what.append(path);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>

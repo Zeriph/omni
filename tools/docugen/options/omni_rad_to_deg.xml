@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_RAD_TO_DEG</Name>
+  <Brief>A helper macro that converts radians to degrees.</Brief>
+  <Considerations>No special considerations.</Considerations>
+  <Description>A helper macro simply defined as the following:
+
+@code
+#define OMNI_RAD_TO_DEG(rad) (rad) * OMNI_180_PI
+@code
+</Description>
+  <Notes>None.</Notes>
+  <PlatformSpecific>No platform specific notes.</PlatformSpecific>
+  <Synopsis>Defines a helper macro that can be utilized in user code that converts radians to degrees.</Synopsis>
+  <IsHelper>true</IsHelper>
+  <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
+</MacroOp>

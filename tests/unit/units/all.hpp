@@ -141,6 +141,7 @@ class UT_CLASS_DEF
             print_info(omni::exceptions::mutex_system_exception);
             print_info(omni::exceptions::semaphore_system_exception);
 
+            #if !defined(OMNI_NO_CONSTS)
             // constants (static memory)
             std::cout << "constant static memory consumed: " <<
                     sizeof(omni::chrono::DAYS_PER_YEAR) +
@@ -366,6 +367,7 @@ class UT_CLASS_DEF
                         std::strlen(omni::environment::NEW_LINE)
                     #endif
             << std::endl;
+            #endif
         }
 };
 

@@ -44,7 +44,7 @@
 #endif
 
 namespace omni {
-    // TODO: does this make sense? helper class, sure ... but prop_get/set??
+    // DEV_NOTE:  property == C# public get/set, property_getter == C# public get, property_setter == C# public set
 
     template < typename T >
     class property
@@ -256,6 +256,11 @@ namespace omni {
             OMNI_MEMBERS_FW(omni::property<T>) // disposing,name,type(),hash()
 
         private:
+            OMNI_SAFE_PROP_MTX_FW
+            get m_get;
+            set m_set;
+            value_t m_val;
+
             value_t _vget() const {
                 OMNI_SAFE_PROP_ALOCK_FW
                 return this->m_get();
@@ -269,11 +274,6 @@ namespace omni {
             value_t _get() const { return this->m_val; }
             
             void _set(value_t value) { this->m_val = value; }
-            
-            OMNI_SAFE_PROP_MTX_FW
-            get m_get;
-            set m_set;
-            value_t m_val;
     };
 
     template < typename T >
@@ -351,6 +351,10 @@ namespace omni {
             OMNI_MEMBERS_FW(omni::property_getter<T>) // disposing,name,type(),hash()
 
         private:
+            OMNI_SAFE_PROP_MTX_FW
+            get m_get;
+            value_t m_val;
+
             property_t& operator=(property_getter<T>& other); // = delete
             property_t& operator=(value_t other); // = delete
 
@@ -360,10 +364,6 @@ namespace omni {
             }
             
             value_t _get() const { return this->m_val; }
-            
-            OMNI_SAFE_PROP_MTX_FW
-            get m_get;
-            value_t m_val;
     };
 
     template < typename T >
@@ -519,11 +519,11 @@ namespace omni {
             OMNI_MEMBERS_FW(omni::property_setter<T>) // disposing,name,type(),hash()
 
         private:            
-            void _set(value_t value) { this->m_val = value; }
-            
             OMNI_SAFE_PROP_MTX_FW
             set m_set;
             value_t m_val;
+
+            void _set(value_t value) { this->m_val = value; }
     };
 }
 

@@ -1,20 +1,16 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_NO_WIN_API</Name>
-  <Brief>Use the Microsoft C Runtime Library where applicable.
-</Brief>
-  <Considerations>This flag changes the underlying API's called for certain areas of code on a Windows build, this can effect the overall system due to the CRT being used. It is highly advised you understand those area's of code affected by this flag to ensure you need (or don't need) this compile time flag.
-</Considerations>
-  <Description>By specifying the OMNI_NO_WIN_API preprocessor flag, the framework will not use WinAPI calls but use their CRT equivalents instead; _beginthreadex over calling CreateThread for example.
-</Description>
-  <Notes>Some calls require that a WinAPI call be made, _beginthreadex for example, still requires that CloseHandle be called. To that extent, even if this flag is enabled not all WinAPI calls will be eliminated, merely key ones swapped for their CRT versions.
-</Notes>
-  <PlatformSpecific>This flag only applies to a Windows based build; it has no affect on the framework if compiled for different platform.
-</PlatformSpecific>
+  <Brief>Use the Microsoft C Runtime Library where applicable.</Brief>
+  <Considerations>This flag changes the underlying API's called for certain areas of code on a Windows build, this can effect the overall system due to the CRT being used. It is highly advised you understand those area's of code affected by this flag to ensure you need (or don't need) this compile time flag.</Considerations>
+  <Description>By specifying the OMNI_NO_WIN_API preprocessor flag, the library will not use WinAPI calls but use their CRT equivalents instead; _beginthreadex over calling CreateThread for example.</Description>
+  <Notes>Some calls require that a WinAPI call be made, _beginthreadex for example, still requires that CloseHandle be called. To that extent, even if this flag is enabled not all WinAPI calls will be eliminated, merely key ones swapped for their CRT versions.</Notes>
+  <PlatformSpecific>This flag only applies to a Windows based build; it has no affect on the library if compiled for different platform.</PlatformSpecific>
   <Synopsis>&lt;code&gt;#define OMNI_NO_WIN_API&lt;/code&gt;
 
 Signifies to use the Microsoft C Runtime Library where applicable.
 </Synopsis>
   <IsHelper>false</IsHelper>
   <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
 </MacroOp>

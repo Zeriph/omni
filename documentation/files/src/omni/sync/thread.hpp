@@ -105,10 +105,8 @@ namespace omni {
                         omni::sync::thread_union_t val);
                     ~thread();
 
-                    static bool abort_requested();
-                    static void request_abort(omni::sync::thread_t tid);
-                    static void request_abort(const omni::sync::thread& tid)
-                    { omni::sync::thread::request_abort(tid.id()); }
+                    omni::sync::thread::event aborted;
+                    omni::sync::thread::event completed;
 
                     void abort(); // request end nicely
                     bool abort_join();
@@ -152,26 +150,14 @@ namespace omni {
                         void set_priority(omni::sync::thread_priority::enum_t p);
                     #endif
 
-                    omni::sync::thread::event aborted;
-                    omni::sync::thread::event completed;
-
                     OMNI_MEMBERS_FW(omni::sync::thread) // disposing,name,type(),hash()
 
-                private:
-                    // Methods
-                    void _chkmthd();
-                    void _close_handle(bool allow_rejoin);
-                    void _hreset(bool force, bool allow_rejoin);
-                    bool _hvalid() const;
-                    bool _state_running() const;
-                    void _state_changed(omni::sync::thread_state::enum_t nstate);
-                    void _state_machine();
-                    void _set_context(const omni::sync::thread& t2);
-                    #if defined(OMNI_NON_PORTABLE)
-                        void _set_prio();
-                    #endif
+                    static bool abort_requested();
+                    static void request_abort(omni::sync::thread_t tid);
+                    static void request_abort(const omni::sync::thread& tid)
+                    { omni::sync::thread::request_abort(tid.id()); }
 
-                    // Members
+                private:
                     #if defined(OMNI_SAFE_THREAD)
                         mutable omni::sync::basic_lock m_mtx;
                     #endif
@@ -186,6 +172,18 @@ namespace omni {
                     #endif
                     volatile OMNI_THRD_INT_FW m_status;
 
+                    void _chkmthd();
+                    void _close_handle(bool allow_rejoin);
+                    void _hreset(bool force, bool allow_rejoin);
+                    bool _hvalid() const;
+                    bool _state_running() const;
+                    void _state_changed(omni::sync::thread_state::enum_t nstate);
+                    void _state_machine();
+                    void _set_context(const omni::sync::thread& t2);
+                    #if defined(OMNI_NON_PORTABLE)
+                        void _set_prio();
+                    #endif
+                    
                     static OMNI_THREAD_FNPTR_T OMNI_THREAD_CALL_T _start(void* param);
 
                     class manager

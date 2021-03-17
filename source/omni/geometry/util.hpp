@@ -20,7 +20,6 @@
 #define OMNI_GEOMETRY_UTIL_HPP 1
 #include <omni/defs/global.hpp>
 #include <omni/geometry/point2d.hpp>
-#include <omni/math.hpp>
 
 namespace omni {
     namespace geometry {

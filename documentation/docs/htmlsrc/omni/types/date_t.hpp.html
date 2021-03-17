@@ -80,11 +80,11 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 000001080:<br>000001081:<br>000001082:<br>000001083:<br>000001084:<br>000001085:<br>000001086:<br>000001087:<br>000001088:<br>000001089:<br>000001090:<br>000001091:<br>000001092:<br>000001093:<br>000001094:<br>000001095:<br>000001096:<br>000001097:<br>000001098:<br>000001099:<br>
 000001100:<br>000001101:<br>000001102:<br>000001103:<br>000001104:<br>000001105:<br>000001106:<br>000001107:<br>000001108:<br>000001109:<br>000001110:<br>000001111:<br>000001112:<br>000001113:<br>000001114:<br>000001115:<br>000001116:<br>000001117:<br>000001118:<br>000001119:<br>
 000001120:<br>000001121:<br>000001122:<br>000001123:<br>000001124:<br>000001125:<br>000001126:<br>000001127:<br>000001128:<br>000001129:<br>000001130:<br>000001131:<br>000001132:<br>000001133:<br>000001134:<br>000001135:<br>000001136:<br>000001137:<br>000001138:<br>000001139:<br>
-000001140:<br>000001141:<br>000001142:<br>000001143:<br>000001144:<br>000001145:<br>000001146:<br>000001147:<br>000001148:<br>000001149:<br>000001150:<br>000001151:<br>
+000001140:<br>000001141:<br>000001142:<br>000001143:<br>000001144:<br>000001145:<br>000001146:<br>000001147:<br>000001148:<br>000001149:<br>000001150:<br>000001151:<br>000001152:<br>000001153:<br>000001154:<br>000001155:<br>000001156:<br>000001157:<br>000001158:<br>000001159:<br>
 <!--end line numbers-->
 </div><div class="cpphtmlcmnt">
 <!--start collapse columns-->
-<img src="../../../../content/tree/min.gif" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<img src="../../../../content/tree/min.gif" alt="Min/Max" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -141,7 +141,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <!--end collapse columns-->
 </div><div class="cpphtml" style="margin-left:4.3em;">
 <!--start highlighted code-->
@@ -170,34 +170,44 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <br>
 <font class="syn_ins">namespace</font> omni {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">namespace</font> chrono {<br>
-<a name="omni::chrono::DAYS_PER_YEAR"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> int64_t DAYS_PER_YEAR OMNI_EXT_ASSN_FW(<font class="syn_num">365</font>); <font class="syn_cmt">// non-leap</font><br>
-<a name="omni::chrono::DAYS_PER_4_YEARS"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> int64_t DAYS_PER_4_YEARS OMNI_EXT_ASSN_FW(<font class="syn_num">1461</font>); <font class="syn_cmt">// 365 * 4 + 1 leap day</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// DEV_NOTE: These values are to keep in line with the .NET library</font><br>
-<a name="omni::chrono::DAYS_PER_100_YEARS"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> int64_t DAYS_PER_100_YEARS OMNI_EXT_ASSN_FW(<font class="syn_num">36524</font>); <font class="syn_cmt">// DAYS_PER_4_YEARS * 25 - 1</font><br>
-<a name="omni::chrono::DAYS_PER_400_YEARS"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> int64_t DAYS_PER_400_YEARS OMNI_EXT_ASSN_FW(<font class="syn_num">146097</font>); <font class="syn_cmt">// DAYS_PER_100_YEARS * 4 + 1</font><br>
-<a name="omni::chrono::DAYS_TO_1601AD"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> int64_t DAYS_TO_1601AD OMNI_EXT_ASSN_FW(<font class="syn_num">584388</font>); <font class="syn_cmt">// Number of days from 1/1/0001 to 12/31/1600 -&gt; DAYS_PER_400_YEARS * 4</font><br>
-<a name="omni::chrono::DAYS_TO_1899AD"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> int64_t DAYS_TO_1899AD OMNI_EXT_ASSN_FW(<font class="syn_num">693593</font>); <font class="syn_cmt">// Number of days from 1/1/0001 to 12/30/1899 -&gt; DAYS_PER_400_YEARS * 4 + DAYS_PER_100_YEARS * 3 - 367;</font><br>
-<a name="omni::chrono::DAYS_TO_10000AD"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> int64_t DAYS_TO_10000AD OMNI_EXT_ASSN_FW(<font class="syn_num">3652059</font>); <font class="syn_cmt">// Number of days from 1/1/0001 to 12/31/9999 -&gt; DAYS_PER_400_YEARS * 25 - 366</font><br>
-<a name="omni::chrono::DAYS_TO_EPOCH"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> int64_t DAYS_TO_EPOCH OMNI_EXT_ASSN_FW(<font class="syn_num">719527</font>); <font class="syn_cmt">// Number of days from 1/1/0001 to 12/31/1969 -&gt; DAYS_TO_1601AD + (DAYS_PER_100_YEARS * 3) + (DAYS_PER_4_YEARS * 17) + (DAYS_PER_YEAR * 2)</font><br>
-<a name="omni::chrono::TICKS_TO_10000AD"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> int64_t TICKS_TO_10000AD OMNI_EXT_ASSN_FW(<font class="syn_num">3155378975999999999</font>); <font class="syn_cmt">// DAYS_TO_10000AD * TICKS_PER_DAY - 1;</font><br>
-<a name="omni::chrono::MILLISECONDS_TO_10000AD"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> int64_t MILLISECONDS_TO_10000AD OMNI_EXT_ASSN_FW(<font class="syn_num">315537897600000</font>); <font class="syn_cmt">// DAYS_TO_10000AD * MILLISECONDS_PER_DAY;</font><br>
+<a name="omni::chrono::time_span"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">typedef</font> <a href="../../../classes/omni-chrono-span.html">omni::chrono::span</a>&lt;int64_t&gt; time_span;<br>
 <br>
-<a name="omni::chrono::FILE_TIME_OFFSET"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> int64_t FILE_TIME_OFFSET OMNI_EXT_ASSN_FW(<font class="syn_num">504911232000000000</font>); <font class="syn_cmt">// DAYS_TO_1601AD * TICKS_PER_DAY;</font><br>
-<a name="omni::chrono::DOUBLE_DATE_OFFSET"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> int64_t DOUBLE_DATE_OFFSET OMNI_EXT_ASSN_FW(<font class="syn_num">599264352000000000</font>); <font class="syn_cmt">// DAYS_TO_1899AD * TICKS_PER_DAY;</font><br>
-<a name="omni::chrono::EPOCH_OFFSET"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> int64_t EPOCH_OFFSET OMNI_EXT_ASSN_FW(<font class="syn_num">621671328000000000</font>); <font class="syn_cmt">// DAYS_TO_EPOCH * TICKS_PER_DAY;</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#if !defined(<a href="../../../options/omni_no_consts.html">OMNI_NO_CONSTS</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+<a name="omni::chrono::DAYS_PER_YEAR"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> int64_t DAYS_PER_YEAR OMNI_EXT_ASSN_FW(<a href="../../../options/omni_days_per_year.html">OMNI_DAYS_PER_YEAR</a>); <font class="syn_cmt">// non-leap</font><br>
+<a name="omni::chrono::DAYS_PER_LEAP_YEAR"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> int64_t DAYS_PER_LEAP_YEAR OMNI_EXT_ASSN_FW(<a href="../../../options/omni_days_per_leap_year.html">OMNI_DAYS_PER_LEAP_YEAR</a>);<br>
+<a name="omni::chrono::DAYS_PER_4_YEARS"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> int64_t DAYS_PER_4_YEARS OMNI_EXT_ASSN_FW(<a href="../../../options/omni_days_per_4_years.html">OMNI_DAYS_PER_4_YEARS</a>); <font class="syn_cmt">// 365 * 4 + 1 leap day</font><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// TODO: from https://www.grc.nasa.gov/www/k-12/Numbers/Math/Mathematical_Thinking/calendar_calculations.htm</font><br>
+<a name="omni::chrono::DAYS_PER_TROPICAL_YEAR"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> <font class="syn_typ">double</font> DAYS_PER_TROPICAL_YEAR OMNI_EXT_ASSN_FW(<a href="../../../options/omni_days_per_tropical_year.html">OMNI_DAYS_PER_TROPICAL_YEAR</a>);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// DEV_NOTE: These values are to keep in line with the .NET library</font><br>
+<a name="omni::chrono::DAYS_PER_100_YEARS"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> int64_t DAYS_PER_100_YEARS OMNI_EXT_ASSN_FW(<a href="../../../options/omni_days_per_100_years.html">OMNI_DAYS_PER_100_YEARS</a>); <font class="syn_cmt">// DAYS_PER_4_YEARS * 25 - 1</font><br>
+<a name="omni::chrono::DAYS_PER_400_YEARS"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> int64_t DAYS_PER_400_YEARS OMNI_EXT_ASSN_FW(<a href="../../../options/omni_days_per_400_years.html">OMNI_DAYS_PER_400_YEARS</a>); <font class="syn_cmt">// DAYS_PER_100_YEARS * 4 + 1</font><br>
+<a name="omni::chrono::DAYS_TO_1601AD"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> int64_t DAYS_TO_1601AD OMNI_EXT_ASSN_FW(<a href="../../../options/omni_days_to_1601ad.html">OMNI_DAYS_TO_1601AD</a>); <font class="syn_cmt">// Number of days from 1/1/0001 to 12/31/1600 -&gt; DAYS_PER_400_YEARS * 4</font><br>
+<a name="omni::chrono::DAYS_TO_1899AD"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> int64_t DAYS_TO_1899AD OMNI_EXT_ASSN_FW(<a href="../../../options/omni_days_to_1899ad.html">OMNI_DAYS_TO_1899AD</a>); <font class="syn_cmt">// Number of days from 1/1/0001 to 12/30/1899 -&gt; DAYS_PER_400_YEARS * 4 + DAYS_PER_100_YEARS * 3 - 367;</font><br>
+<a name="omni::chrono::DAYS_TO_10000AD"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> int64_t DAYS_TO_10000AD OMNI_EXT_ASSN_FW(<a href="../../../options/omni_days_to_10000ad.html">OMNI_DAYS_TO_10000AD</a>); <font class="syn_cmt">// Number of days from 1/1/0001 to 12/31/9999 -&gt; DAYS_PER_400_YEARS * 25 - 366</font><br>
+<a name="omni::chrono::DAYS_TO_EPOCH"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> int64_t DAYS_TO_EPOCH OMNI_EXT_ASSN_FW(<a href="../../../options/omni_days_to_epoch.html">OMNI_DAYS_TO_EPOCH</a>); <font class="syn_cmt">// Number of days from 1/1/0001 to 12/31/1969 -&gt; DAYS_TO_1601AD + (DAYS_PER_100_YEARS * 3) + (DAYS_PER_4_YEARS * 17) + (DAYS_PER_YEAR * 2)</font><br>
+<a name="omni::chrono::TICKS_TO_10000AD"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> int64_t TICKS_TO_10000AD OMNI_EXT_ASSN_FW(<a href="../../../options/omni_ticks_to_10000ad.html">OMNI_TICKS_TO_10000AD</a>); <font class="syn_cmt">// DAYS_TO_10000AD * TICKS_PER_DAY - 1;</font><br>
+<a name="omni::chrono::MILLISECONDS_TO_10000AD"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> int64_t MILLISECONDS_TO_10000AD OMNI_EXT_ASSN_FW(<a href="../../../options/omni_milliseconds_to_10000ad.html">OMNI_MILLISECONDS_TO_10000AD</a>); <font class="syn_cmt">// DAYS_TO_10000AD * MILLISECONDS_PER_DAY;</font><br>
+<br>
+<a name="omni::chrono::FILE_TIME_OFFSET"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> int64_t FILE_TIME_OFFSET OMNI_EXT_ASSN_FW(<a href="../../../options/omni_file_time_offset.html">OMNI_FILE_TIME_OFFSET</a>); <font class="syn_cmt">// DAYS_TO_1601AD * TICKS_PER_DAY;</font><br>
+<a name="omni::chrono::DOUBLE_DATE_OFFSET"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> int64_t DOUBLE_DATE_OFFSET OMNI_EXT_ASSN_FW(<a href="../../../options/omni_double_date_offset.html">OMNI_DOUBLE_DATE_OFFSET</a>); <font class="syn_cmt">// DAYS_TO_1899AD * TICKS_PER_DAY;</font><br>
+<a name="omni::chrono::EPOCH_OFFSET"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> int64_t EPOCH_OFFSET OMNI_EXT_ASSN_FW(<a href="../../../options/omni_epoch_offset.html">OMNI_EPOCH_OFFSET</a>); <font class="syn_cmt">// DAYS_TO_EPOCH * TICKS_PER_DAY;</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// The minimum OA date is 0100/01/01 (Note it is year 100).</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// The maximum OA date is 9999/12/31</font><br>
-<a name="omni::chrono::OA_DATE_MIN_AS_TICKS"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> int64_t OA_DATE_MIN_AS_TICKS OMNI_EXT_ASSN_FW(<font class="syn_num">31241376000000000</font>); <font class="syn_cmt">// (DAYS_PER_100_YEARS - DAYS_PER_YEAR) * TICKS_PER_DAY;</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> <font class="syn_typ">double</font>  OA_DATE_MIN_AS_DOUBLE OMNI_EXT_ASSN_FW(-<font class="syn_num">657435</font>.<font class="syn_num">0</font>); <font class="syn_cmt">// All OA dates must be greater than (not &gt;=) OA_DATE_MIN_AS_DOUBLE</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> <font class="syn_typ">double</font>  OA_DATE_MAX_AS_DOUBLE OMNI_EXT_ASSN_FW(<font class="syn_num">2958466</font>.<font class="syn_num">0</font>); <font class="syn_cmt">// All OA dates must be less than (not &lt;=) OA_DATE_MAX_AS_DOUBLE</font><br>
+<a name="omni::chrono::OA_DATE_MIN_AS_TICKS"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> int64_t OA_DATE_MIN_AS_TICKS OMNI_EXT_ASSN_FW(<a href="../../../options/omni_oa_date_min_as_ticks.html">OMNI_OA_DATE_MIN_AS_TICKS</a>); <font class="syn_cmt">// (DAYS_PER_100_YEARS - DAYS_PER_YEAR) * TICKS_PER_DAY;</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> <font class="syn_typ">double</font>  OA_DATE_MIN_AS_DOUBLE OMNI_EXT_ASSN_FW(<a href="../../../options/omni_oa_date_min_as_double.html">OMNI_OA_DATE_MIN_AS_DOUBLE</a>); <font class="syn_cmt">// All OA dates must be greater than (not &gt;=) OA_DATE_MIN_AS_DOUBLE</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CONSTEXT_FW <font class="syn_typ">const</font> <font class="syn_typ">double</font>  OA_DATE_MAX_AS_DOUBLE OMNI_EXT_ASSN_FW(<a href="../../../options/omni_oa_date_max_as_double.html">OMNI_OA_DATE_MAX_AS_DOUBLE</a>); <font class="syn_cmt">// All OA dates must be less than (not &lt;=) OA_DATE_MAX_AS_DOUBLE</font><br>
 <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../options/omni_no_extern_consts.html">OMNI_NO_EXTERN_CONSTS</a>)</font><br>
-<a name="omni::chrono::DAYS_TO_MONTH_365"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">const</font> int32_t DAYS_TO_MONTH_365[] = { <font class="syn_num">0</font>, <font class="syn_num">31</font>, <font class="syn_num">59</font>, <font class="syn_num">90</font>, <font class="syn_num">120</font>, <font class="syn_num">151</font>, <font class="syn_num">181</font>, <font class="syn_num">212</font>, <font class="syn_num">243</font>, <font class="syn_num">273</font>, <font class="syn_num">304</font>, <font class="syn_num">334</font>, <font class="syn_num">365</font> };<br>
-<a name="omni::chrono::DAYS_TO_MONTH_366"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">const</font> int32_t DAYS_TO_MONTH_366[] = { <font class="syn_num">0</font>, <font class="syn_num">31</font>, <font class="syn_num">60</font>, <font class="syn_num">91</font>, <font class="syn_num">121</font>, <font class="syn_num">152</font>, <font class="syn_num">182</font>, <font class="syn_num">213</font>, <font class="syn_num">244</font>, <font class="syn_num">274</font>, <font class="syn_num">305</font>, <font class="syn_num">335</font>, <font class="syn_num">366</font> };<br>
+<a name="omni::chrono::DAYS_TO_MONTH_365"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">const</font> int32_t DAYS_TO_MONTH_365[] = <a href="../../../options/omni_days_to_month_365.html">OMNI_DAYS_TO_MONTH_365</a>;<br>
+<a name="omni::chrono::DAYS_TO_MONTH_366"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">const</font> int32_t DAYS_TO_MONTH_366[] = <a href="../../../options/omni_days_to_month_366.html">OMNI_DAYS_TO_MONTH_366</a>;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">extern</font> <font class="syn_typ">const</font> int32_t DAYS_TO_MONTH_365[<font class="syn_num">13</font>];<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">extern</font> <font class="syn_typ">const</font> int32_t DAYS_TO_MONTH_366[<font class="syn_num">13</font>];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
 <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">class</font> date_time_kind<br>
@@ -550,7 +560,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
 <a name="omni::chrono::date_time_styles::date_time_styles"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;date_time_styles() :<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CTOR_FW(omni::sync::date_time_styles)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CTOR_FW(<a href="../../../classes/omni-chrono-date_time_styles.html">omni::chrono::date_time_styles</a>)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_val(DEFAULT_VALUE())<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ }<br>
 <br>
@@ -560,7 +570,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ }<br>
 <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;date_time_styles(enum_t val) : <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CTOR_FW(omni::sync::date_time_styles)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CTOR_FW(<a href="../../../classes/omni-chrono-date_time_styles.html">omni::chrono::date_time_styles</a>)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_val(val)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ }<br>
 <br>
@@ -900,7 +910,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;enum_t ret;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (_try_parse(val, ret)) { <font class="syn_ins">return</font> ret; }<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERRV_FW(<font class="syn_str">&quot;invalid enum parse: &quot;</font>, val, <a href="../../../classes/omni-exceptions-invalid_enum.html">omni::exceptions::invalid_enum</a>())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_FW(<font class="syn_str">&quot;invalid enum parse&quot;</font>, <a href="../../../classes/omni-exceptions-invalid_enum.html">omni::exceptions::invalid_enum</a>())<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> DEFAULT_VALUE();<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 <br>
@@ -1289,8 +1299,6 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};<br>
-<br>
-<a name="omni::chrono::time_span"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">typedef</font> <a href="../../../classes/omni-chrono-span.html">omni::chrono::span</a>&lt;int64_t&gt; time_span;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;}<br>
 }<br>
 <br>

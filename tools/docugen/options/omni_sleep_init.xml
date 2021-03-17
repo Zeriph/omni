@@ -1,11 +1,9 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_SLEEP_INIT</Name>
-  <Brief>A helper macro for initializing sleep variables
-</Brief>
-  <Considerations>Since omni::sync::sleep calls this macro and OMNI_SLEEP it might be less costly to just directly call this macro and OMNI_SLEEP or OMNI_SLEEP1 if the sleep is called in a tight loop (i.e. &lt;1-2ms/iteration)
-</Considerations>
-  <Description>To enable millisecond sleep capabilities cross-platform, temporaries are needed on non-Windows platforms; to this, when omni::sync::sleep is called, this macro is utilized. As well, in other areas of the framework where a sleep is called in a tight loop, this macro is utilized.
+  <Brief>A helper macro for initializing sleep variables</Brief>
+  <Considerations>Since omni::sync::sleep calls this macro and OMNI_SLEEP it might be less costly to just directly call this macro and OMNI_SLEEP or OMNI_SLEEP1 if the sleep is called in a tight loop (i.e. &lt;1-2ms/iteration).</Considerations>
+  <Description>To enable millisecond sleep capabilities cross-platform, temporaries are needed on non-Windows platforms; to this, when omni::sync::sleep is called, this macro is utilized. As well, in other areas of the library where a sleep is called in a tight loop, this macro is utilized.
 
 Example:
 
@@ -18,12 +16,9 @@ while (dorun) {
 
 In this example, OMNI_SLEEP_INIT is an empty macro on Windows platforms and the sleep variables needed on others.
 </Description>
-  <Notes>None.
-</Notes>
-  <PlatformSpecific>On Windows platforms, this macro is empty.
-</PlatformSpecific>
-  <Synopsis>To enable millisecond sleep capabilities cross-platform, temporaries are needed on non-Windows platforms.
-</Synopsis>
+  <Notes>None.</Notes>
+  <PlatformSpecific>On Windows platforms, this macro is empty.</PlatformSpecific>
+  <Synopsis>To enable millisecond sleep capabilities cross-platform, temporaries are needed on non-Windows platforms.</Synopsis>
   <IsHelper>true</IsHelper>
   <IsConstant>false</IsConstant>
   <IsFWHelp>false</IsFWHelp>

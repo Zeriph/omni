@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_32BIT_CONDITIONAL</Name>
+  <Brief>If defined, uses 32-bit types in the omni::sync::conditional class.</Brief>
+  <Considerations>A wait counter is kept because a conditional type cannot be destroyed while there are active waits; due to this, if a wait operation is preformed more than the maximum value for the underlying counter type, an overflow can occur and put the conditional into an undefined state. For example, if this flag is defined then the counter type will be 32-bit, thus the maximum number of wait operations that can be preforemd without a release operation is std::numeric_limits&lt;uint32_t&gt;::max().</Considerations>
+  <Description>If defined, the omni::sync::conditional class will utilize a 32-bit intergral type for its wait counter, versus a 64-bit type.</Description>
+  <Notes>See the considerations for this flag.</Notes>
+  <PlatformSpecific>No platform specific notes.</PlatformSpecific>
+  <Synopsis>&lt;code&gt;#define OMNI_32BIT_CONDITIONAL&lt;/code&gt;
+
+Signifies to enable the OMNI_32BIT_CONDITIONAL flag and utilize 32-bit types.</Synopsis>
+  <IsHelper>false</IsHelper>
+  <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
+</MacroOp>

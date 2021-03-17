@@ -1,20 +1,13 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_THREAD_HANDLE_T</Name>
-  <Brief>Defines the thread handle type used by the framework.
-</Brief>
-  <Considerations>No special considerations
-</Considerations>
-  <Description>A framework macro/option that changes certain functionality
-</Description>
-  <Notes>None.
-</Notes>
-  <PlatformSpecific>No platform specific notes.
-</PlatformSpecific>
-  <Synopsis>Defines the thread handle type used by the framework. For more information on it, see @h omni/types/thread_t.hpp @h and @h omni/defs/thread_def.hpp @h
-
-</Synopsis>
-  <IsHelper>false</IsHelper>
+  <Brief>Defines the thread handle type used by the library.</Brief>
+  <Considerations>No special considerations</Considerations>
+  <Description>A library macro/option that changes certain functionality</Description>
+  <Notes>None.</Notes>
+  <PlatformSpecific>No platform specific notes.</PlatformSpecific>
+  <Synopsis>Defines the thread handle type used by the library. For more information on it, see @h omni/types/thread_t.hpp @h and @h omni/defs/thread_def.hpp @h</Synopsis>
+  <IsHelper>true</IsHelper>
   <IsConstant>false</IsConstant>
   <IsFWHelp>true</IsFWHelp>
 </MacroOp>

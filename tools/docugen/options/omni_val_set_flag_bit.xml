@@ -1,10 +1,8 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_VAL_SET_FLAG_BIT</Name>
-  <Brief>Sets a flag bit in a value.
-</Brief>
-  <Considerations>No special considerations
-</Considerations>
+  <Brief>Sets a flag bit in a value.</Brief>
+  <Considerations>No special considerations</Considerations>
   <Description>You can utilize this macro if you wish to set specific bit flag within a specified numeric value.
 
 Example:
@@ -36,15 +34,10 @@ VAL3 is NOT set
 VAL2 is NOT set
 VAL3 is set
 @code
-
-
 </Description>
-  <Notes>None.
-</Notes>
-  <PlatformSpecific>No platform specific notes.
-</PlatformSpecific>
-  <Synopsis>A helper macro used to set a bit flag within a specified value.
-</Synopsis>
+  <Notes>None.</Notes>
+  <PlatformSpecific>No platform specific notes.</PlatformSpecific>
+  <Synopsis>A helper macro used to set a bit flag within a specified value.</Synopsis>
   <IsHelper>true</IsHelper>
   <IsConstant>false</IsConstant>
   <IsFWHelp>false</IsFWHelp>

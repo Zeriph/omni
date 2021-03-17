@@ -275,8 +275,8 @@ namespace omni {
         class invalid_enum : public omni::exception
         {
             public:
-                invalid_enum() : omni::exception(OMNI_INVALID_ENUM) {}
-                explicit invalid_enum(const char* name) : omni::exception(OMNI_INVALID_ENUM) {
+                invalid_enum() : omni::exception(OMNI_INVALID_ENUM_STR) {}
+                explicit invalid_enum(const char* name) : omni::exception(OMNI_INVALID_ENUM_STR) {
                     if (name) {
                         this->m_what.append(": ");
                         this->m_what.append(name);
@@ -285,12 +285,12 @@ namespace omni {
                         OMNI_EXCEPTION_TERMINATE
                     }
                 }
-                explicit invalid_enum(const std::string& name) : omni::exception(OMNI_INVALID_ENUM) {
+                explicit invalid_enum(const std::string& name) : omni::exception(OMNI_INVALID_ENUM_STR) {
                     this->m_what.append(": ");
                     this->m_what.append(name);
                 }
-                explicit invalid_enum(int val) : omni::exception(OMNI_INVALID_ENUM, ": ", val) { }
-                explicit invalid_enum(uint32_t val) : omni::exception(OMNI_INVALID_ENUM, ": ", static_cast<std::size_t>(val)) { }
+                explicit invalid_enum(int val) : omni::exception(OMNI_INVALID_ENUM_STR, ": ", val) { }
+                explicit invalid_enum(uint32_t val) : omni::exception(OMNI_INVALID_ENUM_STR, ": ", static_cast<std::size_t>(val)) { }
         };
 
         /** A parse error occurred */
@@ -378,7 +378,7 @@ namespace omni {
         class invalid_thread_owner : public omni::exceptions::thread_exception
         {
             public:
-                invalid_thread_owner() : omni::exceptions::thread_exception(OMNI_INVALID_THREAD_OWNER) {}
+                invalid_thread_owner() : omni::exceptions::thread_exception(OMNI_INVALID_THREAD_OWNER_STR) {}
         };
         
         /** An invalid thread start type was specified */
@@ -453,8 +453,8 @@ namespace omni {
         class path_exception : public omni::exception
         {
             public:
-                path_exception() : omni::exception(OMNI_PATH_ERROR) {}
-                explicit path_exception(const char* path) : omni::exception(OMNI_PATH_ERROR) {
+                path_exception() : omni::exception(OMNI_PATH_ERROR_STR) {}
+                explicit path_exception(const char* path) : omni::exception(OMNI_PATH_ERROR_STR) {
                     if (path) {
                         this->m_what.append(" on ");
                         this->m_what.append(path);
@@ -463,7 +463,7 @@ namespace omni {
                         OMNI_EXCEPTION_TERMINATE
                     }
                 }
-                explicit path_exception(const std::string& path) : omni::exception(OMNI_PATH_ERROR) {
+                explicit path_exception(const std::string& path) : omni::exception(OMNI_PATH_ERROR_STR) {
                     this->m_what.append(" on ");
                     this->m_what.append(path);
                 }
@@ -482,7 +482,7 @@ namespace omni {
                 }
         };
 
-        /** A general path exception occurred */
+        /** A file not found exception occurred */
         class file_not_found : public omni::exception
         {
             public:
@@ -497,6 +497,26 @@ namespace omni {
                     }
                 }
                 explicit file_not_found(const std::string& path) : omni::exception(OMNI_FILE_NOT_FOUND_STR) {
+                    this->m_what.append(": ");
+                    this->m_what.append(path);
+                }
+        };
+
+        /** A general I/O exception occurred */
+        class io_exception : public omni::exception
+        {
+            public:
+                io_exception() : omni::exception(OMNI_IO_ERROR_STR) {}
+                explicit io_exception(const char* path) : omni::exception(OMNI_IO_ERROR_STR) {
+                    if (path) {
+                        this->m_what.append(": ");
+                        this->m_what.append(path);
+                    } else {
+                        OMNI_DBGE(OMNI_NULL_PTR_STR);
+                        OMNI_EXCEPTION_TERMINATE
+                    }
+                }
+                explicit io_exception(const std::string& path) : omni::exception(OMNI_IO_ERROR_STR) {
                     this->m_what.append(": ");
                     this->m_what.append(path);
                 }

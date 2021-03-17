@@ -2,23 +2,20 @@
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_NCHAR_CHAR</Name>
   <Brief>'\0'</Brief>
-  <Considerations>No special considerations
-</Considerations>
-  <Description>If not already defined, defines the framework constant of:
+  <Considerations>No special considerations</Considerations>
+  <Description>If not already defined, defines the library macro constant of:
 @code
 '\0'
 @code
 </Description>
-  <Notes>None.
-</Notes>
-  <PlatformSpecific>No platform specific notes.
-</PlatformSpecific>
-  <Synopsis>Defines a framework constant of:
+  <Notes>None.</Notes>
+  <PlatformSpecific>No platform specific notes.</PlatformSpecific>
+  <Synopsis>Defines a library macro constant of:
 @code
 '\0'
 @code
 </Synopsis>
-  <IsHelper>false</IsHelper>
+  <IsHelper>true</IsHelper>
   <IsConstant>true</IsConstant>
   <IsFWHelp>false</IsFWHelp>
 </MacroOp>

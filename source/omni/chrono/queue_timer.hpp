@@ -64,7 +64,7 @@ namespace omni {
                 void stop(uint32_t join_timeout);
                 void stop(uint32_t join_timeout, bool kill_on_timeout);
                 void swap(omni::chrono::queue_timer& other);
-                omni::chrono::timer_sync_type::enum_t tick_type() const { return omni::chrono::timer_sync_type::QUEUED; }
+                inline omni::chrono::timer_sync_type::enum_t tick_type() const { return omni::chrono::timer_sync_type::QUEUED; }
                 omni::chrono::queue_timer& operator=(const omni::chrono::queue_timer& other);
                 bool operator==(const omni::chrono::queue_timer& o) const;
                 inline bool operator!=(const omni::chrono::queue_timer& o) const { return !(*this == o); }
@@ -72,6 +72,17 @@ namespace omni {
                 OMNI_MEMBERS_FW(omni::chrono::queue_timer) // disposing,name,type(),hash()
                 
             private:
+                #if defined(OMNI_SAFE_QUEUE_TIMER)
+                    mutable omni::sync::basic_lock m_mtx;
+                    mutable omni::sync::basic_lock m_qmtx;
+                #endif
+                omni_sequence_t<omni::chrono::timer_args> m_que; // the queue
+                omni::sync::basic_thread* m_thread; // the main timer thread to _run on
+                omni::sync::basic_thread* m_qthread; // the thread to run the queue on
+
+                OMNI_QTMR_INT_FW m_int; // "elapsed" interval in ms between ticks
+                volatile OMNI_QTMR_INT_FW m_status; // auto run (true by default), is_run, stop_req
+
                 void _do_run();
                 void _do_tick();
                 void _run();
@@ -79,17 +90,6 @@ namespace omni {
                 void _run_queued();
                 bool _stopreq() const;
                 bool _queue_empty() const;
-                
-                #if defined(OMNI_SAFE_QUEUE_TIMER)
-                    mutable omni::sync::basic_lock m_mtx;
-                    mutable omni::sync::basic_lock m_qmtx;
-                #endif
-                omni_sequence_t<omni::chrono::timer_args> m_que; // the queue
-                omni::sync::basic_thread *m_thread; // the main timer thread to _run on
-                omni::sync::basic_thread *m_qthread; // the thread to run the queue on
-
-                OMNI_QTMR_INT_FW m_int; // "elapsed" interval in ms between ticks
-                volatile OMNI_QTMR_INT_FW m_status; // auto run (true by default), is_run, stop_req
         };
     } // namespace chrono
 } // namespace omni

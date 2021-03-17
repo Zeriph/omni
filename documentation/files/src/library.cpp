@@ -36,6 +36,7 @@ to ensure this file is not built with the rest. */
 #if !defined(OMNI_TIMER_LIB) && !defined(OMNI_THREAD_LIB) && !defined(OMNI_NET_LIB)
     #include "application.cpp"
     #include "argparser.cpp"
+    #include "crypto.cpp"
     #include "environment.cpp"
     #include "externs.cpp"
     #include "io.cpp"
@@ -68,5 +69,9 @@ to ensure this file is not built with the rest. */
 #include "runnable.cpp"
 #include "thread.cpp"
 #include "threadpool.cpp"
+
+#if defined(OMNI_GUI_LIB)
+    //#include "gui.cpp"
+#endif
 
 #endif

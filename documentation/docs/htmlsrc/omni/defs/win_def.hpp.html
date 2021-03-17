@@ -25,17 +25,17 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <!--start line numbers-->
 0001:<br><div id="cmntl1" name="cmntl1">0002:<br>0003:<br>0004:<br>0005:<br>0006:<br>0007:<br>0008:<br>0009:<br>00010:<br>00011:<br>00012:<br>00013:<br>00014:<br>00015:<br>00016:<br>00017:<br>00018:<br></div>00019:<br>
 00020:<br>00021:<br>00022:<br>00023:<br>00024:<br>00025:<br>00026:<br>00027:<br>00028:<br>00029:<br>00030:<br>00031:<br>00032:<br>00033:<br>00034:<br>00035:<br>00036:<br>00037:<br>00038:<br>00039:<br>
-00040:<br>00041:<br>00042:<br>00043:<br>00044:<br>00045:<br>00046:<br>00047:<br><div id="cmntl2" name="cmntl2">00048:<br>00049:<br>00050:<br>00051:<br>00052:<br></div>00053:<br>00054:<br>00055:<br>00056:<br>00057:<br><div id="cmntl3" name="cmntl3">00058:<br>00059:<br>
-00060:<br>00061:<br>00062:<br></div>00063:<br>00064:<br>00065:<br>00066:<br>00067:<br>00068:<br>00069:<br>00070:<br>00071:<br>00072:<br>00073:<br>00074:<br>00075:<br>00076:<br>00077:<br>00078:<br>00079:<br>
-00080:<br>00081:<br>00082:<br>00083:<br>00084:<br>00085:<br>00086:<br>
+00040:<br>00041:<br>00042:<br>00043:<br>00044:<br>00045:<br>00046:<br>00047:<br>00048:<br>00049:<br>00050:<br>00051:<br>00052:<br>00053:<br>00054:<br>00055:<br>00056:<br>00057:<br>00058:<br><div id="cmntl2" name="cmntl2">00059:<br>
+00060:<br>00061:<br>00062:<br>00063:<br></div>00064:<br>00065:<br>00066:<br>00067:<br>00068:<br><div id="cmntl3" name="cmntl3">00069:<br>00070:<br>00071:<br>00072:<br>00073:<br></div>00074:<br>00075:<br>00076:<br>00077:<br>00078:<br>00079:<br>
+00080:<br>00081:<br>00082:<br>00083:<br>00084:<br>00085:<br>00086:<br>00087:<br>00088:<br>00089:<br>00090:<br>00091:<br>00092:<br>00093:<br>00094:<br>00095:<br>00096:<br>00097:<br>
 <!--end line numbers-->
 </div><div class="cpphtmlcmnt">
 <!--start collapse columns-->
-<img src="../../../../content/tree/min.gif" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<img src="../../../../content/tree/min.gif" alt="Min/Max" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><img src="../../../../content/tree/min.gif" id="cmnti2" name="cmnti2" onclick="collapse('2', '../../../../');" /><br><div id="cmnts2" name="cmnts2"><br><br><br><br><br></div><div></div><br><br><br><br><img src="../../../../content/tree/min.gif" id="cmnti3" name="cmnti3" onclick="collapse('3', '../../../../');" /><br><div id="cmnts3" name="cmnts3"><br><br>
-<br><br><br></div><div></div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><img src="../../../../content/tree/min.gif" alt="Min/Max" id="cmnti2" name="cmnti2" onclick="collapse('2', '../../../../');" /><br><div id="cmnts2" name="cmnts2"><br>
+<br><br><br><br></div><div></div><br><br><br><br><img src="../../../../content/tree/min.gif" alt="Min/Max" id="cmnti3" name="cmnti3" onclick="collapse('3', '../../../../');" /><br><div id="cmnts3" name="cmnts3"><br><br><br><br><br></div><div></div><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <!--end collapse columns-->
 </div><div class="cpphtml" style="margin-left:3em;">
 <!--start highlighted code-->
@@ -62,7 +62,9 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <br>
 <font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../options/omni_os_win.html">OMNI_OS_WIN</a>)</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#if !defined(_WIN32_WINNT)</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;SDKDDKVer.h&gt;</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#if !defined(<a href="../../../options/omni_os_cygwin.html">OMNI_OS_CYGWIN</a>) &amp;&amp; !defined(<a href="../../../options/omni_os_mingw.html">OMNI_OS_MINGW</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;SDKDDKVer.h&gt;</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#if !defined(_WIN32_WINNT)</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// _WIN32_WINNT_NT4 = 0x400</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define _WIN32_WINNT 0x0400 <font class="syn_cmt">// for minimum WinAPI compilation</font></font><br>
@@ -73,9 +75,15 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_os_win8.html">OMNI_OS_WIN8</a></font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#if !defined(<a href="../../../options/omni_no_win_lean.html">OMNI_NO_WIN_LEAN</a>)</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define WIN32_LEAN_AND_MEAN <font class="syn_cmt">// trim any extra headers not specifically needed</font></font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define STRICT <font class="syn_cmt">// do not imply int types for handles</font></font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define NOMINMAX <font class="syn_cmt">// do not conflict with <a href="http://www.cplusplus.com/reference/algorithm/min/">std::min</a>/<a href="http://www.cplusplus.com/reference/algorithm/max/">std::max</a></font></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#if !defined(WIN32_LEAN_AND_MEAN)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define WIN32_LEAN_AND_MEAN <font class="syn_cmt">// trim any extra headers not specifically needed</font></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#if !defined(STRICT)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define STRICT <font class="syn_cmt">// do not imply int types for handles</font></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#if !defined(NOMINMAX)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define NOMINMAX <font class="syn_cmt">// do not conflict with <a href="http://www.cplusplus.com/reference/algorithm/min/">std::min</a>/<a href="http://www.cplusplus.com/reference/algorithm/max/">std::max</a></font></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;winsock2.h&gt;</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;winsock.h&gt;</font><br>
@@ -83,6 +91,9 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../options/omni_unicode.html">OMNI_UNICODE</a>)</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// macro to determine if platform is windows unicode</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_wincode.html">OMNI_WINCODE</a></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#if !defined(<a href="../../../options/omni_sigcall.html">OMNI_SIGCALL</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_sigcall.html">OMNI_SIGCALL</a> __cdecl <font class="syn_cmt">// for signal</font></font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#if !defined(<a href="../../../options/omni_no_win_api.html">OMNI_NO_WIN_API</a>)</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">/*DEV_NOTE: if on Win32 and you wish to compile against the<div class="syn_ex" id="cmnt2" name="cmnt2">
@@ -97,9 +108,9 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">/* DEV_NOTE: MSVC emits warning 4351 about the dimensional class having it is array value<div class="syn_ex" id="cmnt3" name="cmnt3">
 &nbsp;&nbsp;&nbsp;&nbsp;initialied in the member init list, e.g. `dimensional() : m_vals() {}`. This is considered<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;new&quot; behavior by MSVC but is perfectly fine behavior per the C++ standard, this 0-init is<br>
-&nbsp;&nbsp;&nbsp;&nbsp;the values in the array (as if memset were called). This is the behavior we want and since<br>
-&nbsp;&nbsp;&nbsp;&nbsp;we are targetting newer C++ and above, this is a non-issue. Additionally, testing this behavior<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;new&quot; behaviour by MSVC but is perfectly fine behaviour per the C++ standard, this 0-init is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the values in the array (as if memset were called). This is the behaviour we want and since<br>
+&nbsp;&nbsp;&nbsp;&nbsp;we are targetting newer C++ and above, this is a non-issue. Additionally, testing this behaviour<br>
 &nbsp;&nbsp;&nbsp;&nbsp;against MSVC 2008 and above (and inspecting the asm) shows we get the results we want. */</div><div></div></font>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#if !defined(<a href="../../../options/omni_win_no_pragma_disable_4351.html">OMNI_WIN_NO_PRAGMA_DISABLE_4351</a>)</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#pragma warning (disable:<font class="syn_num">4351</font>)<br>

@@ -48,7 +48,7 @@ namespace omni {
     {
         public:
             stopwatch();
-            stopwatch(const omni::stopwatch &cp);
+            stopwatch(const omni::stopwatch& cp);
             ~stopwatch();
 
             omni::chrono::unsigned_span_t elapsed() const;
@@ -88,10 +88,10 @@ namespace omni {
             std::wstring to_wstring() const;
             operator std::string() const { return this->to_string(); }
             operator std::wstring() const { return this->to_wstring(); }
-            omni::stopwatch& operator=(const omni::stopwatch &other);
+            omni::stopwatch& operator=(const omni::stopwatch& other);
             omni::stopwatch& operator=(bool enable);
-            bool operator==(const omni::stopwatch &o) const;
-            bool operator!=(const omni::stopwatch &o) const;
+            bool operator==(const omni::stopwatch& o) const;
+            bool operator!=(const omni::stopwatch& o) const;
             
             OMNI_MEMBERS_FW(omni::stopwatch) // disposing,name,type(),hash()
 

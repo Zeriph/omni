@@ -24,22 +24,22 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <div class="docdiv">
     <font class="docu">MACRO</font><br><br>
     <code><font style="font-size:16px;">
-    <code>OMNI_ALLOW_UB</code> - If defined, this allows the framework to compile with undefined behavior.
+    <code>OMNI_ALLOW_UB</code> - If defined, this allows the library to compile with undefined behaviour.
     </font></code>
 </div><br>
 <div class="docdiv">
     <font class="docu">SYNOPSIS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    When <code><a href="omni_no_except.html">OMNI_NO_EXCEPT</a></code> and <code><a href="omni_no_throw.html">OMNI_NO_THROW</a></code> and <code><a href="omni_no_terminate.html">OMNI_NO_TERMINATE</a></code> are all defined, this must be defined to allow undefined behavior within the framework.
+    When <code><a href="omni_no_except.html">OMNI_NO_EXCEPT</a></code> and <code><a href="omni_no_throw.html">OMNI_NO_THROW</a></code> and <code><a href="omni_no_terminate.html">OMNI_NO_TERMINATE</a></code> are all defined, this must be defined to allow undefined behaviour within the library.
 </div><br>
 <div class="docdiv">
     <font class="docu">DESCRIPTION</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    The framework is designed to allow a great amount of build flexibility and portability, to this you can define that the framework does not utilize certain error handling constructs, like calling <code><a href="http://www.cplusplus.com/reference/exception/terminate/">std::terminate</a></code> or throwing exceptions.<br>
+    the library is designed to allow a great amount of build flexibility and portability, to this you can define that the library does not utilize certain error handling constructs, like calling <code><a href="http://www.cplusplus.com/reference/exception/terminate/">std::terminate</a></code> or throwing exceptions.<br>
 <br>
-However, in the event you build the framework without any error handling, you must explicitly define this macro to allow the framework to run without error checking and thus potentially run into undefined behavior with any input or output.
+However, in the event you build the library without any error handling, you must explicitly define this macro to allow the library to run without error checking and thus potentially run into undefined behaviour with any input or output.
 </div><br>
 <div class="docdiv">
     <font class="docu">CONSIDERATIONS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    If defined, all error handling and data validation to and from the framework is left to the user.
+    If defined, all error handling and data validation to and from the library is left to the user.
 </div><br>
 <div class="docdiv">
     <font class="docu">PLATFORM SPECIFIC</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>

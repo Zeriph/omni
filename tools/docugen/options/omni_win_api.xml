@@ -1,20 +1,17 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_WIN_API</Name>
-  <Brief>Defines whether to use straight Windows API or CRT functions
-</Brief>
-  <Considerations>No special considerations
-</Considerations>
+  <Brief>Defines whether to use straight Windows API or CRT functions.</Brief>
+  <Considerations>No special considerations.</Considerations>
   <Description>If this macro is defined, then the direct Windows API calls will be used instead of the WinCRT functions.
 
 For example, in omni::sync::thread when a thread is spawned, if this macro is defined then CreateThread is used, while if this macro is not defined then _beginthreadex is utilized.
 </Description>
-  <Notes>None.
-</Notes>
-  <PlatformSpecific>This macro option only applies to Windows platforms and will have no effect if defined on a non Windows platform.
-</PlatformSpecific>
-  <Synopsis>If defined, will changed certain functions used.
-</Synopsis>
+  <Notes>None.</Notes>
+  <PlatformSpecific>This macro option only applies to Windows platforms and will have no effect if defined on a non Windows platform.</PlatformSpecific>
+  <Synopsis>&lt;code&gt;#define OMNI_WIN_API&lt;/code&gt;
+
+If defined, will change certain functions used.</Synopsis>
   <IsHelper>false</IsHelper>
   <IsConstant>false</IsConstant>
   <IsFWHelp>false</IsFWHelp>

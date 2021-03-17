@@ -52,6 +52,10 @@ namespace omni {
                 runnable_thread(const omni::sync::runnable& obj, std::size_t max_stack_sz);
                 runnable_thread(omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val);
                 virtual ~runnable_thread() OMNI_DTOR_THROWS;
+
+                /** Raised when the thread has changed state (running, stopped, etc) */
+                omni::sync::runnable_thread::state_event state_changed;
+
                 void abort(); // request end nicely
                 bool abort_join();
                 bool abort_join(uint32_t timeout);
@@ -87,9 +91,6 @@ namespace omni {
                     void set_priority(omni::sync::thread_priority::enum_t p);
                 #endif
                 
-                /** Raised when the thread has changed state (running, stopped, etc) */
-                omni::sync::runnable_thread::state_event state_changed;
-                
                 // disposing,name,type(),hash()
                 OMNI_MEMBERS_FW(omni::sync::runnable_thread)
                 
@@ -97,19 +98,6 @@ namespace omni {
                 virtual void state_update(omni::sync::thread_state::enum_t old_state) { OMNI_UNUSED(old_state); }
                 
             private:
-                // Methods
-                void _close_handle();
-                void _hreset(bool force = false);
-                bool _hvalid() const;
-                bool _state_running() const;
-                void _state_changed(omni::sync::thread_state::enum_t nstate);
-                void _set_context(const omni::sync::runnable_thread& t2);
-                #if defined(OMNI_NON_PORTABLE)
-                    void _set_prio();
-                #endif
-                static OMNI_THREAD_FNPTR_T OMNI_THREAD_CALL_T _start(void* param);
-
-                // Members
                 #if defined(OMNI_SAFE_RUNNABLE_THREAD)
                     mutable omni::sync::basic_lock m_mtx;
                 #endif
@@ -131,6 +119,17 @@ namespace omni {
                 #endif
                 /** If join has been called, do not detach */
                 volatile OMNI_RUNTHRD_INT_FW m_isjoined;
+
+                void _close_handle();
+                void _hreset(bool force = false);
+                bool _hvalid() const;
+                bool _state_running() const;
+                void _state_changed(omni::sync::thread_state::enum_t nstate);
+                void _set_context(const omni::sync::runnable_thread& t2);
+                #if defined(OMNI_NON_PORTABLE)
+                    void _set_prio();
+                #endif
+                static OMNI_THREAD_FNPTR_T OMNI_THREAD_CALL_T _start(void* param);
         };
     } // namespace sync
 } // namespace omni

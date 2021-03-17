@@ -1,10 +1,8 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_LITE</Name>
-  <Brief>Enables certain flags that trim portions of code.
-</Brief>
-  <Considerations>It is advised to read the documentation on the individual flags enabled so as to understand what the implications are if OMNI_LITE is defined.
-</Considerations>
+  <Brief>Enables certain flags that trim portions of code.</Brief>
+  <Considerations>It is advised to read the documentation on the individual flags enabled so as to understand what the implications are if OMNI_LITE is defined.</Considerations>
   <Description>Defining the OMNI_LITE preprocessor flag will define the following flags:
 
 @code
@@ -21,21 +19,17 @@ OMNI_NO_SAFE_CONDITIONAL
 OMNI_NO_SAFE_TIMER
 OMNI_NO_SAFE_THREAD
 OMNI_NO_SAFE_RUNNABLE_THREAD
-OMNI_NO_SAFE_FRAMEWORK
+OMNI_NO_SAFE_LIBRARY
 OMNI_NO_FW_VER
 OMNI_NO_SAFE_BASIC_THREAD
 OMNI_NO_SAFE_MUTEX
 OMNI_NO_THROW
 OMNI_THREAD_ARGS_RAW_PTR 
 @code
-
 </Description>
-  <Notes>None.
-</Notes>
-  <PlatformSpecific>No platform specific details.
-</PlatformSpecific>
-  <Synopsis>Signifies to the framework to be 'slimmer' (object size/code use) by reducing certain functionality.
-</Synopsis>
+  <Notes>None.</Notes>
+  <PlatformSpecific>No platform specific details.</PlatformSpecific>
+  <Synopsis>Signifies to the library to be 'slimmer' (object size/code use) by reducing certain functionality.</Synopsis>
   <IsHelper>false</IsHelper>
   <IsConstant>false</IsConstant>
   <IsFWHelp>false</IsFWHelp>

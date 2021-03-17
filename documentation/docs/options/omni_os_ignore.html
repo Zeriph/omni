@@ -35,9 +35,9 @@ Signifies to not use preprocessor macros to attempt to discover what OS is being
 </div><br>
 <div class="docdiv">
     <font class="docu">DESCRIPTION</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    By specifying the <code><a href="omni_os_ignore.html">OMNI_OS_IGNORE</a></code> preprocessor flag, the framework will not attempt to detect what OS is being compiled against via certain preprocessor flags and instead the user can specify what OS to compile for (useful for cross platform compilation).<br>
+    By specifying the <code><a href="omni_os_ignore.html">OMNI_OS_IGNORE</a></code> preprocessor flag, the library will not attempt to detect what OS is being compiled against via certain preprocessor flags and instead the user can specify what OS to compile for (useful for cross platform compilation).<br>
 <br>
-Current values used by the framework to determine which sections of code to use are as follows:<br>
+Current values used by the library to determine which sections of code to use are as follows:<br>
 <br>
 <code><a href="omni_os_win.html">OMNI_OS_WIN</a></code><br>
 <code><a href="omni_os_apple.html">OMNI_OS_APPLE</a></code><br>
@@ -45,13 +45,13 @@ Current values used by the framework to determine which sections of code to use 
 <code><a href="omni_os_solaris.html">OMNI_OS_SOLARIS</a></code><br>
 <code><a href="omni_os_bsd.html">OMNI_OS_BSD</a></code><br>
 <br>
-Defining one of the above will also result in the framework being compiled as if it were being compiled on that platform.<br>
+Defining one of the above will also result in the library being compiled as if it were being compiled on that platform.<br>
 <br>
 If one of the values is not specified the system defaults to a POSIX based platform.
 </div><br>
 <div class="docdiv">
     <font class="docu">CONSIDERATIONS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    If you explicitly define one of the OMNI_OS_ flags (such as <code><a href="omni_os_bsd.html">OMNI_OS_BSD</a></code>), you must take note of which API are being referenced and built against.
+    If you explicitly define one of the <code>OMNI_OS_</code> flags (such as <code><a href="omni_os_bsd.html">OMNI_OS_BSD</a></code>), you must take note of which API are being referenced and built against.
 </div><br>
 <div class="docdiv">
     <font class="docu">PLATFORM SPECIFIC</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>

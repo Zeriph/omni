@@ -1,18 +1,12 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_GLE_PRNT</Name>
-  <Brief>Can be used in print statements to output the last error code.
-</Brief>
-  <Considerations>No special consideration.
-</Considerations>
-  <Description>None.
-</Description>
-  <Notes>None.
-</Notes>
-  <PlatformSpecific>No special consideration.
-</PlatformSpecific>
-  <Synopsis>None.
-</Synopsis>
+  <Brief>Can be used in print statements to output the last error code.</Brief>
+  <Considerations>No special consideration.</Considerations>
+  <Description>None.</Description>
+  <Notes>None.</Notes>
+  <PlatformSpecific>No special consideration.</PlatformSpecific>
+  <Synopsis>None.</Synopsis>
   <IsHelper>true</IsHelper>
   <IsConstant>false</IsConstant>
   <IsFWHelp>true</IsFWHelp>

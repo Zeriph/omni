@@ -3,19 +3,19 @@
   <Name>OMNI_TERA_STR</Name>
   <Brief>"Terabyte"</Brief>
   <Considerations>No special considerations</Considerations>
-  <Description>If not already defined, defines the framework constant of:
+  <Description>If not already defined, defines the library macro constant of:
 @code
 "Terabyte"
 @code
 </Description>
   <Notes>None.</Notes>
   <PlatformSpecific>No platform specific notes.</PlatformSpecific>
-  <Synopsis>Defines a framework constant of:
+  <Synopsis>Defines a library macro constant of:
 @code
 "Terabyte"
 @code
 </Synopsis>
-  <IsHelper>false</IsHelper>
+  <IsHelper>true</IsHelper>
   <IsConstant>true</IsConstant>
   <IsFWHelp>false</IsFWHelp>
 </MacroOp>

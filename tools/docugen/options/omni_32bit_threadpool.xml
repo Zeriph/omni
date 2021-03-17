@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>OMNI_32BIT_THREADPOOL</Name>
+  <Brief>If defined, uses 32-bit types in the omni::sync::threadpool class.</Brief>
+  <Considerations>No special considerations</Considerations>
+  <Description>If defined, the omni::sync::threadpool class will utilize a 32-bit intergral type for its underlying status, versus a 64-bit type. This underlying value is not user accesable or settable, regardless if this flag is set.</Description>
+  <Notes>This is an optimization flag and does not have an effect on the classes functionality.</Notes>
+  <PlatformSpecific>No platform specific notes.</PlatformSpecific>
+  <Synopsis>&lt;code&gt;#define OMNI_32BIT_THREADPOOL&lt;/code&gt;
+
+Signifies to enable the OMNI_32BIT_THREADPOOL flag and utilize 32-bit types.</Synopsis>
+  <IsHelper>false</IsHelper>
+  <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
+</MacroOp>

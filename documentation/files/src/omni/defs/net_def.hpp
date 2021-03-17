@@ -42,10 +42,10 @@
     #include <netinet/in.h>
     #include <netinet/ip.h>
     #include <netinet/tcp.h>
-	#include <netdb.h>
+    #include <netdb.h>
     #include <unistd.h>
     #include <ctype.h>
-	#include <signal.h>
+    #include <signal.h>
     #include <fcntl.h>
 #endif
 
@@ -88,16 +88,16 @@
     #define OMNI_INVALID_SOCKET INVALID_SOCKET
     #define OMNI_SOCK_SYSERR_FW SOCKET_ERROR
     #define OMNI_SOCKET_ERR_FW ::WSAGetLastError()
-    #if !defined(OMNI_WINSOCK_HIGH)
-        #define OMNI_WINSOCK_HIGH 2
+    #if !defined(OMNI_WINSOCK_HIGH_FW)
+        #define OMNI_WINSOCK_HIGH_FW 2
     #endif
-    #if !defined(OMNI_WINSOCK_LOW)
-        #define OMNI_WINSOCK_LOW 2
+    #if !defined(OMNI_WINSOCK_LOW_FW)
+        #define OMNI_WINSOCK_LOW_FW 2
     #endif
     #define OMNI_SOCK_RECEIVE_FW SD_RECEIVE
     #define OMNI_SOCK_SEND_FW SD_SEND
     #define OMNI_SOCK_BOTH_FW SD_BOTH
-    #define OMNI_MSG_EOR 0
+    #define OMNI_MSG_EOR_FW 0
     #define OMNI_SIN_FAMILY_FW ADDRESS_FAMILY
 #else
     #define OMNI_SOCKET_T_FW int
@@ -109,7 +109,7 @@
     #define OMNI_SOCK_RECEIVE_FW SHUT_RD
     #define OMNI_SOCK_SEND_FW SHUT_WR
     #define OMNI_SOCK_BOTH_FW SHUT_RDWR
-    #define OMNI_MSG_EOR MSG_EOR
+    #define OMNI_MSG_EOR_FW MSG_EOR
     #if defined(OMNI_OS_APPLE)
         #define OMNI_SIN_FAMILY_FW sa_family_t
     #else
@@ -124,7 +124,7 @@ namespace omni {
         inline int wsa_init()
         {
             WSADATA sdata;
-            int serr = ::WSAStartup(MAKEWORD(OMNI_WINSOCK_HIGH, OMNI_WINSOCK_LOW), &sdata);
+            int serr = ::WSAStartup(MAKEWORD(OMNI_WINSOCK_HIGH_FW, OMNI_WINSOCK_LOW_FW), &sdata);
             if (serr != 0) {
                 // Could not get the winsock dll, fail since cannot create socket
                 OMNI_DBGEV("a system error occurred in WSAStartUp: ", serr)

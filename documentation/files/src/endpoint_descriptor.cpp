@@ -371,10 +371,11 @@ std::wstring omni::net::endpoint_descriptor::to_wstring() const
     return s.str();
 }
 
-omni::net::endpoint_descriptor& omni::net::endpoint_descriptor::operator=(omni::net::endpoint_descriptor &other)
+omni::net::endpoint_descriptor& omni::net::endpoint_descriptor::operator=(omni::net::endpoint_descriptor& other)
 {
     OMNI_SAFE_SOCKEPALOCK_FW
     OMNI_SAFE_SOCKEPOALOCK_FW(other)
+    OMNI_ASSIGN_FW(other)
     this->m_socket = other.m_socket;
     //this->m_addr = other.m_addr;
     std::memcpy(&this->m_addr, &other.m_addr, sizeof(this->m_addr));
@@ -386,13 +387,13 @@ omni::net::endpoint_descriptor& omni::net::endpoint_descriptor::operator=(omni::
     return *this;
 }
 
-bool omni::net::endpoint_descriptor::operator==(const omni::net::endpoint_descriptor &other) const
+bool omni::net::endpoint_descriptor::operator==(const omni::net::endpoint_descriptor& other) const
 {
     OMNI_UNUSED(other);
     return false;
 }
 
-bool omni::net::endpoint_descriptor::operator==(const omni::net::socket_t &sock) const
+bool omni::net::endpoint_descriptor::operator==(const omni::net::socket_t& sock) const
 {
     OMNI_SAFE_SOCKEPALOCK_FW
     return this->m_socket == sock;

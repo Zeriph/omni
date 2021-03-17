@@ -23,7 +23,7 @@
 
 #include <omni/library>
 
-void some_thread(void *p)
+void some_thread(void* p)
 {
     do (some_code) {
         here
@@ -96,5 +96,9 @@ int main(int argc, char *argv[]) {
 
 // crypto (hashing/etc.)
 #include <omni/crypto_types.hpp>
+
+#if defined(OMNI_GUI_LIB)
+    #include <omni/gui_types.hpp>
+#endif
 
 #endif // OMNI_LIBRARY_HPP

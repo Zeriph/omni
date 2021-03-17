@@ -494,6 +494,21 @@ namespace omni {
                 {
                     return !(*this == val);
                 }
+
+                bool operator!=(const omni::geometry::point2d<T>& val) const
+                {
+                    return !(*this == val);
+                }
+
+                bool operator!=(const omni::geometry::raw_point2d<T>& val) const
+                {
+                    return !(*this == val);
+                }
+
+                bool operator!=(double val) const
+                {
+                    return !(*this == val);
+                }
                 
                 omni::geometry::circle<T>& operator=(const omni::geometry::circle<T>& val)
                 {
@@ -1166,6 +1181,21 @@ namespace omni {
                 }
                 
                 bool operator!=(const omni::geometry::raw_circle<T>& val) const
+                {
+                    return !(*this == val);
+                }
+
+                bool operator!=(const omni::geometry::point2d<T>& val) const
+                {
+                    return !(*this == val);
+                }
+
+                bool operator!=(const omni::geometry::raw_point2d<T>& val) const
+                {
+                    return !(*this == val);
+                }
+
+                bool operator!=(double val) const
                 {
                     return !(*this == val);
                 }

@@ -1,13 +1,15 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_ARCH_AMD64</Name>
-  <Brief>A framework macro/option</Brief>
-  <Considerations>No special considerations</Considerations>
-  <Description>A framework macro/option that changes certain functionality</Description>
+  <Brief>Defines an AMD64 processor architecture was detected.</Brief>
+  <Considerations>Architecture detection via preprocessor flags is not always guaranteed as they can be explicitly defined by a user. Take care when relying on these macros to determine architecture specifics.</Considerations>
+  <Description>None.</Description>
   <Notes>None.</Notes>
-  <PlatformSpecific>No platform specific notes.</PlatformSpecific>
-  <Synopsis>A framework macro/option</Synopsis>
-  <IsHelper>false</IsHelper>
+  <PlatformSpecific>No special consideration.</PlatformSpecific>
+  <Synopsis>If compilation happens on an architecture (or with a compiler) with certain preprocessor flags, this macro is defined.
+
+See @h omni/defs/arch.hpp @h for which flags enable this option.</Synopsis>
+  <IsHelper>true</IsHelper>
   <IsConstant>false</IsConstant>
-  <IsFWHelp>false</IsFWHelp>
+  <IsFWHelp>true</IsFWHelp>
 </MacroOp>

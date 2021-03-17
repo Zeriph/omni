@@ -28,7 +28,7 @@ omni::application::argparser::argparser() :
     OMNI_D5_FW("created");
 }
 
-omni::application::argparser::argparser(const omni::application::argparser &cp) :
+omni::application::argparser::argparser(const omni::application::argparser& cp) :
     OMNI_CPCTOR_FW(cp)
     m_args(cp.m_args),
     m_argc(cp.m_argc)
@@ -316,7 +316,7 @@ omni::string_t omni::application::argparser::operator[](uint32_t index) const
     return this->m_args[index];
 }
 
-omni::application::argparser& omni::application::argparser::operator=(const omni::application::argparser &ap)
+omni::application::argparser& omni::application::argparser::operator=(const omni::application::argparser& ap)
 {
     if (this != &ap) {
         OMNI_ASSIGN_FW(ap);
@@ -327,14 +327,14 @@ omni::application::argparser& omni::application::argparser::operator=(const omni
     return *this;
 }
 
-bool omni::application::argparser::operator==(const omni::application::argparser &o) const
+bool omni::application::argparser::operator==(const omni::application::argparser& o) const
 {
     if (this == &o) { return true; }
     return (this->m_argc == o.m_argc && this->m_args == o.m_args)
     OMNI_EQUAL_FW(o);
 }
 
-bool omni::application::argparser::operator!=(const omni::application::argparser &o) const
+bool omni::application::argparser::operator!=(const omni::application::argparser& o) const
 {
     return !(*this == o);
 }

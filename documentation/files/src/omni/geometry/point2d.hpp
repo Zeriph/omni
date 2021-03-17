@@ -20,6 +20,8 @@
 #define OMNI_2D_POINT_HPP 1
 #include <omni/defs/global.hpp>
 #include <omni/defs/class_macros.hpp>
+#include <omni/math.hpp>
+#include <omni/geometry/size.hpp>
 
 #if defined(OMNI_SAFE_POINT2D)
     #include <omni/sync/basic_lock.hpp>

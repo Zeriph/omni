@@ -11,4 +11,5 @@ OMNI_WSTR will ALWAYS prefix the capital L to whatever is passed in regardless o
   <Synopsis>Not to be confused with OMNI_STRW, this macro always expands the value passed to the macro so that it prefix a capital L (ell) to the macro parameter. </Synopsis>
   <IsHelper>true</IsHelper>
   <IsConstant>false</IsConstant>
+  <IsFWHelp>false</IsFWHelp>
 </MacroOp>

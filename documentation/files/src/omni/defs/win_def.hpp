@@ -21,7 +21,9 @@
 
 #if defined(OMNI_OS_WIN)
     #if !defined(_WIN32_WINNT)
-        #include <SDKDDKVer.h>
+        #if !defined(OMNI_OS_CYGWIN) && !defined(OMNI_OS_MINGW)
+            #include <SDKDDKVer.h>
+        #endif
         #if !defined(_WIN32_WINNT)
             // _WIN32_WINNT_NT4 = 0x400
             #define _WIN32_WINNT 0x0400 // for minimum WinAPI compilation
@@ -32,9 +34,15 @@
         #define OMNI_OS_WIN8
     #endif
     #if !defined(OMNI_NO_WIN_LEAN)
-        #define WIN32_LEAN_AND_MEAN // trim any extra headers not specifically needed
-        #define STRICT // do not imply int types for handles
-        #define NOMINMAX // do not conflict with std::min/std::max
+        #if !defined(WIN32_LEAN_AND_MEAN)
+            #define WIN32_LEAN_AND_MEAN // trim any extra headers not specifically needed
+        #endif
+        #if !defined(STRICT)
+            #define STRICT // do not imply int types for handles
+        #endif
+        #if !defined(NOMINMAX)
+            #define NOMINMAX // do not conflict with std::min/std::max
+        #endif
     #endif
     #include <winsock2.h>
     #include <winsock.h>
@@ -42,6 +50,9 @@
     #if defined(OMNI_UNICODE)
         // macro to determine if platform is windows unicode
         #define OMNI_WINCODE
+    #endif
+    #if !defined(OMNI_SIGCALL)
+        #define OMNI_SIGCALL __cdecl // for signal
     #endif
     #if !defined(OMNI_NO_WIN_API)
         /*DEV_NOTE: if on Win32 and you wish to compile against the
@@ -56,9 +67,9 @@
     #endif
     /* DEV_NOTE: MSVC emits warning 4351 about the dimensional class having it is array value
     initialied in the member init list, e.g. `dimensional() : m_vals() {}`. This is considered
-    "new" behavior by MSVC but is perfectly fine behavior per the C++ standard, this 0-init is
-    the values in the array (as if memset were called). This is the behavior we want and since
-    we are targetting newer C++ and above, this is a non-issue. Additionally, testing this behavior
+    "new" behaviour by MSVC but is perfectly fine behaviour per the C++ standard, this 0-init is
+    the values in the array (as if memset were called). This is the behaviour we want and since
+    we are targetting newer C++ and above, this is a non-issue. Additionally, testing this behaviour
     against MSVC 2008 and above (and inspecting the asm) shows we get the results we want. */
     #if !defined(OMNI_WIN_NO_PRAGMA_DISABLE_4351)
         #pragma warning (disable:4351)

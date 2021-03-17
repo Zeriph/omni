@@ -1,20 +1,14 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_ALLOW_UB</Name>
-  <Brief>If defined, this allows the framework to compile with undefined behavior.
-</Brief>
-  <Considerations>If defined, all error handling and data validation to and from the framework is left to the user.
-</Considerations>
-  <Description>The framework is designed to allow a great amount of build flexibility and portability, to this you can define that the framework does not utilize certain error handling constructs, like calling std::terminate or throwing exceptions.
+  <Brief>If defined, this allows the library to compile with undefined behaviour.</Brief>
+  <Considerations>If defined, all error handling and data validation to and from the library is left to the user.</Considerations>
+  <Description>the library is designed to allow a great amount of build flexibility and portability, to this you can define that the library does not utilize certain error handling constructs, like calling std::terminate or throwing exceptions.
 
-However, in the event you build the framework without any error handling, you must explicitly define this macro to allow the framework to run without error checking and thus potentially run into undefined behavior with any input or output. 
-</Description>
-  <Notes>This flag only has an effect if OMNI_NO_EXCEPT and OMNI_NO_THROW and OMNI_NO_TERMINATE are all defined.
-</Notes>
-  <PlatformSpecific>No platform specific notes.
-</PlatformSpecific>
-  <Synopsis>When OMNI_NO_EXCEPT and OMNI_NO_THROW and OMNI_NO_TERMINATE are all defined, this must be defined to allow undefined behavior within the framework.
-</Synopsis>
+However, in the event you build the library without any error handling, you must explicitly define this macro to allow the library to run without error checking and thus potentially run into undefined behaviour with any input or output. </Description>
+  <Notes>This flag only has an effect if OMNI_NO_EXCEPT and OMNI_NO_THROW and OMNI_NO_TERMINATE are all defined.</Notes>
+  <PlatformSpecific>No platform specific notes.</PlatformSpecific>
+  <Synopsis>When OMNI_NO_EXCEPT and OMNI_NO_THROW and OMNI_NO_TERMINATE are all defined, this must be defined to allow undefined behaviour within the library.</Synopsis>
   <IsHelper>false</IsHelper>
   <IsConstant>false</IsConstant>
   <IsFWHelp>false</IsFWHelp>

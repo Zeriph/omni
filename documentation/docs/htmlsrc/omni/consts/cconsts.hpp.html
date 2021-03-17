@@ -24,12 +24,14 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <code><div class="cpphtmllines">
 <!--start line numbers-->
 0001:<br><div id="cmntl1" name="cmntl1">0002:<br>0003:<br>0004:<br>0005:<br>0006:<br>0007:<br>0008:<br>0009:<br>00010:<br>00011:<br>00012:<br>00013:<br>00014:<br>00015:<br>00016:<br>00017:<br>00018:<br></div>00019:<br>
-00020:<br>00021:<br>00022:<br>00023:<br>00024:<br>00025:<br>00026:<br>00027:<br>00028:<br>00029:<br>00030:<br>00031:<br>00032:<br>00033:<br>00034:<br>00035:<br>00036:<br>00037:<br>00038:<br>
+00020:<br>00021:<br>00022:<br>00023:<br>00024:<br>00025:<br>00026:<br>00027:<br>00028:<br>00029:<br>00030:<br>00031:<br>00032:<br>00033:<br>00034:<br>00035:<br>00036:<br>00037:<br>00038:<br>00039:<br>
+00040:<br>00041:<br>00042:<br>
 <!--end line numbers-->
 </div><div class="cpphtmlcmnt">
 <!--start collapse columns-->
-<img src="../../../../content/tree/min.gif" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<img src="../../../../content/tree/min.gif" alt="Min/Max" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br>
 <!--end collapse columns-->
 </div><div class="cpphtml" style="margin-left:3em;">
 <!--start highlighted code-->
@@ -57,6 +59,8 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <font class="syn_pre">#include &lt;<a href="../../omni/defs/consts.hpp.html">omni/defs/consts.hpp</a>&gt;</font><br>
 <font class="syn_pre">#include &lt;string&gt;</font><br>
 <br>
+<font class="syn_pre">#if !defined(<a href="../../../options/omni_no_consts.html">OMNI_NO_CONSTS</a>)</font><br>
+<br>
 <font class="syn_ins">namespace</font> omni {<br>
 <a name="omni::cconsts"></a>&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">namespace</font> cconsts {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_MISC_T_FW 1</font><br>
@@ -68,6 +72,8 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#undef OMNI_MISC_T_FW</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;}<br>
 }<br>
+<br>
+<font class="syn_pre">#endif</font><br>
 <br>
 <font class="syn_pre">#endif <font class="syn_cmt">// OMNI_CCONSTANTS_HPP</font></font><br>
 <!--end highlighted code-->

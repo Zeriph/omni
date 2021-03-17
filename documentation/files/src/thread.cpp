@@ -17,6 +17,10 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include <omni/sync/thread.hpp>
+#include <omni/chrono/tick.hpp>
+#include <omni/sync/scoped_lock.hpp>
+#include <omni/consts/cconsts.hpp>
+#include <omni/exception.hpp>
 #if !defined(OMNI_OS_WIN)
     // need the following for POSIX thread set prio/join
     #include <unistd.h>
@@ -24,10 +28,6 @@
     #include <ctime>
     #include <cstring>
 #endif
-#include <omni/chrono/tick.hpp>
-#include <omni/sync/scoped_lock.hpp>
-#include <omni/consts/cconsts.hpp>
-#include <omni/exception.hpp>
 
 #if defined(OMNI_NON_PORTABLE)
     #define OMNI_PRIO_FW  m_priority(omni::sync::thread_priority::NORMAL),
@@ -239,7 +239,7 @@ omni::sync::thread::thread() :
     OMNI_D5_FW("thread created");
 }
 
-omni::sync::thread::thread(const omni::sync::thread &cp) : 
+omni::sync::thread::thread(const omni::sync::thread& cp) : 
     aborted(cp.aborted),
     completed(cp.completed),
     OMNI_CPCTOR_FW(cp)
@@ -267,7 +267,7 @@ omni::sync::thread::thread(const omni::sync::thread &cp) :
     OMNI_D5_FW("thread copied");
 }
 
-omni::sync::thread::thread(const omni::sync::thread_flags &ops) : 
+omni::sync::thread::thread(const omni::sync::thread_flags& ops) : 
     aborted(),
     completed(),
     OMNI_CTOR_FW(omni::sync::thread)
@@ -308,7 +308,7 @@ omni::sync::thread::thread(std::size_t max_stack_sz) :
     OMNI_DV5_FW("thread created with stack size of ", this->m_ops.stack_size());
 }
 
-omni::sync::thread::thread(const omni::sync::thread_start &mthd) : 
+omni::sync::thread::thread(const omni::sync::thread_start& mthd) : 
     aborted(),
     completed(),
     OMNI_CTOR_FW(omni::sync::thread)
@@ -329,7 +329,7 @@ omni::sync::thread::thread(const omni::sync::thread_start &mthd) :
     OMNI_D5_FW("thread created with delegate method");
 }
 
-omni::sync::thread::thread(const omni::sync::thread_start &mthd, const omni::sync::thread::delegate& abort_req) : 
+omni::sync::thread::thread(const omni::sync::thread_start& mthd, const omni::sync::thread::delegate& abort_req) : 
     aborted(abort_req),
     completed(),
     OMNI_CTOR_FW(omni::sync::thread)
@@ -350,7 +350,7 @@ omni::sync::thread::thread(const omni::sync::thread_start &mthd, const omni::syn
     OMNI_D5_FW("thread created with delegate method");
 }
 
-omni::sync::thread::thread(const omni::sync::thread_start &mthd, const omni::sync::thread::delegate& abort_req, const omni::sync::thread::delegate& comp) : 
+omni::sync::thread::thread(const omni::sync::thread_start& mthd, const omni::sync::thread::delegate& abort_req, const omni::sync::thread::delegate& comp) : 
     aborted(abort_req),
     completed(comp),
     OMNI_CTOR_FW(omni::sync::thread)
@@ -443,7 +443,7 @@ omni::sync::thread::thread(const omni::sync::thread_start& mthd, const omni::syn
     }
 }
 
-omni::sync::thread::thread(const omni::sync::thread_start &mthd, std::size_t max_stack_sz) :
+omni::sync::thread::thread(const omni::sync::thread_start& mthd, std::size_t max_stack_sz) :
     aborted(),
     completed(),
     OMNI_CTOR_FW(omni::sync::thread)
@@ -464,7 +464,7 @@ omni::sync::thread::thread(const omni::sync::thread_start &mthd, std::size_t max
     OMNI_DV5_FW("thread created with stack size of ", this->m_ops.stack_size());
 }
 
-omni::sync::thread::thread(const omni::sync::thread_start &mthd, const omni::sync::thread::delegate& abort_req, std::size_t max_stack_sz) :
+omni::sync::thread::thread(const omni::sync::thread_start& mthd, const omni::sync::thread::delegate& abort_req, std::size_t max_stack_sz) :
     aborted(abort_req),
     completed(),
     OMNI_CTOR_FW(omni::sync::thread)
@@ -485,7 +485,7 @@ omni::sync::thread::thread(const omni::sync::thread_start &mthd, const omni::syn
     OMNI_DV5_FW("thread created with stack size of ", this->m_ops.stack_size());
 }
 
-omni::sync::thread::thread(const omni::sync::thread_start &mthd, const omni::sync::thread::delegate& abort_req, const omni::sync::thread::delegate& comp, std::size_t max_stack_sz) :
+omni::sync::thread::thread(const omni::sync::thread_start& mthd, const omni::sync::thread::delegate& abort_req, const omni::sync::thread::delegate& comp, std::size_t max_stack_sz) :
     aborted(abort_req),
     completed(comp),
     OMNI_CTOR_FW(omni::sync::thread)
@@ -506,7 +506,7 @@ omni::sync::thread::thread(const omni::sync::thread_start &mthd, const omni::syn
     OMNI_DV5_FW("thread created with stack size of ", this->m_ops.stack_size());
 }
 
-omni::sync::thread::thread(const omni::sync::thread_start &mthd, std::size_t max_stack_sz, omni::sync::thread_start_type::enum_t st) :
+omni::sync::thread::thread(const omni::sync::thread_start& mthd, std::size_t max_stack_sz, omni::sync::thread_start_type::enum_t st) :
     aborted(),
     completed(),
     OMNI_CTOR_FW(omni::sync::thread)
@@ -530,7 +530,7 @@ omni::sync::thread::thread(const omni::sync::thread_start &mthd, std::size_t max
     }
 }
 
-omni::sync::thread::thread(const omni::sync::thread_start &mthd, const omni::sync::thread::delegate& abort_req, std::size_t max_stack_sz, omni::sync::thread_start_type::enum_t st) :
+omni::sync::thread::thread(const omni::sync::thread_start& mthd, const omni::sync::thread::delegate& abort_req, std::size_t max_stack_sz, omni::sync::thread_start_type::enum_t st) :
     aborted(abort_req),
     completed(),
     OMNI_CTOR_FW(omni::sync::thread)
@@ -554,7 +554,7 @@ omni::sync::thread::thread(const omni::sync::thread_start &mthd, const omni::syn
     }
 }
 
-omni::sync::thread::thread(const omni::sync::thread_start &mthd, const omni::sync::thread::delegate& abort_req, const omni::sync::thread::delegate& comp, std::size_t max_stack_sz, omni::sync::thread_start_type::enum_t st) :
+omni::sync::thread::thread(const omni::sync::thread_start& mthd, const omni::sync::thread::delegate& abort_req, const omni::sync::thread::delegate& comp, std::size_t max_stack_sz, omni::sync::thread_start_type::enum_t st) :
     aborted(abort_req),
     completed(comp),
     OMNI_CTOR_FW(omni::sync::thread)
@@ -602,7 +602,7 @@ omni::sync::thread::thread(const omni::sync::thread_start& mthd, omni::sync::thr
 
 // parameterized thread start constructors
 
-omni::sync::thread::thread(const omni::sync::parameterized_thread_start &mthd) : 
+omni::sync::thread::thread(const omni::sync::parameterized_thread_start& mthd) : 
     aborted(),
     completed(),
     OMNI_CTOR_FW(omni::sync::thread)
@@ -623,7 +623,7 @@ omni::sync::thread::thread(const omni::sync::parameterized_thread_start &mthd) :
     OMNI_D5_FW("thread created with delegate method");
 }
 
-omni::sync::thread::thread(const omni::sync::parameterized_thread_start &mthd, const omni::sync::thread::delegate& abort_req) : 
+omni::sync::thread::thread(const omni::sync::parameterized_thread_start& mthd, const omni::sync::thread::delegate& abort_req) : 
     aborted(abort_req),
     completed(),
     OMNI_CTOR_FW(omni::sync::thread)
@@ -644,7 +644,7 @@ omni::sync::thread::thread(const omni::sync::parameterized_thread_start &mthd, c
     OMNI_D5_FW("thread created with delegate method");
 }
 
-omni::sync::thread::thread(const omni::sync::parameterized_thread_start &mthd, const omni::sync::thread::delegate& abort_req, const omni::sync::thread::delegate& comp) : 
+omni::sync::thread::thread(const omni::sync::parameterized_thread_start& mthd, const omni::sync::thread::delegate& abort_req, const omni::sync::thread::delegate& comp) : 
     aborted(abort_req),
     completed(comp),
     OMNI_CTOR_FW(omni::sync::thread)
@@ -665,7 +665,7 @@ omni::sync::thread::thread(const omni::sync::parameterized_thread_start &mthd, c
     OMNI_D5_FW("thread created with delegate method");
 }
 
-omni::sync::thread::thread(const omni::sync::parameterized_thread_start &mthd, std::size_t max_stack_sz) :
+omni::sync::thread::thread(const omni::sync::parameterized_thread_start& mthd, std::size_t max_stack_sz) :
     aborted(),
     completed(),
     OMNI_CTOR_FW(omni::sync::thread)
@@ -686,7 +686,7 @@ omni::sync::thread::thread(const omni::sync::parameterized_thread_start &mthd, s
     OMNI_DV5_FW("thread created with stack size of ", this->m_ops.stack_size());
 }
 
-omni::sync::thread::thread(const omni::sync::parameterized_thread_start &mthd, const omni::sync::thread::delegate& abort_req, std::size_t max_stack_sz) :
+omni::sync::thread::thread(const omni::sync::parameterized_thread_start& mthd, const omni::sync::thread::delegate& abort_req, std::size_t max_stack_sz) :
     aborted(abort_req),
     completed(),
     OMNI_CTOR_FW(omni::sync::thread)
@@ -707,7 +707,7 @@ omni::sync::thread::thread(const omni::sync::parameterized_thread_start &mthd, c
     OMNI_DV5_FW("thread created with stack size of ", this->m_ops.stack_size());
 }
 
-omni::sync::thread::thread(const omni::sync::parameterized_thread_start &mthd, const omni::sync::thread::delegate& abort_req, const omni::sync::thread::delegate& comp, std::size_t max_stack_sz) :
+omni::sync::thread::thread(const omni::sync::parameterized_thread_start& mthd, const omni::sync::thread::delegate& abort_req, const omni::sync::thread::delegate& comp, std::size_t max_stack_sz) :
     aborted(abort_req),
     completed(comp),
     OMNI_CTOR_FW(omni::sync::thread)
@@ -971,7 +971,7 @@ bool omni::sync::thread::is_detached() const
 
 bool omni::sync::thread::join()
 {
-    return this->join(omni::sync::INFINITE_TIMEOUT);
+    return this->join(OMNI_INFINITE_TIMEOUT);
 }
 
 bool omni::sync::thread::join(uint32_t timeout)
@@ -989,7 +989,7 @@ bool omni::sync::thread::join(uint32_t timeout)
     omni::sync::thread_handle_t hndl = this->m_thread;
     if (hndl == omni::sync::thread_handle()) {
         OMNI_SAFE_THREAD_UNLOCK_FW
-        OMNI_ERR_RETV_FW(OMNI_INVALID_THREAD_OWNER, omni::exceptions::invalid_thread_owner(), false)
+        OMNI_ERR_RETV_FW(OMNI_INVALID_THREAD_OWNER_STR, omni::exceptions::invalid_thread_owner(), false)
     }
     #if defined(OMNI_OS_WIN)
         OMNI_VAL_SET_FLAG_BIT(this->m_status, OMNI_THREAD_JOINED_FLAG_FW);
@@ -1005,10 +1005,10 @@ bool omni::sync::thread::join(uint32_t timeout)
     #else
         /* There is not a portable mechanism with pthreads to wait on a specific thread without
         implementing a timed_wait condition variable. We do not want the user to have to implement
-        a seperate variable based on system, so we implement a timeout loop*/
+        a separate variable based on system, so we implement a timeout loop*/
         OMNI_VAL_SET_FLAG_BIT(this->m_status, OMNI_THREAD_JOINED_FLAG_FW);
         OMNI_SAFE_THREAD_UNLOCK_FW
-        if (timeout != omni::sync::INFINITE_TIMEOUT) {
+        if (timeout != OMNI_INFINITE_TIMEOUT) {
             OMNI_SLEEP_INIT();
             volatile bool iav = true;
             omni::chrono::tick_t ts = omni::chrono::monotonic_tick();
@@ -1050,7 +1050,7 @@ bool omni::sync::thread::kill()
     omni::sync::thread_handle_t hndl = this->m_thread;
     if (hndl == omni::sync::thread_handle()) {
         OMNI_SAFE_THREAD_UNLOCK_FW
-        OMNI_ERR_RETV_FW(OMNI_INVALID_THREAD_OWNER, omni::exceptions::invalid_thread_owner(), false)
+        OMNI_ERR_RETV_FW(OMNI_INVALID_THREAD_OWNER_STR, omni::exceptions::invalid_thread_owner(), false)
     }
     this->m_state = omni::sync::thread_state::STOP_REQUESTED;
     OMNI_SAFE_THREAD_UNLOCK_FW
@@ -1347,7 +1347,7 @@ omni::sync::thread_t omni::sync::thread::start(omni::sync::thread_arg_t args)
     return this->m_tid;
 }
 
-void omni::sync::thread::swap(omni::sync::thread &o)
+void omni::sync::thread::swap(omni::sync::thread& o)
 {
     if (this != &o) {
         #if defined(OMNI_SAFE_THREAD)
@@ -1392,7 +1392,7 @@ bool omni::sync::thread::unbind()
     return true;
 }
 
-omni::sync::thread &omni::sync::thread::operator=(const omni::sync::thread &o)
+omni::sync::thread& omni::sync::thread::operator=(const omni::sync::thread& o)
 {
     if (this != &o) {
         OMNI_SAFE_THREAD_LOCK_FW
@@ -1422,7 +1422,7 @@ omni::sync::thread &omni::sync::thread::operator=(const omni::sync::thread &o)
     return *this;
 }
 
-bool omni::sync::thread::operator==(const omni::sync::thread &o) const
+bool omni::sync::thread::operator==(const omni::sync::thread& o) const
 {
     if (this == &o) { return true; }
     #if defined(OMNI_SAFE_THREAD)
@@ -1450,7 +1450,7 @@ bool omni::sync::thread::operator==(const omni::sync::thread &o) const
         );
 }
 
-bool omni::sync::thread::operator!=(const omni::sync::thread &o) const
+bool omni::sync::thread::operator!=(const omni::sync::thread& o) const
 {
     return !(*this == o);
 }

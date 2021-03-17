@@ -24,77 +24,15 @@
 */
 
 // so as not to accidentally build this file with the source
-// these macros are defined in chrono
+// these macros are defined in io.hpp
 #if !defined(OMNI_IO_FILE_RW_FW)
     #error invalid preprocessor directive detected
 #endif
 
-namespace omni { namespace io { /** @internal library helper */ namespace file_internal {
-    /** @internal library helper */
-    inline bool exists(const std::string& file)
-    {
-        if (file.empty()) { return false; }
-        #if defined(OMNI_OS_WIN)
-            #if defined(OMNI_WIN_API)
-                OMNI_FILE_CHECKA_FW(file, false)
-                DWORD res = ::GetFileAttributesA(file.c_str());
-                return (res != INVALID_FILE_ATTRIBUTES && !(res & FILE_ATTRIBUTE_DIRECTORY));
-            #else
-                struct stat fi;
-                if (::_stat(file.c_str(), &fi) == 0) {
-                    #if defined(S_ISSOCK)
-                        return !(S_ISDIR(fi.st_mode)) && !(S_ISSOCK(fi.st_mode));
-                    #else
-                        return !(S_ISDIR(fi.st_mode));
-                    #endif
-                }
-                return false;
-            #endif
-        #else
-            struct stat fi;
-            if (::stat(file.c_str(), &fi) == 0) {
-                #if defined(S_ISSOCK)
-                    return !(S_ISDIR(fi.st_mode)) && !(S_ISSOCK(fi.st_mode));
-                #else
-                    return !(S_ISDIR(fi.st_mode));
-                #endif
-            }
-            return false;
-        #endif
-    }
-    /** @internal library helper */
-    inline bool exists(const std::wstring& file)
-    {
-        if (file.empty()) { return false; }
-        #if defined(OMNI_OS_WIN)
-            #if defined(OMNI_WIN_API)
-                std::wstring tf = OMNI_FILE_CHECKW_FW(tf, file, false)
-                DWORD res = ::GetFileAttributesW(tf.c_str());
-                return (res != INVALID_FILE_ATTRIBUTES && !(res & FILE_ATTRIBUTE_DIRECTORY));
-            #else
-                struct stat fi;
-                if (::_wstat(file.c_str(), &fi) == 0) {
-                    #if defined(S_ISSOCK)
-                        return !(S_ISDIR(fi.st_mode)) && !(S_ISSOCK(fi.st_mode));
-                    #else
-                        return !(S_ISDIR(fi.st_mode));
-                    #endif
-                }
-                return false;
-            #endif
-        #else
-            struct stat fi;
-            if (::stat(omni::string::to_string(file).c_str(), &fi) == 0) {
-                #if defined(S_ISSOCK)
-                    return !(S_ISDIR(fi.st_mode)) && !(S_ISSOCK(fi.st_mode));
-                #else
-                    return !(S_ISDIR(fi.st_mode));
-                #endif
-            }
-            return false;
-        #endif
-    }
+#define OMNI_IO_FILE_EX_FW 1
+#include <omni/xx/io_file_ex.hxx>
 
+namespace omni { namespace io { /** @internal library helper */ namespace file_internal {
     /** @internal library helper */
     template < typename STR, typename IFSTREAM, template < class, class > class std_seq_t, class T, class std_allocator_t >
     uint64_t rd(const STR& file, std_seq_t<T, std_allocator_t >& buffer, uint64_t length, std::streamoff file_offset, std::ios_base::seekdir offset_direction)
@@ -635,46 +573,12 @@ namespace omni { namespace io { /** @internal library helper */ namespace dir_in
         if (psep == path1.length()-1) { return path1 + path2; }
         return path1 + OMNI_WPATH_SEPARATOR + path2;
     }
-    /** @internal library helper */
-    inline bool exists(const std::string& folder)
-    {
-        if (folder.empty()) { return false; }
-        #if defined(OMNI_OS_WIN)
-            #if defined(OMNI_WIN_API)
-                OMNI_FILE_CHECKA_FW(folder, false)
-                DWORD res = ::GetFileAttributesA(folder.c_str());
-                return (res != INVALID_FILE_ATTRIBUTES && (res & FILE_ATTRIBUTE_DIRECTORY));
-            #else
-                struct stat fi;
-                if (::_stat(folder.c_str(), &fi) == 0) { return (S_ISDIR(fi.st_mode)); }
-                return false;    
-            #endif
-        #else
-            struct stat fi;
-            if (::stat(folder.c_str(), &fi) == 0) { return (S_ISDIR(fi.st_mode)); }
-            return false;
-        #endif
-    }
-    /** @internal library helper */
-    inline bool exists(const std::wstring& folder)
-    {
-        if (folder.empty()) { return false; }
-        #if defined(OMNI_OS_WIN)
-            #if defined(OMNI_WIN_API)
-                std::wstring tf = OMNI_FILE_CHECKW_FW(tf, folder, false)
-                DWORD res = ::GetFileAttributesW(tf.c_str());
-                return (res != INVALID_FILE_ATTRIBUTES && (res & FILE_ATTRIBUTE_DIRECTORY));
-            #else
-                struct stat fi;
-                if (::_wstat(folder.c_str(), &fi) == 0) { return (S_ISDIR(fi.st_mode)); }
-                return false;
-            #endif
-        #else
-            struct stat fi;
-            if (::stat(omni::string::to_string(folder).c_str(), &fi) == 0) { return (S_ISDIR(fi.st_mode)); }
-            return false;
-        #endif
-    }
+
+    #if defined(OMNI_OS_WIN)
+        
+    #else
+        
+    #endif
 
     #if defined(OMNI_OS_WIN)
         /** @internal library helper */
@@ -704,21 +608,7 @@ namespace omni { namespace io { /** @internal library helper */ namespace dir_in
             ::CloseHandle(hnd);
             return true;
         }
-    #else
-        /** @internal library helper */
-        template < typename STR >
-        inline bool can_access(const STR& path)
-        {
-            DIR *dp;
-            if ((dp = ::opendir(omni::string::to_string(path).c_str())) == NULL) {
-                if (errno == EACCES) { return false; }
-            }
-            ::closedir(dp);
-            return true;
-        }
-    #endif
 
-    #if defined(OMNI_OS_WIN)
         /** @internal library helper */
         template < template < class, class > class std_seq_t, class T, class std_allocator_t >
         uint64_t get_dir_cont_win_fw(const std::string& name, std_seq_t< T, std_allocator_t >& dirs, int ftype)
@@ -762,6 +652,7 @@ namespace omni { namespace io { /** @internal library helper */ namespace dir_in
             #endif
             return dirs.size();
         }
+
         /** @internal library helper */
         template < template < class, class > class std_seq_t, class T, class std_allocator_t >
         uint64_t get_dir_cont_win_fw(const std::wstring& name, std_seq_t< T, std_allocator_t >& dirs, int ftype)
@@ -807,6 +698,18 @@ namespace omni { namespace io { /** @internal library helper */ namespace dir_in
         }
     #else
         /** @internal library helper */
+        template < typename STR >
+        inline bool can_access(const STR& path)
+        {
+            DIR *dp;
+            if ((dp = ::opendir(omni::string::to_string(path).c_str())) == NULL) {
+                if (errno == EACCES) { return false; }
+            }
+            ::closedir(dp);
+            return true;
+        }
+
+        /** @internal library helper */
         template < template < class, class > class std_seq_t, class T, class std_allocator_t >
         uint64_t get_dir_cont_nix_fw(const std::string& name, std_seq_t< T, std_allocator_t >& dirs, int ftype)
         {
@@ -831,6 +734,7 @@ namespace omni { namespace io { /** @internal library helper */ namespace dir_in
             ::closedir(dp);
             return dirs.size();
         }
+        
         /** @internal library helper */
         template < template < class, class > class std_seq_t, class T, class std_allocator_t >
         uint64_t get_dir_cont_nix_fw(const std::wstring& name, std_seq_t< T, std_allocator_t >& dirs, int ftype)

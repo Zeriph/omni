@@ -40,7 +40,13 @@ void ut_run()
         omni::out << std::endl << "Start unit test: " << omni::ut::current_test.name << std::endl;
         omni::stopwatch sw;
         sw.start();
-        omni::ut::current_test.funcptr();
+        try {
+            omni::ut::current_test.funcptr();
+        } catch (const std::exception& ex) {
+            omni::out << "Exception caught: " << ex.what() << std::endl;
+        } catch (...) {
+            omni::out << "Unhandled exception caught, terminating..." << std::endl;
+        }
         sw.stop();
         omni::out << std::endl << "Test complete, run time: " << sw << std::endl;
         if (!omni::application::args().contains("-noexit")) {

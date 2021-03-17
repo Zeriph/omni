@@ -3,7 +3,6 @@
 omni_lib_loc=/Code/omni
 docdir=${omni_lib_loc}/tools/docugen
 zloc=${omni_lib_loc}/source
-zexp=${omni_lib_loc}/experimental
 zsrc=${zloc}/library.cpp
 # we can use C++03, but it seems that c++11 runs faster
 cppstd="c++11"
@@ -20,7 +19,7 @@ else
 fi
 sdir=${docdir}/src
 xfiles="${sdir}/main.cpp ${sdir}/externs.cpp ${sdir}/gen.cpp ${sdir}/html.cpp ${sdir}/mti.cpp ${sdir}/parse.cpp ${sdir}/util.cpp"
-incs="-I${zloc} -I${sdir} -I${zexp}"
+incs="-I${zloc} -I${sdir}"
 cmd="${gcc} ${xfiles} ${zsrc} ${incs} ${gexf} ${zexf} ${zop} -o ${zout}"
 echo "${cmd}"
 eval ${cmd}

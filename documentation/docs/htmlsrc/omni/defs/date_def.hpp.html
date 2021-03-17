@@ -25,13 +25,15 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <!--start line numbers-->
 0001:<br><div id="cmntl1" name="cmntl1">0002:<br>0003:<br>0004:<br>0005:<br>0006:<br>0007:<br>0008:<br>0009:<br>00010:<br>00011:<br>00012:<br>00013:<br>00014:<br>00015:<br>00016:<br>00017:<br>00018:<br></div>00019:<br>
 00020:<br>00021:<br>00022:<br>00023:<br>00024:<br>00025:<br>00026:<br>00027:<br>00028:<br>00029:<br>00030:<br>00031:<br>00032:<br>00033:<br>00034:<br>00035:<br>00036:<br>00037:<br>00038:<br>00039:<br>
-00040:<br>00041:<br>
+00040:<br>00041:<br>00042:<br>00043:<br>00044:<br>00045:<br>00046:<br>00047:<br>00048:<br>00049:<br>00050:<br>00051:<br>00052:<br>00053:<br>00054:<br>00055:<br>00056:<br>00057:<br>00058:<br>00059:<br>
+00060:<br>00061:<br>00062:<br>00063:<br>00064:<br>00065:<br>00066:<br>00067:<br>00068:<br>00069:<br>00070:<br>00071:<br>00072:<br>
 <!--end line numbers-->
 </div><div class="cpphtmlcmnt">
 <!--start collapse columns-->
-<img src="../../../../content/tree/min.gif" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<img src="../../../../content/tree/min.gif" alt="Min/Max" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br>
 <!--end collapse columns-->
 </div><div class="cpphtml" style="margin-left:3em;">
 <!--start highlighted code-->
@@ -73,6 +75,37 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <font class="syn_pre">#define OMNI_KIND_SHIFT_FW 62</font><br>
 <font class="syn_pre">#define OMNI_TICKS_FIELD_FW <font class="syn_str">&quot;ticks&quot;</font></font><br>
 <font class="syn_pre">#define OMNI_DATE_DATA_FIELD_FW <font class="syn_str">&quot;dateData&quot;</font></font><br>
+<br>
+<br>
+<br>
+<font class="syn_pre">#define <a href="../../../options/omni_days_per_year.html">OMNI_DAYS_PER_YEAR</a> 365 <font class="syn_cmt">// non-leap</font></font><br>
+<font class="syn_pre">#define <a href="../../../options/omni_days_per_leap_year.html">OMNI_DAYS_PER_LEAP_YEAR</a> 366</font><br>
+<font class="syn_pre">#define <a href="../../../options/omni_days_per_4_years.html">OMNI_DAYS_PER_4_YEARS</a> 1461 <font class="syn_cmt">// 365 * 4 + 1 leap day</font></font><br>
+<br>
+<font class="syn_cmt">// TODO: from https://www.grc.nasa.gov/www/k-12/Numbers/Math/Mathematical_Thinking/calendar_calculations.htm</font><br>
+<font class="syn_pre">#define <a href="../../../options/omni_days_per_tropical_year.html">OMNI_DAYS_PER_TROPICAL_YEAR</a> 365.2422</font><br>
+<br>
+<font class="syn_cmt">// DEV_NOTE: These values are to keep in line with the .NET library</font><br>
+<font class="syn_pre">#define <a href="../../../options/omni_days_per_100_years.html">OMNI_DAYS_PER_100_YEARS</a> 36524 <font class="syn_cmt">// DAYS_PER_4_YEARS * 25 - 1</font></font><br>
+<font class="syn_pre">#define <a href="../../../options/omni_days_per_400_years.html">OMNI_DAYS_PER_400_YEARS</a> 146097 <font class="syn_cmt">// DAYS_PER_100_YEARS * 4 + 1</font></font><br>
+<font class="syn_pre">#define <a href="../../../options/omni_days_to_1601ad.html">OMNI_DAYS_TO_1601AD</a> 584388 <font class="syn_cmt">// Number of days from 1/1/0001 to 12/31/1600 -&gt; DAYS_PER_400_YEARS * 4</font></font><br>
+<font class="syn_pre">#define <a href="../../../options/omni_days_to_1899ad.html">OMNI_DAYS_TO_1899AD</a> 693593 <font class="syn_cmt">// Number of days from 1/1/0001 to 12/30/1899 -&gt; DAYS_PER_400_YEARS * 4 + DAYS_PER_100_YEARS * 3 - 367;</font></font><br>
+<font class="syn_pre">#define <a href="../../../options/omni_days_to_10000ad.html">OMNI_DAYS_TO_10000AD</a> 3652059 <font class="syn_cmt">// Number of days from 1/1/0001 to 12/31/9999 -&gt; DAYS_PER_400_YEARS * 25 - 366</font></font><br>
+<font class="syn_pre">#define <a href="../../../options/omni_days_to_epoch.html">OMNI_DAYS_TO_EPOCH</a> 719527 <font class="syn_cmt">// Number of days from 1/1/0001 to 12/31/1969 -&gt; DAYS_TO_1601AD + (DAYS_PER_100_YEARS * 3) + (DAYS_PER_4_YEARS * 17) + (DAYS_PER_YEAR * 2)</font></font><br>
+<font class="syn_pre">#define <a href="../../../options/omni_ticks_to_10000ad.html">OMNI_TICKS_TO_10000AD</a> 3155378975999999999 <font class="syn_cmt">// DAYS_TO_10000AD * TICKS_PER_DAY - 1;</font></font><br>
+<font class="syn_pre">#define <a href="../../../options/omni_milliseconds_to_10000ad.html">OMNI_MILLISECONDS_TO_10000AD</a> 315537897600000 <font class="syn_cmt">// DAYS_TO_10000AD * MILLISECONDS_PER_DAY;</font></font><br>
+<br>
+<font class="syn_pre">#define <a href="../../../options/omni_file_time_offset.html">OMNI_FILE_TIME_OFFSET</a> 504911232000000000 <font class="syn_cmt">// DAYS_TO_1601AD * TICKS_PER_DAY;</font></font><br>
+<font class="syn_pre">#define <a href="../../../options/omni_double_date_offset.html">OMNI_DOUBLE_DATE_OFFSET</a> 599264352000000000 <font class="syn_cmt">// DAYS_TO_1899AD * TICKS_PER_DAY;</font></font><br>
+<font class="syn_pre">#define <a href="../../../options/omni_epoch_offset.html">OMNI_EPOCH_OFFSET</a> 621671328000000000 <font class="syn_cmt">// DAYS_TO_EPOCH * TICKS_PER_DAY;</font></font><br>
+<font class="syn_cmt">// The minimum OA date is 0100/01/01 (Note it is year 100).</font><br>
+<font class="syn_cmt">// The maximum OA date is 9999/12/31</font><br>
+<font class="syn_pre">#define <a href="../../../options/omni_oa_date_min_as_ticks.html">OMNI_OA_DATE_MIN_AS_TICKS</a> 31241376000000000 <font class="syn_cmt">// (DAYS_PER_100_YEARS - DAYS_PER_YEAR) * TICKS_PER_DAY;</font></font><br>
+<font class="syn_pre">#define <a href="../../../options/omni_oa_date_min_as_double.html">OMNI_OA_DATE_MIN_AS_DOUBLE</a> -657435.0 <font class="syn_cmt">// All OA dates must be greater than (not &gt;=) OA_DATE_MIN_AS_DOUBLE</font></font><br>
+<font class="syn_pre">#define <a href="../../../options/omni_oa_date_max_as_double.html">OMNI_OA_DATE_MAX_AS_DOUBLE</a> 2958466.0 <font class="syn_cmt">// All OA dates must be less than (not &lt;=) OA_DATE_MAX_AS_DOUBLE</font></font><br>
+<br>
+<font class="syn_pre">#define <a href="../../../options/omni_days_to_month_365.html">OMNI_DAYS_TO_MONTH_365</a> { 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365 }</font><br>
+<font class="syn_pre">#define <a href="../../../options/omni_days_to_month_366.html">OMNI_DAYS_TO_MONTH_366</a> { 0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366 }</font><br>
 <br>
 <font class="syn_pre">#endif <font class="syn_cmt">// OMNI_DATE_DEF_HPP</font></font><br>
 <!--end highlighted code-->

@@ -41,7 +41,7 @@ namespace omni {
                 OMNI_DV5_FW("created with id of ", this->m_id);
             }
 
-            generic_ptr(const generic_ptr &o) : 
+            generic_ptr(const generic_ptr& o) : 
                 OMNI_CTOR_FW(omni::generic_ptr)
                 m_ptr(o.m_ptr), m_id(o.m_id)
             {
@@ -84,11 +84,14 @@ namespace omni {
                 return (!operator bool());
             }
             
-            generic_ptr& operator=(const generic_ptr &o)
+            generic_ptr& operator=(const generic_ptr& o)
             {
-                this->m_ptr = o.m_ptr;
-                this->m_id = o.m_id;
-                OMNI_DV5_FW("assigned id ", this->m_id);
+                if (this != & o) {
+                    OMNI_ASSIGN_FW(o)
+                    this->m_ptr = o.m_ptr;
+                    this->m_id = o.m_id;
+                    OMNI_DV5_FW("assigned id ", this->m_id);
+                }
                 return *this;
             }
 
@@ -162,7 +165,7 @@ namespace omni {
                 OMNI_DV5_FW("created with id of ", this->m_id);
             }
 
-            generic_ptr_safe(const generic_ptr_safe &o) : 
+            generic_ptr_safe(const generic_ptr_safe& o) : 
                 OMNI_CTOR_FW(omni::generic_ptr_safe)
                 m_ptr(o.m_ptr), m_id(o.m_id), m_mtx()
             {
@@ -215,12 +218,15 @@ namespace omni {
                 return (!operator bool());
             }
             
-            generic_ptr_safe& operator=(const generic_ptr_safe &o)
+            generic_ptr_safe& operator=(const generic_ptr_safe& o)
             {
-                omni::sync::scoped_lock<omni::sync::mutex_t> a1(&this->m_mtx);
-                omni::sync::scoped_lock<omni::sync::mutex_t> a2(&o.m_mtx);
-                this->m_ptr = o.m_ptr;
-                this->m_id = o.m_id;
+                if (this != &o) {
+                    OMNI_ASSIGN_FW(o)
+                    omni::sync::scoped_lock<omni::sync::mutex_t> a1(&this->m_mtx);
+                    omni::sync::scoped_lock<omni::sync::mutex_t> a2(&o.m_mtx);
+                    this->m_ptr = o.m_ptr;
+                    this->m_id = o.m_id;
+                }
                 return *this;
             }
 

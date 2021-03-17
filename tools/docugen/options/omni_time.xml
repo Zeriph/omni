@@ -1,16 +1,11 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_TIME</Name>
-  <Brief>The timestamp used for the framework version information.
-</Brief>
-  <Considerations>No special considerations
-</Considerations>
-  <Description>A helper macro that 
-</Description>
-  <Notes>None.
-</Notes>
-  <PlatformSpecific>No platform specific notes.
-</PlatformSpecific>
+  <Brief>The timestamp used for the library version information.</Brief>
+  <Considerations>No special considerations</Considerations>
+  <Description>A helper macro that </Description>
+  <Notes>None.</Notes>
+  <PlatformSpecific>No platform specific notes.</PlatformSpecific>
   <Synopsis>This is a helper macro that is used by the OMNI_FW_VER_STR helper macro to append the build time to the version macro string.
 
 Defined as the following:

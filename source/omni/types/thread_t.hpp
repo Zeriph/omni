@@ -1738,8 +1738,10 @@ namespace omni {
         } thread_option_union;
         
         // Types
+        #if !defined(OMNI_NO_CONSTS)
         /** Defines the platform infinite time out value */
         const uint32_t INFINITE_TIMEOUT = OMNI_INFINITE_TIMEOUT;
+        #endif
         /** Defines the thread argument parameter type (i.e. void* or omni::generic_ptr) */
         typedef OMNI_THREAD_ARGS_T thread_arg_t;
         /** Defines the platform thread type */
@@ -1810,7 +1812,7 @@ namespace omni {
                 OMNI_ERR_RETV_FW(OMNI_INVALID_THREAD_HANDLE_STR, omni::exceptions::invalid_thread_handle(), false)
             }
             if (handle == omni::sync::thread_handle()) {
-                OMNI_ERR_RETV_FW(OMNI_INVALID_THREAD_OWNER, omni::exceptions::invalid_thread_owner(), false)
+                OMNI_ERR_RETV_FW(OMNI_INVALID_THREAD_OWNER_STR, omni::exceptions::invalid_thread_owner(), false)
             }
             #if defined(OMNI_OS_WIN)
                 return (::WaitForSingleObject(OMNI_WIN_TOHNDL_FW(handle), timeout) == 0) ? true :
@@ -1824,7 +1826,7 @@ namespace omni {
                 /* There is not a portable mechanism with pthreads to wait on a specific thread without
                 implementing a timed_wait condition variable. We do not want the user to have to implement
                 a seperate variable based on system, so we implement a timeout loop*/
-                if (timeout != omni::sync::INFINITE_TIMEOUT) {
+                if (timeout != OMNI_INFINITE_TIMEOUT) {
                     #if !defined(OMNI_CHRONO_AUTO_INIT_TICK)
                         omni::chrono::monotonic::initialize();
                     #endif
@@ -1856,7 +1858,7 @@ namespace omni {
          */
         inline bool join_thread(omni::sync::thread_handle_t handle)
         {
-            return omni::sync::join_thread(handle, omni::sync::INFINITE_TIMEOUT);
+            return omni::sync::join_thread(handle, OMNI_INFINITE_TIMEOUT);
         }
         
         template < void (*fnptr)() >
