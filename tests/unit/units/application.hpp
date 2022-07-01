@@ -29,6 +29,7 @@ class UT_CLASS_DEF
         
         void app_exit()
         {
+            omni::ut::current_test.no_exit = true;
             printl("If the application ends before you press CTRL+C, this test fails");
         }
 

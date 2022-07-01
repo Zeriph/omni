@@ -19,6 +19,7 @@
 #include <omni/net/endpoint_descriptor.hpp>
 #include <omni/net/util.hpp>
 #include <omni/defs/debug.hpp>
+#include <cstring>
 
 #if defined(OMNI_SAFE_SOCKET_EP)
     #define OMNI_SAFE_SOCKEPMTX_FW  ,m_mtx()

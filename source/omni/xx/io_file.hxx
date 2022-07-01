@@ -144,7 +144,7 @@
                 return win_copy_file(file, new_name);
             #else
                 char buf[OMNI_IO_FILE_COPY_BUFSZ];
-                size_t size;
+                std::size_t size;
                 int src = ::open(omni::string::to_string(file).c_str(), O_RDONLY, 0);
                 if (src == -1) {
                     ::close(src);
@@ -156,7 +156,7 @@
                     ::close(dst);
                     OMNI_ERRV_RETV_FW(OMNI_PATH_NOT_ACCESSIBLE_STR, omni::string::to_string_t(new_name), omni::exceptions::path_exception(OMNI_PATH_NOT_ACCESSIBLE_STR, omni::string::to_string(new_name)), false)
                 }
-                while ((size = ::read(src, buf, BUFSIZ)) > 0) {
+                while ((size = ::read(src, buf, OMNI_IO_FILE_COPY_BUFSZ)) > 0) {
                     ::write(dst, buf, size);
                 }
                 ::close(src);

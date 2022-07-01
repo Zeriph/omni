@@ -1361,6 +1361,538 @@ namespace omni {
                 }
         };
 
+        /** server_error defines enum values for socket errors codes */
+        class server_error
+        {
+            public:
+                typedef enum enum_t {
+                    UNSPECIFIED = -1,
+                    SUCCESS = 0,
+                    HOST_ADDRESS_REQUIRED,
+                    NO_ADDRESSES_IN_FAMILY,
+                    NAME_SERVER_TEMPORARY_FAILURE,
+                    INVALID_FLAGS,
+                    NAME_SERVER_PERMANENT_FAILURE,
+                    ADDRESS_FAMILY_NOT_SUPPORTED,
+                    OUT_OF_MEMORY,
+                    HOST_EXISTS_NO_ADDRESSES_DEFINED,
+                    NODE_OR_SERVICE_NOT_KNOWN,
+                    SERVICE_NOT_AVAILABLE_FOR_SOCKET_TYPE,
+                    SOCKET_TYPE_NOT_SUPPORTED,
+                    SYSTEM_ERROR
+                } enum_t;
+                
+                /** Defines the number of elements in the enum */
+                static inline unsigned short COUNT()
+                {
+                    return 13;
+                }
+
+                /** The default value for this enum instance */
+                static inline enum_t DEFAULT_VALUE()
+                {
+                    return UNSPECIFIED;
+                }
+
+                /** Converts the enum to its string representation */
+                static std::string to_string(enum_t v)
+                {
+                    return _to_val<std::stringstream>(v);
+                }
+            
+                /** Converts the enum to its wide string representation */
+                static std::wstring to_wstring(enum_t v)
+                {
+                    return _to_val<std::wstringstream>(v);
+                }
+
+                /** Parsing a string value into its enum representation */
+                static enum_t parse(const std::string& val)
+                {
+                    return _parse(val);
+                }
+
+                /** Parsing a wide string value into its enum representation */
+                static enum_t parse(const std::wstring& val)
+                {
+                    return _parse(val);
+                }
+
+                /** Tries parsing a string value into its enum representation */
+                static bool try_parse(const std::string& val, enum_t& out)
+                {
+                    return _try_parse(val, out);
+                }
+
+                /** Tries parsing a wide string value into its enum representation */
+                static bool try_parse(const std::wstring& val, enum_t& out)
+                {
+                    return _try_parse(val, out);
+                }
+
+                /** Tries parsing a string value into its enum representation */
+                static bool try_parse(const std::string& val, server_error& out)
+                {
+                    return _try_parse(val, out);
+                }
+
+                /** Tries parsing a wide string value into its enum representation */
+                static bool try_parse(const std::wstring& val, server_error& out)
+                {
+                    return _try_parse(val, out);
+                }
+
+                /** Returns true if the integer value specified is a valid enum value */
+                static bool is_valid(int32_t val)
+                {
+                    return _valid(val);
+                }
+                
+                server_error() :
+                    OMNI_CTOR_FW(omni::net::server_error)
+                    m_val(DEFAULT_VALUE())
+                { }
+
+                server_error(const server_error& cp) :
+                    OMNI_CPCTOR_FW(cp)
+                    m_val(cp.m_val)
+                { }
+
+                server_error(enum_t val) : 
+                    OMNI_CTOR_FW(omni::net::server_error)
+                    m_val(val)
+                { }
+
+                ~server_error()
+                {
+                    OMNI_TRY_FW
+                    OMNI_DTOR_FW
+                    OMNI_CATCH_FW
+                    OMNI_D5_FW("destroyed");
+                }
+
+                unsigned short count() const
+                {
+                    return COUNT();
+                }
+
+                enum_t value() const
+                {
+                    return this->m_val;
+                }
+
+                std::string to_string() const
+                {
+                    return to_string(this->m_val);
+                }
+
+                std::wstring to_wstring() const
+                {
+                    return to_wstring(this->m_val);
+                }
+
+                bool operator!=(const server_error& val) const
+                {
+                    return !(*this == val);
+                }
+                
+                bool operator!=(enum_t val) const
+                {
+                    return (this->m_val != val);
+                }
+                
+                server_error& operator=(const server_error& val)
+                {
+                    if (this != &val) {
+                        OMNI_ASSIGN_FW(val)
+                        this->m_val = val.m_val;
+                    }
+                    return *this;
+                }
+
+                server_error& operator=(enum_t val)
+                {
+                    this->m_val = val;
+                    return *this;
+                }
+
+                server_error& operator=(int32_t val)
+                {
+                    if (!server_error::is_valid(val)) {
+                        OMNI_ERR_RET_FW("Invalid enumeration value specified.", omni::exceptions::invalid_enum(val));
+                    } else {
+                        this->m_val = static_cast<enum_t>(val);
+                    }
+                    return *this;
+                }
+
+                server_error operator|(const server_error& val)
+                {
+                    return server_error(static_cast<enum_t>(this->m_val | val.m_val));
+                }
+
+                server_error operator|(enum_t val)
+                {
+                    return server_error(static_cast<enum_t>(this->m_val | val));
+                }
+
+                server_error operator|(int32_t val)
+                {
+                    return server_error(static_cast<enum_t>(this->m_val | val));
+                }
+
+                server_error& operator|=(const server_error& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val | val.m_val);
+                    return *this;
+                }
+
+                server_error& operator|=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val | val);
+                    return *this;
+                }
+
+                server_error& operator|=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val | val);
+                    return *this;
+                }
+
+                server_error operator&(const server_error& val)
+                {
+                    return server_error(static_cast<enum_t>(this->m_val & val.m_val));
+                }
+
+                server_error operator&(enum_t val)
+                {
+                    return server_error(static_cast<enum_t>(this->m_val & val));
+                }
+
+                server_error operator&(int32_t val)
+                {
+                    return server_error(static_cast<enum_t>(this->m_val & val));
+                }
+
+                server_error& operator&=(const server_error& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val & val.m_val);
+                    return *this;
+                }
+
+                server_error& operator&=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val & val);
+                    return *this;
+                }
+
+                server_error& operator&=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val & val);
+                    return *this;
+                }
+                
+                server_error& operator++()
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val + 1);
+                    return *this;
+                }
+
+                server_error operator++(int dummy)
+                {
+                    OMNI_UNUSED(dummy);
+                    server_error ret(this->m_val);
+                    this->m_val = static_cast<enum_t>(this->m_val + 1);
+                    return ret;
+                }
+
+                server_error& operator--()
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val - 1);
+                    return *this;
+                }
+
+                server_error operator--(int dummy)
+                {
+                    OMNI_UNUSED(dummy);
+                    server_error ret(this->m_val);
+                    this->m_val = static_cast<enum_t>(this->m_val - 1);
+                    return ret;
+                }
+
+                server_error operator~()
+                {
+                    return server_error(static_cast<enum_t>(~static_cast<int32_t>(this->m_val)));
+                }
+
+                server_error operator^(const server_error& val)
+                {
+                    return server_error(static_cast<enum_t>(this->m_val ^ val.m_val));
+                }
+
+                server_error operator^(enum_t val)
+                {
+                    return server_error(static_cast<enum_t>(this->m_val ^ val));
+                }
+
+                server_error operator^(int32_t val)
+                {
+                    return server_error(static_cast<enum_t>(this->m_val ^ val));
+                }
+
+                server_error& operator^=(const server_error& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val ^ val.m_val);
+                    return *this;
+                }
+
+                server_error& operator^=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val ^ val);
+                    return *this;
+                }
+
+                server_error& operator^=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val ^ val);
+                    return *this;
+                }
+
+                server_error operator<<(const server_error& val)
+                {
+                    return server_error(static_cast<enum_t>(this->m_val << val.m_val));
+                }
+
+                server_error operator<<(enum_t val)
+                {
+                    return server_error(static_cast<enum_t>(this->m_val << val));
+                }
+
+                server_error operator<<(int32_t val)
+                {
+                    return server_error(static_cast<enum_t>(this->m_val << val));
+                }
+
+                server_error& operator<<=(const server_error& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val << val.m_val);
+                    return *this;
+                }
+
+                server_error& operator<<=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val << val);
+                    return *this;
+                }
+
+                server_error& operator<<=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val << val);
+                    return *this;
+                }
+
+                server_error operator>>(const server_error& val)
+                {
+                    return server_error(static_cast<enum_t>(this->m_val >> val.m_val));
+                }
+
+                server_error operator>>(enum_t val)
+                {
+                    return server_error(static_cast<enum_t>(this->m_val >> val));
+                }
+
+                server_error operator>>(int32_t val)
+                {
+                    return server_error(static_cast<enum_t>(this->m_val >> val));
+                }
+
+                server_error& operator>>=(const server_error& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val >> val.m_val);
+                    return *this;
+                }
+
+                server_error& operator>>=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val >> val);
+                    return *this;
+                }
+
+                server_error& operator>>=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val >> val);
+                    return *this;
+                }
+
+                bool operator<(const server_error& val) const
+                {
+                    return this->m_val < val.m_val;
+                }
+
+                bool operator<(enum_t val) const
+                {
+                    return this->m_val < val;
+                }
+
+                bool operator<(int32_t val) const
+                {
+                    return this->m_val < static_cast<enum_t>(val);
+                }
+
+                bool operator>(const server_error& val) const
+                {
+                    return this->m_val > val.m_val;
+                }
+
+                bool operator>(enum_t val) const
+                {
+                    return this->m_val > val;
+                }
+
+                bool operator>(int32_t val) const
+                {
+                    return this->m_val > val;
+                }
+
+                bool operator==(const server_error& val) const
+                {
+                    if (this == &val) { return true; }
+                    return this->m_val == val.m_val
+                            OMNI_EQUAL_FW(val);
+                }
+
+                bool operator==(enum_t val) const
+                {
+                    return this->m_val == val;
+                }
+
+                bool operator==(int32_t val) const
+                {
+                    return this->m_val == val;
+                }
+
+                operator enum_t() const
+                {
+                    return this->m_val;
+                }
+
+                operator std::string() const
+                {
+                    return this->to_string();
+                }
+
+                operator std::wstring() const
+                {
+                    return this->to_wstring();
+                }
+
+                OMNI_MEMBERS_FW(omni::net::server_error) // disposing,name,type(),hash()
+
+                OMNI_OSTREAM_FW(omni::net::server_error)
+                OMNI_OSTREAM_FN_FW(enum_t)
+
+            private:
+                enum_t m_val;
+                
+                template < typename S >
+                static enum_t _parse(const S& val)
+                {
+                    enum_t ret;
+                    if (_try_parse(val, ret)) { return ret; }
+                    OMNI_ERR_FW("invalid enum parse", omni::exceptions::invalid_enum())
+                    return DEFAULT_VALUE();
+                }
+
+                template < typename S >
+                static bool _try_parse(const S& str, enum_t& out)
+                {
+                    return _try_parse(omni::string::util::to_upper(str), out);
+                }
+
+                template < typename S >
+                static bool _try_parse(const S& val, server_error& out)
+                {
+                    enum_t tmp;
+                    if (_try_parse(val, tmp)) {
+                        out.m_val = tmp;
+                        return true;
+                    }
+                    return false;
+                }
+
+                static bool _try_parse(const std::wstring& val, enum_t& out)
+                {
+                    return _try_parse(omni::string::util::to_string(val), out);
+                }
+
+                static bool _try_parse(const std::string& val, enum_t& out)
+                {
+                    if (!val.empty()) {
+                        OMNI_S2E_FW(UNSPECIFIED)
+                        OMNI_S2E_FW(SUCCESS)
+                        OMNI_S2E_FW(HOST_ADDRESS_REQUIRED)
+                        OMNI_S2E_FW(NO_ADDRESSES_IN_FAMILY)
+                        OMNI_S2E_FW(NAME_SERVER_TEMPORARY_FAILURE)
+                        OMNI_S2E_FW(INVALID_FLAGS)
+                        OMNI_S2E_FW(NAME_SERVER_PERMANENT_FAILURE)
+                        OMNI_S2E_FW(ADDRESS_FAMILY_NOT_SUPPORTED)
+                        OMNI_S2E_FW(OUT_OF_MEMORY)
+                        OMNI_S2E_FW(HOST_EXISTS_NO_ADDRESSES_DEFINED)
+                        OMNI_S2E_FW(NODE_OR_SERVICE_NOT_KNOWN)
+                        OMNI_S2E_FW(SERVICE_NOT_AVAILABLE_FOR_SOCKET_TYPE)
+                        OMNI_S2E_FW(SOCKET_TYPE_NOT_SUPPORTED)
+                        OMNI_S2E_FW(SYSTEM_ERROR)
+                    }
+                    return false;
+                }
+
+                template < typename S >
+                static std::basic_string< typename S::char_type > _to_val(enum_t v)
+                {
+                    S ss;
+                    switch (v) {
+                        OMNI_E2SS_FW(UNSPECIFIED);
+                        OMNI_E2SS_FW(SUCCESS);
+                        OMNI_E2SS_FW(HOST_ADDRESS_REQUIRED);
+                        OMNI_E2SS_FW(NO_ADDRESSES_IN_FAMILY);
+                        OMNI_E2SS_FW(NAME_SERVER_TEMPORARY_FAILURE);
+                        OMNI_E2SS_FW(INVALID_FLAGS);
+                        OMNI_E2SS_FW(NAME_SERVER_PERMANENT_FAILURE);
+                        OMNI_E2SS_FW(ADDRESS_FAMILY_NOT_SUPPORTED);
+                        OMNI_E2SS_FW(OUT_OF_MEMORY);
+                        OMNI_E2SS_FW(HOST_EXISTS_NO_ADDRESSES_DEFINED);
+                        OMNI_E2SS_FW(NODE_OR_SERVICE_NOT_KNOWN);
+                        OMNI_E2SS_FW(SERVICE_NOT_AVAILABLE_FOR_SOCKET_TYPE);
+                        OMNI_E2SS_FW(SOCKET_TYPE_NOT_SUPPORTED);
+                        OMNI_E2SS_FW(SYSTEM_ERROR);
+                        default:
+                            ss << "UNKNOWN (" << static_cast<int>(v) << ")";
+                            break;
+                    }
+                    return ss.str();
+                }
+
+                static bool _valid(int32_t val)
+                {
+                    return (val == 
+                        UNSPECIFIED ||
+                        SUCCESS ||
+                        HOST_ADDRESS_REQUIRED ||
+                        NO_ADDRESSES_IN_FAMILY ||
+                        NAME_SERVER_TEMPORARY_FAILURE ||
+                        INVALID_FLAGS ||
+                        NAME_SERVER_PERMANENT_FAILURE ||
+                        ADDRESS_FAMILY_NOT_SUPPORTED ||
+                        OUT_OF_MEMORY ||
+                        HOST_EXISTS_NO_ADDRESSES_DEFINED ||
+                        NODE_OR_SERVICE_NOT_KNOWN ||
+                        SERVICE_NOT_AVAILABLE_FOR_SOCKET_TYPE ||
+                        SOCKET_TYPE_NOT_SUPPORTED ||
+                        SYSTEM_ERROR
+                    );
+                }
+        };
+
         /** socket_error defines enum values for socket errors codes */
         class socket_error
         {

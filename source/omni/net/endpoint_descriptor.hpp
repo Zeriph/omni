@@ -75,12 +75,12 @@ namespace omni {
                     // if CXX buffer.data
                     return this->_receive(&buffer[0], (buffer.size() * sizeof(T)), flags, received);
                 }
-                template < size_t SZ >
+                template < std::size_t SZ >
                 omni::net::socket_error receive(char (&buffer)[SZ], uint32_t& received)
                 {
                     return this->_receive(buffer, SZ, omni::net::socket_flags::NONE, received);
                 }
-                template < size_t SZ >
+                template < std::size_t SZ >
                 omni::net::socket_error receive(char (&buffer)[SZ], omni::net::socket_flags flags, uint32_t& received)
                 {
                     return this->_receive(buffer, SZ, flags, received);
@@ -113,12 +113,12 @@ namespace omni {
                 {
                     return this->_send(&buffer[0], (buffer.size() * sizeof(T)), flags, sent);
                 }
-                template < size_t SZ >
+                template < std::size_t SZ >
                 omni::net::socket_error send(const char (&buffer)[SZ], uint32_t& sent)
                 {
                     return this->_send(buffer, SZ, omni::net::socket_flags::NONE, sent);
                 }
-                template < size_t SZ >
+                template < std::size_t SZ >
                 omni::net::socket_error send(const char (&buffer)[SZ], omni::net::socket_flags flags, uint32_t& sent)
                 {
                     return this->_send(buffer, SZ, flags, sent);

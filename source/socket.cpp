@@ -102,7 +102,7 @@ omni::net::socket_error omni::net::socket::_receive(void* buffer, uint32_t buffe
         }
         received = static_cast<uint32_t>(recd);
     #else
-        long r = ::recv(this->m_socket, (reinterpret_cast<omni::net::xfr_t*>(buffer)), buffer_size, static_cast<int>(flags));
+        long r = ::recv(this->m_socket, (reinterpret_cast<omni::net::xfr_t*>(buffer)), buffer_size, ((flags == omni::net::socket_flags::NONE) ? 0 : static_cast<int>(flags)));
         switch (r) {
             // connection closed
             case 0: return (this->m_last_err = omni::net::socket_error::CONNECTION_RESET);
@@ -135,7 +135,7 @@ omni::net::socket_error omni::net::socket::_receive_from(void* buffer, uint32_t 
         }
         received = static_cast<uint32_t>(recd);
     #else
-        long r = ::recvfrom(this->m_socket, (reinterpret_cast<omni::net::xfr_t*>(buffer)), buffer_size, static_cast<int>(flags), omni::net::to_sockaddr(src_addr), &addrlen);
+        long r = ::recvfrom(this->m_socket, (reinterpret_cast<omni::net::xfr_t*>(buffer)), buffer_size, ((flags == omni::net::socket_flags::NONE) ? 0 : static_cast<int>(flags)), omni::net::to_sockaddr(src_addr), &addrlen);
         switch (r) {
             // connection closed
             case 0: return (this->m_last_err = omni::net::socket_error::CONNECTION_RESET);
@@ -167,7 +167,7 @@ omni::net::socket_error omni::net::socket::_send(const void* buffer, uint32_t bu
         }
         sent = static_cast<uint32_t>(recd);
     #else
-        long r = ::send(this->m_socket, (reinterpret_cast<const omni::net::xfr_t*>(buffer)), buffer_size, static_cast<int>(flags));
+        long r = ::send(this->m_socket, (reinterpret_cast<const omni::net::xfr_t*>(buffer)), buffer_size, ((flags == omni::net::socket_flags::NONE) ? 0 : static_cast<int>(flags)));
         if (r == OMNI_SOCK_SYSERR_FW) {
             return (this->m_last_err = omni::net::parse_error(OMNI_SOCKET_ERR_FW));
         }
@@ -204,7 +204,7 @@ omni::net::socket_error omni::net::socket::_send_to(const void* buffer, uint32_t
         }
         sent = static_cast<uint32_t>(recd);
     #else
-        long r = ::sendto(this->m_socket, (reinterpret_cast<const omni::net::xfr_t*>(buffer)), buffer_size, static_cast<int>(flags), omni::net::to_sockaddr(to_addr), addrlen);
+        long r = ::sendto(this->m_socket, (reinterpret_cast<const omni::net::xfr_t*>(buffer)), buffer_size, ((flags == omni::net::socket_flags::NONE) ? 0 : static_cast<int>(flags)), omni::net::to_sockaddr(to_addr), addrlen);
         if (r == OMNI_SOCK_SYSERR_FW) {
             return (this->m_last_err = omni::net::parse_error(OMNI_SOCKET_ERR_FW));
         }

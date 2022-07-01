@@ -3537,7 +3537,7 @@ namespace omni {
                 template < typename O_T, std::size_t O_SZ >
                 void copy(const omni::math::dimensional<O_T, O_SZ>& o)
                 {
-                    size_t sz = (SZ < O_SZ) ? SZ : O_SZ;
+                    std::size_t sz = (SZ < O_SZ) ? SZ : O_SZ;
                     for (std::size_t i = 0; i < sz; ++i) {
                         this->m_vals[i] = static_cast<T>(o[i]);
                     }
@@ -3558,7 +3558,7 @@ namespace omni {
                 template < typename O_T, std::size_t O_SZ >
                 void swap(omni::math::dimensional<O_T, O_SZ>& o)
                 {
-                    size_t sz = (SZ < O_SZ) ? SZ : O_SZ;
+                    std::size_t sz = (SZ < O_SZ) ? SZ : O_SZ;
                     O_T otmp; T tmp;
                     for (std::size_t i = 0; i < sz; ++i) {
                         otmp = o[i];
@@ -3579,7 +3579,7 @@ namespace omni {
                 template < typename O_T, std::size_t O_SZ >
                 dimensional& operator=(const omni::math::dimensional<O_T, O_SZ>& o) 
                 {
-                    size_t sz = (SZ < O_SZ) ? SZ : O_SZ;
+                    std::size_t sz = (SZ < O_SZ) ? SZ : O_SZ;
                     for (std::size_t i = 0; i < sz; ++i) {
                         this->m_vals[i] = static_cast<T>(o[i]);
                     }
@@ -3595,7 +3595,7 @@ namespace omni {
                 template < typename O_T, std::size_t O_SZ >
                 bool operator==(const omni::math::dimensional<O_T, O_SZ>& o) const
                 {
-                    size_t sz = (SZ < O_SZ) ? SZ : O_SZ;
+                    std::size_t sz = (SZ < O_SZ) ? SZ : O_SZ;
                     for (std::size_t i = 0; i < sz; ++i) {
                         if (!omni::math::are_equal(this->m_vals[i], static_cast<T>(o[i]))) {
                             return false;
@@ -3617,7 +3617,7 @@ namespace omni {
                 template < typename O_T, std::size_t O_SZ >
                 bool operator!=(const omni::math::dimensional<O_T, O_SZ>& o) const
                 {
-                    size_t sz = (SZ < O_SZ) ? SZ : O_SZ;
+                    std::size_t sz = (SZ < O_SZ) ? SZ : O_SZ;
                     for (std::size_t i = 0; i < sz; ++i) {
                         if (omni::math::are_equal(this->m_vals[i], static_cast<T>(o[i]))) {
                             return false;

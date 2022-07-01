@@ -49,7 +49,7 @@ void ut_run()
         }
         sw.stop();
         omni::out << std::endl << "Test complete, run time: " << sw << std::endl;
-        if (!omni::application::args().contains("-noexit")) {
+        if (!omni::ut::current_test.no_exit && !omni::application::args().contains("-noexit")) {
             omni::application::exit();
         }
     } else {

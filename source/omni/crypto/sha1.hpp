@@ -74,7 +74,7 @@ namespace omni {
                 static std::string _final(std::string& buffer, uint32_t* digest, uint64_t& transforms);
                 static void _transform(uint32_t* block, uint32_t* digest, uint64_t& transforms);
                 static void _buffer_to_block(const std::string& buffer, uint32_t* block);
-                static void _read(std::istream& stream, std::string& str, size_t size);
+                static void _read(std::istream& stream, std::string& str, std::size_t size);
         };
     }
 }

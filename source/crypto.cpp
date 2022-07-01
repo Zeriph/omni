@@ -20,6 +20,7 @@
 #include <omni/defs/file_def.hpp>
 #include <fstream>
 #include <sstream>
+#include <cstring>
 #define OMNI_IO_FILE_EX_FW 1
 #include <omni/xx/io_file_ex.hxx>
 
@@ -479,11 +480,11 @@ std::string omni::crypto::sha1::_final(std::string& buffer, uint32_t* digest, ui
 {
     uint64_t total_bits = (transforms * OMNI_SHA1_BLOCK_BYTE_SZ_FW + buffer.size()) * 8;
     buffer += 0x80;
-    size_t orig_size = buffer.size();
+    std::size_t orig_size = buffer.size();
     while (buffer.size() < OMNI_SHA1_BLOCK_BYTE_SZ_FW) {
         buffer += static_cast<char>(0x00);
     }
-    size_t i;
+    std::size_t i;
     uint32_t block[OMNI_SHA1_BLOCK_SZ_FW];
     omni::crypto::sha1::_buffer_to_block(buffer, block);
     if (orig_size > OMNI_SHA1_BLOCK_BYTE_SZ_FW - 8) {
@@ -543,7 +544,7 @@ void omni::crypto::sha1::_buffer_to_block(const std::string& buffer, uint32_t* b
     }
 }
 
-void omni::crypto::sha1::_read(std::istream& stream, std::string& str, size_t size)
+void omni::crypto::sha1::_read(std::istream& stream, std::string& str, std::size_t size)
 {
     char* buf = new char[size];
     stream.read(buf, size);

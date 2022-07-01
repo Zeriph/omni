@@ -103,16 +103,17 @@ namespace omni {
     // the unit test itself
     class ut {
         public:
-            ut() : index(), funcptr(), name(), desc() {}
+            ut() : index(), funcptr(), name(), desc(), no_exit() {}
             ut(std::size_t idx, omni::callback func, const char* n, const char* d) :
-                index(idx), funcptr(func), name(omni::string::util::to_string_t(n)), desc(omni::string::util::to_string_t(d)) { }
+                index(idx), funcptr(func), name(omni::string::util::to_string_t(n)), desc(omni::string::util::to_string_t(d)), no_exit(false) { }
             ut(std::size_t idx, omni::callback func, omni::string_t n, omni::string_t d) : 
-                index(idx), funcptr(func), name(n), desc(d) { }
+                index(idx), funcptr(func), name(n), desc(d), no_exit(false) { }
 
             std::size_t index;
             omni::callback funcptr;
             omni::string_t name;
             omni::string_t desc;
+            volatile bool no_exit;
             
             static omni::ut current_test;
             

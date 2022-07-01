@@ -61,7 +61,7 @@ namespace omni {
                 va_list args;
                 va_start(args, val1);
                 this->m_data[0] = val1;
-                for (size_t i = 1; i < SZ; ++i) {
+                for (std::size_t i = 1; i < SZ; ++i) {
                     this->m_data[i] = va_arg(args, value_type);
                 }
                 va_end(args);
@@ -121,7 +121,7 @@ namespace omni {
                 return const_cast<const T*>(&this->m_data[0]);
             }
 
-            size_t capacity() const
+            std::size_t capacity() const
             {
                 return SZ * sizeof(T);
             }

@@ -27,6 +27,7 @@
 #include <limits>
 #include <utility>
 #include <iomanip>
+#include <cstring>
 
 #if defined(OMNI_USE_MATH_DEFS) && !defined(_USE_MATH_DEFINES)
     #define _USE_MATH_DEFINES

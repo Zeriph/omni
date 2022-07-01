@@ -137,6 +137,36 @@ namespace omni {
             return static_cast<omni::net::socket_error::enum_t>(serr);
         }
 
+        inline omni::net::server_error parse_server_error(int serr)
+        {
+            switch (serr) {
+                case EAI_ADDRFAMILY: // The specified network host does not have any network addresses in the requested address family.
+                    return omni::net::server_error::NO_ADDRESSES_IN_FAMILY;
+                case EAI_AGAIN: // The name server returned a temporary failure indication. Try again later.
+                    return omni::net::server_error::NAME_SERVER_TEMPORARY_FAILURE;
+                case EAI_BADFLAGS: // hints.ai_flags contains invalid flags; or, hints.ai_flags included AI_CANONNAME and name was NULL.
+                    return omni::net::server_error::INVALID_FLAGS;
+                case EAI_FAIL: // The name server returned a permanent failure indication.
+                    return omni::net::server_error::NAME_SERVER_PERMANENT_FAILURE;
+                case EAI_FAMILY: // The requested address family is not supported.
+                    return omni::net::server_error::ADDRESS_FAMILY_NOT_SUPPORTED;
+                case EAI_MEMORY: // Out of memory.
+                    return omni::net::server_error::OUT_OF_MEMORY;
+                case EAI_NODATA: // The specified network host exists, but does not have any network addresses defined.
+                    return omni::net::server_error::HOST_EXISTS_NO_ADDRESSES_DEFINED;
+                case EAI_NONAME: // The node or service is not known; or both node and service are NULL; or AI_NUMERICSERV was specified in hints.ai_flags and service was not a numeric port-number string.
+                    return omni::net::server_error::NODE_OR_SERVICE_NOT_KNOWN;
+                case EAI_SERVICE: // The requested service is not available for the requested socket type.  It may be available through another socket type.  For example, this error could occur if service was "shell" (a service available only on stream sockets), and either hints.ai_protocol was IPPROTO_UDP, or hints.ai_socktype was SOCK_DGRAM; or the error could occur if service was not NULL, and hints.ai_socktype was SOCK_RAW (a socket type that does not support the concept of services).
+                    return omni::net::server_error::SERVICE_NOT_AVAILABLE_FOR_SOCKET_TYPE;
+                case EAI_SOCKTYPE: // The requested socket type is not supported.  This could occur, for example, if hints.ai_socktype and hints.ai_protocol are inconsistent (e.g., SOCK_DGRAM and IPPROTO_TCP, respectively).
+                    return omni::net::server_error::SOCKET_TYPE_NOT_SUPPORTED;
+                case EAI_SYSTEM: // Other system error; errno is set to indicate the error.
+                    return omni::net::server_error::SYSTEM_ERROR;
+                default: break;
+            }
+            return static_cast<omni::net::server_error::enum_t>(serr);
+        }
+
         inline omni::net::sockaddr_t* to_sockaddr(omni::net::sockaddr_in_t& addr)
         {
             return reinterpret_cast<omni::net::sockaddr_t*>(&addr);
@@ -167,7 +197,7 @@ namespace omni {
                     // A.B.C.D | A.B.D | A.D
                     int64_t oct = -1;
                     ipval = 0;
-                    for (size_t i = 0; i < octs.size(); ++i, oct = -1) {
+                    for (std::size_t i = 0; i < octs.size(); ++i, oct = -1) {
                         if (octs[i].empty() || octs[i].size() > 4) { return false; }
                         if ((octs[i].size() > 1) && (octs[i].at(0) == '0')) { // hex/octal?
                             if ((octs[i].size() > 2) && ((octs[i].at(1) == 'x') || (octs[i].at(1) == 'X'))) { // hex
@@ -217,7 +247,7 @@ namespace omni {
                             // hex
                             std::string tmp_ip = omni::cstring::reverse(ip.substr(2));
                             int64_t p = 1;
-                            for (size_t cnt = 0; cnt < tmp_ip.size(); ++cnt, p *= 16) {
+                            for (std::size_t cnt = 0; cnt < tmp_ip.size(); ++cnt, p *= 16) {
                                 if (!omni::char_util::is_hex(tmp_ip.at(cnt))) { return false; }
                                 ipval += (static_cast<int64_t>(omni::char_util::to_int(tmp_ip.at(cnt), true)) * p);
                             }
@@ -225,7 +255,7 @@ namespace omni {
                             // octal
                             std::string tmp_ip = omni::cstring::reverse(ip.substr(1));
                             int64_t p = 1;
-                            for (size_t cnt = 0; cnt < tmp_ip.size(); ++cnt, p *= 8) {
+                            for (std::size_t cnt = 0; cnt < tmp_ip.size(); ++cnt, p *= 8) {
                                 if (!omni::char_util::is_octal(tmp_ip.at(cnt))) { return false; }
                                 ipval += (static_cast<int64_t>(omni::char_util::to_int(tmp_ip.at(cnt), true)) * p);
                             }
@@ -318,52 +348,61 @@ namespace omni {
                 return ss.str();
             }
 
-            inline omni::net::socket_error get_host(const std::string& ip,
+            inline omni::net::server_error get_host(const std::string& ip,
                                                     uint16_t port,
                                                     omni::net::address_family family,
                                                     std::string& host)
             {
-                if (ip.empty()) { return omni::net::socket_error::DESTINATION_ADDRESS_REQUIRED; }
+                if (ip.empty()) { return omni::net::server_error::HOST_ADDRESS_REQUIRED; }
                 #if defined(OMNI_OS_WIN)
                     omni::net::wsa_info wsa;
                     if (!wsa) { return omni::net::parse_error(wsa.error()); }
                 #endif
                 std::string tmp = omni::string::util::trim(ip);
-                omni::net::socket_error ret = omni::net::socket_error::SUCCESS;
+                omni::net::server_error ret = omni::net::server_error::SUCCESS;
                 struct sockaddr_in sa;
                 char out[NI_MAXHOST];
                 char si[NI_MAXSERV];
                 sa.sin_family = static_cast<OMNI_SIN_FAMILY_FW>(family);
                 sa.sin_addr.s_addr = inet_addr(tmp.c_str());
                 sa.sin_port = htons(port);
-                int serr = ::getnameinfo(reinterpret_cast<struct sockaddr *>(&sa), sizeof(struct sockaddr), out, NI_MAXHOST, si, NI_MAXSERV, NI_NUMERICSERV);
+                
+                int serr = ::getnameinfo(
+                    reinterpret_cast<struct sockaddr *>(&sa), // const struct sockaddr *restrict addr
+                    sizeof(struct sockaddr_in),               // socklen_t addrlen
+                    out,                                      // char *restrict host
+                    NI_MAXHOST,                               // socklen_t hostlen
+                    si,                                       // char *restrict serv
+                    NI_MAXSERV,                               // socklen_t servlen
+                    NI_NUMERICSERV                            // int flags
+                );
                 if (serr != 0) {
-                    ret = omni::net::parse_error(serr);
+                    ret = omni::net::parse_server_error(serr);
                 } else {
                     host.assign(out);
                 }
                 return ret;
             }
 
-            inline omni::net::socket_error get_host(const std::string& ip, uint16_t port, std::string& host)
+            inline omni::net::server_error get_host(const std::string& ip, uint16_t port, std::string& host)
             {
-                return omni::net::util::get_host(ip, port, omni::net::address_family::UNSPECIFIED, host);
+                return omni::net::util::get_host(ip, port, omni::net::address_family::INET, host);
             }
             
-            inline omni::net::socket_error get_host(const std::string& ip, std::string& host)
+            inline omni::net::server_error get_host(const std::string& ip, std::string& host)
             {
-                return omni::net::util::get_host(ip, OMNI_SOCKET_DEFAULT_GET_HOST_PORT, omni::net::address_family::UNSPECIFIED, host);
+                return omni::net::util::get_host(ip, OMNI_SOCKET_DEFAULT_GET_HOST_PORT, omni::net::address_family::INET, host);
             }
 
-            inline omni::net::socket_error get_host(const std::wstring& ip,
+            inline omni::net::server_error get_host(const std::wstring& ip,
                                                     uint16_t port,
                                                     omni::net::address_family family,
                                                     std::wstring& host)
             {
-                if (host.empty()) { return omni::net::socket_error::DESTINATION_ADDRESS_REQUIRED; }
+                if (host.empty()) { return omni::net::server_error::HOST_ADDRESS_REQUIRED; }
                 #if defined(OMNI_WIN_API)
                     omni::net::wsa_info wsa;
-                    if (!wsa) { return omni::net::parse_error(wsa.error()); }
+                    if (!wsa) { return omni::net::parse_server_error(wsa.error()); }
                     std::string tmp = omni::string::to_string(omni::string::util::trim(ip));
                     omni::net::socket_error ret = omni::net::socket_error::SUCCESS;
                     struct sockaddr_in sa;
@@ -374,7 +413,7 @@ namespace omni {
                     sa.sin_port = htons(port);
                     int serr = ::GetNameInfoW(reinterpret_cast<struct sockaddr *>(&sa), sizeof(struct sockaddr), out, NI_MAXHOST, si, NI_MAXSERV, NI_NUMERICSERV);
                     if (serr != 0) {
-                        ret = omni::net::parse_error(serr);
+                        ret = omni::net::parse_server_error(serr);
                     } else {
                         host = omni::string::to_wstring(out);
                     }
@@ -382,22 +421,22 @@ namespace omni {
                 #else
                     std::string val;
                     std::string tmp = omni::string::to_string(omni::string::util::trim(ip));
-                    omni::net::socket_error serr = omni::net::util::get_host(tmp, port, family, val);
-                    if (serr == omni::net::socket_error::SUCCESS) {
+                    omni::net::server_error serr = omni::net::util::get_host(tmp, port, family, val);
+                    if (serr == omni::net::server_error::SUCCESS) {
                         host = omni::string::to_wstring(val);
                     }
                     return serr;
                 #endif
             }
 
-            inline omni::net::socket_error get_host(const std::wstring& ip, uint16_t port, std::wstring& host)
+            inline omni::net::server_error get_host(const std::wstring& ip, uint16_t port, std::wstring& host)
             {
-                return omni::net::util::get_host(ip, port, omni::net::address_family::UNSPECIFIED, host);
+                return omni::net::util::get_host(ip, port, omni::net::address_family::INET, host);
             }
             
-            inline omni::net::socket_error get_host(const std::wstring& ip, std::wstring& host)
+            inline omni::net::server_error get_host(const std::wstring& ip, std::wstring& host)
             {
-                return omni::net::util::get_host(ip, OMNI_SOCKET_DEFAULT_GET_HOST_PORT, omni::net::address_family::UNSPECIFIED, host);
+                return omni::net::util::get_host(ip, OMNI_SOCKET_DEFAULT_GET_HOST_PORT, omni::net::address_family::INET, host);
             }
 
             template < template < class, class > class std_seq_t, typename std_allocator_t >

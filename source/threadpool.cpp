@@ -205,8 +205,11 @@ void omni::sync::threadpool::_add_queue(const omni::sync::threadpool_task& tpt)
 
 omni::sync::threadpool::omni_threadpool_itr omni::sync::threadpool::_create_thread()
 {
-    this->m_threads.push_back(omni::sync::basic_thread::create_threadpool_thread(
-            omni::sync::thread_start::bind<omni::sync::threadpool, &omni::sync::threadpool::_thread_fn>(this)));
+    this->m_threads.push_back(
+        omni::sync::basic_thread::create_threadpool_thread(
+            omni::sync::thread_start::bind<omni::sync::threadpool, &omni::sync::threadpool::_thread_fn>(this)
+        )
+    );
     return --(this->m_threads.end());
 }
 
@@ -233,8 +236,7 @@ void omni::sync::threadpool::_thread_fn()
     if ((this->m_act >= this->m_min) && (this->m_isdestroy == 0)) {
         // find the thread in the list and remove it
         omni::sync::thread_t tid = omni::sync::thread_id();
-        for (omni_threadpool_itr itr = this->m_threads.begin(); itr != this->m_threads.end(); ++itr)
-        {
+        for (omni_threadpool_itr itr = this->m_threads.begin(); itr != this->m_threads.end(); ++itr) {
             if (itr->id() == tid) {
                 this->m_threads.erase(itr);
                 break;
