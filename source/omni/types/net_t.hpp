@@ -2562,7 +2562,7 @@ namespace omni {
         {
             public:
                 typedef enum enum_t {
-                    NONE = -1,
+                    NONE = OMNI_SOCK_FLAGS_NONE,
                     OUT_OF_BAND = MSG_OOB,          // 1
                     PEEK = MSG_PEEK,                // 2
                     DONT_ROUTE = MSG_DONTROUTE,     // 4

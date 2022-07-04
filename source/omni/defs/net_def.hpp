@@ -98,6 +98,7 @@
     #define OMNI_SOCK_SEND_FW SD_SEND
     #define OMNI_SOCK_BOTH_FW SD_BOTH
     #define OMNI_MSG_EOR_FW 0
+    #define OMNI_SOCK_FLAGS_NONE -1
     #define OMNI_SIN_FAMILY_FW ADDRESS_FAMILY
 #else
     #define OMNI_SOCKET_T_FW int
@@ -110,6 +111,7 @@
     #define OMNI_SOCK_SEND_FW SHUT_WR
     #define OMNI_SOCK_BOTH_FW SHUT_RDWR
     #define OMNI_MSG_EOR_FW MSG_EOR
+    #define OMNI_SOCK_FLAGS_NONE 0
     #if defined(OMNI_OS_APPLE)
         #define OMNI_SIN_FAMILY_FW sa_family_t
     #else
