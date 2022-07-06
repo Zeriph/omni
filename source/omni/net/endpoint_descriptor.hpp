@@ -123,6 +123,10 @@ namespace omni {
                 {
                     return this->_send(buffer, SZ, flags, sent);
                 }
+                omni::net::socket_error send(const std::string& buffer, uint32_t& sent)
+                {
+                    return this->unsafe_send(buffer.data(), buffer.size(), sent);
+                }
                 omni::net::socket_error unsafe_send(const char* buffer, uint32_t buffer_size, uint32_t& sent)
                 {
                     return this->_send(buffer, buffer_size, omni::net::socket_flags::NONE, sent);

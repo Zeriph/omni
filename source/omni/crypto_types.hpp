@@ -22,5 +22,6 @@
 #include <omni/crypto/md5.hpp>
 #include <omni/crypto/sha1.hpp>
 #include <omni/crypto/sha256.hpp>
+#include <omni/crypto/base64.hpp>
 
 #endif // OMNI_CRYPTOS_HPP

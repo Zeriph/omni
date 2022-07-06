@@ -14,6 +14,7 @@ class UT_CLASS_DEF
             M_LIST_ADD(md5, "test the functionality in omni::crypto::md5");
             M_LIST_ADD(sha1, "test the functionality in omni::crypto::sha1");
             M_LIST_ADD(sha56, "test the functionality in omni::crypto::sha256");
+            M_LIST_ADD(base64, "test the functionality in omni::crypto::base64");
         }
         
         UT_CLASS_DTOR() {}
@@ -135,6 +136,25 @@ class UT_CLASS_DEF
             } catch (...) {
                 printl("Unknown error");
             }
+        }
+
+        void base64()
+        {
+            std::string in_file = "/Code/omni/tests/misc/pencil.gif";
+            std::string data = omni::io::file::get_contents(in_file);
+            std::string encoded = omni::crypto::base64::encode(data);
+            test("base64_encode", encoded, "R0lGODlhQABAAIABAAAAAP///yH5BAEKAAEALAAAAABAAEAAAALMjI+py60AgZu00oit3hN7yYXc94nmRZbnmqQpC7sufMoybdovLuok3/NlgA7IQ2gkMoYIJEjZ8hx10Kk0eqs2Z9if9kDtMr9Ca/IbcFrRBucZ/CS732z4nM6+X+v6PbrvpwU4JjiIB2V4qJQYV2jIlwj5mBdJOflXiXkpt+k4KPlpGao5ylnqCQiaWpd2KjrHKoYUa+bDeqh2i2sbS9hmQ6si60sasbAT7CVLaye8pVjsDMfcjEx9HHZda639y9vd+g0ODL5d3tF4zlAAADs=");
+            
+
+            std::string out_file = "/Code/omni/tests/misc/pencil_2.gif";
+            std::string enc_str = "R0lGODlhQABAAIABAAAAAP///yH5BAEKAAEALAAAAABAAEAAAALMjI+py60AgZu00oit3hN7yYXc94nmRZbnmqQpC7sufMoybdovLuok3/NlgA7IQ2gkMoYIJEjZ8hx10Kk0eqs2Z9if9kDtMr9Ca/IbcFrRBucZ/CS732z4nM6+X+v6PbrvpwU4JjiIB2V4qJQYV2jIlwj5mBdJOflXiXkpt+k4KPlpGao5ylnqCQiaWpd2KjrHKoYUa+bDeqh2i2sbS9hmQ6si60sasbAT7CVLaye8pVjsDMfcjEx9HHZda639y9vd+g0ODL5d3tF4zlAAADs=";
+            
+            std::deque<uint8_t> decoded = omni::crypto::base64::decode(enc_str);
+            omni::io::file::write(out_file, decoded);
+
+            std::vector<unsigned char> buff;
+            omni::crypto::base64::decode(enc_str, buff);
+            omni::io::file::write("/Code/omni/tests/misc/pencil_3.gif", buff);
         }
 };
 

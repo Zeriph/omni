@@ -228,6 +228,23 @@ omni::net::socket::socket(omni::net::address_family family,
     }
 }
 
+omni::net::socket::socket(omni::net::address_family family,
+                          omni::net::socket_type type, 
+                          omni::net::protocol_type protocol,
+                          omni::net::socket_create_options create_ops) :
+    OMNI_CTOR_FW(omni::net::socket)
+    m_socket(OMNI_INVALID_SOCKET), m_addr(), m_family(family), m_proto(protocol), m_type(type),
+    m_last_err(omni::net::socket_error::UNSPECIFIED), m_ep4(0), m_port(0), m_conops(0)
+    OMNI_SOCK_WSA_FW
+    OMNI_SAFE_SOCKMTX_FW
+{
+    if (create_ops == omni::net::socket_create_options::OPEN_ON_CREATE) {
+        if (this->open() != omni::net::socket_error::SUCCESS) {
+            OMNI_D1_FW("error opening the socket");
+        }
+    }
+}
+
 omni::net::socket::socket(omni::net::socket_type type,
                           omni::net::protocol_type protocol) :
     OMNI_CTOR_FW(omni::net::socket)

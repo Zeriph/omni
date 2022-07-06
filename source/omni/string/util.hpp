@@ -513,6 +513,12 @@ namespace omni {
             {
                 return omni::string::util::split(str, delimeter, 0); 
             }
+
+            template < typename std_string_t, std::size_t X >
+            inline omni_sequence_t<std::string> split(const std_string_t& str, const typename std_string_t::value_type (&delimeter)[X])
+            {
+                return omni::string::util::split(str, std_string_t(delimeter), 0); 
+            }
             
             template < std::size_t X, std::size_t Y >
             inline omni_sequence_t<std::string> split(const char (&str)[X], const char (&delimeter)[Y], std::size_t max_val)

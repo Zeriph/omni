@@ -34,6 +34,10 @@ namespace omni {
                 socket(omni::net::address_family family,
                        omni::net::socket_type type,
                        omni::net::protocol_type protocol);
+                socket(omni::net::address_family family,
+                       omni::net::socket_type type,
+                       omni::net::protocol_type protocol,
+                       omni::net::socket_create_options create_ops);
                 ~socket();
                 
                 omni::net::address_family address_family() const;
@@ -192,6 +196,10 @@ namespace omni {
                 omni::net::socket_error send(const char (&buffer)[SZ], omni::net::socket_flags flags, uint32_t& sent)
                 {
                     return this->_send(buffer, SZ, flags, sent);
+                }
+                omni::net::socket_error send(const std::string& buffer, uint32_t& sent)
+                {
+                    return this->unsafe_send(buffer.data(), buffer.size(), sent);
                 }
                 omni::net::socket_error unsafe_send(const char* buffer, uint32_t buffer_size, uint32_t& sent)
                 {

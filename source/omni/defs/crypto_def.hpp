@@ -26,22 +26,23 @@
 #include <sstream>
 
 // md5
-#define OMNI_MD5_SR1_1_FW 7
-#define OMNI_MD5_SR1_2_FW 12
-#define OMNI_MD5_SR1_3_FW 17
-#define OMNI_MD5_SR1_4_FW 22
-#define OMNI_MD5_SR2_1_FW 5
-#define OMNI_MD5_SR2_2_FW 9
-#define OMNI_MD5_SR2_3_FW 14
-#define OMNI_MD5_SR2_4_FW 20
-#define OMNI_MD5_SR3_1_FW 4
-#define OMNI_MD5_SR3_2_FW 11
-#define OMNI_MD5_SR3_3_FW 16
-#define OMNI_MD5_SR3_4_FW 23
-#define OMNI_MD5_SR4_1_FW 6
-#define OMNI_MD5_SR4_2_FW 10
-#define OMNI_MD5_SR4_3_FW 15
-#define OMNI_MD5_SR4_4_FW 21
+#define OMNI_MD5_SR1_1_FW 0x07
+#define OMNI_MD5_SR1_2_FW 0x0C
+#define OMNI_MD5_SR1_3_FW 0x11
+#define OMNI_MD5_SR1_4_FW 0x16
+#define OMNI_MD5_SR2_1_FW 0x05
+#define OMNI_MD5_SR2_2_FW 0x09
+#define OMNI_MD5_SR2_3_FW 0x0E
+#define OMNI_MD5_SR2_4_FW 0x14
+#define OMNI_MD5_SR3_1_FW 0x04
+#define OMNI_MD5_SR3_2_FW 0x11
+#define OMNI_MD5_SR3_3_FW 0x10
+#define OMNI_MD5_SR3_4_FW 0x17
+#define OMNI_MD5_SR4_1_FW 0x06
+#define OMNI_MD5_SR4_2_FW 0x0A
+#define OMNI_MD5_SR4_3_FW 0x0F
+#define OMNI_MD5_SR4_4_FW 0x15
+
 #define OMNI_MD5_BLOCKSZ_FW 64
 
 // sha1
@@ -70,5 +71,30 @@
 #define OMNI_SHA2_PACK32_FW(str, x) { *(x) = ((uint32_t) *((str) + 3)) | ((uint32_t) *((str) + 2) <<  8) | ((uint32_t) *((str) + 1) << 16) | ((uint32_t) *((str) + 0) << 24); }
 #define OMNI_SHA2_DIGEST_SIZE_FW 32 // (256 / 8)
 #define OMNI_SHA2_BLOCK_SIZE_FW 64 // (512 / 8)
+
+// base64
+#define OMNI_CRYPTO_BASE64_CHARS { \
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", \
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_" \
+}
+#define OMNI_CYRPTO_BASE64_CHAR_POS(c, p) \
+switch (c) { \
+    case 'A': case 'B': case 'C': case 'D': case 'E': case 'F': case 'G': \
+    case 'H': case 'I': case 'J': case 'K': case 'L': case 'M': case 'N': \
+    case 'O': case 'P': case 'Q': case 'R': case 'S': case 'T': case 'U': \
+    case 'V': case 'W': case 'X': case 'Y': case 'Z': \
+        p = (c - 'A'); break; \
+    case 'a': case 'b': case 'c': case 'd': case 'e': case 'f': case 'g': \
+    case 'h': case 'i': case 'j': case 'k': case 'l': case 'm': case 'n': \
+    case 'o': case 'p': case 'q': case 'r': case 's': case 't': case 'u': \
+    case 'v': case 'w': case 'x': case 'y': case 'z': \
+        p = (c - 'a' + ('Z' - 'A') + 1); break; \
+    case '0': case '1': case '2': case '3': case '4': \
+    case '5': case '6': case '7': case '8': case '9': \
+        p = (c - '0' + ('Z' - 'A') + ('z' - 'a') + 2); break; \
+    case '+': case '-': p = 62; break; \
+    case '/': case '_': p = 63; break; \
+    default: p = 255; OMNI_ERR_FW("An invalid character was detected in the base64 encoded data", omni::exceptions::invalid_parse("Invalid base64 encoded data")) break; \
+}
 
 #endif // OMNI_CRYPTO_DEF_HPP

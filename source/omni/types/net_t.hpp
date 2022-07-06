@@ -1897,6 +1897,7 @@ namespace omni {
         class socket_error
         {
             public:
+                // TODO: need to have these tied to the actual system codes (e.g. EAGAIN, etc.)
                 typedef enum enum_t {
                     UNSPECIFIED = -1,
                     SUCCESS = 0,
@@ -5379,7 +5380,7 @@ namespace omni {
                 }
         };
         
-        /** socket_type defines enum values for the type of socket that an instance of the omni::net::socket::socket class represents. */
+        /** socket_type defines enum values for the type of socket that an instance of the omni::net::socket class represents. */
         class socket_type
         {
             public:
@@ -5875,6 +5876,490 @@ namespace omni {
                         RAW ||
                         RDM ||
                         SEQPACKET
+                    );
+                }
+        };
+
+        /** socket_create_options defines enum values for how an omni::net::socket class should be created when instantiated. */
+        class socket_create_options
+        {
+            public:
+                typedef enum enum_t {
+                    OPEN_ON_CREATE,
+                    USER_OPEN
+                } enum_t;
+                
+                /** Defines the number of elements in the enum */
+                static inline unsigned short COUNT()
+                {
+                    return 2;
+                }
+
+                /** The default value for this enum instance */
+                static inline enum_t DEFAULT_VALUE()
+                {
+                    return OPEN_ON_CREATE;
+                }
+
+                /** Converts the enum to its string representation */
+                static std::string to_string(enum_t v)
+                {
+                    return _to_val<std::stringstream>(v);
+                }
+            
+                /** Converts the enum to its wide string representation */
+                static std::wstring to_wstring(enum_t v)
+                {
+                    return _to_val<std::wstringstream>(v);
+                }
+
+                /** Parsing a string value into its enum representation */
+                static enum_t parse(const std::string& val)
+                {
+                    return _parse(val);
+                }
+
+                /** Parsing a wide string value into its enum representation */
+                static enum_t parse(const std::wstring& val)
+                {
+                    return _parse(val);
+                }
+
+                /** Tries parsing a string value into its enum representation */
+                static bool try_parse(const std::string& val, enum_t& out)
+                {
+                    return _try_parse(val, out);
+                }
+
+                /** Tries parsing a wide string value into its enum representation */
+                static bool try_parse(const std::wstring& val, enum_t& out)
+                {
+                    return _try_parse(val, out);
+                }
+
+                /** Tries parsing a string value into its enum representation */
+                static bool try_parse(const std::string& val, socket_create_options& out)
+                {
+                    return _try_parse(val, out);
+                }
+
+                /** Tries parsing a wide string value into its enum representation */
+                static bool try_parse(const std::wstring& val, socket_create_options& out)
+                {
+                    return _try_parse(val, out);
+                }
+
+                /** Returns true if the integer value specified is a valid enum value */
+                static bool is_valid(int32_t val)
+                {
+                    return _valid(val);
+                }
+
+                socket_create_options() :
+                    OMNI_CTOR_FW(omni::net::socket_create_options)
+                    m_val(DEFAULT_VALUE())
+                { }
+
+                socket_create_options(const socket_create_options& cp) :
+                    OMNI_CPCTOR_FW(cp)
+                    m_val(cp.m_val)
+                { }
+
+                socket_create_options(enum_t val) : 
+                    OMNI_CTOR_FW(omni::net::socket_create_options)
+                    m_val(val)
+                { }
+
+                ~socket_create_options()
+                {
+                    OMNI_TRY_FW
+                    OMNI_DTOR_FW
+                    OMNI_CATCH_FW
+                    OMNI_D5_FW("destroyed");
+                }
+
+                unsigned short count() const
+                {
+                    return COUNT();
+                }
+
+                enum_t value() const
+                {
+                    return this->m_val;
+                }
+
+                std::string to_string() const
+                {
+                    return to_string(this->m_val);
+                }
+
+                std::wstring to_wstring() const
+                {
+                    return to_wstring(this->m_val);
+                }
+
+                bool operator!=(const socket_create_options& val) const
+                {
+                    return !(*this == val);
+                }
+                
+                bool operator!=(enum_t val) const
+                {
+                    return (this->m_val != val);
+                }
+                
+                socket_create_options& operator=(const socket_create_options& val)
+                {
+                    if (this != &val) {
+                        OMNI_ASSIGN_FW(val)
+                        this->m_val = val.m_val;
+                    }
+                    return *this;
+                }
+
+                socket_create_options& operator=(enum_t val)
+                {
+                    this->m_val = val;
+                    return *this;
+                }
+
+                socket_create_options& operator=(int32_t val)
+                {
+                    if (!socket_create_options::is_valid(val)) {
+                        OMNI_ERR_RET_FW("Invalid enumeration value specified.", omni::exceptions::invalid_enum(val));
+                    } else {
+                        this->m_val = static_cast<enum_t>(val);
+                    }
+                    return *this;
+                }
+
+                socket_create_options operator|(const socket_create_options& val)
+                {
+                    return socket_create_options(static_cast<enum_t>(this->m_val | val.m_val));
+                }
+
+                socket_create_options operator|(enum_t val)
+                {
+                    return socket_create_options(static_cast<enum_t>(this->m_val | val));
+                }
+
+                socket_create_options operator|(int32_t val)
+                {
+                    return socket_create_options(static_cast<enum_t>(this->m_val | val));
+                }
+
+                socket_create_options& operator|=(const socket_create_options& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val | val.m_val);
+                    return *this;
+                }
+
+                socket_create_options& operator|=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val | val);
+                    return *this;
+                }
+
+                socket_create_options& operator|=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val | val);
+                    return *this;
+                }
+
+                socket_create_options operator&(const socket_create_options& val)
+                {
+                    return socket_create_options(static_cast<enum_t>(this->m_val & val.m_val));
+                }
+
+                socket_create_options operator&(enum_t val)
+                {
+                    return socket_create_options(static_cast<enum_t>(this->m_val & val));
+                }
+
+                socket_create_options operator&(int32_t val)
+                {
+                    return socket_create_options(static_cast<enum_t>(this->m_val & val));
+                }
+
+                socket_create_options& operator&=(const socket_create_options& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val & val.m_val);
+                    return *this;
+                }
+
+                socket_create_options& operator&=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val & val);
+                    return *this;
+                }
+
+                socket_create_options& operator&=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val & val);
+                    return *this;
+                }
+                
+                socket_create_options& operator++()
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val + 1);
+                    return *this;
+                }
+
+                socket_create_options operator++(int dummy)
+                {
+                    OMNI_UNUSED(dummy);
+                    socket_create_options ret(this->m_val);
+                    this->m_val = static_cast<enum_t>(this->m_val + 1);
+                    return ret;
+                }
+
+                socket_create_options& operator--()
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val - 1);
+                    return *this;
+                }
+
+                socket_create_options operator--(int dummy)
+                {
+                    OMNI_UNUSED(dummy);
+                    socket_create_options ret(this->m_val);
+                    this->m_val = static_cast<enum_t>(this->m_val - 1);
+                    return ret;
+                }
+
+                socket_create_options operator~()
+                {
+                    return socket_create_options(static_cast<enum_t>(~static_cast<int32_t>(this->m_val)));
+                }
+
+                socket_create_options operator^(const socket_create_options& val)
+                {
+                    return socket_create_options(static_cast<enum_t>(this->m_val ^ val.m_val));
+                }
+
+                socket_create_options operator^(enum_t val)
+                {
+                    return socket_create_options(static_cast<enum_t>(this->m_val ^ val));
+                }
+
+                socket_create_options operator^(int32_t val)
+                {
+                    return socket_create_options(static_cast<enum_t>(this->m_val ^ val));
+                }
+
+                socket_create_options& operator^=(const socket_create_options& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val ^ val.m_val);
+                    return *this;
+                }
+
+                socket_create_options& operator^=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val ^ val);
+                    return *this;
+                }
+
+                socket_create_options& operator^=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val ^ val);
+                    return *this;
+                }
+
+                socket_create_options operator<<(const socket_create_options& val)
+                {
+                    return socket_create_options(static_cast<enum_t>(this->m_val << val.m_val));
+                }
+
+                socket_create_options operator<<(enum_t val)
+                {
+                    return socket_create_options(static_cast<enum_t>(this->m_val << val));
+                }
+
+                socket_create_options operator<<(int32_t val)
+                {
+                    return socket_create_options(static_cast<enum_t>(this->m_val << val));
+                }
+
+                socket_create_options& operator<<=(const socket_create_options& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val << val.m_val);
+                    return *this;
+                }
+
+                socket_create_options& operator<<=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val << val);
+                    return *this;
+                }
+
+                socket_create_options& operator<<=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val << val);
+                    return *this;
+                }
+
+                socket_create_options operator>>(const socket_create_options& val)
+                {
+                    return socket_create_options(static_cast<enum_t>(this->m_val >> val.m_val));
+                }
+
+                socket_create_options operator>>(enum_t val)
+                {
+                    return socket_create_options(static_cast<enum_t>(this->m_val >> val));
+                }
+
+                socket_create_options operator>>(int32_t val)
+                {
+                    return socket_create_options(static_cast<enum_t>(this->m_val >> val));
+                }
+
+                socket_create_options& operator>>=(const socket_create_options& val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val >> val.m_val);
+                    return *this;
+                }
+
+                socket_create_options& operator>>=(enum_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val >> val);
+                    return *this;
+                }
+
+                socket_create_options& operator>>=(int32_t val)
+                {
+                    this->m_val = static_cast<enum_t>(this->m_val >> val);
+                    return *this;
+                }
+
+                bool operator<(const socket_create_options& val) const
+                {
+                    return this->m_val < val.m_val;
+                }
+
+                bool operator<(enum_t val) const
+                {
+                    return this->m_val < val;
+                }
+
+                bool operator<(int32_t val) const
+                {
+                    return this->m_val < static_cast<enum_t>(val);
+                }
+
+                bool operator>(const socket_create_options& val) const
+                {
+                    return this->m_val > val.m_val;
+                }
+
+                bool operator>(enum_t val) const
+                {
+                    return this->m_val > val;
+                }
+
+                bool operator>(int32_t val) const
+                {
+                    return this->m_val > val;
+                }
+
+                bool operator==(const socket_create_options& val) const
+                {
+                    if (this == &val) { return true; }
+                    return this->m_val == val.m_val
+                            OMNI_EQUAL_FW(val);
+                }
+
+                bool operator==(enum_t val) const
+                {
+                    return this->m_val == val;
+                }
+
+                bool operator==(int32_t val) const
+                {
+                    return this->m_val == val;
+                }
+
+                operator enum_t() const
+                {
+                    return this->m_val;
+                }
+
+                operator std::string() const
+                {
+                    return this->to_string();
+                }
+
+                operator std::wstring() const
+                {
+                    return this->to_wstring();
+                }
+
+                OMNI_MEMBERS_FW(omni::net::socket_create_options) // disposing,name,type(),hash()
+
+                OMNI_OSTREAM_FW(omni::net::socket_create_options)
+                OMNI_OSTREAM_FN_FW(enum_t)
+
+            private:
+                enum_t m_val;
+                
+                template < typename S >
+                static enum_t _parse(const S& val)
+                {
+                    enum_t ret;
+                    if (_try_parse(val, ret)) { return ret; }
+                    OMNI_ERR_FW("invalid enum parse", omni::exceptions::invalid_enum())
+                    return DEFAULT_VALUE();
+                }
+
+                template < typename S >
+                static bool _try_parse(const S& str, enum_t& out)
+                {
+                    return _try_parse(omni::string::util::to_upper(str), out);
+                }
+
+                template < typename S >
+                static bool _try_parse(const S& val, socket_create_options& out)
+                {
+                    enum_t tmp;
+                    if (_try_parse(val, tmp)) {
+                        out.m_val = tmp;
+                        return true;
+                    }
+                    return false;
+                }
+
+                static bool _try_parse(const std::wstring& val, enum_t& out)
+                {
+                    return _try_parse(omni::string::util::to_string(val), out);
+                }
+
+                static bool _try_parse(const std::string& val, enum_t& out)
+                {
+                    if (!val.empty()) {
+                        OMNI_S2E_FW(OPEN_ON_CREATE)
+                        OMNI_S2E_FW(USER_OPEN)
+                    }
+                    return false;
+                }
+
+                template < typename S >
+                static std::basic_string< typename S::char_type > _to_val(enum_t v)
+                {
+                    S ss;
+                    switch (v) {
+                        OMNI_E2SS_FW(OPEN_ON_CREATE);
+                        OMNI_E2SS_FW(USER_OPEN);
+                        default:
+                            ss << "UNKNOWN (" << static_cast<int>(v) << ")";
+                            break;
+                    }
+                    return ss.str();
+                }
+
+                static bool _valid(int32_t val)
+                {
+                    return (val == 
+                        OPEN_ON_CREATE ||
+                        USER_OPEN
                     );
                 }
         };

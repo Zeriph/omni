@@ -35,6 +35,9 @@ namespace omni {
     typedef OMNI_CHAR_T char_t;
 
     namespace char_util {
+        inline bool is_base64(unsigned char c)
+        { return (std::isalnum(c) || (c == '+') || (c == '/')); }
+
         inline bool is_alpha(char c)
         { return (std::isalpha(c) != 0); }
         

@@ -51,13 +51,13 @@ namespace omni {
             OMNI_CONSTEXT_FW const float TAU_F OMNI_EXT_ASSN_FW(OMNI_TAU_F);
 
             #if !defined(OMNI_NO_EXTERN_CONSTS)
-                extern const double      RADS[361];
-                extern const double      RADS_SIN[361];
-                extern const double      RADS_COS[361];
+                extern const double RADS[361];
+                extern const double RADS_SIN[361];
+                extern const double RADS_COS[361];
             #else
-                const double      RADS[] = OMNI_MATH_RADS;
-                const double      RADS_SIN[] = OMNI_MATH_RADS_SIN;
-                const double      RADS_COS[] = OMNI_MATH_RADS_COS;
+                const double RADS[] = OMNI_MATH_RADS;
+                const double RADS_SIN[] = OMNI_MATH_RADS_SIN;
+                const double RADS_COS[] = OMNI_MATH_RADS_COS;
             #endif
         #endif
 
