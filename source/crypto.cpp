@@ -437,20 +437,20 @@ bool omni::crypto::sha1::operator!=(const omni::crypto::sha1& o) const
 
 std::string omni::crypto::sha1::compute_hash(const std::string& text)
 {
-    omni::crypto::sha1 md5(text, omni::crypto::hash_type::STRING);
-    return md5.m_hash;
+    omni::crypto::sha1 var(text, omni::crypto::hash_type::STRING);
+    return var.m_hash;
 }
 
 std::string omni::crypto::sha1::compute_file_hash(const std::string& file)
 {
-    omni::crypto::sha1 md5(file, omni::crypto::hash_type::TEXT_FILE);
-    return md5.m_hash;
+    omni::crypto::sha1 var(file, omni::crypto::hash_type::TEXT_FILE);
+    return var.m_hash;
 }
 
 std::string omni::crypto::sha1::compute_binary_file_hash(const std::string& file)
 {
-    omni::crypto::sha1 md5(file, omni::crypto::hash_type::BINARY_FILE);
-    return md5.m_hash;
+    omni::crypto::sha1 var(file, omni::crypto::hash_type::BINARY_FILE);
+    return var.m_hash;
 }
 
 void omni::crypto::sha1::_compute(std::istream& stream)
