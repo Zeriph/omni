@@ -50,6 +50,8 @@ omni::net::socket_error omni::net::socket::_close(uint16_t timeout, bool shutdow
     if (!omni::bits::unsafe_is_set(this->m_conops, omni::net::connection_option::OPEN)) {
         return (this->m_last_err = omni::net::socket_error::NOT_INITIALIZED);
     }
+    // regardless if it's connected/bound, if we request a close and it's open, actually close
+    omni::bits::unsafe_unset(this->m_conops, omni::net::connection_option::OPEN);
     if (omni::bits::unsafe_is_set(this->m_conops, omni::net::connection_option::CONNECTED) ||
         omni::bits::unsafe_is_set(this->m_conops, omni::net::connection_option::BOUND))
     {
@@ -465,12 +467,13 @@ omni::net::socket_error omni::net::socket::disconnect(bool reuse)
     return this->_close(0, reuse);
 }
 
-omni::net::socket_error omni::net::socket::ioc(uint32_t op_code, omni::net::xfr_t* val, int32_t& result)
+omni::net::socket_error omni::net::socket::ioc(uint32_t op_code, omni::net::xfr_t* val)
 {
     OMNI_SAFE_SOCKALOCK_FW
     if (!omni::bits::unsafe_is_set(this->m_conops, omni::net::connection_option::OPEN)) {
         return (this->m_last_err = omni::net::socket_error::NOT_INITIALIZED);
     }
+    int32_t
     #if defined(OMNI_OS_WIN)
         result = ::ioctlsocket(this->m_socket, static_cast<long>(op_code), reinterpret_cast<u_long*>(val));
     #else
@@ -643,6 +646,12 @@ omni::net::socket_error omni::net::socket::set_socket_option(omni::net::socket_o
 omni::net::socket_error omni::net::socket::set_socket_option(omni::net::socket_option_level op_level, omni::net::tcp_option op_name, int32_t op_val)
 {
     return this->set_socket_option(op_level, static_cast<int32_t>(op_name), op_val);
+}
+
+omni::net::socket_error omni::net::socket::set_blocking_mode(omni::net::blocking_mode mode)
+{
+    uint32_t val = mode;
+    return this->ioc(FIONBIO, static_cast<omni::net::xfr_t*>(&val));
 }
 
 omni::net::address_family omni::net::socket::address_family() const

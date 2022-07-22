@@ -68,7 +68,7 @@ namespace omni {
                 omni::net::socket_error open();
                 omni::net::socket_error open(omni::net::socket_type type, omni::net::protocol_type protocol);
                 omni::net::socket_error open(omni::net::address_family family, omni::net::socket_type type, omni::net::protocol_type protocol);
-                omni::net::socket_error ioc(uint32_t op_code, omni::net::xfr_t* val, int32_t& result);
+                omni::net::socket_error ioc(uint32_t op_code, omni::net::xfr_t* val);
                 bool is_bound() const;
                 bool is_connected() const;
                 bool is_open() const;
@@ -243,6 +243,7 @@ namespace omni {
                 omni::net::socket& set_address_family(omni::net::address_family family);
                 omni::net::socket& set_protocol_type(omni::net::protocol_type protocol);
                 omni::net::socket& set_socket_type(omni::net::socket_type type);
+                omni::net::socket_error set_blocking_mode(omni::net::blocking_mode mode);
                 omni::net::socket_error shutdown(omni::net::socket_shutdown how);
                 omni::net::socket_type socket_type() const;
                 void swap(omni::net::socket& other);

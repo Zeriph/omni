@@ -47,7 +47,7 @@ namespace omni {
                 omni::net::socket_error get_socket_option(omni::net::socket_option_level op_level, omni::net::socket_option op_name, int32_t& op_val);
                 omni::net::socket_error get_socket_option(omni::net::socket_option_level op_level, omni::net::tcp_option op_name, int32_t& op_val);
                 omni::net::socket_t native_handle() const;
-                omni::net::socket_error ioc(uint32_t op_code, omni::net::xfr_t* val, int32_t& result);
+                omni::net::socket_error ioc(uint32_t op_code, omni::net::xfr_t* val);
                 bool is_connected() const;
                 bool is_shutdown() const;
                 omni::net::socket_error last_error() const;
@@ -139,6 +139,7 @@ namespace omni {
                 omni::net::socket_error set_socket_option(omni::net::socket_option_level op_level, int32_t op_name, int32_t op_val);
                 omni::net::socket_error set_socket_option(omni::net::socket_option_level op_level, omni::net::socket_option op_name, int32_t op_val);
                 omni::net::socket_error set_socket_option(omni::net::socket_option_level op_level, omni::net::tcp_option op_name, int32_t op_val);
+                omni::net::socket_error set_blocking_mode(omni::net::blocking_mode mode);
                 omni::net::socket_error shutdown(omni::net::socket_shutdown how);
                 void swap(omni::net::endpoint_descriptor& other);
                 omni::string_t to_string_t() const;

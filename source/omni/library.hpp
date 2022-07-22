@@ -48,6 +48,7 @@ int main(int argc, char *argv[]) {
 #include <omni/types/invoke_t.hpp>
 
 // generic objects
+#include <omni/generic_error.hpp>
 #include <omni/types/ptr_t.hpp> // #include <omni/generic_ptr.hpp>
 #include <omni/type.hpp>
 #include <omni/object.hpp>

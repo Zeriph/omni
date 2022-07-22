@@ -216,12 +216,13 @@ omni::net::socket_error omni::net::endpoint_descriptor::close(uint16_t timeout)
     return this->_close(timeout, false);
 }
 
-omni::net::socket_error omni::net::endpoint_descriptor::ioc(uint32_t op_code, omni::net::xfr_t* val, int32_t& result)
+omni::net::socket_error omni::net::endpoint_descriptor::ioc(uint32_t op_code, omni::net::xfr_t* val)
 {
     OMNI_SAFE_SOCKEPALOCK_FW
     if (!OMNI_VAL_HAS_FLAG_BIT(this->m_status, OMNI_EPDESC_CONN_FLAG_FW)) {
         return (this->m_last_err = omni::net::socket_error::NOT_CONNECTED);
     }
+    int32_t
     #if defined(OMNI_OS_WIN)
         result = ::ioctlsocket(this->m_socket, static_cast<long>(op_code), reinterpret_cast<u_long*>(val));
     #else
@@ -331,6 +332,12 @@ omni::net::socket_error omni::net::endpoint_descriptor::set_socket_option(omni::
 omni::net::socket_error omni::net::endpoint_descriptor::set_socket_option(omni::net::socket_option_level op_level, omni::net::tcp_option op_name, int32_t op_val)
 {
     return this->set_socket_option(op_level, static_cast<int32_t>(op_name), op_val);
+}
+
+omni::net::socket_error omni::net::endpoint_descriptor::set_blocking_mode(omni::net::blocking_mode mode)
+{
+    uint32_t val = mode;
+    return this->ioc(FIONBIO, static_cast<omni::net::xfr_t*>(&val));
 }
 
 void omni::net::endpoint_descriptor::swap(omni::net::endpoint_descriptor& other)
