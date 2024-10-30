@@ -3,11 +3,8 @@ of the library and does not contain a chronological history (that is what the
 git/svn histories are for). This list is like a "live" list meant to be more of
 an all encompassing 'future' and 'todo' list noted and posted in the code repo.
 
-Current version: 0.8.3
+Current version: 0.8.6
 
 -The omni::net::socket/endpoint classes only support IP4 (no IP6/Unix yet).
 
--The date_time class is still being worked on (erroneous warnings might occur).
-
--The library does not account for arithmetic over/under-flow errors and
-trusts the user of the code will do proper error handling above.
+-The date_time class is still being worked on (it does not parse dates/times yet)
