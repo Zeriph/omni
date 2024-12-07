@@ -42,7 +42,7 @@ omni::chrono::async_timer::async_timer() :
     tick(),
     OMNI_CTOR_FW(omni::chrono::async_timer)
     OMNI_SAFE_ATMQMTX_FW
-    m_thread(OMNI_NULL),
+    m_thread(OMNI_NULL_PTR),
     m_int(100),
     m_status(1)
 {
@@ -57,7 +57,7 @@ omni::chrono::async_timer::async_timer(const omni::chrono::async_timer& cp) :
     tick(),
     OMNI_CPCTOR_FW(cp)
     OMNI_SAFE_ATMQMTX_FW
-    m_thread(OMNI_NULL),
+    m_thread(OMNI_NULL_PTR),
     m_int(),
     m_status()
 {
@@ -86,7 +86,7 @@ omni::chrono::async_timer::async_timer(uint32_t interval_ms) :
     tick(),
     OMNI_CTOR_FW(omni::chrono::async_timer)
     OMNI_SAFE_ATMQMTX_FW
-    m_thread(OMNI_NULL),
+    m_thread(OMNI_NULL_PTR),
     m_int(interval_ms),
     m_status(1)
 {
@@ -101,7 +101,7 @@ omni::chrono::async_timer::async_timer(uint32_t interval_ms, const omni::chrono:
     tick(fn),
     OMNI_CTOR_FW(omni::chrono::async_timer)
     OMNI_SAFE_ATMQMTX_FW
-    m_thread(OMNI_NULL),
+    m_thread(OMNI_NULL_PTR),
     m_int(interval_ms),
     m_status(1)
 {
@@ -118,7 +118,7 @@ omni::chrono::async_timer::async_timer(uint32_t interval_ms,
     tick(fn),
     OMNI_CTOR_FW(omni::chrono::async_timer)
     OMNI_SAFE_ATMQMTX_FW
-    m_thread(OMNI_NULL),
+    m_thread(OMNI_NULL_PTR),
     m_int(interval_ms),
     m_status(1)
 {
@@ -139,7 +139,7 @@ omni::chrono::async_timer::async_timer(uint32_t interval_ms,
     tick(fn),
     OMNI_CTOR_FW(omni::chrono::async_timer)
     OMNI_SAFE_ATMQMTX_FW
-    m_thread(OMNI_NULL),
+    m_thread(OMNI_NULL_PTR),
     m_int(interval_ms),
     m_status(1)
 {
@@ -181,6 +181,7 @@ omni::chrono::async_timer& omni::chrono::async_timer::operator=(const omni::chro
         if (OMNI_VAL_HAS_FLAG_BIT(other.m_status, OMNI_TIMER_AUTO_FLAG_FW)) {
             OMNI_VAL_SET_FLAG_BIT(this->m_status, OMNI_TIMER_AUTO_FLAG_FW);
         }
+
         this->state_object = other.state_object;
         this->tick = other.tick;
         this->m_int = other.m_int;
@@ -202,9 +203,6 @@ bool omni::chrono::async_timer::operator==(const omni::chrono::async_timer& o) c
     #endif
     return (this->state_object == o.state_object &&
             this->tick == o.tick &&
-            (((this->m_thread != OMNI_NULL) && (o.m_thread != OMNI_NULL)) ?
-            (*this->m_thread == *o.m_thread)
-            : (this->m_thread == o.m_thread)) &&
             this->m_int == o.m_int &&
             this->m_status == o.m_status)
             OMNI_EQUAL_FW(o);

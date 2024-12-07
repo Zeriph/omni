@@ -31,20 +31,30 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 </div><br>
 <div class="docdiv"><a name="syn"></a>
 <font class="docu">SYNOPSIS</font><br><br>
-No synopsis.
+Stops the timer.
 <br><br><a class="toppg" href="#topopage">top</a>
 </div><br>
 <div class="docdiv"><a name="desc"></a>
 <font class="docu">DESCRIPTION</font><br><br>
-No description.
+Stops the timer and waits for any tick events to finish before continuing. This is a blocking call.
 <br><br><a class="toppg" href="#topopage">top</a>
 </div><br>
 
+<div class="docdiv"><a name="param"></a>
+<font class="docu">PARAMETERS</font><br><br>
+<code>join_timeout</code> - The timeout to wait for any unfinished tick events before unblocking and continuing. <code>kill_on_timeout</code> - If this is true and the timeout elapses while waiting, the underlying event threads are killed. 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
 
 
 
-
-
+<div class="docdiv"><a name="notes"></a>
+<font class="docu">NOTES</font><br><br>
+If the timeout elapses and <code>kill_on_timeout</code> is true, the underlying threads will be killed. While killing a thread can be an option, it can leave the program in an undefined state. It&#39;s best to ensure your tick events are short lived and exit cleanly. 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
 
 
 <!--end content-->

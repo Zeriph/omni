@@ -29,8 +29,8 @@
     Please note that just because a specific macro is defined below, does not
     mean the library has been tested to work in that environment. OMNI_OS_OS400
     will be defined, for instance, if the __OS400__ macro is defined (usually by
-    the compiler), but this does not mean we have been able to test/build the
-    library in a direct (or even emulated) IBM OS/400 environment.
+    the compiler/system libs), but this does not mean we have been able to test/build
+    the library in a direct (or even emulated) IBM OS/400 environment.
     
     That being said, the purpose of this file is to give helper macros for
     possible OS detection, keyword being possible. Should a need ever arise
@@ -46,6 +46,8 @@
     
     OMNI_OS_WIN
     OMNI_OS_APPLE
+    OMNI_OS_LINUX
+    OMNI_OS_OPENBSD
     OMNI_OS_FREEBSD
     OMNI_OS_SOLARIS
     OMNI_OS_BSD
@@ -67,6 +69,45 @@
         #include <AvailabilityMacros.h>
         #if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_7
             #define OMNI_OS_MACOS
+        #else
+            // older mac's
+            #define OMNI_OS_APPLE_MAC
+        #endif
+    #endif
+
+    // Apple/iPhone/TV/Watch/iOS/Simulator
+    #if defined(__APPLE__)
+        #if !defined(OMNI_OS_APPLE)
+            #define OMNI_OS_APPLE
+        #endif
+        #include <TargetConditionals.h>
+        #if defined(TARGET_OS_OSX)
+            // DEV_NOTE: this would essentially be an alias to OMNI_OS_MACOS
+            #define OMNI_OS_APPLE_OSX
+        #endif
+        #if defined(TARGET_OS_IPHONE)
+            #define OMNI_OS_APPLE_IPHONE
+        #endif
+        #if defined(TARGET_OS_IOS)
+            #define OMNI_OS_APPLE_IOS
+        #endif
+        #if defined(TARGET_OS_MACCATALYST)
+            #define OMNI_OS_APPLE_MACCATALYST
+        #endif
+        #if defined(TARGET_OS_TV)
+            #define OMNI_OS_APPLE_TV
+        #endif
+        #if defined(TARGET_OS_WATCH)
+            #define OMNI_OS_APPLE_WATCH
+        #endif
+        #if defined(TARGET_OS_VISION)
+            #define OMNI_OS_APPLE_VISION
+        #endif
+        #if defined(TARGET_OS_BRIDGE)
+            #define OMNI_OS_APPLE_BRIDGE
+        #endif
+        #if defined(TARGET_OS_SIMULATOR)
+            #define OMNI_OS_APPLE_SIM
         #endif
     #endif
     
@@ -77,7 +118,7 @@
 
     // BSD Environment
     #if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__) || defined(__bsdi__) || \
-        defined(__DragonFly__) || defined(_SYSTYPE_BSD)
+        defined(__DragonFly__) || defined(_SYSTYPE_BSD) || defined(__MidnightBSD__) || defined(__MidnightBSD_kernel__)
         #define OMNI_OS_BSD
     #endif
 
@@ -95,6 +136,9 @@
     // Android
     #if defined(__ANDROID__) || defined(__ANDROID_API__)
         #define OMNI_OS_ANDROID
+        #if defined(__ANDROID_API__)
+            #define OMNI_OS_ANDROID_VERSION __ANDROID_API__
+        #endif
     #endif
     // Amdahl UTS
     #if defined(UTS)
@@ -336,6 +380,34 @@
     #if defined(__MVS__) || defined(__HOS_MVS__) || defined(__TOS_MVS__)
         #define OMNI_OS_ZOS
     #endif
+    // XBox One
+    #if defined(_XBOX_ONE)
+        #define OMNI_OS_XBOX_ONE
+    #endif
+    // PS4
+    #if defined(__ORBIS__)
+        #define OMNI_OS_PLAYSTATION_4
+    #endif
+    // Emscripten
+    #if defined(EMSCRIPTEN) || defined(__EMSCRIPTEN__)
+        #define OMNI_OS_EMSCRIPTEN
+    #endif
+    // Fuchsia
+    #if defined(__Fuchsia__)
+        #define OMNI_OS_FUCHSIA
+    #endif
+    // HAIKU
+    #if defined(__HAIKU__)
+        #define OMNI_OS_HAIKU
+    #endif
+    // MidnightBSD
+    #if defined(__MidnightBSD__) || defined(__MidnightBSD_kernel__)
+        #define OMNI_OS_MIDNIGHT_BSD
+    #endif
+    // native_client
+    #if defined(__native_client__)
+        #define OMNI_OS_NATIVE_CLIENT
+    #endif
 
     // check for any invalid combo's
     #if defined(OMNI_OS_CYGWIN) || defined(OMNI_OS_MINGW)
@@ -345,5 +417,39 @@
     #endif
 
 #endif // OMNI_OS_IGNORE
+
+#if !defined(OMNI_OS_STR) && !defined(OMNI_NO_OS_STR)
+    #if defined(OMNI_OS_WIN)
+        #define OMNI_OS_STR "Windows"
+    #elif defined(OMNI_OS_APPLE)
+        #if defined(OMNI_OS_APPLE_OSX) || defined(OMNI_OS_MACOS)
+            #define OMNI_OS_STR "Apple OSX"
+        #elif defined(OMNI_OS_APPLE_IPHONE)
+            #define OMNI_OS_STR "Apple iPhone"
+        #elif defined(OMNI_OS_APPLE_IOS)
+            #define OMNI_OS_STR "Apple iOS"
+        #elif defined(OMNI_OS_APPLE_TV)
+            #define OMNI_OS_STR "Apple TV"
+        #elif defined(OMNI_OS_APPLE_WATCH)
+            #define OMNI_OS_STR "Apple Watch"
+        #elif defined(OMNI_OS_APPLE_VISON)
+            #define OMNI_OS_STR "Apple Vision"
+        #else
+            #define OMNI_OS_STR "Apple"
+        #endif
+    #elif defined(OMNI_OS_ANDROID)
+        #define OMNI_OS_STR "Android"
+    #elif defined(OMNI_OS_OPENBSD)
+        #define OMNI_OS_STR "OpenBSD"
+    #elif defined(OMNI_OS_FREEBSD)
+        #define OMNI_OS_STR "FreeBSD"
+    #elif defined(OMNI_OS_SOLARIS)
+        #define OMNI_OS_STR "Solaris"
+    #elif defined(OMNI_OS_LINUX)
+        #define OMNI_OS_STR "Linux"
+    #else
+        #define OMNI_OS_STR "Other OS"
+    #endif
+#endif
 
 #endif // OMNI_OS_HPP

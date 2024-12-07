@@ -23,66 +23,68 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <div class="ptitle"><a href="../../files/src/runnable.cpp" onclick="return popup('../../files/src/runnable.cpp')">runnable.cpp</a></div><div class="content"><div>
 <code><div class="cpphtmllines">
 <!--start line numbers-->
-000001:<br><div id="cmntl1" name="cmntl1">000002:<br>000003:<br>000004:<br>000005:<br>000006:<br>000007:<br>000008:<br>000009:<br>0000010:<br>0000011:<br>0000012:<br>0000013:<br>0000014:<br>0000015:<br>0000016:<br>0000017:<br>0000018:<br></div>0000019:<br>
-0000020:<br>0000021:<br>0000022:<br>0000023:<br>0000024:<br>0000025:<br>0000026:<br>0000027:<br>0000028:<br>0000029:<br>0000030:<br>0000031:<br>0000032:<br>0000033:<br>0000034:<br>0000035:<br>0000036:<br>0000037:<br>0000038:<br>0000039:<br>
-0000040:<br>0000041:<br>0000042:<br>0000043:<br>0000044:<br>0000045:<br>0000046:<br>0000047:<br>0000048:<br>0000049:<br>0000050:<br>0000051:<br>0000052:<br>0000053:<br>0000054:<br>0000055:<br>0000056:<br>0000057:<br>0000058:<br>0000059:<br>
-0000060:<br>0000061:<br>0000062:<br>0000063:<br><div id="cmntl2" name="cmntl2">0000064:<br>0000065:<br>0000066:<br>0000067:<br></div>0000068:<br>0000069:<br>0000070:<br><div id="cmntl3" name="cmntl3">0000071:<br>0000072:<br>0000073:<br>0000074:<br>0000075:<br>0000076:<br>0000077:<br>0000078:<br>0000079:<br></div>
-0000080:<br>0000081:<br>0000082:<br>0000083:<br>0000084:<br>0000085:<br>0000086:<br>0000087:<br>0000088:<br>0000089:<br>0000090:<br>0000091:<br>0000092:<br>0000093:<br>0000094:<br>0000095:<br>0000096:<br>0000097:<br>0000098:<br>0000099:<br>
-00000100:<br>00000101:<br>00000102:<br>00000103:<br>00000104:<br>00000105:<br>00000106:<br>00000107:<br>00000108:<br>00000109:<br>00000110:<br>00000111:<br>00000112:<br>00000113:<br>00000114:<br>00000115:<br>00000116:<br>00000117:<br>00000118:<br>00000119:<br>
-00000120:<br>00000121:<br>00000122:<br>00000123:<br>00000124:<br>00000125:<br>00000126:<br>00000127:<br>00000128:<br>00000129:<br>00000130:<br>00000131:<br>00000132:<br>00000133:<br>00000134:<br>00000135:<br>00000136:<br>00000137:<br>00000138:<br>00000139:<br>
-00000140:<br>00000141:<br>00000142:<br>00000143:<br>00000144:<br>00000145:<br>00000146:<br>00000147:<br>00000148:<br>00000149:<br>00000150:<br>00000151:<br>00000152:<br>00000153:<br>00000154:<br>00000155:<br>00000156:<br>00000157:<br>00000158:<br>00000159:<br>
-00000160:<br>00000161:<br>00000162:<br>00000163:<br>00000164:<br>00000165:<br>00000166:<br>00000167:<br>00000168:<br>00000169:<br>00000170:<br>00000171:<br>00000172:<br>00000173:<br>00000174:<br>00000175:<br>00000176:<br>00000177:<br>00000178:<br>00000179:<br>
-00000180:<br>00000181:<br>00000182:<br>00000183:<br>00000184:<br>00000185:<br>00000186:<br>00000187:<br>00000188:<br>00000189:<br>00000190:<br>00000191:<br>00000192:<br>00000193:<br>00000194:<br>00000195:<br>00000196:<br>00000197:<br>00000198:<br>00000199:<br>
-00000200:<br>00000201:<br>00000202:<br>00000203:<br>00000204:<br>00000205:<br>00000206:<br>00000207:<br>00000208:<br>00000209:<br>00000210:<br>00000211:<br>00000212:<br>00000213:<br>00000214:<br>00000215:<br>00000216:<br>00000217:<br>00000218:<br>00000219:<br>
-00000220:<br>00000221:<br>00000222:<br>00000223:<br>00000224:<br>00000225:<br>00000226:<br>00000227:<br>00000228:<br>00000229:<br>00000230:<br>00000231:<br>00000232:<br>00000233:<br>00000234:<br>00000235:<br>00000236:<br>00000237:<br>00000238:<br>00000239:<br>
-00000240:<br>00000241:<br>00000242:<br>00000243:<br>00000244:<br>00000245:<br>00000246:<br>00000247:<br>00000248:<br>00000249:<br>00000250:<br>00000251:<br>00000252:<br>00000253:<br>00000254:<br>00000255:<br>00000256:<br>00000257:<br>00000258:<br>00000259:<br>
-00000260:<br>00000261:<br>00000262:<br>00000263:<br>00000264:<br>00000265:<br>00000266:<br>00000267:<br>00000268:<br>00000269:<br>00000270:<br>00000271:<br>00000272:<br>00000273:<br>00000274:<br>00000275:<br>00000276:<br>00000277:<br>00000278:<br>00000279:<br>
-00000280:<br>00000281:<br>00000282:<br>00000283:<br>00000284:<br>00000285:<br>00000286:<br>00000287:<br>00000288:<br>00000289:<br>00000290:<br>00000291:<br>00000292:<br>00000293:<br>00000294:<br>00000295:<br>00000296:<br>00000297:<br>00000298:<br>00000299:<br>
-00000300:<br>00000301:<br>00000302:<br>00000303:<br>00000304:<br>00000305:<br>00000306:<br>00000307:<br>00000308:<br>00000309:<br>00000310:<br>00000311:<br>00000312:<br>00000313:<br>00000314:<br>00000315:<br>00000316:<br>00000317:<br>00000318:<br>00000319:<br>
-00000320:<br>00000321:<br>00000322:<br>00000323:<br>00000324:<br>00000325:<br>00000326:<br>00000327:<br>00000328:<br>00000329:<br>00000330:<br>00000331:<br>00000332:<br>00000333:<br>00000334:<br>00000335:<br>00000336:<br>00000337:<br>00000338:<br>00000339:<br>
-00000340:<br>00000341:<br>00000342:<br>00000343:<br>00000344:<br>00000345:<br>00000346:<br>00000347:<br>00000348:<br>00000349:<br>00000350:<br>00000351:<br>00000352:<br>00000353:<br>00000354:<br>00000355:<br>00000356:<br>00000357:<br>00000358:<br>00000359:<br>
-00000360:<br>00000361:<br>00000362:<br>00000363:<br>00000364:<br>00000365:<br>00000366:<br>00000367:<br>00000368:<br>00000369:<br>00000370:<br>00000371:<br>00000372:<br>00000373:<br>00000374:<br>00000375:<br>00000376:<br>00000377:<br>00000378:<br>00000379:<br>
-00000380:<br>00000381:<br>00000382:<br>00000383:<br>00000384:<br>00000385:<br>00000386:<br>00000387:<br>00000388:<br>00000389:<br>00000390:<br>00000391:<br><div id="cmntl4" name="cmntl4">00000392:<br>00000393:<br>00000394:<br>00000395:<br>00000396:<br>00000397:<br>00000398:<br>00000399:<br>
-00000400:<br>00000401:<br>00000402:<br>00000403:<br>00000404:<br>00000405:<br>00000406:<br>00000407:<br>00000408:<br>00000409:<br>00000410:<br>00000411:<br>00000412:<br>00000413:<br>00000414:<br>00000415:<br></div>00000416:<br>00000417:<br>00000418:<br>00000419:<br>
-00000420:<br>00000421:<br>00000422:<br>00000423:<br>00000424:<br>00000425:<br>00000426:<br>00000427:<br>00000428:<br>00000429:<br>00000430:<br>00000431:<br>00000432:<br>00000433:<br>00000434:<br>00000435:<br>00000436:<br>00000437:<br>00000438:<br>00000439:<br>
-00000440:<br>00000441:<br>00000442:<br>00000443:<br>00000444:<br>00000445:<br>00000446:<br>00000447:<br>00000448:<br>00000449:<br>00000450:<br>00000451:<br>00000452:<br>00000453:<br><div id="cmntl5" name="cmntl5">00000454:<br>00000455:<br></div>00000456:<br>00000457:<br>00000458:<br>00000459:<br>
-00000460:<br>00000461:<br>00000462:<br>00000463:<br>00000464:<br>00000465:<br>00000466:<br>00000467:<br>00000468:<br>00000469:<br>00000470:<br>00000471:<br>00000472:<br>00000473:<br>00000474:<br>00000475:<br>00000476:<br>00000477:<br>00000478:<br>00000479:<br>
-00000480:<br>00000481:<br>00000482:<br>00000483:<br>00000484:<br>00000485:<br>00000486:<br>00000487:<br>00000488:<br>00000489:<br>00000490:<br>00000491:<br>00000492:<br>00000493:<br>00000494:<br>00000495:<br>00000496:<br>00000497:<br>00000498:<br>00000499:<br>
-00000500:<br>00000501:<br>00000502:<br>00000503:<br>00000504:<br>00000505:<br>00000506:<br>00000507:<br>00000508:<br>00000509:<br>00000510:<br>00000511:<br>00000512:<br>00000513:<br>00000514:<br>00000515:<br>00000516:<br>00000517:<br>00000518:<br>00000519:<br>
-00000520:<br>00000521:<br>00000522:<br>00000523:<br>00000524:<br>00000525:<br>00000526:<br>00000527:<br>00000528:<br>00000529:<br>00000530:<br>00000531:<br>00000532:<br>00000533:<br>00000534:<br>00000535:<br>00000536:<br>00000537:<br>00000538:<br>00000539:<br>
-00000540:<br>00000541:<br>00000542:<br>00000543:<br>00000544:<br>00000545:<br>00000546:<br>00000547:<br>00000548:<br>00000549:<br>00000550:<br>00000551:<br>00000552:<br>00000553:<br>00000554:<br>00000555:<br>00000556:<br>00000557:<br>00000558:<br>00000559:<br>
-00000560:<br>00000561:<br>00000562:<br>00000563:<br>00000564:<br>00000565:<br>00000566:<br>00000567:<br>00000568:<br>00000569:<br>00000570:<br>00000571:<br>00000572:<br>00000573:<br>00000574:<br>00000575:<br>00000576:<br>00000577:<br>00000578:<br>00000579:<br>
-00000580:<br>00000581:<br>00000582:<br>00000583:<br>00000584:<br>00000585:<br>00000586:<br>00000587:<br>00000588:<br>00000589:<br>00000590:<br>00000591:<br>00000592:<br>00000593:<br>00000594:<br>00000595:<br>00000596:<br>00000597:<br>00000598:<br>00000599:<br>
-00000600:<br>00000601:<br>00000602:<br>00000603:<br>00000604:<br>00000605:<br>00000606:<br>00000607:<br>00000608:<br>00000609:<br>00000610:<br>00000611:<br>00000612:<br>00000613:<br>00000614:<br>00000615:<br>00000616:<br>00000617:<br>00000618:<br>00000619:<br>
-00000620:<br>00000621:<br>00000622:<br>00000623:<br>00000624:<br>00000625:<br>00000626:<br>00000627:<br>00000628:<br>00000629:<br>00000630:<br>00000631:<br>00000632:<br>00000633:<br>00000634:<br>00000635:<br>00000636:<br>00000637:<br>00000638:<br>00000639:<br>
-00000640:<br>00000641:<br>00000642:<br>00000643:<br>00000644:<br>00000645:<br>00000646:<br>00000647:<br>00000648:<br>00000649:<br>00000650:<br>00000651:<br>00000652:<br>00000653:<br>00000654:<br>00000655:<br>00000656:<br>00000657:<br>00000658:<br>00000659:<br>
-00000660:<br>00000661:<br>00000662:<br>00000663:<br>00000664:<br>00000665:<br>00000666:<br>00000667:<br>00000668:<br>00000669:<br>00000670:<br>00000671:<br>00000672:<br>00000673:<br>00000674:<br>00000675:<br>00000676:<br>00000677:<br>00000678:<br>00000679:<br>
-00000680:<br>00000681:<br>00000682:<br>00000683:<br>00000684:<br>00000685:<br>00000686:<br>00000687:<br>00000688:<br>00000689:<br>00000690:<br>00000691:<br>00000692:<br>00000693:<br>00000694:<br>00000695:<br>00000696:<br>00000697:<br>00000698:<br>00000699:<br>
-00000700:<br>00000701:<br>00000702:<br>00000703:<br>00000704:<br>00000705:<br>00000706:<br>00000707:<br>00000708:<br>00000709:<br>00000710:<br>00000711:<br>00000712:<br>00000713:<br>00000714:<br>00000715:<br>00000716:<br>00000717:<br>00000718:<br>00000719:<br>
-00000720:<br>00000721:<br>00000722:<br>00000723:<br>00000724:<br>00000725:<br>00000726:<br>00000727:<br>00000728:<br>00000729:<br>00000730:<br>00000731:<br>00000732:<br>00000733:<br>00000734:<br>00000735:<br>00000736:<br>00000737:<br>00000738:<br>00000739:<br>
-00000740:<br>00000741:<br>00000742:<br>00000743:<br>00000744:<br>00000745:<br>00000746:<br>00000747:<br>00000748:<br>00000749:<br>00000750:<br>00000751:<br>00000752:<br>00000753:<br>00000754:<br>00000755:<br>00000756:<br>00000757:<br>00000758:<br>00000759:<br>
-00000760:<br>00000761:<br>00000762:<br>00000763:<br>00000764:<br><div id="cmntl6" name="cmntl6">00000765:<br>00000766:<br>00000767:<br></div>00000768:<br>00000769:<br>00000770:<br>00000771:<br><div id="cmntl7" name="cmntl7">00000772:<br></div>00000773:<br>00000774:<br>00000775:<br>00000776:<br>00000777:<br>00000778:<br>00000779:<br>
-00000780:<br>00000781:<br>00000782:<br>00000783:<br>00000784:<br>00000785:<br>00000786:<br>00000787:<br>00000788:<br>00000789:<br>00000790:<br>00000791:<br>00000792:<br>00000793:<br>00000794:<br>00000795:<br>00000796:<br>00000797:<br>00000798:<br>00000799:<br>
-00000800:<br>00000801:<br>00000802:<br>00000803:<br>00000804:<br>00000805:<br>00000806:<br>00000807:<br>00000808:<br>00000809:<br>00000810:<br>00000811:<br>00000812:<br>00000813:<br>00000814:<br>00000815:<br>00000816:<br>00000817:<br>00000818:<br>00000819:<br>
-00000820:<br>00000821:<br>00000822:<br>00000823:<br>00000824:<br>00000825:<br>00000826:<br>00000827:<br>00000828:<br>00000829:<br>00000830:<br>00000831:<br>00000832:<br>00000833:<br>00000834:<br>00000835:<br>00000836:<br>00000837:<br>00000838:<br>00000839:<br>
-00000840:<br>00000841:<br>00000842:<br>00000843:<br>00000844:<br>00000845:<br>00000846:<br>00000847:<br>00000848:<br>00000849:<br>00000850:<br>00000851:<br>00000852:<br>00000853:<br>00000854:<br>00000855:<br>00000856:<br>00000857:<br>00000858:<br>00000859:<br>
-00000860:<br>00000861:<br>00000862:<br>00000863:<br>00000864:<br>00000865:<br>00000866:<br>00000867:<br>00000868:<br>00000869:<br>00000870:<br>00000871:<br>00000872:<br>00000873:<br>00000874:<br>00000875:<br>00000876:<br>00000877:<br>00000878:<br>00000879:<br>
-00000880:<br>00000881:<br>00000882:<br>00000883:<br>00000884:<br>00000885:<br>00000886:<br>00000887:<br>00000888:<br>00000889:<br>00000890:<br>00000891:<br>00000892:<br><div id="cmntl8" name="cmntl8">00000893:<br></div>00000894:<br>00000895:<br>00000896:<br>00000897:<br>00000898:<br>00000899:<br>
-00000900:<br>00000901:<br>00000902:<br>00000903:<br>00000904:<br>00000905:<br>00000906:<br>00000907:<br>00000908:<br>00000909:<br>00000910:<br>00000911:<br>00000912:<br>00000913:<br>00000914:<br>00000915:<br>00000916:<br>00000917:<br>00000918:<br>00000919:<br>
-00000920:<br>00000921:<br>00000922:<br>00000923:<br>00000924:<br>00000925:<br>00000926:<br>00000927:<br>00000928:<br>00000929:<br>00000930:<br>00000931:<br>00000932:<br>00000933:<br>00000934:<br>00000935:<br>00000936:<br>00000937:<br>00000938:<br>00000939:<br>
-00000940:<br>00000941:<br>00000942:<br>00000943:<br>00000944:<br>00000945:<br>00000946:<br>00000947:<br>00000948:<br>00000949:<br>00000950:<br>00000951:<br>00000952:<br>00000953:<br>00000954:<br>00000955:<br>00000956:<br>00000957:<br>00000958:<br>00000959:<br>
-00000960:<br>00000961:<br>00000962:<br>00000963:<br>00000964:<br>00000965:<br>00000966:<br><div id="cmntl9" name="cmntl9">00000967:<br></div>00000968:<br>00000969:<br>00000970:<br>00000971:<br>00000972:<br>00000973:<br>00000974:<br>00000975:<br>00000976:<br>00000977:<br>00000978:<br>00000979:<br>
-00000980:<br>00000981:<br><div id="cmntl10" name="cmntl10">00000982:<br>00000983:<br>00000984:<br></div>00000985:<br>00000986:<br>00000987:<br><div id="cmntl11" name="cmntl11">00000988:<br></div>00000989:<br>00000990:<br>00000991:<br>00000992:<br>00000993:<br>00000994:<br>00000995:<br>00000996:<br>00000997:<br>00000998:<br>00000999:<br>
-000001000:<br>000001001:<br>000001002:<br>000001003:<br>000001004:<br>000001005:<br>000001006:<br>000001007:<br>000001008:<br>000001009:<br>000001010:<br>000001011:<br>000001012:<br><div id="cmntl12" name="cmntl12">000001013:<br>000001014:<br>000001015:<br>000001016:<br>000001017:<br>000001018:<br>000001019:<br>
-000001020:<br>000001021:<br>000001022:<br>000001023:<br>000001024:<br>000001025:<br>000001026:<br>000001027:<br>000001028:<br>000001029:<br>000001030:<br></div>000001031:<br>000001032:<br>000001033:<br>000001034:<br>000001035:<br>000001036:<br>000001037:<br>000001038:<br>000001039:<br>
-000001040:<br>000001041:<br>000001042:<br>000001043:<br>000001044:<br>000001045:<br>000001046:<br>000001047:<br>000001048:<br>000001049:<br>000001050:<br>000001051:<br>000001052:<br>000001053:<br>000001054:<br>000001055:<br>000001056:<br>000001057:<br>
+0001:<br><div id="cmntl1" name="cmntl1">0002:<br>0003:<br>0004:<br>0005:<br>0006:<br>0007:<br>0008:<br>0009:<br>0010:<br>0011:<br>0012:<br>0013:<br>0014:<br>0015:<br>0016:<br>0017:<br>0018:<br></div>0019:<br>
+0020:<br>0021:<br>0022:<br>0023:<br>0024:<br>0025:<br>0026:<br>0027:<br>0028:<br>0029:<br>0030:<br>0031:<br>0032:<br>0033:<br>0034:<br>0035:<br>0036:<br>0037:<br>0038:<br>0039:<br>
+0040:<br>0041:<br>0042:<br>0043:<br>0044:<br>0045:<br>0046:<br>0047:<br>0048:<br>0049:<br>0050:<br>0051:<br>0052:<br>0053:<br>0054:<br>0055:<br>0056:<br>0057:<br>0058:<br>0059:<br>
+0060:<br>0061:<br>0062:<br>0063:<br>0064:<br>0065:<br>0066:<br>0067:<br>0068:<br>0069:<br>0070:<br>0071:<br>0072:<br>0073:<br>0074:<br>0075:<br>0076:<br>0077:<br>0078:<br>0079:<br>
+0080:<br><div id="cmntl2" name="cmntl2">0081:<br>0082:<br>0083:<br>0084:<br></div>0085:<br>0086:<br>0087:<br><div id="cmntl3" name="cmntl3">0088:<br>0089:<br>0090:<br>0091:<br>0092:<br>0093:<br>0094:<br>0095:<br>0096:<br></div>0097:<br>0098:<br>0099:<br>
+0100:<br>0101:<br>0102:<br>0103:<br>0104:<br>0105:<br>0106:<br>0107:<br>0108:<br>0109:<br>0110:<br>0111:<br>0112:<br>0113:<br>0114:<br>0115:<br>0116:<br>0117:<br>0118:<br>0119:<br>
+0120:<br>0121:<br>0122:<br>0123:<br>0124:<br>0125:<br>0126:<br>0127:<br>0128:<br>0129:<br>0130:<br>0131:<br>0132:<br>0133:<br>0134:<br>0135:<br>0136:<br>0137:<br>0138:<br>0139:<br>
+0140:<br>0141:<br>0142:<br>0143:<br>0144:<br>0145:<br>0146:<br>0147:<br>0148:<br>0149:<br>0150:<br>0151:<br>0152:<br>0153:<br>0154:<br>0155:<br>0156:<br>0157:<br>0158:<br>0159:<br>
+0160:<br>0161:<br>0162:<br>0163:<br>0164:<br>0165:<br>0166:<br>0167:<br>0168:<br>0169:<br>0170:<br>0171:<br>0172:<br>0173:<br>0174:<br>0175:<br>0176:<br>0177:<br>0178:<br>0179:<br>
+0180:<br>0181:<br>0182:<br>0183:<br>0184:<br>0185:<br>0186:<br>0187:<br>0188:<br>0189:<br>0190:<br>0191:<br>0192:<br>0193:<br>0194:<br>0195:<br>0196:<br>0197:<br>0198:<br>0199:<br>
+0200:<br>0201:<br>0202:<br>0203:<br>0204:<br>0205:<br>0206:<br>0207:<br>0208:<br>0209:<br>0210:<br>0211:<br>0212:<br>0213:<br>0214:<br>0215:<br>0216:<br>0217:<br>0218:<br>0219:<br>
+0220:<br>0221:<br>0222:<br>0223:<br>0224:<br>0225:<br>0226:<br>0227:<br>0228:<br>0229:<br>0230:<br>0231:<br>0232:<br>0233:<br>0234:<br>0235:<br>0236:<br>0237:<br>0238:<br>0239:<br>
+0240:<br>0241:<br>0242:<br>0243:<br>0244:<br>0245:<br>0246:<br>0247:<br>0248:<br>0249:<br>0250:<br>0251:<br>0252:<br>0253:<br>0254:<br>0255:<br>0256:<br>0257:<br>0258:<br>0259:<br>
+0260:<br>0261:<br>0262:<br>0263:<br>0264:<br>0265:<br>0266:<br>0267:<br>0268:<br>0269:<br>0270:<br>0271:<br>0272:<br>0273:<br>0274:<br>0275:<br>0276:<br>0277:<br>0278:<br>0279:<br>
+0280:<br>0281:<br>0282:<br>0283:<br>0284:<br>0285:<br>0286:<br>0287:<br>0288:<br>0289:<br>0290:<br>0291:<br>0292:<br>0293:<br>0294:<br>0295:<br>0296:<br>0297:<br>0298:<br>0299:<br>
+0300:<br>0301:<br>0302:<br>0303:<br>0304:<br>0305:<br>0306:<br>0307:<br>0308:<br>0309:<br>0310:<br>0311:<br>0312:<br>0313:<br>0314:<br>0315:<br>0316:<br>0317:<br>0318:<br>0319:<br>
+0320:<br>0321:<br>0322:<br>0323:<br>0324:<br>0325:<br>0326:<br>0327:<br>0328:<br>0329:<br>0330:<br>0331:<br>0332:<br>0333:<br>0334:<br>0335:<br>0336:<br>0337:<br>0338:<br>0339:<br>
+0340:<br>0341:<br>0342:<br>0343:<br>0344:<br>0345:<br>0346:<br>0347:<br>0348:<br>0349:<br>0350:<br>0351:<br>0352:<br>0353:<br>0354:<br>0355:<br>0356:<br>0357:<br>0358:<br>0359:<br>
+0360:<br>0361:<br>0362:<br>0363:<br>0364:<br>0365:<br>0366:<br>0367:<br>0368:<br>0369:<br>0370:<br>0371:<br>0372:<br>0373:<br>0374:<br>0375:<br>0376:<br>0377:<br>0378:<br>0379:<br>
+0380:<br>0381:<br>0382:<br>0383:<br>0384:<br>0385:<br>0386:<br>0387:<br>0388:<br>0389:<br>0390:<br>0391:<br>0392:<br>0393:<br>0394:<br>0395:<br>0396:<br>0397:<br>0398:<br>0399:<br>
+0400:<br>0401:<br>0402:<br>0403:<br>0404:<br>0405:<br>0406:<br>0407:<br>0408:<br><div id="cmntl4" name="cmntl4">0409:<br>0410:<br>0411:<br>0412:<br>0413:<br>0414:<br>0415:<br>0416:<br>0417:<br>0418:<br>0419:<br>
+0420:<br>0421:<br>0422:<br>0423:<br>0424:<br>0425:<br>0426:<br>0427:<br>0428:<br>0429:<br>0430:<br>0431:<br>0432:<br></div>0433:<br>0434:<br>0435:<br>0436:<br>0437:<br>0438:<br>0439:<br>
+0440:<br>0441:<br>0442:<br>0443:<br>0444:<br>0445:<br>0446:<br>0447:<br>0448:<br>0449:<br>0450:<br>0451:<br>0452:<br>0453:<br>0454:<br>0455:<br>0456:<br>0457:<br>0458:<br>0459:<br>
+0460:<br>0461:<br>0462:<br>0463:<br>0464:<br>0465:<br>0466:<br>0467:<br>0468:<br>0469:<br>0470:<br><div id="cmntl5" name="cmntl5">0471:<br>0472:<br></div>0473:<br>0474:<br>0475:<br>0476:<br>0477:<br>0478:<br>0479:<br>
+0480:<br>0481:<br>0482:<br>0483:<br>0484:<br>0485:<br>0486:<br>0487:<br>0488:<br>0489:<br>0490:<br>0491:<br>0492:<br>0493:<br>0494:<br>0495:<br>0496:<br>0497:<br>0498:<br>0499:<br>
+0500:<br>0501:<br>0502:<br>0503:<br>0504:<br>0505:<br>0506:<br>0507:<br>0508:<br>0509:<br>0510:<br>0511:<br>0512:<br>0513:<br>0514:<br>0515:<br>0516:<br>0517:<br>0518:<br>0519:<br>
+0520:<br>0521:<br>0522:<br>0523:<br>0524:<br>0525:<br>0526:<br>0527:<br>0528:<br>0529:<br>0530:<br>0531:<br>0532:<br>0533:<br>0534:<br>0535:<br>0536:<br>0537:<br>0538:<br>0539:<br>
+0540:<br>0541:<br>0542:<br>0543:<br>0544:<br>0545:<br>0546:<br>0547:<br>0548:<br>0549:<br>0550:<br>0551:<br>0552:<br>0553:<br>0554:<br>0555:<br>0556:<br>0557:<br>0558:<br>0559:<br>
+0560:<br>0561:<br>0562:<br>0563:<br>0564:<br>0565:<br>0566:<br>0567:<br>0568:<br>0569:<br>0570:<br>0571:<br>0572:<br>0573:<br>0574:<br>0575:<br>0576:<br>0577:<br>0578:<br>0579:<br>
+0580:<br>0581:<br>0582:<br>0583:<br>0584:<br>0585:<br>0586:<br>0587:<br>0588:<br>0589:<br>0590:<br>0591:<br>0592:<br>0593:<br>0594:<br>0595:<br>0596:<br>0597:<br>0598:<br>0599:<br>
+0600:<br>0601:<br>0602:<br>0603:<br>0604:<br>0605:<br>0606:<br>0607:<br>0608:<br>0609:<br>0610:<br>0611:<br>0612:<br>0613:<br>0614:<br>0615:<br>0616:<br>0617:<br>0618:<br>0619:<br>
+0620:<br>0621:<br>0622:<br>0623:<br>0624:<br>0625:<br>0626:<br>0627:<br>0628:<br>0629:<br>0630:<br>0631:<br>0632:<br>0633:<br>0634:<br>0635:<br>0636:<br>0637:<br>0638:<br>0639:<br>
+0640:<br>0641:<br>0642:<br>0643:<br>0644:<br>0645:<br>0646:<br>0647:<br>0648:<br>0649:<br>0650:<br>0651:<br>0652:<br>0653:<br>0654:<br>0655:<br>0656:<br>0657:<br>0658:<br>0659:<br>
+0660:<br>0661:<br>0662:<br>0663:<br>0664:<br>0665:<br>0666:<br>0667:<br>0668:<br>0669:<br>0670:<br>0671:<br>0672:<br>0673:<br>0674:<br>0675:<br>0676:<br>0677:<br>0678:<br>0679:<br>
+0680:<br>0681:<br>0682:<br>0683:<br>0684:<br>0685:<br>0686:<br>0687:<br>0688:<br>0689:<br>0690:<br>0691:<br>0692:<br>0693:<br>0694:<br>0695:<br>0696:<br>0697:<br>0698:<br>0699:<br>
+0700:<br>0701:<br>0702:<br>0703:<br>0704:<br>0705:<br>0706:<br>0707:<br>0708:<br>0709:<br>0710:<br>0711:<br>0712:<br>0713:<br>0714:<br>0715:<br>0716:<br>0717:<br>0718:<br>0719:<br>
+0720:<br>0721:<br>0722:<br>0723:<br>0724:<br>0725:<br>0726:<br>0727:<br>0728:<br>0729:<br>0730:<br>0731:<br>0732:<br>0733:<br>0734:<br>0735:<br>0736:<br>0737:<br>0738:<br>0739:<br>
+0740:<br>0741:<br>0742:<br>0743:<br>0744:<br>0745:<br>0746:<br>0747:<br>0748:<br>0749:<br>0750:<br>0751:<br>0752:<br>0753:<br>0754:<br>0755:<br>0756:<br>0757:<br>0758:<br>0759:<br>
+0760:<br>0761:<br>0762:<br>0763:<br>0764:<br>0765:<br>0766:<br>0767:<br>0768:<br>0769:<br>0770:<br>0771:<br>0772:<br>0773:<br>0774:<br>0775:<br>0776:<br>0777:<br>0778:<br>0779:<br>
+0780:<br>0781:<br><div id="cmntl6" name="cmntl6">0782:<br>0783:<br>0784:<br></div>0785:<br>0786:<br>0787:<br>0788:<br><div id="cmntl7" name="cmntl7">0789:<br></div>0790:<br>0791:<br>0792:<br>0793:<br>0794:<br>0795:<br>0796:<br>0797:<br>0798:<br>0799:<br>
+0800:<br>0801:<br>0802:<br>0803:<br>0804:<br>0805:<br>0806:<br>0807:<br>0808:<br>0809:<br>0810:<br>0811:<br>0812:<br>0813:<br>0814:<br>0815:<br>0816:<br>0817:<br>0818:<br>0819:<br>
+0820:<br>0821:<br>0822:<br>0823:<br>0824:<br>0825:<br>0826:<br>0827:<br>0828:<br>0829:<br>0830:<br>0831:<br>0832:<br>0833:<br>0834:<br>0835:<br>0836:<br>0837:<br>0838:<br>0839:<br>
+0840:<br>0841:<br>0842:<br>0843:<br>0844:<br>0845:<br>0846:<br>0847:<br>0848:<br>0849:<br>0850:<br>0851:<br>0852:<br>0853:<br>0854:<br>0855:<br>0856:<br>0857:<br>0858:<br>0859:<br>
+0860:<br>0861:<br>0862:<br>0863:<br>0864:<br>0865:<br>0866:<br>0867:<br>0868:<br>0869:<br>0870:<br>0871:<br>0872:<br>0873:<br>0874:<br>0875:<br>0876:<br>0877:<br>0878:<br>0879:<br>
+0880:<br>0881:<br>0882:<br>0883:<br>0884:<br>0885:<br>0886:<br>0887:<br>0888:<br>0889:<br>0890:<br>0891:<br>0892:<br>0893:<br>0894:<br>0895:<br>0896:<br>0897:<br>0898:<br>0899:<br>
+0900:<br>0901:<br>0902:<br>0903:<br>0904:<br>0905:<br>0906:<br>0907:<br>0908:<br>0909:<br><div id="cmntl8" name="cmntl8">0910:<br></div>0911:<br>0912:<br>0913:<br>0914:<br>0915:<br>0916:<br>0917:<br>0918:<br>0919:<br>
+0920:<br>0921:<br>0922:<br>0923:<br>0924:<br>0925:<br>0926:<br>0927:<br>0928:<br>0929:<br>0930:<br>0931:<br>0932:<br>0933:<br>0934:<br>0935:<br>0936:<br>0937:<br>0938:<br>0939:<br>
+0940:<br>0941:<br>0942:<br>0943:<br>0944:<br>0945:<br>0946:<br>0947:<br>0948:<br>0949:<br>0950:<br>0951:<br>0952:<br>0953:<br>0954:<br>0955:<br>0956:<br>0957:<br>0958:<br>0959:<br>
+0960:<br>0961:<br>0962:<br>0963:<br>0964:<br>0965:<br>0966:<br>0967:<br>0968:<br>0969:<br>0970:<br>0971:<br>0972:<br>0973:<br>0974:<br>0975:<br>0976:<br>0977:<br>0978:<br>0979:<br>
+0980:<br>0981:<br>0982:<br>0983:<br><div id="cmntl9" name="cmntl9">0984:<br></div>0985:<br>0986:<br>0987:<br>0988:<br>0989:<br>0990:<br>0991:<br>0992:<br>0993:<br>0994:<br>0995:<br>0996:<br>0997:<br>0998:<br><div id="cmntl10" name="cmntl10">0999:<br>
+1000:<br>1001:<br></div>1002:<br>1003:<br>1004:<br><div id="cmntl11" name="cmntl11">1005:<br></div>1006:<br>1007:<br>1008:<br>1009:<br>1010:<br>1011:<br>1012:<br>1013:<br>1014:<br>1015:<br>1016:<br>1017:<br>1018:<br>1019:<br>
+1020:<br>1021:<br>1022:<br>1023:<br>1024:<br>1025:<br>1026:<br>1027:<br>1028:<br>1029:<br><div id="cmntl12" name="cmntl12">1030:<br>1031:<br>1032:<br>1033:<br>1034:<br>1035:<br>1036:<br>1037:<br>1038:<br>1039:<br>
+1040:<br>1041:<br>1042:<br>1043:<br>1044:<br>1045:<br>1046:<br>1047:<br></div>1048:<br>1049:<br>1050:<br>1051:<br>1052:<br>1053:<br>1054:<br>1055:<br>1056:<br>1057:<br>1058:<br>1059:<br>
+1060:<br>1061:<br>1062:<br>1063:<br>1064:<br>1065:<br>1066:<br>1067:<br>1068:<br>1069:<br>1070:<br>1071:<br>1072:<br>1073:<br>1074:<br>
 <!--end line numbers-->
 </div><div class="cpphtmlcmnt">
 <!--start collapse columns-->
 <img src="../../content/tree/min.gif" alt="Min/Max" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><img src="../../content/tree/min.gif" alt="Min/Max" id="cmnti2" name="cmnti2" onclick="collapse('2', '../../');" /><br><div id="cmnts2" name="cmnts2"><br><br><br><br></div><div></div><br><br><img src="../../content/tree/min.gif" alt="Min/Max" id="cmnti3" name="cmnti3" onclick="collapse('3', '../../');" /><br><div id="cmnts3" name="cmnts3"><br><br><br><br><br><br><br><br><br></div><div></div>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<img src="../../content/tree/min.gif" alt="Min/Max" id="cmnti2" name="cmnti2" onclick="collapse('2', '../../');" /><br><div id="cmnts2" name="cmnts2"><br><br><br><br></div><div></div><br><br><img src="../../content/tree/min.gif" alt="Min/Max" id="cmnti3" name="cmnti3" onclick="collapse('3', '../../');" /><br><div id="cmnts3" name="cmnts3"><br><br><br><br><br><br><br><br><br></div><div></div><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -98,12 +100,10 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br><br><br><img src="../../content/tree/min.gif" alt="Min/Max" id="cmnti4" name="cmnti4" onclick="collapse('4', '../../');" /><br><div id="cmnts4" name="cmnts4"><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br><br><br><br>
+<br><br><br><br><br><br><br><br><img src="../../content/tree/min.gif" alt="Min/Max" id="cmnti4" name="cmnti4" onclick="collapse('4', '../../');" /><br><div id="cmnts4" name="cmnts4"><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><img src="../../content/tree/min.gif" alt="Min/Max" id="cmnti5" name="cmnti5" onclick="collapse('5', '../../');" /><br><div id="cmnts5" name="cmnts5"><br><br></div><div></div><br><br><br><br>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><img src="../../content/tree/min.gif" alt="Min/Max" id="cmnti5" name="cmnti5" onclick="collapse('5', '../../');" /><br><div id="cmnts5" name="cmnts5"><br><br></div><div></div><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -117,21 +117,23 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><img src="../../content/tree/min.gif" alt="Min/Max" id="cmnti6" name="cmnti6" onclick="collapse('6', '../../');" /><br><div id="cmnts6" name="cmnts6"><br><br><br></div><div></div><br><br><br><img src="../../content/tree/min.gif" alt="Min/Max" id="cmnti7" name="cmnti7" onclick="collapse('7', '../../');" /><br><div id="cmnts7" name="cmnts7"><br></div><div></div><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><img src="../../content/tree/min.gif" alt="Min/Max" id="cmnti6" name="cmnti6" onclick="collapse('6', '../../');" /><br><div id="cmnts6" name="cmnts6"><br><br><br></div><div></div><br><br><br><img src="../../content/tree/min.gif" alt="Min/Max" id="cmnti7" name="cmnti7" onclick="collapse('7', '../../');" /><br><div id="cmnts7" name="cmnts7"><br></div><div></div><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br><br><br><br><img src="../../content/tree/min.gif" alt="Min/Max" id="cmnti8" name="cmnti8" onclick="collapse('8', '../../');" /><br><div id="cmnts8" name="cmnts8"><br></div><div></div><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><img src="../../content/tree/min.gif" alt="Min/Max" id="cmnti8" name="cmnti8" onclick="collapse('8', '../../');" /><br><div id="cmnts8" name="cmnts8"><br></div><div></div><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><img src="../../content/tree/min.gif" alt="Min/Max" id="cmnti9" name="cmnti9" onclick="collapse('9', '../../');" /><br><div id="cmnts9" name="cmnts9"><br></div><div></div><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><img src="../../content/tree/min.gif" alt="Min/Max" id="cmnti10" name="cmnti10" onclick="collapse('10', '../../');" /><br><div id="cmnts10" name="cmnts10"><br><br><br></div><div></div><br><br><img src="../../content/tree/min.gif" alt="Min/Max" id="cmnti11" name="cmnti11" onclick="collapse('11', '../../');" /><br><div id="cmnts11" name="cmnts11"><br></div><div></div><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br><br><br><br><img src="../../content/tree/min.gif" alt="Min/Max" id="cmnti12" name="cmnti12" onclick="collapse('12', '../../');" /><br><div id="cmnts12" name="cmnts12"><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br><br><br></div><div></div><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><img src="../../content/tree/min.gif" alt="Min/Max" id="cmnti9" name="cmnti9" onclick="collapse('9', '../../');" /><br><div id="cmnts9" name="cmnts9"><br></div><div></div><br><br><br><br><br><br><br><br><br><br><br><br><br><img src="../../content/tree/min.gif" alt="Min/Max" id="cmnti10" name="cmnti10" onclick="collapse('10', '../../');" /><br><div id="cmnts10" name="cmnts10"><br>
+<br><br></div><div></div><br><br><img src="../../content/tree/min.gif" alt="Min/Max" id="cmnti11" name="cmnti11" onclick="collapse('11', '../../');" /><br><div id="cmnts11" name="cmnts11"><br></div><div></div><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><img src="../../content/tree/min.gif" alt="Min/Max" id="cmnti12" name="cmnti12" onclick="collapse('12', '../../');" /><br><div id="cmnts12" name="cmnts12"><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br></div><div></div><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <!--end collapse columns-->
 </div><div class="cpphtml" style="margin-left:4.3em;">
 <!--start highlighted code-->
@@ -186,10 +188,27 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <br>
 <font class="syn_ins">namespace</font> omni {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">namespace</font> sync {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">typedef</font> <font class="syn_typ">struct</font> runnable_thread_args {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-runnable_thread.html">omni::sync::runnable_thread</a>* bthread;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-spin_wait.html">omni::sync::spin_wait</a> swait;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} runnable_thread_args;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">class</font> runnable_thread_args<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">public</font>:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;runnable_thread_args() :<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bthread(<a href="../options/omni_null_ptr.html">OMNI_NULL_PTR</a>),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;swait()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~runnable_thread_args() {}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-runnable_thread.html">omni::sync::runnable_thread</a>* bthread;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-spin_wait.html">omni::sync::spin_wait</a> swait;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">private</font>:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;runnable_thread_args(<font class="syn_typ">const</font> runnable_thread_args&amp; cp) :<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bthread(),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;swait()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../options/omni_unused.html">OMNI_UNUSED</a>(cp);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;runnable_thread_args&amp; <font class="syn_ins">operator</font>=(<font class="syn_typ">const</font> runnable_thread_args&amp; cp) { <a href="../options/omni_unused.html">OMNI_UNUSED</a>(cp); <font class="syn_ins">return</font> *<font class="syn_typ">this</font>; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};<br>
 &nbsp;&nbsp;&nbsp;&nbsp;}<br>
 }<br>
 <br>
@@ -253,7 +272,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">break</font>;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;t-&gt;_hreset();<br>
-&nbsp;&nbsp;&nbsp;&nbsp;t = <a href="../options/omni_null.html">OMNI_NULL</a>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;t = <a href="../options/omni_null_ptr.html">OMNI_NULL_PTR</a>;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;<br>
 }<br>
 <br>
@@ -264,7 +283,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;OMNI_CTOR_FW(<a href="../classes/omni-sync-runnable_thread.html">omni::sync::runnable_thread</a>)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_RMTX_FW<br>
 &nbsp;&nbsp;&nbsp;&nbsp;m_args(),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;m_iface(<a href="../options/omni_null.html">OMNI_NULL</a>),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;m_iface(<a href="../options/omni_null_ptr.html">OMNI_NULL_PTR</a>),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;m_tid(<font class="syn_num">0</font>),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;m_thread(<font class="syn_num">0</font>),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;m_ops(),<br>
@@ -302,7 +321,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;OMNI_CTOR_FW(<a href="../classes/omni-sync-runnable_thread.html">omni::sync::runnable_thread</a>)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_RMTX_FW<br>
 &nbsp;&nbsp;&nbsp;&nbsp;m_args(),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;m_iface(<a href="../options/omni_null.html">OMNI_NULL</a>),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;m_iface(<a href="../options/omni_null_ptr.html">OMNI_NULL_PTR</a>),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;m_tid(<font class="syn_num">0</font>),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;m_thread(<font class="syn_num">0</font>),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;m_ops(ops),<br>
@@ -323,7 +342,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;OMNI_CTOR_FW(<a href="../classes/omni-sync-runnable_thread.html">omni::sync::runnable_thread</a>)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_RMTX_FW<br>
 &nbsp;&nbsp;&nbsp;&nbsp;m_args(),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;m_iface(<a href="../options/omni_null.html">OMNI_NULL</a>),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;m_iface(<a href="../options/omni_null_ptr.html">OMNI_NULL_PTR</a>),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;m_tid(<font class="syn_num">0</font>),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;m_thread(<font class="syn_num">0</font>),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;m_ops(max_stack_sz),<br>
@@ -384,7 +403,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;OMNI_CTOR_FW(<a href="../classes/omni-sync-runnable_thread.html">omni::sync::runnable_thread</a>)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_RMTX_FW<br>
 &nbsp;&nbsp;&nbsp;&nbsp;m_args(),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;m_iface(<a href="../options/omni_null.html">OMNI_NULL</a>),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;m_iface(<a href="../options/omni_null_ptr.html">OMNI_NULL_PTR</a>),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;m_tid(<font class="syn_num">0</font>),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;m_thread(<font class="syn_num">0</font>),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;m_ops(),<br>
@@ -833,7 +852,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_RET_FW(<font class="syn_str">&quot;can not start a thread once it has been started or if it is in an unknown state&quot;</font>, <a href="../classes/omni-exceptions-thread_running_exception.html">omni::exceptions::thread_running_exception</a>())<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font>-&gt;m_iface == <a href="../options/omni_null.html">OMNI_NULL</a>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font>-&gt;m_iface == <a href="../options/omni_null_ptr.html">OMNI_NULL_PTR</a>) {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_RUNLOCK_FW<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// no delegate attached to this thread so we cannot actually start anything</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_RET_FW(<a href="../options/omni_invalid_delegate_func_str.html">OMNI_INVALID_DELEGATE_FUNC_STR</a>, <a href="../classes/omni-exceptions-invalid_delegate.html">omni::exceptions::invalid_delegate</a>())<br>
@@ -1176,7 +1195,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERRV_RET_FW(<font class="syn_str">&quot;invalid priority: &quot;</font>, pri, <a href="../classes/omni-exceptions-invalid_thread_option.html">omni::exceptions::invalid_thread_option</a>(<font class="syn_ins">static_cast</font>&lt;<a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a>&gt;(pri)))<br>
 &nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_RLOCK_FW<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// if we are not running, just set the priority til next time</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// if we are not running, just set the priority til next <a href="https://man7.org/linux/man-pages/man2/time.2.html">time</a></font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_priority = pri;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_RUNLOCK_FW<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font>-&gt;is_alive()) {<br>

@@ -23,19 +23,23 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <div class="ptitle"><a href="../../../../files/src/omni/defs/helper.hpp" onclick="return popup('../../../../files/src/omni/defs/helper.hpp')">omni/defs/helper.hpp</a></div><div class="content"><div>
 <code><div class="cpphtmllines">
 <!--start line numbers-->
-0001:<br><div id="cmntl1" name="cmntl1">0002:<br>0003:<br>0004:<br>0005:<br>0006:<br>0007:<br>0008:<br>0009:<br>00010:<br>00011:<br>00012:<br>00013:<br>00014:<br>00015:<br>00016:<br>00017:<br>00018:<br></div>00019:<br>
-00020:<br>00021:<br>00022:<br>00023:<br>00024:<br>00025:<br>00026:<br>00027:<br>00028:<br>00029:<br>00030:<br>00031:<br>00032:<br>00033:<br>00034:<br>00035:<br>00036:<br>00037:<br>00038:<br>00039:<br>
-00040:<br>00041:<br>00042:<br>00043:<br>00044:<br>00045:<br>00046:<br>00047:<br>00048:<br>00049:<br>00050:<br>00051:<br>00052:<br>00053:<br>00054:<br>00055:<br>00056:<br>00057:<br>00058:<br>00059:<br>
-00060:<br>00061:<br>00062:<br>00063:<br>00064:<br>00065:<br>00066:<br>00067:<br>00068:<br>00069:<br>00070:<br>00071:<br>00072:<br>00073:<br>
+001:<br><div id="cmntl1" name="cmntl1">002:<br>003:<br>004:<br>005:<br>006:<br>007:<br>008:<br>009:<br>010:<br>011:<br>012:<br>013:<br>014:<br>015:<br>016:<br>017:<br>018:<br></div>019:<br>
+020:<br>021:<br>022:<br>023:<br>024:<br>025:<br>026:<br>027:<br>028:<br>029:<br>030:<br>031:<br>032:<br>033:<br>034:<br>035:<br>036:<br>037:<br>038:<br>039:<br>
+040:<br>041:<br>042:<br>043:<br>044:<br>045:<br>046:<br>047:<br>048:<br>049:<br>050:<br>051:<br>052:<br>053:<br>054:<br>055:<br>056:<br>057:<br>058:<br>059:<br>
+060:<br>061:<br>062:<br>063:<br>064:<br>065:<br>066:<br>067:<br>068:<br>069:<br>070:<br>071:<br>072:<br>073:<br>074:<br>075:<br>076:<br>077:<br>078:<br>079:<br>
+080:<br>081:<br>082:<br>083:<br>084:<br>085:<br>086:<br>087:<br>088:<br>089:<br>090:<br>091:<br>092:<br>093:<br>094:<br>095:<br>096:<br>097:<br>098:<br>099:<br>
+100:<br>101:<br>102:<br>103:<br>104:<br>105:<br>106:<br>107:<br>
 <!--end line numbers-->
 </div><div class="cpphtmlcmnt">
 <!--start collapse columns-->
 <img src="../../../../content/tree/min.gif" alt="Min/Max" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br>
 <!--end collapse columns-->
-</div><div class="cpphtml" style="margin-left:3em;">
+</div><div class="cpphtml" style="margin-left:3.75em;">
 <!--start highlighted code-->
 <font class="syn_cmt">/*<div class="syn_ex" id="cmnt1" name="cmnt1">
  * Copyright (c), Zeriph Enterprises<br>
@@ -60,7 +64,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <br>
 <font class="syn_cmt">// macro helper functions</font><br>
 <br>
-<font class="syn_cmt">// string-izes a macro: e.g. <a href="../../../options/omni_def2str.html">OMNI_DEF2STR</a>(X) prints &quot;X&quot;</font><br>
+<font class="syn_cmt">// stringify a macro: e.g. <a href="../../../options/omni_def2str.html">OMNI_DEF2STR</a>(X) prints &quot;X&quot;</font><br>
 <font class="syn_pre">#define OMNI_DEF2STR_FW(...) # __VA_ARGS__</font><br>
 <font class="syn_pre">#define <a href="../../../options/omni_def2str.html">OMNI_DEF2STR</a>(...) OMNI_DEF2STR_FW( __VA_ARGS__ )</font><br>
 <br>
@@ -79,11 +83,9 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <font class="syn_pre">#define <a href="../../../options/omni_dwstr.html">OMNI_DWSTR</a>(v) L # v</font><br>
 <br>
 <font class="syn_pre">#if !defined(<a href="../../../options/omni_date.html">OMNI_DATE</a>) &amp;&amp; defined(__DATE__)</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#undef <a href="../../../options/omni_date.html">OMNI_DATE</a></font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_date.html">OMNI_DATE</a> __DATE__</font><br>
 <font class="syn_pre">#endif</font><br>
 <font class="syn_pre">#if !defined(<a href="../../../options/omni_time.html">OMNI_TIME</a>) &amp;&amp; defined(__TIME__)</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#undef <a href="../../../options/omni_time.html">OMNI_TIME</a></font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_time.html">OMNI_TIME</a> __TIME__</font><br>
 <font class="syn_pre">#endif</font><br>
 <br>
@@ -99,6 +101,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <br>
 <font class="syn_pre">#define OMNI_S2E_FW(v) if (val == <a href="../../../options/omni_def2str.html">OMNI_DEF2STR</a>(v)) { out = v; return true; }</font><br>
 <font class="syn_pre">#define OMNI_E2SS_FW(v) case v: ss &lt;&lt; <a href="../../../options/omni_def2str.html">OMNI_DEF2STR</a>(v); break</font><br>
+<font class="syn_pre">#define OMNI_I2EV_FW(v) (val == v)</font><br>
 <br>
 <font class="syn_pre">#define OMNI_MAX_PATH_FW 32767 <font class="syn_cmt">// 32,767 - 1 for \0</font></font><br>
 <br>
@@ -107,6 +110,41 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <br>
 <font class="syn_cmt">// DEV_NOTE: this is here for MS compilers and how they expand macro variables and the __VA_ARGS__</font><br>
 <font class="syn_pre">#define OMNI_EXPAND_FW(x) x</font><br>
+<br>
+<font class="syn_pre">#if !defined(OMNI_NO_CAST_HELPERS)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// short hand helpers for casting</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define to_u8(x) reinterpret_cast&lt;uint8_t&gt;((x))</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define to_i8(x) reinterpret_cast&lt;int8_t&gt;((x))</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define to_u16(x) reinterpret_cast&lt;uint16_t&gt;((x))</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define to_i16(x) reinterpret_cast&lt;int16_t&gt;((x))</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define to_u32(x) reinterpret_cast&lt;uint32_t&gt;((x))</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define to_i32(x) reinterpret_cast&lt;int32_t&gt;((x))</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define to_u64(x) reinterpret_cast&lt;uint64_t&gt;((x))</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define to_i64(x) reinterpret_cast&lt;int64_t&gt;((x))</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define to_sz(x) reinterpret_cast&lt;<a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a>&gt;((x))</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define to_ssz(x) reinterpret_cast&lt;ssize_t&gt;((x))</font><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font>&lt; <font class="syn_ins">typename</font> R, <font class="syn_ins">typename</font> T &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> static R to_t(T&amp; val)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">reinterpret_cast</font>&lt;R&gt;(val);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font>&lt; <font class="syn_ins">typename</font> R, <font class="syn_ins">typename</font> T &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> static R to_t(<font class="syn_typ">const</font> T&amp; val)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">reinterpret_cast</font>&lt;R&gt;(<font class="syn_ins">const_cast</font>&lt;T&amp;&gt;(val));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font>&lt; <font class="syn_ins">typename</font> R, <font class="syn_ins">typename</font> T &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> static R* to_t(T* val)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">reinterpret_cast</font>&lt;R*&gt;(val);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font>&lt; <font class="syn_ins">typename</font> R, <font class="syn_ins">typename</font> T &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> static R* to_t(<font class="syn_typ">const</font> T* val)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">reinterpret_cast</font>&lt;R*&gt;(<font class="syn_ins">const_cast</font>&lt;T*&gt;(val));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<font class="syn_pre">#endif</font><br>
 <br>
 <font class="syn_pre">#endif <font class="syn_cmt">// OMNI_HELPER_HPP</font></font><br>
 <!--end highlighted code-->

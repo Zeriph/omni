@@ -70,9 +70,9 @@ The <code><a href="../classes/omni-sync-mutex.html">omni::sync::mutex</a></code>
 <br>
 Semaphore objects in Omni differ from mutex types in that they are not recursive, additionally semaphores can have multiple locks on them (i.e. multiple &quot;owners&quot;) but none of the locking types (mutex or semaphore) will &quot;auto&quot; unlock on destruction. As with the mutex, semaphore types cannot have active waits on destruction, in other words, you cannot call <code>lock</code> without <i>also</i> calling <code>unlock</code> on any synchronization type.<br>
 <br>
-The <code><a href="../classes/omni-sync-semaphore.html">omni::sync::semaphore</a></code> is a non-recursive lock that allows multiple waits to call the object. As with a mutex, the &quot;owner&quot; of the lock will be allowed to execute and those waiting for the lock will block until said lock is free. With a mutex you can only have 1 owner, and thus only 1 lock on the object at a time, but with a semaphore, you can have multiple &quot;owners&quot; and thus multiple lines of code executing while others wait.  <br>
+The <code><a href="../classes/omni-sync-semaphore.html">omni::sync::semaphore</a></code> is a non-recursive lock that allows multiple waits to call the object. As with a mutex, the &quot;owner&quot; of the lock will be allowed to execute and those waiting for the lock will block until said lock is free. With a mutex you can only have 1 owner, and thus only 1 lock on the object at a <code><a href="https://man7.org/linux/man-pages/man2/time.2.html">time</a></code>, but with a semaphore, you can have multiple &quot;owners&quot; and thus multiple lines of code executing while others wait.  <br>
 <br>
-The <code><a href="../classes/omni-sync-binary_semaphore.html">omni::sync::binary_semaphore</a></code> is a non-recursive lock and is similar to a mutex in that only 1 &quot;owner&quot; can have the lock at any given time (vs. a normal <code><a href="../classes/omni-sync-semaphore.html">omni::sync::semaphore</a></code> which can have multiple).<br>
+The <code><a href="../classes/omni-sync-binary_semaphore.html">omni::sync::binary_semaphore</a></code> is a non-recursive lock and is similar to a mutex in that only 1 &quot;owner&quot; can have the lock at any given <code><a href="https://man7.org/linux/man-pages/man2/time.2.html">time</a></code> (vs. a normal <code><a href="../classes/omni-sync-semaphore.html">omni::sync::semaphore</a></code> which can have multiple).<br>
 <br>
 A recursive lock allows a thread to call <code>lock</code> on an object multiple times without causing a dead-lock, for example:<br>
 <div class="sntx"><input type="checkbox" id="c1" name="c1" /><label for="c1">&nbsp;</label><pre><a href="../classes/omni-sync-mutex.html">omni::sync::mutex</a> mtx;
@@ -100,17 +100,17 @@ A recursive lock allows a thread to call <code>lock</code> on an object multiple
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// or</font>
 &nbsp;&nbsp;&nbsp;&nbsp;sem.wait(); <font class="syn_cmt">// dead-lock!</font>
 &nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;This will never display&quot;</font> &lt;&lt; std::endl;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;This will never display&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;
-}</pre></div>In this code, <code>wait</code> is called twice on the <code>binary_semaphore</code> without <code>release</code> ever being called. This causes a dead-lock since the <code>binary_semaphore</code> is not recursive. As well, the <code>semaphore</code> has a default wait slot of 5, so in this code all available slots are taken in the for loop causing any additional calls to <code>wait</code> on the semaphore to dead-lock since <code>release</code> was never called at least 1 time on the semaphore.<br>
+}</pre></div>In this code, <code>wait</code> is called twice on the <code>binary_semaphore</code> without <code>release</code> ever being called. This causes a dead-lock since the <code>binary_semaphore</code> is not recursive. As well, the <code>semaphore</code> has a default wait slot of 5, so in this code all available slots are taken in the for loop causing any additional calls to <code>wait</code> on the semaphore to dead-lock since <code>release</code> was never called at least 1 <code><a href="https://man7.org/linux/man-pages/man2/time.2.html">time</a></code> on the semaphore.<br>
 <br>
 <font class="hdr">Spin Locks and Waits</font><br>
 <br>
-Mutex and Semaphore objects can be quite complex and add additional computational time that might not always be ideal. Sometimes small waits are all that are needed and to this Omni has 3 types of <code>spin</code> wait types.<br>
+Mutex and Semaphore objects can be quite complex and add additional computational <code><a href="https://man7.org/linux/man-pages/man2/time.2.html">time</a></code> that might not always be ideal. Sometimes small waits are all that are needed and to this Omni has 3 types of <code>spin</code> wait types.<br>
 <br>
 The <code><a href="../classes/omni-sync-spin_lock.html">omni::sync::spin_lock</a></code> is a basic interlocked exchange type that calls the platform specific API for a spin lock type (which are usually kernel objects that are efficiently designed for this type of wait).<br>
 <br>
-The <code><a href="../classes/omni-sync-spin_wait.html">omni::sync::spin_wait</a></code> is a basic boolean check in a tight loop with a <code><a href="../options/omni_thread_yield.html">OMNI_THREAD_YIELD</a></code> call to not consume 100% CPU. Since this is a basic boolean check, it is not thread-safe and cannot be guaranteed in a multi-threaded environment to yield accurately, that is, if you call one of the wait functions on the <code>spin_wait</code> object and happen to check if it <code>signalled</code> on another thread at the &quot;same&quot; time, it cannot be guaranteed that the result returned was not over-written by the other thread.<br>
+The <code><a href="../classes/omni-sync-spin_wait.html">omni::sync::spin_wait</a></code> is a basic boolean check in a tight loop with a <code><a href="../options/omni_thread_yield.html">OMNI_THREAD_YIELD</a></code> call to not consume 100% CPU. Since this is a basic boolean check, it is not thread-safe and cannot be guaranteed in a multi-threaded environment to yield accurately, that is, if you call one of the wait functions on the <code>spin_wait</code> object and happen to check if it <code>signalled</code> on another thread at the &quot;same&quot; <code><a href="https://man7.org/linux/man-pages/man2/time.2.html">time</a></code>, it cannot be guaranteed that the result returned was not over-written by the other thread.<br>
 <br>
 The <code><a href="../classes/omni-sync-safe_spin_wait.html">omni::sync::safe_spin_wait</a></code> is the same as a <code><a href="../classes/omni-sync-spin_wait.html">omni::sync::spin_wait</a></code> except it has a <code><a href="../classes/omni-sync-mutex_t.html">omni::sync::mutex_t</a></code> object to keep the underlying boolean lock thread-safe, guaranteeing its results.<br>
 <br>
@@ -128,7 +128,7 @@ obj.signal();</pre></div>In this code, <code>thread 1</code> will wait until the
 <br>
 <font class="hdr">The Conditional</font><br>
 <br>
-The <code><a href="../classes/omni-sync-conditional.html">omni::sync::conditional</a></code> is a locking type that allows an event based locking mechanism to occur. When a <code>conditional</code> is utilized, all threads that have called <code>wait</code> on the object will block until either <code>signal</code> or <code>broadcast</code> is called. If <code>broadcast</code> is called, all threads that have blocked until that time will be released and signal is reset. If <code>signal</code> is called, vs. the <code>broadcast</code> function, only a single thread will be released according to the thread scheduling policy of the platform (usually in the order called to wait).<br>
+The <code><a href="../classes/omni-sync-conditional.html">omni::sync::conditional</a></code> is a locking type that allows an event based locking mechanism to occur. When a <code>conditional</code> is utilized, all threads that have called <code>wait</code> on the object will block until either <code>signal</code> or <code>broadcast</code> is called. If <code>broadcast</code> is called, all threads that have blocked until that <code><a href="https://man7.org/linux/man-pages/man2/time.2.html">time</a></code> will be released and signal is reset. If <code>signal</code> is called, vs. the <code>broadcast</code> function, only a single thread will be released according to the thread scheduling policy of the platform (usually in the order called to wait).<br>
 <br>
 As with the <code>mutex</code> and <code>semaphore</code> objects, a <code>conditional</code> type cannot have active waits when the object is being destroyed or an exception occurs. And like the <code>spin</code> lock/wait types, a dead-lock can occur if <code>wait</code> is called multiple times in a row without being signalled and/or reset.<br>
 <br>
@@ -239,7 +239,7 @@ static <font class="syn_typ">void</font> decrement()
 &nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;t1.join();
 &nbsp;&nbsp;&nbsp;&nbsp;t2.join();
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;leaving&quot;</font> &lt;&lt; std::endl;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;leaving&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;
 }</pre></div>
 <!--end content-->

@@ -1386,6 +1386,7 @@ static void CodeToHtml()
         "div.cpphtmlcmnt > img+br+div+div { width: 8px; height: 1px; position: relative; left: 0.55em; border-top: 1px solid #5A5A5A; }" OMNI_EOL_N
         "div.cpphtmlcmnt > img.c { padding-top: 3px; margin-top: -1px; padding-bottom: 1px; }" OMNI_EOL_N
         "div.cpphtmlcmnt > img+br+div+div.c { border-top: 0; }" OMNI_EOL_N
+        "div.cpphtmlcmnt, div.cpphtmlcmnt > img { display: none !important; }" OMNI_EOL_N
         "div.syn_ex + div.c { position: relative; left: -0.4em; margin-top: -1px; border-bottom: 1px solid #5A5A5A; }" OMNI_EOL_N
         "font.syn_doc { color: #8080FF; font-style: italic; }" OMNI_EOL_N
         "font.syn_ins { color: #FF853E; font-weight: bold; }" OMNI_EOL_N

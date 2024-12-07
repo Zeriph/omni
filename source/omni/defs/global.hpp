@@ -20,6 +20,7 @@
 #define OMNI_GLOBALDEFS_HPP 1
 #include <omni/defs/os.hpp>
 #include <omni/defs/arch.hpp>
+#include <omni/defs/compiler_check.hpp>
 #include <omni/defs/cancel_check_def.hpp>
 #include <omni/defs/helper.hpp>
 #include <omni/defs/omni_ver.hpp>
@@ -110,8 +111,8 @@
     #define OMNI_EXPLICIT 
 #endif
 
-#define OMNI_FREE(v) delete v; v = OMNI_NULL
-#define OMNI_FREE_ARR(v) delete[] v; v = OMNI_NULL
+#define OMNI_FREE(v) delete v; v = OMNI_NULL_PTR
+#define OMNI_FREE_ARR(v) delete[] v; v = OMNI_NULL_PTR
 
 // For a list of error codes: see errno.h
 #include <cerrno>  // C++ defs, but some impls do not have errno defined here

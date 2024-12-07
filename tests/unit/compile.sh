@@ -298,7 +298,7 @@ parse_args()
                     "we") extraopts="${extraopts} -Werror" ;;
                     "se") extraopts="${extraopts} -Wfatal-errors" ;;
                     "stats") extraopts="${extraopts} -Q" ;;
-                    "pe") extraopts="${extraopts} -pedantic-errors" ;;
+                    "pe") extraopts="${extraopts} -pedantic-errors -Wno-variadic-macros" ;;
                     "lrt") extraopts="${extraopts} -lrt" ;;
                     "nopthread") nopthread=1 ;;
                     "nortti") extraopts="${extraopts} -fno-rtti" ;;
@@ -335,7 +335,7 @@ parse_args()
                         extraopts="${extraopts} -Wfloat-equal -Wshadow -Wconversion -Wwrite-strings"
                         extraopts="${extraopts} -Wmissing-field-initializers -Wredundant-decls"
                         extraopts="${extraopts} -Wunreachable-code -Wvolatile-register-var -Wctor-dtor-privacy"
-                        extraopts="${extraopts} -Wnon-virtual-dtor -Wsign-promo -Wreorder -Wno-pmf-conversions"
+                        extraopts="${extraopts} -Wnon-virtual-dtor -Wsign-promo -Wreorder -Wno-pmf-conversions -Wno-variadic-macros"
                         ;;
                     "pad") extraopts="${extraopts} -Wpadded" ;;
                     *) echo "Unknown compiler option $2"; usage ;;

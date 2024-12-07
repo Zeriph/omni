@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_NO_CONSTS</Name>
-  <Brief>A library macro/option</Brief>
-  <Considerations>No special considerations</Considerations>
-  <Description>A library macro/option that changes certain functionality</Description>
-  <Notes>None.</Notes>
+  <Brief>Disables any library defined constants.</Brief>
+  <Considerations>If this is macro is defined, any constants will be undefined and you must use their macro equivlents instead.</Considerations>
+  <Description>If this macro is enabled/defined, this will disable any constants defined in namespaces or classes. For example, instead of using the constant omni::math::PI in a funciton, you would have to utilize the OMNI_PI macro. This is in the rare event that the size of an executable should be taken into account; defining this compile time option will slightly reduce the overall size of the library code.</Description>
+  <Notes>This does not disable any @c const values in local functions, it only disables the library constants.</Notes>
   <PlatformSpecific>No platform specific notes.</PlatformSpecific>
-  <Synopsis>A library macro/option</Synopsis>
+  <Synopsis>Defining this macro will have the effect of having any library specific constants be undefined.</Synopsis>
   <IsHelper>false</IsHelper>
   <IsConstant>false</IsConstant>
   <IsFWHelp>false</IsFWHelp>

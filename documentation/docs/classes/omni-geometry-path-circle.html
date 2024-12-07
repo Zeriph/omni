@@ -42,18 +42,33 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 </div><br>
 <div class="docdiv"><a name="syn"></a>
 <font class="docu">SYNOPSIS</font><br><br>
-No synopsis.
+Create a path on a circle.
 <br><br><a class="toppg" href="#topopage">top</a>
 </div><br>
 <div class="docdiv"><a name="desc"></a>
 <font class="docu">DESCRIPTION</font><br><br>
-No description.
+Creates a path of 2d points along a circle given an {X, Y} center point and a radius size. This will create a point every 1 degree along the circle, alternatively you may pass along a stepping value to change the interval each node along the path is created.
 <br><br><a class="toppg" href="#topopage">top</a>
 </div><br>
+<div class="docdiv"><a name="ret"></a>
+<font class="docu">RETURN VALUES</font><br><br>
+A list of <code><a href="omni-geometry-point2d.html">omni::geometry::point2d</a></code> types containing each point along the path. 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
+<div class="docdiv"><a name="param"></a>
+<font class="docu">PARAMETERS</font><br><br>
+<code>x</code> - The X value of the center of the circle. <code>y</code> - The Y value of the center of the circle. <code>radius</code> - The radius of the circle. <code>step</code> - The stepping value to create each point at (default is 1 degree). <code>invert_x</code> - True to invert the X direction the points are added to the list. <code>invert_y</code> - True to invert the Y direction the points are added to the list. <code>std_seq_t</code> - The templated sequence type (e.g. vector/deque/etc.). <code>T</code> - The underlying type the points will be (e.g. double/int32_t/etc.). <code>std_allocator_t</code> - The templated sequence type allocator. 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
 
-
-
-
+<div class="docdiv"><a name="con"></a>
+<font class="docu">CONSIDERATIONS</font><br><br>
+Be aware that if you use non floating point types (e.g. int32_t, etc.), that the values of the points will be clamped to that type, thus making it possible the circle&#39;s path will be more jagged than those with a double or float as the backing type. 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
 
 
 

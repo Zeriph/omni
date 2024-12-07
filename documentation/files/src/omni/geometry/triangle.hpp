@@ -48,6 +48,8 @@
     #define OMNI_TRI_SA_CALC_FW
 #endif
 
+// DEV_NOTE: overflows are not checked in theses class due to double's and raw_point2d's being used, no need to check for overflow
+
 namespace omni {
     namespace geometry {
         class triangle_side
@@ -62,56 +64,67 @@ namespace omni {
                     C = 2
                 } enum_t;
                 
+                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 3;
                 }
                 
+                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return A;
                 }
 
+                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
+                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
+                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
+                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
+                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, triangle_side& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, triangle_side& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -323,10 +336,10 @@ namespace omni {
 
                 static bool _valid(int32_t val)
                 {
-                    return (val == 
-                        A ||
-                        B ||
-                        C
+                    return (
+                        OMNI_I2EV_FW(A) ||
+                        OMNI_I2EV_FW(B) ||
+                        OMNI_I2EV_FW(C)
                     );
                 }
         };
@@ -336,6 +349,7 @@ namespace omni {
         {
             public:
                 typedef T coordinate_t;
+                typedef omni_sequence_t< omni::geometry::point2d< T > > path_t;
 
                 triangle() : 
                     OMNI_CTOR_FW(omni::geometry::triangle<T>)
@@ -651,13 +665,13 @@ namespace omni {
                         );
                 }
 
-                void deflate(double percent)
+                omni::geometry::triangle<T>& deflate(double percent)
                 {
                     if (percent < 0) {
-                        OMNI_ERR_FW("value must be greater than 0", omni::exceptions::overflow_error("value must be greater than 0"))
+                        OMNI_ERR_RETV_FW("value must be greater than 0", omni::exceptions::overflow_error("value must be greater than 0"), *this)
                     }
                     OMNI_SAFE_TRIALOCK_FW
-                    double factor = percent / 100.0;
+                    double factor = (1.0 - (percent / 100.0));
                     double x, y;
                     omni::math::triangle_get_incenter<double>(
                         this->m_a.x, this->m_a.y,
@@ -668,6 +682,7 @@ namespace omni {
                     omni::math::extend_line<double>(x, y, this->m_b.x, this->m_b.y, (omni::math::distance_between_2_points(x, y, this->m_b.x, this->m_b.y) * factor), this->m_b.x, this->m_b.y);
                     omni::math::extend_line<double>(x, y, this->m_c.x, this->m_c.y, (omni::math::distance_between_2_points(x, y, this->m_c.x, this->m_c.y) * factor), this->m_c.x, this->m_c.y);
                     OMNI_TRI_SA_CALC_FW
+                    return *this;
                 }
 
                 bool empty() const
@@ -753,10 +768,10 @@ namespace omni {
                     return omni::geometry::point2d<double>(x, y);
                 }
 
-                void inflate(double percent)
+                omni::geometry::triangle<T>& inflate(double percent)
                 {
                     if (percent < 0) {
-                        OMNI_ERR_FW("value must be greater than 0", omni::exceptions::overflow_error("value must be greater than 0"))
+                        OMNI_ERR_RETV_FW("value must be greater than 0", omni::exceptions::overflow_error("value must be greater than 0"), *this)
                     }
                     OMNI_SAFE_TRIALOCK_FW
                     double factor = percent / 100.0;
@@ -770,11 +785,12 @@ namespace omni {
                     omni::math::extend_line<double>(x, y, this->m_b.x, this->m_b.y, (omni::math::distance_between_2_points(x, y, this->m_b.x, this->m_b.y) * factor), this->m_b.x, this->m_b.y);
                     omni::math::extend_line<double>(x, y, this->m_c.x, this->m_c.y, (omni::math::distance_between_2_points(x, y, this->m_c.x, this->m_c.y) * factor), this->m_c.x, this->m_c.y);
                     OMNI_TRI_SA_CALC_FW
+                    return *this;
                 }
 
-                void intersect(const omni::geometry::triangle<T>& r2)
+                omni::geometry::triangle<T>& intersect(const omni::geometry::triangle<T>& r2)
                 {
-                    if (this == &r2) { return; }
+                    if (this == &r2) { return *this; }
                     omni::geometry::raw_point2d<T> a = r2.a();
                     omni::geometry::raw_point2d<T> b = r2.b();
                     omni::geometry::raw_point2d<T> c = r2.c();
@@ -797,6 +813,7 @@ namespace omni {
                             std::memset(this->m_angle, 0, sizeof(this->m_angle));
                         #endif
                     }
+                    return *this;
                 }
 
                 bool intersects_with(const omni::geometry::triangle<T>& tri) const
@@ -828,13 +845,19 @@ namespace omni {
                     return omni::math::triangle_measure::SCALENE;
                 }
 
+                path_t path() const
+                {
+                    OMNI_SAFE_TRIALOCK_FW
+                    return omni::geometry::path::triangle(this->m_a.x, this->m_a.y, this->m_b.x, this->m_b.y, this->m_c.x, this->m_c.y);
+                }
+
                 double perimeter() const
                 {
                     OMNI_SAFE_TRIALOCK_FW
                     return this->_side_a() + this->_side_b() + this->_side_c();
                 }
 
-                void rotate_on_a(double degrees, const omni::math::rotation_direction& dir)
+                omni::geometry::triangle<T>& rotate_on_a(double degrees, const omni::math::rotation_direction& dir)
                 {
                     OMNI_SAFE_TRIALOCK_FW
                     omni::math::triangle_rotate_abc(
@@ -842,9 +865,10 @@ namespace omni {
                         this->m_b.x, this->m_b.y,
                         this->m_c.x, this->m_c.y
                     );
+                    return *this;
                 }
 
-                void rotate_on_b(double degrees, const omni::math::rotation_direction& dir)
+                omni::geometry::triangle<T>& rotate_on_b(double degrees, const omni::math::rotation_direction& dir)
                 {
                     OMNI_SAFE_TRIALOCK_FW
                     omni::math::triangle_rotate_abc(
@@ -852,9 +876,10 @@ namespace omni {
                         this->m_a.x, this->m_a.y,
                         this->m_c.x, this->m_c.y
                     );
+                    return *this;
                 }
 
-                void rotate_on_c(double degrees, const omni::math::rotation_direction& dir)
+                omni::geometry::triangle<T>& rotate_on_c(double degrees, const omni::math::rotation_direction& dir)
                 {
                     OMNI_SAFE_TRIALOCK_FW
                     omni::math::triangle_rotate_abc(
@@ -862,9 +887,10 @@ namespace omni {
                         this->m_a.x, this->m_a.y,
                         this->m_b.x, this->m_b.y
                     );
+                    return *this;
                 }
 
-                void rotate_centroid(double degrees, const omni::math::rotation_direction& dir)
+                omni::geometry::triangle<T>& rotate_centroid(double degrees, const omni::math::rotation_direction& dir)
                 {
                     OMNI_SAFE_TRIALOCK_FW
                     omni::math::triangle_rotate_centroid(
@@ -873,9 +899,10 @@ namespace omni {
                         this->m_b.x, this->m_b.y,
                         this->m_c.x, this->m_c.y
                     );
+                    return *this;
                 }
 
-                void rotate_circumcenter(double degrees, const omni::math::rotation_direction& dir)
+                omni::geometry::triangle<T>& rotate_circumcenter(double degrees, const omni::math::rotation_direction& dir)
                 {
                     OMNI_SAFE_TRIALOCK_FW
                     omni::math::triangle_rotate_circumcenter(
@@ -884,9 +911,10 @@ namespace omni {
                         this->m_b.x, this->m_b.y,
                         this->m_c.x, this->m_c.y
                     );
+                    return *this;
                 }
 
-                void rotate_incenter(double degrees, const omni::math::rotation_direction& dir)
+                omni::geometry::triangle<T>& rotate_incenter(double degrees, const omni::math::rotation_direction& dir)
                 {
                     OMNI_SAFE_TRIALOCK_FW
                     omni::math::triangle_rotate_incenter(
@@ -895,9 +923,10 @@ namespace omni {
                         this->m_b.x, this->m_b.y,
                         this->m_c.x, this->m_c.y
                     );
+                    return *this;
                 }
 
-                void rotate_origin(double degrees, const omni::math::rotation_direction& dir)
+                omni::geometry::triangle<T>& rotate_origin(double degrees, const omni::math::rotation_direction& dir)
                 {
                     OMNI_SAFE_TRIALOCK_FW
                     omni::math::triangle_rotate_origin(
@@ -906,9 +935,10 @@ namespace omni {
                         this->m_b.x, this->m_b.y,
                         this->m_c.x, this->m_c.y
                     );
+                    return *this;
                 }
 
-                void rotate_point(double degrees, T x, T y, const omni::math::rotation_direction& dir)
+                omni::geometry::triangle<T>& rotate_point(double degrees, T x, T y, const omni::math::rotation_direction& dir)
                 {
                     OMNI_SAFE_TRIALOCK_FW
                     omni::math::triangle_rotate_point(
@@ -917,9 +947,10 @@ namespace omni {
                         this->m_b.x, this->m_b.y,
                         this->m_c.x, this->m_c.y
                     );
+                    return *this;
                 }
 
-                void reflect()
+                omni::geometry::triangle<T>& reflect()
                 {
                     OMNI_SAFE_TRIALOCK_FW
                     omni::math::triangle_reflect(
@@ -927,6 +958,7 @@ namespace omni {
                         this->m_b.x, this->m_b.y,
                         this->m_c.x, this->m_c.y
                     );
+                    return *this;
                 }
 
                 double semiperimeter() const
@@ -935,10 +967,11 @@ namespace omni {
                     return (this->_side_a() + this->_side_b() + this->_side_c()) / 2.0;
                 }
 
-                void set_base(const omni::geometry::triangle_side& base)
+                omni::geometry::triangle<T>& set_base(const omni::geometry::triangle_side& base)
                 {
                     OMNI_SAFE_TRIALOCK_FW
                     this->m_base = base;
+                    return *this;
                 }
 
                 double side_a() const
@@ -974,7 +1007,7 @@ namespace omni {
                     }
                 }
 
-                void translate_xy(T x, T y)
+                omni::geometry::triangle<T>& translate_xy(T x, T y)
                 {
                     OMNI_SAFE_TRIALOCK_FW
                     omni::math::triangle_translate_xy(
@@ -983,9 +1016,10 @@ namespace omni {
                         this->m_b.x, this->m_b.y,
                         this->m_c.x, this->m_c.y
                     );
+                    return *this;
                 }
 
-                void translate_angle(double degrees, T distance)
+                omni::geometry::triangle<T>& translate_angle(double degrees, T distance)
                 {
                     OMNI_SAFE_TRIALOCK_FW
                     omni::math::triangle_translate_angle(
@@ -994,6 +1028,7 @@ namespace omni {
                         this->m_b.x, this->m_b.y,
                         this->m_c.x, this->m_c.y
                     );
+                    return *this;
                 }
 
                 omni::string_t to_string_t() const
@@ -1311,16 +1346,17 @@ namespace omni {
                 }
         };
 
-        typedef omni::geometry::triangle<int32_t> triangle_t;
-        typedef omni::geometry::triangle<int64_t> triangle64_t;
+        typedef omni::geometry::triangle<double> triangle_t;
         typedef omni::geometry::triangle<float> triangleF_t;
-        typedef omni::geometry::triangle<double> triangleD_t;
+        typedef omni::geometry::triangle<int32_t> triangle32_t;
+        typedef omni::geometry::triangle<int64_t> triangle64_t;
 
         template < typename T >
         class raw_triangle
         {
             public:
                 typedef T coordinate_t;
+                typedef omni_sequence_t< omni::geometry::point2d< T > > path_t;
 
                 raw_triangle() : 
                     OMNI_CTOR_FW(omni::geometry::raw_triangle<T>)
@@ -1352,34 +1388,34 @@ namespace omni {
                     a(cp[0], cp[1]), b(cp[2], cp[3]), c(cp[4], cp[5]), base_side(base)
                 { }
 
-                raw_triangle(const omni::math::dimensional<T, 2>& a, const omni::math::dimensional<T, 2>& b, const omni::math::dimensional<T, 2>& c) :
+                raw_triangle(const omni::math::dimensional<T, 2>& _a, const omni::math::dimensional<T, 2>& _b, const omni::math::dimensional<T, 2>& _c) :
                     OMNI_CTOR_FW(omni::geometry::raw_triangle<T>)
-                    a(a[0], a[1]), b(b[0], b[1]), c(c[0], c[1]), base_side()
+                    a(_a[0], _a[1]), b(_b[0], _b[1]), c(_c[0], _c[1]), base_side()
                 { }
 
-                raw_triangle(const omni::math::dimensional<T, 2>& a, const omni::math::dimensional<T, 2>& b, const omni::math::dimensional<T, 2>& c, const omni::geometry::triangle_side& base) :
+                raw_triangle(const omni::math::dimensional<T, 2>& _a, const omni::math::dimensional<T, 2>& _b, const omni::math::dimensional<T, 2>& _c, const omni::geometry::triangle_side& base) :
                     OMNI_CTOR_FW(omni::geometry::raw_triangle<T>)
-                    a(a[0], a[1]), b(b[0], b[1]), c(c[0], c[1]), base_side(base)
+                    a(_a[0], _a[1]), b(_b[0], _b[1]), c(_c[0], _c[1]), base_side(base)
                 { }
 
-                raw_triangle(const omni::geometry::point2d<T>& a, const omni::geometry::point2d<T>& b, const omni::geometry::point2d<T>& c) :
+                raw_triangle(const omni::geometry::point2d<T>& _a, const omni::geometry::point2d<T>& _b, const omni::geometry::point2d<T>& _c) :
                     OMNI_CTOR_FW(omni::geometry::raw_triangle<T>)
-                    a(a.x(), a.y()), b(b.x(), b.y()), c(c.x(), c.y()), base_side()
+                    a(_a.x(), _a.y()), b(_b.x(), _b.y()), c(_c.x(), _c.y()), base_side()
                 { }
 
-                raw_triangle(const omni::geometry::point2d<T>& a, const omni::geometry::point2d<T>& b, const omni::geometry::point2d<T>& c, const omni::geometry::triangle_side& base) :
+                raw_triangle(const omni::geometry::point2d<T>& _a, const omni::geometry::point2d<T>& _b, const omni::geometry::point2d<T>& _c, const omni::geometry::triangle_side& base) :
                     OMNI_CTOR_FW(omni::geometry::raw_triangle<T>)
-                    a(a.x(), a.y()), b(b.x(), b.y()), c(c.x(), c.y()), base_side(base)
+                    a(_a.x(), _a.y()), b(_b.x(), _b.y()), c(_c.x(), _c.y()), base_side(base)
                 { }
 
-                raw_triangle(const omni::geometry::raw_point2d<T>& a, const omni::geometry::raw_point2d<T>& b, const omni::geometry::raw_point2d<T>& c) :
+                raw_triangle(const omni::geometry::raw_point2d<T>& _a, const omni::geometry::raw_point2d<T>& _b, const omni::geometry::raw_point2d<T>& _c) :
                     OMNI_CTOR_FW(omni::geometry::raw_triangle<T>)
-                    a(a.x, a.y), b(b.x, b.y), c(c.x, c.y), base_side()
+                    a(_a.x, _a.y), b(_b.x, _b.y), c(_c.x, _c.y), base_side()
                 { }
 
-                raw_triangle(const omni::geometry::raw_point2d<T>& a, const omni::geometry::raw_point2d<T>& b, const omni::geometry::raw_point2d<T>& c, const omni::geometry::triangle_side& base) :
+                raw_triangle(const omni::geometry::raw_point2d<T>& _a, const omni::geometry::raw_point2d<T>& _b, const omni::geometry::raw_point2d<T>& _c, const omni::geometry::triangle_side& base) :
                     OMNI_CTOR_FW(omni::geometry::raw_triangle<T>)
-                    a(a.x, a.y), b(b.x, b.y), c(c.x, c.y), base_side(base)
+                    a(_a.x, _a.y), b(_b.x, _b.y), c(_c.x, _c.y), base_side(base)
                 { }
 
                 raw_triangle(T x1, T y1, T x2, T y2, T x3, T y3) : 
@@ -1564,12 +1600,12 @@ namespace omni {
                         );
                 }
 
-                void deflate(double percent)
+                omni::geometry::raw_triangle<T>& deflate(double percent)
                 {
                     if (percent < 0) {
-                        OMNI_ERR_FW("value must be greater than 0", omni::exceptions::overflow_error("value must be greater than 0"))
+                        OMNI_ERR_RETV_FW("value must be greater than 0", omni::exceptions::overflow_error("value must be greater than 0"), *this)
                     }
-                    double factor = percent / 100.0;
+                    double factor = (1.0 - (percent / 100.0));
                     double x, y;
                     omni::math::triangle_get_incenter<double>(
                         this->a.x, this->a.y,
@@ -1579,6 +1615,7 @@ namespace omni {
                     omni::math::extend_line<double>(x, y, this->a.x, this->a.y, (omni::math::distance_between_2_points(x, y, this->a.x, this->a.y) * factor), this->a.x, this->a.y);
                     omni::math::extend_line<double>(x, y, this->b.x, this->b.y, (omni::math::distance_between_2_points(x, y, this->b.x, this->b.y) * factor), this->b.x, this->b.y);
                     omni::math::extend_line<double>(x, y, this->c.x, this->c.y, (omni::math::distance_between_2_points(x, y, this->c.x, this->c.y) * factor), this->c.x, this->c.y);
+                    return *this;
                 }
 
                 bool empty() const
@@ -1648,10 +1685,10 @@ namespace omni {
                     return omni::geometry::point2d<double>(x, y);
                 }
 
-                void inflate(double percent)
+                omni::geometry::raw_triangle<T>& inflate(double percent)
                 {
                     if (percent < 0) {
-                        OMNI_ERR_FW("value must be greater than 0", omni::exceptions::overflow_error("value must be greater than 0"))
+                        OMNI_ERR_RETV_FW("value must be greater than 0", omni::exceptions::overflow_error("value must be greater than 0"), *this)
                     }
                     double factor = percent / 100.0;
                     double x, y;
@@ -1663,11 +1700,12 @@ namespace omni {
                     omni::math::extend_line<double>(x, y, this->a.x, this->a.y, (omni::math::distance_between_2_points(x, y, this->a.x, this->a.y) * factor), this->a.x, this->a.y);
                     omni::math::extend_line<double>(x, y, this->b.x, this->b.y, (omni::math::distance_between_2_points(x, y, this->b.x, this->b.y) * factor), this->b.x, this->b.y);
                     omni::math::extend_line<double>(x, y, this->c.x, this->c.y, (omni::math::distance_between_2_points(x, y, this->c.x, this->c.y) * factor), this->c.x, this->c.y);
+                    return *this;
                 }
 
-                void intersect(const omni::geometry::raw_triangle<T>& r2)
+                omni::geometry::raw_triangle<T>& intersect(const omni::geometry::raw_triangle<T>& r2)
                 {
-                    if (this == &r2) { return; }
+                    if (this == &r2) { return *this; }
                     omni::geometry::raw_point2d<T> _a = r2.a;
                     omni::geometry::raw_point2d<T> _b = r2.b;
                     omni::geometry::raw_point2d<T> _c = r2.c;
@@ -1683,6 +1721,7 @@ namespace omni {
                         this->b.x = 0; this->b.y = 0;
                         this->c.x = 0; this->c.y = 0;
                     }
+                    return *this;
                 }
 
                 bool intersects_with(const omni::geometry::raw_triangle<T>& tri) const
@@ -1711,39 +1750,47 @@ namespace omni {
                     return omni::math::triangle_measure::SCALENE;
                 }
 
+                path_t path() const
+                {
+                    return omni::geometry::path::triangle(this->a.x, this->a.y, this->b.x, this->b.y, this->c.x, this->c.y);
+                }
+
                 double perimeter() const
                 {
                     return this->_side_a() + this->_side_b() + this->_side_c();
                 }
 
-                void rotate_on_a(double degrees, const omni::math::rotation_direction& dir)
+                omni::geometry::raw_triangle<T>& rotate_on_a(double degrees, const omni::math::rotation_direction& dir)
                 {
                     omni::math::triangle_rotate_abc(
                         degrees, this->a.x, this->a.y, dir,
                         this->b.x, this->b.y,
                         this->c.x, this->c.y
                     );
+                    return *this;
                 }
 
-                void rotate_on_b(double degrees, const omni::math::rotation_direction& dir)
+                omni::geometry::raw_triangle<T>& rotate_on_b(double degrees, const omni::math::rotation_direction& dir)
                 {
                     omni::math::triangle_rotate_abc(
                         degrees, this->b.x, this->b.y, dir,
                         this->a.x, this->a.y,
                         this->c.x, this->c.y
                     );
+                    return *this;
                 }
 
-                void rotate_on_c(double degrees, const omni::math::rotation_direction& dir)
+                omni::geometry::raw_triangle<T>& rotate_on_c(double degrees, const omni::math::rotation_direction& dir)
                 {
                     omni::math::triangle_rotate_abc(
                         degrees, this->c.x, this->c.y, dir,
                         this->a.x, this->a.y,
                         this->b.x, this->b.y
                     );
+                    return *this;
                 }
 
-                void rotate_centroid(double degrees, const omni::math::rotation_direction& dir)
+                omni::geometry::raw_triangle<T>& rotate_centroid(double degrees, const omni::math::rotation_direction& dir)
                 {
                     omni::math::triangle_rotate_centroid(
                         degrees, dir,
@@ -1751,9 +1798,10 @@ namespace omni {
                         this->b.x, this->b.y,
                         this->c.x, this->c.y
                     );
+                    return *this;
                 }
 
-                void rotate_circumcenter(double degrees, const omni::math::rotation_direction& dir)
+                omni::geometry::raw_triangle<T>& rotate_circumcenter(double degrees, const omni::math::rotation_direction& dir)
                 {
                     omni::math::triangle_rotate_circumcenter(
                         degrees, dir,
@@ -1761,9 +1809,10 @@ namespace omni {
                         this->b.x, this->b.y,
                         this->c.x, this->c.y
                     );
+                    return *this;
                 }
 
-                void rotate_incenter(double degrees, const omni::math::rotation_direction& dir)
+                omni::geometry::raw_triangle<T>& rotate_incenter(double degrees, const omni::math::rotation_direction& dir)
                 {
                     omni::math::triangle_rotate_incenter(
                         degrees, dir,
@@ -1771,9 +1820,10 @@ namespace omni {
                         this->b.x, this->b.y,
                         this->c.x, this->c.y
                     );
+                    return *this;
                 }
 
-                void rotate_origin(double degrees, const omni::math::rotation_direction& dir)
+                omni::geometry::raw_triangle<T>& rotate_origin(double degrees, const omni::math::rotation_direction& dir)
                 {
                     omni::math::triangle_rotate_origin(
                         degrees, dir,
@@ -1781,9 +1831,10 @@ namespace omni {
                         this->b.x, this->b.y,
                         this->c.x, this->c.y
                     );
+                    return *this;
                 }
 
-                void rotate_point(double degrees, T x, T y, const omni::math::rotation_direction& dir)
+                omni::geometry::raw_triangle<T>& rotate_point(double degrees, T x, T y, const omni::math::rotation_direction& dir)
                 {
                     omni::math::triangle_rotate_point(
                         degrees, x, y, dir,
@@ -1791,15 +1842,17 @@ namespace omni {
                         this->b.x, this->b.y,
                         this->c.x, this->c.y
                     );
+                    return *this;
                 }
 
-                void reflect()
+                omni::geometry::raw_triangle<T>& reflect()
                 {
                     omni::math::triangle_reflect(
                         this->a.x, this->a.y,
                         this->b.x, this->b.y,
                         this->c.x, this->c.y
                     );
+                    return *this;
                 }
 
                 double semiperimeter() const
@@ -1831,7 +1884,7 @@ namespace omni {
                     }
                 }
 
-                void translate_xy(T x, T y)
+                omni::geometry::raw_triangle<T>& translate_xy(T x, T y)
                 {
                     omni::math::triangle_translate_xy(
                         x, y,
@@ -1839,9 +1892,10 @@ namespace omni {
                         this->b.x, this->b.y,
                         this->c.x, this->c.y
                     );
+                    return *this;
                 }
 
-                void translate_angle(double degrees, T distance)
+                omni::geometry::raw_triangle<T>& translate_angle(double degrees, T distance)
                 {
                     omni::math::triangle_translate_angle(
                         degrees, distance,
@@ -1849,6 +1903,7 @@ namespace omni {
                         this->b.x, this->b.y,
                         this->c.x, this->c.y
                     );
+                    return *this;
                 }
 
                 omni::string_t to_string_t() const
@@ -1995,16 +2050,16 @@ namespace omni {
                 omni::geometry::triangle_side base_side;
 
             private:
-                raw_triangle(const omni::geometry::raw_triangle<T>& a, const omni::geometry::raw_triangle<T>& b) :
+                raw_triangle(const omni::geometry::raw_triangle<T>& _a, const omni::geometry::raw_triangle<T>& _b) :
                     OMNI_CTOR_FW(omni::geometry::raw_triangle<T>)
-                    a(a.a), b(a.b), c(a.c), base_side(a.base_side)
+                    a(_a.a), b(_a.b), c(_a.c), base_side(_a.base_side)
                 {
-                    this->intersect(b);
+                    this->intersect(_b);
                 }
 
-                raw_triangle(const omni::geometry::raw_triangle<T>& a, double percent, bool deflate) :
+                raw_triangle(const omni::geometry::raw_triangle<T>& _a, double percent, bool deflate) :
                     OMNI_CTOR_FW(omni::geometry::raw_triangle<T>)
-                    a(a.a), b(a.b), c(a.c), base_side(a.base_side)
+                    a(_a.a), b(_a.b), c(_a.c), base_side(_a.base_side)
                 {
                     if (deflate) {
                         this->deflate(percent);
@@ -2072,16 +2127,22 @@ namespace omni {
                 }
         };
 
-        typedef omni::geometry::raw_triangle<int32_t> raw_triangle_t;
-        typedef omni::geometry::raw_triangle<int64_t> raw_triangle64_t;
+        typedef omni::geometry::raw_triangle<double> raw_triangle_t;
         typedef omni::geometry::raw_triangle<float> raw_triangleF_t;
-        typedef omni::geometry::raw_triangle<double> raw_triangleD_t;
+        typedef omni::geometry::raw_triangle<int32_t> raw_triangle32_t;
+        typedef omni::geometry::raw_triangle<int64_t> raw_triangle64_t;
     }
 }
 
 namespace std {
     template < typename T >
     inline void swap(omni::geometry::triangle<T>& o1, omni::geometry::triangle<T>& o2)
+    {
+        o1.swap(o2);
+    }
+
+    template < typename T >
+    inline void swap(omni::geometry::raw_triangle<T>& o1, omni::geometry::raw_triangle<T>& o2)
     {
         o1.swap(o2);
     }

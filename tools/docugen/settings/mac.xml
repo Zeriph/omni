@@ -11,9 +11,10 @@
   <TemplateDirectory>/Code/omni/tools/docugen/templates/</TemplateDirectory>
   <TempZipDirectory>/Code/omni/tools/docugen/tmpout/</TempZipDirectory>
   <Excluded>/Code/omni/source/.vscode</Excluded>
-  <NoParse>io_dir.hxx,io_file.hxx,io_file_ex.hxx,io_file_rw.hxx,io_path.hxx,io_path_combine.hxx,math_radmap.hxx,timer.hxx,date_data.hxx</NoParse>
+  <PathsFor7z>/usr/local/bin/7z,/usr/bin/7z,/usr/local/sbin/7z,/usr/sbin/7z,/opt/homebrew/bin/7z,/opt/homebrew/Cellar/p7zip/17.05/bin/7z</PathsFor7z>
+  <NoParse>dir.hxx,file.hxx,file_ex.hxx,file_rw.hxx,path.hxx,path_combine.hxx,math_radmap.hxx,timer.hxx,date_data.hxx</NoParse>
   <KeywordInstructions>if,else,switch,case,default,break,goto,return,for,while,do,continue,typedef,sizeof,new,delete,throw,try,catch,namespace,operator,static_cast,const_cast,dynamic_cast,reinterpret_cast,true,false,using,typeid,and,and_eq,bitand,bitor,compl,not,not_eq,or,or_eq,xor,xor_eq,private,protected,public,friend,inline,template,virtual,asm,explicit,typename</KeywordInstructions>
-  <KeywordTypes>class,void,struct,union,enum,char,wchar_t,short,int,long,double,float,signed,uint8_t,uint16_t,uint32_t,uint64_t,unsigned,const,extern,auto,register,volatile,bool,mutable,this,NULL</KeywordTypes>
+  <KeywordTypes>class,void,struct,union,enum,char,wchar_t,short,int,long,double,float,signed,uint8_t,uint16_t,uint32_t,uint64_t,unsigned,const,extern,auto,register,volatile,bool,mutable,this,nullptr,NULL</KeywordTypes>
   <KeywordPreproc>#include,#define,#if defined,#if,#else,#elif,#endif,#undef</KeywordPreproc>
   <KeywordDoxyTags>@param ,@tparam ,@return ,@brief ,@details ,@exception ,@attention ,@warning ,@c ,@h ,@note ,@internal ,@invariant </KeywordDoxyTags>
   <KeywordDoxyCommentTags>@brief,@details,@return,@exception,@warning,@attention,@note,@invariant,@param,@tparam</KeywordDoxyCommentTags>

@@ -37,17 +37,22 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 </div><br>
 <div class="docdiv"><a name="syn"></a>
 <font class="docu">SYNOPSIS</font><br><br>
-No synopsis.
+Starts the timer.
 <br><br><a class="toppg" href="#topopage">top</a>
 </div><br>
 <div class="docdiv"><a name="desc"></a>
 <font class="docu">DESCRIPTION</font><br><br>
-No description.
+Starts the timer and blocks until the timer is in a running state. If the timer is already running, nothing happens.
 <br><br><a class="toppg" href="#topopage">top</a>
 </div><br>
 
 
-
+<div class="docdiv"><a name="err"></a>
+<font class="docu">ERRORS</font><br><br>
+<code><a href="omni-exceptions-invalid_delegate.html">omni::exceptions::invalid_delegate</a></code> can be raised if there is no delegate attached to the tick event. Additionally <code><a href="omni-exceptions-index_out_of_range.html">omni::exceptions::index_out_of_range</a></code> can be raised if the interval is set to 0. 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
 
 
 

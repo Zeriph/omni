@@ -31,20 +31,30 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 </div><br>
 <div class="docdiv"><a name="syn"></a>
 <font class="docu">SYNOPSIS</font><br><br>
-No synopsis.
+The tick event that is called when the timer elapses.
 <br><br><a class="toppg" href="#topopage">top</a>
 </div><br>
 <div class="docdiv"><a name="desc"></a>
 <font class="docu">DESCRIPTION</font><br><br>
-No description.
+The event that is raised when the timer elapses. Each delegate is called in the order to which it was attached. The tick event is supposed to be a short-lived function, or you are to ensure that a separate thread is called to handle the elapsed time.
 <br><br><a class="toppg" href="#topopage">top</a>
 </div><br>
 
 
 
+<div class="docdiv"><a name="con"></a>
+<font class="docu">CONSIDERATIONS</font><br><br>
+Since the timer event happens on a new thread, care must be taken to make sure the attached delegate is re-entrant. 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
 
-
-
+<div class="docdiv"><a name="notes"></a>
+<font class="docu">NOTES</font><br><br>
+This timer will invoke a <code>tick</code> event at a specified interval, and depending on how long the delegate takes to complete, could queue up additional events. In other words, if the timer elapses while an event is still executing, the next event will be queued up and fire after the completion of the current event. If the timer is stopped and there are still events queued up, all remaining events will be effectively dropped and not executed. 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
 
 
 <!--end content-->

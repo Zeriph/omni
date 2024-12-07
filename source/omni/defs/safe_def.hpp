@@ -25,17 +25,19 @@
 
 #if defined(OMNI_SAFE_LIBRARY)
     #define OMNI_SAFE_APPLICATION
+    #define OMNI_SAFE_CHRONO
     #define OMNI_SAFE_COLOR
+    #define OMNI_SAFE_CRYPTO
     #define OMNI_SAFE_DELEGATES
     #define OMNI_SAFE_EVENTS
-    #define OMNI_SAFE_PROP
-    #define OMNI_SAFE_CHRONO
+    #define OMNI_SAFE_GEOMETRY
     #define OMNI_SAFE_LOCKS
+    #define OMNI_SAFE_NET
+    #define OMNI_SAFE_PROP
     #define OMNI_SAFE_TIMERS
     #define OMNI_SAFE_THREADS
-    #define OMNI_SAFE_GEOMETRY
-    #define OMNI_SAFE_NET
-    #define OMNI_CHECK_ARITHMETIC_OVERFLOW
+    // since this can have a huge performance impact and potentially cause other issues, this must be explicitly enabled by the user
+    // #define OMNI_CHECK_ARITHMETIC_OVERFLOW
 #endif
 
 #if defined(OMNI_SAFE_TIMERS) && (defined(OMNI_NO_SAFE_TIMERS) || defined(OMNI_NO_SAFE_LIBRARY))
@@ -122,10 +124,11 @@
 
 #if defined(OMNI_SAFE_NET)
     #define OMNI_SAFE_SOCKET
+    #define OMNI_SAFE_SOCKET6
+    #define OMNI_SAFE_UNIX_SOCKET
     #define OMNI_SAFE_SOCKET_EP
-    // TODO: see note in client.hpp
-    #define OMNI_SAFE_NET_CLIENT
-    #define OMNI_SAFE_NET_SERVER
+    #define OMNI_SAFE_SOCKET_EP6
+    #define OMNI_SAFE_UNIX_SOCKET_EP
 #endif
 
 #if defined(OMNI_SAFE_APPLICATION) && (defined(OMNI_NO_SAFE_APPLICATION) || defined(OMNI_NO_SAFE_LIBRARY))
@@ -272,10 +275,52 @@
         #define OMNI_NO_SAFE_SOCKET
     #endif
 #endif
+#if defined(OMNI_SAFE_SOCKET6) && (defined(OMNI_NO_SAFE_SOCKET6) || defined(OMNI_NO_SAFE_LIBRARY))
+    #undef OMNI_SAFE_SOCKET6
+    #if !defined(OMNI_NO_SAFE_SOCKET6)
+        #define OMNI_NO_SAFE_SOCKET6
+    #endif
+#endif
+#if defined(OMNI_SAFE_UNIX_SOCKET) && (defined(OMNI_NO_SAFE_UNIX_SOCKET) || defined(OMNI_NO_SAFE_LIBRARY))
+    #undef OMNI_SAFE_UNIX_SOCKET
+    #if !defined(OMNI_NO_SAFE_UNIX_SOCKET)
+        #define OMNI_NO_SAFE_UNIX_SOCKET
+    #endif
+#endif
 #if defined(OMNI_SAFE_SOCKET_EP) && (defined(OMNI_NO_SAFE_SOCKET_EP) || defined(OMNI_NO_SAFE_LIBRARY))
     #undef OMNI_SAFE_SOCKET_EP
     #if !defined(OMNI_NO_SAFE_SOCKET_EP)
         #define OMNI_NO_SAFE_SOCKET_EP
+    #endif
+#endif
+#if defined(OMNI_SAFE_SOCKET_EP6) && (defined(OMNI_NO_SAFE_SOCKET_EP6) || defined(OMNI_NO_SAFE_LIBRARY))
+    #undef OMNI_SAFE_SOCKET_EP6
+    #if !defined(OMNI_NO_SAFE_SOCKET_EP6)
+        #define OMNI_NO_SAFE_SOCKET_EP6
+    #endif
+#endif
+#if defined(OMNI_SAFE_UNIX_SOCKET_EP) && (defined(OMNI_NO_SAFE_UNIX_SOCKET_EP) || defined(OMNI_NO_SAFE_LIBRARY))
+    #undef OMNI_SAFE_UNIX_SOCKET_EP
+    #if !defined(OMNI_NO_SAFE_UNIX_SOCKET_EP)
+        #define OMNI_NO_SAFE_UNIX_SOCKET_EP
+    #endif
+#endif
+#if defined(OMNI_SAFE_SHA256) && (defined(OMNI_NO_SAFE_SHA256) || defined(OMNI_NO_SAFE_LIBRARY))
+    #undef OMNI_SAFE_SHA256
+    #if !defined(OMNI_NO_SAFE_SHA256)
+        #define OMNI_NO_SAFE_SHA256
+    #endif
+#endif
+#if defined(OMNI_SAFE_SHA1) && (defined(OMNI_NO_SAFE_SHA1) || defined(OMNI_NO_SAFE_LIBRARY))
+    #undef OMNI_SAFE_SHA1
+    #if !defined(OMNI_NO_SAFE_SHA1)
+        #define OMNI_NO_SAFE_SHA1
+    #endif
+#endif
+#if defined(OMNI_SAFE_MD5) && (defined(OMNI_NO_SAFE_MD5) || defined(OMNI_NO_SAFE_LIBRARY))
+    #undef OMNI_SAFE_MD5
+    #if !defined(OMNI_NO_SAFE_MD5)
+        #define OMNI_NO_SAFE_MD5
     #endif
 #endif
 

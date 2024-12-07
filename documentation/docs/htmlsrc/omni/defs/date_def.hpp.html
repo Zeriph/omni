@@ -23,17 +23,17 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <div class="ptitle"><a href="../../../../files/src/omni/defs/date_def.hpp" onclick="return popup('../../../../files/src/omni/defs/date_def.hpp')">omni/defs/date_def.hpp</a></div><div class="content"><div>
 <code><div class="cpphtmllines">
 <!--start line numbers-->
-0001:<br><div id="cmntl1" name="cmntl1">0002:<br>0003:<br>0004:<br>0005:<br>0006:<br>0007:<br>0008:<br>0009:<br>00010:<br>00011:<br>00012:<br>00013:<br>00014:<br>00015:<br>00016:<br>00017:<br>00018:<br></div>00019:<br>
-00020:<br>00021:<br>00022:<br>00023:<br>00024:<br>00025:<br>00026:<br>00027:<br>00028:<br>00029:<br>00030:<br>00031:<br>00032:<br>00033:<br>00034:<br>00035:<br>00036:<br>00037:<br>00038:<br>00039:<br>
-00040:<br>00041:<br>00042:<br>00043:<br>00044:<br>00045:<br>00046:<br>00047:<br>00048:<br>00049:<br>00050:<br>00051:<br>00052:<br>00053:<br>00054:<br>00055:<br>00056:<br>00057:<br>00058:<br>00059:<br>
-00060:<br>00061:<br>00062:<br>00063:<br>00064:<br>00065:<br>00066:<br>00067:<br>00068:<br>00069:<br>00070:<br>00071:<br>00072:<br>
+01:<br><div id="cmntl1" name="cmntl1">02:<br>03:<br>04:<br>05:<br>06:<br>07:<br>08:<br>09:<br>10:<br>11:<br>12:<br>13:<br>14:<br>15:<br>16:<br>17:<br>18:<br></div>19:<br>
+20:<br>21:<br>22:<br>23:<br>24:<br>25:<br>26:<br>27:<br>28:<br>29:<br>30:<br>31:<br>32:<br>33:<br>34:<br>35:<br>36:<br>37:<br>38:<br>39:<br>
+40:<br>41:<br>42:<br>43:<br>44:<br>45:<br>46:<br>47:<br>48:<br>49:<br>50:<br>51:<br>52:<br>53:<br>54:<br>55:<br>56:<br>57:<br>58:<br>59:<br>
+60:<br>61:<br>62:<br>63:<br>64:<br>65:<br>66:<br>67:<br>68:<br>69:<br>70:<br>71:<br>72:<br>73:<br>74:<br>75:<br>76:<br>77:<br>
 <!--end line numbers-->
 </div><div class="cpphtmlcmnt">
 <!--start collapse columns-->
 <img src="../../../../content/tree/min.gif" alt="Min/Max" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <!--end collapse columns-->
 </div><div class="cpphtml" style="margin-left:3em;">
 <!--start highlighted code-->
@@ -66,23 +66,22 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <font class="syn_pre">#define OMNI_DATE_PART_DAY_OF_YEAR_FW 1</font><br>
 <font class="syn_pre">#define OMNI_DATE_PART_MONTH_FW 2</font><br>
 <font class="syn_pre">#define OMNI_DATE_PART_DAY_FW 3</font><br>
-<font class="syn_pre">#define OMNI_FLAGS_MASK_FW 0xC000000000000000</font><br>
-<font class="syn_pre">#define OMNI_LOCAL_MASK_FW 0x8000000000000000</font><br>
-<font class="syn_pre">#define OMNI_KIND_UNSPECIFIED_FW 0x0000000000000000</font><br>
-<font class="syn_pre">#define OMNI_KIND_UTC_FW 0x4000000000000000</font><br>
-<font class="syn_pre">#define OMNI_KIND_LOCAL_FW 0x8000000000000000</font><br>
-<font class="syn_pre">#define OMNI_KIND_LOCAL_AMBIGUOUS_DST_FW 0xC000000000000000</font><br>
-<font class="syn_pre">#define OMNI_KIND_SHIFT_FW 62</font><br>
-<font class="syn_pre">#define OMNI_TICKS_FIELD_FW <font class="syn_str">&quot;ticks&quot;</font></font><br>
-<font class="syn_pre">#define OMNI_DATE_DATA_FIELD_FW <font class="syn_str">&quot;dateData&quot;</font></font><br>
 <br>
+<font class="syn_pre">#define OMNI_DATE_FLAGS_MASK_FW 0xC000000000000000</font><br>
+<font class="syn_pre">#define OMNI_DATE_LOCAL_MASK_FW 0x8000000000000000</font><br>
+<font class="syn_pre">#define OMNI_DATE_KIND_UNSPECIFIED_FW 0x0000000000000000</font><br>
+<font class="syn_pre">#define OMNI_DATE_KIND_UTC_FW 0x4000000000000000</font><br>
+<font class="syn_pre">#define OMNI_DATE_KIND_LOCAL_FW 0x8000000000000000</font><br>
+<font class="syn_pre">#define OMNI_DATE_KIND_LOCAL_DST_FW 0xC000000000000000</font><br>
+<font class="syn_pre">#define OMNI_DATE_KIND_SHIFT_FW 62</font><br>
 <br>
-<br>
+<font class="syn_pre">#define OMNI_DATE_TWO_DIGIT_YEAR_MAX 30</font><br>
+<font class="syn_pre">#define OMNI_DATE_MAX_YEAR 9999</font><br>
 <font class="syn_pre">#define <a href="../../../options/omni_days_per_year.html">OMNI_DAYS_PER_YEAR</a> 365 <font class="syn_cmt">// non-leap</font></font><br>
 <font class="syn_pre">#define <a href="../../../options/omni_days_per_leap_year.html">OMNI_DAYS_PER_LEAP_YEAR</a> 366</font><br>
 <font class="syn_pre">#define <a href="../../../options/omni_days_per_4_years.html">OMNI_DAYS_PER_4_YEARS</a> 1461 <font class="syn_cmt">// 365 * 4 + 1 leap day</font></font><br>
 <br>
-<font class="syn_cmt">// TODO: from https://www.grc.nasa.gov/www/k-12/Numbers/Math/Mathematical_Thinking/calendar_calculations.htm</font><br>
+<font class="syn_cmt">// DEV_NOTE: from https://www.grc.nasa.gov/www/k-12/Numbers/Math/Mathematical_Thinking/calendar_calculations.htm</font><br>
 <font class="syn_pre">#define <a href="../../../options/omni_days_per_tropical_year.html">OMNI_DAYS_PER_TROPICAL_YEAR</a> 365.2422</font><br>
 <br>
 <font class="syn_cmt">// DEV_NOTE: These values are to keep in line with the .NET library</font><br>
@@ -90,14 +89,20 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <font class="syn_pre">#define <a href="../../../options/omni_days_per_400_years.html">OMNI_DAYS_PER_400_YEARS</a> 146097 <font class="syn_cmt">// DAYS_PER_100_YEARS * 4 + 1</font></font><br>
 <font class="syn_pre">#define <a href="../../../options/omni_days_to_1601ad.html">OMNI_DAYS_TO_1601AD</a> 584388 <font class="syn_cmt">// Number of days from 1/1/0001 to 12/31/1600 -&gt; DAYS_PER_400_YEARS * 4</font></font><br>
 <font class="syn_pre">#define <a href="../../../options/omni_days_to_1899ad.html">OMNI_DAYS_TO_1899AD</a> 693593 <font class="syn_cmt">// Number of days from 1/1/0001 to 12/30/1899 -&gt; DAYS_PER_400_YEARS * 4 + DAYS_PER_100_YEARS * 3 - 367;</font></font><br>
+<font class="syn_pre">#define <a href="../../../options/omni_days_to_1970ad.html">OMNI_DAYS_TO_1970AD</a> 719162 <font class="syn_cmt">// Number of days from 1/1/0001 to 12/31/1969 -&gt;  DAYS_PER_400_YEARS * 4 + DAYS_PER_100_YEARS * 3 + <a href="../../../options/omni_days_per_4_years.html">OMNI_DAYS_PER_4_YEARS</a> * 17 + <a href="../../../options/omni_days_per_year.html">OMNI_DAYS_PER_YEAR</a></font></font><br>
+<font class="syn_pre">#define <a href="../../../options/omni_days_to_epoch.html">OMNI_DAYS_TO_EPOCH</a> <a href="../../../options/omni_days_to_1970ad.html">OMNI_DAYS_TO_1970AD</a></font><br>
 <font class="syn_pre">#define <a href="../../../options/omni_days_to_10000ad.html">OMNI_DAYS_TO_10000AD</a> 3652059 <font class="syn_cmt">// Number of days from 1/1/0001 to 12/31/9999 -&gt; DAYS_PER_400_YEARS * 25 - 366</font></font><br>
-<font class="syn_pre">#define <a href="../../../options/omni_days_to_epoch.html">OMNI_DAYS_TO_EPOCH</a> 719527 <font class="syn_cmt">// Number of days from 1/1/0001 to 12/31/1969 -&gt; DAYS_TO_1601AD + (DAYS_PER_100_YEARS * 3) + (DAYS_PER_4_YEARS * 17) + (DAYS_PER_YEAR * 2)</font></font><br>
 <font class="syn_pre">#define <a href="../../../options/omni_ticks_to_10000ad.html">OMNI_TICKS_TO_10000AD</a> 3155378975999999999 <font class="syn_cmt">// DAYS_TO_10000AD * TICKS_PER_DAY - 1;</font></font><br>
 <font class="syn_pre">#define <a href="../../../options/omni_milliseconds_to_10000ad.html">OMNI_MILLISECONDS_TO_10000AD</a> 315537897600000 <font class="syn_cmt">// DAYS_TO_10000AD * MILLISECONDS_PER_DAY;</font></font><br>
 <br>
 <font class="syn_pre">#define <a href="../../../options/omni_file_time_offset.html">OMNI_FILE_TIME_OFFSET</a> 504911232000000000 <font class="syn_cmt">// DAYS_TO_1601AD * TICKS_PER_DAY;</font></font><br>
 <font class="syn_pre">#define <a href="../../../options/omni_double_date_offset.html">OMNI_DOUBLE_DATE_OFFSET</a> 599264352000000000 <font class="syn_cmt">// DAYS_TO_1899AD * TICKS_PER_DAY;</font></font><br>
-<font class="syn_pre">#define <a href="../../../options/omni_epoch_offset.html">OMNI_EPOCH_OFFSET</a> 621671328000000000 <font class="syn_cmt">// DAYS_TO_EPOCH * TICKS_PER_DAY;</font></font><br>
+<font class="syn_pre">#define <a href="../../../options/omni_epoch_offset.html">OMNI_EPOCH_OFFSET</a> 621355968000000000 <font class="syn_cmt">// DAYS_TO_EPOCH * TICKS_PER_DAY;</font></font><br>
+<br>
+<font class="syn_pre">#define <a href="../../../options/omni_unix_epoch_ticks.html">OMNI_UNIX_EPOCH_TICKS</a> 621355968000000000 <font class="syn_cmt">// <a href="../../../options/omni_ticks_per_day.html">OMNI_TICKS_PER_DAY</a> * <a href="../../../options/omni_days_to_1970ad.html">OMNI_DAYS_TO_1970AD</a></font></font><br>
+<font class="syn_pre">#define <a href="../../../options/omni_unix_epoch_seconds.html">OMNI_UNIX_EPOCH_SECONDS</a> 62135596800 <font class="syn_cmt">// <a href="../../../options/omni_unix_epoch_ticks.html">OMNI_UNIX_EPOCH_TICKS</a> / <a href="../../../options/omni_ticks_per_second.html">OMNI_TICKS_PER_SECOND</a></font></font><br>
+<font class="syn_pre">#define <a href="../../../options/omni_unix_epoch_milliseconds.html">OMNI_UNIX_EPOCH_MILLISECONDS</a> 62135596800000 <font class="syn_cmt">// <a href="../../../options/omni_unix_epoch_ticks.html">OMNI_UNIX_EPOCH_TICKS</a> / <a href="../../../options/omni_ticks_per_millisecond.html">OMNI_TICKS_PER_MILLISECOND</a></font></font><br>
+<br>
 <font class="syn_cmt">// The minimum OA date is 0100/01/01 (Note it is year 100).</font><br>
 <font class="syn_cmt">// The maximum OA date is 9999/12/31</font><br>
 <font class="syn_pre">#define <a href="../../../options/omni_oa_date_min_as_ticks.html">OMNI_OA_DATE_MIN_AS_TICKS</a> 31241376000000000 <font class="syn_cmt">// (DAYS_PER_100_YEARS - DAYS_PER_YEAR) * TICKS_PER_DAY;</font></font><br>

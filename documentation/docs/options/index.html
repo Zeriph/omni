@@ -101,14 +101,14 @@ The following is a list of compiler options that can effect how the library is b
     <li><code><a href="omni_no_chrono_auto_init_tick.html">OMNI_NO_CHRONO_AUTO_INIT_TICK</a></code> - A library macro/option</li>
     <li><code><a href="omni_no_clink.html">OMNI_NO_CLINK</a></code> - Does not link certain portions of the library with <code>C</code> linkage</li>
     <li><code><a href="omni_no_clock_getres_realtime.html">OMNI_NO_CLOCK_GETRES_REALTIME</a></code> - A library macro/option</li>
-    <li><code><a href="omni_no_consts.html">OMNI_NO_CONSTS</a></code> - A library macro/option</li>
+    <li><code><a href="omni_no_consts.html">OMNI_NO_CONSTS</a></code> - Disables any library defined constants.</li>
     <li><code><a href="omni_no_cstdint.html">OMNI_NO_CSTDINT</a></code> - A library macro/option</li>
     <li><code><a href="omni_no_cstdio.html">OMNI_NO_CSTDIO</a></code> - A library macro/option</li>
     <li><code><a href="omni_no_dispose_event.html">OMNI_NO_DISPOSE_EVENT</a></code> - Disables the <code><a href="omni_dispose_event.html">OMNI_DISPOSE_EVENT</a></code> macro</li>
     <li><code><a href="omni_no_env_wordexp.html">OMNI_NO_ENV_WORDEXP</a></code> - A library macro/option</li>
     <li><code><a href="omni_no_except.html">OMNI_NO_EXCEPT</a></code> - Disables exception handling in the library</li>
     <li><code><a href="omni_no_explicit.html">OMNI_NO_EXPLICIT</a></code> - A library macro/option</li>
-    <li><code><a href="omni_no_extern_consts.html">OMNI_NO_EXTERN_CONSTS</a></code> - If defined, Omni constants will not have external linkage</li>
+    <li><code><a href="omni_no_extern_consts.html">OMNI_NO_EXTERN_CONSTS</a></code> - If defined, Omni constants will not have external linkage.</li>
     <li><code><a href="omni_no_fw_ver.html">OMNI_NO_FW_VER</a></code> - Disables the library version header from being baked into the library.</li>
     <li><code><a href="omni_no_fw_ver_use_time.html">OMNI_NO_FW_VER_USE_TIME</a></code> - A library macro/option</li>
     <li><code><a href="omni_no_gui.html">OMNI_NO_GUI</a></code> - A library macro/option</li>
@@ -162,6 +162,8 @@ The following is a list of compiler options that can effect how the library is b
     <li><code><a href="omni_no_safe_vector3.html">OMNI_NO_SAFE_VECTOR3</a></code> - A library macro/option</li>
     <li><code><a href="omni_no_show_debug.html">OMNI_NO_SHOW_DEBUG</a></code> - A library macro/option</li>
     <li><code><a href="omni_no_single_file.html">OMNI_NO_SINGLE_FILE</a></code> - Disables the compilation of the library.cpp file</li>
+    <li><code><a href="omni_no_stdinc.html">OMNI_NO_STDINC</a></code> - A library macro/option</li>
+    <li><code><a href="omni_no_std_vector.html">OMNI_NO_STD_VECTOR</a></code> - A library macro/option</li>
     <li><code><a href="omni_no_terminate.html">OMNI_NO_TERMINATE</a></code> - Disables the <code><a href="omni_terminate.html">OMNI_TERMINATE</a></code> macro</li>
     <li><code><a href="omni_no_threadpool_use_seq_t.html">OMNI_NO_THREADPOOL_USE_SEQ_T</a></code> - A library macro/option</li>
     <li><code><a href="omni_no_thread_args_raw_ptr.html">OMNI_NO_THREAD_ARGS_RAW_PTR</a></code> - A library macro/option</li>
@@ -180,8 +182,7 @@ The following is a list of compiler options that can effect how the library is b
     <li><code><a href="omni_no_win_api.html">OMNI_NO_WIN_API</a></code> - Use the Microsoft C Runtime Library where applicable.</li>
     <li><code><a href="omni_no_win_lean.html">OMNI_NO_WIN_LEAN</a></code> - Does not enable the <code>WIN32_LEAN_AND_MEAN</code> macro</li>
     <li><code><a href="omni_no_win_use_event_conditional.html">OMNI_NO_WIN_USE_EVENT_CONDITIONAL</a></code> - A library macro/option</li>
-    <li><code><a href="omni_null_macro.html">OMNI_NULL_MACRO</a></code> - Defines the NULL value type to use.</li>
-    <li><code><a href="omni_null_ptr.html">OMNI_NULL_PTR</a></code> - Defines the NULL value type to use.</li>
+    <li><code><a href="omni_null_use_macro.html">OMNI_NULL_USE_MACRO</a></code> - Defines the NULL value type to use.</li>
     <li><code><a href="omni_object_name.html">OMNI_OBJECT_NAME</a></code> - If defined, adds a <code>name</code> string member to each object.</li>
     <li><code><a href="omni_os_ignore.html">OMNI_OS_IGNORE</a></code> - Do not attempt to guess the OS type based on compiler macros.</li>
     <li><code><a href="omni_os_plan9.html">OMNI_OS_PLAN9</a></code> - A library macro/option</li>
@@ -298,10 +299,9 @@ The following is a list of helper macros that can be utilized in user code.
     <li><code><a href="omni_enum_end.html">OMNI_ENUM_END</a></code> - Defines</li>
     <li><code><a href="omni_event.html">OMNI_EVENT</a></code> - A helper macro for defining an <code><a href="../classes/omni-event.html">omni::event</a></code></li>
     <li><code><a href="omni_is_n_bit_set.html">OMNI_IS_N_BIT_SET</a></code> - Test if a specific bit is set in a value</li>
-    <li><code><a href="omni_macro_arg_count.html">OMNI_MACRO_ARG_COUNT</a></code> - A</li>
-    <li><code><a href="omni_minus_wchar.html">OMNI_MINUS_WCHAR</a></code> - A library macro/option</li>
+    <li><code><a href="omni_macro_arg_count.html">OMNI_MACRO_ARG_COUNT</a></code> - Parses and returns a number based on the number of arguments passed into a macro</li>
     <li><code><a href="omni_new_line.html">OMNI_NEW_LINE</a></code> - Defines the new line constant used based on system.</li>
-    <li><code><a href="omni_null.html">OMNI_NULL</a></code> - The NULL value used throughout the library.</li>
+    <li><code><a href="omni_null_ptr.html">OMNI_NULL_PTR</a></code> - The NULL value used throughout the library.</li>
     <li><code><a href="omni_ostream_fn_operator.html">OMNI_OSTREAM_FN_OPERATOR</a></code> - A library macro/option</li>
     <li><code><a href="omni_ostream_operator.html">OMNI_OSTREAM_OPERATOR</a></code> - A helper macro to implement the <code>operator&lt;&lt;</code> stream friend function</li>
     <li><code><a href="omni_rad_to_deg.html">OMNI_RAD_TO_DEG</a></code> - A helper macro that converts radians to degrees.</li>
@@ -342,6 +342,8 @@ The following is a list of macro constants defined by the library that can be ut
     <li><code><a href="omni_b_str.html">OMNI_B_STR</a></code> - &quot;B&quot;</li>
     <li><code><a href="omni_comma_char.html">OMNI_COMMA_CHAR</a></code> - &#39;,&#39;</li>
     <li><code><a href="omni_comma_wchar.html">OMNI_COMMA_WCHAR</a></code> - L&#39;,&#39;</li>
+    <li><code><a href="omni_crypto_base64_chars.html">OMNI_CRYPTO_BASE64_CHARS</a></code> - A library macro/option</li>
+    <li><code><a href="omni_cyrpto_base64_char_pos.html">OMNI_CYRPTO_BASE64_CHAR_POS</a></code> - A library macro/option</li>
     <li><code><a href="omni_days_per_100_years.html">OMNI_DAYS_PER_100_YEARS</a></code> - A library macro/option</li>
     <li><code><a href="omni_days_per_400_years.html">OMNI_DAYS_PER_400_YEARS</a></code> - A library macro/option</li>
     <li><code><a href="omni_days_per_4_years.html">OMNI_DAYS_PER_4_YEARS</a></code> - A library macro/option</li>
@@ -352,6 +354,7 @@ The following is a list of macro constants defined by the library that can be ut
     <li><code><a href="omni_days_to_10000ad.html">OMNI_DAYS_TO_10000AD</a></code> - A library macro/option</li>
     <li><code><a href="omni_days_to_1601ad.html">OMNI_DAYS_TO_1601AD</a></code> - A library macro/option</li>
     <li><code><a href="omni_days_to_1899ad.html">OMNI_DAYS_TO_1899AD</a></code> - A library macro/option</li>
+    <li><code><a href="omni_days_to_1970ad.html">OMNI_DAYS_TO_1970AD</a></code> - A library macro/option</li>
     <li><code><a href="omni_days_to_epoch.html">OMNI_DAYS_TO_EPOCH</a></code> - A library macro/option</li>
     <li><code><a href="omni_days_to_month_365.html">OMNI_DAYS_TO_MONTH_365</a></code> - A library macro/option</li>
     <li><code><a href="omni_days_to_month_366.html">OMNI_DAYS_TO_MONTH_366</a></code> - A library macro/option</li>
@@ -465,6 +468,7 @@ The following is a list of macro constants defined by the library that can be ut
     <li><code><a href="omni_milliseconds_per_tick.html">OMNI_MILLISECONDS_PER_TICK</a></code> - A library macro/option</li>
     <li><code><a href="omni_milliseconds_to_10000ad.html">OMNI_MILLISECONDS_TO_10000AD</a></code> - A library macro/option</li>
     <li><code><a href="omni_minus_char.html">OMNI_MINUS_CHAR</a></code> - &#39;-&#39;</li>
+    <li><code><a href="omni_minus_wchar.html">OMNI_MINUS_WCHAR</a></code> - &#39;-&#39;</li>
     <li><code><a href="omni_minutes_per_day.html">OMNI_MINUTES_PER_DAY</a></code> - A library macro/option</li>
     <li><code><a href="omni_minutes_per_hour.html">OMNI_MINUTES_PER_HOUR</a></code> - A library macro/option</li>
     <li><code><a href="omni_minutes_per_microsecond.html">OMNI_MINUTES_PER_MICROSECOND</a></code> - A library macro/option</li>
@@ -515,6 +519,7 @@ The following is a list of macro constants defined by the library that can be ut
     <li><code><a href="omni_seconds_per_nanosecond.html">OMNI_SECONDS_PER_NANOSECOND</a></code> - A library macro/option</li>
     <li><code><a href="omni_seconds_per_tick.html">OMNI_SECONDS_PER_TICK</a></code> - A library macro/option</li>
     <li><code><a href="omni_set_pri_unsupported_str.html">OMNI_SET_PRI_UNSUPPORTED_STR</a></code> - &quot;Setting thread priority is not supported on this system&quot;</li>
+    <li><code><a href="omni_sock_flags_none.html">OMNI_SOCK_FLAGS_NONE</a></code> - A library macro/option</li>
     <li><code><a href="omni_string_count_gt0_str.html">OMNI_STRING_COUNT_GT0_STR</a></code> - &quot;Count must be greater than 0&quot;</li>
     <li><code><a href="omni_string_invalid_binary_format_str.html">OMNI_STRING_INVALID_BINARY_FORMAT_STR</a></code> - A library macro/option</li>
     <li><code><a href="omni_string_invalid_format_str.html">OMNI_STRING_INVALID_FORMAT_STR</a></code> - &quot;The specified string does not contain a valid binary number&quot;</li>
@@ -540,6 +545,9 @@ The following is a list of macro constants defined by the library that can be ut
     <li><code><a href="omni_ticks_per_tenth_second.html">OMNI_TICKS_PER_TENTH_SECOND</a></code> - A library macro/option</li>
     <li><code><a href="omni_ticks_to_10000ad.html">OMNI_TICKS_TO_10000AD</a></code> - A library macro/option</li>
     <li><code><a href="omni_tob_str.html">OMNI_TOB_STR</a></code> - &quot;TB&quot;</li>
+    <li><code><a href="omni_unix_epoch_milliseconds.html">OMNI_UNIX_EPOCH_MILLISECONDS</a></code> - A library macro/option</li>
+    <li><code><a href="omni_unix_epoch_seconds.html">OMNI_UNIX_EPOCH_SECONDS</a></code> - A library macro/option</li>
+    <li><code><a href="omni_unix_epoch_ticks.html">OMNI_UNIX_EPOCH_TICKS</a></code> - A library macro/option</li>
     <li><code><a href="omni_unknown_str.html">OMNI_UNKNOWN_STR</a></code> - &quot;Unknown&quot;</li>
     <li><code><a href="omni_yibi_str.html">OMNI_YIBI_STR</a></code> - &quot;Yobibyte&quot;</li>
     <li><code><a href="omni_yib_str.html">OMNI_YIB_STR</a></code> - &quot;YiB&quot;</li>

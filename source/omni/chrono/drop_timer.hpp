@@ -32,6 +32,19 @@
 
 namespace omni {
     namespace chrono {
+        /**
+         * @brief          A timer class that invokes or queues a basic @c tick event.
+         *
+         * @details        This timer will invoke a @c tick event at a specified interval, and depending
+         *                 on how long the delegate takes to complete, could queue up additional events.
+         *                 In other words, if the timer elapses while an event is still executing, the
+         *                 next event will be queued up and fire after the completion of the current event.
+         *                 If the timer is stopped and there are still events queued up, all remaining
+         *                 events will be effectively dropped and not executed.
+         *
+         * @note           Since the timer event happens on a new thread, care must be taken to make sure
+         *                 the attached delegate is re-entrant.
+         */
         class drop_timer
         {
             public:
@@ -49,24 +62,200 @@ namespace omni {
                            uint32_t delay);
                 ~drop_timer();
                 
-                omni::generic_ptr state_object; // state object used when tick event passes
-                omni::chrono::timer_event tick; // Occurs when the interval has passed
+                /**
+                 * @brief       A basic object passed to the tick event.
+                 * 
+                 * @details     A stateful object passed into the tick event. This object is not
+                 *              utilized by the internal tick code itself; it is simply a proxy
+                 *              object that can be utilized in the user code of a tick event.
+                 * 
+                 * @warning     This object is not contained within the timer itself, and thus
+                 *              not subject to any mutex locks or other thread-safe code. This
+                 *              object is strictly accessed by user code only, and must be
+                 *              as such. Take care when accessing or using this object.
+                 */
+                omni::generic_ptr state_object;
+                /**
+                 * @brief       The tick event that is called when the timer elapses.
+                 * 
+                 * @details     The event that is raised when the timer elapses. Each delegate
+                 *              is called in the order to which it was attached. The tick event
+                 *              is supposed to be a short-lived function, or you are to ensure
+                 *              that a separate thread is called to handle the elapsed time.
+                 * 
+                 * @note        This timer will invoke a @c tick event at a specified interval, and depending
+                 *              on how long the delegate takes to complete, could queue up additional events.
+                 *              In other words, if the timer elapses while an event is still executing, the
+                 *              next event will be queued up and fire after the completion of the current event.
+                 *              If the timer is stopped and there are still events queued up, all remaining
+                 *              events will be effectively dropped and not executed.
+                 *
+                 * @warning     Since the timer event happens on a new thread, care must be taken to make sure
+                 *              the attached delegate is re-entrant.
+                 */
+                omni::chrono::timer_event tick;
                 
+                /**
+                 * @brief          Returns a boolean value based on if this timer auto-resets.
+                 * 
+                 * @details        If true, this timer will automatically tick again after
+                 *                 the timer elapses. If false, then @c start must be called
+                 *                 after each elapse of the timer.
+                 */
                 bool auto_reset() const; 
+                /**
+                 * @brief          Returns the interval, in milliseconds, of this timer.
+                 * 
+                 * @details        Returns the interval, in milliseconds, after which the
+                 *                 tick event will be executed.
+                 */
                 uint32_t interval() const; 
+                /**
+                 * @brief          Returns the running state of this timer.
+                 * 
+                 * @details        Returns true if this timer is currently running, returns false
+                 *                 if the timer will not execute any further tick events.
+                 *
+                 * @note           This does not indicate if an event is currently executing or
+                 *                 is about to execute.
+                 */
                 bool is_running() const;
+                /**
+                 * @brief          Resets the current timer.
+                 * 
+                 * @details        This is the same as call @c start then @c stop and will effectively
+                 *                 reset the timer back to 0. As an example, if a timer has a 6 second
+                 *                 interval, and reset is called 3 seconds after it's started, instead
+                 *                 of firing the tick event at 6 seconds, it will fire the event at 9
+                 *                 seconds since it was reset to 0 after 3 seconds.
+                 *
+                 * @note           This does not interrupt any currently running ticks; that is, if a
+                 *                 tick has been fired and then @c reset is called, the tick event
+                 *                 will not be interrupted.
+                 */
                 void reset();
+                /**
+                 * @brief          Sets the timer to automatically reset after it elapses.
+                 * 
+                 * @details        If set to true, the timer will automatically tick again
+                 *                 after the interval elapses. If set to false, then you
+                 *                 must call @c start after each tick.
+                 */
                 void set_auto_reset(bool autoreset);
+                /**
+                 * @brief          Sets the timer interval.
+                 * 
+                 * @details        Sets the interval in between each timer tick event. This can be
+                 *                 called after the timer has started and can lengthen or shorten
+                 *                 when a tick is to happen. In other words, if an interval is initially
+                 *                 set to 5 seconds, and the timer is started, then 3 seconds later
+                 *                 the interval is set to 2 seconds, the timer will near immediately
+                 *                 tick due to the interval being shortened.
+                 *
+                 *                 Inversely, if a timer has been set to 5 seconds, started, and then
+                 *                 3 seconds later, the interval is set to 7 seconds, the timer will
+                 *                 then fire at 7 seconds, prolonging any tick events from happening.
+                 * 
+                 * @warning        Care should be take to set the interval mid-tick or mid-interval
+                 *                 as additional tick events can happen due to the change in interval
+                 *                 time.
+                 */
                 void set_interval(uint32_t interval_ms);
+                /**
+                 * @brief          Starts the timer.
+                 * 
+                 * @details        Starts the timer and blocks until the timer is in a running state. If the
+                 *                 timer is already running, nothing happens.
+                 *
+                 * @exception      omni::exceptions::invalid_delegate can be raised if there is no delegate
+                 *                 attached to the tick event. Additionally omni::exceptions::index_out_of_range
+                 *                 can be raised if the interval is set to 0.
+                 */
                 void start();
+                /**
+                 * @brief          Starts the timer after a delay.
+                 * 
+                 * @details        Starts the timer and blocks until the timer is in a running state. If the
+                 *                 timer is already running, nothing happens.
+                 * 
+                 * @param delay    The delay, in milliseconds, to wait until the underlying timer thread starts.
+                 *                 This allows you to add an additional delay to the first tick event. If the
+                 *                 delay is 0, this has the same effect as just calling the @c start function.
+                 *
+                 * @exception      omni::exceptions::invalid_delegate can be raised if there is no delegate
+                 *                 attached to the tick event. Additionally omni::exceptions::index_out_of_range
+                 *                 can be raised if the interval is set to 0.
+                 */
                 void start(uint32_t delay);
+                /**
+                 * @brief          Stops the timer.
+                 * 
+                 * @details        Stops the timer and waits for any tick events to finish before continuing.
+                 *                 This is a blocking call.
+                 */
                 void stop();
+                /**
+                 * @brief          Stops the timer.
+                 * 
+                 * @details        Stops the timer and waits for any tick events to finish before continuing.
+                 *                 This is a blocking call.
+                 * 
+                 * @param join_timeout   The timeout to wait for any unfinished tick events before unblocking
+                 *                       and continuing.
+                 *
+                 * @note           This call will essentially detach any running event threads before continuing.
+                 */
                 void stop(uint32_t join_timeout);
+                /**
+                 * @brief          Stops the timer.
+                 * 
+                 * @details        Stops the timer and waits for any tick events to finish before continuing.
+                 *                 This is a blocking call.
+                 * 
+                 * @param join_timeout      The timeout to wait for any unfinished tick events before unblocking
+                 *                          and continuing.
+                 * @param kill_on_timeout   If this is true and the timeout elapses while waiting, the underlying
+                 *                          event threads are killed.
+                 *
+                 * @note           If the timeout elapses and @c kill_on_timeout is true, the underlying threads will
+                 *                 be killed. While killing a thread can be an option, it can leave the program
+                 *                 in an undefined state. It's best to ensure your tick events are short lived
+                 *                 and exit cleanly.
+                 */
                 void stop(uint32_t join_timeout, bool kill_on_timeout);
+                /**
+                 * @brief          Swaps the underlying timer data with another.
+                 */
                 void swap(omni::chrono::drop_timer& other);
+                /**
+                 * @brief          Returns the inline omni::chrono::timer_sync_type of this instance.
+                 *
+                 * @details        Returns omni::chrono::timer_sync_type::DROP
+                 */
                 inline omni::chrono::timer_sync_type::enum_t tick_type() const { return omni::chrono::timer_sync_type::DROP; }
+                /**
+                 * @brief          Assigns the underlying data from one timer to this one.
+                 *
+                 * @details        Assigns the interval, state object and tick event data of another
+                 *                 timer to this one. If this timer is currently running, it is stopped
+                 *                 before the assignment occurs.
+                 *
+                 * @warning        Care should be taken if your tick event delegate utilizes the
+                 *                 state object of this instance since it could be destroyed
+                 *                 in assignment.
+                 */
                 omni::chrono::drop_timer& operator=(const omni::chrono::drop_timer& other);
+                /**
+                 * @brief          Compares this timer instance to another.
+                 *
+                 * @details        Compares all aspects of this timer instance to another. This
+                 *                 includes the state object, attached tick delegates, the interval
+                 *                 and the current state of the timer (e.g. running/stopped).
+                 */
                 bool operator==(const omni::chrono::drop_timer& o) const;
+                /**
+                 * @brief          This the syntactic opposite of the equality operator.
+                 */
                 inline bool operator!=(const omni::chrono::drop_timer& o) const { return !(*this == o); }
                 
                 OMNI_MEMBERS_FW(omni::chrono::drop_timer) // disposing,name,type(),hash()

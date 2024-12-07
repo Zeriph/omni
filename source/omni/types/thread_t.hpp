@@ -335,14 +335,14 @@ namespace omni {
 
                 static bool _valid(int32_t val)
                 {
-                    return (val == 
-                        IDLE ||
-                        LOWEST ||
-                        BELOW_NORMAL ||
-                        NORMAL ||
-                        ABOVE_NORMAL ||
-                        HIGHEST ||
-                        REAL_TIME
+                    return (
+                        OMNI_I2EV_FW(IDLE) ||
+                        OMNI_I2EV_FW(LOWEST) ||
+                        OMNI_I2EV_FW(BELOW_NORMAL) ||
+                        OMNI_I2EV_FW(NORMAL) ||
+                        OMNI_I2EV_FW(ABOVE_NORMAL) ||
+                        OMNI_I2EV_FW(HIGHEST) ||
+                        OMNI_I2EV_FW(REAL_TIME)
                     );
                 }
         };
@@ -629,9 +629,9 @@ namespace omni {
 
                 static bool _valid(int32_t val)
                 {
-                    return (val == 
-                        USER ||
-                        NOW
+                    return (
+                        OMNI_I2EV_FW(USER) ||
+                        OMNI_I2EV_FW(NOW)
                     );
                 }
         };
@@ -946,16 +946,16 @@ namespace omni {
 
                 static bool _valid(int32_t val)
                 {
-                    return (val == 
-                        UNSTARTED ||
-                        START_REQUESTED ||
-                        RUNNING ||
-                        COMPLETED ||
-                        STOP_REQUESTED ||
-                        STOPPED ||
-                        ABORT_REQUESTED ||
-                        ABORTED ||
-                        UNKNOWN
+                    return (
+                        OMNI_I2EV_FW(UNSTARTED) ||
+                        OMNI_I2EV_FW(START_REQUESTED) ||
+                        OMNI_I2EV_FW(RUNNING) ||
+                        OMNI_I2EV_FW(COMPLETED) ||
+                        OMNI_I2EV_FW(STOP_REQUESTED) ||
+                        OMNI_I2EV_FW(STOPPED) ||
+                        OMNI_I2EV_FW(ABORT_REQUESTED) ||
+                        OMNI_I2EV_FW(ABORTED) ||
+                        OMNI_I2EV_FW(UNKNOWN)
                     );
                 }
         };
@@ -1469,18 +1469,18 @@ namespace omni {
 
                 static bool _valid(int32_t val)
                 {
-                    return (val == 
-                        NONE ||
-                        ALLOW_THREAD_REUSE ||
-                        AUTO_JOIN ||
-                        DETACH_ON_DESTROY ||
-                        ABORT_ON_DESTROY ||
-                        KILL_ON_DESTROY ||
-                        DETACH_ON_ASSIGN ||
-                        ABORT_ON_ASSIGN ||
-                        KILL_ON_ASSIGN ||
-                        STACK_SIZE ||
-                        AUTO_JOIN_TIMEOUT
+                    return (
+                        OMNI_I2EV_FW(NONE) ||
+                        OMNI_I2EV_FW(ALLOW_THREAD_REUSE) ||
+                        OMNI_I2EV_FW(AUTO_JOIN) ||
+                        OMNI_I2EV_FW(DETACH_ON_DESTROY) ||
+                        OMNI_I2EV_FW(ABORT_ON_DESTROY) ||
+                        OMNI_I2EV_FW(KILL_ON_DESTROY) ||
+                        OMNI_I2EV_FW(DETACH_ON_ASSIGN) ||
+                        OMNI_I2EV_FW(ABORT_ON_ASSIGN) ||
+                        OMNI_I2EV_FW(KILL_ON_ASSIGN) ||
+                        OMNI_I2EV_FW(STACK_SIZE) ||
+                        OMNI_I2EV_FW(AUTO_JOIN_TIMEOUT)
                     );
                 }
         };

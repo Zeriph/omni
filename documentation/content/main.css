@@ -36,11 +36,13 @@ div.menu li a:hover, div.menu li a.current { padding-left: 1em; font-weight: bol
 div.menu li .search { height: 0; }
 div.menu li .search form { visibility: hidden; }
 /* menu search area (javascript enabled) */
-div.menu li .search_js { height: 2.6em; }
+div.menu li .search_js { /* height: 2.6em; */ }
 div.menu li .search_js form { padding-left: 0.5em; padding-top: 0.3em; height: inherit; visibility: visible; }
 div.menu li .search_js input { width: 11em; height: 1.5em; border-radius: 0.25em; }
 div.menu li .search_js img { position: relative; left: 0.35em; top: 0.2em; width: 1.25em; cursor: pointer; }
 li.srhcres { list-style-type: none; }
+/* hide the search since local file is longer supported */
+div.menu > div > ul > li:last-child { display: none !important; }
 
 /* info panel */
 div.info { position: absolute; left: 12.85em; top: 0; right: 0; bottom: 3.5em; }
@@ -65,15 +67,16 @@ div.sntx > input+label:before { content: "show"; }
 div.sntx > input:checked+label:before { content: "hide"; }
 
 /* syntax highlight */
-div.cpphtml { position: relative; top: -0.3em; padding-left: 0.5em; }
+div.cpphtml { position: relative; top: -0.3em; left: -0.5em; }
 div.cpphtmllines { float: left; position: relative; top: -0.3em; }
 div.cpphtmlcmnt { float: left; position: relative; top: -0.3em; width: 1.25em; }
-div.cpphtmlcmnt > img { cursor: pointer; position: relative; left: 0.1em; padding-top: 2px; }
+div.cpphtmlcmnt > img { cursor: pointer; position: relative; left: 0.125rem; padding-top: 2px; z-index: 255; }
 div.cpphtmlcmnt > img+br+div { width: 1px; position: relative; left: 0.5em; }
 div.cpphtmlcmnt > img+br+div+div { width: 8px; height: 1px; position: relative; left: 0.55em; }
 div.cpphtmlcmnt > img.c { padding-top: 3px; margin-top: -1px; padding-bottom: 1px; }
 div.cpphtmlcmnt > img+br+div+div.c { border-top: 0; }
 div.syn_ex + div.c { position: relative; left: -0.4em; margin-top: -1px; }
+div.cpphtmlcmnt, div.cpphtmlcmnt > img { display: none !important; }
 /* font keyword syntax highlights */
 font.syn_doc { font-style: italic; } /* doxy comments: /** */
 font.syn_ins { font-weight: bold; } /* instruction words: if, then */

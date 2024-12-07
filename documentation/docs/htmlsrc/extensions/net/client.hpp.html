@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - extensions/net/client.hpp</title>
+<link rel="stylesheet" type="text/css" href="../../../../content/main.css" /><link rel="icon" type="image/png" href="../../../../content/favicon.png" />
+<script type="text/javascript" src="../../../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="../../index.html" class="current">Source</a></li><li title="Library classes and namespaces">
+<a href="../../../classes/index.html">Class Index</a></li><li title="Download and view examples">
+<a href="../../../examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="../../../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="../../../options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../../../api.html">System API</a></li><li title="Other Considerations">
+<a href="../../../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../../../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle"><a href="../../../../files/src/extensions/net/client.hpp" onclick="return popup('../../../../files/src/extensions/net/client.hpp')">extensions/net/client.hpp</a></div><div class="content"><div>
+<code><div class="cpphtmllines">
+<!--start line numbers-->
+001:<br><div id="cmntl1" name="cmntl1">002:<br>003:<br>004:<br>005:<br>006:<br>007:<br>008:<br>009:<br>010:<br>011:<br>012:<br>013:<br>014:<br>015:<br>016:<br>017:<br>018:<br></div>019:<br>
+020:<br>021:<br>022:<br>023:<br>024:<br>025:<br>026:<br>027:<br>028:<br>029:<br>030:<br>031:<br>032:<br>033:<br>034:<br>035:<br>036:<br>037:<br>038:<br>039:<br>
+040:<br>041:<br>042:<br>043:<br>044:<br>045:<br>046:<br>047:<br>048:<br>049:<br>050:<br>051:<br>052:<br>053:<br>054:<br>055:<br>056:<br>057:<br>058:<br>059:<br>
+060:<br>061:<br>062:<br>063:<br>064:<br>065:<br>066:<br>067:<br>068:<br>069:<br>070:<br>071:<br>072:<br>073:<br>074:<br>075:<br>076:<br>077:<br>078:<br>079:<br>
+080:<br>081:<br>082:<br>083:<br>084:<br>085:<br>086:<br>087:<br>088:<br>089:<br>090:<br>091:<br>092:<br>093:<br>094:<br>095:<br>096:<br>097:<br>098:<br>099:<br>
+100:<br>101:<br>102:<br>103:<br>104:<br>105:<br>106:<br>107:<br>108:<br>109:<br>110:<br>111:<br>112:<br>113:<br>114:<br>115:<br>116:<br>117:<br>118:<br>119:<br>
+120:<br>121:<br>122:<br>123:<br>
+<!--end line numbers-->
+</div><div class="cpphtmlcmnt">
+<!--start collapse columns-->
+<img src="../../../../content/tree/min.gif" alt="Min/Max" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br>
+<!--end collapse columns-->
+</div><div class="cpphtml" style="margin-left:3.75em;">
+<!--start highlighted code-->
+<font class="syn_cmt">/*<div class="syn_ex" id="cmnt1" name="cmnt1">
+ * Copyright (c), Zeriph Enterprises<br>
+ * All rights reserved.<br>
+ * <br>
+ * Contributor(s):<br>
+ * Zechariah Perez, omni (at) zeriph (dot) com<br>
+ * <br>
+ * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS &quot;AS IS&quot; AND ANY<br>
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED<br>
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE<br>
+ * DISCLAIMED. IN NO EVENT SHALL ZERIPH AND CONTRIBUTORS BE LIABLE FOR ANY<br>
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES<br>
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;<br>
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND<br>
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT<br>
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS<br>
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.<br>
+ */</div><div></div></font>
+<font class="syn_pre">#if !defined(OMNI_EXTENSION_NET_CLIENT_HPP)</font><br>
+<font class="syn_pre">#define OMNI_EXTENSION_NET_CLIENT_HPP 1</font><br>
+<font class="syn_pre">#include &lt;<a href="../../omni/types/net_t.hpp.html">omni/types/net_t.hpp</a>&gt;</font><br>
+<font class="syn_pre"><font class="syn_pre">#if defined(OMNI_SAFE_EXTENSION_NET_CLIENT)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;<a href="../../omni/sync/basic_lock.hpp.html">omni/sync/basic_lock.hpp</a>&gt;</font><br>
+<font class="syn_pre">#endif</font><br>
+<br>
+<font class="syn_ins">namespace</font> omni {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">namespace</font> net {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">//typedef <a href="../../../classes/omni-net-endpoint_descriptor.html">omni::net::endpoint_descriptor</a> client;</font><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">class</font> client<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">public</font>:<br>
+<a name="omni::net::client::client"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;client();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;client(<font class="syn_typ">const</font> <a href="../../../classes/omni-net-client.html">omni::net::client</a>&amp; cp);<br>
+<a name="omni::net::client::~client"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~client();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+<a name="omni::net::client::connect"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> connect(<font class="syn_typ">const</font> <a href="../../../classes/omni-net-socket_t.html">omni::net::socket_t</a>&amp; serv_sock);<br>
+<a name="omni::net::client::close"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> <a href="https://linux.die.net/man/2/close">close</a>();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> <a href="https://linux.die.net/man/2/close">close</a>(<font class="syn_typ">uint16_t</font> timeout);<br>
+<a name="omni::net::client::endpoint"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint32_t</font> endpoint() <font class="syn_typ">const</font>;<br>
+<a name="omni::net::client::get_socket_option"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> get_socket_option(<a href="../../../classes/omni-net-socket_option_level.html">omni::net::socket_option_level</a> op_level, int32_t op_name, int32_t&amp; op_val);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> get_socket_option(<a href="../../../classes/omni-net-socket_option_level.html">omni::net::socket_option_level</a> op_level, <a href="../../../classes/omni-net-socket_option.html">omni::net::socket_option</a> op_name, int32_t&amp; op_val);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> get_socket_option(<a href="../../../classes/omni-net-socket_option_level.html">omni::net::socket_option_level</a> op_level, <a href="../../../classes/omni-net-tcp_option.html">omni::net::tcp_option</a> op_name, int32_t&amp; op_val);<br>
+<a name="omni::net::client::native_handle"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-net-socket_t.html">omni::net::socket_t</a> native_handle() <font class="syn_typ">const</font>;<br>
+<a name="omni::net::client::ioc"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> ioc(<font class="syn_typ">uint32_t</font> op_code, <a href="../../../classes/omni-net-xfr_t.html">omni::net::xfr_t</a>* val, int32_t&amp; result);<br>
+<a name="omni::net::client::is_connected"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> is_connected() <font class="syn_typ">const</font>;<br>
+<a name="omni::net::client::is_shutdown"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> is_shutdown() <font class="syn_typ">const</font>;<br>
+<a name="omni::net::client::last_error"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> last_error() <font class="syn_typ">const</font>;<br>
+<a name="omni::net::client::local_port"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint16_t</font> local_port() <font class="syn_typ">const</font>;<br>
+<a name="omni::net::client::port"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint16_t</font> port() <font class="syn_typ">const</font>;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// TODO: change these to be omni::data_buffer (or maybe not??)</font><br>
+<br>
+<a name="omni::net::client::receive"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T, <font class="syn_typ">uint16_t</font> SZ &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> receive(<a href="../../../classes/omni-stack_buffer.html">omni::stack_buffer</a>&lt;T, SZ&gt; buffer, <font class="syn_typ">uint32_t</font>&amp; rcvd);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> receive(<font class="syn_typ">char</font>* buffer, <font class="syn_typ">uint32_t</font> len, <font class="syn_typ">uint32_t</font>&amp; rcvd);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> receive(int8_t* buffer, <font class="syn_typ">uint32_t</font> len, <font class="syn_typ">uint32_t</font>&amp; rcvd);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> receive(<font class="syn_typ">uint8_t</font>* buffer, <font class="syn_typ">uint32_t</font> len, <font class="syn_typ">uint32_t</font>&amp; rcvd);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> receive(<font class="syn_typ">char</font>* buffer, <font class="syn_typ">uint32_t</font> len, <a href="../../../classes/omni-net-socket_flags.html">omni::net::socket_flags</a> flags, <font class="syn_typ">uint32_t</font>&amp; rcvd);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> receive(int8_t* buffer, <font class="syn_typ">uint32_t</font> len, <a href="../../../classes/omni-net-socket_flags.html">omni::net::socket_flags</a> flags, <font class="syn_typ">uint32_t</font>&amp; rcvd);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> receive(<font class="syn_typ">uint8_t</font>* buffer, <font class="syn_typ">uint32_t</font> len, <a href="../../../classes/omni-net-socket_flags.html">omni::net::socket_flags</a> flags, <font class="syn_typ">uint32_t</font>&amp; rcvd);<br>
+<a name="omni::net::client::send"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> <a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/send.html">send</a>(<font class="syn_typ">const</font> <font class="syn_typ">char</font>* buffer, <font class="syn_typ">uint32_t</font> len, <font class="syn_typ">uint32_t</font>&amp; sent);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> <a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/send.html">send</a>(<font class="syn_typ">const</font> int8_t* buffer, <font class="syn_typ">uint32_t</font> len, <font class="syn_typ">uint32_t</font>&amp; sent);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> <a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/send.html">send</a>(<font class="syn_typ">const</font> <font class="syn_typ">uint8_t</font>* buffer, <font class="syn_typ">uint32_t</font> len, <font class="syn_typ">uint32_t</font>&amp; sent);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> <a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/send.html">send</a>(<font class="syn_typ">const</font> <font class="syn_typ">char</font>* buffer, <font class="syn_typ">uint32_t</font> len, <a href="../../../classes/omni-net-socket_flags.html">omni::net::socket_flags</a> flags, <font class="syn_typ">uint32_t</font>&amp; sent);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> <a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/send.html">send</a>(<font class="syn_typ">const</font> int8_t* buffer, <font class="syn_typ">uint32_t</font> len, <a href="../../../classes/omni-net-socket_flags.html">omni::net::socket_flags</a> flags, <font class="syn_typ">uint32_t</font>&amp; sent);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> <a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/send.html">send</a>(<font class="syn_typ">const</font> <font class="syn_typ">uint8_t</font>* buffer, <font class="syn_typ">uint32_t</font> len, <a href="../../../classes/omni-net-socket_flags.html">omni::net::socket_flags</a> flags, <font class="syn_typ">uint32_t</font>&amp; sent);<br>
+<br>
+<a name="omni::net::client::set_socket_option"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> set_socket_option(<a href="../../../classes/omni-net-socket_option_level.html">omni::net::socket_option_level</a> op_level, int32_t op_name, int32_t op_val);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> set_socket_option(<a href="../../../classes/omni-net-socket_option_level.html">omni::net::socket_option_level</a> op_level, <a href="../../../classes/omni-net-socket_option.html">omni::net::socket_option</a> op_name, int32_t op_val);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> set_socket_option(<a href="../../../classes/omni-net-socket_option_level.html">omni::net::socket_option_level</a> op_level, <a href="../../../classes/omni-net-tcp_option.html">omni::net::tcp_option</a> op_name, int32_t op_val);<br>
+<a name="omni::net::client::shutdown"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> <a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/shutdown.html">shutdown</a>(<a href="../../../classes/omni-net-socket_shutdown.html">omni::net::socket_shutdown</a> how);<br>
+<a name="omni::net::client::swap"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> swap(<a href="../../../classes/omni-net-client.html">omni::net::client</a>&amp; other);<br>
+<a name="omni::net::client::to_string_t"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-string_t.html">omni::string_t</a> to_string_t() <font class="syn_typ">const</font>;<br>
+<a name="omni::net::client::to_string"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::string</a> to_string() <font class="syn_typ">const</font>;<br>
+<a name="omni::net::client::to_wstring"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a> to_wstring() <font class="syn_typ">const</font>;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// TODO: <a href="../../../classes/omni-delegate2.html">omni::delegate2</a>&lt;void, char*, uint32_t&gt; data_received;</font><br>
+<br>
+<a name="omni::net::client::operator="></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-net-client.html">omni::net::client</a>&amp; <font class="syn_ins">operator</font>=(<a href="../../../classes/omni-net-client.html">omni::net::client</a>&amp; other);<br>
+<a name="omni::net::client::operator=="></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> <font class="syn_ins">operator</font>==(<font class="syn_typ">const</font> <a href="../../../classes/omni-net-client.html">omni::net::client</a>&amp; other) <font class="syn_typ">const</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> <font class="syn_ins">operator</font>==(<font class="syn_typ">const</font> <a href="../../../classes/omni-net-socket_t.html">omni::net::socket_t</a>&amp; sock) <font class="syn_typ">const</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> <font class="syn_ins">operator</font>==(<font class="syn_typ">uint32_t</font> ep) <font class="syn_typ">const</font>;<br>
+<br>
+<a name="omni::net::client::operator!="></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> <font class="syn_ins">operator</font>!=(<font class="syn_typ">const</font> <a href="../../../classes/omni-net-client.html">omni::net::client</a>&amp; other) <font class="syn_typ">const</font> { <font class="syn_ins">return</font> !(*<font class="syn_typ">this</font> == other); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> <font class="syn_ins">operator</font>!=(<font class="syn_typ">const</font> <a href="../../../classes/omni-net-socket_t.html">omni::net::socket_t</a>&amp; sock) <font class="syn_typ">const</font> { <font class="syn_ins">return</font> !(*<font class="syn_typ">this</font> == sock); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> <font class="syn_ins">operator</font>!=(<font class="syn_typ">uint32_t</font> ep) <font class="syn_typ">const</font> { <font class="syn_ins">return</font> !(*<font class="syn_typ">this</font> == ep); }<br>
+<br>
+<a name="omni::net::client::operator std::string"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">operator</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>() <font class="syn_typ">const</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;to_string();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+<a name="omni::net::client::operator std::wstring"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">operator</font> <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>() <font class="syn_typ">const</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;to_wstring();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_MEMBERS_FW(<a href="../../../classes/omni-net-client.html">omni::net::client</a>) <font class="syn_cmt">// disposing,name,type(),hash()</font><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_OSTREAM_FW(<a href="../../../classes/omni-net-client.html">omni::net::client</a>)<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">private</font>:<br>
+<a name="omni::net::client::m_socket"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-net-socket_t.html">omni::net::socket_t</a> m_socket;<br>
+<a name="omni::net::client::m_last_err"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> m_last_err;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../options/omni_safe_socket_ep.html">OMNI_SAFE_SOCKET_EP</a>)</font><br>
+<a name="omni::net::client::m_mtx"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">mutable</font> <a href="../../../classes/omni-sync-basic_lock.html">omni::sync::basic_lock</a> m_mtx;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+}<br>
+<br>
+<font class="syn_ins">namespace</font> std {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">void</font> swap(<a href="../../../classes/omni-net-client.html">omni::net::client</a>&amp; o1, <a href="../../../classes/omni-net-client.html">omni::net::client</a>&amp; o2)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;o1.swap(o2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+}<br>
+<br>
+<font class="syn_pre">#endif <font class="syn_cmt">// OMNI_EXTENSION_NET_CLIENT_HPP</font></font><br>
+<!--end highlighted code-->
+</div></code><br>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS(); collapseAll('1', '../../../../');</script></body></html>

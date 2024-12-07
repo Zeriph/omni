@@ -35,9 +35,18 @@
 #include <omni/string/util.hpp> // has cstdlib
 #include <omni/exception.hpp>
 
+/*
+    DEV_NOTE: while we could implement an enum with the OS's from os.h, this isn't C# and the need to determine OS
+    at runtime won't be something that will happen. We build C++ for a target, even if cross-compiling, we specify
+    which OS/toolchain we're targeting and thus we can "bake in" features or specifics based on the target using
+    the defined macro's in os.h, instead of determining at run time. As such, we won't be implementing any of the
+    C# System.OperatingSystem functionality via run-time code (e.g. function calls).
+
+    Additionally, version checking can be done at compile time as well, to avoid run-time calls to deprecated API.
+*/
+
 namespace omni {
     namespace environment {
-
         #if !defined(OMNI_NO_CONSTS)
             OMNI_CONSTEXT_FW const omni::char_t NEW_LINE[] OMNI_EXT_ASSN_FW(OMNI_STRW(OMNI_NEW_LINE));
         #endif
@@ -123,7 +132,7 @@ namespace omni {
         
         inline bool set_var(const char* name, const char* val)
         {
-            if (name == NULL || val == NULL) {
+            if (name == OMNI_NULL_PTR || val == OMNI_NULL_PTR) {
                 OMNI_ERR_RETV_FW("Null pointer specified", omni::exceptions::null_pointer_exception(), omni::string_t())
             }
             return omni::environment::set_var(std::string(name), std::string(val));
@@ -131,7 +140,7 @@ namespace omni {
         
         inline bool set_var(const wchar_t* name, const wchar_t* val)
         {
-            if (name == NULL || val == NULL) {
+            if (name == OMNI_NULL_PTR || val == OMNI_NULL_PTR) {
                 OMNI_ERR_RETV_FW("Null pointer specified", omni::exceptions::null_pointer_exception(), omni::string_t())
             }
             return omni::environment::set_var(std::wstring(name), std::wstring(val));

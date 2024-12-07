@@ -23,22 +23,22 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <div class="ptitle"><a href="../../../../files/src/omni/xx/timer.hxx" onclick="return popup('../../../../files/src/omni/xx/timer.hxx')">omni/xx/timer.hxx</a></div><div class="content"><div>
 <code><div class="cpphtmllines">
 <!--start line numbers-->
-00001:<br><div id="cmntl1" name="cmntl1">00002:<br>00003:<br>00004:<br>00005:<br>00006:<br>00007:<br>00008:<br>00009:<br>000010:<br>000011:<br>000012:<br>000013:<br>000014:<br>000015:<br>000016:<br>000017:<br>000018:<br></div>000019:<br>
-000020:<br><div id="cmntl2" name="cmntl2">000021:<br>000022:<br>000023:<br>000024:<br></div>000025:<br>000026:<br>000027:<br>000028:<br>000029:<br>000030:<br>000031:<br>000032:<br>000033:<br>000034:<br>000035:<br>000036:<br>000037:<br>000038:<br>000039:<br>
-000040:<br>000041:<br>000042:<br>000043:<br>000044:<br>000045:<br>000046:<br>000047:<br>000048:<br>000049:<br>000050:<br>000051:<br>000052:<br>000053:<br>000054:<br>000055:<br>000056:<br>000057:<br>000058:<br>000059:<br>
-000060:<br>000061:<br>000062:<br>000063:<br>000064:<br>000065:<br>000066:<br>000067:<br>000068:<br>000069:<br>000070:<br>000071:<br>000072:<br>000073:<br>000074:<br>000075:<br>000076:<br>000077:<br>000078:<br>000079:<br>
-000080:<br>000081:<br>000082:<br>000083:<br>000084:<br>000085:<br>000086:<br>000087:<br>000088:<br>000089:<br>000090:<br>000091:<br>000092:<br>000093:<br>000094:<br>000095:<br>000096:<br>000097:<br>000098:<br>000099:<br>
-0000100:<br>0000101:<br>0000102:<br>0000103:<br>0000104:<br>0000105:<br>0000106:<br>0000107:<br>0000108:<br>0000109:<br>0000110:<br>0000111:<br>0000112:<br>0000113:<br>0000114:<br>0000115:<br>0000116:<br>0000117:<br>0000118:<br>0000119:<br>
-0000120:<br>0000121:<br>0000122:<br>0000123:<br>0000124:<br>0000125:<br>0000126:<br>0000127:<br>0000128:<br>0000129:<br>0000130:<br>0000131:<br>0000132:<br>0000133:<br>0000134:<br>0000135:<br>0000136:<br>0000137:<br>0000138:<br>0000139:<br>
-0000140:<br>0000141:<br>0000142:<br>0000143:<br>0000144:<br>0000145:<br>0000146:<br>0000147:<br>0000148:<br>0000149:<br>0000150:<br>0000151:<br>0000152:<br>0000153:<br>0000154:<br>0000155:<br>0000156:<br>0000157:<br>0000158:<br>0000159:<br>
-0000160:<br>0000161:<br>0000162:<br>0000163:<br>0000164:<br>0000165:<br>0000166:<br>0000167:<br>0000168:<br>0000169:<br>0000170:<br>0000171:<br>0000172:<br>0000173:<br>0000174:<br>0000175:<br>0000176:<br>0000177:<br>0000178:<br>0000179:<br>
-0000180:<br>0000181:<br>0000182:<br>0000183:<br>0000184:<br>0000185:<br>0000186:<br>0000187:<br>0000188:<br>0000189:<br>0000190:<br>0000191:<br>0000192:<br>0000193:<br>0000194:<br>0000195:<br>0000196:<br>0000197:<br>0000198:<br>0000199:<br>
-0000200:<br>0000201:<br>0000202:<br>0000203:<br>0000204:<br>0000205:<br>0000206:<br>0000207:<br>0000208:<br>0000209:<br>0000210:<br>0000211:<br>0000212:<br>0000213:<br>0000214:<br>0000215:<br>0000216:<br>0000217:<br>0000218:<br>0000219:<br>0000220:<br>
+001:<br><div id="cmntl1" name="cmntl1">002:<br>003:<br>004:<br>005:<br>006:<br>007:<br>008:<br>009:<br>010:<br>011:<br>012:<br>013:<br>014:<br>015:<br>016:<br>017:<br>018:<br></div>019:<br>
+020:<br><div id="cmntl2" name="cmntl2">021:<br>022:<br>023:<br>024:<br></div>025:<br>026:<br>027:<br>028:<br>029:<br>030:<br>031:<br>032:<br>033:<br>034:<br>035:<br>036:<br>037:<br>038:<br>039:<br>
+040:<br>041:<br>042:<br>043:<br>044:<br>045:<br>046:<br>047:<br>048:<br>049:<br>050:<br>051:<br>052:<br>053:<br>054:<br>055:<br>056:<br>057:<br>058:<br>059:<br>
+060:<br>061:<br>062:<br>063:<br>064:<br>065:<br>066:<br>067:<br>068:<br>069:<br>070:<br>071:<br>072:<br>073:<br>074:<br>075:<br>076:<br>077:<br>078:<br>079:<br>
+080:<br>081:<br>082:<br>083:<br>084:<br>085:<br>086:<br>087:<br>088:<br>089:<br>090:<br>091:<br>092:<br>093:<br>094:<br>095:<br>096:<br>097:<br>098:<br>099:<br>
+100:<br>101:<br>102:<br>103:<br>104:<br>105:<br>106:<br>107:<br>108:<br>109:<br>110:<br>111:<br>112:<br>113:<br>114:<br>115:<br>116:<br>117:<br>118:<br>119:<br>
+120:<br>121:<br>122:<br>123:<br>124:<br>125:<br>126:<br>127:<br>128:<br>129:<br>130:<br>131:<br>132:<br>133:<br>134:<br>135:<br>136:<br>137:<br>138:<br>139:<br>
+140:<br>141:<br>142:<br>143:<br>144:<br>145:<br>146:<br>147:<br>148:<br>149:<br>150:<br>151:<br>152:<br>153:<br>154:<br>155:<br>156:<br>157:<br>158:<br>159:<br>
+160:<br>161:<br>162:<br>163:<br>164:<br>165:<br>166:<br>167:<br>168:<br>169:<br>170:<br>171:<br>172:<br>173:<br>174:<br>175:<br>176:<br>177:<br>178:<br>179:<br>
+180:<br>181:<br>182:<br>183:<br>184:<br>185:<br>186:<br>187:<br>188:<br>189:<br>190:<br>191:<br>192:<br>193:<br>194:<br>195:<br>196:<br>197:<br>198:<br>199:<br>
+200:<br>201:<br>202:<br>203:<br>204:<br>205:<br>206:<br>207:<br>208:<br>209:<br>210:<br>211:<br>212:<br>213:<br>214:<br>215:<br>216:<br>217:<br>218:<br>219:<br>220:<br>
 <!--end line numbers-->
 </div><div class="cpphtmlcmnt">
 <!--start collapse columns-->
-<img src="../../../../content/tree/min.gif" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
-<img src="../../../../content/tree/min.gif" id="cmnti2" name="cmnti2" onclick="collapse('2', '../../../../');" /><br><div id="cmnts2" name="cmnts2"><br><br><br><br></div><div></div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<img src="../../../../content/tree/min.gif" alt="Min/Max" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<img src="../../../../content/tree/min.gif" alt="Min/Max" id="cmnti2" name="cmnti2" onclick="collapse('2', '../../../../');" /><br><div id="cmnts2" name="cmnts2"><br><br><br><br></div><div></div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>

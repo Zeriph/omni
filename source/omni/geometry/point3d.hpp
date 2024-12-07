@@ -21,6 +21,9 @@
 #include <omni/defs/global.hpp>
 #include <omni/defs/class_macros.hpp>
 #include <omni/math.hpp>
+#if defined(OMNI_ENABLE_CXX)
+    #include <atomic>
+#endif
 
 #if defined(OMNI_SAFE_POINT3D)
     #include <omni/sync/basic_lock.hpp>
@@ -98,36 +101,42 @@ namespace omni {
                 T decrement_x()
                 {
                     OMNI_SAFE_P3ALOCK_FW
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_x, 1)
                     return --this->m_x;
                 }
 
                 T decrement_y()
                 {
                     OMNI_SAFE_P3ALOCK_FW
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_y, 1)
                     return --this->m_y;
                 }
 
                 T decrement_z()
                 {
                     OMNI_SAFE_P3ALOCK_FW
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_z, 1)
                     return --this->m_z;
                 }
 
                 T decrement_x(T val)
                 {
                     OMNI_SAFE_P3ALOCK_FW
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_x, val)
                     return (this->m_x -= val);
                 }
 
                 T decrement_y(T val)
                 {
                     OMNI_SAFE_P3ALOCK_FW
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_y, val)
                     return (this->m_y -= val);
                 }
 
                 T decrement_z(T val)
                 {
                     OMNI_SAFE_P3ALOCK_FW
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_z, val)
                     return (this->m_z -= val);
                 }
 
@@ -144,9 +153,28 @@ namespace omni {
                 void decrement(T x, T y, T z)
                 {
                     OMNI_SAFE_P3ALOCK_FW
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_x, x)
                     this->m_x -= x;
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_y, y)
                     this->m_y -= y;
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_z, z)
                     this->m_z -= z;
+                }
+                
+                double distance_from(const omni::geometry::point3d<T>& val) const
+                {
+                    return this->distance_from(val.x(), val.y(), val.z());
+                }
+
+                double distance_from(const omni::math::dimensional<T, 3>& val) const
+                {
+                    return this->distance_from(val[0], val[1], val[2]);
+                }
+
+                double distance_from(T x, T y, T z) const
+                {
+                    OMNI_SAFE_P3ALOCK_FW
+                    return omni::math::distance_between_2_points(this->m_x, this->m_y, this->m_z, x, y, z);
                 }
 
                 bool empty() const
@@ -179,36 +207,42 @@ namespace omni {
                 T increment_x()
                 {
                     OMNI_SAFE_P3ALOCK_FW
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_x, 1)
                     return ++this->m_x;
                 }
 
                 T increment_y()
                 {
                     OMNI_SAFE_P3ALOCK_FW
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_y, 1)
                     return ++this->m_y;
                 }
 
                 T increment_z()
                 {
                     OMNI_SAFE_P3ALOCK_FW
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_z, 1)
                     return ++this->m_z;
                 }
 
                 T increment_x(T val)
                 {
                     OMNI_SAFE_P3ALOCK_FW
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_x, val)
                     return (this->m_x += val);
                 }
 
                 T increment_y(T val)
                 {
                     OMNI_SAFE_P3ALOCK_FW
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_y, val)
                     return (this->m_y += val);
                 }
 
                 T increment_z(T val)
                 {
                     OMNI_SAFE_P3ALOCK_FW
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_z, val)
                     return (this->m_z += val);
                 }
 
@@ -225,8 +259,11 @@ namespace omni {
                 void increment(T x, T y, T z)
                 {
                     OMNI_SAFE_P3ALOCK_FW
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_x, x)
                     this->m_x += x;
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_y, y)
                     this->m_y += y;
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_z, z)
                     this->m_z += z;
                 }
 
@@ -243,8 +280,11 @@ namespace omni {
                 void offset(T x, T y, T z)
                 {
                     OMNI_SAFE_P3ALOCK_FW
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_x, x)
                     this->m_x += x;
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_y, y)
                     this->m_y += y;
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_z, z)
                     this->m_z += z;
                 }
 
@@ -383,6 +423,9 @@ namespace omni {
                     #if defined(OMNI_SAFE_POINT3D)
                         this->m_mtx.lock();
                         if (this != &val) { val.m_mtx.lock(); }
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_x, val.m_x)
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_y, val.m_y)
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_z, val.m_z)
                         omni::geometry::point3d<T> ret((this->m_x + val.m_x),
                                        (this->m_y + val.m_y),
                                        (this->m_z + val.m_z));
@@ -390,6 +433,9 @@ namespace omni {
                         this->m_mtx.unlock();
                         return ret;
                     #else
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_x, val.m_x)
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_y, val.m_y)
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_z, val.m_z)
                         return omni::geometry::point3d<T>((this->m_x + val.m_x),
                                           (this->m_y + val.m_y),
                                           (this->m_z + val.m_z));
@@ -399,6 +445,9 @@ namespace omni {
                 omni::geometry::point3d<T> operator+(const omni::math::dimensional<T, 3>& val)
                 {
                     OMNI_SAFE_P3ALOCK_FW
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_x, val[0])
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_y, val[1])
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_z, val[2])
                     return omni::geometry::point3d<T>((this->m_x + val[0]),
                                       (this->m_y + val[1]),
                                       (this->m_z + val[2]));
@@ -407,6 +456,9 @@ namespace omni {
                 omni::geometry::point3d<T> operator+(T val)
                 {
                     OMNI_SAFE_P3ALOCK_FW
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_x, val)
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_y, val)
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_z, val)
                     return omni::geometry::point3d<T>((this->m_x + val),
                                       (this->m_y + val),
                                       (this->m_z + val));
@@ -417,6 +469,9 @@ namespace omni {
                     #if defined(OMNI_SAFE_POINT3D)
                         this->m_mtx.lock();
                         if (this != &val) { val.m_mtx.lock(); }
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_x, val.m_x)
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_y, val.m_y)
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_z, val.m_z)
                         omni::geometry::point3d<T> ret((this->m_x - val.m_x),
                                        (this->m_y - val.m_y),
                                        (this->m_z - val.m_z));
@@ -424,6 +479,9 @@ namespace omni {
                         this->m_mtx.unlock();
                         return ret;
                     #else
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_x, val.m_x)
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_y, val.m_y)
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_z, val.m_z)
                         return omni::geometry::point3d<T>((this->m_x - val.m_x),
                                           (this->m_y - val.m_y),
                                           (this->m_z - val.m_z));
@@ -433,6 +491,9 @@ namespace omni {
                 omni::geometry::point3d<T> operator-(const omni::math::dimensional<T, 3>& val)
                 {
                     OMNI_SAFE_P3ALOCK_FW
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_x, val[0])
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_y, val[1])
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_z, val[2])
                     return omni::geometry::point3d<T>((this->m_x - val[0]),
                                       (this->m_y - val[1]),
                                       (this->m_z - val[2]));
@@ -441,6 +502,9 @@ namespace omni {
                 omni::geometry::point3d<T> operator-(T val)
                 {
                     OMNI_SAFE_P3ALOCK_FW
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_x, val)
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_y, val)
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_z, val)
                     return omni::geometry::point3d<T>((this->m_x - val),
                                       (this->m_y - val),
                                       (this->m_z - val));
@@ -451,14 +515,20 @@ namespace omni {
                     #if defined(OMNI_SAFE_POINT3D)
                         this->m_mtx.lock();
                         if (this != &val) { val.m_mtx.lock(); }
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_x, val.m_x)
                         this->m_x += val.m_x;
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_y, val.m_y)
                         this->m_y += val.m_y;
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_z, val.m_z)
                         this->m_z += val.m_z;
                         if (this != & val) { val.m_mtx.unlock(); }
                         this->m_mtx.unlock();
-                    #else    
+                    #else
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_x, val.m_x)
                         this->m_x += val.m_x;
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_y, val.m_y)
                         this->m_y += val.m_y;
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_z, val.m_z)
                         this->m_z += val.m_z;
                     #endif
                     return *this;
@@ -467,8 +537,11 @@ namespace omni {
                 omni::geometry::point3d<T>& operator+=(const omni::math::dimensional<T, 3>& val)
                 {
                     OMNI_SAFE_P3ALOCK_FW
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_x, val[0])
                     this->m_x += val[0];
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_y, val[1])
                     this->m_y += val[1];
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_z, val[2])
                     this->m_z += val[2];
                     return *this;
                 }
@@ -476,8 +549,11 @@ namespace omni {
                 omni::geometry::point3d<T>& operator+=(T val)
                 {
                     OMNI_SAFE_P3ALOCK_FW
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_x, val)
                     this->m_x += val;
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_y, val)
                     this->m_y += val;
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_z, val)
                     this->m_z += val;
                     return *this;
                 }
@@ -487,14 +563,20 @@ namespace omni {
                     #if defined(OMNI_SAFE_POINT3D)
                         this->m_mtx.lock();
                         if (this != &val) { val.m_mtx.lock(); }
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_x, val.m_x)
                         this->m_x -= val.m_x;
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_y, val.m_y)
                         this->m_y -= val.m_y;
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_z, val.m_z)
                         this->m_z -= val.m_z;
                         if (this != & val) { val.m_mtx.unlock(); }
                         this->m_mtx.unlock();
-                    #else    
+                    #else
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_x, val.m_x)
                         this->m_x -= val.m_x;
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_y, val.m_y)
                         this->m_y -= val.m_y;
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_z, val.m_z)
                         this->m_z -= val.m_z;
                     #endif
                     return *this;
@@ -503,8 +585,11 @@ namespace omni {
                 omni::geometry::point3d<T>& operator-=(const omni::math::dimensional<T, 3>& val)
                 {
                     OMNI_SAFE_P3ALOCK_FW
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_x, val[0])
                     this->m_x -= val[0];
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_y, val[1])
                     this->m_y -= val[1];
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_z, val[2])
                     this->m_z -= val[2];
                     return *this;
                 }
@@ -512,8 +597,11 @@ namespace omni {
                 omni::geometry::point3d<T>& operator-=(T val)
                 {
                     OMNI_SAFE_P3ALOCK_FW
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_x, val)
                     this->m_x -= val;
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_y, val)
                     this->m_y -= val;
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_z, val)
                     this->m_z -= val;
                     return *this;
                 }
@@ -525,6 +613,9 @@ namespace omni {
 
                 static omni::geometry::point3d<T> add(const omni::geometry::point3d<T>& point, const omni::math::dimensional<T, 3> coord)
                 {
+                    OMNI_BITS_WILL_ADD_OVER_FW(point.x(), coord[0])
+                    OMNI_BITS_WILL_ADD_OVER_FW(point.y(), coord[1])
+                    OMNI_BITS_WILL_ADD_OVER_FW(point.z(), coord[2])
                     return omni::geometry::point3d<T>(point.x() + coord[0],
                                       point.y() + coord[1],
                                       point.z() + coord[2]);
@@ -532,6 +623,9 @@ namespace omni {
 
                 static omni::geometry::point3d<T> subtract(const omni::geometry::point3d<T>& point, const omni::math::dimensional<T, 3> coord)
                 {
+                    OMNI_BITS_WILL_SUB_UNDER_FW(point.x(), coord[0])
+                    OMNI_BITS_WILL_SUB_UNDER_FW(point.y(), coord[1])
+                    OMNI_BITS_WILL_SUB_UNDER_FW(point.z(), coord[2])
                     return omni::geometry::point3d<T>(point.x() - coord[0],
                                       point.y() - coord[1],
                                       point.z() - coord[2]);
@@ -559,6 +653,8 @@ namespace omni {
         typedef omni_sequence_t<omni::geometry::point64_3d_t> point64_3d_seq_t;
         typedef omni_sequence_t<omni::geometry::pointF_3d_t> pointF_3d_seq_t;
         typedef omni_sequence_t<omni::geometry::pointD_3d_t> pointD_3d_seq_t;
+
+        // DEV_NOTE: "raw" classes do not have checks, like arithmetic over/under flow, locks, etc.
 
         template < typename T >
         class raw_point3d
@@ -688,6 +784,26 @@ namespace omni {
                     this->x -= _x;
                     this->y -= _y;
                     this->z -= _z;
+                }
+
+                double distance_from(const omni::geometry::raw_point3d<T>& val) const
+                {
+                    return this->distance_from(val.x, val.y, val.z);
+                }
+
+                double distance_from(const omni::geometry::point3d<T>& val) const
+                {
+                    return this->distance_from(val.x(), val.y(), val.z());
+                }
+
+                double distance_from(const omni::math::dimensional<T, 3>& val) const
+                {
+                    return this->distance_from(val[0], val[1], val[2]);
+                }
+
+                double distance_from(T _x, T _y, T _z) const
+                {
+                    return omni::math::distance_between_2_points(this->x, this->y, this->z, _x, _y, _z);
                 }
 
                 bool empty() const
@@ -953,6 +1069,561 @@ namespace omni {
         typedef omni_sequence_t<omni::geometry::raw_point64_3d_t> raw_point64_3d_seq_t;
         typedef omni_sequence_t<omni::geometry::raw_pointF_3d_t> raw_pointF_3d_seq_t;
         typedef omni_sequence_t<omni::geometry::raw_pointD_3d_t> raw_pointD_3d_seq_t;
+
+        #if defined(OMNI_ENABLE_CXX)
+            template < typename T >
+            class atomic_point3d
+            {
+                public:
+                    typedef T coordinate_t;
+
+                    atomic_point3d() : 
+                        OMNI_CTOR_FW(omni::geometry::atomic_point3d<T>)
+                        m_x(0), m_y(0), m_z(0)
+                    { }
+
+                    atomic_point3d(const omni::geometry::atomic_point3d<T>& cp) :
+                        OMNI_CPCTOR_FW(cp)
+                        m_x(cp.x()), m_y(cp.y()), m_z(cp.z())
+                    { }
+
+                    OMNI_EXPLICIT atomic_point3d(const omni::math::dimensional<T, 3>& cp) : 
+                        OMNI_CTOR_FW(omni::geometry::atomic_point3d<T>)
+                        m_x(cp[0]), m_y(cp[1]), m_z(cp[2])
+                    { }
+
+                    atomic_point3d(T x, T y, T z) : 
+                        OMNI_CTOR_FW(omni::geometry::atomic_point3d<T>)
+                        m_x(x), m_y(y), m_z(z)
+                    { }
+
+                    ~atomic_point3d()
+                    {
+                        OMNI_TRY_FW
+                        OMNI_DTOR_FW
+                        OMNI_CATCH_FW
+                        OMNI_D5_FW("destroyed");
+                    }
+
+                    T x() const
+                    {
+                        return this->m_x;
+                    }
+
+                    T y() const
+                    {
+                        return this->m_y;
+                    }
+
+                    T z() const
+                    {
+                        return this->m_z;
+                    }
+
+                    T decrement_x()
+                    {
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_x, 1)
+                        return --this->m_x;
+                    }
+
+                    T decrement_y()
+                    {
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_y, 1)
+                        return --this->m_y;
+                    }
+
+                    T decrement_z()
+                    {
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_z, 1)
+                        return --this->m_z;
+                    }
+
+                    T decrement_x(T val)
+                    {
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_x, val)
+                        return (this->m_x -= val);
+                    }
+
+                    T decrement_y(T val)
+                    {
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_y, val)
+                        return (this->m_y -= val);
+                    }
+
+                    T decrement_z(T val)
+                    {
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_z, val)
+                        return (this->m_z -= val);
+                    }
+
+                    void decrement(const omni::geometry::atomic_point3d<T>& val)
+                    {
+                        this->decrement(val.x(), val.y(), val.z());
+                    }
+
+                    void decrement(const omni::math::dimensional<T, 3>& val)
+                    {
+                        this->decrement(val[0], val[1], val[2]);
+                    }
+
+                    void decrement(T x, T y, T z)
+                    {
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_x, x)
+                        this->m_x -= x;
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_y, y)
+                        this->m_y -= y;
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_z, z)
+                        this->m_z -= z;
+                    }
+                    
+                    double distance_from(const omni::geometry::atomic_point3d<T>& val) const
+                    {
+                        return this->distance_from(val.x(), val.y(), val.z());
+                    }
+
+                    double distance_from(const omni::math::dimensional<T, 3>& val) const
+                    {
+                        return this->distance_from(val[0], val[1], val[2]);
+                    }
+
+                    double distance_from(T x, T y, T z) const
+                    {
+                        return omni::math::distance_between_2_points(this->m_x, this->m_y, this->m_z, x, y, z);
+                    }
+
+                    bool empty() const
+                    {
+                        return omni::math::are_equal(this->m_x, static_cast<T>(0)) &&
+                            omni::math::are_equal(this->m_y, static_cast<T>(0)) &&
+                            omni::math::are_equal(this->m_z, static_cast<T>(0));
+                    }
+
+                    bool equals(T x, T y, T z) const
+                    {
+                        return
+                            omni::math::are_equal<T>(this->m_x, x) &&
+                            omni::math::are_equal<T>(this->m_y, y) &&
+                            omni::math::are_equal<T>(this->m_z, z);
+                    }
+                    
+                    int32_t hash_code() const
+                    {
+                        return (
+                            static_cast<int32_t>(this->m_x) ^
+                            ((static_cast<int32_t>(this->m_y) << 13) | (static_cast<int32_t>(this->m_y) >> 19)) ^
+                            ((static_cast<int32_t>(this->m_z) << 26) | (static_cast<int32_t>(this->m_z) >>  6))
+                        );
+                    }
+
+                    T increment_x()
+                    {
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_x, 1)
+                        return ++this->m_x;
+                    }
+
+                    T increment_y()
+                    {
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_y, 1)
+                        return ++this->m_y;
+                    }
+
+                    T increment_z()
+                    {
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_z, 1)
+                        return ++this->m_z;
+                    }
+
+                    T increment_x(T val)
+                    {
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_x, val)
+                        return (this->m_x += val);
+                    }
+
+                    T increment_y(T val)
+                    {
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_y, val)
+                        return (this->m_y += val);
+                    }
+
+                    T increment_z(T val)
+                    {
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_z, val)
+                        return (this->m_z += val);
+                    }
+
+                    void increment(const omni::geometry::atomic_point3d<T>& val)
+                    {
+                        this->increment(val.x(), val.y(), val.z());
+                    }
+
+                    void increment(const omni::math::dimensional<T, 3>& val)
+                    {
+                        this->increment(val[0], val[1], val[2]);
+                    }
+
+                    void increment(T x, T y, T z)
+                    {
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_x, x)
+                        this->m_x += x;
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_y, y)
+                        this->m_y += y;
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_z, z)
+                        this->m_z += z;
+                    }
+
+                    void offset(const omni::geometry::atomic_point3d<T>& val)
+                    {
+                        this->offset(val.x(), val.y(), val.z());
+                    }
+
+                    void offset(const omni::math::dimensional<T, 3>& val)
+                    {
+                        this->offset(val[0], val[1], val[2]);
+                    }
+
+                    void offset(T x, T y, T z)
+                    {
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_x, x)
+                        this->m_x += x;
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_y, y)
+                        this->m_y += y;
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_z, z)
+                        this->m_z += z;
+                    }
+
+                    void set(T x, T y, T z)
+                    {
+                        this->m_x = x;
+                        this->m_y = y;
+                        this->m_z = z;
+                    }
+
+                    void set(const omni::math::dimensional<T, 3>& point)
+                    {
+                        this->set(point[0], point[1], point[2]);
+                    }
+
+                    void swap(atomic_point3d<T>& o)
+                    {
+                        if (this != &o) {
+                            std::swap(this->m_x, o.m_x);
+                            std::swap(this->m_y, o.m_y);
+                            std::swap(this->m_z, o.m_z);
+                        }
+                    }
+
+                    omni::string_t to_string_t() const
+                    {
+                        omni::sstream_t s;
+                        s << "{" << this->m_x << "," << this->m_y << "," << this->m_z << "}";
+                        return s.str();
+                    }
+
+                    std::string to_string() const
+                    {
+                        std::stringstream s;
+                        s << "{" << this->m_x << "," << this->m_y << "," << this->m_z << "}";
+                        return s.str();
+                    }
+
+                    std::wstring to_wstring() const
+                    {
+                        std::wstringstream s;
+                        s << "{" << this->m_x << "," << this->m_y << "," << this->m_z << "}";
+                        return s.str();
+                    }
+
+                    operator std::string() const
+                    {
+                        return this->to_string();
+                    }
+
+                    operator std::wstring() const
+                    {
+                        return this->to_wstring();
+                    }
+
+                    omni::math::dimensional<T, 3> to_dimensional() const
+                    {
+                        T vals[3] = { this->m_x, this->m_y, this->m_z };
+                        return omni::math::dimensional<T, 3>(vals);
+                    }
+
+                    bool operator!=(const omni::geometry::atomic_point3d< T >& val) const
+                    {
+                        return !(*this == val);
+                    }
+
+                    omni::geometry::atomic_point3d<T>& operator=(const omni::geometry::atomic_point3d<T>& val)
+                    {
+                        if (this != &val) {
+                            OMNI_ASSIGN_FW(val)
+                            this->m_x = val.m_x;
+                            this->m_y = val.m_y;
+                            this->m_z = val.m_z;
+                        }
+                        return *this;
+                    }
+
+                    bool operator<(const omni::geometry::atomic_point3d<T>& val) const
+                    {
+                        if (this == &val) { return false; }
+                        return (this->m_x + this->m_y + this->m_z) < (val.m_x + val.m_y + val.m_z);
+                    }
+
+                    bool operator<=(const omni::geometry::atomic_point3d<T>& val) const
+                    {
+                        if (this == &val) { return false; }
+                        return (this->m_x + this->m_y + this->m_z) <= (val.m_x + val.m_y + val.m_z);
+                    }
+
+                    bool operator>(const omni::geometry::atomic_point3d<T>& val) const
+                    {
+                        if (this == &val) { return false; }
+                        return (this->m_x + this->m_y + this->m_z) > (val.m_x + val.m_y + val.m_z);
+                    }
+
+                    bool operator>=(const omni::geometry::atomic_point3d<T>& val) const
+                    {
+                        if (this == &val) { return false; }
+                        return (this->m_x + this->m_y + this->m_z) >= (val.m_x + val.m_y + val.m_z);
+                    }
+
+                    bool operator==(const omni::geometry::atomic_point3d< T >& val) const
+                    {
+                        if (this == &val) { return true; }
+                        return (
+                            omni::math::are_equal<T>(this->m_x, val.m_x) &&
+                            omni::math::are_equal<T>(this->m_y, val.m_y) &&
+                            omni::math::are_equal<T>(this->m_z, val.m_z))
+                        OMNI_EQUAL_FW(val);
+                    }
+
+                    omni::geometry::atomic_point3d<T> operator+(const omni::geometry::atomic_point3d<T>& val)
+                    {
+                        #if defined(OMNI_SAFE_POINT3D)
+                            this->m_mtx.lock();
+                            if (this != &val) { val.m_mtx.lock(); }
+                            OMNI_BITS_WILL_ADD_OVER_FW(this->m_x, val.m_x)
+                            OMNI_BITS_WILL_ADD_OVER_FW(this->m_y, val.m_y)
+                            OMNI_BITS_WILL_ADD_OVER_FW(this->m_z, val.m_z)
+                            omni::geometry::atomic_point3d<T> ret((this->m_x + val.m_x),
+                                        (this->m_y + val.m_y),
+                                        (this->m_z + val.m_z));
+                            if (this != &val) { val.m_mtx.unlock(); }
+                            this->m_mtx.unlock();
+                            return ret;
+                        #else
+                            OMNI_BITS_WILL_ADD_OVER_FW(this->m_x, val.m_x)
+                            OMNI_BITS_WILL_ADD_OVER_FW(this->m_y, val.m_y)
+                            OMNI_BITS_WILL_ADD_OVER_FW(this->m_z, val.m_z)
+                            return omni::geometry::atomic_point3d<T>((this->m_x + val.m_x),
+                                            (this->m_y + val.m_y),
+                                            (this->m_z + val.m_z));
+                        #endif
+                    }
+
+                    omni::geometry::atomic_point3d<T> operator+(const omni::math::dimensional<T, 3>& val)
+                    {
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_x, val[0])
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_y, val[1])
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_z, val[2])
+                        return omni::geometry::atomic_point3d<T>((this->m_x + val[0]),
+                                        (this->m_y + val[1]),
+                                        (this->m_z + val[2]));
+                    }
+
+                    omni::geometry::atomic_point3d<T> operator+(T val)
+                    {
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_x, val)
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_y, val)
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_z, val)
+                        return omni::geometry::atomic_point3d<T>((this->m_x + val),
+                                        (this->m_y + val),
+                                        (this->m_z + val));
+                    }
+
+                    omni::geometry::atomic_point3d<T> operator-(const omni::geometry::atomic_point3d<T>& val)
+                    {
+                        #if defined(OMNI_SAFE_POINT3D)
+                            this->m_mtx.lock();
+                            if (this != &val) { val.m_mtx.lock(); }
+                            OMNI_BITS_WILL_SUB_UNDER_FW(this->m_x, val.m_x)
+                            OMNI_BITS_WILL_SUB_UNDER_FW(this->m_y, val.m_y)
+                            OMNI_BITS_WILL_SUB_UNDER_FW(this->m_z, val.m_z)
+                            omni::geometry::atomic_point3d<T> ret((this->m_x - val.m_x),
+                                        (this->m_y - val.m_y),
+                                        (this->m_z - val.m_z));
+                            if (this != &val) { val.m_mtx.unlock(); }
+                            this->m_mtx.unlock();
+                            return ret;
+                        #else
+                            OMNI_BITS_WILL_SUB_UNDER_FW(this->m_x, val.m_x)
+                            OMNI_BITS_WILL_SUB_UNDER_FW(this->m_y, val.m_y)
+                            OMNI_BITS_WILL_SUB_UNDER_FW(this->m_z, val.m_z)
+                            return omni::geometry::atomic_point3d<T>((this->m_x - val.m_x),
+                                            (this->m_y - val.m_y),
+                                            (this->m_z - val.m_z));
+                        #endif
+                    }
+
+                    omni::geometry::atomic_point3d<T> operator-(const omni::math::dimensional<T, 3>& val)
+                    {
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_x, val[0])
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_y, val[1])
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_z, val[2])
+                        return omni::geometry::atomic_point3d<T>((this->m_x - val[0]),
+                                        (this->m_y - val[1]),
+                                        (this->m_z - val[2]));
+                    }
+
+                    omni::geometry::atomic_point3d<T> operator-(T val)
+                    {
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_x, val)
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_y, val)
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_z, val)
+                        return omni::geometry::atomic_point3d<T>((this->m_x - val),
+                                        (this->m_y - val),
+                                        (this->m_z - val));
+                    }
+
+                    omni::geometry::atomic_point3d<T>& operator+=(const omni::geometry::atomic_point3d<T>& val)
+                    {
+                        #if defined(OMNI_SAFE_POINT3D)
+                            this->m_mtx.lock();
+                            if (this != &val) { val.m_mtx.lock(); }
+                            OMNI_BITS_WILL_ADD_OVER_FW(this->m_x, val.m_x)
+                            this->m_x += val.m_x;
+                            OMNI_BITS_WILL_ADD_OVER_FW(this->m_y, val.m_y)
+                            this->m_y += val.m_y;
+                            OMNI_BITS_WILL_ADD_OVER_FW(this->m_z, val.m_z)
+                            this->m_z += val.m_z;
+                            if (this != & val) { val.m_mtx.unlock(); }
+                            this->m_mtx.unlock();
+                        #else
+                            OMNI_BITS_WILL_ADD_OVER_FW(this->m_x, val.m_x)
+                            this->m_x += val.m_x;
+                            OMNI_BITS_WILL_ADD_OVER_FW(this->m_y, val.m_y)
+                            this->m_y += val.m_y;
+                            OMNI_BITS_WILL_ADD_OVER_FW(this->m_z, val.m_z)
+                            this->m_z += val.m_z;
+                        #endif
+                        return *this;
+                    }
+
+                    omni::geometry::atomic_point3d<T>& operator+=(const omni::math::dimensional<T, 3>& val)
+                    {
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_x, val[0])
+                        this->m_x += val[0];
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_y, val[1])
+                        this->m_y += val[1];
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_z, val[2])
+                        this->m_z += val[2];
+                        return *this;
+                    }
+
+                    omni::geometry::atomic_point3d<T>& operator+=(T val)
+                    {
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_x, val)
+                        this->m_x += val;
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_y, val)
+                        this->m_y += val;
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_z, val)
+                        this->m_z += val;
+                        return *this;
+                    }
+
+                    omni::geometry::atomic_point3d<T>& operator-=(const omni::geometry::atomic_point3d<T>& val)
+                    {
+                        #if defined(OMNI_SAFE_POINT3D)
+                            this->m_mtx.lock();
+                            if (this != &val) { val.m_mtx.lock(); }
+                            OMNI_BITS_WILL_SUB_UNDER_FW(this->m_x, val.m_x)
+                            this->m_x -= val.m_x;
+                            OMNI_BITS_WILL_SUB_UNDER_FW(this->m_y, val.m_y)
+                            this->m_y -= val.m_y;
+                            OMNI_BITS_WILL_SUB_UNDER_FW(this->m_z, val.m_z)
+                            this->m_z -= val.m_z;
+                            if (this != & val) { val.m_mtx.unlock(); }
+                            this->m_mtx.unlock();
+                        #else
+                            OMNI_BITS_WILL_SUB_UNDER_FW(this->m_x, val.m_x)
+                            this->m_x -= val.m_x;
+                            OMNI_BITS_WILL_SUB_UNDER_FW(this->m_y, val.m_y)
+                            this->m_y -= val.m_y;
+                            OMNI_BITS_WILL_SUB_UNDER_FW(this->m_z, val.m_z)
+                            this->m_z -= val.m_z;
+                        #endif
+                        return *this;
+                    }
+
+                    omni::geometry::atomic_point3d<T>& operator-=(const omni::math::dimensional<T, 3>& val)
+                    {
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_x, val[0])
+                        this->m_x -= val[0];
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_y, val[1])
+                        this->m_y -= val[1];
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_z, val[2])
+                        this->m_z -= val[2];
+                        return *this;
+                    }
+
+                    omni::geometry::atomic_point3d<T>& operator-=(T val)
+                    {
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_x, val)
+                        this->m_x -= val;
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_y, val)
+                        this->m_y -= val;
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_z, val)
+                        this->m_z -= val;
+                        return *this;
+                    }
+
+                    operator omni::math::dimensional<T, 3>() const
+                    {
+                        return this->to_dimensional();
+                    }
+
+                    static omni::geometry::atomic_point3d<T> add(const omni::geometry::atomic_point3d<T>& point, const omni::math::dimensional<T, 3> coord)
+                    {
+                        OMNI_BITS_WILL_ADD_OVER_FW(point.x(), coord[0])
+                        OMNI_BITS_WILL_ADD_OVER_FW(point.y(), coord[1])
+                        OMNI_BITS_WILL_ADD_OVER_FW(point.z(), coord[2])
+                        return omni::geometry::atomic_point3d<T>(point.x() + coord[0],
+                                        point.y() + coord[1],
+                                        point.z() + coord[2]);
+                    }
+
+                    static omni::geometry::atomic_point3d<T> subtract(const omni::geometry::atomic_point3d<T>& point, const omni::math::dimensional<T, 3> coord)
+                    {
+                        OMNI_BITS_WILL_SUB_UNDER_FW(point.x(), coord[0])
+                        OMNI_BITS_WILL_SUB_UNDER_FW(point.y(), coord[1])
+                        OMNI_BITS_WILL_SUB_UNDER_FW(point.z(), coord[2])
+                        return omni::geometry::atomic_point3d<T>(point.x() - coord[0],
+                                        point.y() - coord[1],
+                                        point.z() - coord[2]);
+                    }
+
+                    OMNI_MEMBERS_FW(omni::geometry::atomic_point3d<T>) // disposing,name,type(),hash()
+
+                    OMNI_OSTREAM_FW(omni::geometry::atomic_point3d<T>)
+
+                private:
+                    std::atomic<T> m_x;
+                    std::atomic<T> m_y;
+                    std::atomic<T> m_z;
+            };
+
+            typedef omni::geometry::atomic_point3d<int32_t> atomic_point_3d_t;
+            typedef omni::geometry::atomic_point3d<int64_t> atomic_point64_3d_t;
+            typedef omni::geometry::atomic_point3d<float> atomic_pointF_3d_t;
+            typedef omni::geometry::atomic_point3d<double> atomic_pointD_3d_t;
+
+            typedef omni_sequence_t<omni::geometry::atomic_point_3d_t> atomic_point_3d_seq_t;
+            typedef omni_sequence_t<omni::geometry::atomic_point64_3d_t> atomic_point64_3d_seq_t;
+            typedef omni_sequence_t<omni::geometry::atomic_pointF_3d_t> atomic_pointF_3d_seq_t;
+            typedef omni_sequence_t<omni::geometry::atomic_pointD_3d_t> atomic_pointD_3d_seq_t;
+        #endif
     }
 }
 

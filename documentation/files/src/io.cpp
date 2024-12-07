@@ -28,7 +28,7 @@
     #define OMNI_PATH_FW cfile
     #define OMNI_L_FW(v) v
     #define OMNI_STRING_T_FW std::string
-    #include <omni/xx/io_file.hxx>
+    #include <omni/xx/io/file.hxx>
     #undef OMNI_PATH_FW
     #undef OMNI_L_FW
     #undef OMNI_STRING_T_FW
@@ -37,7 +37,7 @@
     #define OMNI_PATH_FW wfile
     #define OMNI_L_FW(v) L##v
     #define OMNI_STRING_T_FW std::wstring
-    #include <omni/xx/io_file.hxx>
+    #include <omni/xx/io/file.hxx>
     #undef OMNI_PATH_FW
     #undef OMNI_L_FW
     #undef OMNI_STRING_T_FW
@@ -49,7 +49,7 @@
     #define OMNI_CHAR_T_FW std_string_t
     #define OMNI_L_FW(v) v
     #define OMNI_STRING_T_FW std::string
-    #include <omni/xx/io_dir.hxx>
+    #include <omni/xx/io/dir.hxx>
     #undef OMNI_PATH_FW
     #undef OMNI_CHAR_T_FW
     #undef OMNI_L_FW
@@ -60,7 +60,7 @@
     #define OMNI_CHAR_T_FW std_wstring_t
     #define OMNI_L_FW(v) L##v
     #define OMNI_STRING_T_FW std::wstring
-    #include <omni/xx/io_dir.hxx>
+    #include <omni/xx/io/dir.hxx>
     #undef OMNI_PATH_FW
     #undef OMNI_CHAR_T_FW
     #undef OMNI_L_FW
@@ -73,7 +73,7 @@
     #define OMNI_CHAR_T_FW char_t
     #define OMNI_L_FW(v) v
     #define OMNI_STRING_T_FW std::string
-    #include <omni/xx/io_path.hxx>
+    #include <omni/xx/io/path.hxx>
     #undef OMNI_PATH_FW
     #undef OMNI_CHAR_T_FW
     #undef OMNI_L_FW
@@ -84,7 +84,7 @@
     #define OMNI_CHAR_T_FW wide_char_t
     #define OMNI_L_FW(v) L##v
     #define OMNI_STRING_T_FW std::wstring
-    #include <omni/xx/io_path.hxx>
+    #include <omni/xx/io/path.hxx>
     #undef OMNI_PATH_FW
     #undef OMNI_CHAR_T_FW
     #undef OMNI_L_FW

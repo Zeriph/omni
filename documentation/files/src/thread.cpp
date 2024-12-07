@@ -50,10 +50,27 @@
 
 namespace omni {
     namespace sync {
-        typedef struct thread_args {
-            omni::sync::thread* bthread;
-            omni::sync::safe_spin_wait swait;
-        } thread_args;
+        class thread_args
+        {
+            public:
+                thread_args() :
+                    bthread(OMNI_NULL_PTR),
+                    swait()
+                {}
+                ~thread_args() {}
+
+                omni::sync::thread* bthread;
+                omni::sync::safe_spin_wait swait;
+                
+            private:
+                thread_args(const thread_args& cp) :
+                    bthread(),
+                    swait()
+                {
+                    OMNI_UNUSED(cp);
+                }
+                thread_args& operator=(const thread_args& cp) { OMNI_UNUSED(cp); return *this; }
+        };
     }
 }
 
@@ -148,10 +165,10 @@ OMNI_THREAD_FNPTR_T OMNI_THREAD_CALL_T omni::sync::thread::_start(void* param)
     If the thread gets this far, then the thread::start() function has already called scoped_lock
     and it is safe to use t->m_ values (since no other threads can operate on the values) */
     omni::sync::thread* t = (static_cast<omni::sync::thread_args*>(param))->bthread;
-    if (t->m_mthd != OMNI_NULL) {
+    if (t->m_mthd != OMNI_NULL_PTR) {
         omni::sync::thread_t tid = omni::sync::thread_id();
-        omni::sync::parameterized_thread_start* pstartfn = OMNI_NULL;
-        omni::sync::thread_start* startfn = OMNI_NULL;
+        omni::sync::parameterized_thread_start* pstartfn = OMNI_NULL_PTR;
+        omni::sync::thread_start* startfn = OMNI_NULL_PTR;
         omni::sync::thread::manager::instance().push_back(tid, *t);
         if (OMNI_VAL_HAS_FLAG_BIT(t->m_status, OMNI_THREAD_PMTHD_FLAG_FW)) {
             pstartfn = new omni::sync::parameterized_thread_start(*(static_cast<omni::sync::parameterized_thread_start*>(t->m_mthd)));
@@ -179,19 +196,19 @@ OMNI_THREAD_FNPTR_T OMNI_THREAD_CALL_T omni::sync::thread::_start(void* param)
         #endif
         t->m_state = omni::sync::thread_state::RUNNING;
         // wrap the delegate in a try..catch in case the user code errors, we can handle it here
-        if (pstartfn != OMNI_NULL) {
+        if (pstartfn != OMNI_NULL_PTR) {
             OMNI_THREAD_TRY_FW
             omni::sync::thread_arg_t args = t->m_args;
             (static_cast<omni::sync::thread_args*>(param))->swait.signal();
             pstartfn->invoke(args);
             OMNI_THREAD_CATCHEX_FW(delete pstartfn;)
-        } else if (startfn != OMNI_NULL) {
+        } else if (startfn != OMNI_NULL_PTR) {
             OMNI_THREAD_TRY_FW
             (static_cast<omni::sync::thread_args*>(param))->swait.signal();
             startfn->invoke();
             OMNI_THREAD_CATCHEX_FW(delete startfn;)
         }
-        pstartfn = OMNI_NULL; startfn = OMNI_NULL;
+        pstartfn = OMNI_NULL_PTR; startfn = OMNI_NULL_PTR;
         omni::sync::thread::manager::instance().pop_back(tid);
     } else {
         // should not happen since this should be caught in the calling thread::start
@@ -202,7 +219,7 @@ OMNI_THREAD_FNPTR_T OMNI_THREAD_CALL_T omni::sync::thread::_start(void* param)
         t->m_state = omni::sync::thread_state::STOPPED;
         (static_cast<omni::sync::thread_args*>(param))->swait.signal();
     }
-    t = OMNI_NULL;
+    t = OMNI_NULL_PTR;
     return 0;
 }
 
@@ -224,7 +241,7 @@ omni::sync::thread::thread() :
     OMNI_CTOR_FW(omni::sync::thread)
     OMNI_SAFE_THREAD_MILST_FW
     m_args(),
-    m_mthd(OMNI_NULL),
+    m_mthd(OMNI_NULL_PTR),
     m_tid(0),
     m_thread(0),
     m_ops(),
@@ -245,7 +262,7 @@ omni::sync::thread::thread(const omni::sync::thread& cp) :
     OMNI_CPCTOR_FW(cp)
     OMNI_SAFE_THREAD_MILST_FW
     m_args(cp.m_args),
-    m_mthd(OMNI_NULL),
+    m_mthd(OMNI_NULL_PTR),
     m_tid(cp.m_tid),
     m_thread(cp.m_thread),
     m_ops(cp.m_ops),
@@ -257,7 +274,7 @@ omni::sync::thread::thread(const omni::sync::thread& cp) :
         omni::chrono::monotonic::initialize();
     #endif
     this->m_ops.set_flag(omni::sync::thread_option::AUTO_JOIN, true);
-    if (cp.m_mthd != OMNI_NULL) {
+    if (cp.m_mthd != OMNI_NULL_PTR) {
         if (OMNI_VAL_HAS_FLAG_BIT(cp.m_status, OMNI_THREAD_PMTHD_FLAG_FW)) {
             this->m_mthd = new omni::sync::parameterized_thread_start(*(static_cast<omni::sync::parameterized_thread_start*>(cp.m_mthd)));
         } else {
@@ -273,7 +290,7 @@ omni::sync::thread::thread(const omni::sync::thread_flags& ops) :
     OMNI_CTOR_FW(omni::sync::thread)
     OMNI_SAFE_THREAD_MILST_FW
     m_args(),
-    m_mthd(OMNI_NULL),
+    m_mthd(OMNI_NULL_PTR),
     m_tid(0),
     m_thread(0),
     m_ops(ops),
@@ -293,7 +310,7 @@ omni::sync::thread::thread(std::size_t max_stack_sz) :
     OMNI_CTOR_FW(omni::sync::thread)
     OMNI_SAFE_THREAD_MILST_FW
     m_args(),
-    m_mthd(OMNI_NULL),
+    m_mthd(OMNI_NULL_PTR),
     m_tid(0),
     m_thread(0),
     m_ops(max_stack_sz),
@@ -942,7 +959,7 @@ bool omni::sync::thread::is_alive() const
 bool omni::sync::thread::is_bound() const
 {
     OMNI_SAFE_THREAD_ALOCK_FW
-    if (this->m_mthd != OMNI_NULL) {
+    if (this->m_mthd != OMNI_NULL_PTR) {
         if (OMNI_VAL_HAS_FLAG_BIT(this->m_status, OMNI_THREAD_PMTHD_FLAG_FW)) {
             return (static_cast<omni::sync::parameterized_thread_start*>(this->m_mthd))->valid();
         } else {
@@ -1263,7 +1280,7 @@ omni::sync::thread_t omni::sync::thread::start(omni::sync::thread_arg_t args)
             OMNI_ERR_RET_FW("Can not start a thread once it has been started or if it is in an unknown state", omni::exceptions::thread_running_exception());
         }
     }
-    if (this->m_mthd == OMNI_NULL) {
+    if (this->m_mthd == OMNI_NULL_PTR) {
         // no delegate attached to this thread so we cannot actually start anything
         OMNI_ERR_RET_FW(OMNI_INVALID_DELEGATE_FUNC_STR, omni::exceptions::invalid_delegate())
     }
@@ -1438,7 +1455,7 @@ bool omni::sync::thread::operator==(const omni::sync::thread& o) const
         this->m_thread == o.m_thread &&
         this->m_status == o.m_status &&
         ((this->m_mthd == o.m_mthd) ||
-        (((this->m_mthd != OMNI_NULL) && (o.m_mthd != OMNI_NULL)) &&
+        (((this->m_mthd != OMNI_NULL_PTR) && (o.m_mthd != OMNI_NULL_PTR)) &&
             (OMNI_VAL_HAS_FLAG_BIT(this->m_status, OMNI_THREAD_PMTHD_FLAG_FW) == OMNI_VAL_HAS_FLAG_BIT(o.m_status, OMNI_THREAD_PMTHD_FLAG_FW)) &&
             (OMNI_VAL_HAS_FLAG_BIT(this->m_status, OMNI_THREAD_PMTHD_FLAG_FW) ?
             (*static_cast<omni::sync::parameterized_thread_start*>(this->m_mthd) == *static_cast<omni::sync::parameterized_thread_start*>(o.m_mthd))
@@ -1459,14 +1476,14 @@ bool omni::sync::thread::operator!=(const omni::sync::thread& o) const
 
 void omni::sync::thread::_chkmthd()
 {
-    if (this->m_mthd != OMNI_NULL) {
+    if (this->m_mthd != OMNI_NULL_PTR) {
         if (OMNI_VAL_HAS_FLAG_BIT(this->m_status, OMNI_THREAD_PMTHD_FLAG_FW)) {
             delete static_cast<omni::sync::parameterized_thread_start*>(this->m_mthd);
         } else {
             delete static_cast<omni::sync::thread_start*>(this->m_mthd);
         }
     }
-    this->m_mthd = OMNI_NULL;
+    this->m_mthd = OMNI_NULL_PTR;
     OMNI_VAL_UNSET_FLAG_BIT(this->m_status, OMNI_THREAD_PMTHD_FLAG_FW);
 }
 
@@ -1590,7 +1607,7 @@ void omni::sync::thread::_set_context(const omni::sync::thread& t2)
     #endif
     this->_chkmthd();
     this->m_status = t2.m_status;
-    if (t2.m_mthd != OMNI_NULL) {
+    if (t2.m_mthd != OMNI_NULL_PTR) {
         if (OMNI_VAL_HAS_FLAG_BIT(t2.m_status, OMNI_THREAD_PMTHD_FLAG_FW)) {
             this->m_mthd = new omni::sync::thread_start(*(static_cast<omni::sync::thread_start*>(t2.m_mthd)));
         } else {

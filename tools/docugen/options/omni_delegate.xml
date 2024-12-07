@@ -5,7 +5,7 @@
   <Considerations>No special considerations.</Considerations>
   <Description>This helper macro allows you to define an omni::delegate of any parameter length without having to specify the specific omni::delegate type. In other words, usually one would have to define an omni::delegate with 2 parameter types by declaring it as such omni::delegate2&lt;void, int, int&gt; additionally, one would have to define an omni::delegate that takes 1 parameter as such omni::delegate1&lt;void, int&gt; this is true for any of the omni::delegate types up to 16 parameters.
 
-So that you do not have to specify the specific delegate type, you can use the omni_delegate helper macro to define the correct omni::delegate type without having to be specific each time, reducing code and confusion.
+So that you do not have to specify the specific delegate type, you can use the omni_delegate helper macro to define the correct omni::delegate type without having to be specific each @_time, reducing code and confusion.
 
 @code
 int function0()

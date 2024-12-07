@@ -44,10 +44,22 @@ namespace omni {
         inline bool is_alpha(wchar_t c)
         { return (std::iswalpha(c) != 0); }
 
+        inline bool is_letter(char c)
+        { return (std::isalpha(c) != 0); }
+        
+        inline bool is_letter(wchar_t c)
+        { return (std::iswalpha(c) != 0); }
+
         inline bool is_digit(char c)
         { return (std::isdigit(c) != 0); }
         
         inline bool is_digit(wchar_t c)
+        { return (std::iswdigit(c) != 0); }
+
+        inline bool is_number(char c)
+        { return (std::isdigit(c) != 0); }
+        
+        inline bool is_number(wchar_t c)
         { return (std::iswdigit(c) != 0); }
 
         inline bool is_punct(char c)

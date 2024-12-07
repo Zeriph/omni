@@ -341,11 +341,11 @@ namespace omni {
 
                 static bool _valid(int32_t val)
                 {
-                    return (val == 
-                        ASYNCHRONOUS ||
-                        SYNCHRONOUS || 
-                        DROP || 
-                        QUEUED
+                    return (
+                        OMNI_I2EV_FW(ASYNCHRONOUS) ||
+                        OMNI_I2EV_FW(SYNCHRONOUS )|| 
+                        OMNI_I2EV_FW(DROP) || 
+                        OMNI_I2EV_FW(QUEUED)
                     );
                 }
         };

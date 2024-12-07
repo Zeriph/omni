@@ -23,13 +23,17 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <div class="ptitle"><a href="../../../../files/src/omni/defs/stdinc.hpp" onclick="return popup('../../../../files/src/omni/defs/stdinc.hpp')">omni/defs/stdinc.hpp</a></div><div class="content"><div>
 <code><div class="cpphtmllines">
 <!--start line numbers-->
-0001:<br><div id="cmntl1" name="cmntl1">0002:<br>0003:<br>0004:<br>0005:<br>0006:<br>0007:<br>0008:<br>0009:<br>00010:<br>00011:<br>00012:<br>00013:<br>00014:<br>00015:<br>00016:<br>00017:<br>00018:<br></div>00019:<br>
-00020:<br>00021:<br>00022:<br>00023:<br>00024:<br>00025:<br>00026:<br>00027:<br>00028:<br>00029:<br>00030:<br>00031:<br>
+01:<br><div id="cmntl1" name="cmntl1">02:<br>03:<br>04:<br>05:<br>06:<br>07:<br>08:<br>09:<br>10:<br>11:<br>12:<br>13:<br>14:<br>15:<br>16:<br>17:<br>18:<br></div>19:<br>
+20:<br>21:<br>22:<br><div id="cmntl2" name="cmntl2">23:<br>24:<br>25:<br>26:<br>27:<br></div>28:<br>29:<br>30:<br>31:<br>32:<br>33:<br>34:<br>35:<br>36:<br>37:<br>38:<br>39:<br>
+40:<br>41:<br>42:<br>43:<br>44:<br>45:<br>46:<br>47:<br>48:<br>49:<br>50:<br>51:<br>52:<br>53:<br>54:<br>55:<br>56:<br>57:<br>58:<br>59:<br>
+60:<br>61:<br>62:<br>63:<br>
 <!--end line numbers-->
 </div><div class="cpphtmlcmnt">
 <!--start collapse columns-->
 <img src="../../../../content/tree/min.gif" alt="Min/Max" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
-<br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><img src="../../../../content/tree/min.gif" alt="Min/Max" id="cmnti2" name="cmnti2" onclick="collapse('2', '../../../../');" /><br><div id="cmnts2" name="cmnts2"><br><br><br><br><br></div><div></div><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br>
 <!--end collapse columns-->
 </div><div class="cpphtml" style="margin-left:3em;">
 <!--start highlighted code-->
@@ -54,16 +58,48 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <font class="syn_pre">#if !defined(OMNI_STDINC_HPP)</font><br>
 <font class="syn_pre">#define OMNI_STDINC_HPP 1</font><br>
 <br>
-<font class="syn_pre">#if !defined(OMNI_NO_STDINC)</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;vector&gt;</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;map&gt;</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;algorithm&gt;</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// TODO: include other C++03/C++11 std include&#39;s that aren&#39;t already included</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">//&nbsp;&nbsp;&nbsp;&nbsp;   in the framework. Make sure to add #ifndef OMNI_NO_STD_VECTOR etc etc</font><br>
+<font class="syn_cmt">/*<div class="syn_ex" id="cmnt2" name="cmnt2">
+&nbsp;&nbsp;&nbsp;&nbsp;This file is simply a helper header to include some of the STL for easy<br>
+&nbsp;&nbsp;&nbsp;&nbsp;access. It should be noted that even if you define something like OMNI_NO_STD_CLIMITS,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if a specific TU needs that header, it will still include it in there, just not<br>
+&nbsp;&nbsp;&nbsp;&nbsp;globally in here.<br>
+*/</div><div></div></font>
+<br>
+<font class="syn_pre">#if !defined(<a href="../../../options/omni_no_stdinc.html">OMNI_NO_STDINC</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#if !defined(<a href="../../../options/omni_no_std_vector.html">OMNI_NO_STD_VECTOR</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;vector&gt;</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#if !defined(OMNI_NO_STD_MAP)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;map&gt;</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#if !defined(OMNI_NO_STD_ALGORITHM)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;algorithm&gt;</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#if !defined(OMNI_NO_STD_ITERATOR)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;iterator&gt;</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#if !defined(OMNI_NO_STD_CLIMITS)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;climits&gt;</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#if !defined(OMNI_NO_STD_DEQUE)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;deque&gt;</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#if !defined(OMNI_NO_STD_LIST)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;list&gt;</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#if !defined(OMNI_NO_STD_SET)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;set&gt;</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#if !defined(OMNI_NO_STD_BITSET)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;bitset&gt;</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#if !defined(OMNI_NO_STD_MEMORY)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;memory&gt;</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
 <font class="syn_pre">#endif</font><br>
 <br>
 <font class="syn_pre">#endif <font class="syn_cmt">// OMNI_STDINC_HPP</font></font><br>
 <!--end highlighted code-->
 </div></code><br>
 <!--end content-->
-</div></div></div></div><script type="text/javascript">loadJS(); collapseAll('1', '../../../../');</script></body></html>
+</div></div></div></div><script type="text/javascript">loadJS(); collapseAll('2', '../../../../');</script></body></html>

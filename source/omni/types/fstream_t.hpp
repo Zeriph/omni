@@ -538,10 +538,10 @@ namespace omni {
 
                 static bool _valid(int32_t val)
                 {
-                    return (val == 
-                        NONE ||
-                        OVERWRITE ||
-                        CREATE_PATH
+                    return (
+                        OMNI_I2EV_FW(NONE) ||
+                        OMNI_I2EV_FW(OVERWRITE) ||
+                        OMNI_I2EV_FW(CREATE_PATH)
                     );
                 }
         };

@@ -22,10 +22,15 @@
 // DEV_NOTE: this enum does not follow the rest of the enum types since this is specifically for delegates
 
 namespace omni {
+    /** Defines the values for the invocation type a delegate object will have */
     typedef struct invoke_type {
+        /** The underlying enum type for the invocation types */
         typedef enum enum_t {
+            /** No methods have been assigned for invocation */
             NONE = 0,
+            /** A non-member function or static function has been assigned for invocation */
             ANONYMOUS = 1,
+            /** A member function of a class or struct has been assigned for invocation */
             MEMBER_FUNC = 2
         } enum_t;
     } invoke_type;

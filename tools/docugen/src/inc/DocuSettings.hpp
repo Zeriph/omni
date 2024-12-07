@@ -33,6 +33,8 @@ namespace OmniDocuGen
             std::string TempZipDirectory;
             // Gets the excluded files/folders
             std::string Excluded;
+            // Gets the system path to 7z
+            std::string PathsFor7z;
             // Gets the files that shalt not be parsed (like .hxx files)
             std::string NoParse;
             // keywords
@@ -118,6 +120,7 @@ namespace OmniDocuGen
                         this->TemplateDirectory = get_tag<std::string>(xml, "TemplateDirectory");
                         this->TempZipDirectory = get_tag<std::string>(xml, "TempZipDirectory");
                         this->Excluded = get_tag<std::string>(xml, "Excluded");
+                        this->PathsFor7z = get_tag<std::string>(xml, "PathsFor7z");
                         this->NoParse = get_tag<std::string>(xml, "NoParse");
                         this->KeywordInstructions = get_tag<std::string>(xml, "KeywordInstructions");
                         this->KeywordTypes = get_tag<std::string>(xml, "KeywordTypes");
@@ -148,6 +151,7 @@ namespace OmniDocuGen
                         "TempZipDirectory: {9}\n"
                         "Excluded: {10}\n"
                         "NoParse: {11}",
+                        "PathsFor7z: {12}",
                         this->SourceDirectory,
                         this->ExampleDirectory,
                         this->OutputDirectory,
@@ -159,7 +163,8 @@ namespace OmniDocuGen
                         this->TemplateDirectory,
                         this->TempZipDirectory,
                         this->Excluded,
-                        this->NoParse
+                        this->NoParse,
+                        this->PathsFor7z
                     );
                 }
                 return ret;
@@ -193,6 +198,7 @@ namespace OmniDocuGen
                     data += gen_tag(this->TemplateDirectory, "TemplateDirectory");
                     data += gen_tag(this->TempZipDirectory, "TempZipDirectory");
                     data += gen_tag(this->Excluded, "Excluded");
+                    data += gen_tag(this->PathsFor7z, "PathsFor7z");
                     data += gen_tag(this->NoParse, "NoParse");
                     data += gen_tag(this->KeywordInstructions, "KeywordInstructions");
                     data += gen_tag(this->KeywordTypes, "KeywordTypes");

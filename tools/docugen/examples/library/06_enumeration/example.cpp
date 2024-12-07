@@ -13,7 +13,10 @@ OMNI_ENUM_END // end definition
 
 class Foo {
     public:
-        OMNI_ENUM(InnerEnum, J, A, B, C, D, E, F, G, H, I, J, K, NONE)
+        OMNI_ENUM(InnerEnum, // name
+            J, // default
+            A, B, C, D, E, F, G, H, I, J, K, NONE // enum values
+        )
 
         InnerEnum val;
 

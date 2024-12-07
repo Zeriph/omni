@@ -32,6 +32,8 @@
     #define OMNI_THRD_INT_FW uint64_t
 #endif
 
+// DEV_NOTE: using "Construct on First Use"
+
 namespace omni {
     namespace sync {
             /**

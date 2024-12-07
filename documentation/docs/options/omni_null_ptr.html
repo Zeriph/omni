@@ -24,20 +24,29 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <div class="docdiv">
     <font class="docu">MACRO</font><br><br>
     <code><font style="font-size:16px;">
-    <code>OMNI_NULL_PTR</code> - Defines the NULL value type to use.
+    <code>OMNI_NULL_PTR</code> - The NULL value used throughout the library.
     </font></code>
 </div><br>
 <div class="docdiv">
     <font class="docu">SYNOPSIS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    If define, the <code><a href="omni_null.html">OMNI_NULL</a></code> type will be the <code>nullptr</code> type.
+    This is a helper macro used throughout the library to signify a NULL value used.
 </div><br>
 <div class="docdiv">
     <font class="docu">DESCRIPTION</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    For more information on the null type used, see <a href="../htmlsrc/omni/defs/global.hpp.html" class="code">omni/defs/global.hpp</a>
+    As the <code>NULL</code> macro is implementation defined and not all compilers will support the <code>nullptr</code> keyword, the default for null pointer values is to zeroize them, that is, the preferred way to initialize pointer types to the null value is to set them to the <code>0</code> address over setting to <code>NULL</code> or <code>nullptr.</code><br>
+<br>
+Example:<br>
+<div class="sntx"><input type="checkbox" id="c0" name="c0" checked /><label for="c0">&nbsp;</label><pre><font class="syn_typ">int</font>* val = <font class="syn_num">0</font>;&nbsp;&nbsp;&nbsp;&nbsp;   &lt;- preferred way
+<font class="syn_typ">int</font>* val = <font class="syn_typ">NULL</font>;&nbsp;&nbsp;&nbsp;&nbsp;&lt;- OK, but <font class="syn_typ">NULL</font> could be anything, so <font class="syn_ins">not</font> really &#39;safe&#39;
+<font class="syn_typ">int</font>* val = <font class="syn_typ">nullptr</font>; &lt;- OK <font class="syn_ins">and</font> expresses intent better, but <font class="syn_ins">not</font> all compilers support <font class="syn_typ">this</font></pre></div>We don&#39;t want to overuse macro&#39;s through the library, but in this scenario, it&#39;s also preferable to avoid being able to do something like this:<br>
+<div class="sntx"><input type="checkbox" id="c1" name="c1" checked /><label for="c1">&nbsp;</label><pre>static <font class="syn_typ">const</font> <font class="syn_typ">int</font> <font class="syn_typ">nullptr</font> = <font class="syn_num">0</font>;
+<font class="syn_typ">int</font>* val = &amp;<font class="syn_typ">nullptr</font>;</pre></div><code>&#39;&amp;nullptr&#39;</code> is not allowed in C++11 and additional checks would need to be in place to avoid this in C++11 compilers and not in previous editions; as well <code>int* val = nullptr</code> could have an implicit cast since you are referencing a named variable (<code>nullptr</code> ), this isn&#39;t the case in C++11 with the <code>nullptr</code> keyword. <br>
+<br>
+To avoid all of this, this macro gives the user the option to choose (or define) their null pointer value. Defining OMNI_USE_NULLPTR sets the C++11 <code>nullptr</code> keyword while OMNI_USE_NULL will use the implementation defined <code>NULL</code> macro, and if nothing is defined to specify which null value to use, the default is to use the <code>0</code> address. While the macro name OMNI_NULL is more verbose than <code>0/NULL/nullptr</code> it does express the intent better than just plain <code>0</code> (which on a cursory glance of the code, one might think <code>0</code> is an <code>int</code> instead of a null value).
 </div><br>
 <div class="docdiv">
     <font class="docu">CONSIDERATIONS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    No special considerations
+    The <code>NULL</code> macro is implementation defined and not all compilers will support the <code>nullptr</code> keyword.
 </div><br>
 <div class="docdiv">
     <font class="docu">PLATFORM SPECIFIC</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>

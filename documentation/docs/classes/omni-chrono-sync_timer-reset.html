@@ -31,12 +31,12 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 </div><br>
 <div class="docdiv"><a name="syn"></a>
 <font class="docu">SYNOPSIS</font><br><br>
-No synopsis.
+Resets the current timer.
 <br><br><a class="toppg" href="#topopage">top</a>
 </div><br>
 <div class="docdiv"><a name="desc"></a>
 <font class="docu">DESCRIPTION</font><br><br>
-No description.
+This is the same as call <code>start</code> then <code>stop</code> and will effectively reset the timer back to 0. As an example, if a timer has a 6 second interval, and reset is called 3 seconds after it&#39;s started, instead of firing the tick event at 6 seconds, it will fire the event at 9 seconds since it was reset to 0 after 3 seconds.
 <br><br><a class="toppg" href="#topopage">top</a>
 </div><br>
 
@@ -44,7 +44,12 @@ No description.
 
 
 
-
+<div class="docdiv"><a name="notes"></a>
+<font class="docu">NOTES</font><br><br>
+This does not interrupt any currently running ticks; that is, if a tick has been fired and then <code>reset</code> is called, the tick event will not be interrupted. 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
 
 
 <!--end content-->

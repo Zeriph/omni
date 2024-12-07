@@ -31,18 +31,23 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 </div><br>
 <div class="docdiv"><a name="syn"></a>
 <font class="docu">SYNOPSIS</font><br><br>
-No synopsis.
+A basic object passed to the tick event.
 <br><br><a class="toppg" href="#topopage">top</a>
 </div><br>
 <div class="docdiv"><a name="desc"></a>
 <font class="docu">DESCRIPTION</font><br><br>
-No description.
+A stateful object passed into the tick event. This object is not utilized by the internal tick code itself; it is simply a proxy object that can be utilized in the user code of a tick event.
 <br><br><a class="toppg" href="#topopage">top</a>
 </div><br>
 
 
 
-
+<div class="docdiv"><a name="con"></a>
+<font class="docu">CONSIDERATIONS</font><br><br>
+This object is not contained within the timer itself, and thus not subject to any mutex locks or other thread-safe code. This object is strictly accessed by user code only, and must be as such. Take care when accessing or using this object. 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
 
 
 

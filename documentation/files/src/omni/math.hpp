@@ -24,30 +24,7 @@
 #include <omni/delegate/2.hpp>
 
 /*
- 
-    Abs(X) - Returns the absolute value of a number.
-    std::abs
-    
-    Acos(Double) - Returns the angle whose cosine is the specified number.
-    std::acos
-    
-    Acosh(Double) - Returns the angle whose hyperbolic cosine is the specified number.
-    std::acosh - C++11
-
-    Asin(Double) - Returns the angle whose sine is the specified number.
-    std::asin
-
-    Asinh(Double) - Returns the angle whose hyperbolic sine is the specified number.
-    std::asinh - C++11
-
-    Atan(Double) - Returns the angle whose tangent is the specified number.
-    std::atan
-
-    Atan2(Double, Double) - Returns the angle whose tangent is the quotient of two specified numbers.
-    std::atan2
-    
-    Atanh(Double) - Returns the angle whose hyperbolic tangent is the specified number.
-    std::atanh - C++11
+    TODO: finish this .. what's marked as C++11, add a function that does the math along with the OMNI_USE_CXX_MATH that returns the C++11 version
 
     BigMul(Int32, Int32) - Produces the full product of two 32-bit numbers.
     int64_t big_mul(int32_t x, int32_t y) { return static_cast<int64_t>(x) + static_cast<int64_t>(y); }
@@ -69,35 +46,15 @@
         }
         return d;
 
-    Cbrt(Double) - Returns the cube root of a specified number.
-    std::cbrt - C++11
-
-    Ceiling(X) - Returns the smallest integral value that is greater than or equal to the specified decimal number.
-    std::ceil
-
-    Clamp(X, X, X) - Returns value clamped to the inclusive range of min and max.
-    std::clamp - C++11
-
     CopySign(Double, Double) - Returns a value with the magnitude of x and the sign of y.
         template < typename T > inline T copy_sign(const T& x, const T& y)
         (y>0) & (x<0) -> (-x)
         (y<0) & (x>0) -> (-x)
         {x,y} >= 0 -OR- {x,y} =< 0 -> x
 
-    Cos(Double) - Returns the cosine of the specified angle.
-    std::cos
-
-    Cosh(Double) - Returns the hyperbolic cosine of the specified angle.
-    std::cosh
-
     DivRem(Int32, Int32, Int32) - Calculates the quotient of two 32-bit signed integers and also returns the remainder in an output parameter.
+    
     DivRem(Int64, Int64, Int64) - Calculates the quotient of two 64-bit signed integers and also returns the remainder in an output parameter.
-
-    Exp(Double) - Returns e raised to the specified power.
-    std::exp
-
-    Floor(X) - Returns the largest integral value less than or equal to the specified decimal number.
-    std::floor
 
     FusedMultiplyAdd(Double, Double, Double) - Returns (x * y) + z, rounded as one ternary operation.
 
@@ -106,30 +63,12 @@
     ILogB(Double) - Returns the base 2 integer logarithm of a specified number.
     std::ilogb - C++11 {also just (int)(log(x)/log(2))}
 
-    Log(Double) - Returns the natural (base e) logarithm of a specified number.
-    std::log
-    
-    Log(Double, Double) - Returns the logarithm of a specified number in a specified base.
-    func = return log(x)/log(y)
-
-    Log10(Double) - Returns the base 10 logarithm of a specified number.
-    std::log10
-    
     Log2(Double) - Returns the base 2 logarithm of a specified number.
     std::log2 - C++11
 
-    Max(X, X) - Returns the larger of two decimal numbers.
-    std::max
-
     MaxMagnitude(Double, Double) - Returns the larger magnitude of two double-precision floating-point numbers.
 
-    Min(X, X) - Returns the smaller of two decimal numbers.
-    std::min
-
     MinMagnitude(Double, Double) - Returns the smaller magnitude of two double-precision floating-point numbers.
-
-    Pow(Double, Double) - Returns a specified number raised to the specified power.
-    std::pow
 
     Round(X) - Rounds a double-precision floating-point value to the nearest integral value, and rounds midpoint values to the nearest even number.
     std::round - C++11
@@ -138,32 +77,158 @@
     Round(Double, Int32, MidpointRounding) - Rounds a double-precision floating-point value to a specified number of fractional digits, and uses the specified rounding convention for midpoint values.
     Round(Double, MidpointRounding) - Rounds a double-precision floating-point value to the nearest integer, and uses the specified rounding convention for midpoint values.
 
-    ScaleB(Double, Int32) - Returns x * 2^n computed efficiently.
-    std::ldexp
-
-    Sign(X) - Returns an integer that indicates the sign of a number.
-
-    Sin(Double) - Returns the sine of the specified angle.
-    std::sin
-
-    Sinh(Double) - Returns the hyperbolic sine of the specified angle.
-    std::sinh
-
-    Sqrt(Double) - Returns the square root of a specified number.
-    std::sqrt
-
-    Tan(Double) - Returns the tangent of the specified angle.
-    std::tan
-
-    Tanh(Double) - Returns the hyperbolic tangent of the specified angle.
-    std::tanh
-
-    Truncate(X) - Calculates the integral part of a specified decimal number.
-    std::trunc - C++11
 */
+
+// DEV_NOTE: since these are specifically helper functions, no overflow checks are done
 
 namespace omni {
     namespace math {
+        // Returns the angle whose hyperbolic cosine is the specified number. (as rad's)
+        inline float acosh(float x)
+        {
+            #if defined(OMNI_USE_CXX_MATH)
+                return std::acosh(x);
+            #else
+                return std::log(x + std::sqrt((x * x) - 1));
+            #endif
+        }
+        inline double acosh(double x)
+        {
+            #if defined(OMNI_USE_CXX_MATH)
+                return std::acosh(x);
+            #else
+                return std::log(x + std::sqrt((x * x) - 1));
+            #endif
+        }
+        inline long double acosh(long double x)
+        {
+            #if defined(OMNI_USE_CXX_MATH)
+                return std::acosh(x);
+            #else
+                return std::log(x + std::sqrt((x * x) - 1));
+            #endif
+        }
+        inline double acosh(int8_t x) { return omni::math::acosh(static_cast<double>(x)); }
+        inline double acosh(uint8_t x) { return omni::math::acosh(static_cast<double>(x)); }
+        inline double acosh(int16_t x) { return omni::math::acosh(static_cast<double>(x)); }
+        inline double acosh(uint16_t x) { return omni::math::acosh(static_cast<double>(x)); }
+        inline double acosh(int32_t x) { return omni::math::acosh(static_cast<double>(x)); }
+        inline double acosh(uint32_t x) { return omni::math::acosh(static_cast<double>(x)); }
+        inline double acosh(int64_t x) { return omni::math::acosh(static_cast<double>(x)); }
+        inline double acosh(uint64_t x) { return omni::math::acosh(static_cast<double>(x)); }
+
+        // Returns the angle whose hyperbolic sine is the specified number. (as rad's)
+        inline float asinh(float x)
+        {
+            #if defined(OMNI_USE_CXX_MATH)
+                return std::asinh(x);
+            #else
+                return std::log(x + std::sqrt((x * x) + 1));
+            #endif
+        }
+        inline double asinh(double x)
+        {
+            #if defined(OMNI_USE_CXX_MATH)
+                return std::asinh(x);
+            #else
+                return std::log(x + std::sqrt((x * x) + 1));
+            #endif
+        }
+        inline long double asinh(long double x)
+        {
+            #if defined(OMNI_USE_CXX_MATH)
+                return std::asinh(x);
+            #else
+                return std::log(x + std::sqrt((x * x) + 1));
+            #endif
+        }
+        inline double asinh(int8_t x) { return omni::math::asinh(static_cast<double>(x)); }
+        inline double asinh(uint8_t x) { return omni::math::asinh(static_cast<double>(x)); }
+        inline double asinh(int16_t x) { return omni::math::asinh(static_cast<double>(x)); }
+        inline double asinh(uint16_t x) { return omni::math::asinh(static_cast<double>(x)); }
+        inline double asinh(int32_t x) { return omni::math::asinh(static_cast<double>(x)); }
+        inline double asinh(uint32_t x) { return omni::math::asinh(static_cast<double>(x)); }
+        inline double asinh(int64_t x) { return omni::math::asinh(static_cast<double>(x)); }
+        inline double asinh(uint64_t x) { return omni::math::asinh(static_cast<double>(x)); }
+        
+        // Returns the angle whose hyperbolic tangent is the specified number. (as rad's)
+        inline float atanh(float x)
+        {
+            #if defined(OMNI_USE_CXX_MATH)
+                return std::atanh(x);
+            #else
+                // TODO: add some error handling here??
+                return static_cast<float>(std::log((1.0 + x) / (1.0 - x)) / 2);
+            #endif
+        }
+        inline double atanh(double x)
+        {
+            #if defined(OMNI_USE_CXX_MATH)
+                return std::atanh(x);
+            #else
+                return (std::log((1.0 + x) / (1.0 - x)) / 2);
+            #endif
+        }
+        inline long double atanh(long double x)
+        {
+            #if defined(OMNI_USE_CXX_MATH)
+                return std::atanh(x);
+            #else
+                return (std::log((1.0 + x) / (1.0 - x)) / 2);
+            #endif
+        }
+        inline double atanh(int8_t x) { return omni::math::atanh(static_cast<double>(x)); }
+        inline double atanh(uint8_t x) { return omni::math::atanh(static_cast<double>(x)); }
+        inline double atanh(int16_t x) { return omni::math::atanh(static_cast<double>(x)); }
+        inline double atanh(uint16_t x) { return omni::math::atanh(static_cast<double>(x)); }
+        inline double atanh(int32_t x) { return omni::math::atanh(static_cast<double>(x)); }
+        inline double atanh(uint32_t x) { return omni::math::atanh(static_cast<double>(x)); }
+        inline double atanh(int64_t x) { return omni::math::atanh(static_cast<double>(x)); }
+        inline double atanh(uint64_t x) { return omni::math::atanh(static_cast<double>(x)); }
+
+        // Returns the cube root of a number
+        inline float cbrt(float x)
+        {
+            #if defined(OMNI_USE_CXX_MATH)
+                return std::cbrt(x);
+            #else
+                if (x < 0) {
+                    return static_cast<float>(-std::pow(-x, (1.0 / 3.0)));
+                }
+                return static_cast<float>(std::pow(x, (1.0 / 3.0)));
+            #endif
+        }
+        inline double cbrt(double x)
+        {
+            #if defined(OMNI_USE_CXX_MATH)
+                return std::cbrt(x);
+            #else
+                if (x < 0) {
+                    return -std::pow(-x, (1.0 / 3.0));
+                }
+                return std::pow(x, (1.0 / 3.0));
+            #endif
+        }
+        inline long double cbrt(long double x)
+        {
+            #if defined(OMNI_USE_CXX_MATH)
+                return std::cbrt(x);
+            #else
+                if (x < 0) {
+                    return -std::pow(-x, (1.0 / 3.0));
+                }
+                return std::pow(x, (1.0 / 3.0));
+            #endif
+        }
+        inline double cbrt(int8_t x) { return omni::math::cbrt(static_cast<double>(x)); }
+        inline double cbrt(uint8_t x) { return omni::math::cbrt(static_cast<double>(x)); }
+        inline double cbrt(int16_t x) { return omni::math::cbrt(static_cast<double>(x)); }
+        inline double cbrt(uint16_t x) { return omni::math::cbrt(static_cast<double>(x)); }
+        inline double cbrt(int32_t x) { return omni::math::cbrt(static_cast<double>(x)); }
+        inline double cbrt(uint32_t x) { return omni::math::cbrt(static_cast<double>(x)); }
+        inline double cbrt(int64_t x) { return omni::math::cbrt(static_cast<double>(x)); }
+        inline double cbrt(uint64_t x) { return omni::math::cbrt(static_cast<double>(x)); }
+
         template < typename T >
         inline double calculate_angle_radians(T x, T y, T bx, T by, T cx, T cy)
         {
@@ -340,6 +405,20 @@ namespace omni {
         }
 
         template < typename T >
+        inline bool angles_are_coterminal(T x, T y)
+        {
+            T a = std::abs(x);
+            T b = std::abs(y);
+            if (a > static_cast<T>(360)) {
+                a = a % static_cast<T>(360);
+            }
+            if (b > static_cast<T>(360)) {
+                b = b % static_cast<T>(360);
+            }
+            return omni::math::are_equal(a, b);
+        }
+
+        template < typename T >
         inline double area_of_circle(T radius)
         {
             return OMNI_PI * static_cast<double>(radius * radius);
@@ -352,9 +431,9 @@ namespace omni {
                 case omni::math::circle_area::RADIUS:
                     return OMNI_PI * static_cast<double>(value * value);
                 case omni::math::circle_area::DIAMETER:
-                    return (OMNI_PI / 4) * (value * value);
+                    return OMNI_PI_4 * (value * value);
                 case omni::math::circle_area::CIRCUMFERENCE:
-                    return static_cast<double>(value * value) / (4 * OMNI_PI);
+                    return static_cast<double>(value * value) / OMNI_PI_X4;
                 default:
                     OMNI_ERR_FW("invalid area type specified", omni::exceptions::index_out_of_range("invalid area type specified"))
                     break;
@@ -450,10 +529,45 @@ namespace omni {
         }
 
         template < typename T >
-        inline void calculate_point(T start_x, T start_y, T end_x, T end_y, T len, T& out_x, T& out_y)
+        inline void calculate_point_zero_distance(T start_x, T start_y, T end_x, T end_y, T distance_from_start, T& out_x, T& out_y)
         {
-            double dist = OMNI_DISTANCE_2POINTS_2D_FW(start_x, start_y, end_x, end_y);
-            double seg_rat = (omni::math::are_equal(dist, 0.0) ? static_cast<double>(len) : (static_cast<double>(len) / dist));
+            out_x = static_cast<T>((distance_from_start * static_cast<double>(end_x)) + ((1.0 - distance_from_start) * static_cast<double>(start_x)));
+            out_y = static_cast<T>((distance_from_start * static_cast<double>(end_y)) + ((1.0 - distance_from_start) * static_cast<double>(start_y)));
+        }
+
+        template < typename T >
+        inline void calculate_point(T start_x, T start_y, T end_x, T end_y, T distance_from_start, T known_distance, T& out_x, T& out_y)
+        {
+            double seg_rat = (static_cast<double>(distance_from_start) / known_distance);
+            out_x = static_cast<T>((seg_rat * static_cast<double>(end_x)) + ((1.0 - seg_rat) * static_cast<double>(start_x)));
+            out_y = static_cast<T>((seg_rat * static_cast<double>(end_y)) + ((1.0 - seg_rat) * static_cast<double>(start_y)));
+        }
+
+        template < typename T >
+        inline void calculate_point(const omni::math::dimensional<T, 2>& start, const omni::math::dimensional<T, 2>& end, T known_distance, omni::math::dimensional<T, 2>& out)
+        {
+            omni::math::calculate_point(start[0], start[1], end[0], end[1], (OMNI_DISTANCE_2POINTS_2D_FW(start[0], start[1], end[0], end[0])), known_distance, out[0], out[1]);
+        }
+
+        template < typename T >
+        inline omni::math::dimensional<T, 2> calculate_point(T start_x, T start_y, T end_x, T end_y, T distance_from_start, T known_distance)
+        {
+            omni::math::dimensional<T, 2> ret;
+            omni::math::calculate_point<T>(start_x, start_y, end_x, end_y, distance_from_start, known_distance, ret[0], ret[1]);
+            return ret;
+        }
+
+        template < typename T >
+        inline omni::math::dimensional<T, 2> calculate_point(const omni::math::dimensional<T, 2>& start, const omni::math::dimensional<T, 2>& end, T distance_from_start, T known_distance)
+        {
+            return omni::math::calculate_point(start[0], start[1], end[0], end[1], distance_from_start, known_distance);
+        }
+
+        template < typename T >
+        inline void calculate_point(T start_x, T start_y, T end_x, T end_y, T distance_from_start, T& out_x, T& out_y)
+        {
+            double point_dist = OMNI_DISTANCE_2POINTS_2D_FW(start_x, start_y, end_x, end_y);
+            double seg_rat = (omni::math::are_equal(static_cast<double>(distance_from_start), 0.0) ? static_cast<double>(distance_from_start) : (static_cast<double>(distance_from_start) / point_dist));
             out_x = static_cast<T>((seg_rat * static_cast<double>(end_x)) + ((1.0 - seg_rat) * static_cast<double>(start_x)));
             out_y = static_cast<T>((seg_rat * static_cast<double>(end_y)) + ((1.0 - seg_rat) * static_cast<double>(start_y)));
         }
@@ -461,27 +575,42 @@ namespace omni {
         template < typename T >
         inline void calculate_point(const omni::math::dimensional<T, 2>& start, const omni::math::dimensional<T, 2>& end, omni::math::dimensional<T, 2>& out)
         {
-            omni::math::calculate_point(start[0], start[1], end[0], end[1], out[0], out[1]);
+            omni::math::calculate_point(start[0], start[1], end[0], end[1], (OMNI_DISTANCE_2POINTS_2D_FW(start[0], start[1], end[0], end[0])), out[0], out[1]);
         }
 
         template < typename T >
-        inline omni::math::dimensional<T, 2> calculate_point(T start_x, T start_y, T end_x, T end_y, T len)
+        inline omni::math::dimensional<T, 2> calculate_point(T start_x, T start_y, T end_x, T end_y, T distance_from_start)
         {
             omni::math::dimensional<T, 2> ret;
-            omni::math::calculate_point<T>(start_x, start_y, end_x, end_y, len, ret[0], ret[1]);
+            omni::math::calculate_point<T>(start_x, start_y, end_x, end_y, distance_from_start, ret[0], ret[1]);
             return ret;
         }
 
         template < typename T >
-        inline omni::math::dimensional<T, 2> calculate_point(const omni::math::dimensional<T, 2>& start, const omni::math::dimensional<T, 2>& end, T len)
+        inline omni::math::dimensional<T, 2> calculate_point(const omni::math::dimensional<T, 2>& start, const omni::math::dimensional<T, 2>& end, T distance_from_start)
         {
-            return omni::math::calculate_point(start[0], start[1], end[0], end[1], len);
+            return omni::math::calculate_point(start[0], start[1], end[0], end[1], distance_from_start);
         }
 
         template < typename T >
         inline double circle_circumference(T radius)
         {
             return OMNI_PI * static_cast<double>(radius) * 2.0;
+        }
+
+        template < typename T >
+        inline bool circle_contains_point_on_edge(T center_x, T center_y, double radius, T x, T y)
+        {
+            return omni::math::are_equal(
+                static_cast<double>(((x - center_x) * (x - center_x)) + ((y - center_y) * (y - center_y))),
+                (radius * radius)
+            );
+        }
+
+        template < typename T >
+        inline bool circle_contains_point_on_edge(T center_x, T center_y, double radius, const omni::math::dimensional<T, 2>& point)
+        {
+            return omni::math::circle_contains_point_on_edge(center_x, center_y, radius, point[0], point[1]);
         }
 
         template < typename T >
@@ -524,25 +653,38 @@ namespace omni {
         }
 
         template < typename T >
-        inline T& clamp(const T& value, const T& min_val, const T& max_val)
+        inline const T& clamp(const T& value, const T& min_val, const T& max_val)
         {
-            if (min_val > max_val) {
-                OMNI_ERR_FW("max value must be greater than or equal to min value", omni::exceptions::invalid_range("max value must be greater than or equal to min value"))
-            }
-            if (value < min_val) { return min_val; }
-            if (value > max_val) { return max_val; }
-            return value;
+            #if defined(OMNI_USE_CXX_MATH) && (OMNI_LANGUAGE_CPP_VERSION >= 17)
+                return std::clamp<T>(value, min_val, max_val);
+            #else
+                if (min_val > max_val) {
+                    OMNI_ERR_FW("max value must be greater than or equal to min value", omni::exceptions::invalid_range("max value must be greater than or equal to min value"))
+                }
+                if (value < min_val) { return min_val; }
+                if (value > max_val) { return max_val; }
+                return value;
+            #endif
         }
 
         template < typename T >
-        inline T& clamp(const T& value, const T& min_val, const T& max_val, const omni::delegate2<bool, T, T>& comp)
+        inline const T& clamp(const T& value, const T& min_val, const T& max_val, const omni::delegate2<bool, T, T>& comp)
         {
-            if (min_val > max_val) {
-                OMNI_ERR_FW("max value must be greater than or equal to min value", omni::exceptions::invalid_range("max value must be greater than or equal to min value"))
-            }
-            if (comp(value, min_val)) { return min_val; }
-            if (comp(value, max_val)) { return max_val; }
-            return value;
+            #if defined(OMNI_USE_CXX_MATH) && (OMNI_LANGUAGE_CPP_VERSION >= 17)
+                // TODO: need to pass along the method for comp .. maybe do an auto lambda??
+                return std::clamp<T>(value, min_val, max_val, [value, min_val, max_val, comp] {
+                    if (comp(value, min_val)) { return min_val; }
+                    if (comp(value, max_val)) { return max_val; }
+                    return value;
+                });
+            #else
+                if (min_val > max_val) {
+                    OMNI_ERR_FW("max value must be greater than or equal to min value", omni::exceptions::invalid_range("max value must be greater than or equal to min value"))
+                }
+                if (comp(value, min_val)) { return min_val; }
+                if (comp(value, max_val)) { return max_val; }
+                return value;
+            #endif
         }
 
         inline double deg_to_rad(double deg)
@@ -593,7 +735,7 @@ namespace omni {
 
         inline bool is_nan(long double val)
         {
-            #if defined(OMNI_ENABLE_CXX)
+            #if defined(OMNI_USE_CXX_MATH)
                 return std::isnan(val);
             #else
                 #if defined(OMNI_OS_WIN)
@@ -614,18 +756,18 @@ namespace omni {
 
         inline bool is_nan(double val)
         {
-            #if defined(OMNI_ENABLE_CXX)
+            #if defined(OMNI_USE_CXX_MATH)
                 return std::isnan(val);
             #else
                 #if defined(OMNI_OS_WIN)
                     #if defined(isnan)
-                        return isnan(val) != 0;
+                        return ::isnan(val) != 0;
                     #else
-                        return _isnan(val) != 0;
+                        return ::_isnan(val) != 0;
                     #endif
                 #else
                     #if defined(isnan)
-                        return isnan(val) == 1;
+                        return ::isnan(val) == 1;
                     #else
                         return val != val;
                     #endif
@@ -635,23 +777,38 @@ namespace omni {
 
         inline bool is_nan(float val)
         {
-            #if defined(OMNI_ENABLE_CXX)
+            #if defined(OMNI_USE_CXX_MATH)
                 return std::isnan(val);
             #else
                 #if defined(OMNI_OS_WIN)
                     #if defined(isnan)
-                        return isnan(val) != 0;
+                        return ::isnan(val) != 0;
                     #else
-                        return _isnan(val) != 0;
+                        return ::_isnan(val) != 0;
                     #endif
                 #else
                     #if defined(isnan)
-                        return isnan(val) == 1;
+                        return ::isnan(val) == 1;
                     #else
                         return val != val;
                     #endif
                 #endif
             #endif
+        }
+
+        inline bool is_odd(int8_t val) { return (val & 1); }
+        inline bool is_odd(uint8_t val) { return (val & 1); }
+        inline bool is_odd(int16_t val) { return (val & 1); }
+        inline bool is_odd(uint16_t val) { return (val & 1); }
+        inline bool is_odd(int32_t val) { return (val & 1); }
+        inline bool is_odd(uint32_t val) { return (val & 1); }
+        inline bool is_odd(int64_t val) { return (val & 1); }
+        inline bool is_odd(uint64_t val) { return (val & 1); }
+
+        template < typename T >
+        inline bool is_even(T val)
+        {
+            return !omni::math::is_odd(val);
         }
 
         template < typename T >
@@ -844,6 +1001,18 @@ namespace omni {
         inline omni::math::ordinal_name octant(const omni::math::dimensional<T, 3>& point)
         {
             return omni::math::octant<T>(point[0], point[1], point[2]);
+        }
+
+        template < typename T >
+        inline bool point_is_on_circle_edge(T center_x, T center_y, double radius, T x, T y)
+        {
+            return omni::math::circle_contains_point_on_edge(center_x, center_y, radius, x, y);
+        }
+        
+        template < typename T >
+        inline bool point_is_on_circle_edge(T center_x, T center_y, double radius, const omni::math::dimensional<T, 2>& point)
+        {
+            return omni::math::circle_contains_point_on_edge(center_x, center_y, radius, point[0], point[1]);
         }
 
         template < typename T >
@@ -1474,9 +1643,12 @@ namespace omni {
 
         inline double truncate(double val)
         {
-            // TODO: if C++11 .. use std::trunc
-            std::modf(val, &val);
-            return val;
+            #if defined(OMNI_USE_CXX_MATH)
+                return std::trunc(val);
+            #else
+                std::modf(val, &val);
+                return val;
+            #endif
         }
 
         inline double trunc(double val)
@@ -1545,7 +1717,7 @@ namespace omni {
                 }
             }
             ares = rmod - (std::fabs(y) * omni::math::sign(x));
-            if (std::fabs(ares) == std::fabs(rmod)) {
+            if (omni::math::are_equal(std::fabs(ares), std::fabs(rmod))) {
                 if (std::fabs(omni::math::round(divres)) > std::fabs(divres)) {
                     return ares;
                 } else { 

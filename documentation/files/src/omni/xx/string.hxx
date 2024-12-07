@@ -37,7 +37,7 @@
 // so as not to accidentally build this file with the source
 // these macros are defined in string/util.hpp string/cstring.hpp and string/wstring.hpp
 #if !defined(OMNI_CHAR_T_FW) || !defined(OMNI_STRING_T_FW)
-    #error invalid preprocessor directive detected
+    #error "invalid preprocessor directive detected"
 #endif
 
 // namespace omni::string/cstring/wstring {
@@ -94,6 +94,16 @@ inline bool contains(const OMNI_STRING_T_FW& chk, const OMNI_STRING_T_FW& fnd)
     return omni::string::util::contains(chk, fnd, false);
 }
 
+inline int32_t compare(const OMNI_STRING_T_FW& str1, size_t idx1, const OMNI_STRING_T_FW& str2, size_t idx2, size_t len, const omni::string::compare_options& options)
+{
+    return omni::string::util::compare(str1, idx1, str2, idx2, len, options);
+}
+
+inline int32_t compare(const OMNI_STRING_T_FW& str1, size_t idx1, size_t len1, const OMNI_STRING_T_FW& str2, size_t idx2, size_t len2, const omni::string::compare_options& options)
+{
+    return omni::string::util::compare(str1, idx1, len1, str2, idx2, len2, options);
+}
+
 inline bool ends_with(const OMNI_STRING_T_FW& chk, const OMNI_STRING_T_FW& fnd)
 {
     return omni::string::util::ends_with(chk, fnd);
@@ -141,15 +151,15 @@ inline OMNI_STRING_T_FW pad_left(OMNI_STRING_T_FW str, OMNI_CHAR_T_FW pad, std::
     return omni::string::util::pad_left(str, pad, count);
 }
 
-inline OMNI_STRING_T_FW pad_left(OMNI_STRING_T_FW str, const OMNI_STRING_T_FW& pad, std::size_t count)
+inline OMNI_STRING_T_FW pad_left_full(OMNI_STRING_T_FW str, const OMNI_STRING_T_FW& pad, std::size_t count)
 {
-    return omni::string::util::pad_left(str, pad, count);
+    return omni::string::util::pad_left_full(str, pad, count);
 }
 
 template < std::size_t X >
-inline OMNI_STRING_T_FW pad_left(OMNI_STRING_T_FW str, const OMNI_CHAR_T_FW (&pad)[X], std::size_t count)
+inline OMNI_STRING_T_FW pad_left_full(OMNI_STRING_T_FW str, const OMNI_CHAR_T_FW (&pad)[X], std::size_t count)
 {
-    return omni::string::util::pad_left(str, pad, count);
+    return omni::string::util::pad_left_full<OMNI_STRING_T_FW, X>(str, pad, count);
 }
 
 inline OMNI_STRING_T_FW pad_right(OMNI_STRING_T_FW str, OMNI_CHAR_T_FW pad, std::size_t count)
@@ -157,15 +167,15 @@ inline OMNI_STRING_T_FW pad_right(OMNI_STRING_T_FW str, OMNI_CHAR_T_FW pad, std:
     return omni::string::util::pad_right(str, pad, count);
 }
 
-inline OMNI_STRING_T_FW pad_right(OMNI_STRING_T_FW str, const OMNI_STRING_T_FW& pad, std::size_t count)
+inline OMNI_STRING_T_FW pad_right_full(OMNI_STRING_T_FW str, const OMNI_STRING_T_FW& pad, std::size_t count)
 {
-    return omni::string::util::pad_right(str, pad, count);
+    return omni::string::util::pad_right_full(str, pad, count);
 }
 
 template < std::size_t X >
-inline OMNI_STRING_T_FW pad_right(OMNI_STRING_T_FW str, const OMNI_CHAR_T_FW (&pad)[X], std::size_t count)
+inline OMNI_STRING_T_FW pad_right_full(OMNI_STRING_T_FW str, const OMNI_CHAR_T_FW (&pad)[X], std::size_t count)
 {
-    return omni::string::util::pad_right(str, pad, count);
+    return omni::string::util::pad_right_full<OMNI_STRING_T_FW, X>(str, pad, count);
 }
 
 inline OMNI_STRING_T_FW replace(OMNI_STRING_T_FW str, const OMNI_STRING_T_FW& fnd, const OMNI_STRING_T_FW& newstr, std::size_t pos, bool ignore_case)
@@ -268,9 +278,75 @@ inline OMNI_STRING_T_FW to_lower(OMNI_STRING_T_FW str)
     return omni::string::util::to_lower(str);
 }
 
+inline OMNI_STRING_T_FW lcfirst(OMNI_STRING_T_FW str)
+{
+    return omni::string::util::lcfirst(str);
+}
+
+template < std::size_t X >
+inline OMNI_STRING_T_FW lcfirst(const OMNI_CHAR_T_FW (&str)[X])
+{
+    return omni::string::util::lcfirst(OMNI_STRING_T_FW(str));
+}
+
 inline OMNI_STRING_T_FW to_upper(OMNI_STRING_T_FW str)
 {
     return omni::string::util::to_upper(str);
+}
+
+inline OMNI_STRING_T_FW ucfirst(const OMNI_STRING_T_FW& str)
+{
+    return omni::string::util::ucfirst(str);
+}
+
+template < std::size_t X >
+inline OMNI_STRING_T_FW ucfirst(const OMNI_CHAR_T_FW (&str)[X])
+{
+    return omni::string::util::ucfirst(OMNI_STRING_T_FW(str));
+}
+
+inline OMNI_STRING_T_FW ucwords(const OMNI_STRING_T_FW& str, const std::string& separators)
+{
+    return omni::string::util::ucwords(str, separators);
+}
+
+inline OMNI_STRING_T_FW ucwords(const OMNI_STRING_T_FW& str)
+{
+    return omni::string::util::ucwords(str);
+}
+
+template < std::size_t X >
+inline OMNI_STRING_T_FW ucwords(const OMNI_CHAR_T_FW (&str)[X], const std::string& separators)
+{
+    return omni::string::util::ucwords(OMNI_STRING_T_FW(str), separators);
+}
+
+template < std::size_t X >
+inline OMNI_STRING_T_FW ucwords(const OMNI_CHAR_T_FW (&str)[X])
+{
+    return omni::string::util::ucwords(OMNI_STRING_T_FW(str), std::string(OMNI_STRING_UCWORD_SEPARATORS));
+}
+
+inline OMNI_STRING_T_FW to_title_case(const OMNI_STRING_T_FW& str, const std::string& separators)
+{
+    return omni::string::util::to_title_case(str, separators);
+}
+
+inline OMNI_STRING_T_FW to_title_case(const OMNI_STRING_T_FW& str)
+{
+    return omni::string::util::to_title_case(str);
+}
+
+template < std::size_t X >
+inline OMNI_STRING_T_FW to_title_case(const OMNI_CHAR_T_FW (&str)[X], const std::string& separators)
+{
+    return omni::string::util::to_title_case(OMNI_STRING_T_FW(str), separators);
+}
+
+template < std::size_t X >
+inline OMNI_STRING_T_FW to_title_case(const OMNI_CHAR_T_FW (&str)[X])
+{
+    return omni::string::util::to_title_case(OMNI_STRING_T_FW(str));
 }
 
 template < typename T >

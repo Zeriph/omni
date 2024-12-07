@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - Library Examples</title>
+<link rel="stylesheet" type="text/css" href="../../content/main.css" /><link rel="icon" type="image/png" href="../../content/favicon.png" />
+<script type="text/javascript" src="../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="../htmlsrc/index.html">Source</a></li><li title="Library classes and namespaces">
+<a href="../classes/index.html">Class Index</a></li><li title="Download and view examples">
+<a href="index.html" class="current">Examples</a></li><li title="Download and view build examples">
+<a href="../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="../options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../api.html">System API</a></li><li title="Other Considerations">
+<a href="../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle"><a name="omni_examples"></a>Date/Time</div><div class="content"><div>
+The <code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> class can be used to represent a date/time value as 100-nanosecond ticks that have elapsed since 1/1/0001 12:00am with a maximum value of 12/31/9999 23:59:59.9999999.<br>
+<br>
+To get the current time you can simply call <code><a href="../classes/omni-chrono-date_time-now.html">omni::chrono::date_time::now</a></code>() which represents the current date/time in a local format; if you wish to get the date/time in UTC, you can call <code><a href="../classes/omni-chrono-date_time-utc_now.html">omni::chrono::date_time::utc_now</a></code>() to get a UTC date/time object.<br>
+<br>
+class <br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<code><a href="../options/omni_explicit.html">OMNI_EXPLICIT</a></code> date_time(uint64_t ticks);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;date_time(uint64_t ticks, const <code><a href="../classes/omni-chrono-date_time_kind.html">omni::chrono::date_time_kind</a></code>&amp; kind);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;date_time(uint16_t year, uint8_t month, uint8_t day);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;date_time(uint16_t year, uint8_t month, uint8_t day, uint8_t hour, uint8_t minute, uint8_t second);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;date_time(uint16_t year, uint8_t month, uint8_t day, uint8_t hour, uint8_t minute, uint8_t second, const <code><a href="../classes/omni-chrono-date_time_kind.html">omni::chrono::date_time_kind</a></code>&amp; kind);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;date_time(uint16_t year, uint8_t month, uint8_t day, uint8_t hour, uint8_t minute, uint8_t second, uint16_t millisecond);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;date_time(uint16_t year, uint8_t month, uint8_t day, uint8_t hour, uint8_t minute, uint8_t second, uint16_t millisecond, const <code><a href="../classes/omni-chrono-date_time_kind.html">omni::chrono::date_time_kind</a></code>&amp; kind);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;~date_time();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> <code><a href="../classes/omni-chrono-date_time-add.html">omni::chrono::date_time::add</a></code>(const <code><a href="../classes/omni-chrono-time_span.html">omni::chrono::time_span</a></code>&amp; value);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> <code><a href="../classes/omni-chrono-date_time-add_days.html">omni::chrono::date_time::add_days</a></code>(double value);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> <code><a href="../classes/omni-chrono-date_time-add_hours.html">omni::chrono::date_time::add_hours</a></code>(double value);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> <code><a href="../classes/omni-chrono-date_time-add_milliseconds.html">omni::chrono::date_time::add_milliseconds</a></code>(double value);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> <code><a href="../classes/omni-chrono-date_time-add_minutes.html">omni::chrono::date_time::add_minutes</a></code>(double value);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> <code><a href="../classes/omni-chrono-date_time-add_months.html">omni::chrono::date_time::add_months</a></code>(int32_t months);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> <code><a href="../classes/omni-chrono-date_time-add_seconds.html">omni::chrono::date_time::add_seconds</a></code>(double value);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> <code><a href="../classes/omni-chrono-date_time-add_ticks.html">omni::chrono::date_time::add_ticks</a></code>(int64_t value);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> <code><a href="../classes/omni-chrono-date_time-add_years.html">omni::chrono::date_time::add_years</a></code>(int16_t value);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bool <code><a href="../classes/omni-chrono-date_time-is_dst.html">omni::chrono::date_time::is_dst</a></code>() const;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;int64_t <code><a href="../classes/omni-chrono-date_time-to_binary.html">omni::chrono::date_time::to_binary</a></code>() const;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> <code><a href="../classes/omni-chrono-date_time-date.html">omni::chrono::date_time::date</a></code>() const;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;uint8_t <code><a href="../classes/omni-chrono-date_time-day.html">omni::chrono::date_time::day</a></code>() const;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<code><a href="../classes/omni-chrono-day_of_week.html">omni::chrono::day_of_week</a></code> <code><a href="../classes/omni-chrono-date_time-day_of_week.html">omni::chrono::date_time::day_of_week</a></code>() const;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;uint16_t <code><a href="../classes/omni-chrono-date_time-day_of_year.html">omni::chrono::date_time::day_of_year</a></code>() const;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;int32_t <code><a href="../classes/omni-chrono-date_time-hash_code.html">omni::chrono::date_time::hash_code</a></code>() const;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;uint8_t <code><a href="../classes/omni-chrono-date_time-hour.html">omni::chrono::date_time::hour</a></code>() const;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<code><a href="../classes/omni-chrono-date_time_kind.html">omni::chrono::date_time_kind</a></code> <code><a href="../classes/omni-chrono-date_time-kind.html">omni::chrono::date_time::kind</a></code>() const;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;uint16_t <code><a href="../classes/omni-chrono-date_time-millisecond.html">omni::chrono::date_time::millisecond</a></code>() const;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;uint8_t <code><a href="../classes/omni-chrono-date_time-minute.html">omni::chrono::date_time::minute</a></code>() const;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;uint8_t <code><a href="../classes/omni-chrono-date_time-month.html">omni::chrono::date_time::month</a></code>() const;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;uint8_t <code><a href="../classes/omni-chrono-date_time-second.html">omni::chrono::date_time::second</a></code>() const;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;uint64_t <code><a href="../classes/omni-chrono-date_time-ticks.html">omni::chrono::date_time::ticks</a></code>() const;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<code><a href="../classes/omni-chrono-time_span.html">omni::chrono::time_span</a></code> <code><a href="../classes/omni-chrono-date_time-time_of_day.html">omni::chrono::date_time::time_of_day</a></code>() const;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;uint16_t <code><a href="../classes/omni-chrono-date_time-year.html">omni::chrono::date_time::year</a></code>() const;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<code><a href="../classes/omni-chrono-time_span.html">omni::chrono::time_span</a></code> <code><a href="../classes/omni-chrono-date_time-subtract.html">omni::chrono::date_time::subtract</a></code>(const <code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code>&amp; value) const;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> <code><a href="../classes/omni-chrono-date_time-subtract.html">omni::chrono::date_time::subtract</a></code>(const <code><a href="../classes/omni-chrono-time_span.html">omni::chrono::time_span</a></code>&amp; value) const;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;double <code><a href="../classes/omni-chrono-date_time-to_oa_date.html">omni::chrono::date_time::to_oa_date</a></code>() const;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;uint64_t <code><a href="../classes/omni-chrono-date_time-to_file_time.html">omni::chrono::date_time::to_file_time</a></code>() const;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;uint64_t <code><a href="../classes/omni-chrono-date_time-to_file_time_utc.html">omni::chrono::date_time::to_file_time_utc</a></code>() const;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> <code><a href="../classes/omni-chrono-date_time-to_local_time.html">omni::chrono::date_time::to_local_time</a></code>() const;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<code><a href="http://www.cplusplus.com/reference/string/">std::string</a></code> <code><a href="../classes/omni-chrono-date_time-to_string.html">omni::chrono::date_time::to_string</a></code>(const std::string&amp; format) const;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> <code><a href="../classes/omni-chrono-date_time-to_utc.html">omni::chrono::date_time::to_utc</a></code>()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<code><a href="../classes/omni-sequence-string_t.html">omni::sequence::string_t</a></code> omni::chrono::date_time::get_date_time_formats() const;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<code><a href="../classes/omni-sequence-string_t.html">omni::sequence::string_t</a></code> omni::chrono::date_time::get_date_time_formats(char format) const;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code>&amp; operator=(const <code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code>&amp; ap);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> operator+(const <code><a href="../classes/omni-chrono-time_span.html">omni::chrono::time_span</a></code>&amp; t);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> operator-(const <code><a href="../classes/omni-chrono-time_span.html">omni::chrono::time_span</a></code>&amp; t);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code>&amp; operator+=(const <code><a href="../classes/omni-chrono-time_span.html">omni::chrono::time_span</a></code>&amp; t);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code>&amp; operator-=(const <code><a href="../classes/omni-chrono-time_span.html">omni::chrono::time_span</a></code>&amp; t);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<code><a href="../classes/omni-chrono-time_span.html">omni::chrono::time_span</a></code> operator+(const <code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code>&amp; d2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<code><a href="../classes/omni-chrono-time_span.html">omni::chrono::time_span</a></code> operator-(const <code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code>&amp; d2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bool operator==(const <code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code>&amp; d2) const;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bool operator!=(const <code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code>&amp; d2) const;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bool operator&lt;(const <code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code>&amp; d2) const;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bool operator&lt;=(const <code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code>&amp; d2) const;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bool operator&gt;(const <code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code>&amp; d2) const;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bool operator&gt;=(const <code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code>&amp; d2) const;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static <code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> min_value()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return <code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code>();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static <code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> max_value()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return <code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code>(<code><a href="../options/omni_ticks_to_10000ad.html">OMNI_TICKS_TO_10000AD</a></code>, <code><a href="../classes/omni-chrono-date_time_kind-unspecified.html">omni::chrono::date_time_kind::UNSPECIFIED</a></code>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static uint16_t days_in_month(uint16_t year, uint8_t month);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static <code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> from_binary(int64_t date_data);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static <code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> from_file_time(int64_t file_time);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static <code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> from_file_time_utc(int64_t file_time);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static <code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> from_oa_date(double d);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static <code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> from_offset(const <code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code>&amp; other, const <code><a href="../classes/omni-chrono-span_t.html">omni::chrono::span_t</a></code>&amp; offset);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static <code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> from_offset(const <code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code>&amp; other, const <code><a href="../classes/omni-chrono-span_t.html">omni::chrono::span_t</a></code>&amp; offset, const <code><a href="../classes/omni-chrono-date_time_kind.html">omni::chrono::date_time_kind</a></code>&amp; kind);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static <code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> from_offset(uint64_t ticks, const <code><a href="../classes/omni-chrono-span_t.html">omni::chrono::span_t</a></code>&amp; offset);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static <code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> from_offset(uint64_t ticks, const <code><a href="../classes/omni-chrono-span_t.html">omni::chrono::span_t</a></code>&amp; offset, const <code><a href="../classes/omni-chrono-date_time_kind.html">omni::chrono::date_time_kind</a></code>&amp; kind);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static <code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> from_offset(uint16_t year, uint8_t month, uint8_t day, uint8_t hour, uint8_t minute, uint8_t second, const <code><a href="../classes/omni-chrono-span_t.html">omni::chrono::span_t</a></code>&amp; offset);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static <code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> from_offset(uint16_t year, uint8_t month, uint8_t day, uint8_t hour, uint8_t minute, uint8_t second, const <code><a href="../classes/omni-chrono-span_t.html">omni::chrono::span_t</a></code>&amp; offset, const <code><a href="../classes/omni-chrono-date_time_kind.html">omni::chrono::date_time_kind</a></code>&amp; kind);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static <code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> from_offset(uint16_t year, uint8_t month, uint8_t day, uint8_t hour, uint8_t minute, uint8_t second, uint16_t millisecond, const <code><a href="../classes/omni-chrono-span_t.html">omni::chrono::span_t</a></code>&amp; offset);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static <code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> from_offset(uint16_t year, uint8_t month, uint8_t day, uint8_t hour, uint8_t minute, uint8_t second, uint16_t millisecond, const <code><a href="../classes/omni-chrono-span_t.html">omni::chrono::span_t</a></code>&amp; offset, const <code><a href="../classes/omni-chrono-date_time_kind.html">omni::chrono::date_time_kind</a></code>&amp; kind);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static double offset_from_utc();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static <code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> specify_kind(const <code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code>&amp; value, const <code><a href="../classes/omni-chrono-date_time_kind.html">omni::chrono::date_time_kind</a></code>&amp; kind);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static <code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> now();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static <code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> utc_now();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static <code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> today();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static bool is_leap_year(uint16_t year);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static <code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> parse(const <code><a href="http://www.cplusplus.com/reference/string/">std::string</a></code>&amp; s);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static <code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> parse_exact(const <code><a href="http://www.cplusplus.com/reference/string/">std::string</a></code>&amp; s, const std::string&amp; format);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static bool try_parse(const <code><a href="http://www.cplusplus.com/reference/string/">std::string</a></code>&amp; s, <code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code>&amp; result);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static bool try_parse_exact(const <code><a href="http://www.cplusplus.com/reference/string/">std::string</a></code>&amp; s, const std::string&amp; format, const <code><a href="../classes/omni-chrono-date_time_styles.html">omni::chrono::date_time_styles</a></code>&amp; style, <code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code>&amp; result);<br>
+};<br>
+<br>
+uint16_t <code><a href="../classes/omni-chrono-days_in_month.html">omni::chrono::days_in_month</a></code>(uint16_t year, uint8_t month)<br>
+<code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> <code><a href="../classes/omni-chrono-from_binary.html">omni::chrono::from_binary</a></code>(int64_t date_data)<br>
+<code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> <code><a href="../classes/omni-chrono-from_file_time.html">omni::chrono::from_file_time</a></code>(int64_t file_time)<br>
+<code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> <code><a href="../classes/omni-chrono-from_file_time_utc.html">omni::chrono::from_file_time_utc</a></code>(int64_t file_time)<br>
+<code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> <code><a href="../classes/omni-chrono-from_oa_date.html">omni::chrono::from_oa_date</a></code>(double d)<br>
+<code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> <code><a href="../classes/omni-chrono-specify_kind.html">omni::chrono::specify_kind</a></code>(const <code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code>&amp; value, const <code><a href="../classes/omni-chrono-date_time_kind.html">omni::chrono::date_time_kind</a></code>&amp; kind)<br>
+<code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> <code><a href="../classes/omni-chrono-now.html">omni::chrono::now</a></code>()<br>
+<code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> <code><a href="../classes/omni-chrono-utc_now.html">omni::chrono::utc_now</a></code>()<br>
+<code><a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a></code> <code><a href="../classes/omni-chrono-today.html">omni::chrono::today</a></code>()<br>
+bool <code><a href="../classes/omni-chrono-is_leap_year.html">omni::chrono::is_leap_year</a></code>(uint16_t year)<br>
+<br>
+<br>
+<br>
+<font class="hdr">Date/Time Utility Functions</font><br>
+<br>
+You can get various things here.<br><br><font class="hdr">Example</font><br><div class="sntx"><input type="checkbox" id="c0" name="c0" checked /><label for="c0">&nbsp;</label><pre><font class="syn_pre">#include &lt;<a href="../htmlsrc/omnilib.html">omnilib</a>&gt;</font>
+
+static <font class="syn_typ">void</font> o(<font class="syn_typ">const</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; dt, <font class="syn_typ">const</font> <font class="syn_typ">char</font>* fmt)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">try</font> {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; fmt &lt;&lt; <font class="syn_str">&quot; = &quot;</font> &lt;&lt; dt.to_string(fmt) &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">catch</font> (...) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Invalid format: &#39;&quot;</font> &lt;&lt; fmt &lt;&lt; <font class="syn_str">&quot;&#39;&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;}
+}
+
+static <font class="syn_typ">void</font> date_format(<font class="syn_typ">const</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; dt)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;--formatted strings--&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;yyyyMMdd hh:mm:ss tt z&quot;</font>);
+
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;d&quot;</font>); <font class="syn_cmt">// The day of the month, from 1 to 31.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;dd&quot;</font>); <font class="syn_cmt">// The day of the month, from 01 to 31.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;ddd&quot;</font>); <font class="syn_cmt">// The abbreviated name of the day of the week.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;dddd&quot;</font>); <font class="syn_cmt">// The full name of the day of the week.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;f&quot;</font>); <font class="syn_cmt">// The tenths of a second in a date and <a href="https://man7.org/linux/man-pages/man2/time.2.html">time</a> value.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;ff&quot;</font>); <font class="syn_cmt">// The hundredths of a second in a date and <a href="https://man7.org/linux/man-pages/man2/time.2.html">time</a> value.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;fff&quot;</font>); <font class="syn_cmt">// The milliseconds in a date and <a href="https://man7.org/linux/man-pages/man2/time.2.html">time</a> value.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;ffff&quot;</font>); <font class="syn_cmt">// The ten thousandths of a second in a date and <a href="https://man7.org/linux/man-pages/man2/time.2.html">time</a> value.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;fffff&quot;</font>); <font class="syn_cmt">// The hundred thousandths of a second in a date and <a href="https://man7.org/linux/man-pages/man2/time.2.html">time</a> value.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;ffffff&quot;</font>); <font class="syn_cmt">// The millionths of a second in a date and <a href="https://man7.org/linux/man-pages/man2/time.2.html">time</a> value.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;fffffff&quot;</font>); <font class="syn_cmt">// The ten millionths of a second in a date and <a href="https://man7.org/linux/man-pages/man2/time.2.html">time</a> value.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;F&quot;</font>); <font class="syn_cmt">// If non-zero, the tenths of a second in a date and <a href="https://man7.org/linux/man-pages/man2/time.2.html">time</a> value.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;FF&quot;</font>); <font class="syn_cmt">// If non-zero, the hundredths of a second in a date and <a href="https://man7.org/linux/man-pages/man2/time.2.html">time</a> value.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;FFF&quot;</font>); <font class="syn_cmt">// If non-zero, the milliseconds in a date and <a href="https://man7.org/linux/man-pages/man2/time.2.html">time</a> value.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;FFFF&quot;</font>); <font class="syn_cmt">// If non-zero, the ten thousandths of a second in a date and <a href="https://man7.org/linux/man-pages/man2/time.2.html">time</a> value.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;FFFFF&quot;</font>); <font class="syn_cmt">// If non-zero, the hundred thousandths of a second in a date and <a href="https://man7.org/linux/man-pages/man2/time.2.html">time</a> value.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;FFFFFF&quot;</font>); <font class="syn_cmt">// If non-zero, the millionths of a second in a date and <a href="https://man7.org/linux/man-pages/man2/time.2.html">time</a> value.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;FFFFFFF&quot;</font>); <font class="syn_cmt">// If non-zero, the ten millionths of a second in a date and <a href="https://man7.org/linux/man-pages/man2/time.2.html">time</a> value.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;g&quot;</font>); <font class="syn_cmt">// short-hand</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;gg&quot;</font>); <font class="syn_cmt">// The period or era (e.g. A.D.).</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;h&quot;</font>); <font class="syn_cmt">// The hour, using a 12-hour clock from 1 to 12.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;hh&quot;</font>); <font class="syn_cmt">// The hour, using a 12-hour clock from 01 to 12.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;H&quot;</font>); <font class="syn_cmt">// The hour, using a 24-hour clock from 0 to 23.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;HH&quot;</font>); <font class="syn_cmt">// The hour, using a 24-hour clock from 00 to 23.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;K&quot;</font>); <font class="syn_cmt">// Time zone information.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;m&quot;</font>); <font class="syn_cmt">// The minute, from 0 to 59.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;mm&quot;</font>); <font class="syn_cmt">// The minute, from 00 to 59.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;M&quot;</font>); <font class="syn_cmt">// The month, from 1 to 12.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;MM&quot;</font>); <font class="syn_cmt">// The month, from 01 to 12.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;MMM&quot;</font>); <font class="syn_cmt">// The abbreviated name of the month.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;MMMM&quot;</font>); <font class="syn_cmt">// The full name of the month.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;s&quot;</font>); <font class="syn_cmt">// The second, from 0 to 59.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;ss&quot;</font>); <font class="syn_cmt">// The second, from 00 to 59.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;t&quot;</font>); <font class="syn_cmt">// The first character of the AM/PM designator.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;tt&quot;</font>); <font class="syn_cmt">// The AM/PM designator.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;y&quot;</font>); <font class="syn_cmt">// The year, from 0 to 99.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;yy&quot;</font>); <font class="syn_cmt">// The year, from 00 to 99.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;yyy&quot;</font>); <font class="syn_cmt">// The year, with a minimum of three digits.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;yyyy&quot;</font>); <font class="syn_cmt">// The year as a four-digit number.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;yyyyy&quot;</font>); <font class="syn_cmt">// The year as a five-digit number.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;z&quot;</font>); <font class="syn_cmt">// Hours offset from UTC, with no leading zeros.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;zz&quot;</font>); <font class="syn_cmt">// Hours offset from UTC, with a leading zero for a single-digit value.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;zzz&quot;</font>); <font class="syn_cmt">// Hours and minutes offset from UTC.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;:&quot;</font>); <font class="syn_cmt">// The <a href="https://man7.org/linux/man-pages/man2/time.2.html">time</a> separator.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;/&quot;</font>); <font class="syn_cmt">// The date separator.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;\&quot;string\&quot;&quot;</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;&#39;string&#39;&quot;</font>); <font class="syn_cmt">// Literal string delimiter.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;%s&quot;</font>); <font class="syn_cmt">// Defines the following character as a custom format specifier.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;\t&quot;</font>); <font class="syn_cmt">// The escape character.</font>
+&nbsp;&nbsp;&nbsp;&nbsp;o(dt, <font class="syn_str">&quot;123-&quot;</font>); <font class="syn_cmt">// Any other character - The character is copied to the result string unchanged.</font>
+
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;----------------------&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+}
+
+static <font class="syn_typ">void</font> date_info_print(<font class="syn_typ">const</font> <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a>&amp; dt)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;.is_dst = &quot;</font> &lt;&lt; (dt.is_dst() ? <font class="syn_str">&quot;yes&quot;</font> : <font class="syn_str">&quot;no&quot;</font>) &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &lt;&lt; <font class="syn_str">&quot;.to_binary = &quot;</font> &lt;&lt; dt.to_binary() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &lt;&lt; <font class="syn_str">&quot;.hash_code = &quot;</font> &lt;&lt; dt.hash_code() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &lt;&lt; <font class="syn_str">&quot;.kind = &quot;</font> &lt;&lt; dt.kind() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &lt;&lt; <font class="syn_str">&quot;.year = &quot;</font> &lt;&lt; dt.year() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &lt;&lt; <font class="syn_str">&quot;.month = &quot;</font> &lt;&lt; <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint32_t</font>&gt;(dt.month()) &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &lt;&lt; <font class="syn_str">&quot;.day = &quot;</font> &lt;&lt; <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint32_t</font>&gt;(dt.day()) &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &lt;&lt; <font class="syn_str">&quot;.day_of_week = &quot;</font> &lt;&lt; dt.day_of_week() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &lt;&lt; <font class="syn_str">&quot;.day_of_year = &quot;</font> &lt;&lt; dt.day_of_year() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &lt;&lt; <font class="syn_str">&quot;.hour = &quot;</font> &lt;&lt; <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint32_t</font>&gt;(dt.hour()) &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &lt;&lt; <font class="syn_str">&quot;.minute = &quot;</font> &lt;&lt; <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint32_t</font>&gt;(dt.minute()) &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &lt;&lt; <font class="syn_str">&quot;.second = &quot;</font> &lt;&lt; <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint32_t</font>&gt;(dt.second()) &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &lt;&lt; <font class="syn_str">&quot;.millisecond = &quot;</font> &lt;&lt; dt.millisecond() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &lt;&lt; <font class="syn_str">&quot;.ticks = &quot;</font> &lt;&lt; dt.ticks() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &lt;&lt; <font class="syn_str">&quot;.time_of_day = &quot;</font> &lt;&lt; dt.time_of_day() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &lt;&lt; <font class="syn_str">&quot;.to_oa_date = &quot;</font> &lt;&lt; dt.to_oa_date() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &lt;&lt; <font class="syn_str">&quot;.to_file_time = &quot;</font> &lt;&lt; dt.to_file_time() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &lt;&lt; <font class="syn_str">&quot;.to_file_time_utc = &quot;</font> &lt;&lt; dt.to_file_time_utc() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &lt;&lt; <font class="syn_str">&quot;.to_string = &#39;&quot;</font> &lt;&lt; dt.to_string() &lt;&lt; <font class="syn_str">&quot;&#39;&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+}
+
+<font class="syn_typ">int</font> main(<font class="syn_typ">int</font> argc, <font class="syn_typ">char</font>* argv[])
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> n = <a href="../classes/omni-chrono-date_time-now.html">omni::chrono::date_time::now</a>();
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// <a href="../classes/omni-chrono-date_time.html">omni::chrono::date_time</a> u = <a href="../classes/omni-chrono-date_time-utc_now.html">omni::chrono::date_time::utc_now</a>();</font>
+&nbsp;&nbsp;&nbsp;&nbsp;date_info_print(n);
+&nbsp;&nbsp;&nbsp;&nbsp;date_format(n);
+
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;------ TRYING PARSING!!!! -----&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<a href="../classes/omni-chrono-date_time-try_parse.html">omni::chrono::date_time::try_parse</a>(<font class="syn_str">&quot;10/31/2024 12:34 PM&quot;</font>, n)) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;PARSED IT!!!!&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;date_info_print(n);
+&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;It did NOT work :(&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;}
+
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">//date_info_print(u);</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">//date_format(u);</font>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;
+}</pre></div>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

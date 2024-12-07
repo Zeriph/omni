@@ -23,27 +23,41 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <div class="ptitle"><a href="../../../../files/src/omni/defs/net_def.hpp" onclick="return popup('../../../../files/src/omni/defs/net_def.hpp')">omni/defs/net_def.hpp</a></div><div class="content"><div>
 <code><div class="cpphtmllines">
 <!--start line numbers-->
-00001:<br><div id="cmntl1" name="cmntl1">00002:<br>00003:<br>00004:<br>00005:<br>00006:<br>00007:<br>00008:<br>00009:<br>000010:<br>000011:<br>000012:<br>000013:<br>000014:<br>000015:<br>000016:<br>000017:<br>000018:<br></div>000019:<br>
-000020:<br>000021:<br>000022:<br>000023:<br>000024:<br>000025:<br>000026:<br>000027:<br>000028:<br>000029:<br>000030:<br>000031:<br>000032:<br>000033:<br>000034:<br>000035:<br>000036:<br>000037:<br>000038:<br>000039:<br>
-000040:<br>000041:<br>000042:<br>000043:<br>000044:<br>000045:<br>000046:<br>000047:<br>000048:<br>000049:<br>000050:<br>000051:<br>000052:<br>000053:<br>000054:<br>000055:<br>000056:<br>000057:<br>000058:<br>000059:<br>
-000060:<br>000061:<br>000062:<br>000063:<br>000064:<br>000065:<br>000066:<br>000067:<br>000068:<br>000069:<br>000070:<br>000071:<br>000072:<br>000073:<br>000074:<br>000075:<br>000076:<br>000077:<br>000078:<br>000079:<br>
-000080:<br>000081:<br>000082:<br>000083:<br>000084:<br>000085:<br>000086:<br>000087:<br>000088:<br>000089:<br>000090:<br>000091:<br>000092:<br>000093:<br>000094:<br>000095:<br>000096:<br>000097:<br>000098:<br>000099:<br>
-0000100:<br>0000101:<br>0000102:<br>0000103:<br>0000104:<br>0000105:<br>0000106:<br>0000107:<br>0000108:<br>0000109:<br>0000110:<br>0000111:<br>0000112:<br>0000113:<br>0000114:<br>0000115:<br>0000116:<br>0000117:<br>0000118:<br>0000119:<br>
-0000120:<br>0000121:<br>0000122:<br>0000123:<br>0000124:<br>0000125:<br>0000126:<br>0000127:<br>0000128:<br>0000129:<br>0000130:<br>0000131:<br>0000132:<br>0000133:<br>0000134:<br>0000135:<br>0000136:<br>0000137:<br>0000138:<br>0000139:<br>
-0000140:<br>0000141:<br>0000142:<br>0000143:<br>0000144:<br>0000145:<br>0000146:<br>0000147:<br>0000148:<br>0000149:<br>0000150:<br>0000151:<br>0000152:<br>0000153:<br>0000154:<br>0000155:<br>0000156:<br>0000157:<br>0000158:<br>0000159:<br>
-0000160:<br>0000161:<br>0000162:<br>0000163:<br>0000164:<br>0000165:<br>0000166:<br>0000167:<br>0000168:<br>0000169:<br>0000170:<br>0000171:<br>0000172:<br>0000173:<br>0000174:<br>0000175:<br>
+001:<br><div id="cmntl1" name="cmntl1">002:<br>003:<br>004:<br>005:<br>006:<br>007:<br>008:<br>009:<br>010:<br>011:<br>012:<br>013:<br>014:<br>015:<br>016:<br>017:<br>018:<br></div>019:<br>
+020:<br>021:<br>022:<br>023:<br>024:<br>025:<br>026:<br>027:<br>028:<br>029:<br>030:<br>031:<br>032:<br>033:<br>034:<br>035:<br>036:<br>037:<br>038:<br>039:<br>
+040:<br>041:<br>042:<br>043:<br>044:<br>045:<br>046:<br>047:<br>048:<br>049:<br>050:<br>051:<br>052:<br>053:<br>054:<br>055:<br>056:<br>057:<br>058:<br>059:<br>
+060:<br><div id="cmntl2" name="cmntl2">061:<br>062:<br>063:<br>064:<br></div>065:<br>066:<br>067:<br>068:<br>069:<br>070:<br>071:<br>072:<br>073:<br>074:<br>075:<br>076:<br>077:<br>078:<br>079:<br>
+080:<br>081:<br>082:<br>083:<br>084:<br>085:<br>086:<br>087:<br>088:<br>089:<br>090:<br>091:<br>092:<br>093:<br>094:<br>095:<br>096:<br>097:<br>098:<br>099:<br>
+100:<br>101:<br>102:<br>103:<br>104:<br>105:<br>106:<br>107:<br>108:<br>109:<br>110:<br>111:<br>112:<br>113:<br>114:<br>115:<br>116:<br>117:<br>118:<br>119:<br>
+120:<br>121:<br>122:<br>123:<br>124:<br>125:<br>126:<br>127:<br>128:<br>129:<br>130:<br>131:<br>132:<br>133:<br>134:<br>135:<br>136:<br>137:<br>138:<br>139:<br>
+140:<br>141:<br>142:<br>143:<br>144:<br>145:<br>146:<br>147:<br>148:<br>149:<br>150:<br>151:<br>152:<br>153:<br>154:<br>155:<br>156:<br>157:<br>158:<br>159:<br>
+160:<br>161:<br>162:<br>163:<br>164:<br>165:<br>166:<br>167:<br>168:<br>169:<br>170:<br>171:<br>172:<br>173:<br>174:<br>175:<br>176:<br>177:<br>178:<br>179:<br>
+180:<br>181:<br>182:<br>183:<br>184:<br>185:<br>186:<br>187:<br>188:<br>189:<br>190:<br>191:<br>192:<br>193:<br>194:<br>195:<br>196:<br>197:<br>198:<br>199:<br>
+200:<br>201:<br>202:<br>203:<br>204:<br>205:<br>206:<br>207:<br>208:<br>209:<br>210:<br>211:<br>212:<br>213:<br>214:<br>215:<br>216:<br>217:<br>218:<br>219:<br>
+220:<br>221:<br>222:<br>223:<br>224:<br>225:<br>226:<br>227:<br>228:<br>229:<br>230:<br>231:<br>232:<br>233:<br>234:<br>235:<br>236:<br>237:<br>238:<br>239:<br>
+240:<br>241:<br>242:<br>243:<br>244:<br>245:<br>246:<br>247:<br>248:<br>249:<br>250:<br>251:<br>252:<br>253:<br>254:<br>255:<br>256:<br>257:<br>258:<br>259:<br>
+260:<br>261:<br>262:<br>263:<br>264:<br>265:<br>266:<br>267:<br>268:<br>269:<br>270:<br>271:<br>272:<br>273:<br>274:<br>275:<br>276:<br>277:<br>278:<br>279:<br>
+280:<br>281:<br>282:<br>283:<br>284:<br>285:<br>286:<br>287:<br>288:<br>289:<br>290:<br>291:<br>292:<br>293:<br>294:<br>295:<br>296:<br>297:<br>298:<br>299:<br>
+300:<br>301:<br>302:<br>303:<br>304:<br>305:<br>306:<br>307:<br>
 <!--end line numbers-->
 </div><div class="cpphtmlcmnt">
 <!--start collapse columns-->
 <img src="../../../../content/tree/min.gif" alt="Min/Max" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<img src="../../../../content/tree/min.gif" alt="Min/Max" id="cmnti2" name="cmnti2" onclick="collapse('2', '../../../../');" /><br><div id="cmnts2" name="cmnts2"><br><br><br><br></div><div></div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br>
 <!--end collapse columns-->
 </div><div class="cpphtml" style="margin-left:3.75em;">
 <!--start highlighted code-->
@@ -87,6 +101,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;sys/socket.h&gt;</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;sys/ioctl.h&gt;</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;sys/un.h&gt;</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;arpa/inet.h&gt;</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;netinet/in.h&gt;</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#include &lt;netinet/ip.h&gt;</font><br>
@@ -102,6 +117,23 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <font class="syn_pre">#define OMNI_SOCKADDR_IN6_T_FW struct sockaddr_in6</font><br>
 <font class="syn_pre">#define OMNI_SOCKADDR_UN_T_FW struct sockaddr_un</font><br>
 <font class="syn_pre">#define OMNI_SOCKADDR_T_FW struct sockaddr</font><br>
+<br>
+<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../options/omni_os_win.html">OMNI_OS_WIN</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// #define OMNI_ALLOW_UNIX_SOCKET 1</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">/*<div class="syn_ex" id="cmnt2" name="cmnt2">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DEV_NOTE: the user must explicitly enable this flag, Windows doesn&#39;t have the sockaddr_un struct<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;except for certain WSL subsystems. So this flag must be explicitly enabled through the build system<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to enable the Unix socket.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*/</div><div></div></font>
+<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_ALLOW_UNIX_SOCKET 1</font><br>
+<font class="syn_pre">#endif</font><br>
+<br>
+<font class="syn_pre">#if !defined(OMNI_UNIX_SOCKET_MAX_PATH)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// the sockaddr_un.sun_path var is typically defined as char sun_path[104],</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// but on some systems can be 108 (potentially more), so 128 seems safe.</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_UNIX_SOCKET_MAX_PATH 128</font><br>
+<font class="syn_pre">#endif</font><br>
 <br>
 <font class="syn_pre">#if !defined(<a href="../../../options/omni_somaxconn.html">OMNI_SOMAXCONN</a>)</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(SOMAXCONN)</font><br>
@@ -136,7 +168,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCKET_XFR_T_FW char</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_invalid_socket.html">OMNI_INVALID_SOCKET</a> INVALID_SOCKET</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_SYSERR_FW SOCKET_ERROR</font><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCKET_ERR_FW ::WSAGetLastError()</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCKET_ERR_FW ::<a href="https://learn.microsoft.com/en-us/windows/win32/api/winsock/nf-winsock-wsagetlasterror">WSAGetLastError</a>()</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#if !defined(OMNI_WINSOCK_HIGH_FW)</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_WINSOCK_HIGH_FW 2</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
@@ -147,6 +179,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_SEND_FW SD_SEND</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_BOTH_FW SD_BOTH</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_MSG_EOR_FW 0</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_sock_flags_none.html">OMNI_SOCK_FLAGS_NONE</a> -1</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SIN_FAMILY_FW ADDRESS_FAMILY</font><br>
 <font class="syn_pre">#else</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCKET_T_FW int</font><br>
@@ -159,6 +192,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_SEND_FW SHUT_WR</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_BOTH_FW SHUT_RDWR</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_MSG_EOR_FW MSG_EOR</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define <a href="../../../options/omni_sock_flags_none.html">OMNI_SOCK_FLAGS_NONE</a> 0</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../options/omni_os_apple.html">OMNI_OS_APPLE</a>)</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SIN_FAMILY_FW sa_family_t</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
@@ -166,14 +200,126 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
 <font class="syn_pre">#endif</font><br>
 <br>
+<font class="syn_cmt">// start network error codes</font><br>
+<br>
+<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../options/omni_os_win.html">OMNI_OS_WIN</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_OPERATION_ABORTED_FW WSA_OPERATION_ABORTED</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// WSA_IO_INCOMPLETE is 996 and there is no real equivelent of general I/O error in WinSock,</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// EIO in most *nix is defined as 5, so just make it the same for Win</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_IO_ERROR_FW 5</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_IO_PENDING_FW WSA_IO_PENDING</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_INTERRUPTED_FW WSAEINTR</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// WSAEACCESS is the only one in WinSock that is about permission, but since EPERM and EACCESS are</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// different on *nix systems we&#39;ll make it the same on Win, EPERM on most *nix is defined as 1</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_PERMISSION_FW 1</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_ACCESS_DENIED_FW WSAEACCES</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_FAULT_FW WSAEFAULT</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_INSUFFICIENT_MEMORY_FW WSA_NOT_ENOUGH_MEMORY</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_INVALID_ARGUMENT_FW WSAEINVAL</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_INVALID_DESCRIPTOR_FW WSAEBADF</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_TOO_MANY_OPEN_SOCKETS_FW WSAEMFILE</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_WOULD_BLOCK_FW WSAEWOULDBLOCK</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_IN_PROGRESS_FW WSAEINPROGRESS</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_ALREADY_IN_PROGRESS_FW WSAEALREADY</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_NOT_SOCKET_FW WSAENOTSOCK</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_DESTINATION_ADDRESS_REQUIRED_FW WSAEDESTADDRREQ</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_MESSAGE_SIZE_FW WSAEMSGSIZE</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_PROTOCOL_TYPE_FW WSAEPROTOTYPE</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_PROTOCOL_OPTION_FW WSAENOPROTOOPT</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_PROTOCOL_NOT_SUPPORTED_FW WSAEPROTONOSUPPORT</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_SOCKET_NOT_SUPPORTED_FW WSAESOCKTNOSUPPORT</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_OPERATION_NOT_SUPPORTED_FW WSAEOPNOTSUPP</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_PROTOCOL_FAMILY_NOT_SUPPORTED_FW WSAEPFNOSUPPORT</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_ADDRESS_FAMILY_NOT_SUPPORTED_FW WSAEAFNOSUPPORT</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_ADDRESS_ALREADY_IN_USE_FW WSAEADDRINUSE</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_ADDRESS_NOT_AVAILABLE_FW WSAEADDRNOTAVAIL</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_NETWORK_DOWN_FW WSAENETDOWN</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_NETWORK_UNREACHABLE_FW WSAENETUNREACH</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_NETWORK_RESET_FW WSAENETRESET</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_CONNECTION_ABORTED_FW WSAECONNABORTED</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_CONNECTION_RESET_FW WSAECONNRESET</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_NO_BUFFER_SPACE_AVAILABLE_FW WSAENOBUFS</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_IS_CONNECTED_FW WSAEISCONN</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_NOT_CONNECTED_FW WSAENOTCONN</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_SHUTDOWN_FW WSAESHUTDOWN</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_TIMED_OUT_FW WSAETIMEDOUT</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_CONNECTION_REFUSED_FW WSAECONNREFUSED</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_LOOP_FW WSAELOOP</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_NAME_TOO_LONG_FW WSAENAMETOOLONG</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_HOST_DOWN_FW WSAEHOSTDOWN</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_HOST_UNREACHABLE_FW WSAEHOSTUNREACH</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_PROCESS_LIMIT_FW WSAEPROCLIM</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_SYSTEM_NOT_READY_FW WSASYSNOTREADY</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_VERSION_NOT_SUPPORTED_FW WSAVERNOTSUPPORTED</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_NOT_INITIALIZED_FW WSANOTINITIALISED</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_DISCONNECTING_FW WSAEDISCON</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_TYPE_NOT_FOUND_FW WSATYPE_NOT_FOUND</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_NO_HOST_FW WSAHOST_NOT_FOUND</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_AGAIN_FW WSATRY_AGAIN</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_NO_RECOVER_FW WSANO_RECOVERY</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_NO_DAT_FW WSANO_DATA</font><br>
+<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_OPERATION_ABORTED_FW 995 <font class="syn_cmt">// &quot;Overlapped operation aborted&quot; .. windows specific ??</font></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_IO_ERROR_FW EIO</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_IO_PENDING_FW 997 <font class="syn_cmt">// &quot;Overlapped operations will complete later.&quot; .. windows specific ??</font></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_INTERRUPTED_FW EINTR</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_PERMISSION_FW EPERM</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_ACCESS_DENIED_FW EACCES</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_FAULT_FW EFAULT</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_INSUFFICIENT_MEMORY_FW ENOMEM</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_INVALID_ARGUMENT_FW EINVAL</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_INVALID_DESCRIPTOR_FW EBADF</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_TOO_MANY_OPEN_SOCKETS_FW ENFILE</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_WOULD_BLOCK_FW EWOULDBLOCK</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_IN_PROGRESS_FW EINPROGRESS</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_ALREADY_IN_PROGRESS_FW EALREADY</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_NOT_SOCKET_FW ENOTSOCK</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_DESTINATION_ADDRESS_REQUIRED_FW EDESTADDRREQ</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_MESSAGE_SIZE_FW EMSGSIZE</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_PROTOCOL_TYPE_FW EPROTOTYPE</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_PROTOCOL_OPTION_FW EPROTO</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_PROTOCOL_NOT_SUPPORTED_FW EPROTONOSUPPORT</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_SOCKET_NOT_SUPPORTED_FW ESOCKTNOSUPPORT</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_OPERATION_NOT_SUPPORTED_FW EOPNOTSUPP</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_PROTOCOL_FAMILY_NOT_SUPPORTED_FW EPFNOSUPPORT</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_ADDRESS_FAMILY_NOT_SUPPORTED_FW EAFNOSUPPORT</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_ADDRESS_ALREADY_IN_USE_FW EADDRINUSE</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_ADDRESS_NOT_AVAILABLE_FW EADDRNOTAVAIL</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_NETWORK_DOWN_FW ENETDOWN</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_NETWORK_UNREACHABLE_FW ENETUNREACH</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_NETWORK_RESET_FW ENETRESET</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_CONNECTION_ABORTED_FW ECONNABORTED</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_CONNECTION_RESET_FW ECONNRESET</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_NO_BUFFER_SPACE_AVAILABLE_FW ENOBUFS</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_IS_CONNECTED_FW EISCONN</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_NOT_CONNECTED_FW ENOTCONN</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_SHUTDOWN_FW ESHUTDOWN</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_TIMED_OUT_FW ETIMEDOUT</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_CONNECTION_REFUSED_FW ECONNREFUSED</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_LOOP_FW ELOOP</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_NAME_TOO_LONG_FW ENAMETOOLONG</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_HOST_DOWN_FW EHOSTDOWN</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_HOST_UNREACHABLE_FW EHOSTUNREACH</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_PROCESS_LIMIT_FW EMFILE</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_SYSTEM_NOT_READY_FW 10091 <font class="syn_cmt">// &quot;WSAStartup not called&quot; .. windows specific</font></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_VERSION_NOT_SUPPORTED_FW 10092 <font class="syn_cmt">// &quot;Winsock.dll wrong version&quot; .. windows specific</font></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_NOT_INITIALIZED_FW 10093 <font class="syn_cmt">// &quot;Successful WSAStartup not yet performed.&quot; .. windows specific</font></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_DISCONNECTING_FW 10101 <font class="syn_cmt">// &quot;Graceful shutdown in progress.&quot; happens for <a href="https://docs.microsoft.com/en-us/windows/desktop/api/Winsock2/nf-winsock2-wsarecv">WSARecv</a>, *nix equiv would be ENOTCONN (already marked), so use windows number</font></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_TYPE_NOT_FOUND_FW 10109 <font class="syn_cmt">// &quot;class type not found&quot; .. windows specific ??</font></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_NO_HOST_FW 11001 <font class="syn_cmt">// &quot;Host not found.&quot; .. this would be one of the other host fail error codes, so use windows number</font></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_AGAIN_FW 11002 <font class="syn_cmt">// &quot;Nonauthoritative host not found.&quot; .. see above note about host errors, using windows num</font></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_NO_RECOVER_FW NO_RECOVERY <font class="syn_cmt">// doesn&#39;t make much sense for non-recoverable in *nix, so just use this one from netdb.h</font></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SOCK_ERR_NO_DAT_FW ENODATA <font class="syn_cmt">// there is a &quot;NO_DATA&quot; in netdb.h, but ENODATA would be more appropriate here</font></font><br>
+<font class="syn_pre">#endif</font><br>
+<br>
 <font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../options/omni_os_win.html">OMNI_OS_WIN</a>)</font><br>
 <br>
 <font class="syn_ins">namespace</font> omni {<br>
-<a name="omni::net"></a>&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">namespace</font> net {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">namespace</font> net {<br>
 <a name="omni::net::wsa_init"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">int</font> wsa_init()<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WSADATA sdata;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> serr = ::WSAStartup(MAKEWORD(OMNI_WINSOCK_HIGH_FW, OMNI_WINSOCK_LOW_FW), &amp;sdata);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> serr = ::<a href="https://learn.microsoft.com/en-us/windows/win32/api/winsock/nf-winsock-wsastartup">WSAStartup</a>(MAKEWORD(OMNI_WINSOCK_HIGH_FW, OMNI_WINSOCK_LOW_FW), &amp;sdata);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (serr != <font class="syn_num">0</font>) {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// Could not get the winsock dll, fail since cannot create socket</font><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../options/omni_dbgev.html">OMNI_DBGEV</a>(<font class="syn_str">&quot;a system error occurred in WSAStartUp: &quot;</font>, serr)<br>
@@ -183,7 +329,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <br>
 <a name="omni::net::wsa_close"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <font class="syn_typ">void</font> wsa_close()<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::WSACleanup();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::<a href="https://learn.microsoft.com/en-us/windows/win32/api/winsock/nf-winsock-wsacleanup">WSACleanup</a>();<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 <br>
 <a name="omni::net::wsa_info"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">class</font> wsa_info<br>
@@ -224,4 +370,4 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <!--end highlighted code-->
 </div></code><br>
 <!--end content-->
-</div></div></div></div><script type="text/javascript">loadJS(); collapseAll('1', '../../../../');</script></body></html>
+</div></div></div></div><script type="text/javascript">loadJS(); collapseAll('2', '../../../../');</script></body></html>

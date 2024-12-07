@@ -2,7 +2,7 @@
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_SLEEP1</Name>
   <Brief>A helper macro for millisecond sleeps</Brief>
-  <Considerations>While the sleep specified is meant for 1ms sleep, it can be typical for a sleep to take approximately 10-15ms due to time slicing and kernel timing. So a 1ms sleep might be 1ms, 10ms or even 0 (i.e. no sleep).</Considerations>
+  <Considerations>While the sleep specified is meant for 1ms sleep, it can be typical for a sleep to take approximately 10-15ms due to @_time slicing and kernel timing. So a 1ms sleep might be 1ms, 10ms or even 0 (i.e. no sleep).</Considerations>
   <Description>To enable millisecond sleep capabilities cross-platform, temporaries are needed on non-Windows platforms; to this, when omni::sync::sleep is called, this macro is utilized. As well, in other areas of the library where a sleep is called in a tight loop, this macro is utilized.
 
 Example:

@@ -43,17 +43,9 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
     <a href="../classes/omni-math-shape_comparator.html">omni::math::shape_comparator</a><br>
     <a href="../classes/omni-math-transformation.html">omni::math::transformation</a><br>
     <a href="../classes/omni-math-triangle_measure.html">omni::math::triangle_measure</a><br>
+    <font class="syn_ins">inline</font> <font class="syn_typ">float</font> <a href="../classes/omni-math-acosh.html">omni::math::acosh</a>(<font class="syn_typ">float</font> x)<br>
+    <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt; <font class="syn_ins">inline</font> <font class="syn_typ">bool</font> <a href="../classes/omni-math-angles_are_coterminal.html">omni::math::angles_are_coterminal</a>(T x, T y)<br>
     <font class="syn_ins">inline</font> <font class="syn_typ">double</font> <a href="../classes/omni-math-arc_length.html">omni::math::arc_length</a>(<font class="syn_typ">double</font> radius, <font class="syn_typ">double</font> degrees)<br>
-    <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt; <font class="syn_ins">inline</font> <font class="syn_typ">bool</font> <a href="../classes/omni-math-are_equal.html">omni::math::are_equal</a>(T x, T y, T epsilon)<br>
-    <font class="syn_ins">template</font> &lt;&gt; <font class="syn_ins">inline</font> <font class="syn_typ">bool</font> <a href="../classes/omni-math-are_equal.html">omni::math::are_equal</a>&lt;<font class="syn_typ">bool</font>&gt;(<font class="syn_typ">bool</font> x, <font class="syn_typ">bool</font> y)<br>
-    <font class="syn_ins">template</font> &lt;&gt; <font class="syn_ins">inline</font> <font class="syn_typ">bool</font> <a href="../classes/omni-math-are_equal.html">omni::math::are_equal</a>&lt;int16_t&gt;(int16_t x, int16_t y, int16_t epsilon)<br>
-    <font class="syn_ins">template</font> &lt;&gt; <font class="syn_ins">inline</font> <font class="syn_typ">bool</font> <a href="../classes/omni-math-are_equal.html">omni::math::are_equal</a>&lt;int32_t&gt;(int32_t x, int32_t y, int32_t epsilon)<br>
-    <font class="syn_ins">template</font> &lt;&gt; <font class="syn_ins">inline</font> <font class="syn_typ">bool</font> <a href="../classes/omni-math-are_equal.html">omni::math::are_equal</a>&lt;int64_t&gt;(int64_t x, int64_t y, int64_t epsilon)<br>
-    <font class="syn_ins">template</font> &lt;&gt; <font class="syn_ins">inline</font> <font class="syn_typ">bool</font> <a href="../classes/omni-math-are_equal.html">omni::math::are_equal</a>&lt;int8_t&gt;(int8_t x, int8_t y, int8_t epsilon)<br>
-    <font class="syn_ins">template</font> &lt;&gt; <font class="syn_ins">inline</font> <font class="syn_typ">bool</font> <a href="../classes/omni-math-are_equal.html">omni::math::are_equal</a>&lt;<font class="syn_typ">uint16_t</font>&gt;(<font class="syn_typ">uint16_t</font> x, <font class="syn_typ">uint16_t</font> y, <font class="syn_typ">uint16_t</font> epsilon)<br>
-    <font class="syn_ins">template</font> &lt;&gt; <font class="syn_ins">inline</font> <font class="syn_typ">bool</font> <a href="../classes/omni-math-are_equal.html">omni::math::are_equal</a>&lt;<font class="syn_typ">uint32_t</font>&gt;(<font class="syn_typ">uint32_t</font> x, <font class="syn_typ">uint32_t</font> y, <font class="syn_typ">uint32_t</font> epsilon)<br>
-    <font class="syn_ins">template</font> &lt;&gt; <font class="syn_ins">inline</font> <font class="syn_typ">bool</font> <a href="../classes/omni-math-are_equal.html">omni::math::are_equal</a>&lt;<font class="syn_typ">uint64_t</font>&gt;(<font class="syn_typ">uint64_t</font> x, <font class="syn_typ">uint64_t</font> y, <font class="syn_typ">uint64_t</font> epsilon)<br>
-    <font class="syn_ins">template</font> &lt;&gt; <font class="syn_ins">inline</font> <font class="syn_typ">bool</font> <a href="../classes/omni-math-are_equal.html">omni::math::are_equal</a>&lt;<font class="syn_typ">uint8_t</font>&gt;(<font class="syn_typ">uint8_t</font> x, <font class="syn_typ">uint8_t</font> y, <font class="syn_typ">uint8_t</font> epsilon)<br>
     <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt; <font class="syn_ins">inline</font> <font class="syn_typ">double</font> <a href="../classes/omni-math-area_of_circle.html">omni::math::area_of_circle</a>(T radius)<br>
     <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt; <font class="syn_ins">inline</font> <font class="syn_typ">double</font> <a href="../classes/omni-math-area_of_circle_sector.html">omni::math::area_of_circle_sector</a>(T radius, <font class="syn_typ">double</font> degrees)<br>
     <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt; <font class="syn_ins">inline</font> <font class="syn_typ">double</font> <a href="../classes/omni-math-area_of_circle_segment.html">omni::math::area_of_circle_segment</a>(T radius, <font class="syn_typ">double</font> degrees)<br>
@@ -62,13 +54,18 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
     <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt; <font class="syn_ins">inline</font> <font class="syn_typ">double</font> <a href="../classes/omni-math-area_of_triangle.html">omni::math::area_of_triangle</a>(T base, T height)<br>
     <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt; <font class="syn_ins">inline</font> <font class="syn_typ">double</font> <a href="../classes/omni-math-area_of_triangle_sas.html">omni::math::area_of_triangle_sas</a>(<font class="syn_typ">double</font> degrees, T side1, T side2)<br>
     <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt; <font class="syn_ins">inline</font> <font class="syn_typ">double</font> <a href="../classes/omni-math-area_of_triangle_sss.html">omni::math::area_of_triangle_sss</a>(T a, T b, T c)<br>
+    <font class="syn_ins">inline</font> <font class="syn_typ">float</font> <a href="../classes/omni-math-asinh.html">omni::math::asinh</a>(<font class="syn_typ">float</font> x)<br>
+    <font class="syn_ins">inline</font> <font class="syn_typ">float</font> <a href="../classes/omni-math-atanh.html">omni::math::atanh</a>(<font class="syn_typ">float</font> x)<br>
     <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt; <font class="syn_ins">inline</font> <font class="syn_typ">double</font> <a href="../classes/omni-math-calculate_angle.html">omni::math::calculate_angle</a>(T x, T y, T bx, T by, T cx, T cy)<br>
     <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt; <font class="syn_ins">inline</font> <font class="syn_typ">double</font> <a href="../classes/omni-math-calculate_angle_radians.html">omni::math::calculate_angle_radians</a>(T x, T y, T bx, T by, T cx, T cy)<br>
-    <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt; <font class="syn_ins">inline</font> <font class="syn_typ">void</font> <a href="../classes/omni-math-calculate_point.html">omni::math::calculate_point</a>(T start_x, T start_y, T end_x, T end_y, T len, T&amp; out_x, T&amp; out_y)<br>
+    <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt; <font class="syn_ins">inline</font> <font class="syn_typ">void</font> <a href="../classes/omni-math-calculate_point.html">omni::math::calculate_point</a>(T start_x, T start_y, T end_x, T end_y, T distance_from_start, T known_distance, T&amp; out_x, T&amp; out_y)<br>
+    <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt; <font class="syn_ins">inline</font> <font class="syn_typ">void</font> <a href="../classes/omni-math-calculate_point_zero_distance.html">omni::math::calculate_point_zero_distance</a>(T start_x, T start_y, T end_x, T end_y, T distance_from_start, T&amp; out_x, T&amp; out_y)<br>
+    <font class="syn_ins">inline</font> <font class="syn_typ">float</font> <a href="../classes/omni-math-cbrt.html">omni::math::cbrt</a>(<font class="syn_typ">float</font> x)<br>
     <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt; <font class="syn_ins">inline</font> <font class="syn_typ">double</font> <a href="../classes/omni-math-circle_circumference.html">omni::math::circle_circumference</a>(T radius)<br>
     <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt; <font class="syn_ins">inline</font> <font class="syn_typ">bool</font> <a href="../classes/omni-math-circle_contains_point.html">omni::math::circle_contains_point</a>(T center_x, T center_y, <font class="syn_typ">double</font> radius, T x, T y, <font class="syn_typ">bool</font> include_edge)<br>
+    <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt; <font class="syn_ins">inline</font> <font class="syn_typ">bool</font> <a href="../classes/omni-math-circle_contains_point_on_edge.html">omni::math::circle_contains_point_on_edge</a>(T center_x, T center_y, <font class="syn_typ">double</font> radius, T x, T y)<br>
     <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt; <font class="syn_ins">inline</font> <font class="syn_typ">bool</font> <a href="../classes/omni-math-circles_intersect.html">omni::math::circles_intersect</a>(T x1, T y1, <font class="syn_typ">double</font> r1, T x2, T y2, <font class="syn_typ">double</font> r2, <font class="syn_typ">bool</font> include_edge)<br>
-    <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt; <font class="syn_ins">inline</font> T&amp; <a href="../classes/omni-math-clamp.html">omni::math::clamp</a>(<font class="syn_typ">const</font> T&amp; value, <font class="syn_typ">const</font> T&amp; min_val, <font class="syn_typ">const</font> T&amp; max_val)<br>
+    <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt; <font class="syn_ins">inline</font> <font class="syn_typ">const</font> T&amp; <a href="../classes/omni-math-clamp.html">omni::math::clamp</a>(<font class="syn_typ">const</font> T&amp; value, <font class="syn_typ">const</font> T&amp; min_val, <font class="syn_typ">const</font> T&amp; max_val)<br>
     <font class="syn_ins">inline</font> <font class="syn_typ">double</font> <a href="../classes/omni-math-deg_to_rad.html">omni::math::deg_to_rad</a>(<font class="syn_typ">double</font> deg)<br>
     <font class="syn_ins">inline</font> <font class="syn_typ">double</font> <a href="../classes/omni-math-degrees_to_radians.html">omni::math::degrees_to_radians</a>(<font class="syn_typ">double</font> deg)<br>
     <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt; <font class="syn_ins">inline</font> T <a href="../classes/omni-math-delta.html">omni::math::delta</a>(T a, T b)<br>
@@ -78,7 +75,9 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
     <font class="syn_ins">inline</font> <font class="syn_typ">double</font> <a href="../classes/omni-math-fractional_part.html">omni::math::fractional_part</a>(<font class="syn_typ">double</font> val)<br>
     static <font class="syn_typ">double</font> <a href="../classes/omni-math-ieee_remainder.html">omni::math::ieee_remainder</a>(<font class="syn_typ">double</font> x, <font class="syn_typ">double</font> y)<br>
     <font class="syn_ins">inline</font> <font class="syn_typ">double</font> <a href="../classes/omni-math-integral_part.html">omni::math::integral_part</a>(<font class="syn_typ">double</font> val)<br>
+    <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt; <font class="syn_ins">inline</font> <font class="syn_typ">bool</font> <a href="../classes/omni-math-is_even.html">omni::math::is_even</a>(T val)<br>
     <font class="syn_ins">inline</font> <font class="syn_typ">bool</font> <a href="../classes/omni-math-is_nan.html">omni::math::is_nan</a>(<font class="syn_typ">long</font> <font class="syn_typ">double</font> val)<br>
+    <font class="syn_ins">inline</font> <font class="syn_typ">bool</font> <a href="../classes/omni-math-is_odd.html">omni::math::is_odd</a>(int8_t val)<br>
     <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt; <font class="syn_ins">inline</font> <font class="syn_typ">double</font> <a href="../classes/omni-math-lerp_x.html">omni::math::lerp_x</a>(T x1, T y1, T x2, T y2, T y)<br>
     <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt; <font class="syn_ins">inline</font> <font class="syn_typ">double</font> <a href="../classes/omni-math-lerp_y.html">omni::math::lerp_y</a>(T x1, T y1, T x2, T y2, T x)<br>
     <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt; <font class="syn_ins">inline</font> <font class="syn_typ">double</font> <a href="../classes/omni-math-linear_interpolation_x.html">omni::math::linear_interpolation_x</a>(T x1, T y1, T x2, T y2, T y)<br>
@@ -87,6 +86,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
     <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt; <font class="syn_ins">inline</font> <font class="syn_typ">void</font> <a href="../classes/omni-math-midpoint.html">omni::math::midpoint</a>(T start_x, T start_y, T end_x, T end_y, T&amp; mid_x, T&amp; mid_y)<br>
     <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt; <font class="syn_ins">inline</font> <font class="syn_typ">void</font> <a href="../classes/omni-math-midpoint3d.html">omni::math::midpoint3d</a>(T start_x, T start_y, T start_z, T end_x, T end_y, T end_z, T&amp; mid_x, T&amp; mid_y, T&amp; mid_z)<br>
     <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt; <font class="syn_ins">inline</font> <a href="../classes/omni-math-ordinal_name.html">omni::math::ordinal_name</a> <a href="../classes/omni-math-octant.html">omni::math::octant</a>(T x, T y, T z)<br>
+    <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt; <font class="syn_ins">inline</font> <font class="syn_typ">bool</font> <a href="../classes/omni-math-point_is_on_circle_edge.html">omni::math::point_is_on_circle_edge</a>(T center_x, T center_y, <font class="syn_typ">double</font> radius, T x, T y)<br>
     <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt; <font class="syn_ins">inline</font> <font class="syn_typ">void</font> <a href="../classes/omni-math-point_on_circle.html">omni::math::point_on_circle</a>(<font class="syn_typ">double</font> degrees, <font class="syn_typ">double</font> radius, T center_x, T center_y, T&amp; out_x, T&amp; out_y)<br>
     <font class="syn_ins">template</font> &lt;&gt; <font class="syn_ins">inline</font> <font class="syn_typ">void</font> <a href="../classes/omni-math-point_on_circle.html">omni::math::point_on_circle</a>&lt;int16_t&gt;(<font class="syn_typ">double</font> degrees, <font class="syn_typ">double</font> radius, int16_t center_x, int16_t center_y, int16_t&amp; out_x, int16_t&amp; out_y)<br>
     <font class="syn_ins">template</font> &lt;&gt; <font class="syn_ins">inline</font> <font class="syn_typ">void</font> <a href="../classes/omni-math-point_on_circle.html">omni::math::point_on_circle</a>&lt;int32_t&gt;(<font class="syn_typ">double</font> degrees, <font class="syn_typ">double</font> radius, int32_t center_x, int32_t center_y, int32_t&amp; out_x, int32_t&amp; out_y)<br>
@@ -145,18 +145,22 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
     <font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt; <font class="syn_ins">inline</font> <font class="syn_typ">void</font> <a href="../classes/omni-math-triangle_translate_xy.html">omni::math::triangle_translate_xy</a>(T x, T y, T&amp; ax, T&amp; ay, T&amp; bx, T&amp; by, T&amp; cx, T&amp; cy)<br>
     <font class="syn_ins">inline</font> <font class="syn_typ">double</font> <a href="../classes/omni-math-trunc.html">omni::math::trunc</a>(<font class="syn_typ">double</font> val)<br>
     <font class="syn_ins">inline</font> <font class="syn_typ">double</font> omni::math::<a href="https://linux.die.net/man/3/truncate">truncate</a>(<font class="syn_typ">double</font> val)<br>
-    <a href="../classes/omni-math-e.html">omni::math::E</a><br>
-    <a href="../classes/omni-math-e_f.html">omni::math::E_F</a><br>
-    <a href="../classes/omni-math-pi.html">omni::math::PI</a><br>
-    <a href="../classes/omni-math-pi_180.html">omni::math::PI_180</a><br>
-    <a href="../classes/omni-math-pi_f.html">omni::math::PI_F</a><br>
-    <a href="../classes/omni-math-pi_f_180.html">omni::math::PI_F_180</a><br>
-    <a href="../classes/omni-math-rads.html">omni::math::RADS</a><br>
-    <a href="../classes/omni-math-rads_cos.html">omni::math::RADS_COS</a><br>
-    <a href="../classes/omni-math-rads_sin.html">omni::math::RADS_SIN</a><br>
-    <a href="../classes/omni-math-tau.html">omni::math::TAU</a><br>
-    <a href="../classes/omni-math-tau_f.html">omni::math::TAU_F</a><br>
-    omni::math::<font class="syn_typ">double</font><br>
+    <a href="../classes/omni-math-int16_2d_t.html">omni::math::int16_2d_t</a><br>
+    <a href="../classes/omni-math-int16_3d_t.html">omni::math::int16_3d_t</a><br>
+    <a href="../classes/omni-math-int32_2d_t.html">omni::math::int32_2d_t</a><br>
+    <a href="../classes/omni-math-int32_3d_t.html">omni::math::int32_3d_t</a><br>
+    <a href="../classes/omni-math-int64_2d_t.html">omni::math::int64_2d_t</a><br>
+    <a href="../classes/omni-math-int64_3d_t.html">omni::math::int64_3d_t</a><br>
+    <a href="../classes/omni-math-int8_2d_t.html">omni::math::int8_2d_t</a><br>
+    <a href="../classes/omni-math-int8_3d_t.html">omni::math::int8_3d_t</a><br>
+    <a href="../classes/omni-math-uint16_2d_t.html">omni::math::uint16_2d_t</a><br>
+    <a href="../classes/omni-math-uint16_3d_t.html">omni::math::uint16_3d_t</a><br>
+    <a href="../classes/omni-math-uint32_2d_t.html">omni::math::uint32_2d_t</a><br>
+    <a href="../classes/omni-math-uint32_3d_t.html">omni::math::uint32_3d_t</a><br>
+    <a href="../classes/omni-math-uint64_2d_t.html">omni::math::uint64_2d_t</a><br>
+    <a href="../classes/omni-math-uint64_3d_t.html">omni::math::uint64_3d_t</a><br>
+    <a href="../classes/omni-math-uint8_2d_t.html">omni::math::uint8_2d_t</a><br>
+    <a href="../classes/omni-math-uint8_3d_t.html">omni::math::uint8_3d_t</a><br>
     </code>
 </div><br>
 <div class="docdiv"><a name="syn"></a>

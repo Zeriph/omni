@@ -35,7 +35,7 @@ namespace omni {
             return omni::geometry::point2d<T>(x, y);
         }
 
-        // DEV_NOTE: the following is a template specialized due to the fact that uint8_t
+        // DEV_NOTE: the following is template specialized due to the fact that uint8_t
         // will never be greater than 360 or less than 0, so no need for error check
 
         template <>

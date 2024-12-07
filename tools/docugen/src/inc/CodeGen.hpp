@@ -54,7 +54,7 @@ namespace OmniDocuGen
                 this->_Initialize("");
             }
 
-            /// Creates a new instnace based from a source file and output directory
+            /// Creates a new instance based from a source file and output directory
             explicit CodeGen(std::string src) :
                 SourceFile(),
                 HtmlSyntaxFile(),
@@ -157,8 +157,10 @@ namespace OmniDocuGen
 
             /// Returns if the file name is a file that has parseable code, but shouldn't be parsed (like a .hxx file)
             static inline bool IsNoParse(const std::string& file)
-            {
-                return omni::string::contains(Program::Settings.NoParse, omni::io::path::get_name(file));
+            {   
+                std::deque<std::string> non = omni::string::split(Program::Settings.NoParse, ",");
+                return std::find(non.begin(), non.end(), omni::io::path::get_name(file)) != non.end();
+                // return omni::string::contains(Program::Settings.NoParse, omni::io::path::get_name(file));
             }
 
             static ptr_t FromXml(const std::string& file)

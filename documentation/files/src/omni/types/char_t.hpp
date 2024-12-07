@@ -35,16 +35,31 @@ namespace omni {
     typedef OMNI_CHAR_T char_t;
 
     namespace char_util {
+        inline bool is_base64(unsigned char c)
+        { return (std::isalnum(c) || (c == '+') || (c == '/')); }
+
         inline bool is_alpha(char c)
         { return (std::isalpha(c) != 0); }
         
         inline bool is_alpha(wchar_t c)
         { return (std::iswalpha(c) != 0); }
 
+        inline bool is_letter(char c)
+        { return (std::isalpha(c) != 0); }
+        
+        inline bool is_letter(wchar_t c)
+        { return (std::iswalpha(c) != 0); }
+
         inline bool is_digit(char c)
         { return (std::isdigit(c) != 0); }
         
         inline bool is_digit(wchar_t c)
+        { return (std::iswdigit(c) != 0); }
+
+        inline bool is_number(char c)
+        { return (std::isdigit(c) != 0); }
+        
+        inline bool is_number(wchar_t c)
         { return (std::iswdigit(c) != 0); }
 
         inline bool is_punct(char c)
@@ -312,28 +327,37 @@ namespace omni {
             return c;
         }
         
+        /** @internal library helper */
         namespace helpers {
+            /** @internal library helper */
             inline bool is_1or0(char v)
             { return v == '0' || v == '1'; }
             
+            /** @internal library helper */
             inline bool is_1or0(wchar_t v)
             { return v == L'0' || v == L'1'; }
             
+            /** @internal library helper */
             inline bool is_nde(char v)
             { return (v == '-' || v == '.' || v == ','); }
             
+            /** @internal library helper */
             inline bool is_nde(wchar_t v)
             { return (v == L'-' || v == L'.' || v == L','); }
             
+            /** @internal library helper */
             inline bool is_de(char v)
             { return (v == '.' || v == ','); }
             
+            /** @internal library helper */
             inline bool is_de(wchar_t v)
             { return (v == L'.' || v == L','); }
             
+            /** @internal library helper */
             inline bool is_neg(char v)
             { return (v == '-'); }
             
+            /** @internal library helper */
             inline bool is_neg(wchar_t v)
             { return (v == L'-'); }
         }

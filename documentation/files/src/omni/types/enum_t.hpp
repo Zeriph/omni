@@ -124,7 +124,7 @@
     template < typename S > static std::basic_string< typename S::char_type > _to_val(enum_t v) { S ss; switch (v) { \
         OMNI_EXPAND_FW( OMNI_EN_E2SS_FW(__VA_ARGS__) ) \
     default: ss << "UNKNOWN (" << static_cast<int>(v) << ")"; break; } return ss.str(); } \
-    static bool _valid(int32_t val) { return (val ==  \
+    static bool _valid(int32_t val) { return ( \
         OMNI_EXPAND_FW( OMNI_EN_OR_FW(__VA_ARGS__) ) \
     ); }
 

@@ -41,7 +41,7 @@ Creating an <code>enum</code> type is simple enough in C++, simply declare one a
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">case</font> C: <a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;C&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>; <font class="syn_ins">break</font>;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">default</font>: <a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;?&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>; <font class="syn_ins">break</font>;
 &nbsp;&nbsp;&nbsp;&nbsp;}
-}</pre></div>This fine and well, but what if we want 2 separate <code>enum</code> types with similar named values, but different underlying integral value, like so:<br>
+}</pre></div>This is fine and well, but what if we want 2 separate <code>enum</code> types with similar named values, but different underlying integral value, like so:<br>
 <div class="sntx"><input type="checkbox" id="c2" name="c2" /><label for="c2">&nbsp;</label><pre><font class="syn_typ">enum</font> alphabet {
 &nbsp;&nbsp;&nbsp;&nbsp;A = <font class="syn_num">1</font>,
 &nbsp;&nbsp;&nbsp;&nbsp;B = <font class="syn_num">2</font>,
@@ -159,7 +159,7 @@ It&#39;s possible to use a <code>template</code> and other functions of the C++ 
 <br>
 To over come this, the <code><a href="../options/omni_enum.html">OMNI_ENUM</a></code> family of macro&#39;s can be used to create an enum type of your own in an easy and efficient way. You have a few options for creating an <code>enum</code> type depending on what you would like your code to do.<br>
 <br>
-To define a simple <code>enum</code> with default-incremented values, you can use the <code><a href="../options/omni_enum_define.html">OMNI_ENUM_DEFINE</a></code> macro. To define an <code>enum</code> with values that are assigned (e.g. <code>enum { VALUE = 100 };</code>), you can use the <code><a href="../options/omni_enum_assigned.html">OMNI_ENUM_ASSIGNED</a></code> macro. Both of these macro&#39;s must be followed by the <code><a href="../options/omni_enum_end.html">OMNI_ENUM_END</a></code> macro to signify the definition is done. If you use either of these macros, you must use the <code><a href="../options/omni_enum_default.html">OMNI_ENUM_DEFAULT</a></code> macro to define a default value for the wrapper. It can come can after the <code><a href="../options/omni_enum.html">OMNI_ENUM</a></code> macro but before the <code><a href="../options/omni_enum_end.html">OMNI_ENUM_END</a></code> macro. If you have elected to use the <code><a href="../options/omni_enum_assigned.html">OMNI_ENUM_ASSIGNED</a></code> macro to create an enum and you would like access to the parser functions, you must use the <code><a href="../options/omni_enum_assigned_parsers.html">OMNI_ENUM_ASSIGNED_PARSERS</a></code> macro after the <code><a href="../options/omni_enum_assigned.html">OMNI_ENUM_ASSIGNED</a></code> definition.<br>
+To define a simple <code>enum</code> with default-incremented values, you can use the <code><a href="../options/omni_enum_define.html">OMNI_ENUM_DEFINE</a></code> macro. To define an <code>enum</code> with values that are assigned (e.g. <code>enum { VALUE = 100 };</code>), you can use the <code><a href="../options/omni_enum_assigned.html">OMNI_ENUM_ASSIGNED</a></code> macro. Both of these macro&#39;s must be followed by the <code><a href="../options/omni_enum_end.html">OMNI_ENUM_END</a></code> macro to signify the definition is done. If you use either of these macros, you must use the <code><a href="../options/omni_enum_default.html">OMNI_ENUM_DEFAULT</a></code> macro to define a default value for the wrapper. It can come after the <code><a href="../options/omni_enum.html">OMNI_ENUM</a></code> macro but before the <code><a href="../options/omni_enum_end.html">OMNI_ENUM_END</a></code> macro. If you have elected to use the <code><a href="../options/omni_enum_assigned.html">OMNI_ENUM_ASSIGNED</a></code> macro to create an enum and you would like access to the parser functions, you must use the <code><a href="../options/omni_enum_assigned_parsers.html">OMNI_ENUM_ASSIGNED_PARSERS</a></code> macro after the <code><a href="../options/omni_enum_assigned.html">OMNI_ENUM_ASSIGNED</a></code> definition.<br>
 <br>
 The <code><a href="../options/omni_enum_define.html">OMNI_ENUM_DEFINE</a></code> and <code><a href="../options/omni_enum_assigned.html">OMNI_ENUM_ASSIGNED</a></code> macro&#39;s take the same parameters. The first parameter is the name of the <code>enum</code> class, and the second parameter is a variadic macro parameter that can take up to 200 parameters; those parameters are the values you wish to define within your <code>enum</code> wrapper.<br>
 <br>
@@ -170,8 +170,8 @@ For a simple example, take the following code to create a couple of <code>enum</
 <font class="syn_cmt">// you must declare a default value</font>
 <a href="../options/omni_enum_default.html">OMNI_ENUM_DEFAULT</a>(VALUE_20)
 <font class="syn_cmt">// If using the <a href="../options/omni_enum_assigned.html">OMNI_ENUM_ASSIGNED</a> macro, you must add the following macro</font>
-<font class="syn_cmt">// for parsing of the values; this macro takes _ONLY_ the parameter</font>
-<font class="syn_cmt">// names and not their assigned values.</font>
+<font class="syn_cmt">// for parsing of the values; this macro takes _ONLY_ the parameter names</font>
+<font class="syn_cmt">// and not their assigned values.</font>
 <a href="../options/omni_enum_assigned_parsers.html">OMNI_ENUM_ASSIGNED_PARSERS</a>(VALUE_10, VALUE_20, NONE)
 <a href="../options/omni_enum_end.html">OMNI_ENUM_END</a> <font class="syn_cmt">// end definition</font>
 
@@ -211,7 +211,10 @@ For more information on each of the macro&#39;s and how to utilize them, you can
 
 <font class="syn_typ">class</font> Foo {
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">public</font>:
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../options/omni_enum.html">OMNI_ENUM</a>(InnerEnum, J, A, B, C, D, E, F, G, H, I, J, K, NONE)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../options/omni_enum.html">OMNI_ENUM</a>(InnerEnum, <font class="syn_cmt">// name</font>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;J, <font class="syn_cmt">// default</font>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A, B, C, D, E, F, G, H, I, J, K, NONE <font class="syn_cmt">// enum values</font>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;InnerEnum val;
 

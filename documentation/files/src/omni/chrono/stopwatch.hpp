@@ -31,6 +31,19 @@
 #endif
 
 namespace omni {
+    /**
+     * @brief The stopwatch class is a simple timer class that will keep track of monotonic time.
+     * 
+     * @details 
+     * 
+     * @exception Errors
+     * 
+     * @warning Consideration
+     * 
+     * @attention Platform
+     * 
+     * @note Notes
+     */
     class stopwatch
     {
         public:
@@ -45,6 +58,26 @@ namespace omni {
             bool is_running() const;
             omni::stopwatch& reset();
             omni::stopwatch& restart();
+            /**
+             * @brief          Brief description.
+             * 
+             * @details        A more detailed description of the function.
+             * 
+             * @return         [optional] A return value if any.
+             * 
+             * @param [name]   [optional] Each parameter should be marked with this.
+             * @tparam [name]  [optional] Each template parameter should be marked with this.
+             * 
+             * @exception      [optional] Any errors (or error conditions) specific to this context.
+             * 
+             * @warning        [optional] Any extra considerations to be aware of.
+             * 
+             * @attention      [optional] Any platform specific notes.
+             * 
+             * @note           [optional] Any notes to be aware of (like system calls, order of operations, etc.).
+             * 
+             * @invariant      [optional] This is the complexity of this function (e.g. O(1) for X conditions, etc.)
+             */
             omni::stopwatch& restart(uint32_t offset_ms);
             omni::stopwatch& start();
             omni::stopwatch& start(uint32_t offset_ms);
@@ -65,14 +98,18 @@ namespace omni {
             OMNI_OSTREAM_FW(omni::stopwatch)
             
         private:
+            /** The internal end clock */
             omni::chrono::tick_t m_end;
+            /** The internal start clock */
             omni::chrono::tick_t m_init;
+            /** The current status of this instance as a bitmask for running and started */
             volatile OMNI_SW_INT_FW m_status;
 
             #if defined(OMNI_SAFE_STOPWATCH)
                 mutable omni::sync::basic_lock m_mtx;
             #endif
 
+            /** zeros the clocks */
             void _zero();
     };
 }

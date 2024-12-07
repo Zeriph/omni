@@ -1,6 +1,7 @@
 #if defined(OMNI_UTUA) || defined(OMNI_UT_GENERIC_PTR)
 
 #define UT_NAME generic_ptr
+#define UT_DESC "Tests omni::generic_ptr class"
 #include <utdefs/unit_test.hpp>
 
 class UT_CLASS_DEF

@@ -71,8 +71,8 @@ namespace omni {
              */
             delegate7() :
                 OMNI_SAFE_DGATE_MILST_FW
-                m_method(OMNI_NULL),
-                m_target(OMNI_NULL)
+                m_method(OMNI_NULL_PTR),
+                m_target(OMNI_NULL_PTR)
             {
                 OMNI_SAFE_DGATE_INIT_FW
                 OMNI_D5_FW("created delegate");
@@ -101,7 +101,7 @@ namespace omni {
             delegate7(function_ptr fnptr) :
                 OMNI_SAFE_DGATE_MILST_FW
                 m_method(reinterpret_cast<functor>(fnptr)),
-                m_target(OMNI_NULL)
+                m_target(OMNI_NULL_PTR)
             {
                 OMNI_SAFE_DGATE_INIT_FW
                 OMNI_D5_FW("created delegate with function pointer");
@@ -152,7 +152,7 @@ namespace omni {
              */
             inline void bond(function_ptr fnptr)
             {
-                this->_bind(OMNI_NULL, reinterpret_cast<functor>(fnptr));
+                this->_bind(OMNI_NULL_PTR, reinterpret_cast<functor>(fnptr));
             }
             
             /**
@@ -168,7 +168,7 @@ namespace omni {
             template < ret_t (*fnptr)(p1_t, p2_t, p3_t, p4_t, p5_t, p6_t, p7_t) >
             inline void bond()
             {
-                this->_bind(OMNI_NULL, &_anon_param_fn<fnptr>);
+                this->_bind(OMNI_NULL_PTR, &_anon_param_fn<fnptr>);
             }
             
             /**
@@ -274,7 +274,7 @@ namespace omni {
             template < ret_t (*fnptr)(p1_t, p2_t, p3_t, p4_t, p5_t, p6_t, p7_t) >
             static delegate7 bind()
             {
-                return delegate7(OMNI_NULL, &_anon_param_fn<fnptr>);
+                return delegate7(OMNI_NULL_PTR, &_anon_param_fn<fnptr>);
             }
             
             /**
@@ -375,7 +375,7 @@ namespace omni {
             bool is_bound() const
             {
                 OMNI_SAFE_DGATE_ALOCK_FW
-                return (this->m_method != OMNI_NULL);
+                return (this->m_method != OMNI_NULL_PTR);
             }
             
             /**
@@ -386,7 +386,7 @@ namespace omni {
             bool is_member_bound() const
             {
                 OMNI_SAFE_DGATE_ALOCK_FW
-                return (this->m_method != OMNI_NULL && this->m_target != OMNI_NULL);
+                return (this->m_method != OMNI_NULL_PTR && this->m_target != OMNI_NULL_PTR);
             }
             
             /**
@@ -399,8 +399,8 @@ namespace omni {
             {
                 #if defined(OMNI_SAFE_DELEGATES)
                     omni::sync::mutex_lock(this->m_mtx);
-                    if (this->m_method != OMNI_NULL) {
-                        if (this->m_target == OMNI_NULL) {
+                    if (this->m_method != OMNI_NULL_PTR) {
+                        if (this->m_target == OMNI_NULL_PTR) {
                             function_ptr fp = reinterpret_cast<function_ptr>(this->m_method);
                             OMNI_D5_FW("invoking function");
                             omni::sync::mutex_unlock(this->m_mtx);
@@ -416,7 +416,7 @@ namespace omni {
                     omni::sync::mutex_unlock(this->m_mtx);
                 #else
                     OMNI_D5_FW("invoking function");
-                    return (this->m_target == OMNI_NULL ?
+                    return (this->m_target == OMNI_NULL_PTR ?
                             (*reinterpret_cast<function_ptr>(this->m_method))(val1, val2, val3, val4, val5, val6, val7) :
                             (*this->m_method)(this->m_target, val1, val2, val3, val4, val5, val6, val7));
                 #endif
@@ -435,7 +435,7 @@ namespace omni {
             ret_t invoke_direct(p1_t val1, p2_t val2, p3_t val3, p4_t val4, p5_t val5, p6_t val6, p7_t val7) const
             {
                 OMNI_D5_FW("invoking function");
-                return (this->m_target == OMNI_NULL ?
+                return (this->m_target == OMNI_NULL_PTR ?
                         (*reinterpret_cast<function_ptr>(this->m_method))(val1, val2, val3, val4, val5, val6, val7) :
                         (*this->m_method)(this->m_target, val1, val2, val3, val4, val5, val6, val7));
             }
@@ -448,8 +448,8 @@ namespace omni {
             omni::invoke_t invoke_type() const
             {
                 OMNI_SAFE_DGATE_ALOCK_FW
-                if (this->m_method == OMNI_NULL) { return omni::invoke_type::NONE; }
-                return (this->m_target == OMNI_NULL ?
+                if (this->m_method == OMNI_NULL_PTR) { return omni::invoke_type::NONE; }
+                return (this->m_target == OMNI_NULL_PTR ?
                         omni::invoke_type::ANONYMOUS :
                         omni::invoke_type::MEMBER_FUNC);
             }
@@ -459,7 +459,7 @@ namespace omni {
              * 
              * @return The underlying functor method
              */
-            const functor method() const
+            functor method() const
             {
                 OMNI_SAFE_DGATE_ALOCK_FW
                 return this->m_method;
@@ -468,14 +468,14 @@ namespace omni {
             /**
              * @brief Gets the underlying function pointer called when this method is invoked.
              * 
-             * @return The underlying function pointer, or an OMNI_NULL value if the
+             * @return The underlying function pointer, or an OMNI_NULL_PTR value if the
              * object instance is null (in the case of a static or non-member function).
              */
-            const function_ptr function() const
+            function_ptr function() const
             {
                 OMNI_SAFE_DGATE_ALOCK_FW
-                return ((this->m_target == OMNI_NULL) ?
-                        reinterpret_cast<function_ptr>(this->m_method) : OMNI_NULL);
+                return ((this->m_target == OMNI_NULL_PTR) ?
+                        reinterpret_cast<function_ptr>(this->m_method) : OMNI_NULL_PTR);
             }
             
             /**
@@ -515,7 +515,7 @@ namespace omni {
              */
             inline void unbind()
             {
-                this->_bind(OMNI_NULL, OMNI_NULL);
+                this->_bind(OMNI_NULL_PTR, OMNI_NULL_PTR);
                 OMNI_D4_FW("instance unbound");
             }
             
@@ -621,7 +621,7 @@ namespace omni {
             bool valid() const
             {
                 OMNI_SAFE_DGATE_ALOCK_FW
-                return (this->m_method != OMNI_NULL);
+                return (this->m_method != OMNI_NULL_PTR);
             }
             
             /**
@@ -708,7 +708,7 @@ namespace omni {
              */
             delegate7< Ret, PT1, PT2, PT3, PT4, PT5, PT6, PT7 >& operator=(function_ptr fnptr)
             {
-                this->_bind(OMNI_NULL, reinterpret_cast<functor>(fnptr));
+                this->_bind(OMNI_NULL_PTR, reinterpret_cast<functor>(fnptr));
                 return *this;
             }
             
@@ -1785,7 +1785,7 @@ namespace omni {
             {
                 OMNI_SAFE_EVENT_ALOCK_FW
                 if (this->m_list.empty() || (idx > (this->m_list.size() - 1))) {
-                    OMNI_ERR_RETV_FW("Index out of range", omni::exceptions::index_out_of_range(), NULL)
+                    OMNI_ERR_RETV_FW("Index out of range", omni::exceptions::index_out_of_range(), OMNI_NULL_PTR)
                 }
                 return *(this->m_list[idx]);
             }

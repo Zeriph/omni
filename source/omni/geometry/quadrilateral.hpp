@@ -48,6 +48,8 @@
     #define OMNI_QUADR_SA_CALC_FW
 #endif
 
+// DEV_NOTE: overflows are not checked in this class due to double's and raw_point2d's being used, no need to check for overflow
+
 namespace omni {
     namespace geometry {
         template < typename T >
@@ -55,6 +57,7 @@ namespace omni {
         {
             public:
                 typedef T coordinate_t;
+                typedef omni_sequence_t< omni::geometry::point2d< T > > path_t;
 
                 quadrilateral() : 
                     OMNI_CTOR_FW(omni::geometry::quadrilateral<T>)
@@ -364,10 +367,10 @@ namespace omni {
                     return this->m_d;
                 }
 
-                void deflate(double percent)
+                omni::geometry::quadrilateral<T>& deflate(double percent)
                 {
                     OMNI_SAFE_QUADRALOCK_FW
-                    double factor = percent / 100.0;
+                    double factor = (1.0 - (percent / 100.0));
                     double x, y;
                     omni::math::quadrilateral_get_incenter<double>(
                         this->m_a.x, this->m_a.y,
@@ -380,6 +383,7 @@ namespace omni {
                     omni::math::extend_line<double>(x, y, this->m_c.x, this->m_c.y, (omni::math::distance_between_2_points(x, y, this->m_c.x, this->m_c.y) * factor), this->m_c.x, this->m_c.y);
                     omni::math::extend_line<double>(x, y, this->m_d.x, this->m_d.y, (omni::math::distance_between_2_points(x, y, this->m_d.x, this->m_d.y) * factor), this->m_d.x, this->m_d.y);
                     OMNI_QUADR_SA_CALC_FW
+                    return *this;
                 }
 
                 bool empty() const
@@ -478,9 +482,9 @@ namespace omni {
                     OMNI_QUADR_SA_CALC_FW
                 }
 
-                void intersect(const omni::geometry::quadrilateral<T>& quad)
+                omni::geometry::quadrilateral<T>& intersect(const omni::geometry::quadrilateral<T>& quad)
                 {
-                    if (this == &quad) { return; }
+                    if (this == &quad) { return *this; }
                     OMNI_SAFE_QUADRALOCK_FW
                     OMNI_SAFE_QUADROALOCK_FW(quad)
                     if (this->_intersects_with(quad.m_a.x, quad.m_a.y, quad.m_b.x, quad.m_b.y,
@@ -505,6 +509,7 @@ namespace omni {
                             std::memset(this->m_angle, 0, sizeof(this->m_angle));
                         #endif
                     }
+                    return *this;
                 }
 
                 bool intersects_with(const omni::geometry::quadrilateral<T>& quad) const
@@ -626,13 +631,24 @@ namespace omni {
                     );
                 }
 
+                path_t path() const
+                {
+                    OMNI_SAFE_QUADRALOCK_FW
+                    return omni::geometry::path::quadrilateral(
+                        this->m_a.x, this->m_a.y,
+                        this->m_b.x, this->m_b.y,
+                        this->m_c.x, this->m_c.y,
+                        this->m_d.x, this->m_d.y
+                    );
+                }
+
                 double perimeter() const
                 {
                     OMNI_SAFE_QUADRALOCK_FW
                     return this->_side_a() + this->_side_b() + this->_side_c() + this->_side_d();
                 }
 
-                void rotate_on_a(double degrees, const omni::math::rotation_direction& dir)
+                omni::geometry::quadrilateral<T>& rotate_on_a(double degrees, const omni::math::rotation_direction& dir)
                 {
                     OMNI_SAFE_QUADRALOCK_FW
                     omni::math::quadrilateral_rotate_abcd(
@@ -641,9 +657,10 @@ namespace omni {
                         this->m_c.x, this->m_c.y,
                         this->m_d.x, this->m_d.y
                     );
+                    return *this;
                 }
 
-                void rotate_on_b(double degrees, const omni::math::rotation_direction& dir)
+                omni::geometry::quadrilateral<T>& rotate_on_b(double degrees, const omni::math::rotation_direction& dir)
                 {
                     OMNI_SAFE_QUADRALOCK_FW
                     omni::math::quadrilateral_rotate_abcd(
@@ -652,9 +669,10 @@ namespace omni {
                         this->m_c.x, this->m_c.y,
                         this->m_d.x, this->m_d.y
                     );
+                    return *this;
                 }
 
-                void rotate_on_c(double degrees, const omni::math::rotation_direction& dir)
+                omni::geometry::quadrilateral<T>& rotate_on_c(double degrees, const omni::math::rotation_direction& dir)
                 {
                     OMNI_SAFE_QUADRALOCK_FW
                     omni::math::quadrilateral_rotate_abcd(
@@ -663,9 +681,10 @@ namespace omni {
                         this->m_b.x, this->m_b.y,
                         this->m_d.x, this->m_d.y
                     );
+                    return *this;
                 }
 
-                void rotate_on_d(double degrees, const omni::math::rotation_direction& dir)
+                omni::geometry::quadrilateral<T>& rotate_on_d(double degrees, const omni::math::rotation_direction& dir)
                 {
                     OMNI_SAFE_QUADRALOCK_FW
                     omni::math::quadrilateral_rotate_abcd(
@@ -674,9 +693,10 @@ namespace omni {
                         this->m_b.x, this->m_b.y,
                         this->m_c.x, this->m_c.y
                     );
+                    return *this;
                 }
 
-                void rotate_centroid(double degrees, const omni::math::rotation_direction& dir)
+                omni::geometry::quadrilateral<T>& rotate_centroid(double degrees, const omni::math::rotation_direction& dir)
                 {
                     OMNI_SAFE_QUADRALOCK_FW
                     omni::math::quadrilateral_rotate_centroid(
@@ -686,9 +706,10 @@ namespace omni {
                         this->m_c.x, this->m_c.y,
                         this->m_d.x, this->m_d.y
                     );
+                    return *this;
                 }
 
-                void rotate_circumcenter(double degrees, const omni::math::rotation_direction& dir)
+                omni::geometry::quadrilateral<T>& rotate_circumcenter(double degrees, const omni::math::rotation_direction& dir)
                 {
                     OMNI_SAFE_QUADRALOCK_FW
                     omni::math::quadrilateral_rotate_circumcenter(
@@ -698,9 +719,10 @@ namespace omni {
                         this->m_c.x, this->m_c.y,
                         this->m_d.x, this->m_d.y
                     );
+                    return *this;
                 }
 
-                void rotate_incenter(double degrees, const omni::math::rotation_direction& dir)
+                omni::geometry::quadrilateral<T>& rotate_incenter(double degrees, const omni::math::rotation_direction& dir)
                 {
                     OMNI_SAFE_QUADRALOCK_FW
                     omni::math::quadrilateral_rotate_incenter(
@@ -710,9 +732,10 @@ namespace omni {
                         this->m_c.x, this->m_c.y,
                         this->m_d.x, this->m_d.y
                     );
+                    return *this;
                 }
 
-                void rotate_origin(double degrees, const omni::math::rotation_direction& dir)
+                omni::geometry::quadrilateral<T>& rotate_origin(double degrees, const omni::math::rotation_direction& dir)
                 {
                     OMNI_SAFE_QUADRALOCK_FW
                     omni::math::quadrilateral_rotate_origin(
@@ -722,9 +745,10 @@ namespace omni {
                         this->m_c.x, this->m_c.y,
                         this->m_d.x, this->m_d.y
                     );
+                    return *this;
                 }
 
-                void rotate_point(double degrees, T x, T y, const omni::math::rotation_direction& dir)
+                omni::geometry::quadrilateral<T>& rotate_point(double degrees, T x, T y, const omni::math::rotation_direction& dir)
                 {
                     OMNI_SAFE_QUADRALOCK_FW
                     omni::math::quadrilateral_rotate_point(
@@ -734,9 +758,10 @@ namespace omni {
                         this->m_c.x, this->m_c.y,
                         this->m_d.x, this->m_d.y
                     );
+                    return *this;
                 }
 
-                void reflect()
+                omni::geometry::quadrilateral<T>& reflect()
                 {
                     OMNI_SAFE_QUADRALOCK_FW
                     omni::math::quadrilateral_reflect(
@@ -745,6 +770,7 @@ namespace omni {
                         this->m_c.x, this->m_c.y,
                         this->m_d.x, this->m_d.y
                     );
+                    return *this;
                 }
 
                 double side_a() const
@@ -787,7 +813,7 @@ namespace omni {
                     }
                 }
 
-                void translate_xy(T x, T y)
+                omni::geometry::quadrilateral<T>& translate_xy(T x, T y)
                 {
                     OMNI_SAFE_QUADRALOCK_FW
                     omni::math::quadrilateral_translate_xy(
@@ -797,9 +823,10 @@ namespace omni {
                         this->m_c.x, this->m_c.y,
                         this->m_d.x, this->m_d.y
                     );
+                    return *this;
                 }
 
-                void translate_angle(float angle, T distance)
+                omni::geometry::quadrilateral<T>& translate_angle(float angle, T distance)
                 {
                     OMNI_SAFE_QUADRALOCK_FW
                     omni::math::quadrilateral_translate_angle(
@@ -809,6 +836,7 @@ namespace omni {
                         this->m_c.x, this->m_c.y,
                         this->m_d.x, this->m_d.y
                     );
+                    return *this;
                 }
 
                 omni::string_t to_string_t() const

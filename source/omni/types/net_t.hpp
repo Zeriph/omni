@@ -29,30 +29,27 @@
     that are OS/implementation specific. Since there are _too_ many variations on what a socket can do, as well as
     what a socket _might_ be able to do, there are various enum types for the `net` namespace that do not have what
     could potentially be all types. Instead, the user can simply utilize the values they need for the platform they
-    are targetting.
+    are targeting.
 */
 
 namespace omni {
     /** The net namespace is used to facilitate certain networking operations and handling */
     namespace net {
-        /** address_family defines enum values for the addressing scheme that an instance of the omni::net::socket class can use. */
+        /** address_family defines enum values for the addressing scheme that an instance of the omni::net::socket classes can use. */
         class address_family
         {
             public:
                 typedef enum enum_t {
                     UNSPECIFIED = AF_UNSPEC,
-                    UNIX = AF_UNIX,
                     INET = AF_INET,
                     INET6 = AF_INET6,
-                    SNA = AF_SNA,
-                    DECNET = AF_DECnet,
-                    APPLETALK = AF_APPLETALK
+                    UNIX = AF_UNIX
                 } enum_t;
                 
                 /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
-                    return 7;
+                    return 4;
                 }
 
                 /** The default value for this enum instance */
@@ -496,12 +493,9 @@ namespace omni {
                 {
                     if (!val.empty()) {
                         OMNI_S2E_FW(UNSPECIFIED)
-                        OMNI_S2E_FW(UNIX)
                         OMNI_S2E_FW(INET)
                         OMNI_S2E_FW(INET6)
-                        OMNI_S2E_FW(SNA)
-                        OMNI_S2E_FW(DECNET)
-                        OMNI_S2E_FW(APPLETALK)
+                        OMNI_S2E_FW(UNIX)
                     }
                     return false;
                 }
@@ -512,12 +506,9 @@ namespace omni {
                     S ss;
                     switch (v) {
                         OMNI_E2SS_FW(UNSPECIFIED);
-                        OMNI_E2SS_FW(UNIX);
                         OMNI_E2SS_FW(INET);
                         OMNI_E2SS_FW(INET6);
-                        OMNI_E2SS_FW(SNA);
-                        OMNI_E2SS_FW(DECNET);
-                        OMNI_E2SS_FW(APPLETALK);
+                        OMNI_E2SS_FW(UNIX);
                         default:
                             ss << "UNKNOWN (" << static_cast<int>(v) << ")";
                             break;
@@ -527,14 +518,11 @@ namespace omni {
 
                 static bool _valid(int32_t val)
                 {
-                    return (val == 
-                        UNSPECIFIED ||
-                        UNIX ||
-                        INET ||
-                        INET6 ||
-                        SNA ||
-                        DECNET ||
-                        APPLETALK
+                    return (
+                        OMNI_I2EV_FW(UNSPECIFIED) ||
+                        OMNI_I2EV_FW(INET) ||
+                        OMNI_I2EV_FW(INET6) ||
+                        OMNI_I2EV_FW(UNIX)
                     );
                 }
         };
@@ -544,23 +532,26 @@ namespace omni {
         {
             public:
                 typedef enum enum_t {
-                    CONNECTED,
-                    BOUND,
-                    OPEN,
-                    SHUT,
-                    LISTEN
+                    NONE  = 0,
+                    CONNECTED = 1,
+                    BOUND = 2,
+                    OPEN = 4,
+                    SHUT = 8,
+                    LISTEN = 16,
+                    // Allow IP4 fallback on IP6 dual stack socket; only valid for the socket6 class
+                    ALLOW_IP4_FALLBACK = 32
                 } enum_t;
                 
                 /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
-                    return 5;
+                    return 7;
                 }
 
                 /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
-                    return CONNECTED;
+                    return NONE;
                 }
 
                 /** Converts the enum to its string representation */
@@ -799,11 +790,13 @@ namespace omni {
                 static bool _try_parse(const std::string& val, enum_t& out)
                 {
                     if (!val.empty()) {
+                        OMNI_S2E_FW(NONE)
                         OMNI_S2E_FW(CONNECTED)
                         OMNI_S2E_FW(BOUND)
                         OMNI_S2E_FW(OPEN)
                         OMNI_S2E_FW(SHUT)
                         OMNI_S2E_FW(LISTEN)
+                        OMNI_S2E_FW(ALLOW_IP4_FALLBACK)
                     }
                     return false;
                 }
@@ -813,11 +806,13 @@ namespace omni {
                 {
                     S ss;
                     switch (v) {
+                        OMNI_E2SS_FW(NONE);
                         OMNI_E2SS_FW(CONNECTED);
                         OMNI_E2SS_FW(BOUND);
                         OMNI_E2SS_FW(OPEN);
                         OMNI_E2SS_FW(SHUT);
                         OMNI_E2SS_FW(LISTEN);
+                        OMNI_E2SS_FW(ALLOW_IP4_FALLBACK);
                         default:
                             ss << "UNKNOWN (" << static_cast<int>(v) << ")";
                             break;
@@ -827,12 +822,14 @@ namespace omni {
 
                 static bool _valid(int32_t val)
                 {
-                    return (val == 
-                        CONNECTED ||
-                        BOUND ||
-                        OPEN ||
-                        SHUT ||
-                        LISTEN
+                    return (
+                        OMNI_I2EV_FW(NONE) ||
+                        OMNI_I2EV_FW(CONNECTED) ||
+                        OMNI_I2EV_FW(BOUND) ||
+                        OMNI_I2EV_FW(OPEN) ||
+                        OMNI_I2EV_FW(SHUT) ||
+                        OMNI_I2EV_FW(LISTEN) ||
+                        OMNI_I2EV_FW(ALLOW_IP4_FALLBACK)
                     );
                 }
         };
@@ -1344,19 +1341,19 @@ namespace omni {
 
                 static bool _valid(int32_t val)
                 {
-                    return (val == 
-                        UNKNOWN ||
-                        IP ||
-                        ICMP ||
-                        IGMP ||
-                        EGP ||
-                        TCP ||
-                        PUP ||
-                        UDP ||
-                        IDP ||
-                        IPV6 ||
-                        ICMPV6 ||
-                        RAW
+                    return (
+                        OMNI_I2EV_FW(UNKNOWN) ||
+                        OMNI_I2EV_FW(IP) ||
+                        OMNI_I2EV_FW(ICMP) ||
+                        OMNI_I2EV_FW(IGMP) ||
+                        OMNI_I2EV_FW(EGP) ||
+                        OMNI_I2EV_FW(TCP) ||
+                        OMNI_I2EV_FW(PUP) ||
+                        OMNI_I2EV_FW(UDP) ||
+                        OMNI_I2EV_FW(IDP) ||
+                        OMNI_I2EV_FW(IPV6) ||
+                        OMNI_I2EV_FW(ICMPV6) ||
+                        OMNI_I2EV_FW(RAW)
                     );
                 }
         };
@@ -1379,13 +1376,18 @@ namespace omni {
                     NODE_OR_SERVICE_NOT_KNOWN,
                     SERVICE_NOT_AVAILABLE_FOR_SOCKET_TYPE,
                     SOCKET_TYPE_NOT_SUPPORTED,
-                    SYSTEM_ERROR
+                    SYSTEM_ERROR,
+                    IN_PROGRESS = 10036,
+                    PROCESS_LIMIT = 10067,
+                    SYSTEM_NOT_READY = 10091,
+                    VERSION_NOT_SUPPORTED = 10092,
+                    NOT_INITIALIZED = 10093
                 } enum_t;
                 
                 /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
-                    return 13;
+                    return 19;
                 }
 
                 /** The default value for this enum instance */
@@ -1842,6 +1844,11 @@ namespace omni {
                         OMNI_S2E_FW(SERVICE_NOT_AVAILABLE_FOR_SOCKET_TYPE)
                         OMNI_S2E_FW(SOCKET_TYPE_NOT_SUPPORTED)
                         OMNI_S2E_FW(SYSTEM_ERROR)
+                        OMNI_S2E_FW(IN_PROGRESS)
+                        OMNI_S2E_FW(PROCESS_LIMIT)
+                        OMNI_S2E_FW(SYSTEM_NOT_READY)
+                        OMNI_S2E_FW(VERSION_NOT_SUPPORTED)
+                        OMNI_S2E_FW(NOT_INITIALIZED)
                     }
                     return false;
                 }
@@ -1865,6 +1872,11 @@ namespace omni {
                         OMNI_E2SS_FW(SERVICE_NOT_AVAILABLE_FOR_SOCKET_TYPE);
                         OMNI_E2SS_FW(SOCKET_TYPE_NOT_SUPPORTED);
                         OMNI_E2SS_FW(SYSTEM_ERROR);
+                        OMNI_E2SS_FW(IN_PROGRESS);
+                        OMNI_E2SS_FW(PROCESS_LIMIT);
+                        OMNI_E2SS_FW(SYSTEM_NOT_READY);
+                        OMNI_E2SS_FW(VERSION_NOT_SUPPORTED);
+                        OMNI_E2SS_FW(NOT_INITIALIZED);
                         default:
                             ss << "UNKNOWN (" << static_cast<int>(v) << ")";
                             break;
@@ -1874,21 +1886,26 @@ namespace omni {
 
                 static bool _valid(int32_t val)
                 {
-                    return (val == 
-                        UNSPECIFIED ||
-                        SUCCESS ||
-                        HOST_ADDRESS_REQUIRED ||
-                        NO_ADDRESSES_IN_FAMILY ||
-                        NAME_SERVER_TEMPORARY_FAILURE ||
-                        INVALID_FLAGS ||
-                        NAME_SERVER_PERMANENT_FAILURE ||
-                        ADDRESS_FAMILY_NOT_SUPPORTED ||
-                        OUT_OF_MEMORY ||
-                        HOST_EXISTS_NO_ADDRESSES_DEFINED ||
-                        NODE_OR_SERVICE_NOT_KNOWN ||
-                        SERVICE_NOT_AVAILABLE_FOR_SOCKET_TYPE ||
-                        SOCKET_TYPE_NOT_SUPPORTED ||
-                        SYSTEM_ERROR
+                    return (
+                        OMNI_I2EV_FW(UNSPECIFIED) ||
+                        OMNI_I2EV_FW(SUCCESS) ||
+                        OMNI_I2EV_FW(HOST_ADDRESS_REQUIRED) ||
+                        OMNI_I2EV_FW(NO_ADDRESSES_IN_FAMILY) ||
+                        OMNI_I2EV_FW(NAME_SERVER_TEMPORARY_FAILURE) ||
+                        OMNI_I2EV_FW(INVALID_FLAGS) ||
+                        OMNI_I2EV_FW(NAME_SERVER_PERMANENT_FAILURE) ||
+                        OMNI_I2EV_FW(ADDRESS_FAMILY_NOT_SUPPORTED) ||
+                        OMNI_I2EV_FW(OUT_OF_MEMORY) ||
+                        OMNI_I2EV_FW(HOST_EXISTS_NO_ADDRESSES_DEFINED) ||
+                        OMNI_I2EV_FW(NODE_OR_SERVICE_NOT_KNOWN) ||
+                        OMNI_I2EV_FW(SERVICE_NOT_AVAILABLE_FOR_SOCKET_TYPE) ||
+                        OMNI_I2EV_FW(SOCKET_TYPE_NOT_SUPPORTED) ||
+                        OMNI_I2EV_FW(SYSTEM_ERROR) ||
+                        OMNI_I2EV_FW(IN_PROGRESS) ||
+                        OMNI_I2EV_FW(PROCESS_LIMIT) ||
+                        OMNI_I2EV_FW(SYSTEM_NOT_READY) ||
+                        OMNI_I2EV_FW(VERSION_NOT_SUPPORTED) ||
+                        OMNI_I2EV_FW(NOT_INITIALIZED)
                     );
                 }
         };
@@ -1897,61 +1914,66 @@ namespace omni {
         class socket_error
         {
             public:
-                // TODO: need to have these tied to the actual system codes (e.g. EAGAIN, etc.)
                 typedef enum enum_t {
                     UNSPECIFIED = -1,
                     SUCCESS = 0,
-                    OPERATION_ABORTED = 995,
-                    IO_PENDING = 997,
-                    INTERRUPTED = 10004,
-                    ACCESS_DENIED = 10013,
-                    FAULT = 10014,
-                    INVALID_ARGUMENT = 10022,
-                    TOO_MANY_OPEN_SOCKETS = 10024,
-                    WOULD_BLOCK = 10035,
-                    IN_PROGRESS = 10036,
-                    ALREADY_IN_PROGRESS = 10037,
-                    NOT_SOCKET = 10038,
-                    DESTINATION_ADDRESS_REQUIRED = 10039,
-                    MESSAGE_SIZE = 10040,
-                    PROTOCOL_TYPE = 10041,
-                    PROTOCOL_OPTION = 10042,
-                    PROTOCOL_NOT_SUPPORTED = 10043,
-                    SOCKET_NOT_SUPPORTED = 10044,
-                    OPERATION_NOT_SUPPORTED = 10045,
-                    PROTOCOL_FAMILY_NOT_SUPPORTED = 10046,
-                    ADDRESS_FAMILY_NOT_SUPPORTED = 10047,
-                    ADDRESS_ALREADY_IN_USE = 10048,
-                    ADDRESS_NOT_AVAILABLE = 10049,
-                    NETWORK_DOWN = 10050,
-                    NETWORK_UNREACHABLE = 10051,
-                    NETWORK_RESET = 10052,
-                    CONNECTION_ABORTED = 10053,
-                    CONNECTION_RESET = 10054,
-                    NO_BUFFER_SPACE_AVAILABLE = 10055,
-                    IS_CONNECTED = 10056,
-                    NOT_CONNECTED = 10057,
-                    SHUTDOWN = 10058,
-                    TIMED_OUT = 10060,
-                    CONNECTION_REFUSED = 10061,
-                    HOST_DOWN = 10064,
-                    HOST_UNREACHABLE = 10065,
-                    PROCESS_LIMIT = 10067,
-                    SYSTEM_NOT_READY = 10091,
-                    VERSION_NOT_SUPPORTED = 10092,
-                    NOT_INITIALIZED = 10093,
-                    DISCONNECTING = 10101,
-                    TYPE_NOT_FOUND = 10109,
-                    NO_HOST = 11001,    // DEV_NOTE: HOST_NOT_FOUND is a #define in netdb.h
-                    AGAIN = 11002,      // DEV_NOTE: TRY_AGAIN is a #define in netdb.h
-                    NO_RECOVER = 11003, // DEV_NOTE: NO_RECOVERY is a #define in netdb.h
-                    NO_DAT = 11004      // DEV_NOTE: NO_DATA is a #define in netdb.h
+                    OPERATION_ABORTED = OMNI_SOCK_ERR_OPERATION_ABORTED_FW,
+                    IO_ERROR = OMNI_SOCK_ERR_IO_ERROR_FW,
+                    IO_PENDING = OMNI_SOCK_ERR_IO_PENDING_FW,
+                    INTERRUPTED = OMNI_SOCK_ERR_INTERRUPTED_FW,
+                    PERMISSION = OMNI_SOCK_ERR_PERMISSION_FW,
+                    ACCESS_DENIED = OMNI_SOCK_ERR_ACCESS_DENIED_FW,
+                    FAULT = OMNI_SOCK_ERR_FAULT_FW,
+                    INSUFFICIENT_MEMORY = OMNI_SOCK_ERR_INSUFFICIENT_MEMORY_FW,
+                    INVALID_ARGUMENT = OMNI_SOCK_ERR_INVALID_ARGUMENT_FW,
+                    INVALID_DESCRIPTOR = OMNI_SOCK_ERR_INVALID_DESCRIPTOR_FW,
+                    TOO_MANY_OPEN_SOCKETS = OMNI_SOCK_ERR_TOO_MANY_OPEN_SOCKETS_FW,
+                    WOULD_BLOCK = OMNI_SOCK_ERR_WOULD_BLOCK_FW,
+                    IN_PROGRESS = OMNI_SOCK_ERR_IN_PROGRESS_FW,
+                    ALREADY_IN_PROGRESS = OMNI_SOCK_ERR_ALREADY_IN_PROGRESS_FW,
+                    NOT_SOCKET = OMNI_SOCK_ERR_NOT_SOCKET_FW,
+                    DESTINATION_ADDRESS_REQUIRED = OMNI_SOCK_ERR_DESTINATION_ADDRESS_REQUIRED_FW,
+                    MESSAGE_SIZE = OMNI_SOCK_ERR_MESSAGE_SIZE_FW,
+                    PROTOCOL_TYPE = OMNI_SOCK_ERR_PROTOCOL_TYPE_FW,
+                    PROTOCOL_OPTION = OMNI_SOCK_ERR_PROTOCOL_OPTION_FW,
+                    PROTOCOL_NOT_SUPPORTED = OMNI_SOCK_ERR_PROTOCOL_NOT_SUPPORTED_FW,
+                    SOCKET_NOT_SUPPORTED = OMNI_SOCK_ERR_SOCKET_NOT_SUPPORTED_FW,
+                    OPERATION_NOT_SUPPORTED = OMNI_SOCK_ERR_OPERATION_NOT_SUPPORTED_FW,
+                    PROTOCOL_FAMILY_NOT_SUPPORTED = OMNI_SOCK_ERR_PROTOCOL_FAMILY_NOT_SUPPORTED_FW,
+                    ADDRESS_FAMILY_NOT_SUPPORTED = OMNI_SOCK_ERR_ADDRESS_FAMILY_NOT_SUPPORTED_FW,
+                    ADDRESS_ALREADY_IN_USE = OMNI_SOCK_ERR_ADDRESS_ALREADY_IN_USE_FW,
+                    ADDRESS_NOT_AVAILABLE = OMNI_SOCK_ERR_ADDRESS_NOT_AVAILABLE_FW,
+                    NETWORK_DOWN = OMNI_SOCK_ERR_NETWORK_DOWN_FW,
+                    NETWORK_UNREACHABLE = OMNI_SOCK_ERR_NETWORK_UNREACHABLE_FW,
+                    NETWORK_RESET = OMNI_SOCK_ERR_NETWORK_RESET_FW,
+                    CONNECTION_ABORTED = OMNI_SOCK_ERR_CONNECTION_ABORTED_FW,
+                    CONNECTION_RESET = OMNI_SOCK_ERR_CONNECTION_RESET_FW,
+                    NO_BUFFER_SPACE_AVAILABLE = OMNI_SOCK_ERR_NO_BUFFER_SPACE_AVAILABLE_FW,
+                    IS_CONNECTED = OMNI_SOCK_ERR_IS_CONNECTED_FW,
+                    NOT_CONNECTED = OMNI_SOCK_ERR_NOT_CONNECTED_FW,
+                    SHUTDOWN = OMNI_SOCK_ERR_SHUTDOWN_FW,
+                    TIMED_OUT = OMNI_SOCK_ERR_TIMED_OUT_FW,
+                    CONNECTION_REFUSED = OMNI_SOCK_ERR_CONNECTION_REFUSED_FW,
+                    LOOP = OMNI_SOCK_ERR_LOOP_FW,
+                    NAME_TOO_LONG = OMNI_SOCK_ERR_NAME_TOO_LONG_FW,
+                    HOST_DOWN = OMNI_SOCK_ERR_HOST_DOWN_FW,
+                    HOST_UNREACHABLE = OMNI_SOCK_ERR_HOST_UNREACHABLE_FW,
+                    PROCESS_LIMIT = OMNI_SOCK_ERR_PROCESS_LIMIT_FW,
+                    SYSTEM_NOT_READY = OMNI_SOCK_ERR_SYSTEM_NOT_READY_FW,
+                    VERSION_NOT_SUPPORTED = OMNI_SOCK_ERR_VERSION_NOT_SUPPORTED_FW,
+                    NOT_INITIALIZED = OMNI_SOCK_ERR_NOT_INITIALIZED_FW,
+                    DISCONNECTING = OMNI_SOCK_ERR_DISCONNECTING_FW,
+                    TYPE_NOT_FOUND = OMNI_SOCK_ERR_TYPE_NOT_FOUND_FW,
+                    NO_HOST = OMNI_SOCK_ERR_NO_HOST_FW,       // DEV_NOTE: HOST_NOT_FOUND is a #define in netdb.h
+                    AGAIN = OMNI_SOCK_ERR_AGAIN_FW,           // DEV_NOTE: TRY_AGAIN is a #define in netdb.h
+                    NO_RECOVER = OMNI_SOCK_ERR_NO_RECOVER_FW, // DEV_NOTE: NO_RECOVERY is a #define in netdb.h
+                    NO_DAT = OMNI_SOCK_ERR_NO_DAT_FW          // DEV_NOTE: NO_DATA is a #define in netdb.h
                 } enum_t;
                 
                 /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
-                    return 48;
+                    return 53;
                 }
 
                 /** The default value for this enum instance */
@@ -2397,11 +2419,15 @@ namespace omni {
                         OMNI_S2E_FW(UNSPECIFIED)
                         OMNI_S2E_FW(SUCCESS)
                         OMNI_S2E_FW(OPERATION_ABORTED)
+                        OMNI_S2E_FW(IO_ERROR)
                         OMNI_S2E_FW(IO_PENDING)
                         OMNI_S2E_FW(INTERRUPTED)
+                        OMNI_S2E_FW(PERMISSION)
                         OMNI_S2E_FW(ACCESS_DENIED)
                         OMNI_S2E_FW(FAULT)
+                        OMNI_S2E_FW(INSUFFICIENT_MEMORY)
                         OMNI_S2E_FW(INVALID_ARGUMENT)
+                        OMNI_S2E_FW(INVALID_DESCRIPTOR)
                         OMNI_S2E_FW(TOO_MANY_OPEN_SOCKETS)
                         OMNI_S2E_FW(WOULD_BLOCK)
                         OMNI_S2E_FW(IN_PROGRESS)
@@ -2429,6 +2455,8 @@ namespace omni {
                         OMNI_S2E_FW(SHUTDOWN)
                         OMNI_S2E_FW(TIMED_OUT)
                         OMNI_S2E_FW(CONNECTION_REFUSED)
+                        OMNI_S2E_FW(LOOP)
+                        OMNI_S2E_FW(NAME_TOO_LONG)
                         OMNI_S2E_FW(HOST_DOWN)
                         OMNI_S2E_FW(HOST_UNREACHABLE)
                         OMNI_S2E_FW(PROCESS_LIMIT)
@@ -2453,11 +2481,15 @@ namespace omni {
                         OMNI_E2SS_FW(UNSPECIFIED);
                         OMNI_E2SS_FW(SUCCESS);
                         OMNI_E2SS_FW(OPERATION_ABORTED);
+                        OMNI_E2SS_FW(IO_ERROR);
                         OMNI_E2SS_FW(IO_PENDING);
                         OMNI_E2SS_FW(INTERRUPTED);
+                        OMNI_E2SS_FW(PERMISSION);
                         OMNI_E2SS_FW(ACCESS_DENIED);
                         OMNI_E2SS_FW(FAULT);
+                        OMNI_E2SS_FW(INSUFFICIENT_MEMORY);
                         OMNI_E2SS_FW(INVALID_ARGUMENT);
+                        OMNI_E2SS_FW(INVALID_DESCRIPTOR);
                         OMNI_E2SS_FW(TOO_MANY_OPEN_SOCKETS);
                         OMNI_E2SS_FW(WOULD_BLOCK);
                         OMNI_E2SS_FW(IN_PROGRESS);
@@ -2485,6 +2517,8 @@ namespace omni {
                         OMNI_E2SS_FW(SHUTDOWN);
                         OMNI_E2SS_FW(TIMED_OUT);
                         OMNI_E2SS_FW(CONNECTION_REFUSED);
+                        OMNI_E2SS_FW(LOOP);
+                        OMNI_E2SS_FW(NAME_TOO_LONG);
                         OMNI_E2SS_FW(HOST_DOWN);
                         OMNI_E2SS_FW(HOST_UNREACHABLE);
                         OMNI_E2SS_FW(PROCESS_LIMIT);
@@ -2506,54 +2540,60 @@ namespace omni {
 
                 static bool _valid(int32_t val)
                 {
-                    return (val == 
-                        UNSPECIFIED ||
-                        SUCCESS ||
-                        OPERATION_ABORTED ||
-                        IO_PENDING ||
-                        INTERRUPTED ||
-                        ACCESS_DENIED ||
-                        FAULT ||
-                        INVALID_ARGUMENT ||
-                        TOO_MANY_OPEN_SOCKETS ||
-                        WOULD_BLOCK ||
-                        IN_PROGRESS ||
-                        ALREADY_IN_PROGRESS ||
-                        NOT_SOCKET ||
-                        DESTINATION_ADDRESS_REQUIRED ||
-                        MESSAGE_SIZE ||
-                        PROTOCOL_TYPE ||
-                        PROTOCOL_OPTION ||
-                        PROTOCOL_NOT_SUPPORTED ||
-                        SOCKET_NOT_SUPPORTED ||
-                        OPERATION_NOT_SUPPORTED ||
-                        PROTOCOL_FAMILY_NOT_SUPPORTED ||
-                        ADDRESS_FAMILY_NOT_SUPPORTED ||
-                        ADDRESS_ALREADY_IN_USE ||
-                        ADDRESS_NOT_AVAILABLE ||
-                        NETWORK_DOWN ||
-                        NETWORK_UNREACHABLE ||
-                        NETWORK_RESET ||
-                        CONNECTION_ABORTED ||
-                        CONNECTION_RESET ||
-                        NO_BUFFER_SPACE_AVAILABLE ||
-                        IS_CONNECTED ||
-                        NOT_CONNECTED ||
-                        SHUTDOWN ||
-                        TIMED_OUT ||
-                        CONNECTION_REFUSED ||
-                        HOST_DOWN ||
-                        HOST_UNREACHABLE ||
-                        PROCESS_LIMIT ||
-                        SYSTEM_NOT_READY ||
-                        VERSION_NOT_SUPPORTED ||
-                        NOT_INITIALIZED ||
-                        DISCONNECTING ||
-                        TYPE_NOT_FOUND ||
-                        NO_HOST ||
-                        AGAIN ||
-                        NO_RECOVER ||
-                        NO_DAT
+                    return (
+                        OMNI_I2EV_FW(UNSPECIFIED) ||
+                        OMNI_I2EV_FW(SUCCESS) ||
+                        OMNI_I2EV_FW(OPERATION_ABORTED) ||
+                        OMNI_I2EV_FW(IO_ERROR) ||
+                        OMNI_I2EV_FW(IO_PENDING) ||
+                        OMNI_I2EV_FW(INTERRUPTED) ||
+                        OMNI_I2EV_FW(PERMISSION) ||
+                        OMNI_I2EV_FW(ACCESS_DENIED) ||
+                        OMNI_I2EV_FW(FAULT) ||
+                        OMNI_I2EV_FW(INSUFFICIENT_MEMORY) ||
+                        OMNI_I2EV_FW(INVALID_ARGUMENT) ||
+                        OMNI_I2EV_FW(INVALID_DESCRIPTOR) ||
+                        OMNI_I2EV_FW(TOO_MANY_OPEN_SOCKETS) ||
+                        OMNI_I2EV_FW(WOULD_BLOCK) ||
+                        OMNI_I2EV_FW(IN_PROGRESS) ||
+                        OMNI_I2EV_FW(ALREADY_IN_PROGRESS) ||
+                        OMNI_I2EV_FW(NOT_SOCKET) ||
+                        OMNI_I2EV_FW(DESTINATION_ADDRESS_REQUIRED) ||
+                        OMNI_I2EV_FW(MESSAGE_SIZE) ||
+                        OMNI_I2EV_FW(PROTOCOL_TYPE) ||
+                        OMNI_I2EV_FW(PROTOCOL_OPTION) ||
+                        OMNI_I2EV_FW(PROTOCOL_NOT_SUPPORTED) ||
+                        OMNI_I2EV_FW(SOCKET_NOT_SUPPORTED) ||
+                        OMNI_I2EV_FW(OPERATION_NOT_SUPPORTED) ||
+                        OMNI_I2EV_FW(PROTOCOL_FAMILY_NOT_SUPPORTED) ||
+                        OMNI_I2EV_FW(ADDRESS_FAMILY_NOT_SUPPORTED) ||
+                        OMNI_I2EV_FW(ADDRESS_ALREADY_IN_USE) ||
+                        OMNI_I2EV_FW(ADDRESS_NOT_AVAILABLE) ||
+                        OMNI_I2EV_FW(NETWORK_DOWN) ||
+                        OMNI_I2EV_FW(NETWORK_UNREACHABLE) ||
+                        OMNI_I2EV_FW(NETWORK_RESET) ||
+                        OMNI_I2EV_FW(CONNECTION_ABORTED) ||
+                        OMNI_I2EV_FW(CONNECTION_RESET) ||
+                        OMNI_I2EV_FW(NO_BUFFER_SPACE_AVAILABLE) ||
+                        OMNI_I2EV_FW(IS_CONNECTED) ||
+                        OMNI_I2EV_FW(NOT_CONNECTED) ||
+                        OMNI_I2EV_FW(SHUTDOWN) ||
+                        OMNI_I2EV_FW(TIMED_OUT) ||
+                        OMNI_I2EV_FW(CONNECTION_REFUSED) ||
+                        OMNI_I2EV_FW(LOOP) ||
+                        OMNI_I2EV_FW(NAME_TOO_LONG) ||
+                        OMNI_I2EV_FW(HOST_DOWN) ||
+                        OMNI_I2EV_FW(HOST_UNREACHABLE) ||
+                        OMNI_I2EV_FW(PROCESS_LIMIT) ||
+                        OMNI_I2EV_FW(SYSTEM_NOT_READY) ||
+                        OMNI_I2EV_FW(VERSION_NOT_SUPPORTED) ||
+                        OMNI_I2EV_FW(NOT_INITIALIZED) ||
+                        OMNI_I2EV_FW(DISCONNECTING) ||
+                        OMNI_I2EV_FW(TYPE_NOT_FOUND) ||
+                        OMNI_I2EV_FW(NO_HOST) ||
+                        OMNI_I2EV_FW(AGAIN) ||
+                        OMNI_I2EV_FW(NO_RECOVER) ||
+                        OMNI_I2EV_FW(NO_DAT)
                     );
                 }
         };
@@ -2564,10 +2604,10 @@ namespace omni {
             public:
                 typedef enum enum_t {
                     NONE = OMNI_SOCK_FLAGS_NONE,
-                    OUT_OF_BAND = MSG_OOB,          // 1
-                    PEEK = MSG_PEEK,                // 2
-                    DONT_ROUTE = MSG_DONTROUTE,     // 4
-                    END_OF_RECORD = OMNI_MSG_EOR_FW,   // 8 (0 for Windows)
+                    OUT_OF_BAND = MSG_OOB,              // 1
+                    PEEK = MSG_PEEK,                    // 2
+                    DONT_ROUTE = MSG_DONTROUTE,         // 4
+                    END_OF_RECORD = OMNI_MSG_EOR_FW    // 8 (0 for Windows)
                 } enum_t;
 
                 /** Defines the number of elements in the enum */
@@ -3044,12 +3084,12 @@ namespace omni {
 
                 static bool _valid(int32_t val)
                 {
-                    return (val == 
-                        NONE ||
-                        OUT_OF_BAND ||
-                        PEEK ||
-                        DONT_ROUTE ||
-                        END_OF_RECORD
+                    return (
+                        OMNI_I2EV_FW(NONE) ||
+                        OMNI_I2EV_FW(OUT_OF_BAND) ||
+                        OMNI_I2EV_FW(PEEK) ||
+                        OMNI_I2EV_FW(DONT_ROUTE) ||
+                        OMNI_I2EV_FW(END_OF_RECORD)
                     );
                 }
         };
@@ -3339,11 +3379,11 @@ namespace omni {
 
                 static bool _valid(int32_t val)
                 {
-                    return (val == 
-                        NONE ||
-                        SELECT_READ || 
-                        SELECT_WRITE || 
-                        SELECT_ERROR
+                    return (
+                        OMNI_I2EV_FW(NONE) ||
+                        OMNI_I2EV_FW(SELECT_READ) || 
+                        OMNI_I2EV_FW(SELECT_WRITE) || 
+                        OMNI_I2EV_FW(SELECT_ERROR)
                     );
                 }
         };
@@ -3627,9 +3667,9 @@ namespace omni {
 
                 static bool _valid(int32_t val)
                 {
-                    return (val == 
-                        BLOCK ||
-                        DONT_BLOCK
+                    return (
+                        OMNI_I2EV_FW(BLOCK) ||
+                        OMNI_I2EV_FW(DONT_BLOCK)
                     );
                 }
         };
@@ -4123,24 +4163,24 @@ namespace omni {
 
                 static bool _valid(int32_t val)
                 {
-                    return (val == 
-                        UNSPECIFIED ||
-                        IP ||
-                        IP6 ||
-                        TCP ||
-                        UDP ||
-                        SOCKET
+                    return (
+                        OMNI_I2EV_FW(UNSPECIFIED) ||
+                        OMNI_I2EV_FW(IP) ||
+                        OMNI_I2EV_FW(IP6) ||
+                        OMNI_I2EV_FW(TCP) ||
+                        OMNI_I2EV_FW(UDP) ||
+                        OMNI_I2EV_FW(SOCKET)
                     );
                 }
         };
         
-        /** socket_option defines enum values for configuration option names. */
+        /** socket_option defines enum values for socket configuration options. */
         class socket_option
         {
             public:
                 typedef enum enum_t {
                     DONT_LINGER = -129,
-                    UNSPECIFIED = -1,
+                    UNSPECIFIED = 0,
                     DBG = SO_DEBUG, // 1, -- DEV_NOTE: DBG instead of DEBUG to avoid macro confusion when -DDEBUG defined
                     ACCEPT_CONNECTION = SO_ACCEPTCONN, // 2,
                     REUSE_ADDRESS = SO_REUSEADDR, // 4,
@@ -4156,7 +4196,7 @@ namespace omni {
                     SEND_TIMEOUT = SO_SNDTIMEO, // 4101,
                     RECEIVE_TIMEOUT = SO_RCVTIMEO, // 4102,
                     ERR = SO_ERROR, // 4103,
-                    SOCKET_TYPE = SO_TYPE, // 4104,
+                    SOCKET_TYPE = SO_TYPE // 4104,
                 } enum_t;
                 
                 /** Defines the number of elements in the enum */
@@ -4659,25 +4699,25 @@ namespace omni {
 
                 static bool _valid(int32_t val)
                 {
-                    return (val ==
-                        DONT_LINGER ||
-                        UNSPECIFIED ||
-                        DBG ||
-                        ACCEPT_CONNECTION ||
-                        REUSE_ADDRESS ||
-                        KEEP_ALIVE ||
-                        DONT_ROUTE ||
-                        BROADCAST ||
-                        LINGER ||
-                        OUT_OF_BAND_INLINE ||
-                        SEND_BUFFER ||
-                        RECEIVE_BUFFER ||
-                        SEND_LOW_WATER ||
-                        RECEIVE_LOW_WATER ||
-                        SEND_TIMEOUT ||
-                        RECEIVE_TIMEOUT ||
-                        ERR ||
-                        SOCKET_TYPE
+                    return (
+                        OMNI_I2EV_FW(DONT_LINGER) ||
+                        OMNI_I2EV_FW(UNSPECIFIED) ||
+                        OMNI_I2EV_FW(DBG) ||
+                        OMNI_I2EV_FW(ACCEPT_CONNECTION) ||
+                        OMNI_I2EV_FW(REUSE_ADDRESS) ||
+                        OMNI_I2EV_FW(KEEP_ALIVE) ||
+                        OMNI_I2EV_FW(DONT_ROUTE) ||
+                        OMNI_I2EV_FW(BROADCAST) ||
+                        OMNI_I2EV_FW(LINGER) ||
+                        OMNI_I2EV_FW(OUT_OF_BAND_INLINE) ||
+                        OMNI_I2EV_FW(SEND_BUFFER) ||
+                        OMNI_I2EV_FW(RECEIVE_BUFFER) ||
+                        OMNI_I2EV_FW(SEND_LOW_WATER) ||
+                        OMNI_I2EV_FW(RECEIVE_LOW_WATER) ||
+                        OMNI_I2EV_FW(SEND_TIMEOUT) ||
+                        OMNI_I2EV_FW(RECEIVE_TIMEOUT) ||
+                        OMNI_I2EV_FW(ERR) ||
+                        OMNI_I2EV_FW(SOCKET_TYPE)
                     );
                 }
         };
@@ -5166,10 +5206,10 @@ namespace omni {
 
                 static bool _valid(int32_t val)
                 {
-                    return (val == 
-                        UNSPECIFIED ||
-                        NO_DELAY ||
-                        KEEP_ALIVE
+                    return (
+                        OMNI_I2EV_FW(UNSPECIFIED) ||
+                        OMNI_I2EV_FW(NO_DELAY) ||
+                        OMNI_I2EV_FW(KEEP_ALIVE)
                     );
                 }
         };
@@ -5657,11 +5697,11 @@ namespace omni {
 
                 static bool _valid(int32_t val)
                 {
-                    return (val == 
-                        UNSPECIFIED ||
-                        RECEIVE || 
-                        SEND || 
-                        BOTH
+                    return (
+                        OMNI_I2EV_FW(UNSPECIFIED) ||
+                        OMNI_I2EV_FW(RECEIVE) || 
+                        OMNI_I2EV_FW(SEND) || 
+                        OMNI_I2EV_FW(BOTH)
                     );
                 }
         };
@@ -6155,13 +6195,13 @@ namespace omni {
 
                 static bool _valid(int32_t val)
                 {
-                    return (val == 
-                        UNKNOWN ||
-                        STREAM ||
-                        DGRAM ||
-                        RAW ||
-                        RDM ||
-                        SEQPACKET
+                    return (
+                        OMNI_I2EV_FW(UNKNOWN) ||
+                        OMNI_I2EV_FW(STREAM) ||
+                        OMNI_I2EV_FW(DGRAM) ||
+                        OMNI_I2EV_FW(RAW) ||
+                        OMNI_I2EV_FW(RDM) ||
+                        OMNI_I2EV_FW(SEQPACKET)
                     );
                 }
         };
@@ -6643,11 +6683,77 @@ namespace omni {
 
                 static bool _valid(int32_t val)
                 {
-                    return (val == 
-                        OPEN_ON_CREATE ||
-                        USER_OPEN
+                    return (
+                        OMNI_I2EV_FW(OPEN_ON_CREATE) ||
+                        OMNI_I2EV_FW(USER_OPEN)
                     );
                 }
+        };
+
+        class ip6_binary_address
+        {
+            public:
+                ip6_binary_address() : m_ip()
+                {
+                    std::memset(m_ip, 0, sizeof(m_ip));
+                }
+
+                ip6_binary_address(const ip6_binary_address& cp) : m_ip()
+                {
+                    std::memcpy(this->m_ip, cp.m_ip, sizeof(this->m_ip));
+                }
+
+                ip6_binary_address(uint8_t (&ip)[16]) : m_ip()
+                {
+                    std::memcpy(this->m_ip, ip, sizeof(this->m_ip));
+                }
+
+                ~ip6_binary_address() {}
+
+                void copy_to(uint8_t (&ip)[16]) const
+                {
+                    std::memcpy(ip, this->m_ip, sizeof(this->m_ip));
+                }
+
+                std::size_t size() const
+                {
+                    return sizeof(this->m_ip);
+                }
+
+                ip6_binary_address& operator=(const ip6_binary_address& other)
+                {
+                    std::memcpy(this->m_ip, other.m_ip, sizeof(m_ip));
+                    return *this;
+                }
+
+                ip6_binary_address& operator=(const uint8_t (&ip)[16])
+                {
+                    std::memcpy(this->m_ip, ip, sizeof(m_ip));
+                    return *this;
+                }
+
+                uint8_t operator[](std::size_t index) const
+                {
+                    return this->m_ip[index];
+                }
+
+                uint8_t& operator[](std::size_t index)
+                {
+                    return this->m_ip[index];
+                }
+
+                operator const uint8_t *const() const
+                {
+                    return this->m_ip;
+                }
+
+                operator uint8_t *const()
+                {
+                    return this->m_ip;
+                }
+
+            private:
+                uint8_t m_ip[16];
         };
 
         typedef OMNI_SOCKET_T_FW socket_t;
@@ -6656,6 +6762,16 @@ namespace omni {
         typedef OMNI_SOCKADDR_UN_T_FW sockaddr_un_t;
         typedef OMNI_SOCKADDR_T_FW sockaddr_t;
         typedef OMNI_SOCKET_XFR_T_FW xfr_t;
+
+        typedef union dual_socket_addr_t {
+            omni::net::sockaddr_in_t addr4;
+            omni::net::sockaddr_in6_t addr6;
+        } dual_socket_addr_t;
+
+        typedef union dual_socket_endpoint_t {
+            uint8_t ep6[16];
+            uint32_t ep4;
+        } dual_socket_endpoint_t;
     }
 }
 

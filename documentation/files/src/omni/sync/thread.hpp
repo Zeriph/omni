@@ -32,8 +32,14 @@
     #define OMNI_THRD_INT_FW uint64_t
 #endif
 
+// DEV_NOTE: using "Construct on First Use"
+
 namespace omni {
     namespace sync {
+            /**
+             * Represents a managed system thread object. Will not spawn the thread until
+             * specified to  do so or a start type of @c NOW is specified.
+             */
             class thread
             {
                 public:
@@ -105,7 +111,9 @@ namespace omni {
                         omni::sync::thread_union_t val);
                     ~thread();
 
+                    /** Raised when omni::sync::thread::abort is called */
                     omni::sync::thread::event aborted;
+                    /** Raised when the thread has completed (by any means) */
                     omni::sync::thread::event completed;
 
                     void abort(); // request end nicely
@@ -161,15 +169,23 @@ namespace omni {
                     #if defined(OMNI_SAFE_THREAD)
                         mutable omni::sync::basic_lock m_mtx;
                     #endif
+                    /** The arguments passed to the thread */
                     omni::sync::thread_arg_t m_args;
+                    /** The delegate invoked on the thread when started */
                     void* m_mthd;
+                    /** The underlying thread ID type */
                     omni::sync::thread_t m_tid;
+                    /** The underlying thread handle type */
                     omni::sync::thread_handle_t m_thread;
+                    /** The underlying thread options */
                     omni::sync::thread_flags m_ops;
+                    /** The current state of the thread */
                     omni::sync::thread_state m_state;
                     #if defined(OMNI_NON_PORTABLE)
+                        /** The threads priority */
                         omni::sync::thread_priority m_priority;
                     #endif
+                    /** The status of the thread, joined or is param thread start */
                     volatile OMNI_THRD_INT_FW m_status;
 
                     void _chkmthd();
@@ -186,6 +202,13 @@ namespace omni {
                     
                     static OMNI_THREAD_FNPTR_T OMNI_THREAD_CALL_T _start(void* param);
 
+                    /**
+                     * This class is an internal thread manager not intended to be used anywhere but here.
+                     * it is used primarily to avoid the static init order fiasco (via the static instance
+                     * function). This manager class is put here (vs. in a header) so as to avoid any
+                     * development environments or user code potentially trying to use this class since
+                     * this class is only intended to avoid the SIOF.
+                     */
                     class manager
                     {
                         public:

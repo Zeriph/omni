@@ -133,8 +133,10 @@ namespace omni {
                 omni::sync::basic_lock& operator=(const omni::sync::basic_lock& other);
         };
         
+        /** Auto basic lock */
         typedef omni::sync::auto_lock<omni::sync::basic_lock> auto_basic_lock;
         
+        /** Scoped basic lock */
         typedef omni::sync::scoped_lock<omni::sync::basic_lock> scoped_basic_lock;
     }
 }

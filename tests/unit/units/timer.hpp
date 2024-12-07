@@ -11,6 +11,7 @@ class UT_CLASS_DEF
         {
             M_LIST_ADD(async_test, "tests the async timer");
             M_LIST_ADD(sync_block_test, "tests the blocking timer");
+            M_LIST_ADD(sync_long_block_test, "tests the long blocking timer");
             M_LIST_ADD(sync_queue_test, "tests queued timer");
             M_LIST_ADD(sync_skip_test, "tests skip timer");
             
@@ -121,6 +122,27 @@ class UT_CLASS_DEF
             printv("sw time: ", m_sw.stop());
             printl("done");
         }
+
+        void sync_long_block_test()
+        {
+            /**
+             * The tick event will not return (i.e. block the _run thread) until the delegate returns;
+             * the next event won't be fired until 'interval' has passed.
+             */
+            tval = 0;
+            printl("creating auto with 1s interval");
+            omni::chrono::sync_timer t1(1000, &UT_CNAME::inttest6);
+            m_sw.start();
+            t1.start();
+            printv("is_running() = ", OMNI_B2S(t1.is_running()));
+            omni::sync::sleep(5000);
+            printv("is_running() = ", OMNI_B2S(t1.is_running()));
+            printl("should see 2 ticks");
+            printl("stopping");
+            t1.stop();
+            printv("sw time: ", m_sw.stop());
+            printl("done");
+        }
         
         void sync_queue_test()
         {
@@ -137,7 +159,7 @@ class UT_CLASS_DEF
             omni::sync::sleep(5000);
             printv("is_running() = ", OMNI_B2S(t1.is_running()));
             printl("should see ~2 ticks");
-            printl("stopping, waiting on queue");
+            printv("stopping, waiting on queue; remaining count = ", t1.queue_count());
             t1.stop(); // anything left in queue will be called
             printv("sw time: ", m_sw.stop());
             printl("should see ~5 ticks total, done");
@@ -146,7 +168,7 @@ class UT_CLASS_DEF
         void sync_skip_test()
         {
             /**
-             * The tick event will file, but all subsequent 'ticks' will be ignored until the delegate
+             * The tick event will fire, but all subsequent 'ticks' will be ignored until the delegate
              * has finished. It is possible to have an events fire immediately after each other if the
              * timing works out such that the delegate call finishes as the tick event is about to occur.
              */
@@ -202,6 +224,14 @@ class UT_CLASS_DEF
             printv("inttest2 ticked #", tv << " @ " << m_sw);
             omni::sync::sleep(2000);
             printv("inttest2 leaving#", tv);
+        }
+
+        static void inttest6(omni::chrono::tick_t tick, const omni::generic_ptr& so)
+        {
+            int tv = tval++;
+            printv("inttest6 ticked #", tv << " @ " << m_sw);
+            omni::sync::sleep(6000);
+            printv("inttest6 leaving#", tv);
         }
 };
 

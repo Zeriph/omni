@@ -328,12 +328,12 @@ std::string OmniDocuGen::DocuGen::_GenerateHtmlSyntaxFromTemplate(const std::str
             cmnti = omni::string::util::to_type<int32_t>(tmp.substr(0, tmp.find("\"")));
             cmstr = omni::string::to_string(cmnti);
             if (cmnti > maxcmnt) { maxcmnt = cmnti; }
-            htmllines += Util::Format(htfmt, omni::string::pad_left(omni::string::to_string(i), "0", clen), cmstr);
+            htmllines += Util::Format(htfmt, omni::string::pad_left(omni::string::to_string(i), '0', clen), cmstr);
             collapse += Util::Format(cfmt, cmstr);
             for (++i, ++x; i <= linecnt; ++i, ++x) {
                 if (OmniDocuGen::Program::StopReq) { return ""; }
                 if (i % 20 == 0) { collapse += "\r\n"; htmllines += "\r\n"; }
-                htmllines += Util::Format("{0}:<br>", omni::string::pad_left(omni::string::to_string(i), "0", clen));
+                htmllines += Util::Format("{0}:<br>", omni::string::pad_left(omni::string::to_string(i), '0', clen));
                 collapse += "<br>";
                 if (omni::string::contains(splits[x], "*/")) { break; }
             }
@@ -356,10 +356,10 @@ std::string OmniDocuGen::DocuGen::_GenerateHtmlSyntaxFromTemplate(const std::str
             collapse += "</div><div></div>";
         }*/
 
-        htmllines += Util::Format("{0}:<br>", omni::string::pad_left(omni::string::to_string(i), "0", clen));
+        htmllines += Util::Format("{0}:<br>", omni::string::pad_left(omni::string::to_string(i), '0', clen));
         collapse += "<br>";
     }
-    htmllines += Util::Format("{0}:<br>", omni::string::pad_left(omni::string::to_string(linecnt+1), "0", clen));
+    htmllines += Util::Format("{0}:<br>", omni::string::pad_left(omni::string::to_string(linecnt+1), '0', clen));
     collapse += "<br>";
 
     switch (clen) {
@@ -646,6 +646,10 @@ std::string OmniDocuGen::DocuGen::ReplaceHtmlDoxyCodeTags(const std::string& val
     int32_t aqsz = std::string("&lt;a href=&quot;").size();
     int32_t ahsz = std::string("&lt;a href=&quot;").size();
     int32_t secsz = std::string("@section ").size();
+    if (omni::string::contains(r, "@_")) {
+        // ignores api/member info
+        r = omni::string::replace_all(r, "@_", "");
+    }
     // &lt;code&gt; && &lt;/code&gt;
     if (omni::string::contains(r, "&lt;code&gt;")) {
         r = omni::string::replace_all(r, "&lt;code&gt;", "<code>");
@@ -1176,7 +1180,7 @@ std::string OmniDocuGen::DocuGen::GenerateHtmlClassHelp(MemberTypeInformation::p
             * @details        A more detailed description of the function.
             * @return         [optional] A return value if any.
             * @param [name]   [optional] Each parameter should be marked with this.
-            @tparam [name]  [optional] Each template parameter should be marked with this.
+            * @tparam [name]  [optional] Each template parameter should be marked with this.
             * @exception      [optional] Any errors (or error conditions) specific to this context.
             * @warning        [optional] Any extra considerations to be aware of.
             * @attention      [optional] Any platform specific notes.
@@ -1256,13 +1260,25 @@ void OmniDocuGen::DocuGen::GenerateFilesViewHtml()
         Util::CheckAndCreateDir(DocuGen::FilesSource);
         
         // copy "raw" source to "undocumented" source
-        std::string rname = "";
-        foreach (CodeGen::ptr_t, c, DocuGen::CodeGenList) {
+        /*
+            std::string rname = "";
+            foreach (CodeGen::ptr_t, c, DocuGen::CodeGenList) {
+                if (OmniDocuGen::Program::StopReq) { return; }
+                rname = omni::string::replace_all((*c)->SourceFile, Program::Settings.SourceDirectory, DocuGen::FilesSource);
+                up(2, "Copying non-commented source {0} to {1}", (*c)->SourceFile, rname);
+                Util::WriteFile(rname, (*c)->SourceSansComment());
+            }
+        */
+        omni::seq::std_string_t src;
+        omni::io::directory::get_all_files(OmniDocuGen::Program::Settings.SourceDirectory, src);
+        omni_foreach (std::string, src_file, src) {
             if (OmniDocuGen::Program::StopReq) { return; }
-            rname = omni::string::replace_all((*c)->SourceFile, Program::Settings.SourceDirectory, DocuGen::FilesSource);
-            up(2, "Copying non-commented source {0} to {1}", (*c)->SourceFile, rname);
-            Util::WriteFile(rname, (*c)->SourceSansComment());
+            OmniDocuGen::CodeGen cg(*src_file);
+            std::string rname = omni::string::replace_all(cg.SourceFile, Program::Settings.SourceDirectory, DocuGen::FilesSource);
+            up(2, "Copying non-commented source {0} to {1}", cg.SourceFile, rname);
+            Util::WriteFile(rname, cg.SourceSansComment());
         }
+
         Util::CopyFile(
             omni::io::path::combine(Program::Settings.SourceDirectory, "omnilib"),
             omni::io::path::combine(DocuGen::FilesSource, "omnilib"),
@@ -1296,6 +1312,7 @@ void OmniDocuGen::DocuGen::GenerateFilesViewHtml()
 std::string OmniDocuGen::DocuGen::ReplaceFrameworkInfo(const std::string& val, const std::string& mihref, const std::string& dhref, const std::string& fref)
 {
     if (val.empty()) { return val; }
+    // keep this order
     std::string r = Util::ToHTML(val);
     r = DocuGen::ReplaceMemberInfo(DocuGen::AllMti, r, mihref, true);
     r = DocuGen::ReplaceMacroInfo(r, dhref, true);

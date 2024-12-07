@@ -16,14 +16,11 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#if !defined(OMNI_NETS_HPP)
-#define OMNI_NETS_HPP 1
+#if !defined(OMNI_NET_TYPES_HPP)
+#define OMNI_NET_TYPES_HPP 1
 
 #include <omni/types/net_t.hpp>
 #include <omni/net/util.hpp>
 #include <omni/net/socket.hpp>
-//#include <omni/net/client.hpp>
-//#include <omni/net/server.hpp>
 
-
-#endif // OMNI_NETS_HPP
+#endif // OMNI_NET_TYPES_HPP

@@ -56,12 +56,12 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 </div><br>
 <div class="docdiv"><a name="syn"></a>
 <font class="docu">SYNOPSIS</font><br><br>
-No synopsis.
+A timer class that invokes a basic <code>tick</code> event asynchronously.
 <br><br><a class="toppg" href="#topopage">top</a>
 </div><br>
 <div class="docdiv"><a name="desc"></a>
 <font class="docu">DESCRIPTION</font><br><br>
-No description.
+This timer will invoke a <code>tick</code> event at a specified interval regardless of how long the event delegate takes to complete. In other words, every <code><a href="https://man7.org/linux/man-pages/man2/time.2.html">time</a></code> the timer fires, a new thread is spawned invoking the attached delegate. If the timer is stopped before the interval has elapsed, no subsequent tick events will fire, however, any currently running tick events will finish.
 <br><br><a class="toppg" href="#topopage">top</a>
 </div><br>
 
@@ -69,8 +69,38 @@ No description.
 
 
 
+<div class="docdiv"><a name="notes"></a>
+<font class="docu">NOTES</font><br><br>
+Since the timer event happens on a new thread, care must be taken to make sure the attached delegate is re-entrant. Additionally, you must be aware that it is possible to have 2 events fire simultaneously if the attached delegate executes for longer than the specified interval. 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
 
+<div class="docdiv"><a name="ex"></a>
+<font class="docu">EXAMPLE</font><br><br>
+<div class="sntx"><input type="checkbox" id="c0" name="c0" checked /><label for="c0"> example</label>
+<pre><font class="syn_pre">#include &lt;<a href="../htmlsrc/omnilib.html">omnilib</a>&gt;</font>
 
+static <font class="syn_typ">void</font> timer_func(<a href="../classes/omni-chrono-tick_t.html">omni::chrono::tick_t</a> tick, <font class="syn_typ">const</font> <a href="../classes/omni-generic_ptr.html">omni::generic_ptr</a>&amp; so)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;monotonic tick count = &quot;</font> &lt;&lt; tick &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+}
 
+<font class="syn_typ">int</font> main(<font class="syn_typ">int</font> argc, <font class="syn_typ">char</font>* argv[])
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-chrono-async_timer.html">omni::chrono::async_timer</a> timer(<font class="syn_num">2000</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;timer.tick += timer_func;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Starting the timer&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;timer.start();
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-sleep.html">omni::sync::sleep</a>(<font class="syn_num">6000</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Stopping the timer&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;timer.stop();
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;
+}</pre>
+</div>Visit the <a href="../examples/index.html">examples</a> page for more.
+
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
 <!--end content-->
 </div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

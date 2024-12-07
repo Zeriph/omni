@@ -322,23 +322,23 @@ namespace omni {
             // maj/major cannot be used as a name (some compilers complain)
             inline uint16_t _maj() const
             {
-                return OMNI_VMAJ_FW(this->m_ver);
+                return static_cast<uint16_t>(OMNI_VMAJ_FW(this->m_ver));
             }
             
             // min/minor cannot be used as a name (some compilers complain)
             inline uint16_t _min() const
             {
-                return OMNI_VMIN_FW(this->m_ver);
+                return static_cast<uint16_t>(OMNI_VMIN_FW(this->m_ver));
             }
             
             inline uint16_t _bld() const
             {
-                return OMNI_VBLD_FW(this->m_ver);
+                return static_cast<uint16_t>(OMNI_VBLD_FW(this->m_ver));
             }
             
             inline uint16_t _rev() const
             {
-                return OMNI_VREV_FW(this->m_ver);
+                return static_cast<uint16_t>(OMNI_VREV_FW(this->m_ver));
             }
 
             template < typename STR, typename SS >

@@ -29,7 +29,7 @@
 
 // so as not to accidentally build this file with the source this macro defined in exception.hpp
 #if !defined(OMNI_ERR_APPEND_FW)
-    #error invalid preprocessor directive detected
+    #error "invalid preprocessor directive detected"
 #endif
 
 /* DEV_NOTE: all exception's in Omni will be explicit for single parameter ctor's to avoid any collision */
@@ -338,11 +338,12 @@ namespace omni {
                 invalid_size() : omni::exception(OMNI_ERR_SIZE_STR) {}
         };
         
-        /** The specified string does not contain a valid binary number */
+        /** The specified string does not contain a valid string format */
         class invalid_string_format : public omni::exceptions::string_exception
         {
             public:
                 invalid_string_format() : omni::exceptions::string_exception(OMNI_STRING_INVALID_FORMAT_STR) {}
+                explicit invalid_string_format(const char* msg) : omni::exceptions::string_exception(msg) {}
         };
         
         /** An invalid type was detected on a template parameter that only takes certain types */

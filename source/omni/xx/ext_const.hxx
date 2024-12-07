@@ -36,7 +36,7 @@
 // so as not to accidentally build this file with the source
 // these macros are defined in cconsts.hpp and wconsts.hpp
 #if !defined(OMNI_CHAR_T_FW) || !defined(OMNI_STRW_FW) || !defined(OMNI_EXT_NS_FW)
-    #error invalid preprocessor directive detected
+    #error "invalid preprocessor directive detected"
 #endif
 
 OMNI_CHAR_T_FW OMNI_EXT_NS_FW::err::DELEGATE_NOT_FOUND[]= OMNI_STRW_FW(OMNI_NO_DELEGATE_STR);

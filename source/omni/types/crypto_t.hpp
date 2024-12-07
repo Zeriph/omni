@@ -308,10 +308,10 @@ namespace omni {
 
                 static bool _valid(int32_t val)
                 {
-                    return (val == 
-                        STRING ||
-                        TEXT_FILE ||
-                        BINARY_FILE
+                    return (
+                        OMNI_I2EV_FW(STRING) ||
+                        OMNI_I2EV_FW(TEXT_FILE) ||
+                        OMNI_I2EV_FW(BINARY_FILE)
                     );
                 }
         };

@@ -36,13 +36,11 @@
     #endif
     #define OMNI_ERR_APPEND_FW(val) std::stringstream cval; cval << val; this->m_what.append(cval.str())
 
-    #define OMNI_CTOR_TRY_FW try
-    #define OMNI_CTOR_CATCH_FW catch(...) { OMNI_DBGE("A general unhandled exception occurred"); OMNI_EXCEPTION_TERMINATE }
-
     // DEV_NOTE: the exception specification for throw() is an implicit noexcept(false)
     // DEV_NOTE: all exceptions in Omni will be explicit for single parameter ctor's to avoid any collision
     
     namespace omni {
+        /** exception is used to facilitate Omni Library specific exceptions */
         class exception : virtual public std::exception
         {
             public:

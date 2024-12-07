@@ -21,6 +21,7 @@
 #include <omni/defs/global.hpp>
 #include <omni/defs/class_macros.hpp>
 #include <omni/geometry/point2d.hpp>
+#include <omni/geometry/path.hpp>
 
 #if defined(OMNI_SAFE_CIRCLE)
     #include <omni/sync/basic_lock.hpp>
@@ -37,6 +38,10 @@
     #define OMNI_SAFE_CIRCOALOCK_FW(o) 
 #endif
 
+#if defined(OMNI_CIRCLE_IS_CHAINABLE)
+#else
+#endif
+
 namespace omni {
     namespace geometry {
         template < typename T >
@@ -44,6 +49,7 @@ namespace omni {
         {
             public:
                 typedef T coordinate_t;
+                typedef omni_sequence_t< omni::geometry::point2d< T > > path_t;
 
                 circle() : 
                     OMNI_CTOR_FW(omni::geometry::circle<T>)
@@ -98,7 +104,7 @@ namespace omni {
                 double circumference() const
                 {
                     OMNI_SAFE_CIRCALOCK_FW
-                    return OMNI_PI * this->m_rad * 2.0;
+                    return OMNI_PI_X2 * this->m_rad;
                 }
 
                 bool contains(T x, T y, bool include_edge) const
@@ -161,30 +167,37 @@ namespace omni {
                     return this->contains(circ, true);
                 }
 
-                void deflate(double percent)
+                omni::geometry::circle<T>& deflate(double percent)
                 {
+                    if (percent < 0) {
+                        OMNI_ERR_RETV_FW("value must be greater than 0", omni::exceptions::overflow_error("value must be greater than 0"), *this)
+                    }
                     OMNI_SAFE_CIRCALOCK_FW
-                    this->m_rad *= (percent / 100.0);
+                    this->m_rad *= (1.0 - (percent / 100.0));
+                    return *this;
                 }
 
-                void decrement(T x, T y)
+                omni::geometry::circle<T>& decrement(T x, T y)
                 {
                     OMNI_SAFE_CIRCALOCK_FW
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_loc.x, x)
                     this->m_loc.x -= x;
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_loc.y, y)
                     this->m_loc.y -= y;
+                    return *this;
                 }
 
-                void decrement(const omni::geometry::point2d<T>& point)
+                omni::geometry::circle<T>& decrement(const omni::geometry::point2d<T>& point)
                 {
                     return this->decrement(point.x(), point.y());
                 }
 
-                void decrement(const omni::geometry::raw_point2d<T>& point)
+                omni::geometry::circle<T>& decrement(const omni::geometry::raw_point2d<T>& point)
                 {
                     return this->decrement(point.x, point.y);
                 }
 
-                void decrement(const omni::math::dimensional<T, 2>& point)
+                omni::geometry::circle<T>& decrement(const omni::math::dimensional<T, 2>& point)
                 {
                     return this->decrement(point[0], point[1]);
                 }
@@ -192,24 +205,28 @@ namespace omni {
                 T decrement_x()
                 {
                     OMNI_SAFE_CIRCALOCK_FW
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_loc.x, static_cast<T>(1))
                     return --this->m_loc.x;
                 }
 
                 T decrement_y()
                 {
                     OMNI_SAFE_CIRCALOCK_FW
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_loc.y, static_cast<T>(1))
                     return --this->m_loc.y;
                 }
 
                 T decrement_x(T val)
                 {
                     OMNI_SAFE_CIRCALOCK_FW
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_loc.x, val)
                     return (this->m_loc.x -= val);
                 }
 
                 T decrement_y(T val)
                 {
                     OMNI_SAFE_CIRCALOCK_FW
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_loc.y, val)
                     return (this->m_loc.y -= val);
                 }
 
@@ -250,15 +267,16 @@ namespace omni {
                     );
                 }
 
-                void inflate(double percent)
+                omni::geometry::circle<T>& inflate(double percent)
                 {
                     OMNI_SAFE_CIRCALOCK_FW
-                    this->m_rad *= (percent / 100.0);
+                    this->m_rad *= ((percent + 100.0) / 100.0);
+                    return *this;
                 }
 
-                void intersect(const omni::geometry::circle<T>& r2)
+                omni::geometry::circle<T>& intersect(const omni::geometry::circle<T>& r2)
                 {
-                    if (this == &r2) { return; }
+                    if (this == &r2) { return *this; }
                     OMNI_SAFE_CIRCALOCK_FW
                     OMNI_SAFE_CIRCOALOCK_FW(r2)
                     if (this->_intersects_with(r2.m_loc.x, r2.m_loc.y, r2.m_rad, true)) {
@@ -270,6 +288,7 @@ namespace omni {
                         this->m_loc.y = 0;
                         this->m_rad = 0;
                     }
+                    return *this;
                 }
 
                 bool intersects_with(T center_x, T center_y, double radius, bool include_edge) const
@@ -312,24 +331,28 @@ namespace omni {
                 T increment_x()
                 {
                     OMNI_SAFE_CIRCALOCK_FW
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_loc.x, static_cast<T>(1))
                     return ++this->m_loc.x;
                 }
 
                 T increment_y()
                 {
                     OMNI_SAFE_CIRCALOCK_FW
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_loc.y, static_cast<T>(1))
                     return ++this->m_loc.y;
                 }
 
                 T increment_x(T val)
                 {
                     OMNI_SAFE_CIRCALOCK_FW
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_loc.x, val)
                     return (this->m_loc.x += val);
                 }
 
                 T increment_y(T val)
                 {
                     OMNI_SAFE_CIRCALOCK_FW
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_loc.y, val)
                     return (this->m_loc.y += val);
                 }
 
@@ -345,26 +368,35 @@ namespace omni {
                     return static_cast<double>(this->m_loc.x) - this->m_rad;
                 }
 
-                void offset(T x, T y)
+                omni::geometry::circle<T>& offset(T x, T y)
                 {
                     OMNI_SAFE_CIRCALOCK_FW
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_loc.x, x)
                     this->m_loc.x += x;
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_loc.y, y)
                     this->m_loc.y += y;
+                    return *this;
                 }
 
-                void offset(const omni::geometry::point2d<T>& point)
+                omni::geometry::circle<T>& offset(const omni::geometry::point2d<T>& point)
                 {
                     return this->offset(point.x(), point.y());
                 }
 
-                void offset(const omni::geometry::raw_point2d<T>& point)
+                omni::geometry::circle<T>& offset(const omni::geometry::raw_point2d<T>& point)
                 {
                     return this->offset(point.x, point.y);
                 }
 
-                void offset(const omni::math::dimensional<T, 2>& coord)
+                omni::geometry::circle<T>& offset(const omni::math::dimensional<T, 2>& coord)
                 {
                     return this->offset(coord[0], coord[1]);
+                }
+
+                path_t path() const
+                {
+                    OMNI_SAFE_CIRCALOCK_FW
+                    return omni::geometry::path::circle<T>(this->m_loc.x, this->m_loc.y, this->m_rad);
                 }
 
                 double radius() const
@@ -379,46 +411,49 @@ namespace omni {
                     return static_cast<double>(this->m_loc.x) + this->m_rad;
                 }
 
-                void set_location(T x, T y)
+                omni::geometry::circle<T>& set_location(T x, T y)
                 {
                     OMNI_SAFE_CIRCALOCK_FW
                     this->m_loc.x = x;
                     this->m_loc.y = y;
+                    return *this;
                 }
 
-                void set_location(const omni::math::dimensional<T, 2>& coord)
+                omni::geometry::circle<T>& set_location(const omni::math::dimensional<T, 2>& coord)
                 {
-                    this->set_location(coord[0], coord[1]);
+                    return this->set_location(coord[0], coord[1]);
                 }
 
-                void set_location(const omni::geometry::point2d<T>& point)
+                omni::geometry::circle<T>& set_location(const omni::geometry::point2d<T>& point)
                 {
-                    this->set_location(point.x(), point.y());
+                    return this->set_location(point.x(), point.y());
                 }
 
-                void set_location(const omni::geometry::raw_point2d<T>& point)
+                omni::geometry::circle<T>& set_location(const omni::geometry::raw_point2d<T>& point)
                 {
-                    this->set_location(point.x, point.y);
+                    return this->set_location(point.x, point.y);
                 }
 
-                void set_circumference(double circumference)
+                omni::geometry::circle<T>& set_circumference(double circumference)
                 {
                     // Circumference = 2 × π × Radius
                     // Radius = Circumference / π / 2
                     this->set_radius((circumference / OMNI_PI) / 2.0);
+                    return *this;
                 }
 
-                void set_diameter(double diameter)
+                omni::geometry::circle<T>& set_diameter(double diameter)
                 {
                     // Diameter = 2 × Radius
                     // Radius = Diameter / 2
-                    this->set_radius(diameter / 2.0);
+                    return this->set_radius(diameter / 2.0);
                 }
 
-                void set_radius(double radius)
+                omni::geometry::circle<T>& set_radius(double radius)
                 {
                     OMNI_SAFE_CIRCALOCK_FW
                     this->m_rad = radius;
+                    return *this;
                 }
 
                 void swap(circle<T>& o)
@@ -440,7 +475,9 @@ namespace omni {
                 void translate_xy(T x, T y)
                 {
                     OMNI_SAFE_CIRCALOCK_FW
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_loc.x, x)
                     this->m_loc.x += x;
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_loc.y, y)
                     this->m_loc.y += y;
                 }
 
@@ -631,6 +668,8 @@ namespace omni {
                 omni::geometry::circle<T> operator+(const omni::geometry::point2d<T>& val)
                 {
                     OMNI_SAFE_CIRCALOCK_FW
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_loc.x, val.x())
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_loc.y, val.y())
                     return omni::geometry::circle<T>((this->m_loc.x + val.x()),
                                      (this->m_loc.y + val.y()),
                                      this->m_rad);
@@ -639,6 +678,8 @@ namespace omni {
                 omni::geometry::circle<T> operator+(const omni::geometry::raw_point2d<T>& val)
                 {
                     OMNI_SAFE_CIRCALOCK_FW
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_loc.x, val.x)
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_loc.y, val.y)
                     return omni::geometry::circle<T>((this->m_loc.x + val.x),
                                       (this->m_loc.y + val.y),
                                       this->m_rad);
@@ -655,6 +696,8 @@ namespace omni {
                 omni::geometry::circle<T> operator-(const omni::geometry::point2d<T>& val)
                 {
                     OMNI_SAFE_CIRCALOCK_FW
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_loc.x, val.x())
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_loc.y, val.y())
                     return omni::geometry::circle<T>((this->m_loc.x - val.x()),
                                      (this->m_loc.y - val.y()),
                                      this->m_rad);
@@ -663,6 +706,8 @@ namespace omni {
                 omni::geometry::circle<T> operator-(const omni::geometry::raw_point2d<T>& val)
                 {
                     OMNI_SAFE_CIRCALOCK_FW
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_loc.x, val.x)
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_loc.y, val.y)
                     return omni::geometry::circle<T>((this->m_loc.x - val.x),
                                      (this->m_loc.y - val.y),
                                      this->m_rad);
@@ -770,15 +815,20 @@ namespace omni {
                 }
         };
 
-        typedef omni::geometry::circle<int32_t> circle_t;
-        typedef omni::geometry::circle<int64_t> circle64_t;
+        typedef omni::geometry::circle<double> circle_t;
         typedef omni::geometry::circle<float> circleF_t;
+        typedef omni::geometry::circle<int32_t> circle32_t;
+        typedef omni::geometry::circle<int64_t> circle64_t;
+
+
+        // DEV_NOTE: "raw" classes do not have checks, like arithmetic over/under flow, locks, etc.
 
         template < typename T >
         class raw_circle
         {
             public:
                 typedef T coordinate_t;
+                typedef omni_sequence_t< omni::geometry::point2d< T > > path_t;
 
                 raw_circle() : 
                     OMNI_CTOR_FW(omni::geometry::raw_circle<T>)
@@ -830,7 +880,7 @@ namespace omni {
 
                 double circumference() const
                 {
-                    return OMNI_PI * this->radius * 2.0;
+                    return OMNI_PI_X2 * this->radius;
                 }
 
                 bool contains(T x, T y, bool include_edge) const
@@ -890,28 +940,33 @@ namespace omni {
                     return this->contains(circ, true);
                 }
 
-                void deflate(double percent)
+                omni::geometry::raw_circle<T>& deflate(double percent)
                 {
-                    this->radius *= (percent / 100.0);
+                    if (percent < 0) {
+                        OMNI_ERR_RETV_FW("value must be greater than 0", omni::exceptions::overflow_error("value must be greater than 0"), *this)
+                    }
+                    this->radius *= (1.0 - (percent / 100.0));
+                    return *this;
                 }
 
-                void decrement(T x, T y)
+                omni::geometry::raw_circle<T>& decrement(T x, T y)
                 {
                     this->location.x -= x;
                     this->location.y -= y;
+                    return *this;
                 }
 
-                void decrement(const omni::geometry::point2d<T>& point)
+                omni::geometry::raw_circle<T>& decrement(const omni::geometry::point2d<T>& point)
                 {
                     return this->decrement(point.x(), point.y());
                 }
 
-                void decrement(const omni::geometry::raw_point2d<T>& point)
+                omni::geometry::raw_circle<T>& decrement(const omni::geometry::raw_point2d<T>& point)
                 {
                     return this->decrement(point.x, point.y);
                 }
 
-                void decrement(const omni::math::dimensional<T, 2>& point)
+                omni::geometry::raw_circle<T>& decrement(const omni::math::dimensional<T, 2>& point)
                 {
                     return this->decrement(point[0], point[1]);
                 }
@@ -968,14 +1023,15 @@ namespace omni {
                     );
                 }
 
-                void inflate(double percent)
+                omni::geometry::raw_circle<T>& inflate(double percent)
                 {
                     this->radius *= (percent / 100.0);
+                    return *this;
                 }
 
-                void intersect(const omni::geometry::raw_circle<T>& r2)
+                omni::geometry::raw_circle<T>& intersect(const omni::geometry::raw_circle<T>& r2)
                 {
-                    if (this == &r2) { return; }
+                    if (this == &r2) { return *this; }
                     omni::geometry::raw_point2d<T> loc2 = r2.location;
                     double rad = r2.radius;
                     if (this->intersects_with(loc2.x, loc2.y, rad, true)) {
@@ -987,6 +1043,7 @@ namespace omni {
                         this->location.y = 0;
                         this->radius = 0;
                     }
+                    return *this;
                 }
 
                 bool intersects_with(T center_x, T center_y, double rad, bool include_edge) const
@@ -1054,25 +1111,31 @@ namespace omni {
                     return static_cast<double>(this->location.x) - this->radius;
                 }
 
-                void offset(T x, T y)
+                omni::geometry::raw_circle<T>& offset(T x, T y)
                 {
                     this->location.x += x;
                     this->location.y += y;
+                    return *this;
                 }
 
-                void offset(const omni::geometry::point2d<T>& point)
+                omni::geometry::raw_circle<T>& offset(const omni::geometry::point2d<T>& point)
                 {
                     return this->offset(point.x(), point.y());
                 }
 
-                void offset(const omni::geometry::raw_point2d<T>& point)
+                omni::geometry::raw_circle<T>& offset(const omni::geometry::raw_point2d<T>& point)
                 {
                     return this->offset(point.x, point.y);
                 }
 
-                void offset(const omni::math::dimensional<T, 2>& coord)
+                omni::geometry::raw_circle<T>& offset(const omni::math::dimensional<T, 2>& coord)
                 {
                     return this->offset(coord[0], coord[1]);
+                }
+
+                path_t path() const
+                {
+                    return omni::geometry::path::circle(this->location.x, this->location.y, this->radius);
                 }
 
                 double right() const
@@ -1080,44 +1143,46 @@ namespace omni {
                     return static_cast<double>(this->location.x) + this->radius;
                 }
 
-                void set_location(T x, T y)
+                omni::geometry::raw_circle<T>& set_location(T x, T y)
                 {
                     this->location.x = x;
                     this->location.y = y;
+                    return *this;
                 }
 
-                void set_location(const omni::math::dimensional<T, 2>& coord)
+                omni::geometry::raw_circle<T>& set_location(const omni::math::dimensional<T, 2>& coord)
                 {
-                    this->set_location(coord[0], coord[1]);
+                    return this->set_location(coord[0], coord[1]);
                 }
 
-                void set_location(const omni::geometry::point2d<T>& point)
+                omni::geometry::raw_circle<T>& set_location(const omni::geometry::point2d<T>& point)
                 {
-                    this->set_location(point.x(), point.y());
+                    return this->set_location(point.x(), point.y());
                 }
 
-                void set_location(const omni::geometry::raw_point2d<T>& point)
+                omni::geometry::raw_circle<T>& set_location(const omni::geometry::raw_point2d<T>& point)
                 {
-                    this->set_location(point.x, point.y);
+                    return this->set_location(point.x, point.y);
                 }
 
-                void set_circumference(double circumference)
+                omni::geometry::raw_circle<T>& set_circumference(double circumference)
                 {
                     // Circumference = 2 × π × Radius
                     // Radius = Circumference / π / 2
-                    this->set_radius((circumference / OMNI_PI) / 2.0);
+                    return this->set_radius((circumference / OMNI_PI) / 2.0);
                 }
 
-                void set_diameter(double diameter)
+                omni::geometry::raw_circle<T>& set_diameter(double diameter)
                 {
                     // Diameter = 2 × Radius
                     // Radius = Diameter / 2
-                    this->set_radius(diameter / 2.0);
+                    return this->set_radius(diameter / 2.0);
                 }
 
-                void set_radius(double rad)
+                omni::geometry::raw_circle<T>& set_radius(double rad)
                 {
                     this->radius = rad;
+                    return *this;
                 }
 
                 void swap(raw_circle<T>& o)
@@ -1133,10 +1198,11 @@ namespace omni {
                     return static_cast<double>(this->location.y) + this->radius;
                 }
 
-                void translate_xy(T x, T y)
+                omni::geometry::raw_circle<T>& translate_xy(T x, T y)
                 {
                     this->location.x += x;
                     this->location.y += y;
+                    return *this;
                 }
 
                 T x() const
@@ -1423,9 +1489,10 @@ namespace omni {
                 }
         };
 
-        typedef omni::geometry::raw_circle<int32_t> raw_circle_t;
-        typedef omni::geometry::raw_circle<int64_t> raw_circle64_t;
+        typedef omni::geometry::raw_circle<double> raw_circle_t;
         typedef omni::geometry::raw_circle<float> raw_circleF_t;
+        typedef omni::geometry::raw_circle<int32_t> raw_circle32_t;
+        typedef omni::geometry::raw_circle<int64_t> raw_circle64_t;
     }
 }
 

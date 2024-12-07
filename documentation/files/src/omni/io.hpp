@@ -27,7 +27,48 @@
 #include <omni/stack_buffer.hpp>
 #include <omni/defs/file_def.hpp>
 #define OMNI_IO_FILE_RW_FW 1
-#include <omni/xx/io_file_rw.hxx>
+#include <omni/xx/io/file_rw.hxx>
+
+/*
+    TODO: add this function ??
+
+    maybe instead of std::string, return uint64_t that can then be used in a date_time class??
+
+    std::string last_write_time(const std::string& file)
+    {
+        if (omni::io::file::exists(file)) {
+            struct stat attr;
+            char date[255] = {0};
+            std::string tmp, utc;
+            int iutc;
+            memset(date, 0, sizeof(date));
+            stat(file.c_str(), &attr);
+            strftime(date, 255, "%z", localtime(&(attr.st_ctime)));
+            tmp = std::string(date);
+            memset(date, 0, sizeof(date));
+            if (!omni::char_util::is_digit(tmp[0])) {
+                utc = tmp.substr(0, 1);
+                tmp = tmp.substr(1);
+            }
+            if (omni::string::is_numeric(tmp)) {
+                iutc = omni::string::util::to_type<int>(tmp);
+                iutc /= 100;
+                if (iutc < 10) {
+                    utc += "0" + omni::string::to_string(iutc);
+                } else {
+                    utc += omni::string::to_string(iutc);
+                }
+            }
+            strftime(date, 255, "%Z", localtime(&(attr.st_ctime)));
+            tmp = std::string(date);
+            memset(date, 0, sizeof(date));
+            utc = " (" + utc + " " + tmp + ")";
+            strftime(date, 255, "%m/%d/%Y %H:%M:%S", localtime(&(attr.st_ctime)));
+            return std::string(date) + utc;
+        }
+        return "00/00/0000 00:00:00 (+0 UTC)";
+    }
+*/
 
 namespace omni {
     namespace io {
@@ -2889,6 +2930,7 @@ namespace omni {
 }
 
 #define OMNI_IO_PATH_COMBINE_FW 1
-#include <omni/xx/io_path_combine.hxx>
+#include <omni/xx/io/path_combine.hxx>
+#undef OMNI_IO_PATH_COMBINE_FW
 
 #endif // OMNI_IO_HPP

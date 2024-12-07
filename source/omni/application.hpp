@@ -930,10 +930,10 @@ namespace omni {
 
                 static bool _valid(int32_t val)
                 {
-                    return (val == 
-                        NONE ||
-                        EXIT_WITH_WORK_THREAD ||
-                        KILL_WORKER_ON_SIGNAL
+                    return (
+                        OMNI_I2EV_FW(NONE) ||
+                        OMNI_I2EV_FW(EXIT_WITH_WORK_THREAD) ||
+                        OMNI_I2EV_FW(KILL_WORKER_ON_SIGNAL)
                     );
                 }
         };

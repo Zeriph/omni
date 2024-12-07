@@ -94,12 +94,13 @@ Ensure you build your projects with the same build parameters as you supplied to
 Static initialization order fiasco
 </td></tr><tr><td>Description</td><td>
 Some functionality of the library would fall pray to the initialization of static objects before
-other static objects were properly initialized, or what is commonly refered to as the <i>static initialization
-order fiasco</i>. To this, a few areas of the code will claim heap memory (like the thread management functions)
-for their static objects via the <code>new</code> keyword. However, they do <i>not</i> call <code>delete</code>
-since they are not reference-aware types and do not need to be freed unless the program ends, thus these objects
-will remain for the lifetime of the program. This would be true even if new/delete were not called, so there is
-not a memory leak in the sense that there is no <code>delete</code> for a call to <code>new</code>.
+other static objects were properly initialized, or what is commonly referred to as the <i>Static Initialization
+Order Fiasco</i>. To this, a few areas of the library follow the <i>Construct on First Use</i> idiom, such as
+the <code>omni::application</code> class and its member functions for maintaining application state (if used).
+If you do not call or use these areas of code, then no instances will be created.<br><br>
+Note that if you do call these areas of code and/or run a static memory analyzer, such as Valgrind, it will
+report those code blocks as "still reachable" after program execution; this is to be expected and should not
+cause alarm.
 </td></tr><tr><td>Resolution</td><td>
 None, just be aware that some areas of code had to be designed a certain way to overcome certain constructs within
 the C++ language; while some of these limitations are not necessarily an issue in newer versions of the C++
@@ -198,6 +199,26 @@ error: initializations for multiple members<br>
 Heed the error and ignore the warning.
 </td></tr></table></div>
 
+<div class="consider"><input type="checkbox" id="issue_compwarnx2" name="issue_compwarnx2" />
+<label class="code" for="issue_compwarnx2"> details</label><table class="code"><tr>
+<td>Issue</td><td>
+Compiler warnings continued again
+</td></tr><tr><td>Description</td><td>
+Depending on the level of warnings you enable, for example, <code>-Wcast-function-type</code> or
+<code>-Wignored-qualifiers</code>, you may notice the library emit a few warning about the
+<code>generic_ptr</code>, <code>stack_buffer</code> or <code>delegate</code> classes.<br><br>
+For the <code>generic_ptr</code> and <code>stack_buffer</code> classes, the warning is in regards
+to the <code>const</code> qualifier after a few of the member functions; this <code>const</code>
+qualifier is there in the event you were to pass one of these classes by const reference to another
+function; without this <code>const</code> qualifier, an error would be generated instead.<br><br>
+For the <code>delegate</code> classes, the warning is in regards to incompatible function types
+being casted to/from. This casting is necessary for the <code>delegate</code> classes to work
+properly.<br><br>
+As such, these warnings can be safely ignored within library itself.
+</td></tr><tr><td>Resolution</td><td>
+None; these warnings can be safely ignored.
+</td></tr></table></div>
+
 <div class="consider"><input type="checkbox" id="issue_nonport" name="issue_nonport" />
 <label class="code" for="issue_nonport"> details</label><table class="code"><tr>
 <td>Issue</td><td>
@@ -249,6 +270,26 @@ a lot of areas in the code that make use of this feature).
 </td></tr><tr><td>Resolution</td><td>
 This is not a bug, but something to be aware of when using the library; considerations
 are being made for other variations on this issue, should something more clear come along.
+</td></tr></table></div>
+
+<div class="consider"><input type="checkbox" id="issue_arithoverflow" name="issue_arithoverflow" />
+<label class="code" for="issue_arithoverflow"> details</label><table class="code"><tr>
+<td>Issue</td><td>
+<a href="options/omni_check_arithmetic_overflow.html">OMNI_CHECK_ARITHMETIC_OVERFLOW</a>
+</td></tr><tr><td>Description</td><td>
+There are certain classes, like those in the <code>omni::geometry</code> or <code>omni::math</code> namespaces
+that utilize mathematic operations (e.g. addition, subtraction, etc.). To this, while it is up to the developer
+to take care not to over/under-flow their operations, if you enable this preprocessor define, then the areas
+within the library that do have a possibility to overflow or underflow can be checked before the operation
+and throw an error if there is an over/under-flow condition.<br><br>
+NOTE: Since this check can have a huge impact on performance, this macro is <b>disabled</b> by default and
+<i>must</i> explicitly be enabled by the user of the library if they wish to have arithmetic overflow checks
+happen within the library itself.
+</td></tr><tr><td>Resolution</td><td>
+None, this option is disabled by default and must be explicitly enabled at compile time to have arithmetic overflow
+checked within the library; just remember this can impact performance since these checks happen before the specific
+arithmetic operation occurs. Since this is disabled by default, you must note that certain classes could have their
+bits overflow (e.g. uint64_t::max + 1 will overflow to 0).
 </td></tr></table></div>
 
 <div class="consider"><input type="checkbox" id="issue_devnote" name="issue_devnote" />

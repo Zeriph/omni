@@ -31,20 +31,30 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 </div><br>
 <div class="docdiv"><a name="syn"></a>
 <font class="docu">SYNOPSIS</font><br><br>
-No synopsis.
+The tick event that is called when the timer elapses.
 <br><br><a class="toppg" href="#topopage">top</a>
 </div><br>
 <div class="docdiv"><a name="desc"></a>
 <font class="docu">DESCRIPTION</font><br><br>
-No description.
+The event that is raised when the timer elapses. Each delegate is called in the order to which it was attached. The tick event is supposed to be a short-lived function, or you are to ensure that a separate thread is called to handle the elapsed time.
 <br><br><a class="toppg" href="#topopage">top</a>
 </div><br>
 
 
 
+<div class="docdiv"><a name="con"></a>
+<font class="docu">CONSIDERATIONS</font><br><br>
+While the timer event is a blocking event, the timer does happen on a separate thread, and care must be taken that any shared data in the attached delegate is protected in a thread-safe way. Additionally, it should be noted that it is possible for the total <code><a href="https://man7.org/linux/man-pages/man2/time.2.html">time</a></code> elapsed to be longer than the specified interval if the attached delegate executes or blocks for longer than the interval. 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
 
-
-
+<div class="docdiv"><a name="notes"></a>
+<font class="docu">NOTES</font><br><br>
+This timer will invoke a <code>tick</code> event at a specified interval and will not tick again until the attached delegate has completed, regardless of how long the specified interval is; in this way the tick event is a blocking event. If the timer is stopped before the interval has elapsed, any subsequent tick events will not fire. 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
 
 
 <!--end content-->

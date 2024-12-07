@@ -21,14 +21,14 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 </ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
 <!--start content-->
 <div class="ptitle"><a name="omni_examples"></a>Timers</div><div class="content"><div>
-A timer is a mechanism by which you can have an event repeat based on a specified time interval. After the specified interval has lapsed, the <code>tick</code> event will be raised and any <code><a href="../classes/omni-chrono-timer_delegate.html">omni::chrono::timer_delegate</a></code> delegates attached will be invoked. There are 4 types of timer classes to utilize within the library:<br>
+A timer is a mechanism by which you can have an event repeat based on a specified <code><a href="https://man7.org/linux/man-pages/man2/time.2.html">time</a></code> interval. After the specified interval has lapsed, the <code>tick</code> event will be raised and any <code><a href="../classes/omni-chrono-timer_delegate.html">omni::chrono::timer_delegate</a></code> delegates attached will be invoked. There are 4 types of timer classes to utilize within the library:<br>
 <br>
 <code><a href="../classes/omni-chrono-async_timer.html">omni::chrono::async_timer</a></code><br>
 <code><a href="../classes/omni-chrono-sync_timer.html">omni::chrono::sync_timer</a></code><br>
 <code><a href="../classes/omni-chrono-queue_timer.html">omni::chrono::queue_timer</a></code><br>
 <code><a href="../classes/omni-chrono-drop_timer.html">omni::chrono::drop_timer</a></code><br>
 <br>
-Each timer has the same functionality (i.e. the same member functions) and utilizes an <code><a href="../classes/omni-sync-basic_thread.html">omni::sync::basic_thread</a></code> that raises a <code>tick</code> event after a specified interval has passed. What differentiates the timer types is how they handle any attached delegates to the <code>tick</code> event that take <i>longer</i> than the specified tick time and could cause an overlap in ticks. As an example, take the following timer tick functions:<br>
+Each timer has the same functionality (i.e. the same member functions) and utilizes an <code><a href="../classes/omni-sync-basic_thread.html">omni::sync::basic_thread</a></code> that raises a <code>tick</code> event after a specified interval has passed. What differentiates the timer types is how they handle any attached delegates to the <code>tick</code> event that take <i>longer</i> than the specified tick <code><a href="https://man7.org/linux/man-pages/man2/time.2.html">time</a></code> and could cause an overlap in ticks. As an example, take the following timer tick functions:<br>
 <div class="sntx"><input type="checkbox" id="c0" name="c0" /><label for="c0">&nbsp;</label><pre><font class="syn_typ">void</font> timer_tick_short(<a href="../classes/omni-chrono-tick_t.html">omni::chrono::tick_t</a> tick_time, <font class="syn_typ">const</font> <a href="../classes/omni-generic_ptr.html">omni::generic_ptr</a>&amp; state_obj)
 {
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;In tick!&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
@@ -56,11 +56,11 @@ As such, any delegates attached to the async timer must be re-entrant or protect
 <br>
 The <code><a href="../classes/omni-chrono-sync_timer.html">omni::chrono::sync_timer</a></code> does <i>not</i> spawn a thread to do the tick event and instead calls the tick event directly, immediately following the interval lapse.<br>
 <br>
-This blocking nature will delay the time the next tick occurs by the time it takes for each attached function to execute; so if a <code>sync_timer</code> were created with a tick interval of 1000 milliseconds and <code>timer_tick_long</code> were attached to it, then the tick will occur after 1 second and the next tick will not occur for another 2 seconds afterwards (instead of 1 second) because of the <code><a href="../classes/omni-sync-sleep.html">omni::sync::sleep</a></code> in the <code>timer_tick_long</code> function, totalling to 3 seconds for the next tick (versus the 1 second interval).<br>
+This blocking nature will delay the <code><a href="https://man7.org/linux/man-pages/man2/time.2.html">time</a></code> the next tick occurs by the time it takes for each attached function to execute; so if a <code>sync_timer</code> were created with a tick interval of 1000 milliseconds and <code>timer_tick_long</code> were attached to it, then the tick will occur after 1 second and the next tick will not occur for another 2 seconds afterwards (instead of 1 second) because of the <code><a href="../classes/omni-sync-sleep.html">omni::sync::sleep</a></code> in the <code>timer_tick_long</code> function, totalling to 3 seconds for the next tick (versus the 1 second interval).<br>
 <br>
 <font class="hdr">Queue Timer</font><br>
 <br>
-The <code><a href="../classes/omni-chrono-queue_timer.html">omni::chrono::queue_timer</a></code> will spawn a thread to do the tick event on (similar to the <code>async_timer),</code> but when a tick event occurs on the <code>queue_timer</code> the time it ticked and state object are added to a queue if the tick event thread is still executing.<br>
+The <code><a href="../classes/omni-chrono-queue_timer.html">omni::chrono::queue_timer</a></code> will spawn a thread to do the tick event on (similar to the <code>async_timer),</code> but when a tick event occurs on the <code>queue_timer</code> the <code><a href="https://man7.org/linux/man-pages/man2/time.2.html">time</a></code> it ticked and state object are added to a queue if the tick event thread is still executing.<br>
 <br>
 If the queue is empty after the tick event occurs then the tick thread dies and a new one will be spawned on the next tick event; if the queue is <b><i>not</i></b> empty, the tick thread will pop off each event in the queue, executing in the order it was added regardless of tick interval. In this manner, it is possible to have multiple tick events occur in quick succession if the queue has any items in it due to a tick event taking longer than the interval. <br>
 <br>
@@ -75,7 +75,7 @@ Like the other timer types the <code>drop_timer</code> executes the tick event o
 Each timer has a separate idiom to it to allow a greater flexibility in how you design your code. The timer types are separated out instead of having 1 class that could &quot;do it all&quot; because merging the capabilities of each timer type into one class would bloat the size of the class needlessly if you only ever needed 1 timer type over another (i.e. an <code>async_timer</code> over a <code>queue_timer</code> type).<br><br><font class="hdr">Example</font><br><div class="sntx"><input type="checkbox" id="c1" name="c1" checked /><label for="c1">&nbsp;</label><pre><font class="syn_pre">#include &lt;<a href="../htmlsrc/omnilib.html">omnilib</a>&gt;</font>
 
 static <a href="../classes/omni-sync-basic_lock.html">omni::sync::basic_lock</a> mtx;
-static <a href="http://www.cplusplus.com/reference/map/map/">std::map</a>&lt;<font class="syn_typ">int</font>, <a href="http://www.cplusplus.com/reference/string/">std::string</a>&gt; vals;
+static <a href="http://www.cplusplus.com/reference/map/map/">std::map</a>&lt;<font class="syn_typ">int</font>, std::string&gt; vals;
 static <a href="http://www.cplusplus.com/reference/map/map/">std::map</a>&lt;<font class="syn_typ">int</font>, <font class="syn_typ">int</font>&gt; tcount;
 
 <font class="syn_typ">void</font> print_status(<font class="syn_typ">int</font> val, <font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; el)

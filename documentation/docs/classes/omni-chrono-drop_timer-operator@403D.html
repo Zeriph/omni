@@ -31,18 +31,23 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 </div><br>
 <div class="docdiv"><a name="syn"></a>
 <font class="docu">SYNOPSIS</font><br><br>
-No synopsis.
+Assigns the underlying data from one timer to this one.
 <br><br><a class="toppg" href="#topopage">top</a>
 </div><br>
 <div class="docdiv"><a name="desc"></a>
 <font class="docu">DESCRIPTION</font><br><br>
-No description.
+Assigns the interval, state object and tick event data of another timer to this one. If this timer is currently running, it is stopped before the assignment occurs.
 <br><br><a class="toppg" href="#topopage">top</a>
 </div><br>
 
 
 
-
+<div class="docdiv"><a name="con"></a>
+<font class="docu">CONSIDERATIONS</font><br><br>
+Care should be taken if your tick event delegate utilizes the state object of this instance since it could be destroyed in assignment. 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
 
 
 

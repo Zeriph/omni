@@ -202,6 +202,7 @@ parse_args()
             "-v3") vs="-vvv" ;;
             "-po") eopts="${eopts} -po" ;;
             "-?") usage; exit 0 ;;
+            "-help") usage; exit 0 ;;
             "-list") list_tests; exit 0 ;;
 
             # library options
@@ -213,6 +214,7 @@ parse_args()
             "-sfw") eopts="${eopts} -oo safe ${2}"; shift ;;
             "-np") eopts="${eopts} -oo np" ;;
             "-terr") eopts="${eopts} -oo terr" ;;
+            "-c++11") eopts="${eopts} -d OMNI_ENABLE_CXX" ;;
             
             # library debug options
             "-d1") eopts="${eopts} -dbg 1" ;;

@@ -50,7 +50,20 @@ namespace omni {
                 }
                 std::memcpy(this->m_data, data, SZ);
             }
-
+            
+            /**
+             * @brief Creates a stack_buffer with the values passed in.
+             *
+             * @details Create a stack_buffer type with the default values specified.
+             *
+             * @param val1... The value(s) to assign each of the stack_buffer's underlying buffer up to val+SZ.
+             *
+             * @warning Be aware, due to the variadic argument list being used, if the backing type is that of a
+             * float or double, the values passed in must either be named types or explicitly defined; for example,
+             * you must have variables defined as a @c double and passing in those variables or you must explicitly
+             * pass in @c 10.0 (for example) for each value. Failure to do this could cause the underlying floating
+             * types to be mis-read by the va_arg list due to certain casting behavior by some compilers/environments.
+             */
             stack_buffer(T val1, ...) : 
                 OMNI_CTOR_FW(omni::stack_buffer)
                 m_data()
@@ -58,11 +71,11 @@ namespace omni {
                 if (SZ == 0) {
                     OMNI_ERR_FW(OMNI_INDEX_OOR_STR, omni::exceptions::index_out_of_range())
                 }
-                va_list args;
+                std::va_list args;
                 va_start(args, val1);
                 this->m_data[0] = val1;
                 for (std::size_t i = 1; i < SZ; ++i) {
-                    this->m_data[i] = va_arg(args, value_type);
+                    this->m_data[i] = static_cast<T>(va_arg(args, T));
                 }
                 va_end(args);
             }
@@ -123,7 +136,7 @@ namespace omni {
 
             std::size_t capacity() const
             {
-                return SZ * sizeof(T);
+                return SZ;
             }
 
             T* data()
@@ -151,6 +164,18 @@ namespace omni {
                 return this->m_data;
             }
 
+            void fill(T value)
+            {
+                for (std::size_t i = 0; i < SZ; ++i) {
+                    this->m_data[i] = value;
+                }
+            }
+
+            std::size_t memory_size() const
+            {
+                return SZ * sizeof(T);
+            }
+
             void swap(stack_buffer& other)
             {
                 if (this != &other) {
@@ -165,7 +190,7 @@ namespace omni {
                 }
             }
 
-            uint16_t size() const
+            std::size_t size() const
             {
                 return SZ;
             }
@@ -260,7 +285,7 @@ namespace omni {
 
             bool operator<(const T (&data)[SZ]) const
             {
-                if (&this->m_data != &data) { return false; }
+                if (&this->m_data == &data) { return false; }
                 for (uint16_t i = 0; i < SZ; ++i) {
                     if (this->m_data[i] >= data[i]) {
                         return false;
@@ -282,7 +307,7 @@ namespace omni {
 
             bool operator>(const T (&data)[SZ]) const
             {
-                if (&this->m_data != &data) { return false; }
+                if (&this->m_data == &data) { return false; }
                 for (uint16_t i = 0; i < SZ; ++i) {
                     if (this->m_data[i] <= data[i]) {
                         return false;
@@ -304,7 +329,7 @@ namespace omni {
 
             bool operator<=(const T (&data)[SZ]) const
             {
-                if (&this->m_data != &data) { return true; }
+                if (&this->m_data == &data) { return true; }
                 for (uint16_t i = 0; i < SZ; ++i) {
                     if (this->m_data[i] > data[i]) {
                         return false;
@@ -326,7 +351,7 @@ namespace omni {
 
             bool operator>=(const T (&data)[SZ]) const
             {
-                if (&this->m_data != &data) { return true; }
+                if (&this->m_data == &data) { return true; }
                 for (uint16_t i = 0; i < SZ; ++i) {
                     if (this->m_data[i] < data[i]) {
                         return false;
@@ -381,7 +406,7 @@ namespace omni {
 
             OMNI_OSTREAM_FW(omni::stack_buffer<T, SZ>)
 
-            static uint32_t max_size()
+            static std::size_t max_size()
             {
                 return std::numeric_limits<uint16_t>::max();
             }

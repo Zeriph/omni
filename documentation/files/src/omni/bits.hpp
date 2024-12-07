@@ -50,6 +50,27 @@
 
 namespace omni {
     namespace bits {
+        /**
+         * @brief Brief
+         * 
+         * @details Details
+         * 
+         * @exception Errors
+         * 
+         * @warning Consideration
+         * 
+         * @attention Platform
+         * 
+         * @note Notes
+         * 
+         * @tparam T   Parameter_Description
+         * @tparam F   Parameter_Description
+         * 
+         * @param t    Parameter_Description
+         * @param flag Parameter_Description
+         * 
+         * @return Return_Description
+         */
         template < typename T, typename F >
         inline bool has_flag(const T& t, F flag)
         {

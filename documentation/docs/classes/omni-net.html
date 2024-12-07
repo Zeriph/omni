@@ -23,23 +23,29 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <div class="ptitle">omni::net</div><div class="content"><div>
 <div class="docdiv"><a name="nm"></a>
 <font class="docu">NAME</font><br><br>
-<code><a href="../htmlsrc/omni/defs/net_def.hpp.html#omni::net" class="chnm">
+<code><a href="../htmlsrc/extensions/net/client.hpp.html#omni::net" class="chnm">
     omni::net
     </a></code><br>
 <br>A namespace of <a href="omni.html" class="code">omni</a><br><br>
-    <code><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/defs/net_def.hpp.html">omni/defs/net_def.hpp</a>&gt;</font></code><br><code>namespace omni::net</code><br>
+    <code><font class="syn_pre">#include &lt;extensions/net/client.hpp&gt;</font></code><br><code>namespace omni::net</code><br>
     <br>
     <font class="docu">MEMBERS</font><br>
     <br>
     <code><a href="../classes/omni-net-util.html">omni::net::util</a><br>
     <a href="../classes/omni-net-address_family.html">omni::net::address_family</a><br>
+    <a href="../classes/omni-net-blocking_mode.html">omni::net::blocking_mode</a><br>
     <a href="../classes/omni-net-client.html">omni::net::client</a><br>
     <a href="../classes/omni-net-connection_option.html">omni::net::connection_option</a><br>
     <a href="../classes/omni-net-endpoint_descriptor.html">omni::net::endpoint_descriptor</a><br>
+    <a href="../classes/omni-net-endpoint_descriptor6.html">omni::net::endpoint_descriptor6</a><br>
+    <a href="../classes/omni-net-ip6_binary_address.html">omni::net::ip6_binary_address</a><br>
     <a href="../classes/omni-net-protocol_type.html">omni::net::protocol_type</a><br>
     <a href="../classes/omni-net-select_mode.html">omni::net::select_mode</a><br>
     <a href="../classes/omni-net-server.html">omni::net::server</a><br>
+    <a href="../classes/omni-net-server_error.html">omni::net::server_error</a><br>
     <a href="../classes/omni-net-socket.html">omni::net::socket</a><br>
+    <a href="../classes/omni-net-socket6.html">omni::net::socket6</a><br>
+    <a href="../classes/omni-net-socket_create_options.html">omni::net::socket_create_options</a><br>
     <a href="../classes/omni-net-socket_error.html">omni::net::socket_error</a><br>
     <a href="../classes/omni-net-socket_flags.html">omni::net::socket_flags</a><br>
     <a href="../classes/omni-net-socket_option.html">omni::net::socket_option</a><br>
@@ -48,8 +54,11 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
     <a href="../classes/omni-net-socket_type.html">omni::net::socket_type</a><br>
     <a href="../classes/omni-net-tcp_option.html">omni::net::tcp_option</a><br>
     <a href="../classes/omni-net-version.html">omni::net::version</a><br>
-    <a href="../classes/omni-net-wsa_info.html">omni::net::wsa_info</a><br>
+    <a href="../classes/omni-net-dual_socket_addr_t.html">omni::net::dual_socket_addr_t</a><br>
+    <a href="../classes/omni-net-dual_socket_endpoint_t.html">omni::net::dual_socket_endpoint_t</a><br>
     <font class="syn_ins">inline</font> <a href="../classes/omni-net-socket_error.html">omni::net::socket_error</a> <a href="../classes/omni-net-parse_error.html">omni::net::parse_error</a>(<font class="syn_typ">int</font> serr)<br>
+    <font class="syn_ins">inline</font> <a href="../classes/omni-net-server_error.html">omni::net::server_error</a> <a href="../classes/omni-net-parse_server_error.html">omni::net::parse_server_error</a>(<font class="syn_typ">int</font> serr)<br>
+    <font class="syn_ins">inline</font> <a href="../classes/omni-net-socket_error.html">omni::net::socket_error</a> <a href="../classes/omni-net-server_error_to_socket_error.html">omni::net::server_error_to_socket_error</a>(<font class="syn_typ">const</font> <a href="../classes/omni-net-server_error.html">omni::net::server_error</a>&amp; error)<br>
     <font class="syn_ins">inline</font> <a href="../classes/omni-net-sockaddr_t.html">omni::net::sockaddr_t</a>* <a href="../classes/omni-net-to_sockaddr.html">omni::net::to_sockaddr</a>(<a href="../classes/omni-net-sockaddr_in_t.html">omni::net::sockaddr_in_t</a>&amp; addr)<br>
     <a href="../classes/omni-net-sockaddr_in6_t.html">omni::net::sockaddr_in6_t</a><br>
     <a href="../classes/omni-net-sockaddr_in_t.html">omni::net::sockaddr_in_t</a><br>

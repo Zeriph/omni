@@ -26,7 +26,7 @@ The output would be:
 255, 10
 @code
 </Description>
-  <Notes>An XOR swap might be efficient on memory since it does not utilize temporaries, but it might not be as fast in CPU time as one might initially expect, especially for different types or types that do not fall on a clean word boundary. Test your swaps in a tight loop to verify if an XOR swap is any faster than a std::swap or copy-swap.</Notes>
+  <Notes>An XOR swap might be efficient on memory since it does not utilize temporaries, but it might not be as fast in CPU @_time as one might initially expect, especially for different types or types that do not fall on a clean word boundary. Test your swaps in a tight loop to verify if an XOR swap is any faster than a std::swap or copy-swap.</Notes>
   <PlatformSpecific>No platform specific notes.</PlatformSpecific>
   <Synopsis>A simple helper macro to swap 2 objects via an XOR swap.</Synopsis>
   <IsHelper>true</IsHelper>

@@ -16,6 +16,7 @@ class UT_CLASS_DEF
             M_LIST_ADD(wstring_test, "tests the basic functionality of the omni::wstring namespace");
             M_LIST_ADD(string_util_test, "tests the string util namespace");
             M_LIST_ADD(split_test, "tests the string split functionality");
+            M_LIST_ADD(contains_test, "tests the string contains functionality");
         }
         
         UT_CLASS_DTOR() {}
@@ -28,18 +29,43 @@ class UT_CLASS_DEF
             omni::out << s << std::endl;
             omni::char_t c = OMNI_STRW('c');
             omni::out << "char test: " << c << std::endl;
+
+
+            test("pad_left_full", omni::cstring::pad_left_full("1", "0", 3), "0001");
+            test("pad_left_full", omni::cstring::pad_left_full("11", "0", 3), "00011");
+            test("pad_left_full", omni::cstring::pad_left_full("111", "0", 3), "000111");
+
+            test("pad_left", omni::cstring::pad_left("1", '0', 3), "001");
+            test("pad_left", omni::cstring::pad_left("11", '0', 3), "011");
+            test("pad_left", omni::cstring::pad_left("111", '0', 3), "111");
+
+
+            test("pad_right_full", omni::cstring::pad_right_full("1", "0", 3), "1000");
+            test("pad_right_full", omni::cstring::pad_right_full("11", "0", 3), "11000");
+            test("pad_right_full", omni::cstring::pad_right_full("111", "0", 3), "111000");
+
+            test("pad_right", omni::cstring::pad_right("1", '0', 3), "100");
+            test("pad_right", omni::cstring::pad_right("11", '0', 3), "110");
+            test("pad_right", omni::cstring::pad_right("111", '0', 3), "111");
+
+
+            test("lcfirst", omni::cstring::lcfirst("This is a test"), "this is a test");
+            test("ucfirst", omni::cstring::ucfirst("this is a test"), "This is a test");
+            test("ucwords", omni::cstring::ucwords("this is a test"), "This Is A Test");
+            test("ucwords", omni::cstring::ucwords("this\tis\ta test"), "This\tIs\tA Test");
+            test("to_title_case", omni::cstring::to_title_case("tHiS iS a tEsT"), "This Is A Test");
             
             /*
             TODO: add the following
             ->inline bool ends_with(const OMNI_STRING_T_FW& chk, const OMNI_STRING_T_FW& fnd, bool ignore_case)
             ->inline bool starts_with(const OMNI_STRING_T_FW& chk, const OMNI_STRING_T_FW& fnd, bool ignore_case)
-
-            omni::string::contains(const std::string& chk, const std::string& fnd, bool ignoreCase);
-            omni::string::is_numeric(const std::string& str, bool ignorePeriod);
             omni::string::pad_left(std::string str, char pad, size_t count);
             omni::string::pad_left(std::string str, const std::string& pad, size_t count);
             omni::string::pad_right(std::string str, char pad, size_t count);
             omni::string::pad_right(std::string str, const std::string& pad, size_t count);
+            omni::string::contains(const std::string& chk, const std::string& fnd, bool ignoreCase);
+            omni::string::util::compare(str1, idx1, len1, str2, idx2, len2, options)
+            omni::string::is_numeric(const std::string& str, bool ignorePeriod);
             omni::string::replace(std::string str, const std::string& fnd, const std::string& newstr, size_t pos, bool ignoreCase);
             omni::string::replace_all(std::string str, const std::string& fnd, const std::string& newstr, size_t pos, bool ignoreCase);
             omni::string::reverse(const std::string& str);
@@ -327,6 +353,25 @@ class UT_CLASS_DEF
             
             std::cout << "sstr = " << sstr << std::endl;
             std::wcout << "wstr = " << wstr << std::endl;
+        }
+
+        void contains_test()
+        {
+            std::string noparse = "dir.hxx,file.hxx,file_ex.hxx,file_rw.hxx,path.hxx,path_combine.hxx,math_radmap.hxx,timer.hxx,date_data.hxx";
+            std::string file = "/Code/omni/source/omni/geometry/path.hxx";
+            std::string name = omni::io::path::get_name(file);
+
+            std::deque<std::string> non = omni::cstring::split(noparse, ",");
+            bool hasit = std::find(non.begin(), non.end(), name) != non.end();
+
+            std::cout << "file = '" << file << "'" << std::endl
+                      << "name = '" << name << "'" << std::endl;
+
+            if (hasit) {
+                std::cout << "noparse contains '" << name << "'" << std::endl;
+            } else {
+                std::cout << "does NOT contain " << name << std::endl;
+            }
         }
 };
 

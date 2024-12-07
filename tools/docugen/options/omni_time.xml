@@ -6,7 +6,7 @@
   <Description>A helper macro that </Description>
   <Notes>None.</Notes>
   <PlatformSpecific>No platform specific notes.</PlatformSpecific>
-  <Synopsis>This is a helper macro that is used by the OMNI_FW_VER_STR helper macro to append the build time to the version macro string.
+  <Synopsis>This is a helper macro that is used by the OMNI_FW_VER_STR helper macro to append the build @_time to the version macro string.
 
 Defined as the following:
 

@@ -36,11 +36,12 @@
 // so as not to accidentally build this file with the source
 // these macros are defined in cconsts.hpp and wconsts.hpp
 #if !defined(OMNI_CHAR_T_FW) || !defined(OMNI_STRW_FW)
-    #error invalid preprocessor directive detected
+    #error "invalid preprocessor directive detected"
 #endif
 
 // namespace omni::consts/cconsts/wconsts {
 
+/** Facilitate constant error strings */
 namespace err {
     OMNI_CONSTEXT_FW const OMNI_CHAR_T_FW DELEGATE_NOT_FOUND[] OMNI_EXT_ASSN_FW(OMNI_STRW_FW(OMNI_NO_DELEGATE_STR));
     OMNI_CONSTEXT_FW const OMNI_CHAR_T_FW ERR_GET_TIME[] OMNI_EXT_ASSN_FW(OMNI_STRW_FW(OMNI_ERR_GET_TIME_STR));
@@ -74,6 +75,7 @@ namespace err {
     OMNI_CONSTEXT_FW const OMNI_CHAR_T_FW UNKNOWN[] OMNI_EXT_ASSN_FW(OMNI_STRW_FW(OMNI_UNKNOWN_STR));
 }
 
+/** Miscellaneous constants */
 namespace misc {
     #if OMNI_MISC_T_FW == 1
         OMNI_CONSTEXT_FW const OMNI_CHAR_T_FW COMMA OMNI_EXT_ASSN_FW(OMNI_COMMA_CHAR);
@@ -90,9 +92,13 @@ namespace misc {
     #endif
 }
 
+/** Facilitates size constants */
 namespace size {
+    /** Facilitates binary size constants (1KB == 1024B) */
     namespace binary {
+        /** Facilitates binary size abbreviated string constants (B, KiB, MiB, etc.) */
         namespace string {
+            /** Facilitates binary size unabbreviated string constants (Byte, Kibibyte, etc.) */
             namespace full {
                 OMNI_CONSTEXT_FW const OMNI_CHAR_T_FW B[] OMNI_EXT_ASSN_FW(OMNI_STRW_FW(OMNI_BYTE_STR));
                 OMNI_CONSTEXT_FW const OMNI_CHAR_T_FW KB[] OMNI_EXT_ASSN_FW(OMNI_STRW_FW(OMNI_KIBI_STR));
@@ -115,8 +121,11 @@ namespace size {
             OMNI_CONSTEXT_FW const OMNI_CHAR_T_FW YB[] OMNI_EXT_ASSN_FW(OMNI_STRW_FW(OMNI_YIB_STR));
         }
     }
+    /** Facilitates decimal size constants (1KB == 1000B) */
     namespace decimal {
+        /** Facilitates decimal size abbreviated string constants (B, KB, MB, etc.) */
         namespace string {
+            /** Facilitates decimal size unabbreviated string constants (Byte, Kilobyte, etc.) */
             namespace full {
                 OMNI_CONSTEXT_FW const OMNI_CHAR_T_FW B[] OMNI_EXT_ASSN_FW(OMNI_STRW_FW(OMNI_BYTE_STR));
                 OMNI_CONSTEXT_FW const OMNI_CHAR_T_FW KB[] OMNI_EXT_ASSN_FW(OMNI_STRW_FW(OMNI_KILO_STR));

@@ -216,6 +216,7 @@ void OmniDocuGen::DocuGen::Initialize()
     if (args.contains("-TempZipDirectory")) { OmniDocuGen::Program::Settings.TempZipDirectory = args["-TempZipDirectory"]; }
     if (args.contains("-Excluded")) { OmniDocuGen::Program::Settings.Excluded = args["-Excluded"]; }
     if (args.contains("-NoParse")) { OmniDocuGen::Program::Settings.NoParse = args["-NoParse"]; }
+    if (args.contains("-PathsFor7z")) { OmniDocuGen::Program::Settings.PathsFor7z = args["-PathsFor7z"]; }
 
     OmniDocuGen::DocuGen::Root = OmniDocuGen::Program::Settings.OutputDirectory;
     OmniDocuGen::DocuGen::Files = omni::io::path::combine(OmniDocuGen::DocuGen::Root, "files");

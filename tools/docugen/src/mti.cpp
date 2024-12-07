@@ -1156,7 +1156,8 @@ void OmniDocuGen::MemberTypeInformation::_ParseAsClass(const std::string& code)
                 }
                 int32_t cidx = OmniDocuGen::Util::CommentBefore(code, idx);
                 if (cidx >= 0) {
-                    idx = cidx;
+                    // idx = cidx; // DEV_NOTE: no clue what I was thinking here, but leaving this for posterity
+                    idx = code.find("*/", cidx) + 2;
                     this->Comment = new CommentInformation(omni::string::trim(code.substr(cidx, idx - cidx)), this->FullPath, this->IsAnOverload(), this->OverloadIndex);
                     if (this->Comment->HasIgnoreFlag) {
                         this->ScopeAccessType = OmniDocuGen::Types::CodeScopeAcessType::Private;

@@ -37,13 +37,13 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
     <font class="syn_ins">template</font> &lt; <font class="syn_typ">class</font> T, ret_t (T::*fnptr)() <font class="syn_typ">const</font> &gt; static delegate <a href="../classes/omni-delegate-bind_const.html">omni::delegate::bind_const</a>(<font class="syn_typ">const</font> T&amp; obj)<br>
     <font class="syn_ins">inline</font> <font class="syn_typ">void</font> <a href="../classes/omni-delegate-bond.html">omni::delegate::bond</a>(function_ptr fnptr)<br>
     <font class="syn_ins">template</font> &lt; <font class="syn_typ">class</font> T, ret_t (T::*fnptr)() <font class="syn_typ">const</font> &gt; <font class="syn_ins">inline</font> <font class="syn_typ">void</font> <a href="../classes/omni-delegate-bond_const.html">omni::delegate::bond_const</a>(<font class="syn_typ">const</font> T&amp; obj)<br>
-    <font class="syn_typ">const</font> function_ptr <a href="../classes/omni-delegate-function.html">omni::delegate::function</a>()<br>
+    function_ptr <a href="../classes/omni-delegate-function.html">omni::delegate::function</a>()<br>
     ret_t <a href="../classes/omni-delegate-invoke.html">omni::delegate::invoke</a>()<br>
     ret_t <a href="../classes/omni-delegate-invoke_direct.html">omni::delegate::invoke_direct</a>()<br>
     <a href="../classes/omni-invoke_t.html">omni::invoke_t</a> <a href="../classes/omni-delegate-invoke_type.html">omni::delegate::invoke_type</a>()<br>
     <font class="syn_typ">bool</font> <a href="../classes/omni-delegate-is_bound.html">omni::delegate::is_bound</a>()<br>
     <font class="syn_typ">bool</font> <a href="../classes/omni-delegate-is_member_bound.html">omni::delegate::is_member_bound</a>()<br>
-    <font class="syn_typ">const</font> functor <a href="../classes/omni-delegate-method.html">omni::delegate::method</a>()<br>
+    functor <a href="../classes/omni-delegate-method.html">omni::delegate::method</a>()<br>
     <font class="syn_typ">void</font> <a href="../classes/omni-delegate-swap.html">omni::delegate::swap</a>(delegate&lt; Ret &gt;&amp; d)<br>
     <font class="syn_typ">void</font>* <a href="../classes/omni-delegate-target.html">omni::delegate::target</a>()<br>
     <font class="syn_ins">inline</font> <font class="syn_typ">void</font> <a href="../classes/omni-delegate-unbind.html">omni::delegate::unbind</a>()<br>
@@ -64,16 +64,21 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 </div><br>
 <div class="docdiv"><a name="syn"></a>
 <font class="docu">SYNOPSIS</font><br><br>
-No synopsis.
+The delegate is a powerful function pointer object that encapsulates both an object instance and a method.
 <br><br><a class="toppg" href="#topopage">top</a>
 </div><br>
 <div class="docdiv"><a name="desc"></a>
 <font class="docu">DESCRIPTION</font><br><br>
-No description.
+The delegate is agnostic to the type or method it encapsulates; all that matters is that the method be signature compatible with the delegate. This allows for anonymous invocation by users of the delegate.
 <br><br><a class="toppg" href="#topopage">top</a>
 </div><br>
 
-
+<div class="docdiv"><a name="param"></a>
+<font class="docu">PARAMETERS</font><br><br>
+<code>Ret</code> - Specifies the return type of the function the delegate is to attach to 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
 
 
 

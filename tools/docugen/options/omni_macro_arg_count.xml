@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_MACRO_ARG_COUNT</Name>
-  <Brief>A</Brief>
+  <Brief>Parses and returns a number based on the number of arguments passed into a macro</Brief>
   <Considerations>No special considerations</Considerations>
-  <Description>A library macro/option that changes certain functionality</Description>
+  <Description>Useful for getting the number of arguments passed into a variadic macro.</Description>
   <Notes>None.</Notes>
   <PlatformSpecific>No platform specific notes.</PlatformSpecific>
   <Synopsis>A library macro/option</Synopsis>

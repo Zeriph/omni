@@ -28,7 +28,7 @@ namespace omni {
         public:
             generic_ptr() :
                 OMNI_CTOR_FW(omni::generic_ptr)
-                m_ptr(OMNI_NULL), m_id(0)
+                m_ptr(OMNI_NULL_PTR), m_id(0)
             {
                 OMNI_D5_FW("created");
             }
@@ -64,7 +64,7 @@ namespace omni {
             
             void invalidate()
             {
-                this->m_ptr = OMNI_NULL;
+                this->m_ptr = OMNI_NULL_PTR;
                 this->m_id = 0;
             }
 
@@ -72,11 +72,11 @@ namespace omni {
             bool is_type() const
             { return this->m_id == omni::type_id<T>(); }
             
-            bool valid() const { return (this->m_ptr != OMNI_NULL); }
+            bool valid() const { return (this->m_ptr != OMNI_NULL_PTR); }
             
             operator bool() const
             {
-                return (this->m_ptr != OMNI_NULL);
+                return (this->m_ptr != OMNI_NULL_PTR);
             }
             
             bool operator!() const
@@ -108,7 +108,7 @@ namespace omni {
             operator T *const() const
             {
                 if (this->m_id != omni::type_id<T>()) {
-                    OMNI_ERR_RETV_FW("invalid cast detected", omni::exceptions::invalid_type_cast(), 0)
+                    OMNI_ERR_RETV_FW("invalid cast detected", omni::exceptions::invalid_type_cast(), OMNI_NULL_PTR)
                 }
                 return static_cast<T *const>(
                     const_cast<void *const>(this->m_ptr)
@@ -119,7 +119,7 @@ namespace omni {
             operator const T *const() const
             {
                 if ((this->m_id != omni::type_id<T>()) && (this->m_id != omni::type_id<const T>())) {
-                    OMNI_ERR_RETV_FW("invalid cast detected", omni::exceptions::invalid_type_cast(), 0);
+                    OMNI_ERR_RETV_FW("invalid cast detected", omni::exceptions::invalid_type_cast(), OMNI_NULL_PTR);
                 }
                 return static_cast<const T *const>(this->m_ptr);
             }
@@ -150,7 +150,7 @@ namespace omni {
         public:
             generic_ptr_safe() :
                 OMNI_CTOR_FW(omni::generic_ptr_safe)
-                m_ptr(OMNI_NULL), m_id(0), m_mtx()
+                m_ptr(OMNI_NULL_PTR), m_id(0), m_mtx()
             {
                 omni::sync::mutex_init(this->m_mtx);
                 OMNI_D5_FW("created");
@@ -191,7 +191,7 @@ namespace omni {
             void invalidate()
             {
                 omni::sync::scoped_lock<omni::sync::mutex_t> alock(&this->m_mtx);
-                this->m_ptr = OMNI_NULL;
+                this->m_ptr = OMNI_NULL_PTR;
                 this->m_id = 0;
             }
             
@@ -205,7 +205,7 @@ namespace omni {
             bool valid() const
             {
                 omni::sync::scoped_lock<omni::sync::mutex_t> alock(&this->m_mtx);
-                return (this->m_ptr != OMNI_NULL);
+                return (this->m_ptr != OMNI_NULL_PTR);
             }
             
             operator bool() const
@@ -245,7 +245,7 @@ namespace omni {
             {
                 omni::sync::scoped_lock<omni::sync::mutex_t> alock(&this->m_mtx);
                 if (this->m_id != omni::type_id<T>()) {
-                    OMNI_ERR_RETV_FW("invalid cast detected", omni::exceptions::invalid_type_cast(), 0)
+                    OMNI_ERR_RETV_FW("invalid cast detected", omni::exceptions::invalid_type_cast(), OMNI_NULL_PTR)
                 }
                 return static_cast<T *const>(
                     const_cast<void *const>(this->m_ptr)
@@ -257,7 +257,7 @@ namespace omni {
             {
                 omni::sync::scoped_lock<omni::sync::mutex_t> alock(&this->m_mtx);
                 if ((this->m_id != omni::type_id<T>()) && (this->m_id != omni::type_id<const T>())) {
-                    OMNI_ERR_RETV_FW("invalid cast detected", omni::exceptions::invalid_type_cast(), 0);
+                    OMNI_ERR_RETV_FW("invalid cast detected", omni::exceptions::invalid_type_cast(), OMNI_NULL_PTR);
                 }
                 return static_cast<const T *const>(this->m_ptr);
             }

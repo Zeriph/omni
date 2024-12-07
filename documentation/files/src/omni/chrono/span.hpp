@@ -39,17 +39,30 @@
     #define OMNI_SPAN_ULOCK_FW
 #endif
 
-/*
-    TODO: make note in the docs that a span does not account for 'years' because
-    of the variations in calendaring and what a 'year' actually is (see the link
-    for DAYS_PER_TROPICAL_YEAR. A 'day' for a span is considered a 24 hour period
-    which consists of 60 minute hours and 60 second minutes, so total days can be
-    calculated on a constant basis where as years are too variable, which is why
-    there is a date_time class.
-*/
-
 namespace omni {
     namespace chrono {
+        /**
+         * @brief            The span class is used to hold a time in ticks.
+         * 
+         * @details          The span class can maintain days, hours, minutes and seconds and
+         *                   are representative of an arbitrary time. That is, the span can
+         *                   be a 0 time, a negative or positive value and are not based on
+         *                   any calendar date. A "day" for this class is considered exactly
+         *                   24 hours with exactly 60 minutes per "hour", 60 seconds per
+         *                   "minute" and 1000 milliseconds per "second", regardless of
+         *                   the underlying type.
+         * 
+         * @tparam TickType  The template parameter to define the underlying type this span
+         *                   will represent.
+         * 
+         * @note             Since this class is representative of an arbitrary time, only
+         *                   days, hours, minutes, seconds and milliseconds are able to be
+         *                   represented. Years are not represented as they can vary, with
+         *                   leap years and different calendar types, the span is a more
+         *                   simplistic representation of time. If you wish to operate on
+         *                   years, or have a more robust date and time represented, you
+         *                   should use the omni::chrono::date_time class. 
+         */
         template < typename TickType >
         class span
         {
@@ -120,8 +133,11 @@ namespace omni {
                 {
                     OMNI_SPAN_ALOCK_FW
                     if (this == &other) {
-                        this->m_ticks += this->m_ticks;
+                        // t+t = 2t = t<<1
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_ticks, this->m_ticks)
+                        this->m_ticks <<= 1;
                     } else {
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_ticks, other.ticks())
                         this->m_ticks += other.ticks();
                     }
                     return *this;
@@ -130,6 +146,7 @@ namespace omni {
                 omni::chrono::span<TickType>& add(TickType ticks)
                 {
                     OMNI_SPAN_ALOCK_FW
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_ticks, ticks)
                     this->m_ticks += ticks;
                     return *this;
                 }
@@ -197,6 +214,7 @@ namespace omni {
                     if (this == &other) {
                         this->m_ticks = 0; // x-x is always 0
                     } else {
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_ticks, other.ticks())
                         this->m_ticks -= other.ticks();
                     }
                     return *this;
@@ -205,6 +223,7 @@ namespace omni {
                 omni::chrono::span<TickType>& subtract(TickType ticks)
                 {
                     OMNI_SPAN_ALOCK_FW
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_ticks, ticks)
                     this->m_ticks -= ticks;
                     return *this;
                 }
@@ -240,10 +259,10 @@ namespace omni {
                 double total_milliseconds() const
                 {
                     double temp = static_cast<double>(this->ticks()) * OMNI_MILLISECONDS_PER_TICK;
-                    if (temp > omni::chrono::span<TickType>::max_milliseconds()) {
+                    if (static_cast<TickType>(temp) > omni::chrono::span<TickType>::max_milliseconds()) {
                         return static_cast<double>(omni::chrono::span<TickType>::max_milliseconds());
                     }
-                    if (temp < omni::chrono::span<TickType>::min_milliseconds()) {
+                    if (static_cast<TickType>(temp) < omni::chrono::span<TickType>::min_milliseconds()) {
                         return static_cast<double>(omni::chrono::span<TickType>::min_milliseconds());
                     }
                     return temp;
@@ -304,6 +323,7 @@ namespace omni {
                         return span<TickType>(0);
                     }
                     OMNI_SPAN_ALOCK_FW
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_ticks, other.ticks())
                     return span<TickType>(this->m_ticks - other.ticks());
                 }
 
@@ -320,12 +340,14 @@ namespace omni {
                         return span<TickType>(this->m_ticks + this->m_ticks);
                     }
                     OMNI_SPAN_ALOCK_FW
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_ticks, other.ticks())
                     return span<TickType>(this->m_ticks + other.ticks());
                 }
 
                 omni::chrono::span<TickType> operator+(span_t val)
                 {
                     OMNI_SPAN_ALOCK_FW
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_ticks, val)
                     return span<TickType>(this->m_ticks + val);
                 }
 
@@ -335,6 +357,7 @@ namespace omni {
                     if (this == &other) {
                         this->m_ticks = 0; // x-x is always 0
                     } else {
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_ticks, other.ticks())
                         this->m_ticks -= other.ticks();
                     }
                     return *this;
@@ -343,6 +366,7 @@ namespace omni {
                 omni::chrono::span<TickType>& operator-=(span_t val)
                 {
                     OMNI_SPAN_ALOCK_FW
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_ticks, val)
                     this->m_ticks -= val;
                     return *this;
                 }
@@ -352,8 +376,10 @@ namespace omni {
                     OMNI_SPAN_ALOCK_FW
                     if (this == &other) {
                         // t+t = 2t = t<<1
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_ticks, this->m_ticks)
                         this->m_ticks <<= 1;
                     } else {
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_ticks, other.ticks())
                         this->m_ticks += other.ticks();
                     }
                     return *this;
@@ -618,7 +644,7 @@ namespace omni {
                     if (!omni::math::is_nan(value)) { // NaN check
                         double tmp = value * scale;
                         double millis = tmp + ((value >= 0) ? 0.5 : -0.5);
-                        if ((millis > omni::chrono::span<TickType>::max_milliseconds()) || (millis < omni::chrono::span<TickType>::min_milliseconds())) {
+                        if ((static_cast<TickType>(millis) > omni::chrono::span<TickType>::max_milliseconds()) || (static_cast<TickType>(millis) < omni::chrono::span<TickType>::min_milliseconds())) {
                             OMNI_ERR_RETV_FW(OMNI_OVERFLOW_STR, omni::exceptions::overflow_error("invalid span"), span<TickType>::zero())
                         }
                         return span<TickType>(static_cast<span_t>(millis) * OMNI_TICKS_PER_MILLISECOND);

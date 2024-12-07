@@ -34,10 +34,13 @@
 
 namespace omni {
     namespace sync {
+        /** Represents a managed over-ridable runnable thread object. */
         class runnable_thread : virtual public omni::sync::runnable
         {
             public:
+                /** Defines the thread changed event delegate signature */
                 typedef omni::delegate2<void, const omni::sync::runnable_thread&, omni::sync::thread_state::enum_t> state_delegate;
+                /** Defines the thread changed event delegate signature */
                 typedef omni::event2<void, const omni::sync::runnable_thread&, omni::sync::thread_state::enum_t> state_event;
                 
                 // Methods
@@ -50,6 +53,7 @@ namespace omni {
                 runnable_thread(omni::sync::thread_option::enum_t op, omni::sync::thread_union_t val);
                 virtual ~runnable_thread() OMNI_DTOR_THROWS;
 
+                /** Raised when the thread has changed state (running, stopped, etc) */
                 omni::sync::runnable_thread::state_event state_changed;
 
                 void abort(); // request end nicely
@@ -97,15 +101,23 @@ namespace omni {
                 #if defined(OMNI_SAFE_RUNNABLE_THREAD)
                     mutable omni::sync::basic_lock m_mtx;
                 #endif
+                /** The arguments passed to the thread */
                 omni::sync::thread_arg_t m_args;
+                /** The underlying interface that is called on thread run (if none assigned, then this->run()) */
                 omni::sync::runnable* m_iface;
+                /** The underlying thread ID type */
                 omni::sync::thread_t m_tid;
+                /** The underlying thread handle type */
                 omni::sync::thread_handle_t m_thread;
+                /** The underlying thread options */
                 omni::sync::thread_flags m_ops;
+                /** The current state of the thread */
                 omni::sync::thread_state m_state;
                 #if defined(OMNI_NON_PORTABLE)
+                    /** The threads priority */
                     omni::sync::thread_priority m_priority;
                 #endif
+                /** If join has been called, do not detach */
                 volatile OMNI_RUNTHRD_INT_FW m_isjoined;
 
                 void _close_handle();

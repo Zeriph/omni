@@ -259,6 +259,18 @@ class UT_CLASS_DEF
             
             // zero ~~ static inline omni::chrono::span<TickType> omni::chrono::span::zero()
             test("omni::chrono::span<TickType>::zero()", omni::chrono::span<TickType>::zero(), "0.00:00:00.0");
+
+            try {
+                omni::chrono::span<uint64_t> max = omni::chrono::span<uint64_t>::max_value();
+                printl("max = " << max);
+                printl("testing overflow");
+                max.add(100);
+                printl("max = " << max);
+            } catch (const std::exception& ex) {
+                printl("Error: " << ex.what());
+            } catch (...) {
+                printl("Unknown error trying overflow");
+            }
         }
 };
 

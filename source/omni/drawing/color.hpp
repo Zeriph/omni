@@ -21,6 +21,7 @@
 #include <omni/defs/global.hpp>
 #include <omni/defs/class_macros.hpp>
 #include <omni/string/util.hpp>
+#include <omni/types/math_t.hpp>
 
 #if defined(OMNI_SAFE_COLOR)
     #include <omni/sync/basic_lock.hpp>
@@ -190,123 +191,139 @@ namespace omni {
                 BitDepth decrement_r()
                 {
                     OMNI_SAFE_CLRALOCK_FW
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_r, 1)
                     return --this->m_r;
                 }
 
                 BitDepth decrement_g()
                 {
                     OMNI_SAFE_CLRALOCK_FW
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_g, 1)
                     return --this->m_g;
                 }
 
                 BitDepth decrement_b()
                 {
                     OMNI_SAFE_CLRALOCK_FW
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_b, 1)
                     return --this->m_b;
                 }
 
                 BitDepth decrement_a()
                 {
                     OMNI_SAFE_CLRALOCK_FW
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_a, 1)
                     return --this->m_a;
                 }
 
                 BitDepth decrease_r(BitDepth val)
                 {
                     OMNI_SAFE_CLRALOCK_FW
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_r, val)
                     return (this->m_r -= val);
                 }
 
                 BitDepth decrease_g(BitDepth val)
                 {
                     OMNI_SAFE_CLRALOCK_FW
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_g, val)
                     return (this->m_g -= val);
                 }
 
                 BitDepth decrease_b(BitDepth val)
                 {
                     OMNI_SAFE_CLRALOCK_FW
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_b, val)
                     return (this->m_b -= val);
                 }
 
                 BitDepth decrease_a(BitDepth val)
                 {
                     OMNI_SAFE_CLRALOCK_FW
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_a, val)
                     return (this->m_a -= val);
                 }
                 
                 BitDepth increment_r()
                 {
                     OMNI_SAFE_CLRALOCK_FW
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_r, 1)
                     return ++this->m_r;
                 }
 
                 BitDepth increment_g()
                 {
                     OMNI_SAFE_CLRALOCK_FW
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_g, 1)
                     return ++this->m_g;
                 }
 
                 BitDepth increment_b()
                 {
                     OMNI_SAFE_CLRALOCK_FW
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_b, 1)
                     return ++this->m_b;
                 }
 
                 BitDepth increment_a()
                 {
                     OMNI_SAFE_CLRALOCK_FW
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_a, 1)
                     return ++this->m_a;
                 }
 
                 BitDepth increase_r(BitDepth val)
                 {
                     OMNI_SAFE_CLRALOCK_FW
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_r, val)
                     return (this->m_r += val);
                 }
 
                 BitDepth increase_g(BitDepth val)
                 {
                     OMNI_SAFE_CLRALOCK_FW
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_g, val)
                     return (this->m_g += val);
                 }
 
                 BitDepth increase_b(BitDepth val)
                 {
                     OMNI_SAFE_CLRALOCK_FW
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_b, val)
                     return (this->m_b += val);
                 }
 
                 BitDepth increase_a(BitDepth val)
                 {
                     OMNI_SAFE_CLRALOCK_FW
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_a, val)
                     return (this->m_a += val);
                 }
 
                 bool empty() const
                 {
                     OMNI_SAFE_CLRALOCK_FW
-                    return this->m_r == 0 &&
-                           this->m_g == 0 &&
-                           this->m_b == 0 &&
-                           this->m_a == 0;
+                    return omni::math::are_equal(this->m_r, 0) &&
+                           omni::math::are_equal(this->m_g, 0) &&
+                           omni::math::are_equal(this->m_b, 0) &&
+                           omni::math::are_equal(this->m_a, 0);
                 }
 
                 bool equals(BitDepth r, BitDepth g, BitDepth b) const
                 {
                     OMNI_SAFE_CLRALOCK_FW
-                    return this->m_r == r &&
-                           this->m_g == g &&
-                           this->m_b == b;
+                    return omni::math::are_equal(this->m_r, r) &&
+                           omni::math::are_equal(this->m_g, g) &&
+                           omni::math::are_equal(this->m_b, b);
                 }
 
                 bool equals(BitDepth r, BitDepth g, BitDepth b, BitDepth a) const
                 {
                     OMNI_SAFE_CLRALOCK_FW
-                    return this->m_r == r &&
-                           this->m_g == g &&
-                           this->m_b == b &&
-                           this->m_a == a;
+                    return omni::math::are_equal(this->m_r, r) &&
+                           omni::math::are_equal(this->m_g, g) &&
+                           omni::math::are_equal(this->m_b, b) &&
+                           omni::math::are_equal(this->m_a, a);
                 }
 
                 void set_alpha(float alpha)
@@ -530,9 +547,9 @@ namespace omni {
                     if (this == &val) { return true; }
                     OMNI_SAFE_CLRALOCK_FW
                     OMNI_SAFE_CLROALOCK_FW(val)
-                    return (this->m_r == val.m_r &&
-                            this->m_g == val.m_g &&
-                            this->m_b == val.m_b &&
+                    return (omni::math::are_equal(this->m_r, val.m_r) &&
+                            omni::math::are_equal(this->m_g, val.m_g) &&
+                            omni::math::are_equal(this->m_b, val.m_b) &&
                             ((this->m_calc_alpha == 1) ? (this->m_a > val.m_a) : true))
                     OMNI_EQUAL_FW(val);
                 }
@@ -550,6 +567,16 @@ namespace omni {
                     #if defined(OMNI_SAFE_COLOR)
                         this->m_mtx.lock();
                         if (this != &val) { val.m_mtx.lock(); }
+                        
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_r, val.m_r)
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_g, val.m_g)
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_b, val.m_b)
+                        #if defined(OMNI_CHECK_ARITHMETIC_OVERFLOW)
+                            if (this->m_calc_alpha == 1) {
+                                OMNI_BITS_WILL_ADD_OVER_FW(this->m_a, val.m_a)
+                            }
+                        #endif
+
                         omni::drawing::color<BitDepth, RgbType, BitSize> ret(
                             (this->m_r + val.m_r),
                             (this->m_g + val.m_g),
@@ -561,6 +588,15 @@ namespace omni {
                         this->m_mtx.unlock();
                         return ret;
                     #else
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_r, val.m_r)
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_g, val.m_g)
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_b, val.m_b)
+                        #if defined(OMNI_CHECK_ARITHMETIC_OVERFLOW)
+                            if (this->m_calc_alpha == 1) {
+                                OMNI_BITS_WILL_ADD_OVER_FW(this->m_a, val.m_a)
+                            }
+                        #endif
+
                         return omni::drawing::color<BitDepth, RgbType, BitSize>(
                             (this->m_r + val.m_r),
                             (this->m_g + val.m_g),
@@ -574,8 +610,10 @@ namespace omni {
                 omni::drawing::color<BitDepth, RgbType, BitSize> operator+(RgbType val)
                 {
                     if (this->m_calc_alpha == 1) {
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->to_rgba(), val)
                         return omni::drawing::color<BitDepth, RgbType, BitSize>((this->to_rgba() + val), true);
                     }
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->to_rgb(), val)
                     return omni::drawing::color<BitDepth, RgbType, BitSize>((this->to_rgb() + val), false);
                 }
 
@@ -584,6 +622,16 @@ namespace omni {
                     #if defined(OMNI_SAFE_COLOR)
                         this->m_mtx.lock();
                         if (this != &val) { val.m_mtx.lock(); }
+
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_r, val.m_r)
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_g, val.m_g)
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_b, val.m_b)
+                        #if defined(OMNI_CHECK_ARITHMETIC_OVERFLOW)
+                            if (this->m_calc_alpha == 1) {
+                                OMNI_BITS_WILL_SUB_UNDER_FW(this->m_a, val.m_a)
+                            }
+                        #endif
+
                         omni::drawing::color<BitDepth, RgbType, BitSize> ret(
                             (this->m_r - val.m_r),
                             (this->m_g - val.m_g),
@@ -595,6 +643,15 @@ namespace omni {
                         this->m_mtx.unlock();
                         return ret;
                     #else
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_r, val.m_r)
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_g, val.m_g)
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_b, val.m_b)
+                        #if defined(OMNI_CHECK_ARITHMETIC_OVERFLOW)
+                            if (this->m_calc_alpha == 1) {
+                                OMNI_BITS_WILL_SUB_UNDER_FW(this->m_a, val.m_a)
+                            }
+                        #endif
+
                         return omni::drawing::color<BitDepth, RgbType, BitSize>(
                             (this->m_r - val.m_r),
                             (this->m_g - val.m_g),
@@ -608,8 +665,10 @@ namespace omni {
                 omni::drawing::color<BitDepth, RgbType, BitSize> operator-(RgbType val)
                 {
                     if (this->m_calc_alpha == 1) {
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->to_rgba(), val)
                         return omni::drawing::color<BitDepth, RgbType, BitSize>((this->to_rgba() - val), true);
                     }
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->to_rgb(), val)
                     return omni::drawing::color<BitDepth, RgbType, BitSize>((this->to_rgb() - val), false);
                 }
 
@@ -618,17 +677,29 @@ namespace omni {
                     #if defined(OMNI_SAFE_COLOR)
                         this->m_mtx.lock();
                         if (this != &val) { val.m_mtx.lock(); }
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_r, val.m_r)
                         this->m_r += val.m_r;
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_g, val.m_g)
                         this->m_g += val.m_g;
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_b, val.m_b)
                         this->m_b += val.m_b;
-                        if (this->m_calc_alpha == 1) { this->m_a += val.m_a; }
+                        if (this->m_calc_alpha == 1) {
+                            OMNI_BITS_WILL_ADD_OVER_FW(this->m_a, val.m_a)
+                            this->m_a += val.m_a;
+                        }
                         if (this != & val) { val.m_mtx.unlock(); }
                         this->m_mtx.unlock();
-                    #else    
+                    #else
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_r, val.m_r)
                         this->m_r += val.m_r;
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_g, val.m_g)
                         this->m_g += val.m_g;
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_b, val.m_b)
                         this->m_b += val.m_b;
-                        if (this->m_calc_alpha == 1) { this->m_a += val.m_a; }
+                        if (this->m_calc_alpha == 1) {
+                            OMNI_BITS_WILL_ADD_OVER_FW(this->m_a, val.m_a)
+                            this->m_a += val.m_a;
+                        }
                     #endif
                     return *this;
                 }
@@ -672,17 +743,29 @@ namespace omni {
                     #if defined(OMNI_SAFE_COLOR)
                         this->m_mtx.lock();
                         if (this != &val) { val.m_mtx.lock(); }
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_r, val.m_r)
                         this->m_r -= val.m_r;
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_g, val.m_g)
                         this->m_g -= val.m_g;
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_b, val.m_b)
                         this->m_b -= val.m_b;
-                        if (this->m_calc_alpha == 1) { this->m_a -= val.m_a; }
+                        if (this->m_calc_alpha == 1) {
+                            OMNI_BITS_WILL_SUB_UNDER_FW(this->m_a, val.m_a)
+                            this->m_a -= val.m_a;
+                        }
                         if (this != & val) { val.m_mtx.unlock(); }
                         this->m_mtx.unlock();
-                    #else    
+                    #else
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_r, val.m_r)
                         this->m_r -= val.m_r;
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_g, val.m_g)
                         this->m_g -= val.m_g;
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_b, val.m_b)
                         this->m_b -= val.m_b;
-                        if (this->m_calc_alpha == 1) { this->m_a -= val.m_a; }
+                        if (this->m_calc_alpha == 1) {
+                            OMNI_BITS_WILL_SUB_UNDER_FW(this->m_a, val.m_a)
+                            this->m_a -= val.m_a;
+                        }
                     #endif
                     return *this;
                 }
@@ -769,13 +852,13 @@ namespace omni {
                 {
                     BitDepth cmax = std::max(std::max(red, green), blue);
                     BitDepth cmin = std::min(std::min(red, green), blue);
-                    if (cmax == cmin) { return 0.0f; }
+                    if (omni::math::are_equal(cmax, cmin)) { return 0.0f; }
                     float ret = 0.0f;
-                    if (cmax == red) {
+                    if (omni::math::are_equal(cmax, red)) {
                         ret = 60.0f * (std::fmod((static_cast<float>(green - blue) / (cmax - cmin)), 6.0f));
-                    } else if (cmax == green) {
+                    } else if (omni::math::are_equal(cmax, green)) {
                         ret = 60.0f * ((static_cast<float>(blue - red) / (cmax - cmin)) + 2.0f);
-                    } else if (cmax == blue) {
+                    } else if (omni::math::are_equal(cmax, blue)) {
                         ret = 60.0f * ((static_cast<float>(red - green) / (cmax - cmin)) + 4.0f);
                     }
                     if (ret < 0.0f) { ret += 360.0f; }
@@ -787,7 +870,7 @@ namespace omni {
                 {
                     BitDepth cmax = std::max(std::max(red, green), blue);
                     BitDepth cmin = std::min(std::min(red, green), blue);
-                    if (cmax == cmin) { return 0.0f; }
+                    if (omni::math::are_equal(cmax, cmin)) { return 0.0f; }
                     return 
                         (static_cast<float>(cmax - cmin) / std::numeric_limits<BitDepth>::max())
                         /
@@ -802,7 +885,9 @@ namespace omni {
                     {
                         OMNI_ERR_RETV_FW(OMNI_ERR_RANGE_STR, omni::exceptions::invalid_range(), 0)
                     }
-                    if ((hue == 0.00f) && (saturation == 0.00f) && (luminance == 0.0f)) { return 0; }
+                    if (omni::math::are_equal(hue, 0.0f) && omni::math::are_equal(saturation, 0.0f) && omni::math::are_equal(luminance, 0.0f)) {
+                        return 0;
+                    }
                     BitDepth nmax = std::numeric_limits<BitDepth>::max();
                     float C = (1.0f - std::fabs((2.0f * luminance) - 1.0f)) * saturation;
                     float X = C * (1.0f - std::fabs(std::fmod((hue / 60.0f), 2.0f) - 1.0f));

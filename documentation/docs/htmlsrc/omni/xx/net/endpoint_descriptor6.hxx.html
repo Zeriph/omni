@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - omni/xx/net/endpoint_descriptor6.hxx</title>
+<link rel="stylesheet" type="text/css" href="../../../../../content/main.css" /><link rel="icon" type="image/png" href="../../../../../content/favicon.png" />
+<script type="text/javascript" src="../../../../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../../../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../../../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../../../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../../../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="../../../index.html" class="current">Source</a></li><li title="Library classes and namespaces">
+<a href="../../../../classes/index.html">Class Index</a></li><li title="Download and view examples">
+<a href="../../../../examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="../../../../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="../../../../options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../../../../api.html">System API</a></li><li title="Other Considerations">
+<a href="../../../../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../../../../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../../../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../../../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle"><a href="../../../../../files/src/omni/xx/net/endpoint_descriptor6.hxx" onclick="return popup('../../../../../files/src/omni/xx/net/endpoint_descriptor6.hxx')">omni/xx/net/endpoint_descriptor6.hxx</a></div><div class="content"><div>
+<code><div class="cpphtmllines">
+<!--start line numbers-->
+001:<br><div id="cmntl1" name="cmntl1">002:<br>003:<br>004:<br>005:<br>006:<br>007:<br>008:<br>009:<br>010:<br>011:<br>012:<br>013:<br>014:<br>015:<br>016:<br>017:<br>018:<br></div>019:<br>
+020:<br><div id="cmntl2" name="cmntl2">021:<br>022:<br>023:<br>024:<br></div>025:<br>026:<br>027:<br>028:<br>029:<br>030:<br>031:<br>032:<br>033:<br>034:<br>035:<br>036:<br>037:<br>038:<br>039:<br>
+040:<br>041:<br>042:<br>043:<br>044:<br>045:<br>046:<br>047:<br>048:<br>049:<br>050:<br>051:<br>052:<br>053:<br>054:<br>055:<br>056:<br>057:<br>058:<br>059:<br>
+060:<br>061:<br>062:<br>063:<br>064:<br>065:<br>066:<br>067:<br>068:<br>069:<br>070:<br>071:<br>072:<br>073:<br>074:<br>075:<br>076:<br>077:<br>078:<br>079:<br>
+080:<br>081:<br>082:<br>083:<br>084:<br>085:<br>086:<br>087:<br>088:<br>089:<br>090:<br>091:<br>092:<br>093:<br>094:<br>095:<br>096:<br>097:<br>098:<br>099:<br>
+100:<br>101:<br>102:<br>103:<br>104:<br>105:<br>106:<br>107:<br>108:<br>109:<br>110:<br>111:<br>112:<br>113:<br>114:<br>115:<br>116:<br>117:<br>118:<br>119:<br>
+120:<br>121:<br>122:<br>123:<br>124:<br>125:<br>126:<br>127:<br>128:<br>129:<br>130:<br>131:<br>132:<br>133:<br>134:<br>135:<br>136:<br>137:<br>138:<br>139:<br>
+140:<br>141:<br>142:<br>143:<br>144:<br>145:<br>146:<br>147:<br>148:<br>149:<br>150:<br>151:<br>152:<br>153:<br>154:<br>155:<br>156:<br>157:<br>158:<br>159:<br>
+160:<br>161:<br>162:<br>163:<br>164:<br>165:<br>166:<br>167:<br>168:<br>169:<br>170:<br>171:<br>172:<br>173:<br>174:<br>175:<br>176:<br>177:<br>178:<br>179:<br>
+180:<br>181:<br>182:<br>183:<br>184:<br>185:<br>186:<br>187:<br>188:<br>189:<br>190:<br>191:<br>192:<br>193:<br>194:<br>195:<br>196:<br>197:<br>198:<br>199:<br>
+200:<br>201:<br>202:<br>203:<br>204:<br>205:<br>206:<br>207:<br>208:<br>209:<br>210:<br>211:<br>212:<br>213:<br>214:<br>215:<br>216:<br>217:<br>218:<br>219:<br>
+220:<br>221:<br>222:<br>223:<br>224:<br>225:<br>226:<br>227:<br>228:<br>229:<br>230:<br>231:<br>232:<br>233:<br>234:<br>235:<br>236:<br>237:<br>238:<br>239:<br>
+240:<br>241:<br>242:<br>243:<br>244:<br>245:<br>246:<br>247:<br>248:<br>249:<br>250:<br>251:<br>252:<br>253:<br>254:<br>255:<br>256:<br>257:<br>258:<br>259:<br>
+260:<br>261:<br>262:<br>263:<br>264:<br>265:<br>266:<br>267:<br>268:<br>269:<br>270:<br>271:<br>272:<br>273:<br>274:<br>275:<br>276:<br>277:<br>278:<br>279:<br>
+280:<br>281:<br>282:<br>283:<br>284:<br>285:<br>286:<br>287:<br>288:<br>289:<br>290:<br>291:<br>292:<br>293:<br>294:<br>295:<br>296:<br>297:<br>298:<br>299:<br>
+300:<br>301:<br>302:<br>303:<br>304:<br>305:<br>306:<br>307:<br>308:<br>309:<br>310:<br>311:<br>312:<br>313:<br>314:<br>315:<br>316:<br>317:<br>318:<br>319:<br>
+320:<br>321:<br>322:<br>323:<br>324:<br>325:<br>326:<br>327:<br>328:<br>329:<br>330:<br>331:<br>332:<br>333:<br>334:<br>335:<br>336:<br>337:<br>338:<br>339:<br>
+340:<br>341:<br>342:<br>343:<br>344:<br>345:<br>346:<br>347:<br>348:<br>349:<br>350:<br>351:<br>352:<br>353:<br>354:<br>355:<br>356:<br>357:<br>358:<br>359:<br>
+360:<br>361:<br>362:<br>363:<br>364:<br>365:<br>366:<br>367:<br>368:<br>369:<br>370:<br>371:<br>372:<br>373:<br>374:<br>375:<br>376:<br>377:<br>378:<br>379:<br>
+380:<br>381:<br>382:<br>383:<br>384:<br>385:<br>386:<br>387:<br>388:<br>389:<br>390:<br>391:<br>392:<br>393:<br>394:<br>395:<br>396:<br>397:<br>398:<br>399:<br>
+400:<br>401:<br>402:<br>403:<br>404:<br>405:<br>406:<br>407:<br>408:<br>409:<br>410:<br>411:<br>412:<br>413:<br>414:<br>415:<br>416:<br>417:<br>418:<br>419:<br>
+420:<br>421:<br>422:<br>423:<br>424:<br>425:<br>426:<br>427:<br>428:<br>429:<br>430:<br>431:<br>432:<br>433:<br>434:<br>435:<br>436:<br>437:<br>438:<br>
+<!--end line numbers-->
+</div><div class="cpphtmlcmnt">
+<!--start collapse columns-->
+<img src="../../../../../content/tree/min.gif" alt="Min/Max" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<img src="../../../../../content/tree/min.gif" alt="Min/Max" id="cmnti2" name="cmnti2" onclick="collapse('2', '../../../../../');" /><br><div id="cmnts2" name="cmnts2"><br><br><br><br></div><div></div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<!--end collapse columns-->
+</div><div class="cpphtml" style="margin-left:3.75em;">
+<!--start highlighted code-->
+<font class="syn_cmt">/*<div class="syn_ex" id="cmnt1" name="cmnt1">
+ * Copyright (c), Zeriph Enterprises<br>
+ * All rights reserved.<br>
+ * <br>
+ * Contributor(s):<br>
+ * Zechariah Perez, omni (at) zeriph (dot) com<br>
+ * <br>
+ * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS &quot;AS IS&quot; AND ANY<br>
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED<br>
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE<br>
+ * DISCLAIMED. IN NO EVENT SHALL ZERIPH AND CONTRIBUTORS BE LIABLE FOR ANY<br>
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES<br>
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;<br>
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND<br>
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT<br>
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS<br>
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.<br>
+ */</div><div></div></font>
+<br>
+<font class="syn_cmt">/* DEV_NOTE: this file is not intended to be used directly by any user code!<div class="syn_ex" id="cmnt2" name="cmnt2">
+<br>
+ i.e. do not #include &lt;<a href="../../../omni/xxx_impl.hxx.html">omni/xxx_impl.hxx</a>&gt; and do not compile this source directly.<br>
+ this file is included directly in other source. <br>
+*/</div><div></div></font>
+<br>
+<font class="syn_cmt">// so as not to accidentally build this file with the source</font><br>
+<font class="syn_cmt">// these macros are defined in chrono</font><br>
+<font class="syn_pre">#if !defined(OMNI_NET_SOCKET6_EP_HXX_FW)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;#error <font class="syn_str">&quot;invalid preprocessor directive detected&quot;</font><br>
+<font class="syn_pre">#endif</font><br>
+<br>
+<font class="syn_pre"><font class="syn_pre">#if defined(OMNI_SAFE_SOCKET_EP6)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_SOCKEP6MTX_FW  ,m_mtx()</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_SOCKEP6LOCK_FW   this-&gt;m_mtx.lock();</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_SOCKEP6UNLOCK_FW this-&gt;m_mtx.unlock();</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_SOCKEP6ALOCK_FW  <a href="../../../../classes/omni-sync-scoped_basic_lock.html">omni::sync::scoped_basic_lock</a> uuid12345(&amp;this-&gt;m_mtx);</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_SOCKEP6OALOCK_FW(o)  <a href="../../../../classes/omni-sync-scoped_basic_lock.html">omni::sync::scoped_basic_lock</a> uuid54321(&amp;o.m_mtx);</font><br>
+<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_SOCKEP6MTX_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_SOCKEP6LOCK_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_SOCKEP6UNLOCK_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_SOCKEP6ALOCK_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_SOCKEP6OALOCK_FW(o) </font><br>
+<font class="syn_pre">#endif</font><br>
+<br>
+<a href="../../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> <a href="../../../../classes/omni-net-endpoint_descriptor6-_close.html">omni::net::endpoint_descriptor6::_close</a>(<font class="syn_typ">uint16_t</font> timeout, <font class="syn_typ">bool</font> <a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/shutdown.html">shutdown</a>)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SOCKEP6ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<a href="../../../../options/omni_val_has_flag_bit.html">OMNI_VAL_HAS_FLAG_BIT</a>(<font class="syn_typ">this</font>-&gt;m_status, OMNI_EPDESC_CONN_FLAG_FW)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (timeout &gt; <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">struct</font> linger lop;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lop.l_onoff = <font class="syn_num">1</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lop.l_linger = timeout;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/setsockopt.html">setsockopt</a>(<font class="syn_typ">this</font>-&gt;m_socket, SOL_SOCKET, SO_LINGER, <font class="syn_ins">reinterpret_cast</font>&lt;<font class="syn_typ">char</font>*&gt;(&amp;lop), <font class="syn_ins">sizeof</font>(<font class="syn_typ">struct</font> linger)) != <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../../../../classes/omni-net-parse_error.html">omni::net::parse_error</a>(OMNI_SOCKET_ERR_FW));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/shutdown.html">shutdown</a> &amp;&amp; (<font class="syn_typ">this</font>-&gt;<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/shutdown.html">shutdown</a>(<a href="../../../../classes/omni-net-socket_shutdown-both.html">omni::net::socket_shutdown::BOTH</a>) != <a href="../../../../classes/omni-net-socket_error-success.html">omni::net::socket_error::SUCCESS</a>)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../options/omni_dbge.html">OMNI_DBGE</a>(<font class="syn_str">&quot;could not shutdown the socket&quot;</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;m_last_err;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (OMNI_SOCKET_CLOSE_FW(<font class="syn_typ">this</font>-&gt;m_socket) != <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../../../../classes/omni-net-parse_error.html">omni::net::parse_error</a>(OMNI_SOCKET_ERR_FW));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/shutdown.html">shutdown</a>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_socket = <a href="../../../../options/omni_invalid_socket.html">OMNI_INVALID_SOCKET</a>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/cstring/memset/">std::memset</a>(&amp;<font class="syn_typ">this</font>-&gt;m_addr, <font class="syn_num">0</font>, <font class="syn_ins">sizeof</font>(<font class="syn_typ">this</font>-&gt;m_addr));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../options/omni_val_unset_flag_bit.html">OMNI_VAL_UNSET_FLAG_BIT</a>(<font class="syn_typ">this</font>-&gt;m_status, OMNI_EPDESC_CONN_FLAG_FW);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../../../../classes/omni-net-socket_error-success.html">omni::net::socket_error::SUCCESS</a>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../../../../classes/omni-net-socket_error-not_connected.html">omni::net::socket_error::NOT_CONNECTED</a>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;m_last_err;<br>
+}<br>
+<br>
+<a href="../../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> <a href="../../../../classes/omni-net-endpoint_descriptor6-_receive.html">omni::net::endpoint_descriptor6::_receive</a>(<font class="syn_typ">void</font>* buffer, <a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a> buffer_size, <a href="../../../../classes/omni-net-socket_flags.html">omni::net::socket_flags</a> flags, <font class="syn_typ">uint32_t</font>&amp; received)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SOCKEP6ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!<a href="../../../../options/omni_val_has_flag_bit.html">OMNI_VAL_HAS_FLAG_BIT</a>(<font class="syn_typ">this</font>-&gt;m_status, OMNI_EPDESC_CONN_FLAG_FW)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../../../../classes/omni-net-socket_error-not_connected.html">omni::net::socket_error::NOT_CONNECTED</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../../options/omni_win_api.html">OMNI_WIN_API</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DWORD flag = <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">int</font>&gt;(flags);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DWORD recd = <font class="syn_ins">static_cast</font>&lt;DWORD&gt;(received);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WSABUF buf;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;buf.len = buffer_size;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;buf.buf = <font class="syn_ins">reinterpret_cast</font>&lt;<a href="../../../../classes/omni-net-xfr_t.html">omni::net::xfr_t</a>*&gt;(buffer);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (::<a href="https://docs.microsoft.com/en-us/windows/desktop/api/Winsock2/nf-winsock2-wsarecv">WSARecv</a>(<font class="syn_typ">this</font>-&gt;m_socket, &amp;buf, <font class="syn_num">1</font>, &amp;recd, &amp;flag, <font class="syn_typ">NULL</font>, <font class="syn_typ">NULL</font>) == SOCKET_ERROR) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../../../../classes/omni-net-parse_error.html">omni::net::parse_error</a>(OMNI_SOCKET_ERR_FW));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;received = <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint32_t</font>&gt;(recd);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">long</font> r = ::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/recv.html">recv</a>(<font class="syn_typ">this</font>-&gt;m_socket, (<font class="syn_ins">reinterpret_cast</font>&lt;<a href="../../../../classes/omni-net-xfr_t.html">omni::net::xfr_t</a>*&gt;(buffer)), buffer_size, <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">int</font>&gt;(flags));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">switch</font> (r) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// connection closed</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">case</font> <font class="syn_num">0</font>: <font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../../../../classes/omni-net-socket_error-connection_reset.html">omni::net::socket_error::CONNECTION_RESET</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// error</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">case</font> OMNI_SOCK_SYSERR_FW: <font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../../../../classes/omni-net-parse_error.html">omni::net::parse_error</a>(OMNI_SOCKET_ERR_FW));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// success</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">default</font>: received = <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint32_t</font>&gt;(r); <font class="syn_ins">break</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../../../../classes/omni-net-socket_error-success.html">omni::net::socket_error::SUCCESS</a>);<br>
+}<br>
+<br>
+<a href="../../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> <a href="../../../../classes/omni-net-endpoint_descriptor6-_send.html">omni::net::endpoint_descriptor6::_send</a>(<font class="syn_typ">const</font> <font class="syn_typ">void</font>* buffer, <a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a> buffer_size, <a href="../../../../classes/omni-net-socket_flags.html">omni::net::socket_flags</a> flags, <font class="syn_typ">uint32_t</font>&amp; sent)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SOCKEP6ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!<a href="../../../../options/omni_val_has_flag_bit.html">OMNI_VAL_HAS_FLAG_BIT</a>(<font class="syn_typ">this</font>-&gt;m_status, OMNI_EPDESC_CONN_FLAG_FW)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../../../../classes/omni-net-socket_error-not_connected.html">omni::net::socket_error::NOT_CONNECTED</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../../options/omni_win_api.html">OMNI_WIN_API</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DWORD flag = <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">int</font>&gt;(flags);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DWORD recd = <font class="syn_ins">static_cast</font>&lt;DWORD&gt;(sent);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WSABUF buf;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;buf.len = buffer_size;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;buf.buf = <font class="syn_ins">const_cast</font>&lt;<a href="../../../../classes/omni-net-xfr_t.html">omni::net::xfr_t</a>*&gt;(<font class="syn_ins">reinterpret_cast</font>&lt;<font class="syn_typ">const</font> <a href="../../../../classes/omni-net-xfr_t.html">omni::net::xfr_t</a>*&gt;(buffer));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (::<a href="https://docs.microsoft.com/en-us/windows/desktop/api/Winsock2/nf-winsock2-wsasend">WSASend</a>(<font class="syn_typ">this</font>-&gt;m_socket, &amp;buf, <font class="syn_num">1</font>, &amp;recd, flag, <font class="syn_typ">NULL</font>, <font class="syn_typ">NULL</font>) == SOCKET_ERROR) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../../../../classes/omni-net-parse_error.html">omni::net::parse_error</a>(OMNI_SOCKET_ERR_FW));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sent = <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint32_t</font>&gt;(recd);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">long</font> r = ::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/send.html">send</a>(<font class="syn_typ">this</font>-&gt;m_socket, (<font class="syn_ins">reinterpret_cast</font>&lt;<font class="syn_typ">const</font> <a href="../../../../classes/omni-net-xfr_t.html">omni::net::xfr_t</a>*&gt;(buffer)), buffer_size, <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">int</font>&gt;(flags));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (r == OMNI_SOCK_SYSERR_FW) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../../../../classes/omni-net-parse_error.html">omni::net::parse_error</a>(OMNI_SOCKET_ERR_FW));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// success</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sent = <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint32_t</font>&gt;(r);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../../../../classes/omni-net-socket_error-success.html">omni::net::socket_error::SUCCESS</a>);<br>
+}<br>
+<br>
+<a href="../../../../classes/omni-net-endpoint_descriptor6-endpoint_descriptor6.html">omni::net::endpoint_descriptor6::endpoint_descriptor6</a>() :<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CTOR_FW(<a href="../../../../classes/omni-net-endpoint_descriptor6.html">omni::net::endpoint_descriptor6</a>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;m_socket(<a href="../../../../options/omni_invalid_socket.html">OMNI_INVALID_SOCKET</a>),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;m_addr(),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;m_last_err(<a href="../../../../classes/omni-net-socket_error-unspecified.html">omni::net::socket_error::UNSPECIFIED</a>),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;m_status()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SOCKEP6MTX_FW<br>
+{<br>
+}<br>
+<br>
+<a href="../../../../classes/omni-net-endpoint_descriptor6-endpoint_descriptor6.html">omni::net::endpoint_descriptor6::endpoint_descriptor6</a>(<font class="syn_typ">const</font> <a href="../../../../classes/omni-net-endpoint_descriptor6.html">omni::net::endpoint_descriptor6</a>&amp; cp) :<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CTOR_FW(<a href="../../../../classes/omni-net-endpoint_descriptor6.html">omni::net::endpoint_descriptor6</a>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;m_socket(<a href="../../../../options/omni_invalid_socket.html">OMNI_INVALID_SOCKET</a>),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;m_addr(),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;m_last_err(<a href="../../../../classes/omni-net-socket_error-unspecified.html">omni::net::socket_error::UNSPECIFIED</a>),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;m_status()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SOCKEP6MTX_FW<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;swap(*<font class="syn_ins">const_cast</font>&lt;<a href="../../../../classes/omni-net-endpoint_descriptor6.html">omni::net::endpoint_descriptor6</a>*&gt;(&amp;cp));<br>
+}<br>
+<br>
+<a href="../../../../classes/omni-net-endpoint_descriptor6-@7Eendpoint_descriptor6.html">omni::net::endpoint_descriptor6::~endpoint_descriptor6</a>()<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_TRY_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font>-&gt;<a href="https://linux.die.net/man/2/close">close</a>() != <a href="../../../../classes/omni-net-socket_error-success.html">omni::net::socket_error::SUCCESS</a>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_D1_FW(<font class="syn_str">&quot;error closing socket&quot;</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTOR_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CATCH_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_D5_FW(<font class="syn_str">&quot;destroyed&quot;</font>);<br>
+}<br>
+<br>
+<a href="http://www.cplusplus.com/reference/string/">std::string</a> <a href="../../../../classes/omni-net-endpoint_descriptor6-endpoint.html">omni::net::endpoint_descriptor6::endpoint</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SOCKEP6ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font>-&gt;m_addr.sin6_family == AF_INET6) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../../../../classes/omni-net-util-ip6_binary_to_string.html">omni::net::util::ip6_binary_to_string</a>(<font class="syn_typ">this</font>-&gt;m_addr.sin6_addr.s6_addr);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../../../../classes/omni-net-util-ip4_binary_to_string.html">omni::net::util::ip4_binary_to_string</a>(<font class="syn_typ">this</font>-&gt;m_addr.sin6_addr.s6_addr);<br>
+}<br>
+<br>
+<font class="syn_typ">uint16_t</font> <a href="../../../../classes/omni-net-endpoint_descriptor6-port.html">omni::net::endpoint_descriptor6::port</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SOCKEP6ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint16_t</font>&gt;(<font class="syn_typ">this</font>-&gt;m_addr.sin6_port);<br>
+}<br>
+<br>
+<a href="../../../../classes/omni-net-socket_t.html">omni::net::socket_t</a> <a href="../../../../classes/omni-net-endpoint_descriptor6-native_handle.html">omni::net::endpoint_descriptor6::native_handle</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SOCKEP6ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;m_socket;<br>
+}<br>
+<br>
+<font class="syn_typ">bool</font> <a href="../../../../classes/omni-net-endpoint_descriptor6-is_ip4.html">omni::net::endpoint_descriptor6::is_ip4</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SOCKEP6ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_addr.sin6_family == AF_INET);<br>
+}<br>
+<br>
+<font class="syn_typ">bool</font> <a href="../../../../classes/omni-net-endpoint_descriptor6-is_ip6.html">omni::net::endpoint_descriptor6::is_ip6</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SOCKEP6ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_addr.sin6_family == AF_INET6);<br>
+}<br>
+<br>
+<font class="syn_typ">bool</font> <a href="../../../../classes/omni-net-endpoint_descriptor6-is_connected.html">omni::net::endpoint_descriptor6::is_connected</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SOCKEP6ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../../../../options/omni_val_has_flag_bit.html">OMNI_VAL_HAS_FLAG_BIT</a>(<font class="syn_typ">this</font>-&gt;m_status, OMNI_EPDESC_CONN_FLAG_FW);<br>
+}<br>
+<br>
+<font class="syn_typ">bool</font> <a href="../../../../classes/omni-net-endpoint_descriptor6-is_shutdown.html">omni::net::endpoint_descriptor6::is_shutdown</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SOCKEP6ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../../../../options/omni_val_has_flag_bit.html">OMNI_VAL_HAS_FLAG_BIT</a>(<font class="syn_typ">this</font>-&gt;m_status, OMNI_EPDESC_SHUT_FLAG_FW);<br>
+}<br>
+<br>
+<a href="../../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> <a href="../../../../classes/omni-net-endpoint_descriptor6-last_error.html">omni::net::endpoint_descriptor6::last_error</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SOCKEP6ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;m_last_err;<br>
+}<br>
+<br>
+<a href="../../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> <a href="../../../../classes/omni-net-endpoint_descriptor6-connect.html">omni::net::endpoint_descriptor6::connect</a>(<font class="syn_typ">const</font> <a href="../../../../classes/omni-net-socket_t.html">omni::net::socket_t</a>&amp; serv_sock)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SOCKEP6ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<a href="../../../../options/omni_val_has_flag_bit.html">OMNI_VAL_HAS_FLAG_BIT</a>(<font class="syn_typ">this</font>-&gt;m_status, OMNI_EPDESC_CONN_FLAG_FW)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../../../../classes/omni-net-socket_error-is_connected.html">omni::net::socket_error::IS_CONNECTED</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SOCKLEN_FW out_len = <font class="syn_ins">sizeof</font>(<font class="syn_typ">this</font>-&gt;m_addr);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_socket = OMNI_SOCKET_ACCEPT_FW(serv_sock, <font class="syn_ins">reinterpret_cast</font>&lt;<a href="../../../../classes/omni-net-sockaddr_t.html">omni::net::sockaddr_t</a>*&gt;(&amp;(<font class="syn_typ">this</font>-&gt;m_addr)), &amp;out_len);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font>-&gt;m_socket == <a href="../../../../options/omni_invalid_socket.html">OMNI_INVALID_SOCKET</a>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../../../../classes/omni-net-parse_error.html">omni::net::parse_error</a>(OMNI_SOCKET_ERR_FW));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../options/omni_val_set_flag_bit.html">OMNI_VAL_SET_FLAG_BIT</a>(<font class="syn_typ">this</font>-&gt;m_status, OMNI_EPDESC_CONN_FLAG_FW);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../options/omni_val_unset_flag_bit.html">OMNI_VAL_UNSET_FLAG_BIT</a>(<font class="syn_typ">this</font>-&gt;m_status, OMNI_EPDESC_SHUT_FLAG_FW);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../../../../classes/omni-net-socket_error-success.html">omni::net::socket_error::SUCCESS</a>);<br>
+}<br>
+<br>
+<a href="../../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> omni::net::endpoint_descriptor6::<a href="https://linux.die.net/man/2/close">close</a>()<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;<a href="https://linux.die.net/man/2/close">close</a>(<font class="syn_num">0</font>);<br>
+}<br>
+<br>
+<a href="../../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> omni::net::endpoint_descriptor6::<a href="https://linux.die.net/man/2/close">close</a>(<font class="syn_typ">uint16_t</font> timeout)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;_close(timeout, <font class="syn_ins">false</font>);<br>
+}<br>
+<br>
+<a href="../../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> <a href="../../../../classes/omni-net-endpoint_descriptor6-ioc.html">omni::net::endpoint_descriptor6::ioc</a>(<font class="syn_typ">uint32_t</font> op_code, <a href="../../../../classes/omni-net-xfr_t.html">omni::net::xfr_t</a>* val)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SOCKEP6ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!<a href="../../../../options/omni_val_has_flag_bit.html">OMNI_VAL_HAS_FLAG_BIT</a>(<font class="syn_typ">this</font>-&gt;m_status, OMNI_EPDESC_CONN_FLAG_FW)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../../../../classes/omni-net-socket_error-not_connected.html">omni::net::socket_error::NOT_CONNECTED</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;int32_t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../../options/omni_os_win.html">OMNI_OS_WIN</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result = ::<a href="https://docs.microsoft.com/en-us/windows/desktop/api/winsock/nf-winsock-ioctlsocket">ioctlsocket</a>(<font class="syn_typ">this</font>-&gt;m_socket, <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">long</font>&gt;(op_code), <font class="syn_ins">reinterpret_cast</font>&lt;u_long*&gt;(val));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result = ::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/ioctl.html">ioctl</a>(<font class="syn_typ">this</font>-&gt;m_socket, <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">unsigned</font> <font class="syn_typ">long</font>&gt;(op_code), val);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (result == OMNI_SOCK_SYSERR_FW) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../../../../classes/omni-net-parse_error.html">omni::net::parse_error</a>(OMNI_SOCKET_ERR_FW));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../../../../classes/omni-net-socket_error-success.html">omni::net::socket_error::SUCCESS</a>);<br>
+}<br>
+<br>
+<a href="../../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> <a href="../../../../classes/omni-net-endpoint_descriptor6-get_socket_option.html">omni::net::endpoint_descriptor6::get_socket_option</a>(<a href="../../../../classes/omni-net-socket_option_level.html">omni::net::socket_option_level</a> op_level, int32_t op_name, int32_t&amp; op_val)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SOCKEP6ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!<a href="../../../../options/omni_val_has_flag_bit.html">OMNI_VAL_HAS_FLAG_BIT</a>(<font class="syn_typ">this</font>-&gt;m_status, OMNI_EPDESC_CONN_FLAG_FW)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../../../../classes/omni-net-socket_error-not_connected.html">omni::net::socket_error::NOT_CONNECTED</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> serr = <font class="syn_num">0</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SOCKLEN_FW sz;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> ((op_level == <a href="../../../../classes/omni-net-socket_option_level-socket.html">omni::net::socket_option_level::SOCKET</a>) &amp;&amp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((op_name == <a href="../../../../classes/omni-net-socket_option-linger.html">omni::net::socket_option::LINGER</a>) || (op_name == <a href="../../../../classes/omni-net-socket_option-dont_linger.html">omni::net::socket_option::DONT_LINGER</a>)))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">struct</font> linger lop;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/cstring/memset/">std::memset</a>(&amp;lop, <font class="syn_num">0</font>, <font class="syn_ins">sizeof</font>(<font class="syn_typ">struct</font> linger));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sz = <font class="syn_ins">static_cast</font>&lt;OMNI_SOCKLEN_FW&gt;(<font class="syn_ins">sizeof</font>(<font class="syn_typ">struct</font> linger));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;serr = ::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/getsockopt.html">getsockopt</a>(<font class="syn_typ">this</font>-&gt;m_socket,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">int</font>&gt;(op_level),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">int</font>&gt;(<a href="../../../../classes/omni-net-socket_option-linger.html">omni::net::socket_option::LINGER</a>),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <font class="syn_ins">reinterpret_cast</font>&lt;OMNI_SOCKET_XFR_T_FW*&gt;(&amp;lop),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   &amp;sz);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (serr == <font class="syn_num">0</font>) { op_val = <font class="syn_ins">static_cast</font>&lt;int32_t&gt;(lop.l_linger); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SOCKET_XFR_T_FW* val = <font class="syn_ins">reinterpret_cast</font>&lt;OMNI_SOCKET_XFR_T_FW*&gt;(&amp;op_val);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sz = <font class="syn_ins">static_cast</font>&lt;OMNI_SOCKLEN_FW&gt;(<font class="syn_ins">sizeof</font>(val));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;serr = ::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/getsockopt.html">getsockopt</a>(<font class="syn_typ">this</font>-&gt;m_socket, <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">int</font>&gt;(op_level), <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">int</font>&gt;(op_name), val, &amp;sz);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (serr == <font class="syn_num">0</font>) { op_val = *(<font class="syn_ins">reinterpret_cast</font>&lt;int32_t*&gt;(val)); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (serr != <font class="syn_num">0</font>) { <font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../../../../classes/omni-net-parse_error.html">omni::net::parse_error</a>(OMNI_SOCKET_ERR_FW)); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../../../../classes/omni-net-socket_error-success.html">omni::net::socket_error::SUCCESS</a>);<br>
+}<br>
+<br>
+<a href="../../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> <a href="../../../../classes/omni-net-endpoint_descriptor6-get_socket_option.html">omni::net::endpoint_descriptor6::get_socket_option</a>(<a href="../../../../classes/omni-net-socket_option_level.html">omni::net::socket_option_level</a> op_level, <a href="../../../../classes/omni-net-socket_option.html">omni::net::socket_option</a> op_name, int32_t&amp; op_val)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;get_socket_option(op_level, <font class="syn_ins">static_cast</font>&lt;int32_t&gt;(op_name), op_val);<br>
+}<br>
+<br>
+<a href="../../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> <a href="../../../../classes/omni-net-endpoint_descriptor6-get_socket_option.html">omni::net::endpoint_descriptor6::get_socket_option</a>(<a href="../../../../classes/omni-net-socket_option_level.html">omni::net::socket_option_level</a> op_level, <a href="../../../../classes/omni-net-tcp_option.html">omni::net::tcp_option</a> op_name, int32_t&amp; op_val)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;get_socket_option(op_level, <font class="syn_ins">static_cast</font>&lt;int32_t&gt;(op_name), op_val);<br>
+}<br>
+<br>
+<a href="../../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> omni::net::endpoint_descriptor6::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/shutdown.html">shutdown</a>(<a href="../../../../classes/omni-net-socket_shutdown.html">omni::net::socket_shutdown</a> how)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SOCKEP6ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!<a href="../../../../options/omni_val_has_flag_bit.html">OMNI_VAL_HAS_FLAG_BIT</a>(<font class="syn_typ">this</font>-&gt;m_status, OMNI_EPDESC_CONN_FLAG_FW)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../../../../classes/omni-net-socket_error-not_connected.html">omni::net::socket_error::NOT_CONNECTED</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> <font class="syn_ins">if</font> (<a href="../../../../options/omni_val_has_flag_bit.html">OMNI_VAL_HAS_FLAG_BIT</a>(<font class="syn_typ">this</font>-&gt;m_status, OMNI_EPDESC_SHUT_FLAG_FW)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../../../../classes/omni-net-socket_error-success.html">omni::net::socket_error::SUCCESS</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> serr = ::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/shutdown.html">shutdown</a>(<font class="syn_typ">this</font>-&gt;m_socket, <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">int</font>&gt;(how));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (serr == OMNI_SOCK_SYSERR_FW) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../../../../classes/omni-net-parse_error.html">omni::net::parse_error</a>(OMNI_SOCKET_ERR_FW));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../options/omni_val_set_flag_bit.html">OMNI_VAL_SET_FLAG_BIT</a>(<font class="syn_typ">this</font>-&gt;m_status, OMNI_EPDESC_SHUT_FLAG_FW);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../../../../classes/omni-net-socket_error-success.html">omni::net::socket_error::SUCCESS</a>);<br>
+}<br>
+<br>
+<a href="../../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> <a href="../../../../classes/omni-net-endpoint_descriptor6-set_socket_option.html">omni::net::endpoint_descriptor6::set_socket_option</a>(<a href="../../../../classes/omni-net-socket_option_level.html">omni::net::socket_option_level</a> op_level, int32_t op_name, int32_t op_val)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SOCKEP6ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!<a href="../../../../options/omni_val_has_flag_bit.html">OMNI_VAL_HAS_FLAG_BIT</a>(<font class="syn_typ">this</font>-&gt;m_status, OMNI_EPDESC_CONN_FLAG_FW)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../../../../classes/omni-net-socket_error-not_connected.html">omni::net::socket_error::NOT_CONNECTED</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> serr = <font class="syn_num">0</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> ((op_level == <a href="../../../../classes/omni-net-socket_option_level-socket.html">omni::net::socket_option_level::SOCKET</a>) &amp;&amp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((op_name == <a href="../../../../classes/omni-net-socket_option-linger.html">omni::net::socket_option::LINGER</a>) || (op_name == <a href="../../../../classes/omni-net-socket_option-dont_linger.html">omni::net::socket_option::DONT_LINGER</a>)))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">struct</font> linger lop;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/cstring/memset/">std::memset</a>(&amp;lop, <font class="syn_num">0</font>, <font class="syn_ins">sizeof</font>(<font class="syn_typ">struct</font> linger));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (op_name == <a href="../../../../classes/omni-net-socket_option-linger.html">omni::net::socket_option::LINGER</a>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lop.l_onoff = <font class="syn_num">1</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lop.l_linger = op_val;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;serr = ::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/setsockopt.html">setsockopt</a>(<font class="syn_typ">this</font>-&gt;m_socket,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">int</font>&gt;(op_level),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">int</font>&gt;(<a href="../../../../classes/omni-net-socket_option-linger.html">omni::net::socket_option::LINGER</a>),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <font class="syn_ins">reinterpret_cast</font>&lt;OMNI_SOCKET_XFR_T_FW*&gt;(&amp;lop),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <font class="syn_ins">sizeof</font>(<font class="syn_typ">struct</font> linger));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;serr = ::<a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/setsockopt.html">setsockopt</a>(<font class="syn_typ">this</font>-&gt;m_socket,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">int</font>&gt;(op_level),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">int</font>&gt;(op_name),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <font class="syn_ins">reinterpret_cast</font>&lt;OMNI_SOCKET_XFR_T_FW*&gt;(&amp;op_val),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <font class="syn_ins">sizeof</font>(int32_t));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (serr != <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../../../../classes/omni-net-parse_error.html">omni::net::parse_error</a>(OMNI_SOCKET_ERR_FW));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (<font class="syn_typ">this</font>-&gt;m_last_err = <a href="../../../../classes/omni-net-socket_error-success.html">omni::net::socket_error::SUCCESS</a>);<br>
+}<br>
+<br>
+<a href="../../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> <a href="../../../../classes/omni-net-endpoint_descriptor6-set_socket_option.html">omni::net::endpoint_descriptor6::set_socket_option</a>(<a href="../../../../classes/omni-net-socket_option_level.html">omni::net::socket_option_level</a> op_level, <a href="../../../../classes/omni-net-socket_option.html">omni::net::socket_option</a> op_name, int32_t op_val)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;set_socket_option(op_level, <font class="syn_ins">static_cast</font>&lt;int32_t&gt;(op_name), op_val);<br>
+}<br>
+<br>
+<a href="../../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> <a href="../../../../classes/omni-net-endpoint_descriptor6-set_socket_option.html">omni::net::endpoint_descriptor6::set_socket_option</a>(<a href="../../../../classes/omni-net-socket_option_level.html">omni::net::socket_option_level</a> op_level, <a href="../../../../classes/omni-net-tcp_option.html">omni::net::tcp_option</a> op_name, int32_t op_val)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;set_socket_option(op_level, <font class="syn_ins">static_cast</font>&lt;int32_t&gt;(op_name), op_val);<br>
+}<br>
+<br>
+<a href="../../../../classes/omni-net-socket_error.html">omni::net::socket_error</a> <a href="../../../../classes/omni-net-endpoint_descriptor6-set_blocking_mode.html">omni::net::endpoint_descriptor6::set_blocking_mode</a>(<a href="../../../../classes/omni-net-blocking_mode.html">omni::net::blocking_mode</a> mode)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint32_t</font> val = mode;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;ioc(FIONBIO, <font class="syn_ins">reinterpret_cast</font>&lt;<a href="../../../../classes/omni-net-xfr_t.html">omni::net::xfr_t</a>*&gt;(&amp;val));<br>
+}<br>
+<br>
+<font class="syn_typ">void</font> <a href="../../../../classes/omni-net-endpoint_descriptor6-swap.html">omni::net::endpoint_descriptor6::swap</a>(<a href="../../../../classes/omni-net-endpoint_descriptor6.html">omni::net::endpoint_descriptor6</a>&amp; other)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font> != &amp;other) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SOCKEP6ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SOCKEP6OALOCK_FW(other)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/algorithm/swap/">std::swap</a>(<font class="syn_typ">this</font>-&gt;m_socket, other.m_socket);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/algorithm/swap/">std::swap</a>(<font class="syn_typ">this</font>-&gt;m_addr, other.m_addr);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/algorithm/swap/">std::swap</a>(<font class="syn_typ">this</font>-&gt;m_last_err, other.m_last_err);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/algorithm/swap/">std::swap</a>(<font class="syn_typ">this</font>-&gt;m_status, other.m_status);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+}<br>
+<br>
+<a href="../../../../classes/omni-string_t.html">omni::string_t</a> <a href="../../../../classes/omni-net-endpoint_descriptor6-to_string_t.html">omni::net::endpoint_descriptor6::to_string_t</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../classes/omni-sstream_t.html">omni::sstream_t</a> s;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SOCKEP6LOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;s &lt;&lt; <a href="../../../../classes/omni-net-util-ip6_binary_to_string.html">omni::net::util::ip6_binary_to_string</a>(<font class="syn_typ">this</font>-&gt;m_addr.sin6_addr.s6_addr).c_str() &lt;&lt; <font class="syn_str">&quot;:&quot;</font> &lt;&lt; <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint16_t</font>&gt;(<font class="syn_typ">this</font>-&gt;m_addr.sin6_port);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SOCKEP6UNLOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> s.str();<br>
+}<br>
+<br>
+<a href="http://www.cplusplus.com/reference/string/">std::string</a> <a href="../../../../classes/omni-net-endpoint_descriptor6-to_string.html">omni::net::endpoint_descriptor6::to_string</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;std::stringstream s;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SOCKEP6LOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;s &lt;&lt; <a href="../../../../classes/omni-net-util-ip6_binary_to_string.html">omni::net::util::ip6_binary_to_string</a>(<font class="syn_typ">this</font>-&gt;m_addr.sin6_addr.s6_addr) &lt;&lt; <font class="syn_str">&quot;:&quot;</font> &lt;&lt; <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint16_t</font>&gt;(<font class="syn_typ">this</font>-&gt;m_addr.sin6_port);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SOCKEP6UNLOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> s.str();<br>
+}<br>
+<br>
+<a href="http://www.cplusplus.com/reference/string/">std::wstring</a> <a href="../../../../classes/omni-net-endpoint_descriptor6-to_wstring.html">omni::net::endpoint_descriptor6::to_wstring</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;std::wstringstream s;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SOCKEP6LOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;s &lt;&lt; <a href="../../../../classes/omni-net-util-ip6_binary_to_string.html">omni::net::util::ip6_binary_to_string</a>(<font class="syn_typ">this</font>-&gt;m_addr.sin6_addr.s6_addr).c_str() &lt;&lt; <font class="syn_str">&quot;:&quot;</font> &lt;&lt; <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint16_t</font>&gt;(<font class="syn_typ">this</font>-&gt;m_addr.sin6_port);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SOCKEP6UNLOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> s.str();<br>
+}<br>
+<br>
+<a href="../../../../classes/omni-net-endpoint_descriptor6.html">omni::net::endpoint_descriptor6</a>&amp; omni::net::endpoint_descriptor6::<font class="syn_ins">operator</font>=(<a href="../../../../classes/omni-net-endpoint_descriptor6.html">omni::net::endpoint_descriptor6</a>&amp; other)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SOCKEP6ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SOCKEP6OALOCK_FW(other)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ASSIGN_FW(other)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_socket = other.m_socket;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">//this-&gt;m_addr = other.m_addr;</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/cstring/memcpy/">std::memcpy</a>(&amp;<font class="syn_typ">this</font>-&gt;m_addr, &amp;other.m_addr, <font class="syn_ins">sizeof</font>(<font class="syn_typ">this</font>-&gt;m_addr));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_status = other.m_status;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;other.m_socket = <a href="../../../../options/omni_invalid_socket.html">OMNI_INVALID_SOCKET</a>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/cstring/memset/">std::memset</a>(&amp;other.m_addr, <font class="syn_num">0</font>, <font class="syn_ins">sizeof</font>(other.m_addr));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;other.m_status = <font class="syn_num">0</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> *<font class="syn_typ">this</font>;<br>
+}<br>
+<br>
+<font class="syn_typ">bool</font> omni::net::endpoint_descriptor6::<font class="syn_ins">operator</font>==(<font class="syn_typ">const</font> <a href="../../../../classes/omni-net-endpoint_descriptor6.html">omni::net::endpoint_descriptor6</a>&amp; other) <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../options/omni_unused.html">OMNI_UNUSED</a>(other);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+}<br>
+<br>
+<font class="syn_typ">bool</font> omni::net::endpoint_descriptor6::<font class="syn_ins">operator</font>==(<font class="syn_typ">const</font> <a href="../../../../classes/omni-net-socket_t.html">omni::net::socket_t</a>&amp; sock) <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SOCKEP6ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;m_socket == sock;<br>
+}<br>
+<br>
+<font class="syn_typ">bool</font> omni::net::endpoint_descriptor6::<font class="syn_ins">operator</font>==(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; ep) <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;endpoint() == ep;<br>
+}<br>
+<!--end highlighted code-->
+</div></code><br>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS(); collapseAll('2', '../../../../../');</script></body></html>

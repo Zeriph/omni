@@ -37,21 +37,51 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 </div><br>
 <div class="docdiv"><a name="syn"></a>
 <font class="docu">SYNOPSIS</font><br><br>
-No synopsis.
+Starts the timer.
 <br><br><a class="toppg" href="#topopage">top</a>
 </div><br>
 <div class="docdiv"><a name="desc"></a>
 <font class="docu">DESCRIPTION</font><br><br>
-No description.
+Starts the timer and blocks until the timer is in a running state. If the timer is already running, nothing happens.
 <br><br><a class="toppg" href="#topopage">top</a>
 </div><br>
 
 
+<div class="docdiv"><a name="err"></a>
+<font class="docu">ERRORS</font><br><br>
+<code><a href="omni-exceptions-invalid_delegate.html">omni::exceptions::invalid_delegate</a></code> can be raised if there is no delegate attached to the tick event. Additionally <code><a href="omni-exceptions-index_out_of_range.html">omni::exceptions::index_out_of_range</a></code> can be raised if the interval is set to 0. 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
 
 
 
 
+<div class="docdiv"><a name="ex"></a>
+<font class="docu">EXAMPLE</font><br><br>
+<div class="sntx"><input type="checkbox" id="c0" name="c0" checked /><label for="c0"> example</label>
+<pre><font class="syn_pre">#include &lt;<a href="../htmlsrc/omnilib.html">omnilib</a>&gt;</font>
 
+static <font class="syn_typ">void</font> timer_func(<a href="../classes/omni-chrono-tick_t.html">omni::chrono::tick_t</a> tick, <font class="syn_typ">const</font> <a href="../classes/omni-generic_ptr.html">omni::generic_ptr</a>&amp; so)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;monotonic tick count = &quot;</font> &lt;&lt; tick &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+}
 
+<font class="syn_typ">int</font> main(<font class="syn_typ">int</font> argc, <font class="syn_typ">char</font>* argv[])
+{
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-chrono-async_timer.html">omni::chrono::async_timer</a> timer(<font class="syn_num">2000</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;timer.tick += timer_func;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Starting the timer&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;timer.start();
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-sync-sleep.html">omni::sync::sleep</a>(<font class="syn_num">6000</font>);
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/iostream/cout/">std::cout</a> &lt;&lt; <font class="syn_str">&quot;Stopping the timer&quot;</font> &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;
+&nbsp;&nbsp;&nbsp;&nbsp;timer.stop();
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;
+}</pre>
+</div>Visit the <a href="../examples/index.html">examples</a> page for more.
+
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
 <!--end content-->
 </div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

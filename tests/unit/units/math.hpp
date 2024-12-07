@@ -22,6 +22,7 @@ class UT_CLASS_DEF
             M_LIST_ADD(area_of, "tests the omni::math::area_of_circle/rect/triangle");
             M_LIST_ADD(area_of_circle_sector, "tests the omni::math::area_of_circle_sector");
             M_LIST_ADD(arc_length, "tests the omni::math::arc_length");
+            M_LIST_ADD(angles_are_coterminal, "tests the omni::math::angles_are_coterminal");
             M_LIST_ADD(calculate_point, "tests the omni::math::calculate_point");
             M_LIST_ADD(clamp, "tests the omni::math::clamp");
             M_LIST_ADD(deg_to_rad, "tests the omni::math::deg_to_rad");
@@ -57,14 +58,122 @@ class UT_CLASS_DEF
             printv("omni::math::PI_L = ", OMNI_PI_L);
             printv("omni::math::PI_F = ", OMNI_PI_F);
             printv("omni::math::PI_180 = ", OMNI_PI_180);
+            printv("omni::math::PI_RAD_180 = ", OMNI_180_PI);
+            printv("omni::math::PI_RAD_180_L = ", OMNI_180_PI_L);
+            printv("omni::math::PI_RAD_180_F = ", OMNI_180_PI_F);
+            printv("omni::math::PI_X2 = ", OMNI_PI_X2);
+            printv("omni::math::PI_X2_L = ", OMNI_PI_L_X2);
+            printv("omni::math::PI_X2_F = ", OMNI_PI_F_X2);
+            printv("omni::math::PI_X4 = ", OMNI_PI_X4);
+            printv("omni::math::PI_X4_L = ", OMNI_PI_L_X4);
+            printv("omni::math::PI_X4_F = ", OMNI_PI_F_X4);
             printv("omni::math::PI_L_180 = ", OMNI_PI_L_180);
             printv("omni::math::PI_F_180 = ", OMNI_PI_F_180);
             printv("omni::math::TAU = ", OMNI_TAU);
             printv("omni::math::TAU_L = ", OMNI_TAU_L);
             printv("omni::math::TAU_F = ", OMNI_TAU_F);
-            printv("omni::math::compat::E = ", OMNI_E);
-            printv("omni::math::compat::PI = ", OMNI_PI);
-            printv("omni::math::compat::TAU = ", OMNI_TAU);
+            printv("omni::math::compat::E = ", OMNI_MATH_COMPAT_E);
+            printv("omni::math::compat::PI = ", OMNI_MATH_COMPAT_PI);
+            printv("omni::math::compat::TAU = ", OMNI_MATH_COMPAT_TAU);
+
+            printv("omni::math::LOG2E = ", OMNI_LOG2E);
+            printv("omni::math::LOG10E = ", OMNI_LOG10E);
+            printv("omni::math::LN2 = ", OMNI_LN2);
+            printv("omni::math::LN10 = ", OMNI_LN10);
+            printv("omni::math::PI_2 = ", OMNI_PI_2);
+            printv("omni::math::PI_4 = ", OMNI_PI_4);
+            printv("omni::math::1_PI = ", OMNI_1_PI);
+            printv("omni::math::2_PI = ", OMNI_2_PI);
+            printv("omni::math::2_SQRTPI = ", OMNI_2_SQRTPI);
+            printv("omni::math::SQRT2 = ", OMNI_SQRT2);
+            printv("omni::math::SQRT1_2 = ", OMNI_SQRT1_2);
+
+            printv("omni::math::LOG2E_L = ", OMNI_LOG2E_L);
+            printv("omni::math::LOG10E_L = ", OMNI_LOG10E_L);
+            printv("omni::math::LN2_L = ", OMNI_LN2_L);
+            printv("omni::math::LN10_L = ", OMNI_LN10_L);
+            printv("omni::math::PI_2_L = ", OMNI_PI_2_L);
+            printv("omni::math::PI_4_L = ", OMNI_PI_4_L);
+            printv("omni::math::1_PI_L = ", OMNI_1_PI_L);
+            printv("omni::math::2_PI_L = ", OMNI_2_PI_L);
+            printv("omni::math::2_SQRTPI_L = ", OMNI_2_SQRTPI_L);
+            printv("omni::math::SQRT2_L = ", OMNI_SQRT2_L);
+            printv("omni::math::SQRT1_2_L = ", OMNI_SQRT1_2_L);
+
+            printv("omni::math::LOG2E_F = ", OMNI_LOG2E_F);
+            printv("omni::math::LOG10E_F = ", OMNI_LOG10E_F);
+            printv("omni::math::LN2_F = ", OMNI_LN2_F);
+            printv("omni::math::LN10_F = ", OMNI_LN10_F);
+            printv("omni::math::PI_2_F = ", OMNI_PI_2_F);
+            printv("omni::math::PI_4_F = ", OMNI_PI_4_F);
+            printv("omni::math::1_PI_F = ", OMNI_1_PI_F);
+            printv("omni::math::2_PI_F = ", OMNI_2_PI_F);
+            printv("omni::math::2_SQRTPI_F = ", OMNI_2_SQRTPI_F);
+            printv("omni::math::SQRT2_F = ", OMNI_SQRT2_F);
+            printv("omni::math::SQRT1_2_F = ", OMNI_SQRT1_2_F);
+
+            #if !defined(OMNI_NO_CONSTS)
+            printv("omni::math::E = ", omni::math::E);
+            printv("omni::math::E_L = ", omni::math::E_L);
+            printv("omni::math::E_F = ", omni::math::E_F);
+            printv("omni::math::PI = ", omni::math::PI);
+            printv("omni::math::PI_L = ", omni::math::PI_L);
+            printv("omni::math::PI_F = ", omni::math::PI_F);
+            printv("omni::math::PI_180 = ", omni::math::PI_180);
+            printv("omni::math::PI_L_180 = ", omni::math::PI_L_180);
+            printv("omni::math::PI_F_180 = ", omni::math::PI_F_180);
+            printv("omni::math::PI_RAD_180 = ", omni::math::PI_RAD_180);
+            printv("omni::math::PI_RAD_180_L = ", omni::math::PI_RAD_180_L);
+            printv("omni::math::PI_RAD_180_F = ", omni::math::PI_RAD_180_F);
+            printv("omni::math::PI_X2 = ", omni::math::PI_X2);
+            printv("omni::math::PI_X2_L = ", omni::math::PI_X2_L);
+            printv("omni::math::PI_X2_F = ", omni::math::PI_X2_F);
+            printv("omni::math::PI_X4 = ", omni::math::PI_X4);
+            printv("omni::math::PI_X4_L = ", omni::math::PI_X4_L);
+            printv("omni::math::PI_X4_F = ", omni::math::PI_X4_F);
+            printv("omni::math::TAU = ", omni::math::TAU);
+            printv("omni::math::TAU_L = ", omni::math::TAU_L);
+            printv("omni::math::TAU_F = ", omni::math::TAU_F);
+            printv("omni::math::compat::E = ", omni::math::compat::E);
+            printv("omni::math::compat::PI = ", omni::math::compat::PI);
+            printv("omni::math::compat::TAU = ", omni::math::compat::TAU);
+
+            printv("omni::math::LOG2E = ", omni::math::LOG2E);
+            printv("omni::math::LOG10E = ", omni::math::LOG10E);
+            printv("omni::math::LN2 = ", omni::math::LN2);
+            printv("omni::math::LN10 = ", omni::math::LN10);
+            printv("omni::math::PI_2 = ", omni::math::PI_2);
+            printv("omni::math::PI_4 = ", omni::math::PI_4);
+            printv("omni::math::1_PI = ", omni::math::ONE_PI);
+            printv("omni::math::2_PI = ", omni::math::TWO_PI);
+            printv("omni::math::2_SQRTPI = ", omni::math::TWO_SQRTPI);
+            printv("omni::math::SQRT2 = ", omni::math::SQRT2);
+            printv("omni::math::SQRT1_2 = ", omni::math::SQRT1_2);
+
+            printv("omni::math::LOG2E_L = ", omni::math::LOG2E_L);
+            printv("omni::math::LOG10E_L = ", omni::math::LOG10E_L);
+            printv("omni::math::LN2_L = ", omni::math::LN2_L);
+            printv("omni::math::LN10_L = ", omni::math::LN10_L);
+            printv("omni::math::PI_2_L = ", omni::math::PI_2_L);
+            printv("omni::math::PI_4_L = ", omni::math::PI_4_L);
+            printv("omni::math::1_PI_L = ", omni::math::ONE_PI_L);
+            printv("omni::math::2_PI_L = ", omni::math::TWO_PI_L);
+            printv("omni::math::2_SQRTPI_L = ", omni::math::TWO_SQRTPI_L);
+            printv("omni::math::SQRT2_L = ", omni::math::SQRT2_L);
+            printv("omni::math::SQRT1_2_L = ", omni::math::SQRT1_2_L);
+
+            printv("omni::math::LOG2E_F = ", omni::math::LOG2E_F);
+            printv("omni::math::LOG10E_F = ", omni::math::LOG10E_F);
+            printv("omni::math::LN2_F = ", omni::math::LN2_F);
+            printv("omni::math::LN10_F = ", omni::math::LN10_F);
+            printv("omni::math::PI_2_F = ", omni::math::PI_2_F);
+            printv("omni::math::PI_4_F = ", omni::math::PI_4_F);
+            printv("omni::math::1_PI_F = ", omni::math::ONE_PI_F);
+            printv("omni::math::2_PI_F = ", omni::math::TWO_PI_F);
+            printv("omni::math::2_SQRTPI_F = ", omni::math::TWO_SQRTPI_F);
+            printv("omni::math::SQRT2_F = ", omni::math::SQRT2_F);
+            printv("omni::math::SQRT1_2_F = ", omni::math::SQRT1_2_F);
+            #endif
 
             #if !defined(OMNI_NO_CONSTS)
                 for (int i = 0; i < 361; ++i) {
@@ -210,6 +319,9 @@ class UT_CLASS_DEF
 
             test("omni::math::calculate_angle(2,2, 4,4, 2,4)", omni::math::calculate_angle(2,2, 4,4, 2,4), "45");
 
+            test("omni::math::angles_are_coterminal(40, 400)", omni::math::angles_are_coterminal(40, 400), "true");
+            test("omni::math::angles_are_coterminal(4, 400)", omni::math::angles_are_coterminal(4, 400), "false");
+
             //inline void rotate_point(double degrees, const omni::math::rotation_direction& dir, T center_x, T center_y, T& rotate_x, T& rotate_y)
             //inline void rotate_point(double degrees, const omni::math::rotation_direction& dir, T center_x, T center_y, omni::math::dimensional<T, 2>& rotate)
             //inline void rotate_point(double degrees, const omni::math::rotation_direction& dir, const omni::math::dimensional<T, 2>& center, omni::math::dimensional<T, 2>& rotate)
@@ -259,7 +371,13 @@ class UT_CLASS_DEF
 
             //inline double circle_circumference(T radius)
             test("circle_circumference(3.5)", omni::math::circle_circumference(3.5), "21.9911");
-            
+
+            // inline bool circle_contains_point_on_edge(T center_x, T center_y, double radius, T x, T y)
+            test("circle_contains_point_on_edge(0, 0, 16, 0, 16)", (omni::math::circle_contains_point_on_edge(0, 0, 16, 0, 16) ? "true" : "false"), "true");
+
+            // inline bool circle_contains_point_on_edge(T center_x, T center_y, double radius, T x, T y)
+            test("circle_contains_point_on_edge(3, 2, 5, 8, 0)", (omni::math::circle_contains_point_on_edge(3, 2, 5, 8, 0) ? "true" : "false"), "false");
+
             //inline bool circle_contains_point(T center_x, T center_y, double radius, T x, T y, bool include_edge)
             test("circle_contains_point(10, 10, 3.5, 11, 11, true)", (omni::math::circle_contains_point(10, 10, 3.5, 11, 11, true) ? "true" : "false"), "true");
             
@@ -615,6 +733,12 @@ class UT_CLASS_DEF
         {
             // template < typename T > inline double arc_length(T radius, T degrees)
             test("arc_length(3, 192)", omni::math::arc_length(3, 192), "10.0531");
+        }
+
+        void angles_are_coterminal()
+        {
+            test("angles_are_coterminal(40, 400)", omni::math::angles_are_coterminal(40, 400), "true");
+            test("angles_are_coterminal(4, 400)", omni::math::angles_are_coterminal(4, 400), "false");
         }
 
         void calculate_point()

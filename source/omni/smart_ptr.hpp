@@ -51,7 +51,7 @@ namespace omni {
 
             smart_ptr() :
                 OMNI_CTOR_FW(omni::smart_ptr<T>)
-                m_ptr(OMNI_NULL),
+                m_ptr(OMNI_NULL_PTR),
                 m_cnt(0)
             {
                 OMNI_D5_FW("created empty smart_ptr");
@@ -60,7 +60,7 @@ namespace omni {
             OMNI_EXPLICIT smart_ptr(pointer_t* val) :
                 OMNI_CTOR_FW(omni::smart_ptr<T>)
                 m_ptr(val),
-                m_cnt((val == OMNI_NULL) ? 0 : 1)
+                m_cnt((val == OMNI_NULL_PTR) ? 0 : 1)
             {
                 OMNI_D5_FW("created by ptr");
             }
@@ -91,14 +91,14 @@ namespace omni {
             smart_ptr& reset()
             {
                 this->_decrement();
-                this->m_ptr = OMNI_NULL;
+                this->m_ptr = OMNI_NULL_PTR;
                 this->m_cnt = 0;
                 return *this;
             }
             
             bool valid() const
             {
-                return (this->m_ptr != OMNI_NULL);
+                return (this->m_ptr != OMNI_NULL_PTR);
             }
 
             T* value() const
@@ -146,7 +146,7 @@ namespace omni {
                     if (this->m_ptr != val.m_ptr) {
                         this->_decrement();
                         this->m_ptr = val.m_ptr;
-                        if (this->m_ptr != OMNI_NULL) {
+                        if (this->m_ptr != OMNI_NULL_PTR) {
                             this->m_cnt = ++val.m_cnt;
                         }
                     }
@@ -159,7 +159,7 @@ namespace omni {
                 if (this->m_ptr != val) {
                     this->_decrement();
                     this->m_ptr = val;
-                    if (this->m_ptr != OMNI_NULL) {
+                    if (this->m_ptr != OMNI_NULL_PTR) {
                         ++this->m_cnt;
                     }
                 }
@@ -183,7 +183,7 @@ namespace omni {
             {
                 if ((this->m_cnt > 0) && (--this->m_cnt == 0)) {
                     OMNI_D5_FW("ref count == 0, freeing pointers");
-                    if (this->m_ptr != OMNI_NULL) {
+                    if (this->m_ptr != OMNI_NULL_PTR) {
                         OMNI_FREE(this->m_ptr);
                     }
                 }
@@ -201,7 +201,7 @@ namespace omni {
 
             smart_ptr_safe() :
                 OMNI_CTOR_FW(omni::smart_ptr_safe<T>)
-                m_ptr(OMNI_NULL),
+                m_ptr(OMNI_NULL_PTR),
                 m_cnt(0),
                 m_mtx()
             {
@@ -212,7 +212,7 @@ namespace omni {
             OMNI_EXPLICIT smart_ptr_safe(pointer_t* val) :
                 OMNI_CTOR_FW(omni::smart_ptr_safe<T>)
                 m_ptr(val),
-                m_cnt((val == OMNI_NULL) ? 0 : 1),
+                m_cnt((val == OMNI_NULL_PTR) ? 0 : 1),
                 m_mtx()
             {
                 omni::sync::mutex_init(this->m_mtx);
@@ -252,7 +252,7 @@ namespace omni {
             {
                 omni::sync::scoped_lock<omni::sync::mutex_t> alock(&this->m_mtx);
                 this->_dec_no_lock();
-                this->m_ptr = OMNI_NULL;
+                this->m_ptr = OMNI_NULL_PTR;
                 this->m_cnt = 0;
                 return *this;
             }
@@ -260,7 +260,7 @@ namespace omni {
             bool valid() const
             {
                 omni::sync::scoped_lock<omni::sync::mutex_t> alock(&this->m_mtx);
-                return (this->m_ptr != OMNI_NULL);
+                return (this->m_ptr != OMNI_NULL_PTR);
             }
 
             T const* value() const
@@ -315,7 +315,7 @@ namespace omni {
                     if (this->m_ptr != val.m_ptr) {
                         this->_dec_no_lock();
                         this->m_ptr = val.m_ptr;
-                        if (this->m_ptr != OMNI_NULL) {
+                        if (this->m_ptr != OMNI_NULL_PTR) {
                             this->m_cnt = ++val.m_cnt;
                         }
                     }
@@ -331,7 +331,7 @@ namespace omni {
                 if (this->m_ptr != val) {
                     this->_dec_no_lock();
                     this->m_ptr = val;
-                    if (this->m_ptr != OMNI_NULL) {
+                    if (this->m_ptr != OMNI_NULL_PTR) {
                         ++this->m_cnt;
                     }
                 }
@@ -362,7 +362,7 @@ namespace omni {
             {
                 if ((this->m_cnt > 0) && (--this->m_cnt == 0)) {
                     OMNI_D5_FW("ref count == 0, freeing pointers");
-                    if (this->m_ptr != OMNI_NULL) {
+                    if (this->m_ptr != OMNI_NULL_PTR) {
                         OMNI_FREE(this->m_ptr);
                     }
                 }

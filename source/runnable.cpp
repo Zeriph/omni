@@ -49,10 +49,27 @@
 
 namespace omni {
     namespace sync {
-        typedef struct runnable_thread_args {
-            omni::sync::runnable_thread* bthread;
-            omni::sync::spin_wait swait;
-        } runnable_thread_args;
+        class runnable_thread_args
+        {
+            public:
+                runnable_thread_args() :
+                    bthread(OMNI_NULL_PTR),
+                    swait()
+                {}
+                ~runnable_thread_args() {}
+
+                omni::sync::runnable_thread* bthread;
+                omni::sync::spin_wait swait;
+                
+            private:
+                runnable_thread_args(const runnable_thread_args& cp) :
+                    bthread(),
+                    swait()
+                {
+                    OMNI_UNUSED(cp);
+                }
+                runnable_thread_args& operator=(const runnable_thread_args& cp) { OMNI_UNUSED(cp); return *this; }
+        };
     }
 }
 
@@ -116,7 +133,7 @@ OMNI_THREAD_FNPTR_T OMNI_THREAD_CALL_T omni::sync::runnable_thread::_start(void*
             break;
     }
     t->_hreset();
-    t = OMNI_NULL;
+    t = OMNI_NULL_PTR;
     return 0;
 }
 
@@ -127,7 +144,7 @@ omni::sync::runnable_thread::runnable_thread() :
     OMNI_CTOR_FW(omni::sync::runnable_thread)
     OMNI_SAFE_RMTX_FW
     m_args(),
-    m_iface(OMNI_NULL),
+    m_iface(OMNI_NULL_PTR),
     m_tid(0),
     m_thread(0),
     m_ops(),
@@ -165,7 +182,7 @@ omni::sync::runnable_thread::runnable_thread(const omni::sync::thread_flags& ops
     OMNI_CTOR_FW(omni::sync::runnable_thread)
     OMNI_SAFE_RMTX_FW
     m_args(),
-    m_iface(OMNI_NULL),
+    m_iface(OMNI_NULL_PTR),
     m_tid(0),
     m_thread(0),
     m_ops(ops),
@@ -186,7 +203,7 @@ omni::sync::runnable_thread::runnable_thread(std::size_t max_stack_sz) :
     OMNI_CTOR_FW(omni::sync::runnable_thread)
     OMNI_SAFE_RMTX_FW
     m_args(),
-    m_iface(OMNI_NULL),
+    m_iface(OMNI_NULL_PTR),
     m_tid(0),
     m_thread(0),
     m_ops(max_stack_sz),
@@ -247,7 +264,7 @@ omni::sync::runnable_thread::runnable_thread(omni::sync::thread_option::enum_t o
     OMNI_CTOR_FW(omni::sync::runnable_thread)
     OMNI_SAFE_RMTX_FW
     m_args(),
-    m_iface(OMNI_NULL),
+    m_iface(OMNI_NULL_PTR),
     m_tid(0),
     m_thread(0),
     m_ops(),
@@ -696,7 +713,7 @@ omni::sync::thread_t omni::sync::runnable_thread::start(omni::sync::thread_arg_t
             OMNI_ERR_RET_FW("can not start a thread once it has been started or if it is in an unknown state", omni::exceptions::thread_running_exception())
         }
     }
-    if (this->m_iface == OMNI_NULL) {
+    if (this->m_iface == OMNI_NULL_PTR) {
         OMNI_SAFE_RUNLOCK_FW
         // no delegate attached to this thread so we cannot actually start anything
         OMNI_ERR_RET_FW(OMNI_INVALID_DELEGATE_FUNC_STR, omni::exceptions::invalid_delegate())

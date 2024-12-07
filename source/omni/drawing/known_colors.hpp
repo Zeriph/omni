@@ -231,7 +231,7 @@ namespace omni {
                 }
 
                 /** Returns true if the integer value specified is a valid enum value */
-                static bool is_valid(uint32_t val)
+                static bool is_valid(int64_t val)
                 {
                     return _valid(val);
                 }
@@ -239,7 +239,7 @@ namespace omni {
                 static enum_t from_color(const omni::drawing::color_t& val)
                 {
                     omni::drawing::color_t::rgb_t rgb = val.to_rgb();
-                    if (_valid(rgb)) {
+                    if (_valid(static_cast<int64_t>(rgb))) {
                         return static_cast<enum_t>(rgb);
                     }
                     OMNI_ERR_RETV_FW("Invalid color specified", omni::exceptions::invalid_enum(), DEFAULT_VALUE())
@@ -898,150 +898,150 @@ namespace omni {
                     return ss.str();
                 }
 
-                static bool _valid(uint32_t val)
+                static bool _valid(int64_t val)
                 {
-                    return (val == 
-                            ALICEBLUE ||
-                            ANTIQUEWHITE ||
-                            AQUA ||
-                            AQUAMARINE ||
-                            AZURE ||
-                            BEIGE ||
-                            BISQUE ||
-                            BLACK ||
-                            BLANCHEDALMOND ||
-                            BLUE ||
-                            BLUEVIOLET ||
-                            BROWN ||
-                            BURLYWOOD ||
-                            CADETBLUE ||
-                            CHARTREUSE ||
-                            CHOCOLATE ||
-                            CORAL ||
-                            CORNFLOWERBLUE ||
-                            CORNSILK ||
-                            CRIMSON ||
-                            //CYAN || // same as aqua
-                            DARKBLUE ||
-                            DARKCYAN ||
-                            DARKGOLDENROD ||
-                            DARKGRAY ||
-                            DARKGREEN ||
-                            DARKKHAKI ||
-                            DARKMAGENTA ||
-                            DARKOLIVEGREEN ||
-                            DARKORANGE ||
-                            DARKORCHID ||
-                            DARKRED ||
-                            DARKSALMON ||
-                            DARKSEAGREEN ||
-                            DARKSLATEBLUE ||
-                            DARKSLATEGRAY ||
-                            DARKTURQUOISE ||
-                            DARKVIOLET ||
-                            DEEPPINK ||
-                            DEEPSKYBLUE ||
-                            DIMGRAY ||
-                            DODGERBLUE ||
-                            FIREBRICK ||
-                            FLORALWHITE ||
-                            FORESTGREEN ||
-                            FUCHSIA ||
-                            GAINSBORO ||
-                            GHOSTWHITE ||
-                            GOLD ||
-                            GOLDENROD ||
-                            GRAY ||
-                            GREEN ||
-                            GREENYELLOW ||
-                            HONEYDEW ||
-                            HOTPINK ||
-                            INDIANRED ||
-                            INDIGO ||
-                            IVORY ||
-                            KHAKI ||
-                            LAVENDER ||
-                            LAVENDERBLUSH ||
-                            LAWNGREEN ||
-                            LEMONCHIFFON ||
-                            LIGHTBLUE ||
-                            LIGHTCORAL ||
-                            LIGHTCYAN ||
-                            LIGHTGOLDENRODYELLOW ||
-                            LIGHTGRAY ||
-                            LIGHTGREEN ||
-                            LIGHTPINK ||
-                            LIGHTSALMON ||
-                            LIGHTSEAGREEN ||
-                            LIGHTSKYBLUE ||
-                            LIGHTSLATEGRAY ||
-                            LIGHTSTEELBLUE ||
-                            LIGHTYELLOW ||
-                            LIME ||
-                            LIMEGREEN ||
-                            LINEN ||
-                            //MAGENTA || // same as fuchsia
-                            MAROON ||
-                            MEDIUMAQUAMARINE ||
-                            MEDIUMBLUE ||
-                            MEDIUMORCHID ||
-                            MEDIUMPURPLE ||
-                            MEDIUMSEAGREEN ||
-                            MEDIUMSLATEBLUE ||
-                            MEDIUMSPRINGGREEN ||
-                            MEDIUMTURQUOISE ||
-                            MEDIUMVIOLETRED ||
-                            MIDNIGHTBLUE ||
-                            MINTCREAM ||
-                            MISTYROSE ||
-                            MOCCASIN ||
-                            NAVAJOWHITE ||
-                            NAVY ||
-                            OLDLACE ||
-                            OLIVE ||
-                            OLIVEDRAB ||
-                            ORANGE ||
-                            ORANGERED ||
-                            ORCHID ||
-                            PALEGOLDENROD ||
-                            PALEGREEN ||
-                            PALETURQUOISE ||
-                            PALEVIOLETRED ||
-                            PAPAYAWHIP ||
-                            PEACHPUFF ||
-                            PERU ||
-                            PINK ||
-                            PLUM ||
-                            POWDERBLUE ||
-                            PURPLE ||
-                            REBECCAPURPLE ||
-                            RED ||
-                            ROSYBROWN ||
-                            ROYALBLUE ||
-                            SADDLEBROWN ||
-                            SALMON ||
-                            SANDYBROWN ||
-                            SEAGREEN ||
-                            SEASHELL ||
-                            SIENNA ||
-                            SILVER ||
-                            SKYBLUE ||
-                            SLATEBLUE ||
-                            SLATEGRAY ||
-                            SNOW ||
-                            SPRINGGREEN ||
-                            STEELBLUE ||
-                            TAN ||
-                            TEAL ||
-                            THISTLE ||
-                            TOMATO ||
-                            TURQUOISE ||
-                            VIOLET ||
-                            WHEAT ||
-                            WHITE ||
-                            WHITESMOKE ||
-                            YELLOW ||
-                            YELLOWGREEN
+                    return (
+                        OMNI_I2EV_FW(ALICEBLUE) ||
+                        OMNI_I2EV_FW(ANTIQUEWHITE) ||
+                        OMNI_I2EV_FW(AQUA) ||
+                        OMNI_I2EV_FW(AQUAMARINE) ||
+                        OMNI_I2EV_FW(AZURE) ||
+                        OMNI_I2EV_FW(BEIGE) ||
+                        OMNI_I2EV_FW(BISQUE) ||
+                        OMNI_I2EV_FW(BLACK) ||
+                        OMNI_I2EV_FW(BLANCHEDALMOND) ||
+                        OMNI_I2EV_FW(BLUE) ||
+                        OMNI_I2EV_FW(BLUEVIOLET) ||
+                        OMNI_I2EV_FW(BROWN) ||
+                        OMNI_I2EV_FW(BURLYWOOD) ||
+                        OMNI_I2EV_FW(CADETBLUE) ||
+                        OMNI_I2EV_FW(CHARTREUSE) ||
+                        OMNI_I2EV_FW(CHOCOLATE) ||
+                        OMNI_I2EV_FW(CORAL) ||
+                        OMNI_I2EV_FW(CORNFLOWERBLUE) ||
+                        OMNI_I2EV_FW(CORNSILK) ||
+                        OMNI_I2EV_FW(CRIMSON) ||
+                        // OMNI_I2EV_FW(CYAN) || // same as aqua
+                        OMNI_I2EV_FW(DARKBLUE) ||
+                        OMNI_I2EV_FW(DARKCYAN) ||
+                        OMNI_I2EV_FW(DARKGOLDENROD) ||
+                        OMNI_I2EV_FW(DARKGRAY) ||
+                        OMNI_I2EV_FW(DARKGREEN) ||
+                        OMNI_I2EV_FW(DARKKHAKI) ||
+                        OMNI_I2EV_FW(DARKMAGENTA) ||
+                        OMNI_I2EV_FW(DARKOLIVEGREEN) ||
+                        OMNI_I2EV_FW(DARKORANGE) ||
+                        OMNI_I2EV_FW(DARKORCHID) ||
+                        OMNI_I2EV_FW(DARKRED) ||
+                        OMNI_I2EV_FW(DARKSALMON) ||
+                        OMNI_I2EV_FW(DARKSEAGREEN) ||
+                        OMNI_I2EV_FW(DARKSLATEBLUE) ||
+                        OMNI_I2EV_FW(DARKSLATEGRAY) ||
+                        OMNI_I2EV_FW(DARKTURQUOISE) ||
+                        OMNI_I2EV_FW(DARKVIOLET) ||
+                        OMNI_I2EV_FW(DEEPPINK) ||
+                        OMNI_I2EV_FW(DEEPSKYBLUE) ||
+                        OMNI_I2EV_FW(DIMGRAY) ||
+                        OMNI_I2EV_FW(DODGERBLUE) ||
+                        OMNI_I2EV_FW(FIREBRICK) ||
+                        OMNI_I2EV_FW(FLORALWHITE) ||
+                        OMNI_I2EV_FW(FORESTGREEN) ||
+                        OMNI_I2EV_FW(FUCHSIA) ||
+                        OMNI_I2EV_FW(GAINSBORO) ||
+                        OMNI_I2EV_FW(GHOSTWHITE) ||
+                        OMNI_I2EV_FW(GOLD) ||
+                        OMNI_I2EV_FW(GOLDENROD) ||
+                        OMNI_I2EV_FW(GRAY) ||
+                        OMNI_I2EV_FW(GREEN) ||
+                        OMNI_I2EV_FW(GREENYELLOW) ||
+                        OMNI_I2EV_FW(HONEYDEW) ||
+                        OMNI_I2EV_FW(HOTPINK) ||
+                        OMNI_I2EV_FW(INDIANRED) ||
+                        OMNI_I2EV_FW(INDIGO) ||
+                        OMNI_I2EV_FW(IVORY) ||
+                        OMNI_I2EV_FW(KHAKI) ||
+                        OMNI_I2EV_FW(LAVENDER) ||
+                        OMNI_I2EV_FW(LAVENDERBLUSH) ||
+                        OMNI_I2EV_FW(LAWNGREEN) ||
+                        OMNI_I2EV_FW(LEMONCHIFFON) ||
+                        OMNI_I2EV_FW(LIGHTBLUE) ||
+                        OMNI_I2EV_FW(LIGHTCORAL) ||
+                        OMNI_I2EV_FW(LIGHTCYAN) ||
+                        OMNI_I2EV_FW(LIGHTGOLDENRODYELLOW) ||
+                        OMNI_I2EV_FW(LIGHTGRAY) ||
+                        OMNI_I2EV_FW(LIGHTGREEN) ||
+                        OMNI_I2EV_FW(LIGHTPINK) ||
+                        OMNI_I2EV_FW(LIGHTSALMON) ||
+                        OMNI_I2EV_FW(LIGHTSEAGREEN) ||
+                        OMNI_I2EV_FW(LIGHTSKYBLUE) ||
+                        OMNI_I2EV_FW(LIGHTSLATEGRAY) ||
+                        OMNI_I2EV_FW(LIGHTSTEELBLUE) ||
+                        OMNI_I2EV_FW(LIGHTYELLOW) ||
+                        OMNI_I2EV_FW(LIME) ||
+                        OMNI_I2EV_FW(LIMEGREEN) ||
+                        OMNI_I2EV_FW(LINEN) ||
+                        // OMNI_I2EV_FW(MAGENTA) || // same as fuchsia
+                        OMNI_I2EV_FW(MAROON) ||
+                        OMNI_I2EV_FW(MEDIUMAQUAMARINE) ||
+                        OMNI_I2EV_FW(MEDIUMBLUE) ||
+                        OMNI_I2EV_FW(MEDIUMORCHID) ||
+                        OMNI_I2EV_FW(MEDIUMPURPLE) ||
+                        OMNI_I2EV_FW(MEDIUMSEAGREEN) ||
+                        OMNI_I2EV_FW(MEDIUMSLATEBLUE) ||
+                        OMNI_I2EV_FW(MEDIUMSPRINGGREEN) ||
+                        OMNI_I2EV_FW(MEDIUMTURQUOISE) ||
+                        OMNI_I2EV_FW(MEDIUMVIOLETRED) ||
+                        OMNI_I2EV_FW(MIDNIGHTBLUE) ||
+                        OMNI_I2EV_FW(MINTCREAM) ||
+                        OMNI_I2EV_FW(MISTYROSE) ||
+                        OMNI_I2EV_FW(MOCCASIN) ||
+                        OMNI_I2EV_FW(NAVAJOWHITE) ||
+                        OMNI_I2EV_FW(NAVY) ||
+                        OMNI_I2EV_FW(OLDLACE) ||
+                        OMNI_I2EV_FW(OLIVE) ||
+                        OMNI_I2EV_FW(OLIVEDRAB) ||
+                        OMNI_I2EV_FW(ORANGE) ||
+                        OMNI_I2EV_FW(ORANGERED) ||
+                        OMNI_I2EV_FW(ORCHID) ||
+                        OMNI_I2EV_FW(PALEGOLDENROD) ||
+                        OMNI_I2EV_FW(PALEGREEN) ||
+                        OMNI_I2EV_FW(PALETURQUOISE) ||
+                        OMNI_I2EV_FW(PALEVIOLETRED) ||
+                        OMNI_I2EV_FW(PAPAYAWHIP) ||
+                        OMNI_I2EV_FW(PEACHPUFF) ||
+                        OMNI_I2EV_FW(PERU) ||
+                        OMNI_I2EV_FW(PINK) ||
+                        OMNI_I2EV_FW(PLUM) ||
+                        OMNI_I2EV_FW(POWDERBLUE) ||
+                        OMNI_I2EV_FW(PURPLE) ||
+                        OMNI_I2EV_FW(REBECCAPURPLE) ||
+                        OMNI_I2EV_FW(RED) ||
+                        OMNI_I2EV_FW(ROSYBROWN) ||
+                        OMNI_I2EV_FW(ROYALBLUE) ||
+                        OMNI_I2EV_FW(SADDLEBROWN) ||
+                        OMNI_I2EV_FW(SALMON) ||
+                        OMNI_I2EV_FW(SANDYBROWN) ||
+                        OMNI_I2EV_FW(SEAGREEN) ||
+                        OMNI_I2EV_FW(SEASHELL) ||
+                        OMNI_I2EV_FW(SIENNA) ||
+                        OMNI_I2EV_FW(SILVER) ||
+                        OMNI_I2EV_FW(SKYBLUE) ||
+                        OMNI_I2EV_FW(SLATEBLUE) ||
+                        OMNI_I2EV_FW(SLATEGRAY) ||
+                        OMNI_I2EV_FW(SNOW) ||
+                        OMNI_I2EV_FW(SPRINGGREEN) ||
+                        OMNI_I2EV_FW(STEELBLUE) ||
+                        OMNI_I2EV_FW(TAN) ||
+                        OMNI_I2EV_FW(TEAL) ||
+                        OMNI_I2EV_FW(THISTLE) ||
+                        OMNI_I2EV_FW(TOMATO) ||
+                        OMNI_I2EV_FW(TURQUOISE) ||
+                        OMNI_I2EV_FW(VIOLET) ||
+                        OMNI_I2EV_FW(WHEAT) ||
+                        OMNI_I2EV_FW(WHITE) ||
+                        OMNI_I2EV_FW(WHITESMOKE) ||
+                        OMNI_I2EV_FW(YELLOW) ||
+                        OMNI_I2EV_FW(YELLOWGREEN)
                     );
                 }
         };

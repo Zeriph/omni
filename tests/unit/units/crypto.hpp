@@ -13,8 +13,9 @@ class UT_CLASS_DEF
         {
             M_LIST_ADD(md5, "test the functionality in omni::crypto::md5");
             M_LIST_ADD(sha1, "test the functionality in omni::crypto::sha1");
-            M_LIST_ADD(sha56, "test the functionality in omni::crypto::sha256");
+            M_LIST_ADD(sha256, "test the functionality in omni::crypto::sha256");
             M_LIST_ADD(base64, "test the functionality in omni::crypto::base64");
+            M_LIST_ADD(util, "test the functionality in omni::crypto::util");
         }
         
         UT_CLASS_DTOR() {}
@@ -30,7 +31,9 @@ class UT_CLASS_DEF
         {
             md5(); printl("");
             sha1(); printl("");
-            sha56(); printl("");
+            sha256(); printl("");
+            base64(); printl("");
+            util(); printl("");
         }
 
         void md5()
@@ -38,7 +41,7 @@ class UT_CLASS_DEF
             try {
                 std::string txt = OMNI_PATH_ROOT + omni::io::path::combine("Code", "omni", "tests", "unit", "data", "hash.txt");
                 std::string zip = OMNI_PATH_ROOT + omni::io::path::combine("Code", "omni", "tests", "unit", "data", "hash.zip");
-                std::string dat = "test text";
+                std::string dat = "message digest";
                 cprintv("txt = ", txt);
                 cprintv("zip = ", zip);
                 cprintv("dat = ", dat);
@@ -58,9 +61,9 @@ class UT_CLASS_DEF
                 
                 omni::crypto::md5 hash_dat(dat, omni::crypto::hash_type::STRING);
                 omni::crypto::md5 hash_str(omni::crypto::md5::compute_hash(dat));
-                test("hash_dat", hash_dat, "1e2db57dd6527ad4f8f281ab028d2c70");
-                test("hash_str", hash_str, "1e2db57dd6527ad4f8f281ab028d2c70");
-                test("omni::crypto::md5::compute_hash(dat)", omni::crypto::md5::compute_hash(dat), "1e2db57dd6527ad4f8f281ab028d2c70");
+                test("hash_dat", hash_dat, "f96b697d7cb7938d525a2f31aaf161d0");
+                test("hash_str", hash_str, "f96b697d7cb7938d525a2f31aaf161d0");
+                test("omni::crypto::md5::compute_hash(dat)", omni::crypto::md5::compute_hash(dat), "f96b697d7cb7938d525a2f31aaf161d0");
             } catch (const std::exception& ex) {
                 printv("Exception: ", ex.what());
             } catch (...) {
@@ -103,7 +106,7 @@ class UT_CLASS_DEF
             }
         }
 
-        void sha56()
+        void sha256()
         {
             try {
                 std::string txt = OMNI_PATH_ROOT + omni::io::path::combine("Code", "omni", "tests", "unit", "data", "hash.txt");
@@ -155,6 +158,27 @@ class UT_CLASS_DEF
             std::vector<unsigned char> buff;
             omni::crypto::base64::decode(enc_str, buff);
             omni::io::file::write("/Code/omni/tests/misc/pencil_3.gif", buff);
+        }
+
+        void util()
+        {
+            uint32_t x = 255;
+            test("rotate_left", omni::crypto::util::rotate_left(x, 1), "510");
+            test("rotate_left", omni::crypto::util::rotate_left(x, 2), "1020");
+            test("rotate_right", omni::crypto::util::rotate_right(x, 1), "2147483775");
+            test("rotate_right", omni::crypto::util::rotate_right(x, 2), "3221225535");
+
+            std::string sha1 = "ff01ff";
+            std::vector<uint8_t> vals;
+            if (omni::crypto::util::string_to_hex(sha1, vals)) {
+                print("string_to_hex = ");
+                std_foreach(std::vector<uint8_t>, x, vals) {
+                    std::cout << static_cast<uint32_t>(*x) << " ";
+                }
+                printl(" -- expected: 255 1 255 | PASS");
+            } else {
+                printl("string_to_hex - FAIL");
+            }
         }
 };
 

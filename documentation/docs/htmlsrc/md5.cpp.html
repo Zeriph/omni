@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - md5.cpp</title>
+<link rel="stylesheet" type="text/css" href="../../content/main.css" /><link rel="icon" type="image/png" href="../../content/favicon.png" />
+<script type="text/javascript" src="../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="index.html" class="current">Source</a></li><li title="Library classes and namespaces">
+<a href="../classes/index.html">Class Index</a></li><li title="Download and view examples">
+<a href="../examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="../options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../api.html">System API</a></li><li title="Other Considerations">
+<a href="../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle"><a href="../../files/src/md5.cpp" onclick="return popup('../../files/src/md5.cpp')">md5.cpp</a></div><div class="content"><div>
+<code><div class="cpphtmllines">
+<!--start line numbers-->
+001:<br><div id="cmntl1" name="cmntl1">002:<br>003:<br>004:<br>005:<br>006:<br>007:<br>008:<br>009:<br>010:<br>011:<br>012:<br>013:<br>014:<br>015:<br>016:<br>017:<br>018:<br></div>019:<br>
+020:<br>021:<br>022:<br>023:<br>024:<br>025:<br>026:<br>027:<br>028:<br>029:<br>030:<br>031:<br>032:<br>033:<br>034:<br>035:<br>036:<br>037:<br>038:<br>039:<br>
+040:<br>041:<br>042:<br>043:<br>044:<br>045:<br>046:<br>047:<br>048:<br>049:<br>050:<br>051:<br>052:<br>053:<br>054:<br>055:<br>056:<br>057:<br>058:<br>059:<br>
+060:<br>061:<br>062:<br>063:<br>064:<br>065:<br>066:<br>067:<br>068:<br>069:<br>070:<br>071:<br>072:<br>073:<br>074:<br>075:<br>076:<br>077:<br>078:<br>079:<br>
+080:<br>081:<br>082:<br>083:<br>084:<br>085:<br>086:<br>087:<br>088:<br>089:<br>090:<br>091:<br>092:<br>093:<br>094:<br>095:<br>096:<br>097:<br>098:<br>099:<br>
+100:<br>101:<br>102:<br>103:<br>104:<br>105:<br>106:<br>107:<br>108:<br>109:<br>110:<br>111:<br>112:<br>113:<br>114:<br>115:<br>116:<br>117:<br>118:<br>119:<br>
+120:<br>121:<br>122:<br>123:<br>124:<br>125:<br>126:<br>127:<br>128:<br>129:<br>130:<br>131:<br>132:<br>133:<br>134:<br>135:<br>136:<br>137:<br>138:<br>139:<br>
+140:<br>141:<br>142:<br>143:<br>144:<br>145:<br>146:<br>147:<br>148:<br>149:<br>150:<br>151:<br>152:<br>153:<br>154:<br>155:<br>156:<br>157:<br>158:<br>159:<br>
+160:<br>161:<br>162:<br>163:<br>164:<br>165:<br>166:<br>167:<br>168:<br>169:<br>170:<br>171:<br>172:<br>173:<br>174:<br>175:<br>176:<br>177:<br>178:<br>179:<br>
+180:<br>181:<br>182:<br>183:<br>184:<br>185:<br>186:<br>187:<br>188:<br>189:<br>190:<br>191:<br>192:<br>193:<br>194:<br>195:<br>196:<br>197:<br>198:<br>199:<br>
+200:<br>201:<br>202:<br>203:<br>204:<br>205:<br>206:<br>207:<br>208:<br>209:<br>210:<br>211:<br>212:<br>213:<br>214:<br>215:<br>216:<br>217:<br>218:<br>219:<br>
+220:<br>221:<br>222:<br>223:<br>224:<br>225:<br>226:<br>227:<br>228:<br>229:<br>230:<br>231:<br>232:<br>233:<br>234:<br>235:<br>236:<br>237:<br>238:<br>239:<br>
+240:<br>241:<br>242:<br>243:<br>244:<br>245:<br>246:<br>247:<br>248:<br>249:<br>250:<br>251:<br>252:<br>253:<br>254:<br>255:<br>256:<br>257:<br>258:<br>259:<br>
+260:<br>261:<br>262:<br>263:<br>264:<br>265:<br>266:<br>267:<br>268:<br>269:<br>270:<br>271:<br>272:<br>273:<br>274:<br>275:<br>276:<br>277:<br>278:<br>279:<br>
+280:<br>281:<br>282:<br>283:<br>284:<br>285:<br>286:<br>287:<br>
+<!--end line numbers-->
+</div><div class="cpphtmlcmnt">
+<!--start collapse columns-->
+<img src="../../content/tree/min.gif" alt="Min/Max" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br>
+<!--end collapse columns-->
+</div><div class="cpphtml" style="margin-left:3.75em;">
+<!--start highlighted code-->
+<font class="syn_cmt">/*<div class="syn_ex" id="cmnt1" name="cmnt1">
+ * Copyright (c), Zeriph Enterprises<br>
+ * All rights reserved.<br>
+ * <br>
+ * Contributor(s):<br>
+ * Zechariah Perez, omni (at) zeriph (dot) com<br>
+ * <br>
+ * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS &quot;AS IS&quot; AND ANY<br>
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED<br>
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE<br>
+ * DISCLAIMED. IN NO EVENT SHALL ZERIPH AND CONTRIBUTORS BE LIABLE FOR ANY<br>
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES<br>
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;<br>
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND<br>
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT<br>
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS<br>
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.<br>
+ */</div><div></div></font>
+<font class="syn_pre">#include &lt;<a href="omni/crypto/md5.hpp.html">omni/crypto/md5.hpp</a>&gt;</font><br>
+<font class="syn_pre">#include &lt;<a href="omni/crypto/util.hpp.html">omni/crypto/util.hpp</a>&gt;</font><br>
+<font class="syn_pre">#include &lt;<a href="omni/defs/file_def.hpp.html">omni/defs/file_def.hpp</a>&gt;</font><br>
+<font class="syn_pre">#include &lt;fstream&gt;</font><br>
+<font class="syn_pre">#include &lt;sstream&gt;</font><br>
+<font class="syn_pre">#include &lt;cstring&gt;</font><br>
+<font class="syn_pre">#define OMNI_IO_FILE_EX_FW 1</font><br>
+<font class="syn_pre">#include &lt;<a href="omni/xx/io/file_ex.hxx.html">omni/xx/io/file_ex.hxx</a>&gt;</font><br>
+<br>
+<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../options/omni_safe_md5.html">OMNI_SAFE_MD5</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_MD5DMTX_FW  ,m_mtx()</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_MD5LOCK_FW   this-&gt;m_mtx.lock();</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_MD5UNLOCK_FW this-&gt;m_mtx.unlock();</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_MD5ALOCK_FW  <a href="../classes/omni-sync-scoped_basic_lock.html">omni::sync::scoped_basic_lock</a> uuid12345(&amp;this-&gt;m_mtx);</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_MD5OALOCK_FW(o)  <a href="../classes/omni-sync-scoped_basic_lock.html">omni::sync::scoped_basic_lock</a> uuid54321(&amp;o.m_mtx);</font><br>
+<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_MD5DMTX_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_MD5LOCK_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_MD5UNLOCK_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_MD5ALOCK_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_MD5OALOCK_FW(o) </font><br>
+<font class="syn_pre">#endif</font><br>
+<br>
+<font class="syn_cmt">// standard MD5 bit-twiddling functions</font><br>
+<font class="syn_pre">#define OMNI_MD5_F_FW(x, y, z) (((x) &amp; (y)) | ((~x) &amp; (z)))</font><br>
+<font class="syn_pre">#define OMNI_MD5_G_FW(x, y, z) (((x) &amp; (z)) | ((y) &amp; (~z)))</font><br>
+<font class="syn_pre">#define OMNI_MD5_H_FW(x, y, z) ((x) ^ (y) ^ (z))</font><br>
+<font class="syn_pre">#define OMNI_MD5_I_FW(x, y, z) ((y) ^ ((x) | (~z)))</font><br>
+<br>
+<font class="syn_ins">namespace</font> omni { <font class="syn_ins">namespace</font> crypto { <font class="syn_ins">namespace</font> md5_internal {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> transform (<font class="syn_typ">const</font> <font class="syn_typ">unsigned</font> <font class="syn_typ">char</font>* block, <font class="syn_typ">uint32_t</font>* state)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">const</font> <font class="syn_typ">uint32_t</font> transform_magic[<font class="syn_num">64</font>] = {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_num">0</font>xD76AA478, <font class="syn_num">0</font>xE8C7B756, <font class="syn_num">0</font>x242070DB, <font class="syn_num">0</font>xC1BDCEEE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_num">0</font>xF57C0FAF, <font class="syn_num">0</font>x4787C62A, <font class="syn_num">0</font>xA8304613, <font class="syn_num">0</font>xFD469501,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_num">0</font>x698098D8, <font class="syn_num">0</font>x8B44F7AF, <font class="syn_num">0</font>xFFFF5BB1, <font class="syn_num">0</font>x895CD7BE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_num">0</font>x6B901122, <font class="syn_num">0</font>xFD987193, <font class="syn_num">0</font>xA679438E, <font class="syn_num">0</font>x49B40821,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_num">0</font>xF61E2562, <font class="syn_num">0</font>xC040B340, <font class="syn_num">0</font>x265E5A51, <font class="syn_num">0</font>xE9B6C7AA,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_num">0</font>xD62F105D, <font class="syn_num">0</font>x02441453, <font class="syn_num">0</font>xD8A1E681, <font class="syn_num">0</font>xE7D3FBC8,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_num">0</font>x21E1CDE6, <font class="syn_num">0</font>xC33707D6, <font class="syn_num">0</font>xF4D50D87, <font class="syn_num">0</font>x455A14ED,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_num">0</font>xA9E3E905, <font class="syn_num">0</font>xFCEFA3F8, <font class="syn_num">0</font>x676F02D9, <font class="syn_num">0</font>x8D2A4C8A,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_num">0</font>xFFFA3942, <font class="syn_num">0</font>x8771F681, <font class="syn_num">0</font>x6D9D6122, <font class="syn_num">0</font>xFDE5380C,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_num">0</font>xA4BEEA44, <font class="syn_num">0</font>x4BDECFA9, <font class="syn_num">0</font>xF6BB4B60, <font class="syn_num">0</font>xBEBFBC70,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_num">0</font>x289B7EC6, <font class="syn_num">0</font>xEAA127FA, <font class="syn_num">0</font>xD4EF3085, <font class="syn_num">0</font>x04881D05,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_num">0</font>xD9D4D039, <font class="syn_num">0</font>xE6DB99E5, <font class="syn_num">0</font>x1FA27CF8, <font class="syn_num">0</font>xC4AC5665,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_num">0</font>xF4292244, <font class="syn_num">0</font>x432AFF97, <font class="syn_num">0</font>xAB9423A7, <font class="syn_num">0</font>xFC93A039,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_num">0</font>x655B59C3, <font class="syn_num">0</font>x8F0CCC92, <font class="syn_num">0</font>xFFEFF47D, <font class="syn_num">0</font>x85845DD1,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_num">0</font>x6FA87E4F, <font class="syn_num">0</font>xFE2CE6E0, <font class="syn_num">0</font>xA3014314, <font class="syn_num">0</font>x4E0811A1,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_num">0</font>xF7537E82, <font class="syn_num">0</font>xBD3AF235, <font class="syn_num">0</font>x2AD7D2BB, <font class="syn_num">0</font>xEB86D391<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">const</font> int8_t s1[<font class="syn_num">4</font>] = {  <font class="syn_num">7</font>, <font class="syn_num">12</font>, <font class="syn_num">17</font>, <font class="syn_num">22</font> };<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">const</font> int8_t s2[<font class="syn_num">4</font>] = {  <font class="syn_num">5</font>,  <font class="syn_num">9</font>, <font class="syn_num">14</font>, <font class="syn_num">20</font> };<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">const</font> int8_t s3[<font class="syn_num">4</font>] = {  <font class="syn_num">4</font>, <font class="syn_num">11</font>, <font class="syn_num">16</font>, <font class="syn_num">23</font> };<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">const</font> int8_t s4[<font class="syn_num">4</font>] = {  <font class="syn_num">6</font>, <font class="syn_num">10</font>, <font class="syn_num">15</font>, <font class="syn_num">21</font> };<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">const</font> <font class="syn_typ">uint32_t</font>* x = <font class="syn_ins">reinterpret_cast</font>&lt;<font class="syn_typ">const</font> <font class="syn_typ">uint32_t</font>*&gt;(block);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a> i, j;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint32_t</font> a, b, c, d, tmp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a = state[<font class="syn_num">0</font>];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b = state[<font class="syn_num">1</font>];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c = state[<font class="syn_num">2</font>];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d = state[<font class="syn_num">3</font>];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// Round 1</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">for</font> (i = <font class="syn_num">0</font>; i &lt; <font class="syn_num">16</font>; ++i) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tmp = a + OMNI_MD5_F_FW(b, c, d) + (x[i]) + transform_magic[i];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tmp = <a href="../classes/omni-crypto-util-rotate_left.html">omni::crypto::util::rotate_left</a>(tmp, <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint8_t</font>&gt;(s1[i &amp; <font class="syn_num">3</font>]));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tmp += b;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a = d; d = c; c = b; b = tmp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// Round 2</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">for</font> (i = <font class="syn_num">0</font>, j = <font class="syn_num">1</font>; i &lt; <font class="syn_num">16</font>; ++i, j += <font class="syn_num">5</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tmp = a + OMNI_MD5_G_FW(b, c, d) + (x[j &amp; <font class="syn_num">15</font>]) + transform_magic[i+<font class="syn_num">16</font>];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tmp = <a href="../classes/omni-crypto-util-rotate_left.html">omni::crypto::util::rotate_left</a>(tmp, <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint8_t</font>&gt;(s2[i &amp; <font class="syn_num">3</font>]));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tmp += b;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a = d; d = c; c = b; b = tmp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// Round 3</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">for</font> (i = <font class="syn_num">0</font>, j = <font class="syn_num">5</font>; i &lt; <font class="syn_num">16</font>; ++i, j += <font class="syn_num">3</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tmp = a + OMNI_MD5_H_FW(b, c, d) + (x[j &amp; <font class="syn_num">15</font>]) + transform_magic[i+<font class="syn_num">32</font>];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tmp = <a href="../classes/omni-crypto-util-rotate_left.html">omni::crypto::util::rotate_left</a>(tmp, <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint8_t</font>&gt;(s3[i &amp; <font class="syn_num">3</font>]));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tmp += b;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a = d; d = c; c = b; b = tmp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// Round 4</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">for</font> (i = <font class="syn_num">0</font>, j = <font class="syn_num">0</font>; i &lt; <font class="syn_num">16</font>; ++i, j += <font class="syn_num">7</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tmp = a + OMNI_MD5_I_FW(b, c, d) + (x[j &amp; <font class="syn_num">15</font>]) + transform_magic[i+<font class="syn_num">48</font>];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tmp = <a href="../classes/omni-crypto-util-rotate_left.html">omni::crypto::util::rotate_left</a>(tmp, <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint8_t</font>&gt;(s4[i &amp; <font class="syn_num">3</font>]));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tmp += b;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a = d; d = c; c = b; b = tmp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;state[<font class="syn_num">0</font>] += a;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;state[<font class="syn_num">1</font>] += b;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;state[<font class="syn_num">2</font>] += c;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;state[<font class="syn_num">3</font>] += d;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::string</a> compute(<font class="syn_typ">const</font> <font class="syn_typ">unsigned</font> <font class="syn_typ">char</font>* data, <font class="syn_typ">uint32_t</font> data_len)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint32_t</font> state[<font class="syn_num">4</font>] = { <font class="syn_num">0</font>x67452301, <font class="syn_num">0</font>xefcdab89, <font class="syn_num">0</font>x98badcfe, <font class="syn_num">0</font>x10325476 };<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">unsigned</font> <font class="syn_typ">char</font> buffer[<font class="syn_num">64</font>] =  {<font class="syn_num">0</font>};<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint32_t</font> length = <font class="syn_num">0</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint32_t</font> buflen = length &amp; <font class="syn_num">63</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;length += data_len;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (buflen + data_len &lt; <font class="syn_num">64</font>)  {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/cstring/memcpy/">std::memcpy</a>(buffer + buflen, data, data_len);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;buflen += data_len;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/cstring/memcpy/">std::memcpy</a>(buffer + buflen, data, <font class="syn_num">64</font> - buflen);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;omni::crypto::md5_internal::transform(buffer, state);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data += <font class="syn_num">64</font> - buflen;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data_len -= <font class="syn_num">64</font> - buflen;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">while</font> (data_len &gt;= <font class="syn_num">64</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;omni::crypto::md5_internal::transform(data, state);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data += <font class="syn_num">64</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data_len -= <font class="syn_num">64</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/cstring/memcpy/">std::memcpy</a>(buffer, data, data_len);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;buflen = data_len;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;buflen = length &amp; <font class="syn_num">63</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;buffer[buflen++] = <font class="syn_num">0</font>x80;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/cstring/memset/">std::memset</a>(buffer+buflen, <font class="syn_num">0</font>, <font class="syn_num">64</font> - buflen);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (buflen &gt; <font class="syn_num">56</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;omni::crypto::md5_internal::transform(buffer, state);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/cstring/memset/">std::memset</a>(buffer, <font class="syn_num">0</font>, <font class="syn_num">64</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;buflen = <font class="syn_num">0</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*(<font class="syn_ins">reinterpret_cast</font>&lt;<font class="syn_typ">uint32_t</font> *&gt;(buffer + <font class="syn_num">56</font>)) = (<font class="syn_num">8</font> * length);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*(<font class="syn_ins">reinterpret_cast</font>&lt;<font class="syn_typ">uint32_t</font> *&gt;(buffer + <font class="syn_num">60</font>)) = <font class="syn_num">0</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;omni::crypto::md5_internal::transform(buffer, state);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">unsigned</font> <font class="syn_typ">char</font>* digest = <font class="syn_ins">reinterpret_cast</font>&lt;<font class="syn_typ">unsigned</font> <font class="syn_typ">char</font> *&gt;(state);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-crypto-util-buffer_to_hex_string.html">omni::crypto::util::buffer_to_hex_string</a>(digest, <font class="syn_num">16</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">inline</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a> compute(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; text)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> omni::crypto::md5_internal::compute(<font class="syn_ins">reinterpret_cast</font>&lt;<font class="syn_typ">const</font> <font class="syn_typ">unsigned</font> <font class="syn_typ">char</font>*&gt;(text.c_str()), <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint32_t</font>&gt;(text.length()));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+} } }<br>
+<br>
+<a href="../classes/omni-crypto-md5-md5.html">omni::crypto::md5::md5</a>() :<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CTOR_FW(<a href="../classes/omni-crypto-md5.html">omni::crypto::md5</a>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;m_hash()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_MD5DMTX_FW<br>
+{}<br>
+<br>
+<a href="../classes/omni-crypto-md5-md5.html">omni::crypto::md5::md5</a>(<font class="syn_typ">const</font> <a href="../classes/omni-crypto-md5.html">omni::crypto::md5</a>&amp; cp) :<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CPCTOR_FW(cp)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;m_hash(cp.m_hash)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_MD5DMTX_FW<br>
+{}<br>
+<br>
+<a href="../options/omni_explicit.html">OMNI_EXPLICIT</a> <a href="../classes/omni-crypto-md5-md5.html">omni::crypto::md5::md5</a>(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; hash) :<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CTOR_FW(<a href="../classes/omni-crypto-md5.html">omni::crypto::md5</a>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;m_hash(hash)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_MD5DMTX_FW<br>
+{<br>
+}<br>
+<br>
+<a href="../classes/omni-crypto-md5-md5.html">omni::crypto::md5::md5</a>(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; text, <font class="syn_typ">const</font> <a href="../classes/omni-crypto-hash_type.html">omni::crypto::hash_type</a>&amp; type) :<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CTOR_FW(<a href="../classes/omni-crypto-md5.html">omni::crypto::md5</a>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;m_hash()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_MD5DMTX_FW<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (type == <a href="../classes/omni-crypto-hash_type-string.html">omni::crypto::hash_type::STRING</a>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_hash = omni::crypto::md5_internal::compute(text);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!omni::io::file_internal::exists(text)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERRV_FW(<font class="syn_str">&quot;File not found: &quot;</font>, text, <a href="../classes/omni-exceptions-file_not_found.html">omni::exceptions::file_not_found</a>(text))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/fstream/">std::ifstream</a> ifile;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (type == <a href="../classes/omni-crypto-hash_type-binary_file.html">omni::crypto::hash_type::BINARY_FILE</a>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ifile.open(text.c_str(), <a href="http://www.cplusplus.com/reference/ios/ios_base/openmode/">std::ios::binary</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ifile.open(text.c_str());<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ifile.seekg(<font class="syn_num">0</font>, ifile.end);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint32_t</font> length = <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint32_t</font>&gt;(ifile.tellg());<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ifile.seekg(<font class="syn_num">0</font>, ifile.beg);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (length &gt; <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">char</font>* data = <font class="syn_ins">new</font> <font class="syn_typ">char</font>[length];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ifile.read(data, length);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ifile.close();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_hash = omni::crypto::md5_internal::compute(<font class="syn_ins">reinterpret_cast</font>&lt;<font class="syn_typ">const</font> <font class="syn_typ">unsigned</font> <font class="syn_typ">char</font>*&gt;(data), length);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">delete</font>[] data;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+}<br>
+<br>
+<a href="../classes/omni-crypto-md5-@7Emd5.html">omni::crypto::md5::~md5</a>()<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_TRY_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTOR_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CATCH_FW<br>
+}<br>
+<br>
+<a href="http://www.cplusplus.com/reference/string/">std::string</a> <a href="../classes/omni-crypto-md5-hash_code.html">omni::crypto::md5::hash_code</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;to_string();<br>
+}<br>
+<br>
+<font class="syn_typ">void</font> <a href="../classes/omni-crypto-md5-swap.html">omni::crypto::md5::swap</a>(<a href="../classes/omni-crypto-md5.html">omni::crypto::md5</a>&amp; o)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font> != &amp;o) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_MD5ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_MD5OALOCK_FW(o)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/algorithm/swap/">std::swap</a>(<font class="syn_typ">this</font>-&gt;m_hash, o.m_hash);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+}<br>
+<br>
+<a href="../classes/omni-string_t.html">omni::string_t</a> <a href="../classes/omni-crypto-md5-to_string_t.html">omni::crypto::md5::to_string_t</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_MD5ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-string-util-to_string_t.html">omni::string::util::to_string_t</a>(<font class="syn_typ">this</font>-&gt;m_hash);<br>
+}<br>
+<br>
+<a href="http://www.cplusplus.com/reference/string/">std::string</a> <a href="../classes/omni-crypto-md5-to_string.html">omni::crypto::md5::to_string</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_MD5ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;m_hash;<br>
+}<br>
+<br>
+<a href="http://www.cplusplus.com/reference/string/">std::wstring</a> <a href="../classes/omni-crypto-md5-to_wstring.html">omni::crypto::md5::to_wstring</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_MD5ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-string-util-to_wstring.html">omni::string::util::to_wstring</a>(<font class="syn_typ">this</font>-&gt;m_hash);<br>
+}<br>
+<br>
+<a href="../classes/omni-crypto-md5.html">omni::crypto::md5</a>&amp; omni::crypto::md5::<font class="syn_ins">operator</font>=(<font class="syn_typ">const</font> <a href="../classes/omni-crypto-md5.html">omni::crypto::md5</a>&amp; other)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font> != &amp;other) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_MD5ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_MD5OALOCK_FW(other)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_hash = other.m_hash;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> *<font class="syn_typ">this</font>;<br>
+}<br>
+<br>
+<font class="syn_typ">bool</font> omni::crypto::md5::<font class="syn_ins">operator</font>==(<font class="syn_typ">const</font> <a href="../classes/omni-crypto-md5.html">omni::crypto::md5</a>&amp; o) <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font> != &amp;o) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_MD5ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_MD5OALOCK_FW(o)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;m_hash == o.m_hash;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">true</font>;<br>
+}<br>
+<br>
+<font class="syn_typ">bool</font> omni::crypto::md5::<font class="syn_ins">operator</font>!=(<font class="syn_typ">const</font> <a href="../classes/omni-crypto-md5.html">omni::crypto::md5</a>&amp; o) <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> !(*<font class="syn_typ">this</font> == o);<br>
+}<br>
+<br>
+<a href="http://www.cplusplus.com/reference/string/">std::string</a> <a href="../classes/omni-crypto-md5-compute_hash.html">omni::crypto::md5::compute_hash</a>(<font class="syn_typ">const</font> std::string&amp; text)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-crypto-md5.html">omni::crypto::md5</a> md5(text, <a href="../classes/omni-crypto-hash_type-string.html">omni::crypto::hash_type::STRING</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> md5.m_hash;<br>
+}<br>
+<br>
+<a href="http://www.cplusplus.com/reference/string/">std::string</a> <a href="../classes/omni-crypto-md5-compute_file_hash.html">omni::crypto::md5::compute_file_hash</a>(<font class="syn_typ">const</font> std::string&amp; file)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-crypto-md5.html">omni::crypto::md5</a> md5(file, <a href="../classes/omni-crypto-hash_type-text_file.html">omni::crypto::hash_type::TEXT_FILE</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> md5.m_hash;<br>
+}<br>
+<br>
+<a href="http://www.cplusplus.com/reference/string/">std::string</a> <a href="../classes/omni-crypto-md5-compute_binary_file_hash.html">omni::crypto::md5::compute_binary_file_hash</a>(<font class="syn_typ">const</font> std::string&amp; file)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-crypto-md5.html">omni::crypto::md5</a> md5(file, <a href="../classes/omni-crypto-hash_type-binary_file.html">omni::crypto::hash_type::BINARY_FILE</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> md5.m_hash;<br>
+}<br>
+<!--end highlighted code-->
+</div></code><br>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS(); collapseAll('1', '../../');</script></body></html>

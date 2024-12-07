@@ -23,17 +23,13 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <div class="ptitle"><a href="../../../../files/src/omni/defs/crypto_def.hpp" onclick="return popup('../../../../files/src/omni/defs/crypto_def.hpp')">omni/defs/crypto_def.hpp</a></div><div class="content"><div>
 <code><div class="cpphtmllines">
 <!--start line numbers-->
-0001:<br><div id="cmntl1" name="cmntl1">0002:<br>0003:<br>0004:<br>0005:<br>0006:<br>0007:<br>0008:<br>0009:<br>00010:<br>00011:<br>00012:<br>00013:<br>00014:<br>00015:<br>00016:<br>00017:<br>00018:<br></div>00019:<br>
-00020:<br>00021:<br>00022:<br>00023:<br>00024:<br>00025:<br>00026:<br>00027:<br>00028:<br>00029:<br>00030:<br>00031:<br>00032:<br>00033:<br>00034:<br>00035:<br>00036:<br>00037:<br>00038:<br>00039:<br>
-00040:<br>00041:<br>00042:<br>00043:<br>00044:<br>00045:<br>00046:<br>00047:<br>00048:<br>00049:<br>00050:<br>00051:<br>00052:<br>00053:<br>00054:<br>00055:<br>00056:<br>00057:<br>00058:<br>00059:<br>
-00060:<br>00061:<br>00062:<br>00063:<br>00064:<br>00065:<br>00066:<br>00067:<br>00068:<br>00069:<br>00070:<br>00071:<br>00072:<br>00073:<br>00074:<br>00075:<br>
+01:<br><div id="cmntl1" name="cmntl1">02:<br>03:<br>04:<br>05:<br>06:<br>07:<br>08:<br>09:<br>10:<br>11:<br>12:<br>13:<br>14:<br>15:<br>16:<br>17:<br>18:<br></div>19:<br>
+20:<br>21:<br>22:<br>23:<br>24:<br>25:<br>26:<br>27:<br>28:<br>29:<br>
 <!--end line numbers-->
 </div><div class="cpphtmlcmnt">
 <!--start collapse columns-->
 <img src="../../../../content/tree/min.gif" alt="Min/Max" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br>
 <!--end collapse columns-->
 </div><div class="cpphtml" style="margin-left:3em;">
 <!--start highlighted code-->
@@ -63,52 +59,6 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <font class="syn_pre">#include &lt;<a href="../../omni/types/string_t.hpp.html">omni/types/string_t.hpp</a>&gt;</font><br>
 <font class="syn_pre">#include &lt;fstream&gt;</font><br>
 <font class="syn_pre">#include &lt;sstream&gt;</font><br>
-<br>
-<font class="syn_cmt">// md5</font><br>
-<font class="syn_pre">#define OMNI_MD5_SR1_1_FW 7</font><br>
-<font class="syn_pre">#define OMNI_MD5_SR1_2_FW 12</font><br>
-<font class="syn_pre">#define OMNI_MD5_SR1_3_FW 17</font><br>
-<font class="syn_pre">#define OMNI_MD5_SR1_4_FW 22</font><br>
-<font class="syn_pre">#define OMNI_MD5_SR2_1_FW 5</font><br>
-<font class="syn_pre">#define OMNI_MD5_SR2_2_FW 9</font><br>
-<font class="syn_pre">#define OMNI_MD5_SR2_3_FW 14</font><br>
-<font class="syn_pre">#define OMNI_MD5_SR2_4_FW 20</font><br>
-<font class="syn_pre">#define OMNI_MD5_SR3_1_FW 4</font><br>
-<font class="syn_pre">#define OMNI_MD5_SR3_2_FW 11</font><br>
-<font class="syn_pre">#define OMNI_MD5_SR3_3_FW 16</font><br>
-<font class="syn_pre">#define OMNI_MD5_SR3_4_FW 23</font><br>
-<font class="syn_pre">#define OMNI_MD5_SR4_1_FW 6</font><br>
-<font class="syn_pre">#define OMNI_MD5_SR4_2_FW 10</font><br>
-<font class="syn_pre">#define OMNI_MD5_SR4_3_FW 15</font><br>
-<font class="syn_pre">#define OMNI_MD5_SR4_4_FW 21</font><br>
-<font class="syn_pre">#define OMNI_MD5_BLOCKSZ_FW 64</font><br>
-<br>
-<font class="syn_cmt">// sha1</font><br>
-<font class="syn_pre">#define OMNI_SHA1_R_FW(value, bits) (((value) &lt;&lt; (bits)) | (((value) &amp; 0xFFFFFFFF) &gt;&gt; (32 - (bits))))</font><br>
-<font class="syn_pre">#define OMNI_SHA1_B_FW(i) (block[i &amp; 15] = OMNI_SHA1_R_FW(block[(i + 13) &amp; 15] ^ block[(i + 8) &amp; 15] ^ block[(i + 2) &amp; 15] ^ block[i &amp; 15], 1))</font><br>
-<font class="syn_pre">#define OMNI_SHA1_R0_FW(v, w, x, y, z, i) z += ((w &amp; (x ^ y)) ^ y) + block[i] + 0x5A827999 + OMNI_SHA1_R_FW(v, 5); w = OMNI_SHA1_R_FW(w, 30);</font><br>
-<font class="syn_pre">#define OMNI_SHA1_R1_FW(v, w, x, y, z, i) z += ((w &amp; (x ^ y)) ^ y) + OMNI_SHA1_B_FW(i) + 0x5A827999 + OMNI_SHA1_R_FW(v, 5); w = OMNI_SHA1_R_FW(w, 30);</font><br>
-<font class="syn_pre">#define OMNI_SHA1_R2_FW(v, w, x, y, z, i) z += (w ^ x ^ y) + OMNI_SHA1_B_FW(i) + 0x6ED9EBA1 + OMNI_SHA1_R_FW(v,5); w = OMNI_SHA1_R_FW(w, 30);</font><br>
-<font class="syn_pre">#define OMNI_SHA1_R3_FW(v, w, x, y, z, i) z += (((w | x) &amp; y) | (w &amp; x)) + OMNI_SHA1_B_FW(i) + 0x8F1BBCDC + OMNI_SHA1_R_FW(v, 5); w = OMNI_SHA1_R_FW(w, 30);</font><br>
-<font class="syn_pre">#define OMNI_SHA1_R4_FW(v, w, x, y, z, i) z += (w ^ x ^ y) + OMNI_SHA1_B_FW(i) + 0xCA62C1D6 + OMNI_SHA1_R_FW(v, 5); w = OMNI_SHA1_R_FW(w, 30);</font><br>
-<font class="syn_pre">#define OMNI_SHA1_DIGEST_SZ_FW 5</font><br>
-<font class="syn_pre">#define OMNI_SHA1_BLOCK_SZ_FW 16</font><br>
-<font class="syn_pre">#define OMNI_SHA1_BLOCK_BYTE_SZ_FW 64 <font class="syn_cmt">// OMNI_SHA1_BLOCK_SZ_FW * 4</font></font><br>
-<br>
-<font class="syn_cmt">// sha256</font><br>
-<font class="syn_pre">#define OMNI_SHA2_SHFR_FW(x, n) (x &gt;&gt; n)</font><br>
-<font class="syn_pre">#define OMNI_SHA2_ROTR_FW(x, n) ((x &gt;&gt; n) | (x &lt;&lt; ((sizeof(x) &lt;&lt; 3) - n)))</font><br>
-<font class="syn_pre">#define OMNI_SHA2_ROTL_FW(x, n) ((x &lt;&lt; n) | (x &gt;&gt; ((sizeof(x) &lt;&lt; 3) - n)))</font><br>
-<font class="syn_pre">#define OMNI_SHA2_CH_FW(x, y, z) ((x &amp; y) ^ (~x &amp; z))</font><br>
-<font class="syn_pre">#define OMNI_SHA2_MAJ_FW(x, y, z) ((x &amp; y) ^ (x &amp; z) ^ (y &amp; z))</font><br>
-<font class="syn_pre">#define OMNI_SHA256_F1_FW(x) (OMNI_SHA2_ROTR_FW(x, 2) ^ OMNI_SHA2_ROTR_FW(x, 13) ^ OMNI_SHA2_ROTR_FW(x, 22))</font><br>
-<font class="syn_pre">#define OMNI_SHA256_F2_FW(x) (OMNI_SHA2_ROTR_FW(x, 6) ^ OMNI_SHA2_ROTR_FW(x, 11) ^ OMNI_SHA2_ROTR_FW(x, 25))</font><br>
-<font class="syn_pre">#define OMNI_SHA256_F3_FW(x) (OMNI_SHA2_ROTR_FW(x, 7) ^ OMNI_SHA2_ROTR_FW(x, 18) ^ OMNI_SHA2_SHFR_FW(x, 3))</font><br>
-<font class="syn_pre">#define OMNI_SHA256_F4_FW(x) (OMNI_SHA2_ROTR_FW(x, 17) ^ OMNI_SHA2_ROTR_FW(x, 19) ^ OMNI_SHA2_SHFR_FW(x, 10))</font><br>
-<font class="syn_pre">#define OMNI_SHA2_UNPACK32_FW(x, str) { *((str) + 3) = (uint8_t) ((x)); *((str) + 2) = (uint8_t) ((x) &gt;&gt; 8); *((str) + 1) = (uint8_t) ((x) &gt;&gt; 16); *((str) + 0) = (uint8_t) ((x) &gt;&gt; 24); }</font><br>
-<font class="syn_pre">#define OMNI_SHA2_PACK32_FW(str, x) { *(x) = ((uint32_t) *((str) + 3)) | ((uint32_t) *((str) + 2) &lt;&lt;  8) | ((uint32_t) *((str) + 1) &lt;&lt; 16) | ((uint32_t) *((str) + 0) &lt;&lt; 24); }</font><br>
-<font class="syn_pre">#define OMNI_SHA2_DIGEST_SIZE_FW 32 <font class="syn_cmt">// (256 / 8)</font></font><br>
-<font class="syn_pre">#define OMNI_SHA2_BLOCK_SIZE_FW 64 <font class="syn_cmt">// (512 / 8)</font></font><br>
 <br>
 <font class="syn_pre">#endif <font class="syn_cmt">// OMNI_CRYPTO_DEF_HPP</font></font><br>
 <!--end highlighted code-->

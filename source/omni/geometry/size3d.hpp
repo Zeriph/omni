@@ -80,6 +80,8 @@ namespace omni {
                 T area() const
                 {
                     OMNI_SAFE_GSZ3ALOCK_FW
+                    OMNI_BITS_WILL_MUL_OVER_FW(this->m_w, this->m_h)
+                    OMNI_BITS_WILL_MUL_OVER_FW(this->m_h, this->m_d)
                     return (this->m_w * this->m_h * this->m_d);
                 }
 
@@ -275,11 +277,20 @@ namespace omni {
                         OMNI_SAFE_GSZ3ALOCK_FW
                         if (this != &val) {
                             OMNI_SAFE_GSZ3OALOCK_FW(val)
+                            OMNI_BITS_WILL_ADD_OVER_FW(this->m_w, val.m_w)
+                            OMNI_BITS_WILL_ADD_OVER_FW(this->m_h, val.m_h)
+                            OMNI_BITS_WILL_ADD_OVER_FW(this->m_d, val.m_d)
                             return omni::geometry::size3d<T> ((this->m_w + val.m_w), (this->m_h + val.m_h), (this->m_d + val.m_d));
                         } else {
+                            OMNI_BITS_WILL_ADD_OVER_FW(this->m_w, val.m_w)
+                            OMNI_BITS_WILL_ADD_OVER_FW(this->m_h, val.m_h)
+                            OMNI_BITS_WILL_ADD_OVER_FW(this->m_d, val.m_d)
                             return omni::geometry::size3d<T> ((this->m_w + val.m_w), (this->m_h + val.m_h), (this->m_d + val.m_d));
                         }
                     #else
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_w, val.m_w)
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_h, val.m_h)
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_d, val.m_d)
                         return omni::geometry::size3d<T> ((this->m_w + val.m_w), (this->m_h + val.m_h), (this->m_d + val.m_d));
                     #endif
                 }
@@ -290,11 +301,20 @@ namespace omni {
                         OMNI_SAFE_GSZ3ALOCK_FW
                         if (this != &val) {
                             OMNI_SAFE_GSZ3OALOCK_FW(val)
+                            OMNI_BITS_WILL_SUB_UNDER_FW(this->m_w, val.m_w)
+                            OMNI_BITS_WILL_SUB_UNDER_FW(this->m_h, val.m_h)
+                            OMNI_BITS_WILL_SUB_UNDER_FW(this->m_d, val.m_d)
                             return omni::geometry::size3d<T> ((this->m_w - val.m_w), (this->m_h - val.m_h), (this->m_d - val.m_d));
                         } else {
+                            OMNI_BITS_WILL_SUB_UNDER_FW(this->m_w, val.m_w)
+                            OMNI_BITS_WILL_SUB_UNDER_FW(this->m_h, val.m_h)
+                            OMNI_BITS_WILL_SUB_UNDER_FW(this->m_d, val.m_d)
                             return omni::geometry::size3d<T> ((this->m_w - val.m_w), (this->m_h - val.m_h), (this->m_d - val.m_d));
                         }
                     #else
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_w, val.m_w)
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_h, val.m_h)
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_d, val.m_d)
                         return omni::geometry::size3d<T> ((this->m_w - val.m_w), (this->m_h - val.m_h), (this->m_d - val.m_d));
                     #endif
                 }
@@ -305,17 +325,26 @@ namespace omni {
                         OMNI_SAFE_GSZ3ALOCK_FW
                         if (this != &val) {
                             OMNI_SAFE_GSZ3OALOCK_FW(val)
+                            OMNI_BITS_WILL_ADD_OVER_FW(this->m_w, val.m_w)
                             this->m_w += val.m_w;
+                            OMNI_BITS_WILL_ADD_OVER_FW(this->m_h, val.m_h)
                             this->m_h += val.m_h;
+                            OMNI_BITS_WILL_ADD_OVER_FW(this->m_d, val.m_d)
                             this->m_d += val.m_d;
                         } else {
+                            OMNI_BITS_WILL_ADD_OVER_FW(this->m_w, val.m_w)
                             this->m_w += val.m_w;
+                            OMNI_BITS_WILL_ADD_OVER_FW(this->m_h, val.m_h)
                             this->m_h += val.m_h;
+                            OMNI_BITS_WILL_ADD_OVER_FW(this->m_d, val.m_d)
                             this->m_d += val.m_d;
                         }
-                    #else    
+                    #else
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_w, val.m_w)
                         this->m_w += val.m_w;
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_h, val.m_h)
                         this->m_h += val.m_h;
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_d, val.m_d)
                         this->m_d += val.m_d;
                     #endif
                     return *this;
@@ -327,17 +356,26 @@ namespace omni {
                         OMNI_SAFE_GSZ3ALOCK_FW
                         if (this != &val) {
                             OMNI_SAFE_GSZ3OALOCK_FW(val)
+                            OMNI_BITS_WILL_SUB_UNDER_FW(this->m_w, val.m_w)
                             this->m_w -= val.m_w;
+                            OMNI_BITS_WILL_SUB_UNDER_FW(this->m_h, val.m_h)
                             this->m_h -= val.m_h;
+                            OMNI_BITS_WILL_SUB_UNDER_FW(this->m_d, val.m_d)
                             this->m_d -= val.m_d;
                         } else {
+                            OMNI_BITS_WILL_SUB_UNDER_FW(this->m_w, val.m_w)
                             this->m_w -= val.m_w;
+                            OMNI_BITS_WILL_SUB_UNDER_FW(this->m_h, val.m_h)
                             this->m_h -= val.m_h;
+                            OMNI_BITS_WILL_SUB_UNDER_FW(this->m_d, val.m_d)
                             this->m_d -= val.m_d;
                         }
-                    #else    
+                    #else
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_w, val.m_w)
                         this->m_w -= val.m_w;
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_h, val.m_h)
                         this->m_h -= val.m_h;
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_d, val.m_d)
                         this->m_d -= val.m_d;
                     #endif
                     return *this;
@@ -359,6 +397,8 @@ namespace omni {
         typedef omni::geometry::size3d<int32_t> size3d_t;
         typedef omni::geometry::size3d<int64_t> size3d_64_t;
         typedef omni::geometry::size3d<float> size3d_F_t;
+
+        // DEV_NOTE: "raw" classes do not have checks, like arithmetic over/under flow, locks, etc.
 
         template < typename T >
         class raw_size3d

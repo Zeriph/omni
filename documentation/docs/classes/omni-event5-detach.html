@@ -60,7 +60,7 @@ Removes the last attached delegate that matches the signature, method and object
 
 <div class="docdiv"><a name="con"></a>
 <font class="docu">CONSIDERATIONS</font><br><br>
-If the OMNI_SAFE_EVENT defines are not enabled, it is undefined if this event is invoked and edited at the same time; i.e. a race condition can occur if you detach to an event from one thread while invoking from another. 
+If the OMNI_SAFE_EVENT defines are not enabled, it is undefined if this event is invoked and edited at the same <code><a href="https://man7.org/linux/man-pages/man2/time.2.html">time</a></code>; i.e. a race condition can occur if you detach to an event from one thread while invoking from another. 
 <br><br><a class="toppg" href="#topopage">top</a>
 </div><br>
 <br>

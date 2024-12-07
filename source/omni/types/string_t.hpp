@@ -38,6 +38,8 @@
     #define OMNI_STRW(v) OMNI_STR_WIDEN(v)
 #endif
 
+#define OMNI_STRING_UCWORD_SEPARATORS " \t\r\n\f\v"
+
 namespace omni {
     
     typedef OMNI_STRING_T string_t;
@@ -371,6 +373,30 @@ namespace omni {
             #else
                 return std::string(str);
             #endif
+        }
+
+        /** @internal library helper */
+        template < typename std_string_t >
+        std_string_t to_lower(std_string_t str)
+        {
+            typename std_string_t::iterator it = str.begin();
+            while (it != str.end()) {
+                *it = omni::char_util::to_lower(*it);
+                ++it;
+            }
+            return str;
+        }
+
+        /** @internal library helper */
+        template < typename std_string_t >
+        std_string_t to_upper(std_string_t str)
+        {
+            typename std_string_t::iterator it = str.begin();
+            while (it != str.end()) {
+                *it = omni::char_util::to_upper(*it);
+                ++it;
+            }
+            return str;
         }
         
         /** @internal library helper */

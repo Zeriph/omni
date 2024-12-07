@@ -35,10 +35,10 @@
 #endif
 
 #define OMNI_TIMER_T_FW queue_timer
-#define OMNI_TIMER_EX_STOP_FW if (this->m_qthread != OMNI_NULL) { delete this->m_qthread; this->m_qthread = OMNI_NULL; }
+#define OMNI_TIMER_EX_STOP_FW if (this->m_qthread != OMNI_NULL_PTR) { delete this->m_qthread; this->m_qthread = OMNI_NULL_PTR; }
 #define OMNI_TIMER_EX_RUN_BEG_FW this->m_qthread = omni::sync::allocate_basic_thread< omni::chrono::queue_timer, &omni::chrono::queue_timer::_run_queued >(*this, omni::sync::thread_start_type::USER);   
 // this->m_qmtx.lock();  if (!this->m_que.empty()) { this->m_que.clear(); } this->m_qmtx.unlock();
-#define OMNI_TIMER_EX_RUN_END_FW this->m_qthread->join(); delete this->m_qthread; this->m_qthread = OMNI_NULL;
+#define OMNI_TIMER_EX_RUN_END_FW this->m_qthread->join(); delete this->m_qthread; this->m_qthread = OMNI_NULL_PTR;
 #include <omni/xx/timer.hxx>
 
 omni::chrono::queue_timer::queue_timer() : 
@@ -47,8 +47,8 @@ omni::chrono::queue_timer::queue_timer() :
     OMNI_CTOR_FW(omni::chrono::queue_timer)
     OMNI_SAFE_QTMQMTX_FW
     m_que(),
-    m_thread(OMNI_NULL),
-    m_qthread(OMNI_NULL),
+    m_thread(OMNI_NULL_PTR),
+    m_qthread(OMNI_NULL_PTR),
     m_int(100),
     m_status(1)
 {
@@ -64,8 +64,8 @@ omni::chrono::queue_timer::queue_timer(const omni::chrono::queue_timer& cp) :
     OMNI_CPCTOR_FW(cp)
     OMNI_SAFE_QTMQMTX_FW
     m_que(cp.m_que),
-    m_thread(OMNI_NULL),
-    m_qthread(OMNI_NULL),
+    m_thread(OMNI_NULL_PTR),
+    m_qthread(OMNI_NULL_PTR),
     m_int(cp.m_int),
     m_status()
 {
@@ -98,8 +98,8 @@ omni::chrono::queue_timer::queue_timer(uint32_t interval_ms) :
     OMNI_CTOR_FW(omni::chrono::queue_timer)
     OMNI_SAFE_QTMQMTX_FW
     m_que(),
-    m_thread(OMNI_NULL),
-    m_qthread(OMNI_NULL),
+    m_thread(OMNI_NULL_PTR),
+    m_qthread(OMNI_NULL_PTR),
     m_int(interval_ms),
     m_status(1)
 {
@@ -115,8 +115,8 @@ omni::chrono::queue_timer::queue_timer(uint32_t interval_ms, const omni::chrono:
     OMNI_CTOR_FW(omni::chrono::queue_timer)
     OMNI_SAFE_QTMQMTX_FW
     m_que(),
-    m_thread(OMNI_NULL),
-    m_qthread(OMNI_NULL),
+    m_thread(OMNI_NULL_PTR),
+    m_qthread(OMNI_NULL_PTR),
     m_int(interval_ms),
     m_status(1)
 {
@@ -134,8 +134,8 @@ omni::chrono::queue_timer::queue_timer(uint32_t interval_ms,
     OMNI_CTOR_FW(omni::chrono::queue_timer)
     OMNI_SAFE_QTMQMTX_FW
     m_que(),
-    m_thread(OMNI_NULL),
-    m_qthread(OMNI_NULL),
+    m_thread(OMNI_NULL_PTR),
+    m_qthread(OMNI_NULL_PTR),
     m_int(interval_ms),
     m_status(1)
 {
@@ -157,8 +157,8 @@ omni::chrono::queue_timer::queue_timer(uint32_t interval_ms,
     OMNI_CTOR_FW(omni::chrono::queue_timer)
     OMNI_SAFE_QTMQMTX_FW
     m_que(),
-    m_thread(OMNI_NULL),
-    m_qthread(OMNI_NULL),
+    m_thread(OMNI_NULL_PTR),
+    m_qthread(OMNI_NULL_PTR),
     m_int(interval_ms),
     m_status(1)
 {
@@ -170,6 +170,18 @@ omni::chrono::queue_timer::queue_timer(uint32_t interval_ms,
     #endif
     OMNI_DV5_FW("created with interval of ", this->m_int);
     this->start(delay);
+}
+
+std::size_t omni::chrono::queue_timer::queue_count() const
+{
+    #if defined(OMNI_SAFE_QUEUE_TIMER)
+        this->m_qmtx.lock();
+        size_t count = this->m_que.size();
+        this->m_qmtx.unlock();
+        return count;
+    #else
+        return this->m_que.size();
+    #endif
 }
 
 void omni::chrono::queue_timer::swap(omni::chrono::queue_timer& other)
@@ -196,6 +208,7 @@ omni::chrono::queue_timer& omni::chrono::queue_timer::operator=(const omni::chro
             other.m_mtx.lock();
             other.m_qmtx.lock();
         #endif
+
         bool isrun = OMNI_VAL_HAS_FLAG_BIT(other.m_status, OMNI_TIMER_RUN_FLAG_FW);
         bool stopreq = OMNI_VAL_HAS_FLAG_BIT(other.m_status, OMNI_TIMER_STOP_FLAG_FW);
 
@@ -203,6 +216,7 @@ omni::chrono::queue_timer& omni::chrono::queue_timer::operator=(const omni::chro
         if (OMNI_VAL_HAS_FLAG_BIT(other.m_status, OMNI_TIMER_AUTO_FLAG_FW)) {
             OMNI_VAL_SET_FLAG_BIT(this->m_status, OMNI_TIMER_AUTO_FLAG_FW);
         }
+
         this->state_object = other.state_object;
         this->tick = other.tick;
         this->m_int = other.m_int;
@@ -230,12 +244,6 @@ bool omni::chrono::queue_timer::operator==(const omni::chrono::queue_timer& o) c
     return (this->state_object == o.state_object &&
             this->tick == o.tick &&
             this->m_que == o.m_que && 
-            (((this->m_thread != OMNI_NULL) && (o.m_thread != OMNI_NULL)) ?
-            (*this->m_thread == *o.m_thread)
-            : (this->m_thread == o.m_thread)) &&
-            (((this->m_qthread != OMNI_NULL) && (o.m_qthread != OMNI_NULL)) ?
-            (*this->m_qthread == *o.m_qthread)
-            : (this->m_qthread == o.m_qthread)) &&
             this->m_int == o.m_int &&
             this->m_status == o.m_status)
             OMNI_EQUAL_FW(o);

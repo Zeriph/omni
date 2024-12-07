@@ -34,62 +34,100 @@ namespace omni {
         {
             public:
                 typedef enum enum_t {
+                    /**
+                     * When the timer interval passes, the interval counter is reset and a separate thread is
+                     * spawned and detached in which the tick event will be fired. Care should be taken for any
+                     * attached delegates since the event fires in a separate thread, if a function takes longer
+                     * than the interval, a tick can happen and thus the function can be called while still
+                     * executing; as such, any functions should be re-entrant or thread safe.
+                     */
                     ASYNCHRONOUS,
+                    /**
+                     * When the timer interval passes the tick event will block and execute any delegates
+                     * in the order they were attached. The timer interval counter will not be reset until
+                     * the last attached delegate returns, thus adding additional time between official ticks.
+                     */
                     SYNCHRONOUS,
+                    /**
+                     * When the timer interval passes, the interval counter is reset and any attached delegates
+                     * are called in the order they were attached. If any functions should take longer than the
+                     * timer interval and an interval lapse happens, any subsequent ticks will be dropped while
+                     * the attached delegates are still executing. It is possible to have an events fire immediately
+                     * after each other if the timing works out such that the delegate call finishes as the tick
+                     * event is about to occur.
+                     */
                     DROP,
+                    /**
+                     * When the timer interval passes, the interval counter is reset and any attached delegates
+                     * are pushed to a queue that are executed on a separate thread that monitors said queue. If
+                     * an attached delegates take longer than the tick interval, any subsequent tick events are
+                     * queued up and called in succession without regards to the tick event or interval on the
+                     * queue monitor thread.
+                     */
                     QUEUED
                 } enum_t;
                 
+                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 4;
                 }
 
+                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return ASYNCHRONOUS;
                 }
 
+                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
+                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
+                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
+                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
+                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, timer_sync_type& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, timer_sync_type& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -303,11 +341,11 @@ namespace omni {
 
                 static bool _valid(int32_t val)
                 {
-                    return (val == 
-                        ASYNCHRONOUS ||
-                        SYNCHRONOUS || 
-                        DROP || 
-                        QUEUED
+                    return (
+                        OMNI_I2EV_FW(ASYNCHRONOUS) ||
+                        OMNI_I2EV_FW(SYNCHRONOUS )|| 
+                        OMNI_I2EV_FW(DROP) || 
+                        OMNI_I2EV_FW(QUEUED)
                     );
                 }
         };

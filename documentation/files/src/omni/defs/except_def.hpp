@@ -85,11 +85,10 @@
 #else
     #if defined(OMNI_TERMINATE)
         #define OMNI_THROW_FW(ex) OMNI_TERMINATE;
-        #define OMNI_EX_RET_FW(ret)
     #else
         #define OMNI_THROW_FW(ex)
-        #define OMNI_EX_RET_FW(ret) return ret;
     #endif
+    #define OMNI_EX_RET_FW(ret) return ret;
 #endif
 
 // OMNI_TERMINATE_FW("debug error string")
@@ -114,27 +113,43 @@
     #define OMNI_TERMINATEV_FW(str, val) OMNI_DBGEV(str, val) std::abort();
 #endif
 
-// OMNI_ERR_FW("debug error string", omni::execption())
-// OMNI_ERRV_FW("debug error string: ", err, omni::execption())
+// OMNI_ERR_FW("debug error string", omni::exception())
+// OMNI_ERRV_FW("debug error string: ", err, omni::exception())
 #define OMNI_ERR_FW(str, ex) OMNI_DBGE(str) OMNI_THROW_FW(ex)
 #define OMNI_ERRV_FW(str, val, ex) OMNI_DBGEV(str, val) OMNI_THROW_FW(ex)
 
-// OMNI_ERR_RET_FW("debug error string", omni::execption())
-// OMNI_ERRV_RET_FW("debug error string: ", err, omni::execption())
+// OMNI_ERR_RET_FW("debug error string", omni::exception())
+// OMNI_ERRV_RET_FW("debug error string: ", err, omni::exception())
 #define OMNI_ERR_RET_FW(str, ex) OMNI_DBGE(str) OMNI_THROW_FW(ex)
 #define OMNI_ERRV_RET_FW(str, val, ex) OMNI_DBGEV(str, val) OMNI_THROW_FW(ex)
 
-// OMNI_ERR_RETV_FW("debug error string", omni::execption(), default_return)
-// OMNI_ERRV_RETV_FW("debug error string: ", err, omni::execption(), default_return)
+// OMNI_ERR_RETV_FW("debug error string", omni::exception(), default_return)
+// OMNI_ERRV_RETV_FW("debug error string: ", err, omni::exception(), default_return)
 #define OMNI_ERR_RETV_FW(str, ex, ret) OMNI_DBGE(str) OMNI_THROW_FW(ex) OMNI_EX_RET_FW(ret)
 #define OMNI_ERRV_RETV_FW(str, val, ex, ret) OMNI_DBGEV(str, val) OMNI_THROW_FW(ex) OMNI_EX_RET_FW(ret)
 
 #if defined(OMNI_THROW)
     #define OMNI_TRY_FW try {
-    #define OMNI_CATCH_FW } catch (omni::exception ex) { OMNI_TERMINATE_FW(ex.what()) } catch (...) { OMNI_TERMINATE_FW("Unknown exception") }
+    #define OMNI_CATCH_FW } catch (const omni::exception& ex) { OMNI_TERMINATE_FW(ex.what()) } catch (...) { OMNI_TERMINATE_FW("Unknown exception") }
 #else
     #define OMNI_TRY_FW 
     #define OMNI_CATCH_FW 
 #endif
+
+/*
+    DEV_NOTE: we could implement a try..catch within class constructors (see below for example), but it's better to have the ctor throw an exception and be handled
+    up the stack, or by the general signal handler, so as to actually catch the exception and fix it. Any ctor's in omni that actually allocate or do other init
+    things, like the mutex or thread classes, already handle the specific scenarios that should be handled and throw an appropriate exception or error as needed.
+
+    example of ctor try/catch:
+
+    x_ctor() try :
+        m_member(0)
+    {
+        this->init();
+    } catch (...) {
+        handle error here
+    }
+*/
 
 #endif // OMNI_EXCEPT_DEF_HPP

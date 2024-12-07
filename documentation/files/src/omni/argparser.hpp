@@ -26,6 +26,13 @@
 
 namespace omni {
     namespace application {
+        /**
+         * @brief Brief description.
+         * 
+         * @details A more detailed description of the function.
+         * 
+         * @attention Any platform specific notes.
+         */
         class argparser
         {
             public:

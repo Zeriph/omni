@@ -44,11 +44,11 @@ namespace OmniDocuGen
                         if (omni::io::file::exists(file)) {
                             switch (ht) {
                                 case Types::HashType::SHA256:
-                                    return omni::crypto::sha256::compute_file_hash(file);
+                                    return omni::crypto::sha256::compute_binary_file_hash(file);
                                 case Types::HashType::SHA1:
-                                    return omni::crypto::sha1::compute_file_hash(file);
+                                    return omni::crypto::sha1::compute_binary_file_hash(file);
                                 case Types::HashType::MD5:
-                                    return omni::crypto::md5::compute_file_hash(file);
+                                    return omni::crypto::md5::compute_binary_file_hash(file);
                             }
                         }
                     } catch (const std::exception& ex) {
@@ -117,11 +117,11 @@ struct DocuGenThreadParam
     omni::sync::basic_thread* m_t;
 
     DocuGenThreadParam() :
-        cgen(), isSrc(false), m_t(OMNI_NULL)
+        cgen(), isSrc(false), m_t(OMNI_NULL_PTR)
     { }
 
     DocuGenThreadParam(std::string f, bool isrc) :
-        cgen(new CodeGen(f)), isSrc(isrc), m_t(OMNI_NULL)
+        cgen(new CodeGen(f)), isSrc(isrc), m_t(OMNI_NULL_PTR)
     {
         //this->cgen = new CodeGen(f);
     }
@@ -155,7 +155,7 @@ struct DocuGenThreadParam
 
     void Wait()
     {
-        if (this->m_t != OMNI_NULL) {
+        if (this->m_t != OMNI_NULL_PTR) {
             this->m_t->join();
             delete this->m_t;
         }
@@ -652,7 +652,6 @@ void OmniDocuGen::DocuGen::_GenerateTempHelp(std::string thelp)
     if (!omni::string::ends_with(thelp, OMNI_PATH_SEPARATOR)) { thelp += OMNI_PATH_SEPARATOR; }
     std::string html;
     std::string idx = omni::io::path::combine(DocuGen::Root, "index.html");
-    std::string dl = omni::io::path::combine(DocuGen::Root, "download.html");
     omni::seq::std_string_t files;
     omni::io::directory::get_files(DocuGen::Root, files);
     Util::CopyDirectory(DocuGen::Build, omni::string::replace(DocuGen::Build, DocuGen::Root, thelp), true);
@@ -662,7 +661,6 @@ void OmniDocuGen::DocuGen::_GenerateTempHelp(std::string thelp)
     files.push_back(omni::io::path::combine(DocuGen::Docs, "license.txt"));
     omni_foreach (std::string, file, files) {
         if (!omni::io::file::exists(*file)) { continue; }
-        if (*file == dl) { continue; }
         html = omni::io::file::get_contents(*file);
         if (*file == idx) {
             std::string edlt = "<\\!--end download table-->";
@@ -675,7 +673,6 @@ void OmniDocuGen::DocuGen::_GenerateTempHelp(std::string thelp)
                 }
             }
         }
-        html = replace_dl_html(html);
         Util::WriteFile(omni::string::replace(*file, DocuGen::Root, thelp), html);
     }
     Util::CopyDirectory(omni::io::path::combine(DocuGen::Root, "content"), omni::io::path::combine(thelp, "content"), true, false);
@@ -860,6 +857,7 @@ void OmniDocuGen::DocuGen::_CreateAndMoveZips(const std::string& tpath, const st
     Util::DeleteFile(toz);
     sw.restart();
     Util::ZipDirectory(odgzipdir, toz);
+    OmniDocuGen::Util::RemoveEntryFromZip(toz, "zips/omni.zip");
     up("Finished omni.zip in {0}s", omni::string::to_string(sw.elapsed_s()));
 
     up("Moving zips to html directory");
@@ -946,7 +944,15 @@ void OmniDocuGen::DocuGen::GenerateHashFiles()
     }
     up("Generating local help docs");
     sw.start();
-    DocuGen::_GenerateTempHelp(thelp);
+    // DocuGen::_GenerateTempHelp(thelp);
+    if (!omni::string::ends_with(thelp, OMNI_PATH_SEPARATOR)) { thelp += OMNI_PATH_SEPARATOR; }
+    Util::CopyDirectory(DocuGen::Root, thelp, true, true);
+    std::string thelp_files = omni::io::path::combine(thelp, "files");
+    if (OmniDocuGen::Program::Profile) {
+        up(1, "Profile mode enabled, skipping delete dir ('{0}'..", thelp_files);
+    } else {
+        omni::io::directory::remove(thelp_files, true);
+    }
     up("Help docs generated in {0}ms ({1}s)",
         omni::string::to_string(sw.elapsed_ms()),
         omni::string::to_string(omni::math::round(static_cast<double>(sw.elapsed_ms())/1000, 3))
@@ -977,6 +983,7 @@ void OmniDocuGen::DocuGen::GenerateHashFiles()
         omni::string::to_string(sw.elapsed_ms()),
         omni::string::to_string(omni::math::round(static_cast<double>(sw.elapsed_ms())/1000, 3))
     );
+
     std::sort(oldzips.begin(), oldzips.end());
     std::reverse(oldzips.begin(), oldzips.end());
 
@@ -1147,6 +1154,7 @@ void OmniDocuGen::DocuGen::GenerateExamplesZipFile()
     if (Util::ZipDirectory(OmniDocuGen::Program::Settings.ExampleDirectory, exzip)) {
         std::string fez = omni::io::path::combine(OmniDocuGen::DocuGen::Files, "examples.zip");
         Util::RemoveEntryFromZip(exzip, std::string("build/"));
+        Util::RemoveEntryFromZip(exzip, std::string("WORKING/"));
         Util::DeleteFile(fez);
         Util::MoveFile(exzip, fez);
         if (omni::io::file::exists(fez)) {
@@ -1348,11 +1356,11 @@ void OmniDocuGen::DocuGen::GenerateJavaScriptSearchList()
     jsfiles.push_back("docs/build/index.html");
 
     std::string jsfilename = omni::io::path::combine(omni::io::path::combine(OmniDocuGen::Program::Settings.OutputDirectory, "content"), "search_list.js");
-    std::string html = "function searchList(){ return [ ";
+    std::string html = "var searchList = [ ";
     for (int32_t i = 0; i < jsfiles.size()-1; ++i) {
         html += "\r\n\"" + omni::string::replace_all(omni::string::trim_front(omni::string::replace(jsfiles[i], OmniDocuGen::Program::Settings.OutputDirectory, ""), "/"), "\\", "/") + "\",";
     }
-    html += "\r\n\"" + omni::string::replace_all(omni::string::trim_front(omni::string::replace(jsfiles[jsfiles.size() - 1], OmniDocuGen::Program::Settings.OutputDirectory, ""), "/"), "\\", "/") + "\"\r\n];}";
+    html += "\r\n\"" + omni::string::replace_all(omni::string::trim_front(omni::string::replace(jsfiles[jsfiles.size() - 1], OmniDocuGen::Program::Settings.OutputDirectory, ""), "/"), "\\", "/") + "\"\r\n];";
     if (Util::WriteFile(jsfilename, html)) {
         up("Wrote javascript file {0}", jsfilename);
     } else {

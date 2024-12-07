@@ -35,8 +35,9 @@ OMNI_CLOCK_FREQ_T omni::chrono::monotonic::m_freq;
         const int64_t omni::chrono::DAYS_PER_400_YEARS = OMNI_DAYS_PER_400_YEARS; // DAYS_PER_100_YEARS * 4 + 1
         const int64_t omni::chrono::DAYS_TO_1601AD = OMNI_DAYS_TO_1601AD; // Number of days from 1/1/0001 to 12/31/1600 -> DAYS_PER_400_YEARS * 4
         const int64_t omni::chrono::DAYS_TO_1899AD = OMNI_DAYS_TO_1899AD; // Number of days from 1/1/0001 to 12/30/1899 -> DAYS_PER_400_YEARS * 4 + DAYS_PER_100_YEARS * 3 - 367;
+        const int64_t omni::chrono::DAYS_TO_1970AD = OMNI_DAYS_TO_1970AD; // Number of days from 1/1/0001 to 12/31/1969 ->  DAYS_PER_400_YEARS * 4 + DAYS_PER_100_YEARS * 3 + OMNI_DAYS_PER_4_YEARS * 17 + OMNI_DAYS_PER_YEAR
+        const int64_t omni::chrono::DAYS_TO_EPOCH = OMNI_DAYS_TO_EPOCH; // Alias to DAYS_TO_1970AD
         const int64_t omni::chrono::DAYS_TO_10000AD = OMNI_DAYS_TO_10000AD; // Number of days from 1/1/0001 to 12/31/9999 -> DAYS_PER_400_YEARS * 25 - 366
-        const int64_t omni::chrono::DAYS_TO_EPOCH = OMNI_DAYS_TO_EPOCH; // Number of days from 1/1/0001 to 12/31/1969 -> DAYS_TO_1601AD + (DAYS_PER_100_YEARS * 3) + (DAYS_PER_4_YEARS * 17) + (DAYS_PER_YEAR * 2)
         const int64_t omni::chrono::TICKS_TO_10000AD = OMNI_TICKS_TO_10000AD; // DAYS_TO_10000AD * TICKS_PER_DAY - 1;
         const int64_t omni::chrono::MILLISECONDS_TO_10000AD = OMNI_MILLISECONDS_TO_10000AD; // DAYS_TO_10000AD * MILLISECONDS_PER_DAY;
         const int64_t omni::chrono::FILE_TIME_OFFSET = OMNI_FILE_TIME_OFFSET; // DAYS_TO_1601AD * TICKS_PER_DAY;
@@ -145,22 +146,61 @@ OMNI_CLOCK_FREQ_T omni::chrono::monotonic::m_freq;
         const double omni::math::E = OMNI_E;
         const double omni::math::PI = OMNI_PI;
         const double omni::math::PI_180 = OMNI_PI_180;
+        const double omni::math::PI_RAD_180 = OMNI_180_PI;
+        const double omni::math::PI_X2 = OMNI_PI_X2;
+        const double omni::math::PI_X4 = OMNI_PI_X4;
+        const double omni::math::PI_2 = OMNI_PI_2;
+        const double omni::math::PI_4 = OMNI_PI_4;
+        const double omni::math::ONE_PI = OMNI_1_PI;
+        const double omni::math::TWO_PI = OMNI_2_PI;
+        const double omni::math::TWO_SQRTPI = OMNI_2_SQRTPI;
         const double omni::math::TAU = OMNI_TAU;
+        const double omni::math::LOG2E = OMNI_LOG2E;
+        const double omni::math::LOG10E = OMNI_LOG10E;
+        const double omni::math::LN2 = OMNI_LN2;
+        const double omni::math::LN10 = OMNI_LN10;
+        const double omni::math::SQRT2 = OMNI_SQRT2;
+        const double omni::math::SQRT1_2 = OMNI_SQRT1_2;
 
         const long double omni::math::E_L = OMNI_E_L;
         const long double omni::math::PI_L = OMNI_PI_L;
         const long double omni::math::PI_L_180 = OMNI_PI_L_180;
+        const long double omni::math::PI_RAD_180_L = OMNI_180_PI_L;
+        const long double omni::math::PI_X2_L = OMNI_PI_L_X2;
+        const long double omni::math::PI_X4_L = OMNI_PI_L_X4;
+        const long double omni::math::PI_2_L = OMNI_PI_2_L;
+        const long double omni::math::PI_4_L = OMNI_PI_4_L;
+        const long double omni::math::ONE_PI_L = OMNI_1_PI_L;
+        const long double omni::math::TWO_PI_L = OMNI_2_PI_L;
+        const long double omni::math::TWO_SQRTPI_L = OMNI_2_SQRTPI_L;
         const long double omni::math::TAU_L = OMNI_TAU_L;
+        const long double omni::math::LOG2E_L = OMNI_LOG2E_L;
+        const long double omni::math::LOG10E_L = OMNI_LOG10E_L;
+        const long double omni::math::LN2_L = OMNI_LN2_L;
+        const long double omni::math::LN10_L = OMNI_LN10_L;
+        const long double omni::math::SQRT2_L = OMNI_SQRT2_L;
+        const long double omni::math::SQRT1_2_L = OMNI_SQRT1_2_L;
         
         const float omni::math::E_F = OMNI_E_F;
         const float omni::math::PI_F = OMNI_PI_F;
         const float omni::math::PI_F_180 = OMNI_PI_F_180;
+        const float omni::math::PI_RAD_180_F = OMNI_180_PI_F;
+        const float omni::math::PI_X2_F = OMNI_PI_F_X2;
+        const float omni::math::PI_X4_F = OMNI_PI_F_X4;
+        const float omni::math::PI_2_F = OMNI_PI_2_F;
+        const float omni::math::PI_4_F = OMNI_PI_4_F;
+        const float omni::math::ONE_PI_F = OMNI_1_PI_F;
+        const float omni::math::TWO_PI_F = OMNI_2_PI_F;
+        const float omni::math::TWO_SQRTPI_F = OMNI_2_SQRTPI_F;
         const float omni::math::TAU_F = OMNI_TAU_F;
+        const float omni::math::LOG2E_F = OMNI_LOG2E_F;
+        const float omni::math::LOG10E_F = OMNI_LOG10E_F;
+        const float omni::math::LN2_F = OMNI_LN2_F;
+        const float omni::math::LN10_F = OMNI_LN10_F;
+        const float omni::math::SQRT2_F = OMNI_SQRT2_F;
+        const float omni::math::SQRT1_2_F = OMNI_SQRT1_2_F;
 
         const double omni::math::RADS[] = OMNI_MATH_RADS;
         const double omni::math::RADS_SIN[] = OMNI_MATH_RADS_SIN;
         const double omni::math::RADS_COS[] = OMNI_MATH_RADS_COS;
-
-    #include <omni/crypto/base64.hpp>
-        const char *const omni::crypto::base64::CHARS[] = OMNI_CRYPTO_BASE64_CHARS;
 #endif

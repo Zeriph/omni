@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #omni_lib_loc=/code/Zeriph/libraries/omni
 omni_lib_loc=/Code/omni
 exdir=${omni_lib_loc}/tools/docugen/examples/classes
@@ -7,13 +7,13 @@ zloc=${omni_lib_loc}/source
 zsrc=${zloc}/library.cpp
 exname=$1
 exname=${exname//.cpp}
-zout="${omni_lib_loc}/tools/docugen/bin/examples/${exname}"
+zout="${omni_lib_loc}/tools/docugen/bin/examples/class_example.bin"
 xfile="${exdir}/${exname}.cpp"
 zexd="-DOMNI_SHOW_DEBUG=5 -DOMNI_SHOW_DEBUG_ERR -DOMNI_SHOW_DEBUG_FILE -DOMNI_SHOW_DEBUG_FUNC -DOMNI_SHOW_DEBUG_LINE"
 zexf="-DOMNI_UT_FULL -DOMNI_SHOW_DEBUG=5 -DOMNI_SHOW_DEBUG_ERR -DOMNI_SHOW_DEBUG_FILE -DOMNI_SHOW_DEBUG_FUNC -DOMNI_SHOW_DEBUG_LINE -DOMNI_DISPOSE_EVENT -DOMNI_OBJECT_NAME -DOMNI_TYPE_INFO -DOMNI_SAFE_LIBRARY -DOMNI_NON_PORTABLE"
 
 if [ "$1" == "list" ]; then
-    find ${exdir} -type f -name "*.cpp" -exec basename "{}" ";"
+    for X in `find ${exdir} -type f -name "*.cpp"`; do X="${X/${exdir}/}" && echo ${X:1}; done
     exit 0
 elif [ "$1" == "html" ]; then
     xfile="${fwexd}/index_html.cpp"

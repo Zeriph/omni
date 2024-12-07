@@ -23,6 +23,7 @@
 #include <omni/defs/math_radmap_def.hpp>
 #include <omni/defs/class_macros.hpp>
 #include <omni/string/util.hpp>
+#include <algorithm>
 #include <functional>
 #include <cstdarg>
 
@@ -35,29 +36,92 @@ namespace omni {
                 OMNI_CONSTEXT_FW const double TAU OMNI_EXT_ASSN_FW(OMNI_MATH_COMPAT_TAU);
             }
 
+            /**
+             * @brief          The mathematical constant e (Euler's number) as a double.
+             *
+             * @details        This is the mathematical constant e, also known as Euler's number. If OMNI_USE_M_E or OMNI_USE_MATH_DEFS are
+             *                 defined, and if the system has M_E defined, then this constant is set to M_E. Otherwise this constant is
+             *                 defined as 2.71828182845904523536
+             */
             OMNI_CONSTEXT_FW const double E OMNI_EXT_ASSN_FW(OMNI_E);
             OMNI_CONSTEXT_FW const double PI OMNI_EXT_ASSN_FW(OMNI_PI);
             OMNI_CONSTEXT_FW const double PI_180 OMNI_EXT_ASSN_FW(OMNI_PI_180);
+            OMNI_CONSTEXT_FW const double PI_RAD_180 OMNI_EXT_ASSN_FW(OMNI_180_PI);
+            OMNI_CONSTEXT_FW const double PI_X2 OMNI_EXT_ASSN_FW(OMNI_PI_X2);
+            OMNI_CONSTEXT_FW const double PI_X4 OMNI_EXT_ASSN_FW(OMNI_PI_X4);
+            OMNI_CONSTEXT_FW const double PI_2 OMNI_EXT_ASSN_FW(OMNI_PI_2);
+            OMNI_CONSTEXT_FW const double PI_4 OMNI_EXT_ASSN_FW(OMNI_PI_4);
+            OMNI_CONSTEXT_FW const double ONE_PI OMNI_EXT_ASSN_FW(OMNI_1_PI);
+            OMNI_CONSTEXT_FW const double TWO_PI OMNI_EXT_ASSN_FW(OMNI_2_PI);
+            OMNI_CONSTEXT_FW const double TWO_SQRTPI OMNI_EXT_ASSN_FW(OMNI_2_SQRTPI);
             OMNI_CONSTEXT_FW const double TAU OMNI_EXT_ASSN_FW(OMNI_TAU);
+            OMNI_CONSTEXT_FW const double LOG2E OMNI_EXT_ASSN_FW(OMNI_LOG2E);
+            OMNI_CONSTEXT_FW const double LOG10E OMNI_EXT_ASSN_FW(OMNI_LOG10E);
+            OMNI_CONSTEXT_FW const double LN2 OMNI_EXT_ASSN_FW(OMNI_LN2);
+            OMNI_CONSTEXT_FW const double LN10 OMNI_EXT_ASSN_FW(OMNI_LN10);
+            OMNI_CONSTEXT_FW const double SQRT2 OMNI_EXT_ASSN_FW(OMNI_SQRT2);
+            OMNI_CONSTEXT_FW const double SQRT1_2 OMNI_EXT_ASSN_FW(OMNI_SQRT1_2);
             
+            /**
+             * @brief          The mathematical constant e (Euler's number) as a long double.
+             *
+             * @details        This is the mathematical constant e, also known as Euler's number. If OMNI_USE_M_E_L or OMNI_USE_MATH_DEFS are
+             *                 defined, and if the system has M_El defined, then this constant is set to M_El. Otherwise this constant is
+             *                 defined as 2.71828182845904523536028747135266250L
+             */
             OMNI_CONSTEXT_FW const long double E_L OMNI_EXT_ASSN_FW(OMNI_E_L);
             OMNI_CONSTEXT_FW const long double PI_L OMNI_EXT_ASSN_FW(OMNI_PI_L);
             OMNI_CONSTEXT_FW const long double PI_L_180 OMNI_EXT_ASSN_FW(OMNI_PI_L_180);
+            OMNI_CONSTEXT_FW const long double PI_RAD_180_L OMNI_EXT_ASSN_FW(OMNI_180_PI_L);
+            OMNI_CONSTEXT_FW const long double PI_X2_L OMNI_EXT_ASSN_FW(OMNI_PI_L_X2);
+            OMNI_CONSTEXT_FW const long double PI_X4_L OMNI_EXT_ASSN_FW(OMNI_PI_L_X4);
+            OMNI_CONSTEXT_FW const long double PI_2_L OMNI_EXT_ASSN_FW(OMNI_PI_2_L);
+            OMNI_CONSTEXT_FW const long double PI_4_L OMNI_EXT_ASSN_FW(OMNI_PI_4_L);
+            OMNI_CONSTEXT_FW const long double ONE_PI_L OMNI_EXT_ASSN_FW(OMNI_1_PI_L);
+            OMNI_CONSTEXT_FW const long double TWO_PI_L OMNI_EXT_ASSN_FW(OMNI_2_PI_L);
+            OMNI_CONSTEXT_FW const long double TWO_SQRTPI_L OMNI_EXT_ASSN_FW(OMNI_2_SQRTPI_L);
             OMNI_CONSTEXT_FW const long double TAU_L OMNI_EXT_ASSN_FW(OMNI_TAU_L);
+            OMNI_CONSTEXT_FW const long double LOG2E_L OMNI_EXT_ASSN_FW(OMNI_LOG2E_L);
+            OMNI_CONSTEXT_FW const long double LOG10E_L OMNI_EXT_ASSN_FW(OMNI_LOG10E_L);
+            OMNI_CONSTEXT_FW const long double LN2_L OMNI_EXT_ASSN_FW(OMNI_LN2_L);
+            OMNI_CONSTEXT_FW const long double LN10_L OMNI_EXT_ASSN_FW(OMNI_LN10_L);
+            OMNI_CONSTEXT_FW const long double SQRT2_L OMNI_EXT_ASSN_FW(OMNI_SQRT2_L);
+            OMNI_CONSTEXT_FW const long double SQRT1_2_L OMNI_EXT_ASSN_FW(OMNI_SQRT1_2_L);
             
+            /**
+             * @brief          The mathematical constant e (Euler's number) as a float.
+             *
+             * @details        This is the mathematical constant e, also known as Euler's number. If OMNI_USE_M_E or OMNI_USE_MATH_DEFS are
+             *                 defined, and if the system has M_E defined, then this constant is set to M_E casted to a float. Otherwise this
+             *                 constant is defined as 2.7182818F
+             */
             OMNI_CONSTEXT_FW const float E_F OMNI_EXT_ASSN_FW(OMNI_E_F);
             OMNI_CONSTEXT_FW const float PI_F OMNI_EXT_ASSN_FW(OMNI_PI_F);
             OMNI_CONSTEXT_FW const float PI_F_180 OMNI_EXT_ASSN_FW(OMNI_PI_F_180);
+            OMNI_CONSTEXT_FW const float PI_RAD_180_F OMNI_EXT_ASSN_FW(OMNI_180_PI_F);
+            OMNI_CONSTEXT_FW const float PI_X2_F OMNI_EXT_ASSN_FW(OMNI_PI_F_X2);
+            OMNI_CONSTEXT_FW const float PI_X4_F OMNI_EXT_ASSN_FW(OMNI_PI_F_X4);
+            OMNI_CONSTEXT_FW const float PI_2_F OMNI_EXT_ASSN_FW(OMNI_PI_2_F);
+            OMNI_CONSTEXT_FW const float PI_4_F OMNI_EXT_ASSN_FW(OMNI_PI_4_F);
+            OMNI_CONSTEXT_FW const float ONE_PI_F OMNI_EXT_ASSN_FW(OMNI_1_PI_F);
+            OMNI_CONSTEXT_FW const float TWO_PI_F OMNI_EXT_ASSN_FW(OMNI_2_PI_F);
+            OMNI_CONSTEXT_FW const float TWO_SQRTPI_F OMNI_EXT_ASSN_FW(OMNI_2_SQRTPI_F);
             OMNI_CONSTEXT_FW const float TAU_F OMNI_EXT_ASSN_FW(OMNI_TAU_F);
+            OMNI_CONSTEXT_FW const float LOG2E_F OMNI_EXT_ASSN_FW(OMNI_LOG2E_F);
+            OMNI_CONSTEXT_FW const float LOG10E_F OMNI_EXT_ASSN_FW(OMNI_LOG10E_F);
+            OMNI_CONSTEXT_FW const float LN2_F OMNI_EXT_ASSN_FW(OMNI_LN2_F);
+            OMNI_CONSTEXT_FW const float LN10_F OMNI_EXT_ASSN_FW(OMNI_LN10_F);
+            OMNI_CONSTEXT_FW const float SQRT2_F OMNI_EXT_ASSN_FW(OMNI_SQRT2_F);
+            OMNI_CONSTEXT_FW const float SQRT1_2_F OMNI_EXT_ASSN_FW(OMNI_SQRT1_2_F);
 
             #if !defined(OMNI_NO_EXTERN_CONSTS)
-                extern const double      RADS[361];
-                extern const double      RADS_SIN[361];
-                extern const double      RADS_COS[361];
+                extern const double RADS[361];
+                extern const double RADS_SIN[361];
+                extern const double RADS_COS[361];
             #else
-                const double      RADS[] = OMNI_MATH_RADS;
-                const double      RADS_SIN[] = OMNI_MATH_RADS_SIN;
-                const double      RADS_COS[] = OMNI_MATH_RADS_COS;
+                const double RADS[] = OMNI_MATH_RADS;
+                const double RADS_SIN[] = OMNI_MATH_RADS_SIN;
+                const double RADS_COS[] = OMNI_MATH_RADS_COS;
             #endif
         #endif
 
@@ -104,56 +168,67 @@ namespace omni {
                     RIGHT = 2
                 } enum_t;
                 
+                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 3;
                 }
                 
+                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return ACUTE;
                 }
 
+                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
+                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
+                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
+                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
+                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, angle_measure& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, angle_measure& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -365,10 +440,10 @@ namespace omni {
 
                 static bool _valid(int32_t val)
                 {
-                    return (val == 
-                        ACUTE ||
-                        OBTUSE ||
-                        RIGHT
+                    return (
+                        OMNI_I2EV_FW(ACUTE) ||
+                        OMNI_I2EV_FW(OBTUSE) ||
+                        OMNI_I2EV_FW(RIGHT)
                     );
                 }
         };
@@ -385,56 +460,67 @@ namespace omni {
                     CIRCUMFERENCE = 2
                 } enum_t;
                 
+                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 3;
                 }
                 
+                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return RADIUS;
                 }
 
+                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
+                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
+                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
+                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
+                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, circle_area& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, circle_area& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -646,10 +732,10 @@ namespace omni {
 
                 static bool _valid(int32_t val)
                 {
-                    return (val == 
-                        RADIUS ||
-                        DIAMETER ||
-                        CIRCUMFERENCE
+                    return (
+                        OMNI_I2EV_FW(RADIUS) ||
+                        OMNI_I2EV_FW(DIAMETER) ||
+                        OMNI_I2EV_FW(CIRCUMFERENCE)
                     );
                 }
         };
@@ -673,56 +759,67 @@ namespace omni {
                     TO_POSITIVE_INFINITY = 4
                 } enum_t;
                 
+                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 5;
                 }
                 
+                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return TO_EVEN;
                 }
 
+                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
+                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
+                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
+                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
+                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, midpoint_rounding& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, midpoint_rounding& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -938,12 +1035,12 @@ namespace omni {
 
                 static bool _valid(int32_t val)
                 {
-                    return (val == 
-                        TO_EVEN || 
-                        AWAY_FROM_ZERO || 
-                        TO_ZERO || 
-                        TO_NEGATIVE_INFINITY || 
-                        TO_POSITIVE_INFINITY
+                    return (
+                        OMNI_I2EV_FW(TO_EVEN) || 
+                        OMNI_I2EV_FW(AWAY_FROM_ZERO) || 
+                        OMNI_I2EV_FW(TO_ZERO) || 
+                        OMNI_I2EV_FW(TO_NEGATIVE_INFINITY) || 
+                        OMNI_I2EV_FW(TO_POSITIVE_INFINITY)
                     );
                 }
         };
@@ -974,56 +1071,67 @@ namespace omni {
                     VII_VIII = (VII | VIII)
                 } enum_t;
                 
+                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 20;
                 }
                 
+                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return ORIGIN;
                 }
 
+                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
+                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
+                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
+                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
+                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, ordinal_name& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, ordinal_name& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -1467,27 +1575,27 @@ namespace omni {
 
                 static bool _valid(int32_t val)
                 {
-                    return (val == 
-                        Z_AXIS || 
-                        Y_AXIS || 
-                        X_AXIS || 
-                        ORIGIN || 
-                        I || 
-                        II || 
-                        III || 
-                        IV || 
-                        V || 
-                        VI || 
-                        VII || 
-                        VIII || 
-                        I_IV || 
-                        V_VIII || 
-                        II_III || 
-                        VI_VII || 
-                        I_II || 
-                        V_VI || 
-                        III_IV || 
-                        VII_VIII
+                    return (
+                        OMNI_I2EV_FW(Z_AXIS) || 
+                        OMNI_I2EV_FW(Y_AXIS) || 
+                        OMNI_I2EV_FW(X_AXIS) || 
+                        OMNI_I2EV_FW(ORIGIN) || 
+                        OMNI_I2EV_FW(I) || 
+                        OMNI_I2EV_FW(II) || 
+                        OMNI_I2EV_FW(III) || 
+                        OMNI_I2EV_FW(IV) || 
+                        OMNI_I2EV_FW(V) || 
+                        OMNI_I2EV_FW(VI) || 
+                        OMNI_I2EV_FW(VII) || 
+                        OMNI_I2EV_FW(VIII) || 
+                        OMNI_I2EV_FW(I_IV) || 
+                        OMNI_I2EV_FW(V_VIII) || 
+                        OMNI_I2EV_FW(II_III) || 
+                        OMNI_I2EV_FW(VI_VII) || 
+                        OMNI_I2EV_FW(I_II) || 
+                        OMNI_I2EV_FW(V_VI) || 
+                        OMNI_I2EV_FW(III_IV) || 
+                        OMNI_I2EV_FW(VII_VIII)
                     );
                 }
         };
@@ -1502,56 +1610,67 @@ namespace omni {
                     ROTATE_AXIS = 1
                 } enum_t;
                 
+                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 2;
                 }
                 
+                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return ROTATE_ORIGIN;
                 }
 
+                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
+                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
+                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
+                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
+                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, rotation& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, rotation& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -1761,9 +1880,9 @@ namespace omni {
 
                 static bool _valid(int32_t val)
                 {
-                    return (val == 
-                        ROTATE_ORIGIN ||
-                        ROTATE_AXIS
+                    return (
+                        OMNI_I2EV_FW(ROTATE_ORIGIN) ||
+                        OMNI_I2EV_FW(ROTATE_AXIS)
                     );
                 }
         };
@@ -1782,56 +1901,67 @@ namespace omni {
                     TWO_SEVENTY = 270
                 } enum_t;
                 
+                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 4;
                 }
                 
+                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return ZERO;
                 }
 
+                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
+                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
+                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
+                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
+                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, rotation_angle& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, rotation_angle& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -2045,11 +2175,11 @@ namespace omni {
 
                 static bool _valid(int32_t val)
                 {
-                    return (val == 
-                        ZERO ||
-                        NINETY ||
-                        ONE_EIGHTY ||
-                        TWO_SEVENTY
+                    return (
+                        OMNI_I2EV_FW(ZERO) ||
+                        OMNI_I2EV_FW(NINETY) ||
+                        OMNI_I2EV_FW(ONE_EIGHTY) ||
+                        OMNI_I2EV_FW(TWO_SEVENTY)
                     );
                 }
         };
@@ -2064,56 +2194,67 @@ namespace omni {
                     CLOCKWISE = 1
                 } enum_t;
                 
+                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 2;
                 }
                 
+                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return COUNTER_CLOCKWISE;
                 }
 
+                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
+                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
+                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
+                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
+                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, rotation_direction& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, rotation_direction& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -2323,9 +2464,9 @@ namespace omni {
 
                 static bool _valid(int32_t val)
                 {
-                    return (val == 
-                        COUNTER_CLOCKWISE ||
-                        CLOCKWISE
+                    return (
+                        OMNI_I2EV_FW(COUNTER_CLOCKWISE) ||
+                        OMNI_I2EV_FW(CLOCKWISE)
                     );
                 }
         };
@@ -2344,56 +2485,67 @@ namespace omni {
                     SIMILAR_CONGRUENT = 3 // bit mask of 1 & 2
                 } enum_t;
                 
+                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 4;
                 }
                 
+                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return NOT_EQUAL;
                 }
 
+                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
+                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
+                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
+                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
+                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, shape_comparator& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, shape_comparator& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -2805,11 +2957,11 @@ namespace omni {
 
                 static bool _valid(int32_t val)
                 {
-                    return (val == 
-                        NOT_EQUAL ||
-                        SIMILAR ||
-                        CONGRUENT ||
-                        SIMILAR_CONGRUENT
+                    return (
+                        OMNI_I2EV_FW(NOT_EQUAL) ||
+                        OMNI_I2EV_FW(SIMILAR) ||
+                        OMNI_I2EV_FW(CONGRUENT) ||
+                        OMNI_I2EV_FW(SIMILAR_CONGRUENT)
                     );
                 }
         };
@@ -2824,56 +2976,67 @@ namespace omni {
                     TRANSLATE = 1
                 } enum_t;
                 
+                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 2;
                 }
                 
+                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return REFLECTION;
                 }
 
+                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
+                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
+                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
+                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
+                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, transformation& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, transformation& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -3083,9 +3246,9 @@ namespace omni {
 
                 static bool _valid(int32_t val)
                 {
-                    return (val == 
-                        REFLECTION ||
-                        TRANSLATE
+                    return (
+                        OMNI_I2EV_FW(REFLECTION) ||
+                        OMNI_I2EV_FW(TRANSLATE)
                     );
                 }
         };
@@ -3102,56 +3265,67 @@ namespace omni {
                     SCALENE = 2
                 } enum_t;
                 
+                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 3;
                 }
                 
+                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return EQUILATERAL;
                 }
 
+                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
+                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
+                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
+                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
+                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, triangle_measure& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, triangle_measure& out)
                 {
                     return _try_parse(val, out);
                 }
 
+                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -3363,10 +3537,10 @@ namespace omni {
 
                 static bool _valid(int32_t val)
                 {
-                    return (val == 
-                        EQUILATERAL ||
-                        ISOSCELES ||
-                        SCALENE
+                    return (
+                        OMNI_I2EV_FW(EQUILATERAL) ||
+                        OMNI_I2EV_FW(ISOSCELES) ||
+                        OMNI_I2EV_FW(SCALENE)
                     );
                 }
         };
@@ -3375,7 +3549,7 @@ namespace omni {
         class dimensional
         {
             public:
-                typedef T dimension_t;
+                typedef T value_type;
                 typedef T* iterator;
                 typedef const T* const_iterator;
 
@@ -3393,13 +3567,26 @@ namespace omni {
                     }
                 }
 
+                /**
+                 * @brief Creates a dimensional with the values passed in.
+                 *
+                 * @details Create a dimensional type with the default values specified.
+                 *
+                 * @param val1... The value(s) to assign each of the dimensional's underlying buffer up to val+SZ.
+                 *
+                 * @warning Be aware, due to the variadic argument list being used, if the backing type is that of a
+                 * float or double, the values passed in must either be named types or explicitly defined; for example,
+                 * you must have variables defined as a @c double and passing in those variables or you must explicitly
+                 * pass in @c 10.0 (for example) for each value. Failure to do this could cause the underlying floating
+                 * types to be mis-read by the va_arg list due to certain casting behavior by some compilers/environments.
+                 */
                 dimensional(T val1, ...) : m_vals()
                 {
-                    va_list args;
+                    std::va_list args;
                     va_start(args, val1);
                     this->m_vals[0] = val1;
-                    for (size_t i = 1; i < SZ; ++i) {
-                        this->m_vals[i] = va_arg(args, T);
+                    for (std::size_t i = 1; i < SZ; ++i) {
+                        this->m_vals[i] = static_cast<T>(va_arg(args, T));
                     }
                     va_end(args);
                 }
@@ -3427,7 +3614,7 @@ namespace omni {
                 template < typename O_T, std::size_t O_SZ >
                 void copy(const omni::math::dimensional<O_T, O_SZ>& o)
                 {
-                    size_t sz = (SZ < O_SZ) ? SZ : O_SZ;
+                    std::size_t sz = (SZ < O_SZ) ? SZ : O_SZ;
                     for (std::size_t i = 0; i < sz; ++i) {
                         this->m_vals[i] = static_cast<T>(o[i]);
                     }
@@ -3440,6 +3627,34 @@ namespace omni {
                     }
                 }
 
+                void decrement(const dimensional& val)
+                {
+                    for (std::size_t i = 0; i < SZ; ++i) {
+                        this->m_vals[i] -= val.m_vals[i];
+                    }
+                }
+
+                void decrement(T val)
+                {
+                    for (std::size_t i = 0; i < SZ; ++i) {
+                        this->m_vals[i] -= val;
+                    }
+                }
+
+                void increment(const dimensional& val)
+                {
+                    for (std::size_t i = 0; i < SZ; ++i) {
+                        this->m_vals[i] += val.m_vals[i];
+                    }
+                }
+
+                void increment(T val)
+                {
+                    for (std::size_t i = 0; i < SZ; ++i) {
+                        this->m_vals[i] += val;
+                    }
+                }
+
                 std::size_t size() const
                 {
                     return SZ;
@@ -3448,7 +3663,7 @@ namespace omni {
                 template < typename O_T, std::size_t O_SZ >
                 void swap(omni::math::dimensional<O_T, O_SZ>& o)
                 {
-                    size_t sz = (SZ < O_SZ) ? SZ : O_SZ;
+                    std::size_t sz = (SZ < O_SZ) ? SZ : O_SZ;
                     O_T otmp; T tmp;
                     for (std::size_t i = 0; i < sz; ++i) {
                         otmp = o[i];
@@ -3469,7 +3684,7 @@ namespace omni {
                 template < typename O_T, std::size_t O_SZ >
                 dimensional& operator=(const omni::math::dimensional<O_T, O_SZ>& o) 
                 {
-                    size_t sz = (SZ < O_SZ) ? SZ : O_SZ;
+                    std::size_t sz = (SZ < O_SZ) ? SZ : O_SZ;
                     for (std::size_t i = 0; i < sz; ++i) {
                         this->m_vals[i] = static_cast<T>(o[i]);
                     }
@@ -3485,7 +3700,7 @@ namespace omni {
                 template < typename O_T, std::size_t O_SZ >
                 bool operator==(const omni::math::dimensional<O_T, O_SZ>& o) const
                 {
-                    size_t sz = (SZ < O_SZ) ? SZ : O_SZ;
+                    std::size_t sz = (SZ < O_SZ) ? SZ : O_SZ;
                     for (std::size_t i = 0; i < sz; ++i) {
                         if (!omni::math::are_equal(this->m_vals[i], static_cast<T>(o[i]))) {
                             return false;
@@ -3507,7 +3722,7 @@ namespace omni {
                 template < typename O_T, std::size_t O_SZ >
                 bool operator!=(const omni::math::dimensional<O_T, O_SZ>& o) const
                 {
-                    size_t sz = (SZ < O_SZ) ? SZ : O_SZ;
+                    std::size_t sz = (SZ < O_SZ) ? SZ : O_SZ;
                     for (std::size_t i = 0; i < sz; ++i) {
                         if (omni::math::are_equal(this->m_vals[i], static_cast<T>(o[i]))) {
                             return false;
@@ -3524,6 +3739,73 @@ namespace omni {
                         }
                     }
                     return true;
+                }
+
+                dimensional operator+(const dimensional& val)
+                {
+                    dimensional ret(*this);
+                    for (std::size_t i = 0; i < SZ; ++i) {
+                        ret.m_vals[i] += val.m_vals[i];
+                    }
+                    return ret;
+                }
+
+                dimensional operator+(T val)
+                {
+                    dimensional ret(*this);
+                    for (std::size_t i = 0; i < SZ; ++i) {
+                        ret.m_vals[i] += val;
+                    }
+                    return ret;
+                }
+
+                dimensional operator-(const dimensional& val)
+                {
+                    dimensional ret(*this);
+                    for (std::size_t i = 0; i < SZ; ++i) {
+                        ret.m_vals[i] -= val.m_vals[i];
+                    }
+                    return ret;
+                }
+
+                dimensional operator-(T val)
+                {
+                    dimensional ret(*this);
+                    for (std::size_t i = 0; i < SZ; ++i) {
+                        ret.m_vals[i] -= val;
+                    }
+                    return ret;
+                }
+
+                dimensional& operator+=(const dimensional& val)
+                {
+                    for (std::size_t i = 0; i < SZ; ++i) {
+                        this->m_vals[i] += val.m_vals[i];
+                    }
+                    return *this;
+                }
+                dimensional& operator+=(T val)
+                {
+                    for (std::size_t i = 0; i < SZ; ++i) {
+                        this->m_vals[i] += val;
+                    }
+                    return *this;
+                }
+
+                dimensional& operator-=(const dimensional& val)
+                {
+                    for (std::size_t i = 0; i < SZ; ++i) {
+                        this->m_vals[i] -= val.m_vals[i];
+                    }
+                    return *this;
+                }
+
+                dimensional& operator-=(T val)
+                {
+                    for (std::size_t i = 0; i < SZ; ++i) {
+                        this->m_vals[i] -= val;
+                    }
+                    return *this;
                 }
 
                 T& operator[](std::size_t idx)
@@ -3587,6 +3869,26 @@ namespace omni {
             private:
                 mutable T m_vals[SZ];
         };
+
+        typedef omni::math::dimensional<std::uint8_t, 2> uint8_2d_t;
+        typedef omni::math::dimensional<std::uint16_t, 2> uint16_2d_t;
+        typedef omni::math::dimensional<std::uint32_t, 2> uint32_2d_t;
+        typedef omni::math::dimensional<std::uint64_t, 2> uint64_2d_t;
+
+        typedef omni::math::dimensional<std::uint8_t, 3> uint8_3d_t;
+        typedef omni::math::dimensional<std::uint16_t, 3> uint16_3d_t;
+        typedef omni::math::dimensional<std::uint32_t, 3> uint32_3d_t;
+        typedef omni::math::dimensional<std::uint64_t, 3> uint64_3d_t;
+
+        typedef omni::math::dimensional<std::int8_t, 2> int8_2d_t;
+        typedef omni::math::dimensional<std::int16_t, 2> int16_2d_t;
+        typedef omni::math::dimensional<std::int32_t, 2> int32_2d_t;
+        typedef omni::math::dimensional<std::int64_t, 2> int64_2d_t;
+
+        typedef omni::math::dimensional<std::int8_t, 3> int8_3d_t;
+        typedef omni::math::dimensional<std::int16_t, 3> int16_3d_t;
+        typedef omni::math::dimensional<std::int32_t, 3> int32_3d_t;
+        typedef omni::math::dimensional<std::int64_t, 3> int64_3d_t;
     }
 }
 

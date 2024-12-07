@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<SysAPI xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>CompareFileTime</Name>
+  <Link>https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-comparefiletime</Link>
+  <SysType>Windows</SysType>
+</SysAPI>

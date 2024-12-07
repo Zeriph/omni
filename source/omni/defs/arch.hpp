@@ -82,7 +82,7 @@
     #endif
     
     // Blackfin
-    #if defined(__bfin) || defined(__BFIN__)
+    #if defined(__bfin) || defined(__BFIN__) || defined(__ADSPBLACKFIN__)
         #define OMNI_ARCH_BLACKFIN
     #endif
 
@@ -97,12 +97,22 @@
         #define OMNI_ARCH_EPIPHANY
     #endif
 
+    // Elbrus
+    #if defined(__e2k__)
+        #define OMNI_ARCH_ELBRUS
+    #endif
+
     // HP/PA RISC
     #if defined(__hppa__) || defined(__HPPA__) || defined(__hppa) || \
         /* PA RISC 1.0 */ defined(_PA_RISC1_0) || \
         /* PA RISC 1.1 */ defined(_PA_RISC1_1) || defined(__HPPA11__) || defined(__PA7100__) || \
         /* PA RISC 2.0 */ defined(_PA_RISC2_0) || defined(__RISC2_0__) || defined(__HPPA20__) || defined(__PA8000__)
         #define OMNI_ARCH_HPPA_RISC
+    #endif
+
+    // Intel x80
+    #if defined(__8080__) || defined(__8085__) || defined(__Z80) || defined(__Z180)
+        #define OMNI_ARCH_INTEL_X80
     #endif
 
     // Intel x86
@@ -116,6 +126,11 @@
     #if defined(__ia64__) || defined(_IA64) || defined(__IA64__) || defined(__ia64) || defined(_M_IA64) || \
         defined(_M_IA64) || defined(_M_IA64) || defined(__itanium__)
         #define OMNI_ARCH_INTEL_IA64
+    #endif
+
+    // LoongArch
+    #if defined(__loongarch__)
+        #define OMNI_ARCH_LOONGARCH
     #endif
 
     // Motorola 68k
@@ -137,6 +152,16 @@
         #define OMNI_ARCH_MIPS
     #endif
 
+    // NEC SX-Aurora TSUBASA
+    #if defined(__ve__) || defined(__ve) || defined(__NEC__)
+        #define OMNI_ARCH_NEC
+    #endif
+
+    // PNaCl
+    #if defined(__pnacl__)
+        #define OMNI_ARCH_PNACL
+    #endif
+
     // PowerPC
     #if defined(__powerpc) || defined(__powerpc__) || defined(__powerpc64__) || defined(__POWERPC__) || \
         defined(__ppc__) || defined(__ppc64__) || defined(__PPC__) || defined(__PPC64__) || defined(_ARCH_PPC) || \
@@ -149,6 +174,18 @@
     // Pyramid 9810
     #if defined(pyr)
         #define OMNI_ARCH_PYRAMID_9810
+    #endif
+
+    // RISC-V
+    #if defined(__riscv) || defined(__riscv_xlen)
+        #define OMNI_ARCH_RISC_V
+        #if defined(__riscv_xlen)
+            #if (__riscv_xlen == 32)
+                #define OMNI_ARCH_RISC_V32
+            #elif (__riscv_xlen == 64)
+                #define OMNI_ARCH_RISC_V64
+            #endif
+        #endif
     #endif
 
     // RS/6000

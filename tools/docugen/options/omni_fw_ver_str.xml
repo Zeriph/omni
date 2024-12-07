@@ -6,7 +6,7 @@
   <Description>None.</Description>
   <Notes>None.</Notes>
   <PlatformSpecific>No special consideration.</PlatformSpecific>
-  <Synopsis>If OMNI_NO_FW_VER is not defined, this macro will expand to the current library version. If OMNI_FW_VER_USE_TIME is defined, the build date/time will be appeneded to the library string.</Synopsis>
+  <Synopsis>If OMNI_NO_FW_VER is not defined, this macro will expand to the current library version. If OMNI_FW_VER_USE_TIME is defined, the build date/@_time will be appeneded to the library string.</Synopsis>
   <IsHelper>true</IsHelper>
   <IsConstant>false</IsConstant>
   <IsFWHelp>true</IsFWHelp>

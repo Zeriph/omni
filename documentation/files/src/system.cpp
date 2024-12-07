@@ -45,26 +45,34 @@
 #include <climits>
 #include <cstring>
 
-bool omni::system::is_big_endian()
+omni::system::endian_type omni::system::endianness()
 {
-    unsigned short test = 0x0001;
-    return ((*(reinterpret_cast<char*>(&test))) == 0x00);
-}
+    union {
+        uint32_t value;
+        uint8_t data[sizeof(uint32_t)];
+    } number;
 
-int32_t omni::system::last_error()
-{
-    return OMNI_GLE;
-}
+    number.data[0] = 0x00;
+    number.data[1] = 0x01;
+    number.data[2] = 0x02;
+    number.data[3] = 0x03;
 
-std::string omni::system::last_error_str()
-{
-    return omni::system::error_str(OMNI_GLE);
+    switch (number.value) {
+        case UINT32_C(0x00010203):
+            return omni::system::endian_type::BIG;
+        case UINT32_C(0x03020100):
+            return omni::system::endian_type::LITTLE;
+        case UINT32_C(0x02030001):
+            return omni::system::endian_type::BIG_WORD;
+        case UINT32_C(0x01000302):
+            return omni::system::endian_type::LITTLE_WORD;
+        default: break;
+    }
+    return omni::system::endian_type::UNKNOWN;
 }
-
-#if defined(OMNI_NON_PORTABLE)
 
 omni::system::architecture_type omni::system::architecture()
-{
+{    
     #if defined(OMNI_ARCH_AMD64)
         // AMD64
         return omni::system::architecture_type::AMD64;
@@ -83,30 +91,48 @@ omni::system::architecture_type omni::system::architecture()
     #elif defined(OMNI_ARCH_DEC_ALPHA)
         // DEC-Alpha
         return omni::system::architecture_type::DEC_ALPHA;
+    #elif defined(OMNI_ARCH_ELBRUS)
+        // Elbrus
+        return omni::system::architecture_type::ELBRUS;
     #elif defined(OMNI_ARCH_EPIPHANY)
         // Epiphany
         return omni::system::architecture_type::EPIPHANY;
     #elif defined(OMNI_ARCH_HPPA_RISC)
         // HP/PA RISC
         return omni::system::architecture_type::HPPA_RISC;
+    #elif defined(OMNI_ARCH_INTEL_X80)
+        // Intel x80
+        return omni::system::architecture_type::INTEL_X80;
     #elif defined(OMNI_ARCH_INTEL_X86)
         // Intel x86
         return omni::system::architecture_type::INTEL_X86;
     #elif defined(OMNI_ARCH_INTEL_IA64)
         // Intel Itanium (IA-64)
         return omni::system::architecture_type::INTEL_IA64;
+    #elif defined(OMNI_ARCH_LOONGARCH)
+        // LoongArch
+        return omni::system::architecture_type::LOONGARCH;
     #elif defined(OMNI_ARCH_MOTOROLA_68K)
         // Motorola 68k
         return omni::system::architecture_type::MOTOROLA_68K;
     #elif defined(OMNI_ARCH_MIPS)
         // MIPS
         return omni::system::architecture_type::MIPS;
+    #elif defined(OMNI_ARCH_NEC)
+        // HP-NEC
+        return omni::system::architecture_type::NEC;
+    #elif defined(OMNI_ARCH_PNACL)
+        // PNaCl
+        return omni::system::architecture_type::PNACL;
     #elif defined(OMNI_ARCH_POWER_PC)
         // PowerPC
         return omni::system::architecture_type::POWER_PC;
     #elif defined(OMNI_ARCH_PYRAMID_9810)
         // Pyramid 9810
         return omni::system::architecture_type::PYRAMID_9810;
+    #elif defined(OMNI_ARCH_RISC_V)
+        // RISC-V
+        return omni::system::architecture_type::RISC_V;
     #elif defined(OMNI_ARCH_RS6000)
         // RS/6000
         return omni::system::architecture_type::RS6000;
@@ -130,6 +156,18 @@ omni::system::architecture_type omni::system::architecture()
         return omni::system::architecture_type::UNKNOWN;
     #endif
 }
+
+int32_t omni::system::last_error()
+{
+    return OMNI_GLE;
+}
+
+std::string omni::system::last_error_str()
+{
+    return omni::system::error_str(OMNI_GLE);
+}
+
+#if defined(OMNI_NON_PORTABLE)
 
 omni::string_t omni::system::cwd()
 {
@@ -180,11 +218,11 @@ std::string omni::system::error_str(int code)
         if (ret != 0) {
             omni::string_t werr(serr); // make copy
             delete[] serr;
-            serr = OMNI_NULL;
+            serr = OMNI_NULL_PTR;
             return omni::string::to_string(werr);
         }
         delete[] serr;
-        serr = OMNI_NULL;
+        serr = OMNI_NULL_PTR;
         return std::string("Unknown error ").append(omni::string::util::to_string(code));
     #else
         return std::strerror(code);

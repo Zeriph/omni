@@ -37,13 +37,13 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
     <font class="syn_ins">template</font> &lt; <font class="syn_typ">class</font> T, ret_t (T::*fnptr)(p1_t, p2_t, p3_t, p4_t, p5_t, p6_t, p7_t, p8_t, p9_t, p10_t, p11_t, p12_t, p13_t, p14_t, p15_t) <font class="syn_typ">const</font> &gt; static delegate15 <a href="../classes/omni-delegate15-bind_const.html">omni::delegate15::bind_const</a>(<font class="syn_typ">const</font> T&amp; obj)<br>
     <font class="syn_ins">inline</font> <font class="syn_typ">void</font> <a href="../classes/omni-delegate15-bond.html">omni::delegate15::bond</a>(function_ptr fnptr)<br>
     <font class="syn_ins">template</font> &lt; <font class="syn_typ">class</font> T, ret_t (T::*fnptr)(p1_t, p2_t, p3_t, p4_t, p5_t, p6_t, p7_t, p8_t, p9_t, p10_t, p11_t, p12_t, p13_t, p14_t, p15_t) <font class="syn_typ">const</font> &gt; <font class="syn_ins">inline</font> <font class="syn_typ">void</font> <a href="../classes/omni-delegate15-bond_const.html">omni::delegate15::bond_const</a>(<font class="syn_typ">const</font> T&amp; obj)<br>
-    <font class="syn_typ">const</font> function_ptr <a href="../classes/omni-delegate15-function.html">omni::delegate15::function</a>()<br>
+    function_ptr <a href="../classes/omni-delegate15-function.html">omni::delegate15::function</a>()<br>
     ret_t <a href="../classes/omni-delegate15-invoke.html">omni::delegate15::invoke</a>(p1_t val1, p2_t val2, p3_t val3, p4_t val4, p5_t val5, p6_t val6, p7_t val7, p8_t val8, p9_t val9, p10_t val10, p11_t val11, p12_t val12, p13_t val13, p14_t val14, p15_t val15)<br>
     ret_t <a href="../classes/omni-delegate15-invoke_direct.html">omni::delegate15::invoke_direct</a>(p1_t val1, p2_t val2, p3_t val3, p4_t val4, p5_t val5, p6_t val6, p7_t val7, p8_t val8, p9_t val9, p10_t val10, p11_t val11, p12_t val12, p13_t val13, p14_t val14, p15_t val15)<br>
     <a href="../classes/omni-invoke_t.html">omni::invoke_t</a> <a href="../classes/omni-delegate15-invoke_type.html">omni::delegate15::invoke_type</a>()<br>
     <font class="syn_typ">bool</font> <a href="../classes/omni-delegate15-is_bound.html">omni::delegate15::is_bound</a>()<br>
     <font class="syn_typ">bool</font> <a href="../classes/omni-delegate15-is_member_bound.html">omni::delegate15::is_member_bound</a>()<br>
-    <font class="syn_typ">const</font> functor <a href="../classes/omni-delegate15-method.html">omni::delegate15::method</a>()<br>
+    functor <a href="../classes/omni-delegate15-method.html">omni::delegate15::method</a>()<br>
     <font class="syn_typ">void</font> <a href="../classes/omni-delegate15-swap.html">omni::delegate15::swap</a>(delegate15&lt; Ret, PT1, PT2, PT3, PT4, PT5, PT6, PT7, PT8, PT9, PT10, PT11, PT12, PT13, PT14, PT15 &gt;&amp; d)<br>
     <font class="syn_typ">void</font>* <a href="../classes/omni-delegate15-target.html">omni::delegate15::target</a>()<br>
     <font class="syn_ins">inline</font> <font class="syn_typ">void</font> <a href="../classes/omni-delegate15-unbind.html">omni::delegate15::unbind</a>()<br>
@@ -79,16 +79,21 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 </div><br>
 <div class="docdiv"><a name="syn"></a>
 <font class="docu">SYNOPSIS</font><br><br>
-No synopsis.
+The delegate is a powerful function pointer object that encapsulates both an object instance and a method.
 <br><br><a class="toppg" href="#topopage">top</a>
 </div><br>
 <div class="docdiv"><a name="desc"></a>
 <font class="docu">DESCRIPTION</font><br><br>
-No description.
+The delegate is agnostic to the type or method it encapsulates; all that matters is that the method be signature compatible with the delegate. This allows for anonymous invocation by users of the delegate.
 <br><br><a class="toppg" href="#topopage">top</a>
 </div><br>
 
-
+<div class="docdiv"><a name="param"></a>
+<font class="docu">PARAMETERS</font><br><br>
+<code>Ret</code> - Specifies the return type of the function the delegate is to attach to <code>PT1</code> - Specifies the 1st parameter type passed to the function delegate <code>PT2</code> - Specifies the 2nd parameter type passed to the function delegate <code>PT3</code> - Specifies the 3rd parameter type passed to the function delegate <code>PT4</code> - Specifies the 4th parameter type passed to the function delegate <code>PT5</code> - Specifies the 5th parameter type passed to the function delegate <code>PT6</code> - Specifies the 6th parameter type passed to the function delegate <code>PT7</code> - Specifies the 7th parameter type passed to the function delegate <code>PT8</code> - Specifies the 8th parameter type passed to the function delegate <code>PT9</code> - Specifies the 9th parameter type passed to the function delegate <code>PT10</code> - Specifies the 10th parameter type passed to the function delegate <code>PT11</code> - Specifies the 11th parameter type passed to the function delegate <code>PT12</code> - Specifies the 12th parameter type passed to the function delegate <code>PT13</code> - Specifies the 13th parameter type passed to the function delegate <code>PT14</code> - Specifies the 14th parameter type passed to the function delegate <code>PT15</code> - Specifies the 15th parameter type passed to the function delegate 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
 
 
 

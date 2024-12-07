@@ -66,10 +66,10 @@
         #endif
     #endif
     /* DEV_NOTE: MSVC emits warning 4351 about the dimensional class having it is array value
-    initialied in the member init list, e.g. `dimensional() : m_vals() {}`. This is considered
+    initialized in the member init list, e.g. `dimensional() : m_vals() {}`. This is considered
     "new" behaviour by MSVC but is perfectly fine behaviour per the C++ standard, this 0-init is
     the values in the array (as if memset were called). This is the behaviour we want and since
-    we are targetting newer C++ and above, this is a non-issue. Additionally, testing this behaviour
+    we are targeting newer C++ and above, this is a non-issue. Additionally, testing this behaviour
     against MSVC 2008 and above (and inspecting the asm) shows we get the results we want. */
     #if !defined(OMNI_WIN_NO_PRAGMA_DISABLE_4351)
         #pragma warning (disable:4351)

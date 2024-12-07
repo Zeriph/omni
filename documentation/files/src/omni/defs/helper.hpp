@@ -21,7 +21,7 @@
 
 // macro helper functions
 
-// string-izes a macro: e.g. OMNI_DEF2STR(X) prints "X"
+// stringify a macro: e.g. OMNI_DEF2STR(X) prints "X"
 #define OMNI_DEF2STR_FW(...) # __VA_ARGS__
 #define OMNI_DEF2STR(...) OMNI_DEF2STR_FW( __VA_ARGS__ )
 
@@ -40,11 +40,9 @@
 #define OMNI_DWSTR(v) L # v
 
 #if !defined(OMNI_DATE) && defined(__DATE__)
-    #undef OMNI_DATE
     #define OMNI_DATE __DATE__
 #endif
 #if !defined(OMNI_TIME) && defined(__TIME__)
-    #undef OMNI_TIME
     #define OMNI_TIME __TIME__
 #endif
 
@@ -60,6 +58,7 @@
 
 #define OMNI_S2E_FW(v) if (val == OMNI_DEF2STR(v)) { out = v; return true; }
 #define OMNI_E2SS_FW(v) case v: ss << OMNI_DEF2STR(v); break
+#define OMNI_I2EV_FW(v) (val == v)
 
 #define OMNI_MAX_PATH_FW 32767 // 32,767 - 1 for \0
 
@@ -68,5 +67,40 @@
 
 // DEV_NOTE: this is here for MS compilers and how they expand macro variables and the __VA_ARGS__
 #define OMNI_EXPAND_FW(x) x
+
+#if !defined(OMNI_NO_CAST_HELPERS)
+    // short hand helpers for casting
+    #define to_u8(x) reinterpret_cast<uint8_t>((x))
+    #define to_i8(x) reinterpret_cast<int8_t>((x))
+    #define to_u16(x) reinterpret_cast<uint16_t>((x))
+    #define to_i16(x) reinterpret_cast<int16_t>((x))
+    #define to_u32(x) reinterpret_cast<uint32_t>((x))
+    #define to_i32(x) reinterpret_cast<int32_t>((x))
+    #define to_u64(x) reinterpret_cast<uint64_t>((x))
+    #define to_i64(x) reinterpret_cast<int64_t>((x))
+    #define to_sz(x) reinterpret_cast<std::size_t>((x))
+    #define to_ssz(x) reinterpret_cast<ssize_t>((x))
+
+    template< typename R, typename T >
+    inline static R to_t(T& val)
+    {
+        return reinterpret_cast<R>(val);
+    }
+    template< typename R, typename T >
+    inline static R to_t(const T& val)
+    {
+        return reinterpret_cast<R>(const_cast<T&>(val));
+    }
+    template< typename R, typename T >
+    inline static R* to_t(T* val)
+    {
+        return reinterpret_cast<R*>(val);
+    }
+    template< typename R, typename T >
+    inline static R* to_t(const T* val)
+    {
+        return reinterpret_cast<R*>(const_cast<T*>(val));
+    }
+#endif
 
 #endif // OMNI_HELPER_HPP

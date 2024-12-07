@@ -48,6 +48,7 @@ int main(int argc, char *argv[]) {
 #include <omni/types/invoke_t.hpp>
 
 // generic objects
+#include <omni/generic_error.hpp>
 #include <omni/types/ptr_t.hpp> // #include <omni/generic_ptr.hpp>
 #include <omni/type.hpp>
 #include <omni/object.hpp>
@@ -97,8 +98,11 @@ int main(int argc, char *argv[]) {
 // crypto (hashing/etc.)
 #include <omni/crypto_types.hpp>
 
-#if defined(OMNI_GUI_LIB)
-    #include <omni/gui_types.hpp>
+// others
+#include <omni/convert.hpp>
+
+#if defined(OMNI_INCLUDE_EXTENSIONS)
+    #include <extensions/extensions.hpp>
 #endif
 
 #endif // OMNI_LIBRARY_HPP

@@ -26,7 +26,7 @@
     address over setting to NULL or nullptr. Example:
 
     int* val = 0;       <- preferred way
-    int* val = NULL;    <- OK, but NULL could be anything, so not really safe
+    int* val = NULL;    <- OK, but NULL could be anything, so not really "safe" if cross platform
     int* val = nullptr; <- OK and expresses intent better, but not all compilers support this
 
     We do not want to overuse macros through the library, but in this scenario, it is also
@@ -40,24 +40,38 @@
     since you are referencing a named variable (nullptr), this is not the case in C++11 with the nullptr keyword. 
 
     So to avoid all of this, we will give the user the option to choose (or define) their null pointer
-    value. Defining OMNI_NULL_PTR sets the C++11 nullptr keyword while OMNI_NULL_MACRO will use the
+    value. Defining OMNI_NULL_USE_NULLPTR sets the C++11 nullptr keyword while OMNI_NULL_USE_MACRO will use the
     implementation defined NULL macro, and if nothing, the default is to use 0. While the macro name
-    OMNI_NULL is more verbose than 0/NULL/nullptr, it does express the intent better than just plain 0.
+    OMNI_NULL_PTR is more verbose than 0/NULL/nullptr, it does express the intent better than just plain 0.
+
+    Also note: this is -only- for pointer types used within the Omni library itself; the OMNI_NULL_PTR
+    is not used for OS/system specific API's (like pthread_join, WideCharToMultiByte, etc.), instead
+    the NULL macro is used (since that it what is defined/used in those specific docs).
 */
-#if defined(OMNI_NULL_PTR) && defined(OMNI_NULL_MACRO)
-    #error "Can not define OMNI_NULL_PTR and OMNI_NULL_MACRO together"
+
+
+#if (defined(OMNI_NULL_USE_NULLPTR) && defined(OMNI_NULL_USE_MACRO)) || (defined(OMNI_NULL_USE_NULLPTR) && defined(OMNI_NULL_USE_ZERO)) || (defined(OMNI_NULL_USE_MACRO) && defined(OMNI_NULL_USE_ZERO))
+    #error "Can not define OMNI_NULL_USE_NULLPTR, OMNI_NULL_USE_MACRO or OMNI_NULL_USE_ZERO together"
 #endif
-#if (defined(OMNI_NULL_PTR) || defined(OMNI_NULL_MACRO)) && defined(OMNI_NULL)
-    #error "Can not define OMNI_NULL as well as OMNI_NULL_PTR or OMNI_NULL_MACRO"
+
+#if (defined(OMNI_NULL_USE_NULLPTR) || defined(OMNI_NULL_USE_MACRO) || defined(OMNI_NULL_USE_ZERO)) && defined(OMNI_NULL_PTR)
+    #error "Can not define OMNI_NULL_PTR as well as OMNI_NULL_USE_NULLPTR, OMNI_NULL_USE_MACRO, or OMNI_NULL_USE_ZERO"
 #endif
-#if defined(OMNI_NULL_PTR)
-    #define OMNI_NULL nullptr
+
+
+#if defined(OMNI_NULL_USE_NULLPTR)
+    #define OMNI_NULL_PTR nullptr
 #endif
-#if defined(OMNI_NULL_MACRO)
-    #define OMNI_NULL NULL
+#if defined(OMNI_NULL_USE_MACRO)
+    #define OMNI_NULL_PTR NULL
 #endif
-#if !defined(OMNI_NULL)
-    #define OMNI_NULL 0
+#if defined(OMNI_NULL_USE_ZERO)
+    #define OMNI_NULL_PTR 0
+#endif
+
+// default is to have NULL macro
+#if !defined(OMNI_NULL_PTR)
+    #define OMNI_NULL_PTR 0
 #endif
 
 #endif // OMNI_NULL_DEF_HPP

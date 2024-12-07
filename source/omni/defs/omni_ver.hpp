@@ -22,8 +22,8 @@
 #include <omni/defs/helper.hpp>
 
 #define OMNI_FW_VER_MAJ 0 // Major revision
-#define OMNI_FW_VER_MIN 8 // Minor revision
-#define OMNI_FW_VER_SUB 5 // Sub revision
+#define OMNI_FW_VER_MIN 9 // Minor revision
+#define OMNI_FW_VER_SUB 2 // Sub revision
 
 #if defined(OMNI_FW_VER_USE_TIME)
     #define OMNI_FW_TS_FW OMNI_DATE " " OMNI_TIME

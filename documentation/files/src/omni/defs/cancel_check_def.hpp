@@ -108,35 +108,6 @@
 #if defined(OMNI_USE_M_PI_F) && defined(OMNI_NO_USE_M_PI_F)
     #undef OMNI_USE_MATH_DEFS
 #endif
-#if defined(OMNI_SAFE_SHA256) && defined(OMNI_NO_SAFE_SHA256)
-    #undef OMNI_SAFE_SHA256
-#endif
-#if defined(OMNI_SAFE_SHA1) && defined(OMNI_NO_SAFE_SHA1)
-    #undef OMNI_SAFE_SHA1
-#endif
-#if defined(OMNI_SAFE_MD5) && defined(OMNI_NO_SAFE_MD5)
-    #undef OMNI_SAFE_MD5
-#endif
-#if defined(OMNI_NO_GUI)
-    #if !defined(OMNI_NO_GUI_USE_X11)
-        #define OMNI_NO_GUI_USE_X11
-    #endif
-    #if !defined(OMNI_NO_GUI_LIB)
-        #define OMNI_NO_GUI_LIB
-    #endif
-    #if !defined(OMNI_NO_GUI_APP)
-        #define OMNI_NO_GUI_APP
-    #endif
-#endif
-#if defined(OMNI_GUI_USE_X11) && defined(OMNI_NO_GUI_USE_X11)
-    #undef OMNI_GUI_USE_X11
-#endif
-#if defined(OMNI_GUI_LIB) && defined(OMNI_NO_GUI_LIB)
-    #undef OMNI_GUI_LIB
-#endif
-#if defined(OMNI_GUI_APP) && defined(OMNI_NO_GUI_APP)
-    #undef OMNI_GUI_APP
-#endif
 #if defined(OMNI_NO_UNICODE)
     #if defined(OMNI_UNICODE)
         #undef OMNI_UNICODE

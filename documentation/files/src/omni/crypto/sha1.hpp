@@ -19,20 +19,8 @@
 #if !defined(OMNI_CRYPTO_SHA1_HPP)
 #define OMNI_CRYPTO_SHA1_HPP 1
 #include <omni/types/crypto_t.hpp>
-
 #if defined(OMNI_SAFE_SHA1)
     #include <omni/sync/basic_lock.hpp>
-    #define OMNI_SAFE_SHA1DMTX_FW  ,m_mtx()
-    #define OMNI_SAFE_SHA1LOCK_FW   this->m_mtx.lock();
-    #define OMNI_SAFE_SHA1UNLOCK_FW this->m_mtx.unlock();
-    #define OMNI_SAFE_SHA1ALOCK_FW  omni::sync::scoped_basic_lock uuid12345(&this->m_mtx);
-    #define OMNI_SAFE_SHA1OALOCK_FW(o)  omni::sync::scoped_basic_lock uuid54321(&o.m_mtx);
-#else
-    #define OMNI_SAFE_SHA1DMTX_FW
-    #define OMNI_SAFE_SHA1LOCK_FW
-    #define OMNI_SAFE_SHA1UNLOCK_FW
-    #define OMNI_SAFE_SHA1ALOCK_FW
-    #define OMNI_SAFE_SHA1OALOCK_FW(o) 
 #endif
 
 namespace omni {
@@ -65,16 +53,11 @@ namespace omni {
 
             private:
                 std::string m_hash;
-                #if defined(OMNI_SAFE_MD5)
+                #if defined(OMNI_SAFE_SHA1)
                     mutable omni::sync::basic_lock m_mtx;
                 #endif
 
                 void _compute(std::istream& stream);
-                static void _compute_hash(std::istream& stream, std::string& buffer, uint32_t* digest, uint64_t& transforms);
-                static std::string _final(std::string& buffer, uint32_t* digest, uint64_t& transforms);
-                static void _transform(uint32_t* block, uint32_t* digest, uint64_t& transforms);
-                static void _buffer_to_block(const std::string& buffer, uint32_t* block);
-                static void _read(std::istream& stream, std::string& str, size_t size);
         };
     }
 }

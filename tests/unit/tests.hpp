@@ -18,6 +18,7 @@
 #include "units/math.hpp"
 #include "units/misc.hpp"
 #include "units/mutex.hpp"
+#include "units/macro_helper.hpp"
 #include "units/object.hpp"
 #include "units/property.hpp"
 #include "units/runnable.hpp"

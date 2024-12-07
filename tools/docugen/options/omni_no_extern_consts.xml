@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_NO_EXTERN_CONSTS</Name>
-  <Brief>If defined, Omni constants will not have external linkage</Brief>
+  <Brief>If defined, Omni constants will not have external linkage.</Brief>
   <Considerations>Know that you are changing the linkage from static to extern with regards to the constant values in the library.</Considerations>
   <Description>The constant string values in the library are marked @c extern as their default linkage. To change this behaviour to have all string constants be marked as @c static instead of @c extern you can define this macro option, there's no additional files to exclude as this flag disables portions of the code that pertain to the extern values.</Description>
   <Notes>The extern'd values reside in @h library.cpp @h (which is always built with the library, but if the macro is enabled, the extern portions are not compiled in).</Notes>

@@ -118,7 +118,7 @@ namespace omni {
                     return OMNI_RAD_TO_DEG((this->_dot_product(b) / (this->_magnitude() * b._magnitude())));
                 }
 
-                void assign(V start_x, V start_y, V start_z, V x, V y, V z)
+                omni::geometry::vector3<V>& assign(V start_x, V start_y, V start_z, V x, V y, V z)
                 {
                     OMNI_SAFE_VEC3ALOCK_FW
                     this->m_sx = start_x;
@@ -127,12 +127,13 @@ namespace omni {
                     this->m_x = x;
                     this->m_y = y;
                     this->m_z = z;
+                    return *this;
                 }
 
                 template < typename T >
-                void assign(const omni::geometry::point3d<T>& tail, const omni::geometry::point3d<T>& head)
+                omni::geometry::vector3<V>& assign(const omni::geometry::point3d<T>& tail, const omni::geometry::point3d<T>& head)
                 {
-                    this->assign(
+                    return this->assign(
                         static_cast<V>(tail.x()),
                         static_cast<V>(tail.y()),
                         static_cast<V>(tail.z()),
@@ -143,9 +144,9 @@ namespace omni {
                 }
 
                 template < typename T >
-                void assign(const omni::math::dimensional<T, 3>& tail, const omni::math::dimensional<T, 3>& head)
+                omni::geometry::vector3<V>& assign(const omni::math::dimensional<T, 3>& tail, const omni::math::dimensional<T, 3>& head)
                 {
-                    this->assign(
+                    return this->assign(
                         static_cast<V>(tail[0]),
                         static_cast<V>(tail[1]),
                         static_cast<V>(tail[2]),
@@ -155,18 +156,19 @@ namespace omni {
                     );
                 }
 
-                void assign_head(V x, V y, V z)
+                omni::geometry::vector3<V>& assign_head(V x, V y, V z)
                 {
                     OMNI_SAFE_VEC3ALOCK_FW
                     this->m_x = x;
                     this->m_y = y;
                     this->m_z = z;
+                    return *this;
                 }
 
                 template < typename T >
-                void assign_head(const omni::geometry::point3d<T>& head)
+                omni::geometry::vector3<V>& assign_head(const omni::geometry::point3d<T>& head)
                 {
-                    this->assign_head(
+                    return this->assign_head(
                         static_cast<V>(head.x()),
                         static_cast<V>(head.y()),
                         static_cast<V>(head.z())
@@ -174,27 +176,28 @@ namespace omni {
                 }
 
                 template < typename T >
-                void assign_head(const omni::math::dimensional<T, 3>& head)
+                omni::geometry::vector3<V>& assign_head(const omni::math::dimensional<T, 3>& head)
                 {
-                    this->assign_head(
+                    return this->assign_head(
                         static_cast<V>(head[0]),
                         static_cast<V>(head[1]),
                         static_cast<V>(head[2])
                     );
                 }
 
-                void assign_tail(V start_x, V start_y, V start_z)
+                omni::geometry::vector3<V>& assign_tail(V start_x, V start_y, V start_z)
                 {
                     OMNI_SAFE_VEC3ALOCK_FW
                     this->m_sx = start_x;
                     this->m_sy = start_y;
                     this->m_sz = start_z;
+                    return *this;
                 }
 
                 template < typename T >
-                void assign_tail(const omni::geometry::point3d<T>& tail)
+                omni::geometry::vector3<V>& assign_tail(const omni::geometry::point3d<T>& tail)
                 {
-                    this->assign_tail(
+                    return this->assign_tail(
                         static_cast<V>(tail.x()),
                         static_cast<V>(tail.y()),
                         static_cast<V>(tail.z())
@@ -202,9 +205,9 @@ namespace omni {
                 }
 
                 template < typename T >
-                void assign_tail(const omni::math::dimensional<T, 3>& tail)
+                omni::geometry::vector3<V>& assign_tail(const omni::math::dimensional<T, 3>& tail)
                 {
-                    this->assign_tail(
+                    return this->assign_tail(
                         static_cast<V>(tail[0]),
                         static_cast<V>(tail[1]),
                         static_cast<V>(tail[2])
@@ -222,12 +225,24 @@ namespace omni {
                             c.y = a.z * b.x − a.x * b.z
                             c.z = a.x * b.y − a.y * b.x
                         */
+                        OMNI_BITS_WILL_MUL_OVER_FW(this->m_y, b.m_z)
+                        OMNI_BITS_WILL_MUL_OVER_FW(this->m_z, b.m_y)
+                        OMNI_BITS_WILL_MUL_OVER_FW(this->m_z, b.m_x)
+                        OMNI_BITS_WILL_MUL_OVER_FW(this->m_x, b.m_z)
+                        OMNI_BITS_WILL_MUL_OVER_FW(this->m_x, b.m_y)
+                        OMNI_BITS_WILL_MUL_OVER_FW(this->m_y, b.m_x)
                         return omni::geometry::vector3<V>(
                             ((this->m_y * b.m_z) - (this->m_z * b.m_y)), // x
                             ((this->m_z * b.m_x) - (this->m_x * b.m_z)), // y
                             ((this->m_x * b.m_y) - (this->m_y * b.m_x))  // z
                         );
                     }
+                    OMNI_BITS_WILL_MUL_OVER_FW(this->m_y, b.m_z)
+                    OMNI_BITS_WILL_MUL_OVER_FW(this->m_z, b.m_y)
+                    OMNI_BITS_WILL_MUL_OVER_FW(this->m_z, b.m_x)
+                    OMNI_BITS_WILL_MUL_OVER_FW(this->m_x, b.m_z)
+                    OMNI_BITS_WILL_MUL_OVER_FW(this->m_x, b.m_y)
+                    OMNI_BITS_WILL_MUL_OVER_FW(this->m_y, b.m_x)
                     return omni::geometry::vector3<V>(
                         ((this->m_y * b.m_z) - (this->m_z * b.m_y)), // x
                         ((this->m_z * b.m_x) - (this->m_x * b.m_z)), // y
@@ -334,40 +349,46 @@ namespace omni {
                     return this->_magnitude();
                 }
 
-                void set_start_x(V start_x)
+                omni::geometry::vector3<V>& set_start_x(V start_x)
                 {
                     OMNI_SAFE_VEC3ALOCK_FW
                     this->m_sx = start_x;
+                    return *this;
                 }
 
-                void set_start_y(V start_y)
+                omni::geometry::vector3<V>& set_start_y(V start_y)
                 {
                     OMNI_SAFE_VEC3ALOCK_FW
                     this->m_sy = start_y;
+                    return *this;
                 }
 
-                void set_start_z(V start_z)
+                omni::geometry::vector3<V>& set_start_z(V start_z)
                 {
                     OMNI_SAFE_VEC3ALOCK_FW
                     this->m_sz = start_z;
+                    return *this;
                 }
 
-                void set_x(V x)
+                omni::geometry::vector3<V>& set_x(V x)
                 {
                     OMNI_SAFE_VEC3ALOCK_FW
                     this->m_x = x;
+                    return *this;
                 }
 
-                void set_y(V y)
+                omni::geometry::vector3<V>& set_y(V y)
                 {
                     OMNI_SAFE_VEC3ALOCK_FW
                     this->m_y = y;
+                    return *this;
                 }
 
-                void set_z(V z)
+                omni::geometry::vector3<V>& set_z(V z)
                 {
                     OMNI_SAFE_VEC3ALOCK_FW
                     this->m_z = z;
+                    return *this;
                 }
 
                 V start_x() const
@@ -571,6 +592,9 @@ namespace omni {
                     OMNI_SAFE_VEC3ALOCK_FW
                     if (this != &b) {
                         OMNI_SAFE_VEC3OALOCK_FW(b)
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_x, (-b.m_x))
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_y, (-b.m_y))
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_z, (-b.m_z))
                         return omni::geometry::vector3<V>(
                             this->m_sx,
                             this->m_sy,
@@ -580,6 +604,9 @@ namespace omni {
                             (this->m_z + (-b.m_z))
                         );
                     }
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_x, (-b.m_x))
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_y, (-b.m_y))
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_z, (-b.m_z))
                     return omni::geometry::vector3<V>(
                         this->m_sx,
                         this->m_sy,
@@ -595,6 +622,9 @@ namespace omni {
                     OMNI_SAFE_VEC3ALOCK_FW
                     if (this != &b) {
                         OMNI_SAFE_VEC3OALOCK_FW(b)
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_x, b.m_x)
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_y, b.m_y)
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_z, b.m_z)
                         return omni::geometry::vector3<V>(
                             this->m_sx,
                             this->m_sy,
@@ -604,6 +634,9 @@ namespace omni {
                             (this->m_z + b.m_z)
                         );
                     }
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_x, b.m_x)
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_y, b.m_y)
+                    OMNI_BITS_WILL_ADD_OVER_FW(this->m_z, b.m_z)
                     return omni::geometry::vector3<V>(
                         this->m_sx,
                         this->m_sy,
@@ -618,6 +651,9 @@ namespace omni {
                 omni::geometry::vector3<V> operator*(V scalar) const
                 {
                     OMNI_SAFE_VEC3ALOCK_FW
+                    OMNI_BITS_WILL_MUL_OVER_FW(this->m_x, scalar)
+                    OMNI_BITS_WILL_MUL_OVER_FW(this->m_y, scalar)
+                    OMNI_BITS_WILL_MUL_OVER_FW(this->m_z, scalar)
                     return omni::geometry::vector3<V>(
                         this->m_sx,
                         this->m_sy,
@@ -660,6 +696,9 @@ namespace omni {
 
                 inline V _dot_product(const omni::geometry::vector3<V>& b) const
                 {
+                    OMNI_BITS_WILL_MUL_OVER_FW(this->_x(), b._x())
+                    OMNI_BITS_WILL_MUL_OVER_FW(this->_y(), b._y())
+                    OMNI_BITS_WILL_MUL_OVER_FW(this->_z(), b._z())
                     return (this->_x() * b._x()) + (this->_y() * b._y()) + (this->_z() * b._z());
                 }
 
@@ -680,6 +719,9 @@ namespace omni {
 
                 inline V _magnitude() const
                 {
+                    OMNI_BITS_WILL_MUL_OVER_FW(this->_x(), this->_x())
+                    OMNI_BITS_WILL_MUL_OVER_FW(this->_y(), this->_y())
+                    OMNI_BITS_WILL_MUL_OVER_FW(this->_z(), this->_z())
                     return std::sqrt(
                         (this->_x() * this->_x()) + 
                         (this->_y() * this->_y()) + 
@@ -689,16 +731,19 @@ namespace omni {
 
                 inline V _x() const
                 {
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_x, this->m_sx)
                     return (this->m_x - this->m_sx);
                 }
 
                 inline V _y() const
                 {
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_y, this->m_sy)
                     return (this->m_y - this->m_sy);
                 }
 
                 inline V _z() const
                 {
+                    OMNI_BITS_WILL_SUB_UNDER_FW(this->m_z, this->m_sz)
                     return (this->m_z - this->m_sz);
                 }
         };

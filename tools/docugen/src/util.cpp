@@ -181,12 +181,9 @@ bool OmniDocuGen::Util::ZipDirectory(const std::string& dir, const std::string& 
     }
     bool id = true; // TODO: what the hell was this for?
     std::string zip;
-    List<std::string> zpaths;
-    zpaths.push_back("/usr/local/bin/7z");
-    zpaths.push_back("/usr/bin/7z");
-    zpaths.push_back("/usr/local/sbin/7z");
-    zpaths.push_back("/usr/sbin/7z");
-    foreach (std::string, z, zpaths) {
+    
+    omni_sequence_t<std::string> zpaths = omni::cstring::split(OmniDocuGen::Program::Settings.PathsFor7z, ",");
+    omni_foreach(std::string, z, zpaths) {
         if (OmniDocuGen::Program::StopReq) { return false; }
         if (omni::io::file::exists(*z)) {
             zip = *z;
@@ -206,7 +203,10 @@ bool OmniDocuGen::Util::ZipDirectory(const std::string& dir, const std::string& 
         int rv = 0;
         cmd = "chmod -R 777 '" + dir + "'";
         up(2, "Executing zip command '{0}'", cmd);
-        system(cmd.c_str());
+
+        if ((rv = system(cmd.c_str())) != 0) {
+            up("Return value for command returned non zero value: {0}", omni::string::to_string(rv));
+        }
         if (id) {
             if (no_html) {
                 args = Util::Format("a -tzip \"{0}\" \"{1}\" -x!*.html", z, dir);
@@ -216,7 +216,9 @@ bool OmniDocuGen::Util::ZipDirectory(const std::string& dir, const std::string& 
             cmd = zip + " " + args;
             if (Program::Verbosity < 1) { cmd += " > /dev/null"; }
             up(2, "Executing zip command '{0}'", cmd);
-            system(cmd.c_str());
+            if ((rv = system(cmd.c_str())) != 0) {
+                up("Return value for command returned non zero value: {0}", omni::string::to_string(rv));
+            }
         } else {
             omni::seq::std_string_t dirs, files;
             omni::io::directory::get_directories(dir, dirs);
@@ -263,12 +265,8 @@ bool OmniDocuGen::Util::RemoveEntryFromZip(const std::string& z, const std::stri
         return true;
     }
     std::string zip;
-    List<std::string> zpaths;
-    zpaths.push_back("/usr/local/bin/7z");
-    zpaths.push_back("/usr/bin/7z");
-    zpaths.push_back("/usr/local/sbin/7z");
-    zpaths.push_back("/usr/sbin/7z");
-    foreach (std::string, z, zpaths) {
+    omni_sequence_t<std::string> zpaths = omni::cstring::split(OmniDocuGen::Program::Settings.PathsFor7z, ",");
+    omni_foreach(std::string, z, zpaths) {
         if (OmniDocuGen::Program::StopReq) { return false; }
         if (omni::io::file::exists(*z)) {
             zip = *z;
@@ -521,6 +519,7 @@ std::map<size_t, size_t> OmniDocuGen::Util::IndexOfCompliments(const std::string
                 i2 = std::string::npos;
             }
             ret[i1] = i2;
+            if (idx == vals.end()) { break; }
         }
     }
     return ret;

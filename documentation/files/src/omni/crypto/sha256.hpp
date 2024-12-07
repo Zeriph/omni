@@ -19,20 +19,8 @@
 #if !defined(OMNI_CRYPTO_SHA256_HPP)
 #define OMNI_CRYPTO_SHA256_HPP 1
 #include <omni/types/crypto_t.hpp>
-
 #if defined(OMNI_SAFE_SHA256)
     #include <omni/sync/basic_lock.hpp>
-    #define OMNI_SAFE_SHA256DMTX_FW  ,m_mtx()
-    #define OMNI_SAFE_SHA256LOCK_FW   this->m_mtx.lock();
-    #define OMNI_SAFE_SHA256UNLOCK_FW this->m_mtx.unlock();
-    #define OMNI_SAFE_SHA256ALOCK_FW  omni::sync::scoped_basic_lock uuid12345(&this->m_mtx);
-    #define OMNI_SAFE_SHA256OALOCK_FW(o)  omni::sync::scoped_basic_lock uuid54321(&o.m_mtx);
-#else
-    #define OMNI_SAFE_SHA256DMTX_FW
-    #define OMNI_SAFE_SHA256LOCK_FW
-    #define OMNI_SAFE_SHA256UNLOCK_FW
-    #define OMNI_SAFE_SHA256ALOCK_FW
-    #define OMNI_SAFE_SHA256OALOCK_FW(o) 
 #endif
 
 namespace omni {
@@ -65,13 +53,12 @@ namespace omni {
                 
             private:
                 std::string m_hash;
-                #if defined(OMNI_SAFE_MD5)
+                #if defined(OMNI_SAFE_SHA256)
                     mutable omni::sync::basic_lock m_mtx;
                 #endif
 
                 void _compute(const std::string& text);
                 void _compute(const unsigned char* message, uint32_t len);
-                static void _transform(const unsigned char* message, uint32_t block_nb, uint32_t* hex_vals);
         };
     }
 }

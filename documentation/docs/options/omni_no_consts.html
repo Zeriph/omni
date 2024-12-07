@@ -24,20 +24,20 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 <div class="docdiv">
     <font class="docu">MACRO</font><br><br>
     <code><font style="font-size:16px;">
-    <code>OMNI_NO_CONSTS</code> - A library macro/option
+    <code>OMNI_NO_CONSTS</code> - Disables any library defined constants.
     </font></code>
 </div><br>
 <div class="docdiv">
     <font class="docu">SYNOPSIS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    A library macro/option
+    Defining this macro will have the effect of having any library specific constants be undefined.
 </div><br>
 <div class="docdiv">
     <font class="docu">DESCRIPTION</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    A library macro/option that changes certain functionality
+    If this macro is enabled/defined, this will disable any constants defined in namespaces or classes. For example, instead of using the constant omni::math::PI in a funciton, you would have to utilize the <code><a href="omni_pi.html">OMNI_PI</a></code> macro. This is in the rare event that the size of an executable should be taken into account; defining this compile <code><a href="https://man7.org/linux/man-pages/man2/time.2.html">time</a></code> option will slightly reduce the overall size of the library code.
 </div><br>
 <div class="docdiv">
     <font class="docu">CONSIDERATIONS</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    No special considerations
+    If this is macro is defined, any constants will be undefined and you must use their macro equivlents instead.
 </div><br>
 <div class="docdiv">
     <font class="docu">PLATFORM SPECIFIC</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
@@ -45,7 +45,7 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 </div><br>
 <div class="docdiv">
     <font class="docu">NOTES</font>&nbsp;<a class="toppg" href="#toppg">top</a><br><br>
-    None.
+    This does not disable any <code>const</code> values in local functions, it only disables the library constants.
 </div><br>
 <!--end content-->
 </div></div></div></div><script type="text/javascript">loadJS();</script></body></html>

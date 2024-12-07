@@ -3,7 +3,7 @@
   <Name>OMNI_STR_WIDEN</Name>
   <Brief>A helper macro used to 'widen' strings.</Brief>
   <Considerations>No special consideration.</Considerations>
-  <Description>If the OMNI_UNICODE flag is defined this helper macro will expand string literal values to their 'wide' representation. That is to say that &lt;code&gt;OMNI_STR_WIDEN("Some character string")&lt;/code&gt; will expand to &lt;code&gt;L"Some character string"&lt;/code&gt; if the OMNI_UNICODE flag is defined at compile time, otherwise it expands to the value passed to the macro (&lt;code&gt;"Some character string"&lt;/code&gt; in this example).
+  <Description>If the OMNI_UNICODE flag is defined this helper macro will expand string literal values to their 'wide' representation. That is to say that &lt;code&gt;OMNI_STR_WIDEN("Some character string")&lt;/code&gt; will expand to &lt;code&gt;L"Some character string"&lt;/code&gt; if the OMNI_UNICODE flag is defined at compile @_time, otherwise it expands to the value passed to the macro (&lt;code&gt;"Some character string"&lt;/code&gt; in this example).
 
 To use a shortened version of this macro, you can use OMNI_STRW.</Description>
   <Notes>None.</Notes>

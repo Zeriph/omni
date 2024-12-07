@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - sha1.cpp</title>
+<link rel="stylesheet" type="text/css" href="../../content/main.css" /><link rel="icon" type="image/png" href="../../content/favicon.png" />
+<script type="text/javascript" src="../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="index.html" class="current">Source</a></li><li title="Library classes and namespaces">
+<a href="../classes/index.html">Class Index</a></li><li title="Download and view examples">
+<a href="../examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="../options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../api.html">System API</a></li><li title="Other Considerations">
+<a href="../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle"><a href="../../files/src/sha1.cpp" onclick="return popup('../../files/src/sha1.cpp')">sha1.cpp</a></div><div class="content"><div>
+<code><div class="cpphtmllines">
+<!--start line numbers-->
+001:<br><div id="cmntl1" name="cmntl1">002:<br>003:<br>004:<br>005:<br>006:<br>007:<br>008:<br>009:<br>010:<br>011:<br>012:<br>013:<br>014:<br>015:<br>016:<br>017:<br>018:<br></div>019:<br>
+020:<br>021:<br>022:<br>023:<br>024:<br>025:<br>026:<br>027:<br>028:<br>029:<br>030:<br>031:<br>032:<br>033:<br>034:<br>035:<br>036:<br>037:<br>038:<br>039:<br>
+040:<br>041:<br>042:<br>043:<br>044:<br>045:<br>046:<br>047:<br>048:<br>049:<br>050:<br>051:<br>052:<br>053:<br>054:<br>055:<br>056:<br>057:<br>058:<br>059:<br>
+060:<br>061:<br>062:<br>063:<br>064:<br>065:<br>066:<br>067:<br>068:<br>069:<br>070:<br>071:<br>072:<br>073:<br>074:<br>075:<br>076:<br>077:<br>078:<br>079:<br>
+080:<br>081:<br>082:<br>083:<br>084:<br>085:<br>086:<br>087:<br>088:<br>089:<br>090:<br>091:<br>092:<br>093:<br>094:<br>095:<br>096:<br>097:<br>098:<br>099:<br>
+100:<br>101:<br>102:<br>103:<br>104:<br>105:<br>106:<br>107:<br>108:<br>109:<br>110:<br>111:<br>112:<br>113:<br>114:<br>115:<br>116:<br>117:<br>118:<br>119:<br>
+120:<br>121:<br>122:<br>123:<br>124:<br>125:<br>126:<br>127:<br>128:<br>129:<br>130:<br>131:<br>132:<br>133:<br>134:<br>135:<br>136:<br>137:<br>138:<br>139:<br>
+140:<br>141:<br>142:<br>143:<br>144:<br>145:<br>146:<br>147:<br>148:<br>149:<br>150:<br>151:<br>152:<br>153:<br>154:<br>155:<br>156:<br>157:<br>158:<br>159:<br>
+160:<br>161:<br>162:<br>163:<br>164:<br>165:<br>166:<br>167:<br>168:<br>169:<br>170:<br>171:<br>172:<br>173:<br>174:<br>175:<br>176:<br>177:<br>178:<br>179:<br>
+180:<br>181:<br>182:<br>183:<br>184:<br>185:<br>186:<br>187:<br>188:<br>189:<br>190:<br>191:<br>192:<br>193:<br>194:<br>195:<br>196:<br>197:<br>198:<br>199:<br>
+200:<br>201:<br>202:<br>203:<br>204:<br>205:<br>206:<br>207:<br>208:<br>209:<br>210:<br>211:<br>212:<br>213:<br>214:<br>215:<br>216:<br>217:<br>218:<br>219:<br>
+220:<br>221:<br>222:<br>223:<br>224:<br>225:<br>226:<br>227:<br>228:<br>229:<br>230:<br>231:<br>232:<br>233:<br>234:<br>235:<br>236:<br>237:<br>238:<br>239:<br>
+240:<br>241:<br>242:<br>243:<br>244:<br>245:<br>246:<br>247:<br>248:<br>249:<br>250:<br>251:<br>252:<br>253:<br>254:<br>255:<br>256:<br>257:<br>258:<br>259:<br>
+260:<br>261:<br>262:<br>263:<br>264:<br>265:<br>266:<br>267:<br>268:<br>
+<!--end line numbers-->
+</div><div class="cpphtmlcmnt">
+<!--start collapse columns-->
+<img src="../../content/tree/min.gif" alt="Min/Max" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br>
+<!--end collapse columns-->
+</div><div class="cpphtml" style="margin-left:3.75em;">
+<!--start highlighted code-->
+<font class="syn_cmt">/*<div class="syn_ex" id="cmnt1" name="cmnt1">
+ * Copyright (c), Zeriph Enterprises<br>
+ * All rights reserved.<br>
+ * <br>
+ * Contributor(s):<br>
+ * Zechariah Perez, omni (at) zeriph (dot) com<br>
+ * <br>
+ * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS &quot;AS IS&quot; AND ANY<br>
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED<br>
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE<br>
+ * DISCLAIMED. IN NO EVENT SHALL ZERIPH AND CONTRIBUTORS BE LIABLE FOR ANY<br>
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES<br>
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;<br>
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND<br>
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT<br>
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS<br>
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.<br>
+ */</div><div></div></font>
+<font class="syn_pre">#include &lt;<a href="omni/crypto/sha1.hpp.html">omni/crypto/sha1.hpp</a>&gt;</font><br>
+<font class="syn_pre">#include &lt;<a href="omni/defs/file_def.hpp.html">omni/defs/file_def.hpp</a>&gt;</font><br>
+<font class="syn_pre">#include &lt;fstream&gt;</font><br>
+<font class="syn_pre">#include &lt;sstream&gt;</font><br>
+<font class="syn_pre">#include &lt;cstring&gt;</font><br>
+<font class="syn_pre">#define OMNI_IO_FILE_EX_FW 1</font><br>
+<font class="syn_pre">#include &lt;<a href="omni/xx/io/file_ex.hxx.html">omni/xx/io/file_ex.hxx</a>&gt;</font><br>
+<br>
+<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../options/omni_safe_sha1.html">OMNI_SAFE_SHA1</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_SHA1DMTX_FW  ,m_mtx()</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_SHA1LOCK_FW   this-&gt;m_mtx.lock();</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_SHA1UNLOCK_FW this-&gt;m_mtx.unlock();</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_SHA1ALOCK_FW  <a href="../classes/omni-sync-scoped_basic_lock.html">omni::sync::scoped_basic_lock</a> uuid12345(&amp;this-&gt;m_mtx);</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_SHA1OALOCK_FW(o)  <a href="../classes/omni-sync-scoped_basic_lock.html">omni::sync::scoped_basic_lock</a> uuid54321(&amp;o.m_mtx);</font><br>
+<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_SHA1DMTX_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_SHA1LOCK_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_SHA1UNLOCK_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_SHA1ALOCK_FW</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#define OMNI_SAFE_SHA1OALOCK_FW(o) </font><br>
+<font class="syn_pre">#endif</font><br>
+<br>
+<font class="syn_pre">#define OMNI_SHA1_R_FW(value, bits) (((value) &lt;&lt; (bits)) | (((value) &amp; 0xFFFFFFFF) &gt;&gt; (32 - (bits))))</font><br>
+<font class="syn_pre">#define OMNI_SHA1_B_FW(i) (block[i &amp; 15] = OMNI_SHA1_R_FW(block[(i + 13) &amp; 15] ^ block[(i + 8) &amp; 15] ^ block[(i + 2) &amp; 15] ^ block[i &amp; 15], 1))</font><br>
+<font class="syn_pre">#define OMNI_SHA1_R0_FW(v, w, x, y, z, i) z += ((w &amp; (x ^ y)) ^ y) + block[i] + 0x5A827999 + OMNI_SHA1_R_FW(v, 5); w = OMNI_SHA1_R_FW(w, 30);</font><br>
+<font class="syn_pre">#define OMNI_SHA1_R1_FW(v, w, x, y, z, i) z += ((w &amp; (x ^ y)) ^ y) + OMNI_SHA1_B_FW(i) + 0x5A827999 + OMNI_SHA1_R_FW(v, 5); w = OMNI_SHA1_R_FW(w, 30);</font><br>
+<font class="syn_pre">#define OMNI_SHA1_R2_FW(v, w, x, y, z, i) z += (w ^ x ^ y) + OMNI_SHA1_B_FW(i) + 0x6ED9EBA1 + OMNI_SHA1_R_FW(v,5); w = OMNI_SHA1_R_FW(w, 30);</font><br>
+<font class="syn_pre">#define OMNI_SHA1_R3_FW(v, w, x, y, z, i) z += (((w | x) &amp; y) | (w &amp; x)) + OMNI_SHA1_B_FW(i) + 0x8F1BBCDC + OMNI_SHA1_R_FW(v, 5); w = OMNI_SHA1_R_FW(w, 30);</font><br>
+<font class="syn_pre">#define OMNI_SHA1_R4_FW(v, w, x, y, z, i) z += (w ^ x ^ y) + OMNI_SHA1_B_FW(i) + 0xCA62C1D6 + OMNI_SHA1_R_FW(v, 5); w = OMNI_SHA1_R_FW(w, 30);</font><br>
+<font class="syn_pre">#define OMNI_SHA1_DIGEST_SZ_FW 5</font><br>
+<font class="syn_pre">#define OMNI_SHA1_BLOCK_SZ_FW 16</font><br>
+<font class="syn_pre">#define OMNI_SHA1_BLOCK_BYTE_SZ_FW 64 <font class="syn_cmt">// OMNI_SHA1_BLOCK_SZ_FW * 4</font></font><br>
+<br>
+<font class="syn_ins">namespace</font> omni { <font class="syn_ins">namespace</font> crypto { <font class="syn_ins">namespace</font> sha1_internal {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> buffer_to_block(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; buffer, <font class="syn_typ">uint32_t</font>* block)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">for</font> (<font class="syn_typ">uint64_t</font> i = <font class="syn_num">0</font>; i &lt; OMNI_SHA1_BLOCK_SZ_FW; ++i) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;block[i] = (buffer[<font class="syn_num">4</font> * i + <font class="syn_num">3</font>] &amp; <font class="syn_num">0</font>xFF) |<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   (<font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint32_t</font>&gt;(buffer[<font class="syn_num">4</font> * i + <font class="syn_num">2</font>] &amp; <font class="syn_num">0</font>xFF) &lt;&lt; <font class="syn_num">8</font>) |<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   (<font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint32_t</font>&gt;(buffer[<font class="syn_num">4</font> * i + <font class="syn_num">1</font>] &amp; <font class="syn_num">0</font>xFF) &lt;&lt; <font class="syn_num">16</font>) |<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   (<font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint32_t</font>&gt;(buffer[<font class="syn_num">4</font> * i] &amp; <font class="syn_num">0</font>xFF) &lt;&lt; <font class="syn_num">24</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> read(<a href="http://www.cplusplus.com/reference/istream/istream/">std::istream</a>&amp; stream, <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; str, <a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a> size)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">char</font>* buf = <font class="syn_ins">new</font> <font class="syn_typ">char</font>[size];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stream.read(buf, <font class="syn_ins">static_cast</font>&lt;<a href="http://www.cplusplus.com/reference/ios/streamsize/">std::streamsize</a>&gt;(size));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;str.assign(buf, <font class="syn_ins">static_cast</font>&lt;<a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a>&gt;(stream.gcount()));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../options/omni_free_arr.html">OMNI_FREE_ARR</a>(buf);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> transform(<font class="syn_typ">uint32_t</font>* block, <font class="syn_typ">uint32_t</font>* digest, <font class="syn_typ">uint64_t</font>&amp; transforms)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint32_t</font> a = digest[<font class="syn_num">0</font>]; <font class="syn_typ">uint32_t</font> b = digest[<font class="syn_num">1</font>]; <font class="syn_typ">uint32_t</font> c = digest[<font class="syn_num">2</font>]; <font class="syn_typ">uint32_t</font> d = digest[<font class="syn_num">3</font>]; <font class="syn_typ">uint32_t</font> e = digest[<font class="syn_num">4</font>];<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SHA1_R0_FW(a,b,c,d,e, <font class="syn_num">0</font>); OMNI_SHA1_R0_FW(e,a,b,c,d, <font class="syn_num">1</font>); OMNI_SHA1_R0_FW(d,e,a,b,c, <font class="syn_num">2</font>); OMNI_SHA1_R0_FW(c,d,e,a,b, <font class="syn_num">3</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SHA1_R0_FW(b,c,d,e,a, <font class="syn_num">4</font>); OMNI_SHA1_R0_FW(a,b,c,d,e, <font class="syn_num">5</font>); OMNI_SHA1_R0_FW(e,a,b,c,d, <font class="syn_num">6</font>); OMNI_SHA1_R0_FW(d,e,a,b,c, <font class="syn_num">7</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SHA1_R0_FW(c,d,e,a,b, <font class="syn_num">8</font>); OMNI_SHA1_R0_FW(b,c,d,e,a, <font class="syn_num">9</font>); OMNI_SHA1_R0_FW(a,b,c,d,e,<font class="syn_num">10</font>); OMNI_SHA1_R0_FW(e,a,b,c,d,<font class="syn_num">11</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SHA1_R0_FW(d,e,a,b,c,<font class="syn_num">12</font>); OMNI_SHA1_R0_FW(c,d,e,a,b,<font class="syn_num">13</font>); OMNI_SHA1_R0_FW(b,c,d,e,a,<font class="syn_num">14</font>); OMNI_SHA1_R0_FW(a,b,c,d,e,<font class="syn_num">15</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SHA1_R1_FW(e,a,b,c,d,<font class="syn_num">16</font>); OMNI_SHA1_R1_FW(d,e,a,b,c,<font class="syn_num">17</font>); OMNI_SHA1_R1_FW(c,d,e,a,b,<font class="syn_num">18</font>); OMNI_SHA1_R1_FW(b,c,d,e,a,<font class="syn_num">19</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SHA1_R2_FW(a,b,c,d,e,<font class="syn_num">20</font>); OMNI_SHA1_R2_FW(e,a,b,c,d,<font class="syn_num">21</font>); OMNI_SHA1_R2_FW(d,e,a,b,c,<font class="syn_num">22</font>); OMNI_SHA1_R2_FW(c,d,e,a,b,<font class="syn_num">23</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SHA1_R2_FW(b,c,d,e,a,<font class="syn_num">24</font>); OMNI_SHA1_R2_FW(a,b,c,d,e,<font class="syn_num">25</font>); OMNI_SHA1_R2_FW(e,a,b,c,d,<font class="syn_num">26</font>); OMNI_SHA1_R2_FW(d,e,a,b,c,<font class="syn_num">27</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SHA1_R2_FW(c,d,e,a,b,<font class="syn_num">28</font>); OMNI_SHA1_R2_FW(b,c,d,e,a,<font class="syn_num">29</font>); OMNI_SHA1_R2_FW(a,b,c,d,e,<font class="syn_num">30</font>); OMNI_SHA1_R2_FW(e,a,b,c,d,<font class="syn_num">31</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SHA1_R2_FW(d,e,a,b,c,<font class="syn_num">32</font>); OMNI_SHA1_R2_FW(c,d,e,a,b,<font class="syn_num">33</font>); OMNI_SHA1_R2_FW(b,c,d,e,a,<font class="syn_num">34</font>); OMNI_SHA1_R2_FW(a,b,c,d,e,<font class="syn_num">35</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SHA1_R2_FW(e,a,b,c,d,<font class="syn_num">36</font>); OMNI_SHA1_R2_FW(d,e,a,b,c,<font class="syn_num">37</font>); OMNI_SHA1_R2_FW(c,d,e,a,b,<font class="syn_num">38</font>); OMNI_SHA1_R2_FW(b,c,d,e,a,<font class="syn_num">39</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SHA1_R3_FW(a,b,c,d,e,<font class="syn_num">40</font>); OMNI_SHA1_R3_FW(e,a,b,c,d,<font class="syn_num">41</font>); OMNI_SHA1_R3_FW(d,e,a,b,c,<font class="syn_num">42</font>); OMNI_SHA1_R3_FW(c,d,e,a,b,<font class="syn_num">43</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SHA1_R3_FW(b,c,d,e,a,<font class="syn_num">44</font>); OMNI_SHA1_R3_FW(a,b,c,d,e,<font class="syn_num">45</font>); OMNI_SHA1_R3_FW(e,a,b,c,d,<font class="syn_num">46</font>); OMNI_SHA1_R3_FW(d,e,a,b,c,<font class="syn_num">47</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SHA1_R3_FW(c,d,e,a,b,<font class="syn_num">48</font>); OMNI_SHA1_R3_FW(b,c,d,e,a,<font class="syn_num">49</font>); OMNI_SHA1_R3_FW(a,b,c,d,e,<font class="syn_num">50</font>); OMNI_SHA1_R3_FW(e,a,b,c,d,<font class="syn_num">51</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SHA1_R3_FW(d,e,a,b,c,<font class="syn_num">52</font>); OMNI_SHA1_R3_FW(c,d,e,a,b,<font class="syn_num">53</font>); OMNI_SHA1_R3_FW(b,c,d,e,a,<font class="syn_num">54</font>); OMNI_SHA1_R3_FW(a,b,c,d,e,<font class="syn_num">55</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SHA1_R3_FW(e,a,b,c,d,<font class="syn_num">56</font>); OMNI_SHA1_R3_FW(d,e,a,b,c,<font class="syn_num">57</font>); OMNI_SHA1_R3_FW(c,d,e,a,b,<font class="syn_num">58</font>); OMNI_SHA1_R3_FW(b,c,d,e,a,<font class="syn_num">59</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SHA1_R4_FW(a,b,c,d,e,<font class="syn_num">60</font>); OMNI_SHA1_R4_FW(e,a,b,c,d,<font class="syn_num">61</font>); OMNI_SHA1_R4_FW(d,e,a,b,c,<font class="syn_num">62</font>); OMNI_SHA1_R4_FW(c,d,e,a,b,<font class="syn_num">63</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SHA1_R4_FW(b,c,d,e,a,<font class="syn_num">64</font>); OMNI_SHA1_R4_FW(a,b,c,d,e,<font class="syn_num">65</font>); OMNI_SHA1_R4_FW(e,a,b,c,d,<font class="syn_num">66</font>); OMNI_SHA1_R4_FW(d,e,a,b,c,<font class="syn_num">67</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SHA1_R4_FW(c,d,e,a,b,<font class="syn_num">68</font>); OMNI_SHA1_R4_FW(b,c,d,e,a,<font class="syn_num">69</font>); OMNI_SHA1_R4_FW(a,b,c,d,e,<font class="syn_num">70</font>); OMNI_SHA1_R4_FW(e,a,b,c,d,<font class="syn_num">71</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SHA1_R4_FW(d,e,a,b,c,<font class="syn_num">72</font>); OMNI_SHA1_R4_FW(c,d,e,a,b,<font class="syn_num">73</font>); OMNI_SHA1_R4_FW(b,c,d,e,a,<font class="syn_num">74</font>); OMNI_SHA1_R4_FW(a,b,c,d,e,<font class="syn_num">75</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SHA1_R4_FW(e,a,b,c,d,<font class="syn_num">76</font>); OMNI_SHA1_R4_FW(d,e,a,b,c,<font class="syn_num">77</font>); OMNI_SHA1_R4_FW(c,d,e,a,b,<font class="syn_num">78</font>); OMNI_SHA1_R4_FW(b,c,d,e,a,<font class="syn_num">79</font>);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;digest[<font class="syn_num">0</font>] += a; digest[<font class="syn_num">1</font>] += b; digest[<font class="syn_num">2</font>] += c; digest[<font class="syn_num">3</font>] += d; digest[<font class="syn_num">4</font>] += e;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;++transforms;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">void</font> compute_hash(<a href="http://www.cplusplus.com/reference/istream/istream/">std::istream</a>&amp; stream, <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; buffer, <font class="syn_typ">uint32_t</font>* digest, <font class="syn_typ">uint64_t</font>&amp; transforms, <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; out_result)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::string</a> rbuf;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;omni::crypto::sha1_internal::read(stream, rbuf, OMNI_SHA1_BLOCK_BYTE_SZ_FW - buffer.size());<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;buffer += rbuf;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">while</font> (stream) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint32_t</font> block[OMNI_SHA1_BLOCK_SZ_FW];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;omni::crypto::sha1_internal::buffer_to_block(buffer, block);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;omni::crypto::sha1_internal::transform(block, digest, transforms);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;omni::crypto::sha1_internal::read(stream, buffer, OMNI_SHA1_BLOCK_BYTE_SZ_FW);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> total_bits = (transforms * OMNI_SHA1_BLOCK_BYTE_SZ_FW + buffer.size()) * <font class="syn_num">8</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;buffer += <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">char</font>&gt;(<font class="syn_num">0</font>x80);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a> orig_size = buffer.size();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">while</font> (buffer.size() &lt; OMNI_SHA1_BLOCK_BYTE_SZ_FW) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;buffer += <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">char</font>&gt;(<font class="syn_num">0</font>x00);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a> i;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint32_t</font> block[OMNI_SHA1_BLOCK_SZ_FW];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;omni::crypto::sha1_internal::buffer_to_block(buffer, block);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (orig_size &gt; OMNI_SHA1_BLOCK_BYTE_SZ_FW - <font class="syn_num">8</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;omni::crypto::sha1_internal::transform(block, digest, transforms);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">for</font> (i = <font class="syn_num">0</font>; i &lt; OMNI_SHA1_BLOCK_SZ_FW - <font class="syn_num">2</font>; ++i) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;block[i] = <font class="syn_num">0</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;block[OMNI_SHA1_BLOCK_SZ_FW - <font class="syn_num">1</font>] = <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint32_t</font>&gt;(total_bits);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;block[OMNI_SHA1_BLOCK_SZ_FW - <font class="syn_num">2</font>] = <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint32_t</font>&gt;((total_bits &gt;&gt; <font class="syn_num">32</font>));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;omni::crypto::sha1_internal::transform(block, digest, transforms);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;out_result = <a href="../classes/omni-crypto-util-buffer_to_hex_string.html">omni::crypto::util::buffer_to_hex_string</a>(digest, OMNI_SHA1_DIGEST_SZ_FW, <font class="syn_num">0</font>xFFFFFFFF);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+} } }<br>
+<br>
+<a href="../classes/omni-crypto-sha1-sha1.html">omni::crypto::sha1::sha1</a>() :<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CTOR_FW(<a href="../classes/omni-crypto-sha1.html">omni::crypto::sha1</a>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;m_hash()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SHA1DMTX_FW<br>
+{}<br>
+<br>
+<a href="../classes/omni-crypto-sha1-sha1.html">omni::crypto::sha1::sha1</a>(<font class="syn_typ">const</font> <a href="../classes/omni-crypto-sha1.html">omni::crypto::sha1</a>&amp; cp) :<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CPCTOR_FW(cp)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;m_hash(cp.m_hash)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SHA1DMTX_FW<br>
+{}<br>
+<br>
+<a href="../options/omni_explicit.html">OMNI_EXPLICIT</a> <a href="../classes/omni-crypto-sha1-sha1.html">omni::crypto::sha1::sha1</a>(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; hash) :<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CTOR_FW(<a href="../classes/omni-crypto-sha1.html">omni::crypto::sha1</a>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;m_hash(hash)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SHA1DMTX_FW<br>
+{<br>
+}<br>
+<br>
+<a href="../classes/omni-crypto-sha1-sha1.html">omni::crypto::sha1::sha1</a>(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; text, <font class="syn_typ">const</font> <a href="../classes/omni-crypto-hash_type.html">omni::crypto::hash_type</a>&amp; type) :<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CTOR_FW(<a href="../classes/omni-crypto-sha1.html">omni::crypto::sha1</a>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;m_hash()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SHA1DMTX_FW<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (type == <a href="../classes/omni-crypto-hash_type-string.html">omni::crypto::hash_type::STRING</a>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.cplusplus.com/reference/sstream/istringstream/istringstream/">std::istringstream</a> stream(text);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;_compute(stream);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!omni::io::file_internal::exists(text)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERRV_FW(<font class="syn_str">&quot;File not found: &quot;</font>, text, <a href="../classes/omni-exceptions-file_not_found.html">omni::exceptions::file_not_found</a>(text))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (type == <a href="../classes/omni-crypto-hash_type-binary_file.html">omni::crypto::hash_type::BINARY_FILE</a>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/fstream/">std::ifstream</a> stream(text.c_str(), <a href="http://www.cplusplus.com/reference/ios/ios_base/openmode/">std::ios::binary</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;_compute(stream);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/fstream/">std::ifstream</a> stream(text.c_str());<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;_compute(stream);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+}<br>
+<br>
+<a href="../classes/omni-crypto-sha1-@7Esha1.html">omni::crypto::sha1::~sha1</a>()<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_TRY_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DTOR_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_CATCH_FW<br>
+}<br>
+<br>
+<a href="http://www.cplusplus.com/reference/string/">std::string</a> <a href="../classes/omni-crypto-sha1-hash_code.html">omni::crypto::sha1::hash_code</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;to_string();<br>
+}<br>
+<br>
+<font class="syn_typ">void</font> <a href="../classes/omni-crypto-sha1-swap.html">omni::crypto::sha1::swap</a>(<a href="../classes/omni-crypto-sha1.html">omni::crypto::sha1</a>&amp; o)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font> != &amp;o) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SHA1ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SHA1OALOCK_FW(o)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/algorithm/swap/">std::swap</a>(<font class="syn_typ">this</font>-&gt;m_hash, o.m_hash);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+}<br>
+<br>
+<a href="../classes/omni-string_t.html">omni::string_t</a> <a href="../classes/omni-crypto-sha1-to_string_t.html">omni::crypto::sha1::to_string_t</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SHA1ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-string-util-to_string_t.html">omni::string::util::to_string_t</a>(<font class="syn_typ">this</font>-&gt;m_hash);<br>
+}<br>
+<br>
+<a href="http://www.cplusplus.com/reference/string/">std::string</a> <a href="../classes/omni-crypto-sha1-to_string.html">omni::crypto::sha1::to_string</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SHA1ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;m_hash;<br>
+}<br>
+<br>
+<a href="http://www.cplusplus.com/reference/string/">std::wstring</a> <a href="../classes/omni-crypto-sha1-to_wstring.html">omni::crypto::sha1::to_wstring</a>() <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SHA1ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../classes/omni-string-util-to_wstring.html">omni::string::util::to_wstring</a>(<font class="syn_typ">this</font>-&gt;m_hash);<br>
+}<br>
+<br>
+<a href="../classes/omni-crypto-sha1.html">omni::crypto::sha1</a>&amp; omni::crypto::sha1::<font class="syn_ins">operator</font>=(<font class="syn_typ">const</font> <a href="../classes/omni-crypto-sha1.html">omni::crypto::sha1</a>&amp; other)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font> != &amp;other) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SHA1ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SHA1OALOCK_FW(other)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">this</font>-&gt;m_hash = other.m_hash;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> *<font class="syn_typ">this</font>;<br>
+}<br>
+<br>
+<font class="syn_typ">bool</font> omni::crypto::sha1::<font class="syn_ins">operator</font>==(<font class="syn_typ">const</font> <a href="../classes/omni-crypto-sha1.html">omni::crypto::sha1</a>&amp; o) <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<font class="syn_typ">this</font> != &amp;o) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SHA1ALOCK_FW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_SAFE_SHA1OALOCK_FW(o)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_typ">this</font>-&gt;m_hash == o.m_hash;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">true</font>;<br>
+}<br>
+<br>
+<font class="syn_typ">bool</font> omni::crypto::sha1::<font class="syn_ins">operator</font>!=(<font class="syn_typ">const</font> <a href="../classes/omni-crypto-sha1.html">omni::crypto::sha1</a>&amp; o) <font class="syn_typ">const</font><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> !(*<font class="syn_typ">this</font> == o);<br>
+}<br>
+<br>
+<a href="http://www.cplusplus.com/reference/string/">std::string</a> <a href="../classes/omni-crypto-sha1-compute_hash.html">omni::crypto::sha1::compute_hash</a>(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; text)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-crypto-sha1.html">omni::crypto::sha1</a> var(text, <a href="../classes/omni-crypto-hash_type-string.html">omni::crypto::hash_type::STRING</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> var.m_hash;<br>
+}<br>
+<br>
+<a href="http://www.cplusplus.com/reference/string/">std::string</a> <a href="../classes/omni-crypto-sha1-compute_file_hash.html">omni::crypto::sha1::compute_file_hash</a>(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; file)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-crypto-sha1.html">omni::crypto::sha1</a> var(file, <a href="../classes/omni-crypto-hash_type-text_file.html">omni::crypto::hash_type::TEXT_FILE</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> var.m_hash;<br>
+}<br>
+<br>
+<a href="http://www.cplusplus.com/reference/string/">std::string</a> <a href="../classes/omni-crypto-sha1-compute_binary_file_hash.html">omni::crypto::sha1::compute_binary_file_hash</a>(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; file)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-crypto-sha1.html">omni::crypto::sha1</a> var(file, <a href="../classes/omni-crypto-hash_type-binary_file.html">omni::crypto::hash_type::BINARY_FILE</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> var.m_hash;<br>
+}<br>
+<br>
+<font class="syn_typ">void</font> <a href="../classes/omni-crypto-sha1-_compute.html">omni::crypto::sha1::_compute</a>(<a href="http://www.cplusplus.com/reference/istream/istream/">std::istream</a>&amp; stream)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint32_t</font> digest[OMNI_SHA1_DIGEST_SZ_FW] = { <font class="syn_num">0</font>x67452301, <font class="syn_num">0</font>xEFCDAB89, <font class="syn_num">0</font>x98BADCFE, <font class="syn_num">0</font>x10325476, <font class="syn_num">0</font>xC3D2E1F0 };<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> transforms = <font class="syn_num">0</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::string</a> buffer;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;omni::crypto::sha1_internal::compute_hash(stream, buffer, digest, transforms, <font class="syn_typ">this</font>-&gt;m_hash);<br>
+}<br>
+<br>
+<font class="syn_pre">#undef OMNI_IO_FILE_EX_FW</font><br>
+<!--end highlighted code-->
+</div></code><br>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS(); collapseAll('1', '../../');</script></body></html>

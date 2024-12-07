@@ -23,148 +23,214 @@
 
 namespace omni {
     namespace net {
-
         inline omni::net::socket_error parse_error(int serr)
         {
             switch (serr) {
-                #if defined(OMNI_OS_WIN)
-                    case WSANOTINITIALISED: // A successful WSAStartup call must occur before using this function.
-                        return omni::net::socket_error::NOT_INITIALIZED;
-                    case WSAENETDOWN: // The network subsystem has failed.
-                        return omni::net::socket_error::NETWORK_DOWN;
-                    case WSAEADDRINUSE: // The local address of the socket is already in use and the socket was not marked to allow address reuse with SO_REUSEADDR. This error usually occurs during the execution of bind, but could be delayed until this function if the bind function operates on a partially wildcard address (involving ADDR_ANY) and if a specific address needs to be "committed" at the time of this function.
-                        return omni::net::socket_error::ADDRESS_ALREADY_IN_USE;
-                    case WSAEINTR: // The (blocking) Windows Socket 1.1 call was canceled through WSACancelBlockingCall.
-                        return omni::net::socket_error::INTERRUPTED;
-                    case WSAEINPROGRESS: // A blocking Windows Sockets 1.1 call is in progress, or the service provider is still processing a callback function.
-                        return omni::net::socket_error::IN_PROGRESS;
-                    case WSAEALREADY: // A nonblocking connect or WSAConnect call is in progress on the specified socket.
-                        return omni::net::socket_error::ALREADY_IN_PROGRESS;
-                    case WSAEADDRNOTAVAIL: // The remote address is not a valid address (such as ADDR_ANY).
-                        return omni::net::socket_error::ADDRESS_NOT_AVAILABLE;
-                    case WSAEAFNOSUPPORT: // Addresses in the specified family cannot be used with this socket.
-                        return omni::net::socket_error::ADDRESS_FAMILY_NOT_SUPPORTED;
-                    case WSAECONNREFUSED: // The attempt to connect was rejected.
-                        return omni::net::socket_error::CONNECTION_REFUSED;
-                    case WSAEFAULT: // The name or the namelen parameter is not a valid part of the user address space, the namelen parameter is too small, the buffer length for lpCalleeData, lpSQOS, and lpGQOS are too small, or the buffer length for lpCallerData is too large.
-                        return omni::net::socket_error::FAULT;
-                    case WSAEINVAL: // The parameter s is a listening socket, or the destination address specified is not consistent with that of the constrained group to which the socket belongs, or the lpGQOS parameter is not NULL.
-                        return omni::net::socket_error::INVALID_ARGUMENT;
-                    case WSAEISCONN: // The socket is already connected (connection-oriented sockets only).
-                        return omni::net::socket_error::IS_CONNECTED;
-                    case WSAENETUNREACH: // The network cannot be reached from this host at this time.
-                        return omni::net::socket_error::NETWORK_UNREACHABLE;
-                    case WSAEHOSTUNREACH: // A socket operation was attempted to an unreachable host.
-                        return omni::net::socket_error::HOST_UNREACHABLE;
-                    case WSAENOBUFS: // No buffer space is available. The socket cannot be connected.
-                        return omni::net::socket_error::NO_BUFFER_SPACE_AVAILABLE;
-                    case WSAENOTSOCK: // The descriptor is not a socket.
-                        return omni::net::socket_error::NOT_SOCKET;
-                    case WSAENOPROTOOPT:
-                        return omni::net::socket_error::PROTOCOL_OPTION;
-                    case WSAEOPNOTSUPP:
-                        return omni::net::socket_error::OPERATION_NOT_SUPPORTED;
-                    case WSAEPROTONOSUPPORT: // The lpCallerData parameter is not supported by the service provider.
-                        return omni::net::socket_error::PROTOCOL_NOT_SUPPORTED;
-                    case WSAETIMEDOUT: // Attempt to connect timed out without establishing a connection.
-                        return omni::net::socket_error::TIMED_OUT;
-                    case WSAEWOULDBLOCK: // The socket is marked as nonblocking and the connection cannot be completed immediately.
-                        return omni::net::socket_error::WOULD_BLOCK;
-                    case WSAEACCES: // Attempt to connect datagram socket to broadcast address failed because setsockopt SO_BROADCAST is not enabled. 
-                        return omni::net::socket_error::ACCESS_DENIED;
-                    case WSAEDISCON: // Socket s is message oriented and the virtual circuit was gracefully closed by the remote side. 
-                        return omni::net::socket_error::DISCONNECTING;
-                    case WSA_IO_PENDING: // An overlapped operation was successfully initiated and completion will be indicated at a later time.
-                        return omni::net::socket_error::IO_PENDING;
-                    case WSA_OPERATION_ABORTED: // The overlapped operation has been canceled due to the closure of the socket. 
-                        return omni::net::socket_error::OPERATION_ABORTED;
-                #else
-                    case EACCES:        // For UNIX domain sockets, which are identified by pathname: Write permission is denied on the socket file, or search permission is denied for one of the directories in the path prefix.
-                        return omni::net::socket_error::ACCESS_DENIED;
-                    case EOPNOTSUPP:    // The socket argument is associated with a socket that does not support one or more of the values set in flags.
-                    case EPERM:         // The user tried to connect to a broadcast address without having the socket broadcast flag enabled or the connection request failed because of a local firewall rule.
-                        return omni::net::socket_error::OPERATION_NOT_SUPPORTED;
-                    case EADDRINUSE:    // Local address is already in use.
-                        return omni::net::socket_error::ADDRESS_ALREADY_IN_USE;
-                    case EADDRNOTAVAIL: // (Internet domain sockets) The socket referred to by sockfd had not previously been bound to an address and, upon attempting to bind it to an ephemeral port, it was determined that all port numbers in the ephemeral port range are currently in use.
-                        return omni::net::socket_error::ADDRESS_NOT_AVAILABLE;
-                    case EAFNOSUPPORT:  // The passed address did not have the correct address family in its sa_family field.
-                        return omni::net::socket_error::ADDRESS_FAMILY_NOT_SUPPORTED;
-                    case EAGAIN:        // For nonblocking UNIX domain sockets, the socket is nonblocking, and the connection cannot be completed immediately.  For other socket families, there are insufficient entries in the routing cache.
-                        return omni::net::socket_error::AGAIN;
-                    case EALREADY:      // The socket is nonblocking and a previous connection attempt has not yet been completed.
-                        return omni::net::socket_error::ALREADY_IN_PROGRESS;
-                    case ECONNREFUSED:  // A connect() on a stream socket found no one listening on the remote address.
-                        return omni::net::socket_error::CONNECTION_REFUSED;
-                    case EIO:           // An I/O error occurred while reading from or writing to the file system.
-                    case EFAULT:        // The socket structure address is outside the users address space.
-                        return omni::net::socket_error::FAULT;
-                    case EINPROGRESS:   // The socket is nonblocking and the connection cannot be completed immediately.  (UNIX domain sockets failed with EAGAIN instead.)
-                        return omni::net::socket_error::IN_PROGRESS;
-                    case EINTR:         // The system call was interrupted by a signal that was caught; see signal(7).
-                        return omni::net::socket_error::INTERRUPTED;
-                    case EISCONN:       // The socket is already connected.
-                        return omni::net::socket_error::IS_CONNECTED;
-                    case ENETUNREACH:   // Network is unreachable.
-                        return omni::net::socket_error::NETWORK_UNREACHABLE;
-                    case EBADF:         // sockfd is not a valid open file descriptor.
-                    case ENOTSOCK:      // The file descriptor sockfd does not refer to a socket.
-                        return omni::net::socket_error::NOT_SOCKET;
-                    case EPROTOTYPE:    // The socket type does not support the requested communications protocol.  This error can occur, for example, on an attempt to connect a UNIX domain datagram socket to a stream socket.
-                        return omni::net::socket_error::PROTOCOL_NOT_SUPPORTED;
-                    case ETIMEDOUT:     // Timeout while attempting connection.  The server may be too busy to accept new connections.  Note that for IP sockets the timeout may be very long when syncookies are enabled on the server.
-                        return omni::net::socket_error::TIMED_OUT;
-                    case ENOBUFS:       // Insufficient resources were available in the system to perform the operation.
-                    case ENOMEM:        // Insufficient memory was available to fulfill the request.
-                        return omni::net::socket_error::NO_BUFFER_SPACE_AVAILABLE;
-                    case EINVAL:        // Invalid argument passed.
-                        return omni::net::socket_error::INVALID_ARGUMENT;
-                    case EDESTADDRREQ:  // The socket is not connection-mode, and no peer address is set.
-                        return omni::net::socket_error::DESTINATION_ADDRESS_REQUIRED;
-                    case ECONNRESET:    // A connection was forcibly closed by a peer.
-                        return omni::net::socket_error::CONNECTION_RESET;
-                    case EMSGSIZE:      // The message is too large to be sent all at once, as the socket requires.
-                        return omni::net::socket_error::MESSAGE_SIZE;
-                    case ENOTCONN:      // The socket is not connected or otherwise has not had the peer pre-specified.
-                        return omni::net::socket_error::NOT_CONNECTED;
-                    case EPIPE:         // The socket is shut down for writing, or the socket is connection-mode and is no longer connected. In the latter case, and if the socket is of type SOCK_STREAM, the SIGPIPE signal is generated to the calling thread.
-                        return omni::net::socket_error::SHUTDOWN;
-                    case ENETDOWN:      // The local network interface used to reach the destination is down.
-                        return omni::net::socket_error::NETWORK_DOWN;
-                #endif
+                case 0:
+                    return omni::net::socket_error::SUCCESS;
+                case OMNI_SOCK_ERR_OPERATION_ABORTED_FW:
+                    return omni::net::socket_error::OPERATION_ABORTED;
+                case OMNI_SOCK_ERR_IO_ERROR_FW:
+                    return omni::net::socket_error::IO_ERROR;
+                case OMNI_SOCK_ERR_IO_PENDING_FW:
+                    return omni::net::socket_error::IO_PENDING;
+                case OMNI_SOCK_ERR_INTERRUPTED_FW:
+                    return omni::net::socket_error::INTERRUPTED;
+                case OMNI_SOCK_ERR_PERMISSION_FW:
+                    return omni::net::socket_error::PERMISSION;
+                case OMNI_SOCK_ERR_ACCESS_DENIED_FW:
+                    return omni::net::socket_error::ACCESS_DENIED;
+                case OMNI_SOCK_ERR_FAULT_FW:
+                    return omni::net::socket_error::FAULT;
+                case OMNI_SOCK_ERR_INSUFFICIENT_MEMORY_FW:
+                    return omni::net::socket_error::INSUFFICIENT_MEMORY;
+                case OMNI_SOCK_ERR_INVALID_ARGUMENT_FW:
+                    return omni::net::socket_error::INVALID_ARGUMENT;
+                case OMNI_SOCK_ERR_INVALID_DESCRIPTOR_FW:
+                    return omni::net::socket_error::INVALID_DESCRIPTOR;
+                case OMNI_SOCK_ERR_TOO_MANY_OPEN_SOCKETS_FW:
+                    return omni::net::socket_error::TOO_MANY_OPEN_SOCKETS;
+                case OMNI_SOCK_ERR_WOULD_BLOCK_FW:
+                    return omni::net::socket_error::WOULD_BLOCK;
+                case OMNI_SOCK_ERR_IN_PROGRESS_FW:
+                    return omni::net::socket_error::IN_PROGRESS;
+                case OMNI_SOCK_ERR_ALREADY_IN_PROGRESS_FW:
+                    return omni::net::socket_error::ALREADY_IN_PROGRESS;
+                case OMNI_SOCK_ERR_NOT_SOCKET_FW:
+                    return omni::net::socket_error::NOT_SOCKET;
+                case OMNI_SOCK_ERR_DESTINATION_ADDRESS_REQUIRED_FW:
+                    return omni::net::socket_error::DESTINATION_ADDRESS_REQUIRED;
+                case OMNI_SOCK_ERR_MESSAGE_SIZE_FW:
+                    return omni::net::socket_error::MESSAGE_SIZE;
+                case OMNI_SOCK_ERR_PROTOCOL_TYPE_FW:
+                    return omni::net::socket_error::PROTOCOL_TYPE;
+                case OMNI_SOCK_ERR_PROTOCOL_OPTION_FW:
+                    return omni::net::socket_error::PROTOCOL_OPTION;
+                case OMNI_SOCK_ERR_PROTOCOL_NOT_SUPPORTED_FW:
+                    return omni::net::socket_error::PROTOCOL_NOT_SUPPORTED;
+                case OMNI_SOCK_ERR_SOCKET_NOT_SUPPORTED_FW:
+                    return omni::net::socket_error::SOCKET_NOT_SUPPORTED;
+                case OMNI_SOCK_ERR_OPERATION_NOT_SUPPORTED_FW:
+                    return omni::net::socket_error::OPERATION_NOT_SUPPORTED;
+                case OMNI_SOCK_ERR_PROTOCOL_FAMILY_NOT_SUPPORTED_FW:
+                    return omni::net::socket_error::PROTOCOL_FAMILY_NOT_SUPPORTED;
+                case OMNI_SOCK_ERR_ADDRESS_FAMILY_NOT_SUPPORTED_FW:
+                    return omni::net::socket_error::ADDRESS_FAMILY_NOT_SUPPORTED;
+                case OMNI_SOCK_ERR_ADDRESS_ALREADY_IN_USE_FW:
+                    return omni::net::socket_error::ADDRESS_ALREADY_IN_USE;
+                case OMNI_SOCK_ERR_ADDRESS_NOT_AVAILABLE_FW:
+                    return omni::net::socket_error::ADDRESS_NOT_AVAILABLE;
+                case OMNI_SOCK_ERR_NETWORK_DOWN_FW:
+                    return omni::net::socket_error::NETWORK_DOWN;
+                case OMNI_SOCK_ERR_NETWORK_UNREACHABLE_FW:
+                    return omni::net::socket_error::NETWORK_UNREACHABLE;
+                case OMNI_SOCK_ERR_NETWORK_RESET_FW:
+                    return omni::net::socket_error::NETWORK_RESET;
+                case OMNI_SOCK_ERR_CONNECTION_ABORTED_FW:
+                    return omni::net::socket_error::CONNECTION_ABORTED;
+                case OMNI_SOCK_ERR_CONNECTION_RESET_FW:
+                    return omni::net::socket_error::CONNECTION_RESET;
+                case OMNI_SOCK_ERR_NO_BUFFER_SPACE_AVAILABLE_FW:
+                    return omni::net::socket_error::NO_BUFFER_SPACE_AVAILABLE;
+                case OMNI_SOCK_ERR_IS_CONNECTED_FW:
+                    return omni::net::socket_error::IS_CONNECTED;
+                case OMNI_SOCK_ERR_NOT_CONNECTED_FW:
+                    return omni::net::socket_error::NOT_CONNECTED;
+                case OMNI_SOCK_ERR_SHUTDOWN_FW:
+                    return omni::net::socket_error::SHUTDOWN;
+                case OMNI_SOCK_ERR_TIMED_OUT_FW:
+                    return omni::net::socket_error::TIMED_OUT;
+                case OMNI_SOCK_ERR_CONNECTION_REFUSED_FW:
+                    return omni::net::socket_error::CONNECTION_REFUSED;
+                case OMNI_SOCK_ERR_LOOP_FW:
+                    return omni::net::socket_error::LOOP;
+                case OMNI_SOCK_ERR_NAME_TOO_LONG_FW:
+                    return omni::net::socket_error::NAME_TOO_LONG;
+                case OMNI_SOCK_ERR_HOST_DOWN_FW:
+                    return omni::net::socket_error::HOST_DOWN;
+                case OMNI_SOCK_ERR_HOST_UNREACHABLE_FW:
+                    return omni::net::socket_error::HOST_UNREACHABLE;
+                case OMNI_SOCK_ERR_PROCESS_LIMIT_FW:
+                    return omni::net::socket_error::PROCESS_LIMIT;
+                case OMNI_SOCK_ERR_SYSTEM_NOT_READY_FW:
+                    return omni::net::socket_error::SYSTEM_NOT_READY;
+                case OMNI_SOCK_ERR_VERSION_NOT_SUPPORTED_FW:
+                    return omni::net::socket_error::VERSION_NOT_SUPPORTED;
+                case OMNI_SOCK_ERR_NOT_INITIALIZED_FW:
+                    return omni::net::socket_error::NOT_INITIALIZED;
+                case OMNI_SOCK_ERR_DISCONNECTING_FW:
+                    return omni::net::socket_error::DISCONNECTING;
+                case OMNI_SOCK_ERR_TYPE_NOT_FOUND_FW:
+                    return omni::net::socket_error::TYPE_NOT_FOUND;
                 default: break;
             }
-            return static_cast<omni::net::socket_error::enum_t>(serr);
+            return omni::net::socket_error::UNSPECIFIED;
         }
 
         inline omni::net::server_error parse_server_error(int serr)
         {
             switch (serr) {
-                case EAI_ADDRFAMILY: // The specified network host does not have any network addresses in the requested address family.
-                    return omni::net::server_error::NO_ADDRESSES_IN_FAMILY;
-                case EAI_AGAIN: // The name server returned a temporary failure indication. Try again later.
-                    return omni::net::server_error::NAME_SERVER_TEMPORARY_FAILURE;
-                case EAI_BADFLAGS: // hints.ai_flags contains invalid flags; or, hints.ai_flags included AI_CANONNAME and name was NULL.
-                    return omni::net::server_error::INVALID_FLAGS;
-                case EAI_FAIL: // The name server returned a permanent failure indication.
-                    return omni::net::server_error::NAME_SERVER_PERMANENT_FAILURE;
-                case EAI_FAMILY: // The requested address family is not supported.
-                    return omni::net::server_error::ADDRESS_FAMILY_NOT_SUPPORTED;
-                case EAI_MEMORY: // Out of memory.
-                    return omni::net::server_error::OUT_OF_MEMORY;
-                case EAI_NODATA: // The specified network host exists, but does not have any network addresses defined.
-                    return omni::net::server_error::HOST_EXISTS_NO_ADDRESSES_DEFINED;
-                case EAI_NONAME: // The node or service is not known; or both node and service are NULL; or AI_NUMERICSERV was specified in hints.ai_flags and service was not a numeric port-number string.
-                    return omni::net::server_error::NODE_OR_SERVICE_NOT_KNOWN;
-                case EAI_SERVICE: // The requested service is not available for the requested socket type.  It may be available through another socket type.  For example, this error could occur if service was "shell" (a service available only on stream sockets), and either hints.ai_protocol was IPPROTO_UDP, or hints.ai_socktype was SOCK_DGRAM; or the error could occur if service was not NULL, and hints.ai_socktype was SOCK_RAW (a socket type that does not support the concept of services).
-                    return omni::net::server_error::SERVICE_NOT_AVAILABLE_FOR_SOCKET_TYPE;
-                case EAI_SOCKTYPE: // The requested socket type is not supported.  This could occur, for example, if hints.ai_socktype and hints.ai_protocol are inconsistent (e.g., SOCK_DGRAM and IPPROTO_TCP, respectively).
-                    return omni::net::server_error::SOCKET_TYPE_NOT_SUPPORTED;
-                case EAI_SYSTEM: // Other system error; errno is set to indicate the error.
-                    return omni::net::server_error::SYSTEM_ERROR;
+                #if defined(OMNI_OS_WIN)
+                    case WSAHOST_NOT_FOUND: // The node or service is not known; or both node and service are NULL; or AI_NUMERICSERV was specified in hints.ai_flags and service was not a numeric port-number string.
+                        return omni::net::server_error::NODE_OR_SERVICE_NOT_KNOWN;
+                    case WSA_NOT_ENOUGH_MEMORY: // A memory allocation failure occurred.
+                        return omni::net::server_error::OUT_OF_MEMORY;
+                    case WSAEAFNOSUPPORT: // The sa_family member of socket address structure pointed to by the pSockaddr parameter is not supported. 
+                        return omni::net::server_error::ADDRESS_FAMILY_NOT_SUPPORTED;
+                    case WSANO_RECOVERY: // A nonrecoverable failure in name resolution occurred.
+                        return omni::net::server_error::NAME_SERVER_PERMANENT_FAILURE;
+                    case WSAEFAULT: // The lpWSAData parameter is not a valid pointer.
+                    case WSAEINVAL: // One or more invalid parameters was passed to the GetNameInfoW function. This error is returned if a host name was requested but the NodeBufferSize parameter was zero or if a service name was requested but the ServiceBufferSize parameter was zero. 
+                        return omni::net::server_error::INVALID_FLAGS;
+                    case WSATRY_AGAIN: // A temporary failure in name resolution occurred.
+                        return omni::net::server_error::NAME_SERVER_TEMPORARY_FAILURE;
+                    case WSATYPE_NOT_FOUND: // The pServiceName parameter is not supported for the specified ai_socktype member of the pHints parameter.
+                        return omni::net::server_error::SERVICE_NOT_AVAILABLE_FOR_SOCKET_TYPE;
+                    case WSAESOCKTNOSUPPORT: // The ai_socktype member of the pHints parameter is not supported.
+                        return omni::net::server_error::SOCKET_TYPE_NOT_SUPPORTED;
+                    case WSANO_DATA: // The requested name is valid, but no data of the requested type was found. 
+                        return omni::net::server_error::HOST_EXISTS_NO_ADDRESSES_DEFINED;
+                    case WSAEINPROGRESS: //A blocking Windows Sockets 1.1 operation is in progress.
+                        return omni::net::server_error::IN_PROGRESS;
+                    case WSAEPROCLIM: // A limit on the number of tasks supported by the Windows Sockets implementation has been reached. 
+                        return omni::net::server_error::PROCESS_LIMIT;
+                    case WSAVERNOTSUPPORTED: // The version of Windows Sockets support requested is not provided by this particular Windows Sockets implementation. 
+                        return omni::net::server_error::VERSION_NOT_SUPPORTED;
+                    case WSASYSNOTREADY: // The underlying network subsystem is not ready for network communication. 
+                        return omni::net::server_error::SYSTEM_NOT_READY;
+                #else
+                    case EAI_ADDRFAMILY: // The specified network host does not have any network addresses in the requested address family.
+                        return omni::net::server_error::NO_ADDRESSES_IN_FAMILY;
+                    case EAI_AGAIN: // The name server returned a temporary failure indication. Try again later.
+                        return omni::net::server_error::NAME_SERVER_TEMPORARY_FAILURE;
+                    case EAI_BADFLAGS: // hints.ai_flags contains invalid flags; or, hints.ai_flags included AI_CANONNAME and name was NULL.
+                        return omni::net::server_error::INVALID_FLAGS;
+                    case EAI_FAIL: // The name server returned a permanent failure indication.
+                        return omni::net::server_error::NAME_SERVER_PERMANENT_FAILURE;
+                    case EAI_FAMILY: // The requested address family is not supported.
+                        return omni::net::server_error::ADDRESS_FAMILY_NOT_SUPPORTED;
+                    case EAI_MEMORY: // Out of memory.
+                        return omni::net::server_error::OUT_OF_MEMORY;
+                    case EAI_NODATA: // The specified network host exists, but does not have any network addresses defined.
+                        return omni::net::server_error::HOST_EXISTS_NO_ADDRESSES_DEFINED;
+                    case EAI_NONAME: // The node or service is not known; or both node and service are NULL; or AI_NUMERICSERV was specified in hints.ai_flags and service was not a numeric port-number string.
+                        return omni::net::server_error::NODE_OR_SERVICE_NOT_KNOWN;
+                    case EAI_SERVICE: // The requested service is not available for the requested socket type.  It may be available through another socket type.  For example, this error could occur if service was "shell" (a service available only on stream sockets), and either hints.ai_protocol was IPPROTO_UDP, or hints.ai_socktype was SOCK_DGRAM; or the error could occur if service was not NULL, and hints.ai_socktype was SOCK_RAW (a socket type that does not support the concept of services).
+                        return omni::net::server_error::SERVICE_NOT_AVAILABLE_FOR_SOCKET_TYPE;
+                    case EAI_SOCKTYPE: // The requested socket type is not supported.  This could occur, for example, if hints.ai_socktype and hints.ai_protocol are inconsistent (e.g., SOCK_DGRAM and IPPROTO_TCP, respectively).
+                        return omni::net::server_error::SOCKET_TYPE_NOT_SUPPORTED;
+                    case EAI_SYSTEM: // Other system error; errno is set to indicate the error.
+                        return omni::net::server_error::SYSTEM_ERROR;
+                #endif
                 default: break;
             }
             return static_cast<omni::net::server_error::enum_t>(serr);
+        }
+
+        inline omni::net::socket_error server_error_to_socket_error(const omni::net::server_error& error)
+        {
+            switch (error.value()) {
+                case omni::net::server_error::SUCCESS:
+                    return omni::net::socket_error::SUCCESS;
+                case omni::net::server_error::HOST_ADDRESS_REQUIRED:
+                    return omni::net::socket_error::DESTINATION_ADDRESS_REQUIRED;
+                case omni::net::server_error::NO_ADDRESSES_IN_FAMILY:
+                    return omni::net::socket_error::ADDRESS_NOT_AVAILABLE;
+                case omni::net::server_error::NAME_SERVER_TEMPORARY_FAILURE:
+                    return omni::net::socket_error::AGAIN;
+                case omni::net::server_error::INVALID_FLAGS:
+                    return omni::net::socket_error::INVALID_ARGUMENT;
+                case omni::net::server_error::NAME_SERVER_PERMANENT_FAILURE:
+                    return omni::net::socket_error::NO_RECOVER;
+                case omni::net::server_error::ADDRESS_FAMILY_NOT_SUPPORTED:
+                    return omni::net::socket_error::ADDRESS_FAMILY_NOT_SUPPORTED;
+                case omni::net::server_error::OUT_OF_MEMORY:
+                    return omni::net::socket_error::INSUFFICIENT_MEMORY;
+                case omni::net::server_error::HOST_EXISTS_NO_ADDRESSES_DEFINED:
+                    return omni::net::socket_error::NO_DAT;
+                case omni::net::server_error::NODE_OR_SERVICE_NOT_KNOWN:
+                    return omni::net::socket_error::NO_HOST;
+                case omni::net::server_error::SERVICE_NOT_AVAILABLE_FOR_SOCKET_TYPE:
+                    return omni::net::socket_error::OPERATION_NOT_SUPPORTED;
+                case omni::net::server_error::SOCKET_TYPE_NOT_SUPPORTED:
+                    return omni::net::socket_error::SOCKET_NOT_SUPPORTED;
+                case omni::net::server_error::SYSTEM_ERROR:
+                    return omni::net::socket_error::FAULT;
+                case omni::net::server_error::IN_PROGRESS:
+                    return omni::net::socket_error::IN_PROGRESS;
+                case omni::net::server_error::PROCESS_LIMIT:
+                    return omni::net::socket_error::PROCESS_LIMIT;
+                case omni::net::server_error::SYSTEM_NOT_READY:
+                    return omni::net::socket_error::SYSTEM_NOT_READY;
+                case omni::net::server_error::VERSION_NOT_SUPPORTED:
+                    return omni::net::socket_error::VERSION_NOT_SUPPORTED;
+                case omni::net::server_error::NOT_INITIALIZED:
+                    return omni::net::socket_error::NOT_INITIALIZED;
+                
+                case omni::net::server_error::UNSPECIFIED:
+                default: break;
+            }
+            return omni::net::socket_error::UNSPECIFIED;
         }
 
         inline omni::net::sockaddr_t* to_sockaddr(omni::net::sockaddr_in_t& addr)
@@ -215,6 +281,7 @@ namespace omni {
                                         case 1: oct += (omni::char_util::to_int(octs[i].at(c))); break;
                                         case 2: oct += (omni::char_util::to_int(octs[i].at(c)) * 8); break;
                                         case 3: oct += (omni::char_util::to_int(octs[i].at(c)) * 64); break;
+                                        default: break;
                                     }
                                 }
                             }
@@ -276,6 +343,22 @@ namespace omni {
                 return omni::net::util::try_parse_ip4(omni::string::to_string(ip), result);
             }
 
+            inline bool try_parse_ip6(const std::string& ip, uint8_t* result)
+            {
+                if (::inet_pton(AF_INET6, ip.c_str(), result) == 1) {
+                    return true;
+                }
+                return false;
+            }
+
+            inline bool try_parse_ip6(const std::wstring& ip, uint8_t* result)
+            {
+                if (::inet_pton(AF_INET6, omni::string::util::to_string(ip).c_str(), result) == 1) {
+                    return true;
+                }
+                return false;
+            }
+
             inline bool is_valid_dotted_ip4(const std::string& ip)
             {
                 uint32_t tmp = 0;
@@ -296,6 +379,18 @@ namespace omni {
             inline bool is_valid_ip4(const std::wstring& ip)
             {
                 return omni::net::util::is_valid_ip4(omni::string::to_string(ip));
+            }
+
+            inline bool is_valid_ip6(const std::string& ip)
+            {
+                omni::net::ip6_binary_address tmp;
+                return omni::net::util::try_parse_ip6(ip, tmp);
+            }
+
+            inline bool is_valid_ip6(const std::wstring& ip)
+            {
+                omni::net::ip6_binary_address tmp;
+                return omni::net::util::try_parse_ip6(omni::string::util::to_string(ip), tmp);
             }
 
             inline bool is_valid_port(uint64_t port)
@@ -348,6 +443,34 @@ namespace omni {
                 return ss.str();
             }
 
+            inline std::string ip6_binary_to_string(const uint8_t (&num)[16])
+            {
+                char buf[INET6_ADDRSTRLEN];
+                #if defined(OMNI_OS_WIN)
+                if (::inet_ntop(AF_INET6, reinterpret_cast<PVOID>(const_cast<uint8_t*>(&num[0])), buf, sizeof(buf)) != NULL)
+                #else
+                if (::inet_ntop(AF_INET6, reinterpret_cast<const void*>(&num), buf, sizeof(buf)) != NULL)
+                #endif
+                {
+                    return std::string(buf);
+                }
+                return std::string();
+            }
+
+            inline std::string ip4_binary_to_string(const uint8_t (&num)[16])
+            {
+                char buf[INET6_ADDRSTRLEN];
+                #if defined(OMNI_OS_WIN)
+                if (::inet_ntop(AF_INET, reinterpret_cast<PVOID>(const_cast<uint8_t*>(&num[0])), buf, sizeof(buf)) != NULL)
+                #else
+                if (::inet_ntop(AF_INET, reinterpret_cast<const void*>(&num), buf, sizeof(buf)) != NULL)
+                #endif
+                {
+                    return std::string(buf);
+                }
+                return std::string();
+            }
+
             inline omni::net::server_error get_host(const std::string& ip,
                                                     uint16_t port,
                                                     omni::net::address_family family,
@@ -356,7 +479,7 @@ namespace omni {
                 if (ip.empty()) { return omni::net::server_error::HOST_ADDRESS_REQUIRED; }
                 #if defined(OMNI_OS_WIN)
                     omni::net::wsa_info wsa;
-                    if (!wsa) { return omni::net::parse_error(wsa.error()); }
+                    if (!wsa) { return omni::net::parse_server_error(wsa.error()); }
                 #endif
                 std::string tmp = omni::string::util::trim(ip);
                 omni::net::server_error ret = omni::net::server_error::SUCCESS;
@@ -404,16 +527,16 @@ namespace omni {
                     omni::net::wsa_info wsa;
                     if (!wsa) { return omni::net::parse_server_error(wsa.error()); }
                     std::string tmp = omni::string::to_string(omni::string::util::trim(ip));
-                    omni::net::socket_error ret = omni::net::socket_error::SUCCESS;
+                    omni::net::server_error ret = omni::net::server_error::SUCCESS;
                     struct sockaddr_in sa;
                     wchar_t out[NI_MAXHOST];
                     wchar_t si[NI_MAXSERV];
                     sa.sin_family = static_cast<OMNI_SIN_FAMILY_FW>(family);
-                    sa.sin_addr.s_addr = inet_addr(tmp.c_str());
-                    sa.sin_port = htons(port);
+                    sa.sin_addr.s_addr = ::inet_addr(tmp.c_str());
+                    sa.sin_port = ::htons(port);
                     int serr = ::GetNameInfoW(reinterpret_cast<struct sockaddr *>(&sa), sizeof(struct sockaddr), out, NI_MAXHOST, si, NI_MAXSERV, NI_NUMERICSERV);
                     if (serr != 0) {
-                        ret = omni::net::parse_server_error(serr);
+                        ret = omni::net::parse_server_error(::WSAGetLastError());
                     } else {
                         host = omni::string::to_wstring(out);
                     }
@@ -440,17 +563,17 @@ namespace omni {
             }
 
             template < template < class, class > class std_seq_t, typename std_allocator_t >
-            inline omni::net::socket_error get_ip(const std::string& host,
+            inline omni::net::server_error get_ip(const std::string& host,
                                                   uint16_t port,
                                                   omni::net::address_family family,
                                                   omni::net::socket_type type,
                                                   omni::net::protocol_type proto,
                                                   std_seq_t< std::string, std_allocator_t >& ips)
             {
-                if (host.empty()) { return omni::net::socket_error::DESTINATION_ADDRESS_REQUIRED; }
+                if (host.empty()) { return omni::net::server_error::HOST_ADDRESS_REQUIRED; }
                 #if defined(OMNI_OS_WIN)
                     omni::net::wsa_info wsa;
-                    if (!wsa) { return omni::net::parse_error(wsa.error()); }
+                    if (!wsa) { return omni::net::parse_server_error(wsa.error()); }
                 #endif
                 std::string tmp = omni::string::util::trim(host);
                 std::string sport = omni::string::to_string(port);
@@ -462,7 +585,7 @@ namespace omni {
                 hints.ai_protocol = static_cast<int>(proto);
                 int ret = ::getaddrinfo(tmp.c_str(), sport.c_str(), &hints, &result);
                 if (ret != 0) {
-                    return omni::net::parse_error(ret);
+                    return omni::net::parse_server_error(ret);
                 }
                 for (struct addrinfo* ptr = result; ptr != NULL; ptr = ptr->ai_next) {
                     if (ptr->ai_family == omni::net::address_family::INET) {
@@ -470,11 +593,11 @@ namespace omni {
                     }
                 }
                 ::freeaddrinfo(result);
-                return omni::net::socket_error::SUCCESS;
+                return omni::net::server_error::SUCCESS;
             }
 
             template < template < class, class > class std_seq_t >
-            inline omni::net::socket_error get_ip(const std::string& host,
+            inline omni::net::server_error get_ip(const std::string& host,
                                                   uint16_t port,
                                                   omni::net::address_family family,
                                                   omni::net::socket_type type,
@@ -485,7 +608,7 @@ namespace omni {
             }
 
             template < template < class, class > class std_seq_t >
-            inline omni::net::socket_error get_ip(const std::string& host,
+            inline omni::net::server_error get_ip(const std::string& host,
                                                   uint16_t port,
                                                   omni::net::address_family family,
                                                   omni::net::socket_type type,
@@ -500,7 +623,7 @@ namespace omni {
             }
 
             template < template < class, class > class std_seq_t >
-            inline omni::net::socket_error get_ip(const std::string& host,
+            inline omni::net::server_error get_ip(const std::string& host,
                                                   uint16_t port,
                                                   omni::net::address_family family,
                                                   std_seq_t< std::string, std::allocator<std::string> >& ips)
@@ -514,7 +637,7 @@ namespace omni {
             }
 
             template < template < class, class > class std_seq_t >
-            inline omni::net::socket_error get_ip(const std::string& host,
+            inline omni::net::server_error get_ip(const std::string& host,
                                                   uint16_t port,
                                                   std_seq_t< std::string, std::allocator<std::string> >& ips)
             {
@@ -527,7 +650,7 @@ namespace omni {
             }
 
             template < template < class, class > class std_seq_t >
-            inline omni::net::socket_error get_ip(const std::string& host,
+            inline omni::net::server_error get_ip(const std::string& host,
                                                   std_seq_t< std::string, std::allocator<std::string> >& ips)
             {
                 return omni::net::util::get_ip(host,
@@ -539,17 +662,17 @@ namespace omni {
             }
 
             template < template < class, class > class std_seq_t, typename std_allocator_t >
-            inline omni::net::socket_error get_ip(const std::wstring& host,
+            inline omni::net::server_error get_ip(const std::wstring& host,
                                                   uint16_t port,
                                                   omni::net::address_family family,
                                                   omni::net::socket_type type,
                                                   omni::net::protocol_type proto,
                                                   std_seq_t< std::wstring, std_allocator_t >& ips)
             {
-                if (host.empty()) { return omni::net::socket_error::DESTINATION_ADDRESS_REQUIRED; }
+                if (host.empty()) { return omni::net::server_error::HOST_ADDRESS_REQUIRED; }
                 #if defined(OMNI_OS_WIN)
                     omni::net::wsa_info wsa;
-                    if (!wsa) { return omni::net::parse_error(wsa.error()); }
+                    if (!wsa) { return omni::net::parse_server_error(wsa.error()); }
                 #endif
                 #if defined(OMNI_WIN_API)
                     std::wstring tmp = omni::string::util::trim(host);
@@ -564,7 +687,7 @@ namespace omni {
                     hints.ai_protocol = static_cast<int>(proto);
                     int ret = ::GetAddrInfoW(tmp.c_str(), sport.c_str(), &hints, &result);
                     if (ret != 0) {
-                        return omni::net::parse_error(ret);
+                        return omni::net::parse_server_error(::WSAGetLastError());
                     }
                     for (ADDRINFOW* ptr = result; ptr != NULL; ptr = ptr->ai_next) {
                         if (ptr->ai_family == omni::net::address_family::INET) {
@@ -573,7 +696,7 @@ namespace omni {
                             ret = ::WSAAddressToString((reinterpret_cast<LPSOCKADDR>(ptr->ai_addr)), static_cast<DWORD>(ptr->ai_addrlen), NULL, buf, &len);
                             if (ret != 0) {
                                 ::FreeAddrInfoW(result);
-                                return omni::net::parse_error(ret);
+                                return omni::net::parse_server_error(::WSAGetLastError());
                             }
                             ips.push_back(std::wstring(buf));
                         }
@@ -590,7 +713,7 @@ namespace omni {
                     hints.ai_protocol = static_cast<int>(proto);
                     int ret = ::getaddrinfo(tmp.c_str(), sport.c_str(), &hints, &result);
                     if (ret != 0) {
-                        return omni::net::parse_error(ret);
+                        return omni::net::parse_server_error(ret);
                     }
                     for (struct addrinfo* ptr = result; ptr != NULL; ptr = ptr->ai_next) {
                         if (ptr->ai_family == omni::net::address_family::INET) {
@@ -599,11 +722,11 @@ namespace omni {
                     }
                     ::freeaddrinfo(result);
                 #endif
-                return omni::net::socket_error::SUCCESS;
+                return omni::net::server_error::SUCCESS;
             }
 
             template < template < class, class > class std_seq_t >
-            inline omni::net::socket_error get_ip(const std::wstring& host,
+            inline omni::net::server_error get_ip(const std::wstring& host,
                                                   uint16_t port,
                                                   omni::net::address_family family,
                                                   omni::net::socket_type type,
@@ -614,7 +737,7 @@ namespace omni {
             }
 
             template < template < class, class > class std_seq_t >
-            inline omni::net::socket_error get_ip(const std::wstring& host,
+            inline omni::net::server_error get_ip(const std::wstring& host,
                                                   uint16_t port,
                                                   omni::net::address_family family,
                                                   omni::net::socket_type type,
@@ -629,7 +752,7 @@ namespace omni {
             }
 
             template < template < class, class > class std_seq_t >
-            inline omni::net::socket_error get_ip(const std::wstring& host,
+            inline omni::net::server_error get_ip(const std::wstring& host,
                                                   uint16_t port,
                                                   omni::net::address_family family,
                                                   std_seq_t< std::wstring, std::allocator<std::wstring> >& ips)
@@ -643,7 +766,7 @@ namespace omni {
             }
 
             template < template < class, class > class std_seq_t >
-            inline omni::net::socket_error get_ip(const std::wstring& host,
+            inline omni::net::server_error get_ip(const std::wstring& host,
                                                   uint16_t port,
                                                   std_seq_t< std::wstring, std::allocator<std::wstring> >& ips)
             {
@@ -656,7 +779,7 @@ namespace omni {
             }
 
             template < template < class, class > class std_seq_t >
-            inline omni::net::socket_error get_ip(const std::wstring& host,
+            inline omni::net::server_error get_ip(const std::wstring& host,
                                                   std_seq_t< std::wstring, std::allocator<std::wstring> >& ips)
             {
                 return omni::net::util::get_ip(host,
@@ -666,10 +789,6 @@ namespace omni {
                                                omni::net::protocol_type::TCP,
                                                ips);
             }
-
-            // TODO: future -> to_ip6/parse_ip6
-            // TODO: omni::net::socket_error poll(omni::net::socket_t handle, uint32_t us, omni::net::select_mode mode);
-            // TODO: does this make sense -> static omni::net::pingreply ping(const std::string& ip);
         }
     }
 }

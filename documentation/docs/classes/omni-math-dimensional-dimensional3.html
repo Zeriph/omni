@@ -31,18 +31,28 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 </div><br>
 <div class="docdiv"><a name="syn"></a>
 <font class="docu">SYNOPSIS</font><br><br>
-No synopsis.
+Creates a dimensional with the values passed in.
 <br><br><a class="toppg" href="#topopage">top</a>
 </div><br>
 <div class="docdiv"><a name="desc"></a>
 <font class="docu">DESCRIPTION</font><br><br>
-No description.
+Create a dimensional type with the default values specified.
 <br><br><a class="toppg" href="#topopage">top</a>
 </div><br>
 
+<div class="docdiv"><a name="param"></a>
+<font class="docu">PARAMETERS</font><br><br>
+<code>val1...</code> - The value(s) to assign each of the dimensional&#39;s underlying buffer up to val+SZ. 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
 
-
-
+<div class="docdiv"><a name="con"></a>
+<font class="docu">CONSIDERATIONS</font><br><br>
+Be aware, due to the variadic argument list being used, if the backing type is that of a float or double, the values passed in must either be named types or explicitly defined; for example, you must have variables defined as a <code>double</code> and passing in those variables or you must explicitly pass in <code>10.0</code> (for example) for each value. Failure to do this could cause the underlying floating types to be mis-read by the va_arg list due to certain casting behavior by some compilers/environments. 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
 
 
 

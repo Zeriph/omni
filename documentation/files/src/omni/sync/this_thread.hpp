@@ -22,6 +22,11 @@
 
 namespace omni {
     namespace sync {
+        /**
+         * Stops the current thread from processing messages for the specified time
+         * 
+         * @param milliseconds The number of milliseconds to sleep the current thread
+         */
         inline void sleep(uint32_t ms)
         {
             switch (ms) {
@@ -39,6 +44,14 @@ namespace omni {
             }
         }
 
+        /**
+         * Causes the current thread to be rescheduled by the OS.
+         * Not to be confused with sleep, this function does not
+         * stop the current thread, it merely calls the OS to have
+         * its thread scheduler move the current thread to a new
+         * thread schedule. If the current thread is of higher priority
+         * (or real time) this call might not have an effect.
+         */
         inline bool yield_thread()
         {
             #if defined(OMNI_OS_WIN)

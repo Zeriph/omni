@@ -2,12 +2,12 @@
 <MacroOp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>OMNI_CHECK_ARITHMETIC_OVERFLOW</Name>
   <Brief>If defined, the library will check for aritmetic over/under flow.</Brief>
-  <Considerations>If defined, additional checks will be performed, and thus additional computational time will be used.</Considerations>
+  <Considerations>If defined, additional checks will be performed, and thus additional computational @_time will be used.</Considerations>
   <Description>If this flag is defined, areas of code that preform aritmetic operations will check for overflow and underflow conditions.
 
 If an over/under flow is detected, an exception will be thrown to that fact.
 
-Utilizing this flag will increase computational time in the library due to the fact that the checks must be preformed before the aritmetic operation can take place.
+Utilizing this flag will increase computational @_time in the library due to the fact that the checks must be preformed before the aritmetic operation can take place.
 </Description>
   <Notes>None.</Notes>
   <PlatformSpecific>No platform specific notes.</PlatformSpecific>

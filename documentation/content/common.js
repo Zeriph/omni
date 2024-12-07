@@ -14,6 +14,7 @@ function popup(code) {
 }
 
 function collapse(id, rpath) {
+    return;
     flipStyle('cmnts' + id);
     flipStyle('cmntl' + id);
     flipStyle('cmnt' + id);

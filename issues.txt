@@ -3,8 +3,18 @@ of the library and does not contain a chronological history (that is what the
 git/svn histories are for). This list is like a "live" list meant to be more of
 an all encompassing 'future' and 'todo' list noted and posted in the code repo.
 
+<<<<<<< HEAD
 Current version: 0.8.6
 
 -The omni::net::socket/endpoint classes only support IP4 (no IP6/Unix yet).
 
 -The date_time class is still being worked on (it does not parse dates/times yet)
+=======
+Current version: 0.9.2
+
+- documentation is incomplete
+- unit tests are incomplete
+- the date_time class currently only supports the Julian/Gregorian calander
+  there are currently no immediate plans to support other calanders.
+- C++XX (11/17/20/23/etc.) support to be added soon
+>>>>>>> 3a7aca31 (0.9.2)

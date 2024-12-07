@@ -19,8 +19,10 @@
 #if !defined(OMNI_CRYPTOS_HPP)
 #define OMNI_CRYPTOS_HPP 1
 
+#include <omni/crypto/util.hpp>
 #include <omni/crypto/md5.hpp>
 #include <omni/crypto/sha1.hpp>
 #include <omni/crypto/sha256.hpp>
+#include <omni/crypto/base64.hpp>
 
 #endif // OMNI_CRYPTOS_HPP

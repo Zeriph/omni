@@ -21,6 +21,9 @@
 #include <omni/defs/global.hpp>
 #include <omni/defs/class_macros.hpp>
 #include <omni/types/math_t.hpp>
+#if defined(OMNI_ENABLE_CXX)
+    #include <atomic>
+#endif
 
 #if defined(OMNI_SAFE_GEO_SIZE)
     #include <omni/sync/basic_lock.hpp>
@@ -80,9 +83,16 @@ namespace omni {
                 T area() const
                 {
                     OMNI_SAFE_GSZALOCK_FW
+                    OMNI_BITS_WILL_MUL_OVER_FW(this->m_w, this->m_h)
                     return (this->m_w * this->m_h);
                 }
 
+                omni::geometry::size<T>& add(const omni::geometry::size<T>& other)
+                {
+                    (*this) += other;
+                    return *this;
+                }
+                
                 T width() const
                 {
                     OMNI_SAFE_GSZALOCK_FW
@@ -108,8 +118,8 @@ namespace omni {
                 {
                     OMNI_SAFE_GSZALOCK_FW
                     return
-                        omni::math::are_equal<T>(this->m_w, 0) &&
-                        omni::math::are_equal<T>(this->m_h, 0);
+                        omni::math::are_equal<T>(this->m_w, T(0)) &&
+                        omni::math::are_equal<T>(this->m_h, T(0));
                 }
 
                 void set_dimensions(T w, T h)
@@ -129,6 +139,12 @@ namespace omni {
                 {
                     OMNI_SAFE_GSZALOCK_FW
                     this->m_w = w;
+                }
+
+                omni::geometry::size<T>& subtract(const omni::geometry::size<T>& other)
+                {
+                    (*this) -= other;
+                    return *this;
                 }
 
                 void swap(size<T>& o)
@@ -256,11 +272,17 @@ namespace omni {
                         OMNI_SAFE_GSZALOCK_FW
                         if (this != &val) {
                             OMNI_SAFE_GSZOALOCK_FW(val)
+                            OMNI_BITS_WILL_ADD_OVER_FW(this->m_w, val.m_w)
+                            OMNI_BITS_WILL_ADD_OVER_FW(this->m_h, val.m_h)
                             return omni::geometry::size<T> ((this->m_w + val.m_w), (this->m_h + val.m_h));
                         } else {
+                            OMNI_BITS_WILL_ADD_OVER_FW(this->m_w, val.m_w)
+                            OMNI_BITS_WILL_ADD_OVER_FW(this->m_h, val.m_h)
                             return omni::geometry::size<T> ((this->m_w + val.m_w), (this->m_h + val.m_h));
                         }
                     #else
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_w, val.m_w)
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_h, val.m_h)
                         return omni::geometry::size<T>((this->m_w + val.m_w), (this->m_h + val.m_h));
                     #endif
                 }
@@ -271,11 +293,17 @@ namespace omni {
                         OMNI_SAFE_GSZALOCK_FW
                         if (this != &val) {
                             OMNI_SAFE_GSZOALOCK_FW(val)
+                            OMNI_BITS_WILL_SUB_UNDER_FW(this->m_w, val.m_w)
+                            OMNI_BITS_WILL_SUB_UNDER_FW(this->m_h, val.m_h)
                             return omni::geometry::size<T> ((this->m_w - val.m_w), (this->m_h - val.m_h));
                         } else {
+                            OMNI_BITS_WILL_SUB_UNDER_FW(this->m_w, val.m_w)
+                            OMNI_BITS_WILL_SUB_UNDER_FW(this->m_h, val.m_h)
                             return omni::geometry::size<T> ((this->m_w - val.m_w), (this->m_h - val.m_h));
                         }
                     #else
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_w, val.m_w)
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_h, val.m_h)
                         return omni::geometry::size<T>((this->m_w - val.m_w), (this->m_h - val.m_h));
                     #endif
                 }
@@ -286,14 +314,20 @@ namespace omni {
                         OMNI_SAFE_GSZALOCK_FW
                         if (this != &val) {
                             OMNI_SAFE_GSZOALOCK_FW(val)
+                            OMNI_BITS_WILL_ADD_OVER_FW(this->m_w, val.m_w)
                             this->m_w += val.m_w;
+                            OMNI_BITS_WILL_ADD_OVER_FW(this->m_h, val.m_h)
                             this->m_h += val.m_h;
                         } else {
+                            OMNI_BITS_WILL_ADD_OVER_FW(this->m_w, val.m_w)
                             this->m_w += val.m_w;
+                            OMNI_BITS_WILL_ADD_OVER_FW(this->m_h, val.m_h)
                             this->m_h += val.m_h;
                         }
-                    #else    
+                    #else
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_w, val.m_w)
                         this->m_w += val.m_w;
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_h, val.m_h)
                         this->m_h += val.m_h;
                     #endif
                     return *this;
@@ -305,14 +339,20 @@ namespace omni {
                         OMNI_SAFE_GSZALOCK_FW
                         if (this != &val) {
                             OMNI_SAFE_GSZOALOCK_FW(val)
+                            OMNI_BITS_WILL_SUB_UNDER_FW(this->m_w, val.m_w)
                             this->m_w -= val.m_w;
+                            OMNI_BITS_WILL_SUB_UNDER_FW(this->m_h, val.m_h)
                             this->m_h -= val.m_h;
                         } else {
+                            OMNI_BITS_WILL_SUB_UNDER_FW(this->m_w, val.m_w)
                             this->m_w -= val.m_w;
+                            OMNI_BITS_WILL_SUB_UNDER_FW(this->m_h, val.m_h)
                             this->m_h -= val.m_h;
                         }
-                    #else    
+                    #else
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_w, val.m_w)
                         this->m_w -= val.m_w;
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_h, val.m_h) 
                         this->m_h -= val.m_h;
                     #endif
                     return *this;
@@ -333,6 +373,8 @@ namespace omni {
         typedef omni::geometry::size<int32_t> size32_t;
         typedef omni::geometry::size<int64_t> size64_t;
         typedef omni::geometry::size<float> sizeF_t;
+
+        // DEV_NOTE: "raw" classes do not have checks, like arithmetic over/under flow, locks, etc.
 
         template < typename T >
         class raw_size
@@ -373,6 +415,12 @@ namespace omni {
                     OMNI_D5_FW("destroyed");
                 }
 
+                omni::geometry::raw_size<T>& add(const omni::geometry::raw_size<T>& other)
+                {
+                    (*this) += other;
+                    return *this;
+                }
+
                 T area() const
                 {
                     return (this->width * this->height);
@@ -407,6 +455,12 @@ namespace omni {
                 void set_width(T w)
                 {
                     this->width = w;
+                }
+
+                omni::geometry::raw_size<T>& subtract(const omni::geometry::raw_size<T>& other)
+                {
+                    (*this) -= other;
+                    return *this;
                 }
 
                 void swap(raw_size<T>& o)
@@ -545,6 +599,244 @@ namespace omni {
         typedef omni::geometry::raw_size<int32_t> raw_size_t;
         typedef omni::geometry::raw_size<int64_t> raw_size64_t;
         typedef omni::geometry::raw_size<float> raw_sizeF_t;
+        
+        #if defined(OMNI_ENABLE_CXX)
+            template < typename T >
+            class atomic_size
+            {
+                public:
+                    typedef T value_t;
+
+                    atomic_size() : 
+                        OMNI_CTOR_FW(omni::geometry::atomic_size<T>)
+                        m_w(0), m_h(0)
+                    { }
+
+                    atomic_size(const omni::geometry::atomic_size<T>& cp) :
+                        OMNI_CPCTOR_FW(cp)
+                        m_w(cp.width()), m_h(cp.height())
+                    { }
+
+                    atomic_size(const omni::math::dimensional<T, 2>& cp) :
+                        OMNI_CTOR_FW(omni::geometry::atomic_size<T>)
+                        m_w(cp[0]), m_h(cp[1])
+                    { }
+
+                    atomic_size(T w, T h) : 
+                        OMNI_CTOR_FW(omni::geometry::atomic_size<T>)
+                        m_w(w), m_h(h)
+                    { }
+
+                    ~atomic_size()
+                    {
+                        OMNI_TRY_FW
+                        OMNI_DTOR_FW
+                        OMNI_CATCH_FW
+                        OMNI_D5_FW("destroyed");
+                    }
+
+                    T area() const
+                    {
+                        OMNI_BITS_WILL_MUL_OVER_FW(this->m_w, this->m_h)
+                        return (this->m_w * this->m_h);
+                    }
+
+                    omni::geometry::atomic_size<T>& add(const omni::geometry::atomic_size<T>& other)
+                    {
+                        (*this) += other;
+                        return *this;
+                    }
+                    
+                    T width() const
+                    {
+                        return this->m_w;
+                    }
+
+                    T height() const
+                    {
+                        return this->m_h;
+                    }
+
+                    int32_t hash_code() const
+                    {
+                        return (
+                            static_cast<int32_t>(this->m_w) ^
+                            ((static_cast<int32_t>(this->m_h) << 13) | (static_cast<int32_t>(this->m_h) >> 19))
+                        );
+                    }
+
+                    bool empty() const
+                    {
+                        return
+                            omni::math::are_equal<T>(this->m_w, T(0)) &&
+                            omni::math::are_equal<T>(this->m_h, T(0));
+                    }
+
+                    void set_dimensions(T w, T h)
+                    {
+                        this->m_w = w;
+                        this->m_h = h;
+                    }
+
+                    void set_height(T h)
+                    {
+                        this->m_h = h;
+                    }
+
+                    void set_width(T w)
+                    {
+                        this->m_w = w;
+                    }
+
+                    omni::geometry::atomic_size<T>& subtract(const omni::geometry::atomic_size<T>& other)
+                    {
+                        (*this) -= other;
+                        return *this;
+                    }
+
+                    void swap(atomic_size<T>& o)
+                    {
+                        if (this != &o) {
+                            std::swap(this->m_w, o.m_w);
+                            std::swap(this->m_h, o.m_h);
+                        }
+                    }
+
+                    omni::math::dimensional<T, 2> to_dimensional() const
+                    {
+                        T vals[2] = { this->m_w, this->m_h };
+                        return omni::math::dimensional<T, 2>(vals);
+                    }
+
+                    omni::string_t to_string_t() const
+                    {
+                        omni::sstream_t s;
+                        s << "{" << this->m_w << "," << this->m_h << "}";
+                        return s.str();
+                    }
+
+                    std::string to_string() const
+                    {
+                        std::stringstream s;
+                        s << "{" << this->m_w << "," << this->m_h << "}";
+                        return s.str();
+                    }
+
+                    std::wstring to_wstring() const
+                    {
+                        std::wstringstream s;
+                        s << "{" << this->m_w << "," << this->m_h << "}";
+                        return s.str();
+                    }
+
+                    operator std::string() const
+                    {
+                        return this->to_string();
+                    }
+
+                    operator std::wstring() const
+                    {
+                        return this->to_wstring();
+                    }
+
+                    operator omni::math::dimensional<T, 2>() const
+                    {
+                        return this->to_dimensional();
+                    }
+
+                    bool operator!=(const omni::geometry::atomic_size<T>& val) const
+                    {
+                        return !(*this == val);
+                    }
+                    
+                    omni::geometry::atomic_size<T>& operator=(const omni::geometry::atomic_size<T>& val)
+                    {
+                        if (this != &val) {
+                            OMNI_ASSIGN_FW(val)
+                            this->m_w = val.m_w;
+                            this->m_h = val.m_h;
+                        }
+                        return *this;
+                    }
+
+                    bool operator<(const omni::geometry::atomic_size<T>& val) const
+                    {
+                        if (this == &val) { return false; }
+                        return (this->m_w * this->m_h) < (val.m_w * val.m_h);
+                    }
+
+                    bool operator<=(const omni::geometry::atomic_size<T>& val) const
+                    {
+                        if (this == &val) { return false; }
+                        return (this->m_w * this->m_h) <= (val.m_w * val.m_h);
+                    }
+
+                    bool operator>(const omni::geometry::atomic_size<T>& val) const
+                    {
+                        if (this == &val) { return false; }
+                        return (this->m_w * this->m_h) > (val.m_w * val.m_h);
+                    }
+
+                    bool operator>=(const omni::geometry::atomic_size<T>& val) const
+                    {
+                        if (this == &val) { return false; }
+                        return (this->m_w * this->m_h) >= (val.m_w * val.m_h);
+                    }
+
+                    bool operator==(const omni::geometry::atomic_size<T>& val) const
+                    {
+                        if (this == &val) { return true; }
+                        return (
+                            omni::math::are_equal<T>(this->m_w, val.m_w) &&
+                            omni::math::are_equal<T>(this->m_h, val.m_h))
+                        OMNI_EQUAL_FW(val);
+                    }
+
+                    omni::geometry::atomic_size<T> operator+(const omni::geometry::atomic_size<T>& val)
+                    {
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_w, val.m_w)
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_h, val.m_h)
+                        return omni::geometry::atomic_size<T>((this->m_w + val.m_w), (this->m_h + val.m_h));
+                    }
+
+                    omni::geometry::atomic_size<T> operator-(const omni::geometry::atomic_size<T>& val)
+                    {
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_w, val.m_w)
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_h, val.m_h)
+                        return omni::geometry::atomic_size<T>((this->m_w - val.m_w), (this->m_h - val.m_h));
+                    }
+
+                    omni::geometry::atomic_size<T>& operator+=(const omni::geometry::atomic_size<T>& val)
+                    {
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_w, val.m_w)
+                        this->m_w += val.m_w;
+                        OMNI_BITS_WILL_ADD_OVER_FW(this->m_h, val.m_h)
+                        this->m_h += val.m_h;
+                        return *this;
+                    }
+
+                    omni::geometry::atomic_size<T>& operator-=(const omni::geometry::atomic_size<T>& val)
+                    {
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_w, val.m_w)
+                        this->m_w -= val.m_w;
+                        OMNI_BITS_WILL_SUB_UNDER_FW(this->m_h, val.m_h) 
+                        this->m_h -= val.m_h;
+                        return *this;
+                    }
+
+                    OMNI_MEMBERS_FW(omni::geometry::atomic_size<T>) // disposing,name,type(),hash()
+
+                    OMNI_OSTREAM_FW(omni::geometry::atomic_size<T>)
+
+                private:
+                    std::atomic<T> m_w;
+                    std::atomic<T> m_h;
+            };
+
+            typedef omni::geometry::atomic_size<int32_t> atomic_size32_t;
+            typedef omni::geometry::atomic_size<int64_t> atomic_size64_t;
+            typedef omni::geometry::atomic_size<float> atomic_sizeF_t;
+        #endif
     }
 }
 

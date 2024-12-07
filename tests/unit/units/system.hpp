@@ -17,7 +17,7 @@ class UT_CLASS_DEF
         {
             omni::out << "omni::system::architecture = " << omni::system::architecture() << std::endl;
             omni::out << "omni::system::cwd = " << omni::system::cwd() << std::endl;
-            omni::out << "omni::system::is_big_endian() = " << OMNI_BOOL2STR(omni::system::is_big_endian()) << std::endl;
+            omni::out << "omni::system::endianness() = " << omni::system::endianness() << std::endl;
             omni::out << "omni::system::last_error() = " << omni::system::last_error() << std::endl;
             std::cout << "omni::system::last_error_str() = " << omni::system::last_error_str() << std::endl;
             #if defined(OMNI_NON_PORTABLE)

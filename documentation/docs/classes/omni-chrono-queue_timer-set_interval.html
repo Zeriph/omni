@@ -31,18 +31,25 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 </div><br>
 <div class="docdiv"><a name="syn"></a>
 <font class="docu">SYNOPSIS</font><br><br>
-No synopsis.
+Sets the timer interval.
 <br><br><a class="toppg" href="#topopage">top</a>
 </div><br>
 <div class="docdiv"><a name="desc"></a>
 <font class="docu">DESCRIPTION</font><br><br>
-No description.
+Sets the interval in between each timer tick event. This can be called after the timer has started and can lengthen or shorten when a tick is to happen. In other words, if an interval is initially set to 5 seconds, and the timer is started, then 3 seconds later the interval is set to 2 seconds, the timer will near immediately tick due to the interval being shortened.<br>
+<br>
+Inversely, if a timer has been set to 5 seconds, started, and then 3 seconds later, the interval is set to 7 seconds, the timer will then fire at 7 seconds, prolonging any tick events from happening.
 <br><br><a class="toppg" href="#topopage">top</a>
 </div><br>
 
 
 
-
+<div class="docdiv"><a name="con"></a>
+<font class="docu">CONSIDERATIONS</font><br><br>
+Care should be take to set the interval mid-tick or mid-interval as additional tick events can happen due to the change in interval time. 
+<br><br><a class="toppg" href="#topopage">top</a>
+</div><br>
+<br>
 
 
 

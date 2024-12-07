@@ -67,7 +67,7 @@ The <code><a href="../classes/omni-sync-basic_thread.html">omni::sync::basic_thr
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// wait for the thread to finish</font>
 &nbsp;&nbsp;&nbsp;&nbsp;t.join();
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;
-}</pre></div>This extra level of determinism can help a developer when muli-threaded code and real-time requirements are needed to ensure that each thread is valid or has started properly.<br>
+}</pre></div>This extra level of determinism can help a developer when muli-threaded code and real-<code><a href="https://man7.org/linux/man-pages/man2/time.2.html">time</a></code> requirements are needed to ensure that each thread is valid or has started properly.<br>
 <br>
 Additionally, while the underlying thread itself might be thread-safe, the individual thread classes are not inherently thread safe unless you specify one of the <code><a href="../options/omni_safe_thread.html">OMNI_SAFE_THREAD</a></code> preprocessor defines to enable thread-safe thread classes. If these macros are not defined, calls to an instance of the thread cannot be guaranteed across threads and synchronization primitives would need to be used to ensure proper access.<br>
 <br>
@@ -271,9 +271,9 @@ When queuing a task (a delegate), the <code>threadpool</code> class will follow 
 <br>
 4.) If the queue is <i>not</i> empty and the active thread count is at the maximum, the task is simply queued until a thread can become available to preform the task.<br>
 <br>
-The tasks are preformed in a FIFO manner, so any tasks pushed in first will be the tasks to be preformed first by any available threads. It should also be noted that any tasks queued are preformed as soon as an available thread can consume and preform it, there is no intentional delay between the act of queueing the task and an available thread consuming the tasks beyond the CPU time it takes to preform said actions.<br>
+The tasks are preformed in a FIFO manner, so any tasks pushed in first will be the tasks to be preformed first by any available threads. It should also be noted that any tasks queued are preformed as soon as an available thread can consume and preform it, there is no intentional delay between the act of queueing the task and an available thread consuming the tasks beyond the CPU <code><a href="https://man7.org/linux/man-pages/man2/time.2.html">time</a></code> it takes to preform said actions.<br>
 <br>
-There is also no &quot;wait&quot; time when all active threads end, that is, once the task queue is empty, the threads end and do not wait around in the event a task might be queued; a thread is started once a task is queued so waiting in this fashion is moot.<br>
+There is also no &quot;wait&quot; <code><a href="https://man7.org/linux/man-pages/man2/time.2.html">time</a></code> when all active threads end, that is, once the task queue is empty, the threads end and do not wait around in the event a task might be queued; a thread is started once a task is queued so waiting in this fashion is moot.<br>
 <br>
 Setting the maximum thread count sets the maximum number of active threads (and thus active tasks) that can concurrently run within the <code>threadpool</code> instance. Setting the minimum number of threads sets the number of <code><a href="../classes/omni-sync-basic_thread.html">omni::sync::basic_thread</a></code> objects the <code>threadpool</code> will have pre-allocated for when a task is queued; the allocated thread is not started until a task is queued. As an example:<br>
 <div class="sntx"><input type="checkbox" id="c7" name="c7" /><label for="c7">&nbsp;</label><pre><font class="syn_pre">#include &lt;<a href="../htmlsrc/omni/library.html">omni/library</a>&gt;</font>

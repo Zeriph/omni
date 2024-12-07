@@ -19,12 +19,44 @@
 #if !defined(OMNI_STDINC_HPP)
 #define OMNI_STDINC_HPP 1
 
+/*
+    This file is simply a helper header to include some of the STL for easy
+    access. It should be noted that even if you define something like OMNI_NO_STD_CLIMITS,
+    if a specific TU needs that header, it will still include it in there, just not
+    globally in here.
+*/
+
 #if !defined(OMNI_NO_STDINC)
-    #include <vector>
-    #include <map>
-    #include <algorithm>
-    // TODO: include other C++03/C++11 std include's that aren't already included
-    //       in the framework. Make sure to add #ifndef OMNI_NO_STD_VECTOR etc etc
+    #if !defined(OMNI_NO_STD_VECTOR)
+        #include <vector>
+    #endif
+    #if !defined(OMNI_NO_STD_MAP)
+        #include <map>
+    #endif
+    #if !defined(OMNI_NO_STD_ALGORITHM)
+        #include <algorithm>
+    #endif
+    #if !defined(OMNI_NO_STD_ITERATOR)
+        #include <iterator>
+    #endif
+    #if !defined(OMNI_NO_STD_CLIMITS)
+        #include <climits>
+    #endif
+    #if !defined(OMNI_NO_STD_DEQUE)
+        #include <deque>
+    #endif
+    #if !defined(OMNI_NO_STD_LIST)
+        #include <list>
+    #endif
+    #if !defined(OMNI_NO_STD_SET)
+        #include <set>
+    #endif
+    #if !defined(OMNI_NO_STD_BITSET)
+        #include <bitset>
+    #endif
+    #if !defined(OMNI_NO_STD_MEMORY)
+        #include <memory>
+    #endif
 #endif
 
 #endif // OMNI_STDINC_HPP

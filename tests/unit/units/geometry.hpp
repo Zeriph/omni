@@ -14,6 +14,7 @@ class UT_CLASS_DEF
             M_LIST_ADD(path_test, "tests the path namespace functionality");
             M_LIST_ADD(triangle, "test the functionality in omni::geometry::triangle via direct use");
             M_LIST_ADD(util, "tests util class");
+            M_LIST_ADD(vector, "tests the vector classes");
         }
         
         UT_CLASS_DTOR() {}
@@ -136,8 +137,8 @@ class UT_CLASS_DEF
 
         void triangle()
         {
-            omni::geometry::triangle_t t1(0,0, 0,2, 2,0);
-            omni::geometry::triangleD_t t2(2.5,2.5, 6.9,8.9, 5,3, omni::geometry::triangle_side::A);
+            omni::geometry::triangle32_t t1(0,0, 0,2, 2,0);
+            omni::geometry::triangle_t t2(2.5,2.5, 6.9,8.9, 5,3, omni::geometry::triangle_side::A);
             printl("to_string | side_a | side_b | side_c | angle_a | angle_b | angle_c | base | base_side | height | semiperimeter | perimeter | measure | incenter | circumcenter | centroid");
             ptri(t1, "t1");
             ptri(t2, "t2");
@@ -191,7 +192,7 @@ class UT_CLASS_DEF
                 printl("t5 < t6");
             }
 
-            omni::geometry::point_t pt(10, 10);
+            omni::geometry::pointD_t pt(10, 10);
             ptri(t6, "t6");
             t6 += pt;
             ptri(t6, "t6");
@@ -246,6 +247,15 @@ class UT_CLASS_DEF
             // template < typename T > inline omni::geometry::point2d<T> point_on_circle(T degrees, T radius, T center_x, T center_y)
             // template <> inline omni::geometry::point2d<uint8_t> point_on_circle<uint8_t>(uint8_t degrees, uint8_t radius, uint8_t center_x, uint8_t center_y)
             printl(omni::geometry::point_on_circle(25.6, 12.2, 12.0, 15.0));
+        }
+
+        void vector()
+        {
+            omni::geometry::vector2F_t a(3,2);
+            omni::geometry::vector2F_t b(5,6);
+
+            std::cout << "vector a(" << a << ") - b(" << b << ") = " << (a - b) << std::endl;
+
         }
 
     private:

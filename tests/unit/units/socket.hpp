@@ -25,7 +25,7 @@ class UT_CLASS_DEF
         
         void base_test()
         {
-            omni::net::socket s(omni::net::address_family::INET, omni::net::socket_type::STREAM, omni::net::protocol_type::TCP);
+            omni::net::socket s(omni::net::socket_type::STREAM, omni::net::protocol_type::TCP);
             std::cout << "socket is connected: " << OMNI_BOOL2STR(s.is_connected()) << std::endl;
         }
 
@@ -33,8 +33,8 @@ class UT_CLASS_DEF
         {
             omni::seq::std_string_t ips;
             std::string host;
-            omni::net::socket_error err = omni::net::util::get_ip("zeriph.com", ips);
-            if (err == omni::net::socket_error::SUCCESS) {
+            omni::net::server_error err = omni::net::util::get_ip("zeriph.com", ips);
+            if (err == omni::net::server_error::SUCCESS) {
                 std::cout << "IP's for zeriph.com:" << std::endl;
                 for (omni::seq::std_string_t::iterator it = ips.begin(); it != ips.end(); ++it) {
                     std::cout << *it << std::endl;
@@ -55,7 +55,7 @@ class UT_CLASS_DEF
         {
             uint32_t xfr = 0;
             const std::string req = "GET / HTTP/1.0\r\nHost: zeriph.com\r\n\r\n";
-            omni::net::socket sock(omni::net::address_family::INET, omni::net::socket_type::STREAM, omni::net::protocol_type::TCP);
+            omni::net::socket sock(omni::net::socket_type::STREAM, omni::net::protocol_type::TCP);
             if (sock.connect_host("zeriph.com", 80) == omni::net::socket_error::SUCCESS) {
                 std::cout << "Connected to " << sock << std::endl;
                 if (sock.unsafe_send(req.c_str(), req.size(), xfr) == omni::net::socket_error::SUCCESS) {
@@ -82,7 +82,7 @@ class UT_CLASS_DEF
         {
             uint32_t xfr = 0;
             char req[] = "GET / HTTP/1.0\r\nHost: zeriph.com\r\n\r\n";
-            omni::net::socket sock(omni::net::address_family::INET, omni::net::socket_type::STREAM, omni::net::protocol_type::TCP);
+            omni::net::socket sock(omni::net::socket_type::STREAM, omni::net::protocol_type::TCP);
             if (sock.connect_host("zeriph.com", 443) == omni::net::socket_error::SUCCESS) {
                 std::cout << "Connected to " << sock << std::endl;
                 if (sock.send(req, xfr) == omni::net::socket_error::SUCCESS) {
@@ -120,7 +120,7 @@ class UT_CLASS_DEF
         {
             uint32_t xfr = 0;
             char buff[1024];
-            omni::net::socket s(omni::net::address_family::INET, omni::net::socket_type::STREAM, omni::net::protocol_type::TCP);
+            omni::net::socket s(omni::net::socket_type::STREAM, omni::net::protocol_type::TCP);
             if (s.connect("127.0.0.1", SERVER_PORT) == omni::net::socket_error::SUCCESS) {
                 std::cout << "CLIENT: Connected to " << s << std::endl;
                 std::cout << "CLIENT: Sending: HELLO!\\r\\n" << std::endl;
@@ -145,7 +145,7 @@ class UT_CLASS_DEF
             uint32_t xfr = 0;
             char buff[1024];
             omni::net::endpoint_descriptor remote_ep;
-            omni::net::socket s(omni::net::address_family::INET, omni::net::socket_type::STREAM, omni::net::protocol_type::TCP);
+            omni::net::socket s(omni::net::socket_type::STREAM, omni::net::protocol_type::TCP);
             if (s.bind(SERVER_PORT) == omni::net::socket_error::SUCCESS) {
                 std::cout << "SERVER: Bound to port " << SERVER_PORT << std::endl;
                 if (s.listen() == omni::net::socket_error::SUCCESS) {

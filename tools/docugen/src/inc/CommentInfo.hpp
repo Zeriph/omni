@@ -343,6 +343,7 @@ namespace OmniDocuGen
             {
                 try {
                     std::string fpath = omni::string::replace_all(OmniDocuGen::Util::ToFilePath(fullPath), "@@", "-");
+                    fpath = omni::string::replace_all(fpath, "-", "/");
                     std::string edoc = omni::io::path::combine(OmniDocuGen::Program::Settings.ClassExampleDirectory(),
                                                         ((isAnOverload ? (fpath + omni::string::to_string(overloadIndex)) : fpath) + ".cpp"));
                     this->Example = (omni::io::file::exists(edoc) ? omni::io::file::get_contents(edoc) : "");

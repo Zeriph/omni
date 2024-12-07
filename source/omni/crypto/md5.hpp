@@ -19,20 +19,8 @@
 #if !defined(OMNI_CRYPTO_MD5_HPP)
 #define OMNI_CRYPTO_MD5_HPP 1
 #include <omni/types/crypto_t.hpp>
-
 #if defined(OMNI_SAFE_MD5)
     #include <omni/sync/basic_lock.hpp>
-    #define OMNI_SAFE_MD5DMTX_FW  ,m_mtx()
-    #define OMNI_SAFE_MD5LOCK_FW   this->m_mtx.lock();
-    #define OMNI_SAFE_MD5UNLOCK_FW this->m_mtx.unlock();
-    #define OMNI_SAFE_MD5ALOCK_FW  omni::sync::scoped_basic_lock uuid12345(&this->m_mtx);
-    #define OMNI_SAFE_MD5OALOCK_FW(o)  omni::sync::scoped_basic_lock uuid54321(&o.m_mtx);
-#else
-    #define OMNI_SAFE_MD5DMTX_FW
-    #define OMNI_SAFE_MD5LOCK_FW
-    #define OMNI_SAFE_MD5UNLOCK_FW
-    #define OMNI_SAFE_MD5ALOCK_FW
-    #define OMNI_SAFE_MD5OALOCK_FW(o) 
 #endif
 
 namespace omni {
@@ -68,16 +56,6 @@ namespace omni {
                 #if defined(OMNI_SAFE_MD5)
                     mutable omni::sync::basic_lock m_mtx;
                 #endif
-                
-                void _compute(const std::string& text);
-                void _compute(const unsigned char* data, uint32_t data_len);
-                static void _update(const unsigned char* input, uint32_t length, uint32_t* count, uint8_t* buffer, uint32_t* state);
-                static void _transform(const uint8_t* block, uint32_t* state);
-                static uint32_t _rotate(uint32_t x, int n);
-                static void _r1(uint32_t& a, uint32_t b, uint32_t c, uint32_t d, uint32_t x, uint32_t s, uint32_t ac);
-                static void _r2(uint32_t& a, uint32_t b, uint32_t c, uint32_t d, uint32_t x, uint32_t s, uint32_t ac);
-                static void _r3(uint32_t& a, uint32_t b, uint32_t c, uint32_t d, uint32_t x, uint32_t s, uint32_t ac);
-                static void _r4(uint32_t& a, uint32_t b, uint32_t c, uint32_t d, uint32_t x, uint32_t s, uint32_t ac);
         };
     }
 }

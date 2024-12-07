@@ -118,7 +118,7 @@
 #if !defined(OMNI_THREAD_ARGS_T)
     #if defined(OMNI_THREAD_ARGS_RAW_PTR)
         #define OMNI_THREAD_ARGS_T void*
-        #define OMNI_THREAD_ARG_NULL_T OMNI_NULL
+        #define OMNI_THREAD_ARG_NULL_T OMNI_NULL_PTR
     #else
         #define OMNI_THREAD_ARGS_T omni::generic_ptr
         #define OMNI_THREAD_ARG_NULL_T omni::generic_ptr::null()
@@ -140,12 +140,12 @@
         if (omni::sync::user_thread_exception) { omni::sync::user_thread_exception(ex); } \
         else { throw ex; }
     #define OMNI_THREAD_CATCHEX_FW(ex) ex } \
-        catch (omni::exception tex) { ex OMNI_CEXBLOCK_FW(tex) } \
-        catch (std::exception sx) { ex OMNI_CSXBLOCK_FW(sx) } \
+        catch (const omni::exception& tex) { ex OMNI_CEXBLOCK_FW(tex) } \
+        catch (const std::exception& sx) { ex OMNI_CSXBLOCK_FW(sx) } \
         catch (...) { ex OMNI_CBLOCK_FW }
     #define OMNI_THREAD_CATCH_FW } \
-        catch (omni::exception ex) { OMNI_CEXBLOCK_FW(ex) } \
-        catch (std::exception sx) { OMNI_CSXBLOCK_FW(sx) } \
+        catch (const omni::exception& ex) { OMNI_CEXBLOCK_FW(ex) } \
+        catch (const std::exception& sx) { OMNI_CSXBLOCK_FW(sx) } \
         catch (...) { OMNI_CBLOCK_FW }    
 #else
     #define OMNI_THREAD_TRY_FW 

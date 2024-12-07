@@ -53,8 +53,6 @@ to ensure this file is not built with the rest. */
 #if defined(OMNI_NET_LIB) || (!defined(OMNI_TIMER_LIB) && !defined(OMNI_THREAD_LIB))
     #include "endpoint_descriptor.cpp"
     #include "socket.cpp"
-    // #include "server.cpp" # INCOMPLETE
-    // #include "client.cpp" # INCOMPLETE
 #endif
 
 #include "date_time.cpp"
@@ -70,8 +68,8 @@ to ensure this file is not built with the rest. */
 #include "thread.cpp"
 #include "threadpool.cpp"
 
-#if defined(OMNI_GUI_LIB)
-    //#include "gui.cpp"
+#if defined(OMNI_INCLUDE_EXTENSIONS)
+    #include "library_extensions.cpp"
 #endif
 
 #endif
