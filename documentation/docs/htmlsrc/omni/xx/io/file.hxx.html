@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - omni/xx/io/file.hxx</title>
+<link rel="stylesheet" type="text/css" href="../../../../../content/main.css" /><link rel="icon" type="image/png" href="../../../../../content/favicon.png" />
+<script type="text/javascript" src="../../../../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../../../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../../../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../../../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../../../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="../../../index.html" class="current">Source</a></li><li title="Library classes and namespaces">
+<a href="../../../../classes/index.html">Class Index</a></li><li title="Download and view examples">
+<a href="../../../../examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="../../../../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="../../../../options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../../../../api.html">System API</a></li><li title="Other Considerations">
+<a href="../../../../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../../../../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../../../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../../../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle"><a href="../../../../../files/src/omni/xx/io/file.hxx" onclick="return popup('../../../../../files/src/omni/xx/io/file.hxx')">omni/xx/io/file.hxx</a></div><div class="content"><div>
+<code><div class="cpphtmllines">
+<!--start line numbers-->
+001:<br><div id="cmntl1" name="cmntl1">002:<br>003:<br>004:<br>005:<br>006:<br>007:<br>008:<br>009:<br>010:<br>011:<br>012:<br>013:<br>014:<br>015:<br>016:<br>017:<br>018:<br></div>019:<br>
+020:<br><div id="cmntl2" name="cmntl2">021:<br>022:<br>023:<br>024:<br></div>025:<br>026:<br>027:<br>028:<br>029:<br>030:<br>031:<br>032:<br>033:<br>034:<br>035:<br>036:<br>037:<br><div id="cmntl3" name="cmntl3">038:<br>039:<br>
+040:<br></div>041:<br>042:<br>043:<br>044:<br>045:<br>046:<br>047:<br>048:<br>049:<br>050:<br>051:<br>052:<br>053:<br>054:<br>055:<br>056:<br>057:<br>058:<br>059:<br>
+060:<br>061:<br>062:<br>063:<br>064:<br>065:<br>066:<br>067:<br>068:<br>069:<br>070:<br>071:<br>072:<br>073:<br>074:<br>075:<br>076:<br>077:<br>078:<br>079:<br>
+080:<br>081:<br>082:<br>083:<br>084:<br>085:<br>086:<br>087:<br>088:<br>089:<br>090:<br>091:<br>092:<br>093:<br>094:<br>095:<br>096:<br>097:<br>098:<br>099:<br>
+100:<br>101:<br>102:<br>103:<br>104:<br>105:<br>106:<br>107:<br>108:<br>109:<br>110:<br>111:<br>112:<br>113:<br>114:<br>115:<br>116:<br>117:<br>118:<br>119:<br>
+120:<br>121:<br>122:<br>123:<br>124:<br>125:<br>126:<br>127:<br>128:<br>129:<br>130:<br>131:<br>132:<br>133:<br>134:<br>135:<br>136:<br>137:<br>138:<br>139:<br>
+140:<br>141:<br>142:<br>143:<br>144:<br>145:<br>146:<br>147:<br>148:<br>149:<br>150:<br>151:<br>152:<br>153:<br>154:<br>155:<br>156:<br>157:<br>158:<br>159:<br>
+160:<br>161:<br>162:<br>163:<br>164:<br>165:<br>166:<br>167:<br>168:<br>169:<br>170:<br>171:<br>172:<br>173:<br>174:<br>175:<br>176:<br>177:<br>178:<br>179:<br>
+180:<br>181:<br>182:<br>183:<br>184:<br>185:<br>186:<br>187:<br>188:<br>189:<br>190:<br>191:<br>192:<br>193:<br>194:<br>195:<br>196:<br>197:<br>198:<br>199:<br>
+200:<br>201:<br>202:<br>203:<br>204:<br>205:<br>206:<br>207:<br>208:<br>209:<br>210:<br>211:<br>212:<br>213:<br>214:<br>215:<br>216:<br>217:<br>218:<br>219:<br>
+220:<br>221:<br>222:<br>223:<br>224:<br>225:<br>226:<br>227:<br>228:<br>229:<br>230:<br>231:<br>232:<br>233:<br>234:<br>235:<br>236:<br>237:<br>238:<br>239:<br>
+240:<br>241:<br>242:<br>243:<br>244:<br>245:<br>246:<br>247:<br>248:<br>249:<br>250:<br>251:<br>252:<br>253:<br>254:<br>255:<br>256:<br>257:<br>258:<br>259:<br>
+260:<br>261:<br>262:<br>263:<br>264:<br>265:<br>266:<br>267:<br>268:<br>269:<br>270:<br>271:<br>272:<br>273:<br>274:<br>275:<br>276:<br>277:<br>278:<br>279:<br>
+280:<br>281:<br>282:<br>283:<br>284:<br>285:<br>286:<br>287:<br>288:<br>289:<br>290:<br>291:<br>292:<br>293:<br>294:<br>295:<br>296:<br>297:<br>298:<br>299:<br>
+300:<br>301:<br>302:<br>303:<br>304:<br>305:<br>306:<br>307:<br>308:<br>309:<br>310:<br>311:<br>312:<br>313:<br>314:<br>315:<br>316:<br>317:<br>318:<br>319:<br>
+320:<br>321:<br>322:<br>323:<br>324:<br>325:<br>326:<br>327:<br>328:<br>329:<br>330:<br>331:<br>332:<br>333:<br>334:<br>335:<br>336:<br>337:<br>338:<br>339:<br>
+340:<br>341:<br>342:<br>343:<br>344:<br>345:<br>346:<br>347:<br>348:<br>349:<br>350:<br>351:<br>352:<br>353:<br>354:<br>355:<br>356:<br>357:<br>358:<br>359:<br>
+360:<br>361:<br>362:<br>363:<br>364:<br>365:<br>366:<br>367:<br>368:<br>369:<br>370:<br>371:<br>372:<br>373:<br>374:<br>375:<br>376:<br>377:<br>378:<br>379:<br>
+380:<br>381:<br>382:<br>383:<br>384:<br>385:<br>386:<br>387:<br>388:<br>389:<br>390:<br>391:<br>392:<br>393:<br>394:<br>395:<br>396:<br>397:<br>398:<br>399:<br>
+400:<br>401:<br>402:<br>403:<br>404:<br>405:<br>406:<br>407:<br>408:<br>409:<br>410:<br>411:<br>412:<br>413:<br>414:<br>415:<br>416:<br>417:<br>418:<br>419:<br>
+420:<br>421:<br>422:<br>423:<br>424:<br>425:<br>426:<br>427:<br>428:<br>429:<br>430:<br>431:<br>432:<br>433:<br>434:<br>435:<br>436:<br>437:<br>438:<br>439:<br>
+440:<br>441:<br>442:<br>443:<br>444:<br>445:<br>446:<br>447:<br>448:<br>449:<br>450:<br>451:<br>452:<br>453:<br>454:<br>455:<br>456:<br>457:<br>458:<br>459:<br>
+460:<br>461:<br>462:<br>463:<br>464:<br>465:<br>466:<br>467:<br>468:<br>469:<br>470:<br>471:<br>472:<br>473:<br>474:<br>475:<br>476:<br>477:<br>478:<br>479:<br>
+480:<br>481:<br>482:<br>483:<br>484:<br>485:<br>486:<br>487:<br>488:<br>489:<br>490:<br>491:<br>492:<br>493:<br>494:<br>495:<br>496:<br>497:<br>498:<br>499:<br>
+500:<br>501:<br>502:<br>503:<br>504:<br>505:<br>506:<br>507:<br>508:<br>509:<br>510:<br>511:<br>512:<br>513:<br>514:<br>515:<br>516:<br>517:<br>518:<br>519:<br>
+520:<br>521:<br>522:<br>523:<br>524:<br>525:<br>526:<br>527:<br>528:<br>529:<br>530:<br>531:<br>532:<br>533:<br>534:<br>535:<br>536:<br>537:<br>538:<br>539:<br>
+540:<br>541:<br>542:<br>543:<br>544:<br>545:<br>546:<br>547:<br>548:<br>549:<br>550:<br>551:<br>552:<br>553:<br>554:<br>555:<br>556:<br>557:<br>558:<br>559:<br>
+560:<br>561:<br>562:<br>563:<br>564:<br>565:<br>566:<br>567:<br>568:<br>569:<br>570:<br>571:<br>572:<br>573:<br>574:<br>575:<br>576:<br>577:<br>578:<br>579:<br>
+580:<br>581:<br>582:<br>583:<br>584:<br>585:<br>586:<br>587:<br>588:<br>589:<br>590:<br>591:<br>592:<br>593:<br>594:<br>595:<br>596:<br>597:<br>598:<br>599:<br>
+600:<br>601:<br>602:<br>603:<br>604:<br>605:<br>606:<br>607:<br>608:<br>609:<br>610:<br>611:<br>612:<br>613:<br>614:<br>615:<br>616:<br>617:<br>618:<br>619:<br>
+620:<br>621:<br>622:<br>623:<br>624:<br>625:<br>626:<br>627:<br>628:<br>629:<br>630:<br>631:<br>632:<br>633:<br>634:<br>635:<br>636:<br>637:<br>638:<br>639:<br>
+640:<br>641:<br>642:<br>643:<br>644:<br>645:<br>646:<br>647:<br>648:<br>649:<br>650:<br>651:<br>652:<br>653:<br>654:<br>655:<br>656:<br>657:<br>658:<br>659:<br>
+660:<br>661:<br>662:<br>663:<br>664:<br>665:<br>666:<br>667:<br>668:<br>669:<br>670:<br>671:<br>672:<br>673:<br>674:<br>675:<br>676:<br>677:<br>678:<br>679:<br>
+680:<br>681:<br>682:<br>683:<br>684:<br>685:<br>686:<br>687:<br>688:<br>689:<br>690:<br>691:<br>692:<br>693:<br>694:<br>695:<br>696:<br>697:<br>698:<br>699:<br>
+700:<br>701:<br>702:<br>703:<br>704:<br>705:<br>706:<br>707:<br>708:<br>709:<br>710:<br>711:<br>712:<br>713:<br>714:<br>715:<br>716:<br>717:<br>718:<br>719:<br>
+720:<br>721:<br>722:<br>723:<br>724:<br>725:<br>726:<br>727:<br>728:<br>729:<br>730:<br>731:<br>732:<br>733:<br>734:<br>735:<br>736:<br>737:<br>738:<br>739:<br>
+740:<br>741:<br>742:<br>743:<br>744:<br>745:<br>746:<br>747:<br>748:<br>749:<br>750:<br>751:<br>752:<br>753:<br>754:<br>755:<br>756:<br>757:<br>758:<br>759:<br>
+760:<br>761:<br>762:<br>763:<br>764:<br>765:<br>766:<br>767:<br>768:<br>769:<br>770:<br>771:<br>772:<br>773:<br>774:<br>775:<br>776:<br>777:<br>778:<br>779:<br>
+780:<br>781:<br>782:<br>783:<br>784:<br>785:<br>786:<br>787:<br>788:<br>789:<br>790:<br>791:<br>792:<br>793:<br>794:<br>795:<br>796:<br>797:<br>798:<br>799:<br>
+800:<br>801:<br>802:<br>803:<br>804:<br>805:<br>806:<br>807:<br>808:<br>809:<br>810:<br>811:<br>812:<br>813:<br>814:<br>815:<br>816:<br>817:<br>818:<br>819:<br>
+820:<br>821:<br>822:<br>823:<br>824:<br>825:<br>826:<br>827:<br>828:<br>829:<br>830:<br>831:<br>832:<br>833:<br>834:<br>835:<br>836:<br>837:<br>838:<br>839:<br>
+840:<br>841:<br>842:<br>843:<br>844:<br>845:<br>846:<br>847:<br>848:<br>849:<br>850:<br>851:<br>852:<br>853:<br>854:<br>855:<br>856:<br>857:<br>858:<br>859:<br>
+860:<br>861:<br>862:<br>863:<br>864:<br>865:<br>866:<br>867:<br>868:<br>869:<br>870:<br>871:<br>872:<br>873:<br>874:<br>875:<br>876:<br>877:<br>878:<br>879:<br>
+880:<br>881:<br>882:<br>883:<br>884:<br>885:<br>886:<br>887:<br>888:<br>889:<br>890:<br>891:<br>892:<br>893:<br>894:<br>895:<br>896:<br>897:<br>898:<br>899:<br>
+900:<br>901:<br>902:<br>903:<br>904:<br>905:<br>906:<br><div id="cmntl4" name="cmntl4">907:<br>908:<br>909:<br>910:<br>911:<br>912:<br>913:<br>914:<br>915:<br>916:<br>917:<br>918:<br>919:<br></div>
+920:<br>921:<br>922:<br>923:<br>924:<br>925:<br>926:<br>927:<br>928:<br>929:<br>930:<br>931:<br>932:<br>933:<br>934:<br>935:<br>936:<br>937:<br>938:<br>939:<br>
+940:<br>941:<br>942:<br>943:<br>944:<br>945:<br>946:<br>947:<br>948:<br>949:<br>950:<br>951:<br>952:<br>953:<br>954:<br>955:<br>956:<br>957:<br>
+<!--end line numbers-->
+</div><div class="cpphtmlcmnt">
+<!--start collapse columns-->
+<img src="../../../../../content/tree/min.gif" alt="Min/Max" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<img src="../../../../../content/tree/min.gif" alt="Min/Max" id="cmnti2" name="cmnti2" onclick="collapse('2', '../../../../../');" /><br><div id="cmnts2" name="cmnts2"><br><br><br><br></div><div></div><br><br><br><br><br><br><br><br><br><br><br><br><img src="../../../../../content/tree/min.gif" alt="Min/Max" id="cmnti3" name="cmnti3" onclick="collapse('3', '../../../../../');" /><br><div id="cmnts3" name="cmnts3"><br><br>
+<br></div><div></div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><img src="../../../../../content/tree/min.gif" alt="Min/Max" id="cmnti4" name="cmnti4" onclick="collapse('4', '../../../../../');" /><br><div id="cmnts4" name="cmnts4"><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<!--end collapse columns-->
+</div><div class="cpphtml" style="margin-left:3.75em;">
+<!--start highlighted code-->
+<font class="syn_cmt">/*<div class="syn_ex" id="cmnt1" name="cmnt1">
+ * Copyright (c), Zeriph Enterprises<br>
+ * All rights reserved.<br>
+ * <br>
+ * Contributor(s):<br>
+ * Zechariah Perez, omni (at) zeriph (dot) com<br>
+ * <br>
+ * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS &quot;AS IS&quot; AND ANY<br>
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED<br>
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE<br>
+ * DISCLAIMED. IN NO EVENT SHALL ZERIPH AND CONTRIBUTORS BE LIABLE FOR ANY<br>
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES<br>
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;<br>
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND<br>
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT<br>
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS<br>
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.<br>
+ */</div><div></div></font>
+<br>
+<font class="syn_cmt">/* DEV_NOTE: this file is not intended to be used directly by any user code!<div class="syn_ex" id="cmnt2" name="cmnt2">
+<br>
+ i.e. do not #include &lt;<a href="../../../omni/xxx_impl.hxx.html">omni/xxx_impl.hxx</a>&gt; and do not compile this source directly.<br>
+ this file is included directly in other source.<br>
+*/</div><div></div></font>
+<br>
+<font class="syn_cmt">// so as not to accidentally build this file with the source this macro is defined in io.cpp</font><br>
+<font class="syn_pre">#if !defined(OMNI_IO_FILE_FW) || !defined(OMNI_PATH_FW) || !defined(OMNI_L_FW) || !defined(OMNI_STRING_T_FW)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;#error <font class="syn_str">&quot;invalid preprocessor directive detected&quot;</font><br>
+<font class="syn_pre">#endif</font><br>
+<br>
+<font class="syn_pre"><font class="syn_pre">#if defined(OMNI_IO_FILE_INTERNAL_FW)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">namespace</font> omni {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">namespace</font> io {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">namespace</font> file_internal {<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../../options/omni_os_win.html">OMNI_OS_WIN</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">/* DEV_NOTE: this code is Windows only .. it returns the short/long path name for a file<div class="syn_ex" id="cmnt3" name="cmnt3">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;but that is largely irrelevant as it only returns an 8.3 short path name if it is enabled<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;in the registry for above Windows XP. Since this is a one-off type of thing and likely<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;not largely used, this will not be exposed or documented beyond this file scope. */</div><div></div></font>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::string</a> get_path_name(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; file)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::string</a> name = <font class="syn_str">&quot;\\\\?\\&quot;</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">long</font> length = ::<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa364989(v=vs.85).aspx">GetShortPathNameA</a>(file.c_str(), <font class="syn_typ">NULL</font>, <font class="syn_num">0</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (length &gt; <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">char</font>* buffer = <font class="syn_ins">new</font> <font class="syn_typ">char</font>[length];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;length = ::<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa364989(v=vs.85).aspx">GetShortPathNameA</a>(file.c_str(), buffer, length);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (length &gt; <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::string</a> npath(buffer);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">delete</font>[] buffer;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name += npath;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">delete</font>[] buffer;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name += file;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> name;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a> get_path_name(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>&amp; file)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a> name = L<font class="syn_str">&quot;\\\\?\\&quot;</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">long</font> length = ::<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa364989(v=vs.85).aspx">GetShortPathNameW</a>(file.c_str(), <font class="syn_typ">NULL</font>, <font class="syn_num">0</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (length &gt; <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">wchar_t</font>* buffer = <font class="syn_ins">new</font> <font class="syn_typ">wchar_t</font>[length];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;length = ::<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa364989(v=vs.85).aspx">GetShortPathNameW</a>(file.c_str(), buffer, length);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (length &gt; <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a> npath(buffer);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">delete</font>[] buffer;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name += npath;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">delete</font>[] buffer;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name += file;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> name;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> win_copy_file(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; file, <font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; new_name)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_FILE_CHECKA_FW(file, <font class="syn_ins">false</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_FILE_CHECKA_FW(new_name, <font class="syn_ins">false</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BOOL res = ::<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa363851(v=vs.85).aspx">CopyFileA</a>(file.c_str(), new_name.c_str(), FALSE); <font class="syn_cmt">// don&#39;t fail if exists (e.g. overwrite)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (res == <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<a href="../../../../options/omni_gle.html">OMNI_GLE</a> == ERROR_FILE_NOT_FOUND) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERRV_RETV_FW(<a href="../../../../options/omni_file_not_found_str.html">OMNI_FILE_NOT_FOUND_STR</a>, omni::string::to_string_t(file), <a href="../../../../classes/omni-exceptions-file_not_found.html">omni::exceptions::file_not_found</a>(omni::string::to_string(file)), <font class="syn_ins">false</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::string</a> ex = <a href="../../../../options/omni_path_not_accessible_str.html">OMNI_PATH_NOT_ACCESSIBLE_STR</a>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ex += <a href="../../../../classes/omni-string-util-to_string.html">omni::string::util::to_string</a>(<a href="../../../../options/omni_gle.html">OMNI_GLE</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERRV_RETV_FW(<a href="../../../../options/omni_path_not_accessible_str.html">OMNI_PATH_NOT_ACCESSIBLE_STR</a>, omni::string::to_string_t(file), <a href="../../../../classes/omni-exceptions-path_exception.html">omni::exceptions::path_exception</a>(ex, file), <font class="syn_ins">false</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">true</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> win_copy_file(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>&amp; file, <font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>&amp; new_name)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a> tf = OMNI_FILE_CHECKW_FW(tf, file, <font class="syn_ins">false</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a> nf = OMNI_FILE_CHECKW_FW(nf, new_name, <font class="syn_ins">false</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BOOL res = ::<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa363851(v=vs.85).aspx">CopyFileW</a>(tf.c_str(), nf.c_str(), FALSE); <font class="syn_cmt">// don&#39;t fail if exists (e.g. overwrite)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (res == <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<a href="../../../../options/omni_gle.html">OMNI_GLE</a> == ERROR_FILE_NOT_FOUND) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERRV_RETV_FW(<a href="../../../../options/omni_file_not_found_str.html">OMNI_FILE_NOT_FOUND_STR</a>, omni::string::to_string_t(file), <a href="../../../../classes/omni-exceptions-file_not_found.html">omni::exceptions::file_not_found</a>(omni::string::to_string(file)), <font class="syn_ins">false</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::string</a> ex = <a href="../../../../options/omni_path_not_accessible_str.html">OMNI_PATH_NOT_ACCESSIBLE_STR</a>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ex += <a href="../../../../classes/omni-string-util-to_string.html">omni::string::util::to_string</a>(<a href="../../../../options/omni_gle.html">OMNI_GLE</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERRV_RETV_FW(<a href="../../../../options/omni_path_not_accessible_str.html">OMNI_PATH_NOT_ACCESSIBLE_STR</a>, omni::string::to_string_t(file), <a href="../../../../classes/omni-exceptions-path_exception.html">omni::exceptions::path_exception</a>(ex, omni::string::to_string(file)), <font class="syn_ins">false</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">true</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> STR, <font class="syn_ins">typename</font> ISTREAM, <font class="syn_ins">typename</font> OSTREAM &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> copy(<font class="syn_typ">const</font> STR&amp; file, <font class="syn_typ">const</font> STR&amp; new_name)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../../options/omni_io_file_copy_use_fstream.html">OMNI_IO_FILE_COPY_USE_FSTREAM</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ISTREAM src(omni::string::to_string(file).c_str(), <a href="http://www.cplusplus.com/reference/ios/ios_base/openmode/">std::ios::binary</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!src.is_open()) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;src.close();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERRV_RETV_FW(<a href="../../../../options/omni_path_not_accessible_str.html">OMNI_PATH_NOT_ACCESSIBLE_STR</a>, omni::string::to_string_t(file), <a href="../../../../classes/omni-exceptions-path_exception.html">omni::exceptions::path_exception</a>(<a href="../../../../options/omni_path_not_accessible_str.html">OMNI_PATH_NOT_ACCESSIBLE_STR</a>,omni::string::to_string(file)), <font class="syn_ins">false</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OSTREAM dst(omni::string::to_string(new_name).c_str(), <a href="http://www.cplusplus.com/reference/ios/ios_base/openmode/">std::ios::binary</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!dst.is_open()) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;src.close();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dst.close();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERRV_RETV_FW(<a href="../../../../options/omni_path_not_accessible_str.html">OMNI_PATH_NOT_ACCESSIBLE_STR</a>, omni::string::to_string_t(new_name), <a href="../../../../classes/omni-exceptions-path_exception.html">omni::exceptions::path_exception</a>(<a href="../../../../options/omni_path_not_accessible_str.html">OMNI_PATH_NOT_ACCESSIBLE_STR</a>, omni::string::to_string(new_name)), <font class="syn_ins">false</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dst &lt;&lt; src.rdbuf();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;src.close();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dst.close();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">true</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../../options/omni_os_win.html">OMNI_OS_WIN</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> win_copy_file(file, new_name);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">char</font> buf[<a href="../../../../options/omni_io_file_copy_bufsz.html">OMNI_IO_FILE_COPY_BUFSZ</a>] = {<font class="syn_num">0</font>};<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int64_t size = <font class="syn_num">0</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> src = ::<a href="https://linux.die.net/man/2/open">open</a>(omni::string::to_string(file).c_str(), O_RDONLY, <font class="syn_num">0</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (src == -<font class="syn_num">1</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::<a href="https://linux.die.net/man/2/close">close</a>(src);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERRV_RETV_FW(<a href="../../../../options/omni_path_not_accessible_str.html">OMNI_PATH_NOT_ACCESSIBLE_STR</a>, omni::string::to_string_t(file), <a href="../../../../classes/omni-exceptions-path_exception.html">omni::exceptions::path_exception</a>(<a href="../../../../options/omni_path_not_accessible_str.html">OMNI_PATH_NOT_ACCESSIBLE_STR</a>,omni::string::to_string(file)), <font class="syn_ins">false</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// TODO: pass in user perms here</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> dst = ::<a href="https://linux.die.net/man/2/open">open</a>(omni::string::to_string(new_name).c_str(), O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR); <font class="syn_cmt">// | O_TRUNC);</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (dst == -<font class="syn_num">1</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::<a href="https://linux.die.net/man/2/close">close</a>(src);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::<a href="https://linux.die.net/man/2/close">close</a>(dst);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERRV_RETV_FW(<a href="../../../../options/omni_path_not_accessible_str.html">OMNI_PATH_NOT_ACCESSIBLE_STR</a>, omni::string::to_string_t(new_name), <a href="../../../../classes/omni-exceptions-path_exception.html">omni::exceptions::path_exception</a>(<a href="../../../../options/omni_path_not_accessible_str.html">OMNI_PATH_NOT_ACCESSIBLE_STR</a>, omni::string::to_string(new_name)), <font class="syn_ins">false</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">while</font> ((size = ::read(src, buf, <a href="../../../../options/omni_io_file_copy_bufsz.html">OMNI_IO_FILE_COPY_BUFSZ</a>)) &gt; <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (::write(dst, buf, <font class="syn_ins">static_cast</font>&lt;size_t&gt;(size)) == -<font class="syn_num">1</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// TODO: debug print</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">break</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/cstring/memset/">std::memset</a>(buf, <font class="syn_num">0</font>, <a href="../../../../options/omni_io_file_copy_bufsz.html">OMNI_IO_FILE_COPY_BUFSZ</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::<a href="https://linux.die.net/man/2/close">close</a>(src);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::<a href="https://linux.die.net/man/2/close">close</a>(dst);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">true</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> copy(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; file, <font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; new_name)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../../options/omni_os_win.html">OMNI_OS_WIN</a>) &amp;&amp; defined(<a href="../../../../options/omni_win_api.html">OMNI_WIN_API</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_FILE_CHECKA_FW(file, <font class="syn_ins">false</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (::<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa363851(v=vs.85).aspx">CopyFileA</a>(file.c_str(), new_name.c_str(), FALSE) == <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../options/omni_dbgev.html">OMNI_DBGEV</a>(<font class="syn_str">&quot;error copying file: &quot;</font>, omni::string::to_string_t(<a href="../../../../classes/omni-system-last_error_str.html">omni::system::last_error_str</a>()));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> omni::io::file_internal::exists(new_name);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> omni::io::file_internal::copy&lt;<a href="http://www.cplusplus.com/reference/string/">std::string</a>, <a href="http://www.cplusplus.com/reference/fstream/">std::ifstream</a>, <a href="http://www.cplusplus.com/reference/fstream/">std::ofstream</a>&gt;(file, new_name);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> copy(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>&amp; file, <font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>&amp; new_name)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../../options/omni_os_win.html">OMNI_OS_WIN</a>) &amp;&amp; defined(<a href="../../../../options/omni_win_api.html">OMNI_WIN_API</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a> tf = OMNI_FILE_CHECKW_FW(tf, file, <font class="syn_ins">false</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a> nf = OMNI_FILE_CHECKW_FW(nf, new_name, <font class="syn_ins">false</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (::<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa363851(v=vs.85).aspx">CopyFileW</a>(tf.c_str(), nf.c_str(), FALSE) == <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../options/omni_dbgev.html">OMNI_DBGEV</a>(<font class="syn_str">&quot;error copying file: &quot;</font>, omni::string::to_string_t(<a href="../../../../classes/omni-system-last_error_str.html">omni::system::last_error_str</a>()));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> omni::io::file_internal::exists(new_name);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> omni::io::file_internal::copy&lt;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a>, <a href="http://www.cplusplus.com/reference/fstream/">std::wifstream</a>, <a href="http://www.cplusplus.com/reference/fstream/">std::wofstream</a>&gt;(file, new_name);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> STR, <font class="syn_ins">typename</font> OSTREAM &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> create(<font class="syn_typ">const</font> STR&amp; file, <font class="syn_typ">const</font> <a href="../../../../classes/omni-io-options.html">omni::io::options</a>&amp; io_ops)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> create_path = ((io_ops &amp; <a href="../../../../classes/omni-io-options-create_path.html">omni::io::options::CREATE_PATH</a>) == <a href="../../../../classes/omni-io-options-create_path.html">omni::io::options::CREATE_PATH</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;STR parent = <a href="../../../../classes/omni-io-path-get_parent_name.html">omni::io::path::get_parent_name</a>(file);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (create_path &amp;&amp; !<a href="../../../../classes/omni-io-directory-exists.html">omni::io::directory::exists</a>(parent)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!<a href="../../../../classes/omni-io-directory-create.html">omni::io::directory::create</a>(parent)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OSTREAM out(omni::string::to_string(file).c_str(), <a href="http://www.cplusplus.com/reference/ios/ios_base/openmode/">std::ios::binary</a>|<a href="http://www.cplusplus.com/reference/ios/ios_base/openmode/">std::ios::out</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;out.close(); <font class="syn_cmt">// <a href="https://linux.die.net/man/2/close">close</a>/flush</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> omni::io::file_internal::exists(file);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> create(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; file, <font class="syn_typ">const</font> <a href="../../../../classes/omni-io-options.html">omni::io::options</a>&amp; io_ops)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> create_path = ((io_ops &amp; <a href="../../../../classes/omni-io-options-create_path.html">omni::io::options::CREATE_PATH</a>) == <a href="../../../../classes/omni-io-options-create_path.html">omni::io::options::CREATE_PATH</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../../options/omni_os_win.html">OMNI_OS_WIN</a>) &amp;&amp; defined(<a href="../../../../options/omni_win_api.html">OMNI_WIN_API</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (create_path) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::string</a> parent = <a href="../../../../classes/omni-io-path-get_parent_name.html">omni::io::path::get_parent_name</a>(file);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (create_path &amp;&amp; !<a href="../../../../classes/omni-io-directory-exists.html">omni::io::directory::exists</a>(parent)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!<a href="../../../../classes/omni-io-directory-create.html">omni::io::directory::create</a>(parent)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_FILE_CHECKA_FW(file, <font class="syn_ins">false</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HANDLE hfile = ::<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa363858(v=vs.85).aspx">CreateFileA</a>(file.c_str(), GENERIC_WRITE, FILE_SHARE_READ|FILE_SHARE_WRITE, <font class="syn_typ">NULL</font>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   CREATE_NEW, FILE_ATTRIBUTE_NORMAL, <font class="syn_typ">NULL</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (hfile == INVALID_HANDLE_VALUE) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../options/omni_dbgev.html">OMNI_DBGEV</a>(<font class="syn_str">&quot;error creating file: &quot;</font>, <a href="../../../../classes/omni-system-last_error_str.html">omni::system::last_error_str</a>().c_str())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms724211%28v=vs.85%29.aspx">CloseHandle</a>(hfile);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> omni::io::file_internal::exists(file);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> omni::io::file_internal::create&lt;<a href="http://www.cplusplus.com/reference/string/">std::string</a>, <a href="http://www.cplusplus.com/reference/fstream/">std::ofstream</a>&gt;(file, create_path);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> create(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>&amp; file, <font class="syn_typ">const</font> <a href="../../../../classes/omni-io-options.html">omni::io::options</a>&amp; io_ops)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> create_path = ((io_ops &amp; <a href="../../../../classes/omni-io-options-create_path.html">omni::io::options::CREATE_PATH</a>) == <a href="../../../../classes/omni-io-options-create_path.html">omni::io::options::CREATE_PATH</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../../options/omni_os_win.html">OMNI_OS_WIN</a>) &amp;&amp; defined(<a href="../../../../options/omni_win_api.html">OMNI_WIN_API</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (create_path) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a> parent = <a href="../../../../classes/omni-io-path-get_parent_name.html">omni::io::path::get_parent_name</a>(file);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (create_path &amp;&amp; !<a href="../../../../classes/omni-io-directory-exists.html">omni::io::directory::exists</a>(parent)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!<a href="../../../../classes/omni-io-directory-create.html">omni::io::directory::create</a>(parent)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a> tf = OMNI_FILE_CHECKW_FW(tf, file, <font class="syn_ins">false</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HANDLE hfile = ::<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa363858(v=vs.85).aspx">CreateFileW</a>(tf.c_str(), GENERIC_WRITE, FILE_SHARE_READ|FILE_SHARE_WRITE, <font class="syn_typ">NULL</font>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CREATE_NEW, FILE_ATTRIBUTE_NORMAL, <font class="syn_typ">NULL</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (hfile == INVALID_HANDLE_VALUE) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../options/omni_dbgev.html">OMNI_DBGEV</a>(<font class="syn_str">&quot;error creating file: &quot;</font>, <a href="../../../../classes/omni-system-last_error_str.html">omni::system::last_error_str</a>().c_str())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms724211%28v=vs.85%29.aspx">CloseHandle</a>(hfile);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> omni::io::file_internal::exists(file);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> omni::io::file_internal::create&lt;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a>, <a href="http://www.cplusplus.com/reference/fstream/">std::wofstream</a>&gt;(file, create_path);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> STR, <font class="syn_ins">typename</font> ISTRM, <font class="syn_ins">typename</font> SSTRM &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;STR get_contents(<font class="syn_typ">const</font> STR&amp; file)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ISTRM ifile(omni::string::to_string(file).c_str());<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SSTRM buf;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;buf &lt;&lt; ifile.rdbuf();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> buf.str();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::string</a> get_contents(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; file)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> get_contents&lt;<a href="http://www.cplusplus.com/reference/string/">std::string</a>, <a href="http://www.cplusplus.com/reference/fstream/">std::ifstream</a>, std::stringstream&gt;(file);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a> get_contents(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>&amp; file)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> get_contents&lt;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a>, <a href="http://www.cplusplus.com/reference/fstream/">std::wifstream</a>, std::wstringstream&gt;(file);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> get_size(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; file)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../../options/omni_os_win.html">OMNI_OS_WIN</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../../options/omni_win_api.html">OMNI_WIN_API</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_FILE_CHECKA_FW(file, <font class="syn_num">0</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WIN32_FILE_ATTRIBUTE_DATA finfo;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (::<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa364946(v=vs.85).aspx">GetFileAttributesExA</a>(file.c_str(), GetFileExInfoStandard, &amp;finfo) == <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LARGE_INTEGER sz;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sz.HighPart = finfo.nFileSizeHigh;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sz.LowPart = finfo.nFileSizeLow;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(sz.QuadPart);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">struct</font> <a href="https://linux.die.net/man/3/stat">stat</a> fi;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (::<a href="https://msdn.microsoft.com/en-us/library/14h5k7ff.aspx">_stat</a>(file.c_str(), &amp;fi) == <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(fi.st_size);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">struct</font> <a href="https://linux.die.net/man/3/stat">stat</a> fi;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (::<a href="https://linux.die.net/man/3/stat">stat</a>(file.c_str(), &amp;fi) == <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(fi.st_size);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> get_size(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>&amp; file)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../../options/omni_os_win.html">OMNI_OS_WIN</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../../options/omni_win_api.html">OMNI_WIN_API</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a> tf = OMNI_FILE_CHECKW_FW(tf, file, <font class="syn_num">0</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WIN32_FILE_ATTRIBUTE_DATA finfo;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (::<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa364946(v=vs.85).aspx">GetFileAttributesExW</a>(tf.c_str(), GetFileExInfoStandard, &amp;finfo) == <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LARGE_INTEGER sz;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sz.HighPart = finfo.nFileSizeHigh;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sz.LowPart = finfo.nFileSizeLow;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(sz.QuadPart);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">struct</font> <a href="https://linux.die.net/man/3/stat">stat</a> fi;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (::<a href="https://msdn.microsoft.com/en-us/library/14h5k7ff.aspx">_wstat</a>(file.c_str(), &amp;fi) == <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(fi.st_size);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">struct</font> <a href="https://linux.die.net/man/3/stat">stat</a> fi;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (::<a href="https://linux.die.net/man/3/stat">stat</a>(omni::string::to_string(file).c_str(), &amp;fi) == <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(fi.st_size);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_num">0</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> mv(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; file, <font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; new_name, <font class="syn_typ">const</font> <a href="../../../../classes/omni-io-options.html">omni::io::options</a>&amp; io_ops)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> overwrite = ((io_ops &amp; <a href="../../../../classes/omni-io-options-overwrite.html">omni::io::options::OVERWRITE</a>) == <a href="../../../../classes/omni-io-options-overwrite.html">omni::io::options::OVERWRITE</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> create_path = ((io_ops &amp; <a href="../../../../classes/omni-io-options-create_path.html">omni::io::options::CREATE_PATH</a>) == <a href="../../../../classes/omni-io-options-create_path.html">omni::io::options::CREATE_PATH</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!<a href="../../../../classes/omni-io-cfile-exists.html">omni::io::cfile::exists</a>(file)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DV1_FW(<font class="syn_str">&quot;file does not exists:&quot;</font>, file);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!overwrite &amp;&amp; omni::io::file_internal::exists(new_name)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../options/omni_dbgev.html">OMNI_DBGEV</a>(<font class="syn_str">&quot;New path already exists: &quot;</font>, omni::string::to_string_t(new_name));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::string</a> root = <a href="../../../../classes/omni-io-cpath-get_parent_name.html">omni::io::cpath::get_parent_name</a>(new_name);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!<a href="../../../../classes/omni-io-cdirectory-exists.html">omni::io::cdirectory::exists</a>(root)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (create_path) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!<a href="../../../../classes/omni-io-cdirectory-create.html">omni::io::cdirectory::create</a>(root, <font class="syn_ins">true</font>)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_D1_FW(<font class="syn_str">&quot;could not create parent directory&quot;</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_D1_FW(<font class="syn_str">&quot;error moving file: new path does not exist&quot;</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../../options/omni_os_win.html">OMNI_OS_WIN</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../../options/omni_win_api.html">OMNI_WIN_API</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_FILE_CHECKA_FW(file, <font class="syn_ins">false</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_FILE_CHECKA_FW(new_name, <font class="syn_ins">false</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BOOL ret = ::<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa365239(v=vs.85).aspx">MoveFileA</a>(file.c_str(), new_name.c_str());<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (ret == <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DV1_FW(<font class="syn_str">&quot;error moving file: &quot;</font>, <a href="../../../../classes/omni-system-last_error_str.html">omni::system::last_error_str</a>().c_str());<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> ret = ::<a href="https://msdn.microsoft.com/en-us/library/zw5t957f.aspx">_rename</a>(file.c_str(), new_name.c_str());<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (ret != <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DV1_FW(<font class="syn_str">&quot;error moving file: &quot;</font>, omni::string::to_string_t(<a href="../../../../classes/omni-system-error_str.html">omni::system::error_str</a>(ret)));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> ret = ::<a href="https://linux.die.net/man/3/rename">rename</a>(file.c_str(), new_name.c_str());<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (ret != <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DV1_FW(<font class="syn_str">&quot;error moving file: &quot;</font>, omni::string::to_string_t(<a href="../../../../classes/omni-system-error_str.html">omni::system::error_str</a>(ret)));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> omni::io::file_internal::exists(new_name);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> mv(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>&amp; file, <font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>&amp; new_name, <font class="syn_typ">const</font> <a href="../../../../classes/omni-io-options.html">omni::io::options</a>&amp; io_ops)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> overwrite = ((io_ops &amp; <a href="../../../../classes/omni-io-options-overwrite.html">omni::io::options::OVERWRITE</a>) == <a href="../../../../classes/omni-io-options-overwrite.html">omni::io::options::OVERWRITE</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> create_path = ((io_ops &amp; <a href="../../../../classes/omni-io-options-create_path.html">omni::io::options::CREATE_PATH</a>) == <a href="../../../../classes/omni-io-options-create_path.html">omni::io::options::CREATE_PATH</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!<a href="../../../../classes/omni-io-wfile-exists.html">omni::io::wfile::exists</a>(file)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DV1_FW(<font class="syn_str">&quot;file does not exists:&quot;</font>, omni::string::to_string_t(file));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!overwrite &amp;&amp; omni::io::file_internal::exists(new_name)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../options/omni_dbgev.html">OMNI_DBGEV</a>(<font class="syn_str">&quot;New path already exists: &quot;</font>, omni::string::to_string_t(new_name));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a> root = <a href="../../../../classes/omni-io-wpath-get_parent_name.html">omni::io::wpath::get_parent_name</a>(new_name);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!<a href="../../../../classes/omni-io-wdirectory-exists.html">omni::io::wdirectory::exists</a>(root)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (create_path) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!<a href="../../../../classes/omni-io-wdirectory-create.html">omni::io::wdirectory::create</a>(root, <font class="syn_ins">true</font>)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_D1_FW(<font class="syn_str">&quot;could not create parent directory&quot;</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_D1_FW(<font class="syn_str">&quot;error moving file: new path does not exist&quot;</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../../options/omni_os_win.html">OMNI_OS_WIN</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../../options/omni_win_api.html">OMNI_WIN_API</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a> tf = OMNI_FILE_CHECKW_FW(tf, file, <font class="syn_ins">false</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a> nf = OMNI_FILE_CHECKW_FW(nf, new_name, <font class="syn_ins">false</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BOOL ret = ::<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa365239(v=vs.85).aspx">MoveFileW</a>(tf.c_str(), nf.c_str());<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (ret == <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DV1_FW(<font class="syn_str">&quot;error moving file: &quot;</font>, omni::string::to_string_t(<a href="../../../../classes/omni-system-last_error_str.html">omni::system::last_error_str</a>()));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> ret = ::<a href="https://msdn.microsoft.com/en-us/library/zw5t957f.aspx">_wrename</a>(file.c_str(), new_name.c_str());<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (ret != <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DV1_FW(<font class="syn_str">&quot;error moving file: &quot;</font>, omni::string::to_string_t(<a href="../../../../classes/omni-system-error_str.html">omni::system::error_str</a>(ret)));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> ret = ::<a href="https://linux.die.net/man/3/rename">rename</a>(omni::string::to_string(file).c_str(), omni::string::to_string(new_name).c_str());<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (ret != <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DV1_FW(<font class="syn_str">&quot;error moving file: &quot;</font>, omni::string::to_string_t(<a href="../../../../classes/omni-system-error_str.html">omni::system::error_str</a>(ret)));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> omni::io::file_internal::exists(new_name);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> STR, <font class="syn_ins">typename</font> IFSTREAM &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> rd_f(<font class="syn_typ">const</font> STR&amp; file, STR&amp; buffer)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IFSTREAM ifile(omni::string::to_string(file).c_str(), <a href="http://www.cplusplus.com/reference/ios/ios_base/openmode/">std::ios::binary</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!ifile.is_open()) { <font class="syn_ins">return</font> <font class="syn_num">0</font>; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> length = <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(ifile.tellg());<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ifile &gt;&gt; buffer;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;length = <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(ifile.tellg()) - length;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ifile.close();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> length;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> read(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; file, <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; buffer)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> omni::io::file_internal::rd_f&lt;<a href="http://www.cplusplus.com/reference/string/">std::string</a>, <a href="http://www.cplusplus.com/reference/fstream/">std::ifstream</a>&gt;(file, buffer);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> read(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>&amp; file, <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>&amp; buffer)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> omni::io::file_internal::rd_f&lt;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a>, <a href="http://www.cplusplus.com/reference/fstream/">std::wifstream</a>&gt;(file, buffer);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> STR, <font class="syn_ins">typename</font> IFSTREAM, <font class="syn_ins">typename</font> SEQ &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> unsafe_rd(<font class="syn_typ">const</font> STR&amp; file, SEQ* buffer, <font class="syn_typ">uint64_t</font> blen)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> ((blen == <font class="syn_num">0</font>) || (buffer == <a href="../../../../options/omni_null_ptr.html">OMNI_NULL_PTR</a>)) { <font class="syn_ins">return</font> <font class="syn_num">0</font>; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IFSTREAM ifile(omni::string::to_string(file).c_str(), <a href="http://www.cplusplus.com/reference/ios/ios_base/openmode/">std::ios::binary</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!ifile.is_open()) { <font class="syn_ins">return</font> <font class="syn_num">0</font>; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ifile.seekg(<font class="syn_num">0</font>, ifile.end);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> length = <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(ifile.tellg());<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ifile.seekg(<font class="syn_num">0</font>, ifile.beg);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (length &gt; blen) { length = blen; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ifile.read(<font class="syn_ins">reinterpret_cast</font>&lt;<font class="syn_ins">typename</font> IFSTREAM::char_type*&gt;(buffer), <font class="syn_ins">static_cast</font>&lt;<a href="http://www.cplusplus.com/reference/ios/streamsize/">std::streamsize</a>&gt;(length));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;length = <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(ifile.gcount());<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ifile.close();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> length;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> unsafe_read(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; file, <font class="syn_typ">char</font>* buffer, <font class="syn_typ">uint64_t</font> length)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> omni::io::file_internal::unsafe_rd&lt;<a href="http://www.cplusplus.com/reference/string/">std::string</a>, <a href="http://www.cplusplus.com/reference/fstream/">std::ifstream</a>, <font class="syn_typ">char</font>&gt;(file, buffer, length);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> unsafe_read(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>&amp; file, <font class="syn_typ">char</font>* buffer, <font class="syn_typ">uint64_t</font> length)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> omni::io::file_internal::unsafe_rd&lt;<a href="http://www.cplusplus.com/reference/string/">std::string</a>, <a href="http://www.cplusplus.com/reference/fstream/">std::ifstream</a>, <font class="syn_typ">char</font>&gt;(omni::string::to_string(file), buffer, length);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> unsafe_read(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; file, <font class="syn_typ">wchar_t</font>* buffer, <font class="syn_typ">uint64_t</font> length)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> omni::io::file_internal::unsafe_rd&lt;<a href="http://www.cplusplus.com/reference/string/">std::string</a>, <a href="http://www.cplusplus.com/reference/fstream/">std::ifstream</a>, <font class="syn_typ">wchar_t</font>&gt;(file, buffer, length);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> unsafe_read(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>&amp; file, <font class="syn_typ">wchar_t</font>* buffer, <font class="syn_typ">uint64_t</font> length)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> omni::io::file_internal::unsafe_rd&lt;<a href="http://www.cplusplus.com/reference/string/">std::string</a>, <a href="http://www.cplusplus.com/reference/fstream/">std::ifstream</a>, <font class="syn_typ">wchar_t</font>&gt;(omni::string::to_string(file), buffer, length);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> unsafe_read(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; file, <font class="syn_typ">uint8_t</font>* buffer, <font class="syn_typ">uint64_t</font> length)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> omni::io::file_internal::unsafe_rd&lt;<a href="http://www.cplusplus.com/reference/string/">std::string</a>, <a href="http://www.cplusplus.com/reference/fstream/">std::ifstream</a>, <font class="syn_typ">uint8_t</font>&gt;(file, buffer, length);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> unsafe_read(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>&amp; file, <font class="syn_typ">uint8_t</font>* buffer, <font class="syn_typ">uint64_t</font> length)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> omni::io::file_internal::unsafe_rd&lt;<a href="http://www.cplusplus.com/reference/string/">std::string</a>, <a href="http://www.cplusplus.com/reference/fstream/">std::ifstream</a>, <font class="syn_typ">uint8_t</font>&gt;(omni::string::to_string(file), buffer, length);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> unsafe_read(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; file, int8_t* buffer, <font class="syn_typ">uint64_t</font> length)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> omni::io::file_internal::unsafe_rd&lt;<a href="http://www.cplusplus.com/reference/string/">std::string</a>, <a href="http://www.cplusplus.com/reference/fstream/">std::ifstream</a>, int8_t&gt;(file, buffer, length);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> unsafe_read(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>&amp; file, int8_t* buffer, <font class="syn_typ">uint64_t</font> length)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> omni::io::file_internal::unsafe_rd&lt;<a href="http://www.cplusplus.com/reference/string/">std::string</a>, <a href="http://www.cplusplus.com/reference/fstream/">std::ifstream</a>, int8_t&gt;(omni::string::to_string(file), buffer, length);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> rem(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; file)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../../options/omni_os_win.html">OMNI_OS_WIN</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../../options/omni_win_api.html">OMNI_WIN_API</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_FILE_CHECKA_FW(file, <font class="syn_ins">false</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (::<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa363915(v=vs.85).aspx">DeleteFileA</a>(file.c_str()) == <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DV1_FW(<font class="syn_str">&quot;error deleting file: &quot;</font>, omni::string::to_string_t(<a href="../../../../classes/omni-system-last_error_str.html">omni::system::last_error_str</a>()));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (::<a href="https://msdn.microsoft.com/en-us/library/2da4hk1d.aspx">_remove</a>(file.c_str()) != <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DV1_FW(<font class="syn_str">&quot;error deleting file: &quot;</font>, <a href="../../../../classes/omni-system-last_error.html">omni::system::last_error</a>());<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (::<a href="https://linux.die.net/man/3/remove">remove</a>(file.c_str()) != <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DV1_FW(<font class="syn_str">&quot;error deleting file: &quot;</font>, <a href="../../../../classes/omni-system-last_error.html">omni::system::last_error</a>());<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> !<a href="../../../../classes/omni-io-file-exists.html">omni::io::file::exists</a>(file);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> rem(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>&amp; file)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../../options/omni_os_win.html">OMNI_OS_WIN</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../../options/omni_win_api.html">OMNI_WIN_API</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a> tf = OMNI_FILE_CHECKW_FW(tf, file, <font class="syn_ins">false</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (::<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa363915(v=vs.85).aspx">DeleteFileW</a>(tf.c_str()) == <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DV1_FW(<font class="syn_str">&quot;error deleting file: &quot;</font>, omni::string::to_string_t(<a href="../../../../classes/omni-system-last_error_str.html">omni::system::last_error_str</a>()));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (::<a href="https://msdn.microsoft.com/en-us/library/2da4hk1d.aspx">_wremove</a>(file.c_str()) != <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DV1_FW(<font class="syn_str">&quot;error deleting file: &quot;</font>, <a href="../../../../classes/omni-system-last_error.html">omni::system::last_error</a>());<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (::<a href="https://linux.die.net/man/3/remove">remove</a>(omni::string::to_string(file).c_str()) != <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DV1_FW(<font class="syn_str">&quot;error deleting file: &quot;</font>, <a href="../../../../classes/omni-system-last_error.html">omni::system::last_error</a>());<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> !<a href="../../../../classes/omni-io-file-exists.html">omni::io::file::exists</a>(file);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../../options/omni_non_portable.html">OMNI_NON_PORTABLE</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> set_size(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; file, <font class="syn_typ">uint64_t</font> size)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../../options/omni_os_win.html">OMNI_OS_WIN</a>) &amp;&amp; defined(<a href="../../../../options/omni_win_api.html">OMNI_WIN_API</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_FILE_CHECKA_FW(file, <font class="syn_ins">false</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HANDLE hfile = ::<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa363858(v=vs.85).aspx">CreateFileA</a>(file.c_str(), GENERIC_WRITE, FILE_SHARE_READ|FILE_SHARE_WRITE, <font class="syn_typ">NULL</font>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   CREATE_NEW|OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, <font class="syn_typ">NULL</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (hfile == INVALID_HANDLE_VALUE) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../options/omni_dbgev.html">OMNI_DBGEV</a>(<font class="syn_str">&quot;error setting file length: &quot;</font>, <a href="../../../../classes/omni-system-last_error_str.html">omni::system::last_error_str</a>().c_str())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa365541(v=vs.85).aspx">SetFilePointer</a>(hfile, size, <font class="syn_num">0</font>, FILE_BEGIN);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa365531(v=vs.85).aspx">SetEndOfFile</a>(hfile);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms724211%28v=vs.85%29.aspx">CloseHandle</a>(hfile);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../../options/omni_os_win.html">OMNI_OS_WIN</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> fd = ::_open(file.c_str(), O_RDWR);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (fd == -<font class="syn_num">1</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../options/omni_dbgev.html">OMNI_DBGEV</a>(<font class="syn_str">&quot;Could not open file: &quot;</font>, <a href="../../../../classes/omni-system-last_error_str.html">omni::system::last_error_str</a>().c_str())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;errno_t ret = _chsize_s(fd, <font class="syn_ins">static_cast</font>&lt;__int64&gt;(size));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (ret != <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../options/omni_dbgev.html">OMNI_DBGEV</a>(<font class="syn_str">&quot;error setting file length: &quot;</font>, o<a href="../../../../classes/omni-system-last_error_str.html">omni::system::last_error_str</a>().c_str())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::_close(fd);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::_close(fd);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../../options/omni_io_use_truncate.html">OMNI_IO_USE_TRUNCATE</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<a href="../../../../options/omni_io_file_truncate_fn.html">OMNI_IO_FILE_TRUNCATE_FN</a> (file.c_str(), <font class="syn_ins">static_cast</font>&lt;off_t&gt;(size)) != <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../options/omni_dbgev.html">OMNI_DBGEV</a>(<font class="syn_str">&quot;error setting file length: &quot;</font>, <a href="../../../../classes/omni-system-last_error.html">omni::system::last_error</a>())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> fd = ::<a href="https://linux.die.net/man/2/open">open</a>(file.c_str(), O_RDWR);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (fd == -<font class="syn_num">1</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../options/omni_dbgev.html">OMNI_DBGEV</a>(<font class="syn_str">&quot;Could not open file: &quot;</font>, <a href="../../../../classes/omni-system-last_error.html">omni::system::last_error</a>())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// TODO: if this is ::<a href="https://linux.die.net/man/3/truncate">truncate</a> (not ::<a href="https://linux.die.net/man/3/ftruncate">ftruncate</a>) then it expects a file path, not file handle</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<a href="../../../../options/omni_io_file_ftruncate_fn.html">OMNI_IO_FILE_FTRUNCATE_FN</a> (fd, <font class="syn_ins">static_cast</font>&lt;off_t&gt;(size)) != <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../options/omni_dbgev.html">OMNI_DBGEV</a>(<font class="syn_str">&quot;error setting file length: &quot;</font>, <a href="../../../../classes/omni-system-last_error.html">omni::system::last_error</a>())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::<a href="https://linux.die.net/man/2/close">close</a>(fd);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::<a href="https://linux.die.net/man/2/close">close</a>(fd);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">true</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> set_size(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>&amp; file, <font class="syn_typ">uint64_t</font> size)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../../options/omni_os_win.html">OMNI_OS_WIN</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a> tf = OMNI_FILE_CHECKW_FW(tf, file, <font class="syn_ins">false</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HANDLE hfile = ::<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa363858(v=vs.85).aspx">CreateFileW</a>(tf.c_str(), GENERIC_WRITE, FILE_SHARE_READ|FILE_SHARE_WRITE, <font class="syn_typ">NULL</font>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CREATE_NEW|OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, <font class="syn_typ">NULL</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (hfile == INVALID_HANDLE_VALUE) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../options/omni_dbgev.html">OMNI_DBGEV</a>(<font class="syn_str">&quot;error setting file length: &quot;</font>, <a href="../../../../classes/omni-system-last_error_str.html">omni::system::last_error_str</a>().c_str())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa365541(v=vs.85).aspx">SetFilePointer</a>(hfile, size, <font class="syn_num">0</font>, FILE_BEGIN);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa365531(v=vs.85).aspx">SetEndOfFile</a>(hfile);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms724211%28v=vs.85%29.aspx">CloseHandle</a>(hfile);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../../options/omni_os_win.html">OMNI_OS_WIN</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> fd = ::_wopen(file.c_str(), O_RDWR);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (fd == -<font class="syn_num">1</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../options/omni_dbgev.html">OMNI_DBGEV</a>(<font class="syn_str">&quot;Could not open file: &quot;</font>, <a href="../../../../classes/omni-system-last_error_str.html">omni::system::last_error_str</a>().c_str())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;errno_t ret = _chsize_s(fd, <font class="syn_ins">static_cast</font>&lt;__int64&gt;(size));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (ret != <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../options/omni_dbgev.html">OMNI_DBGEV</a>(<font class="syn_str">&quot;error setting file length: &quot;</font>, ret)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::_close(fd);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::_close(fd);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../../options/omni_io_use_truncate.html">OMNI_IO_USE_TRUNCATE</a>)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<a href="../../../../options/omni_io_file_truncate_fn.html">OMNI_IO_FILE_TRUNCATE_FN</a> (file.c_str(), <font class="syn_ins">static_cast</font>&lt;off_t&gt;(size)) != <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../options/omni_dbgev.html">OMNI_DBGEV</a>(<font class="syn_str">&quot;error setting file length: &quot;</font>, <a href="../../../../classes/omni-system-last_error.html">omni::system::last_error</a>())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#else</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">int</font> fd = ::<a href="https://linux.die.net/man/2/open">open</a>(omni::string::to_string(file).c_str(), O_RDWR);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (fd == -<font class="syn_num">1</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../options/omni_dbgev.html">OMNI_DBGEV</a>(<font class="syn_str">&quot;Could not open file: &quot;</font>, <a href="../../../../classes/omni-system-last_error.html">omni::system::last_error</a>())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<a href="../../../../options/omni_io_file_ftruncate_fn.html">OMNI_IO_FILE_FTRUNCATE_FN</a> (fd, <font class="syn_ins">static_cast</font>&lt;off_t&gt;(size)) != <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../options/omni_dbgev.html">OMNI_DBGEV</a>(<font class="syn_str">&quot;error setting file length: &quot;</font>, <a href="../../../../classes/omni-system-last_error.html">omni::system::last_error</a>())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::<a href="https://linux.die.net/man/2/close">close</a>(fd);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::<a href="https://linux.die.net/man/2/close">close</a>(fd);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">true</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_pre">#endif</font><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T, <font class="syn_ins">typename</font> O &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> write_fw(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; file, <font class="syn_typ">const</font> T&amp; buffer, <font class="syn_typ">bool</font> append)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O ofile(omni::string::to_string(file).c_str(), (append ? (<a href="http://www.cplusplus.com/reference/ios/ios_base/openmode/">std::ios::binary</a> | <a href="http://www.cplusplus.com/reference/ios/ios_base/openmode/">std::ios::app</a>) : <a href="http://www.cplusplus.com/reference/ios/ios_base/openmode/">std::ios::binary</a>));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> start = <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(ofile.tellp());<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> end = start;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ofile &lt;&lt; buffer.c_str();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ofile.flush();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end = <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(ofile.tellp());<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ofile.close();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (end - start);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> write(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; file, <font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; buffer, <font class="syn_typ">bool</font> append)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> write_fw&lt;<a href="http://www.cplusplus.com/reference/string/">std::string</a>, <a href="http://www.cplusplus.com/reference/fstream/">std::ofstream</a>&gt;(file, buffer, append);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> write(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>&amp; file, <font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>&amp; buffer, <font class="syn_typ">bool</font> append)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> write_fw&lt;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a>, <a href="http://www.cplusplus.com/reference/fstream/">std::wofstream</a>&gt;(omni::string::to_string(file), buffer, append);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> STR, <font class="syn_ins">typename</font> OFSTREAM, <font class="syn_ins">typename</font> SEQ &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> unsafe_write_fw(<font class="syn_typ">const</font> STR&amp; file, <font class="syn_typ">const</font> SEQ* buffer, <font class="syn_typ">uint64_t</font> length, <font class="syn_typ">bool</font> append)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> ((length == <font class="syn_num">0</font>) || (buffer == <a href="../../../../options/omni_null_ptr.html">OMNI_NULL_PTR</a>)) { <font class="syn_ins">return</font> <font class="syn_num">0</font>; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OFSTREAM ofile(omni::string::to_string(file).c_str(), (append ? (<a href="http://www.cplusplus.com/reference/ios/ios_base/openmode/">std::ios::binary</a> | <a href="http://www.cplusplus.com/reference/ios/ios_base/openmode/">std::ios::app</a>) : <a href="http://www.cplusplus.com/reference/ios/ios_base/openmode/">std::ios::binary</a>));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!ofile.is_open()) { <font class="syn_ins">return</font> <font class="syn_num">0</font>; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> start = <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(ofile.tellp());<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> end = start;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">const</font> <font class="syn_ins">typename</font> OFSTREAM::char_type* bf = <font class="syn_ins">reinterpret_cast</font>&lt;<font class="syn_typ">const</font> <font class="syn_ins">typename</font> OFSTREAM::char_type*&gt;(buffer);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ofile.write(bf, <font class="syn_ins">static_cast</font>&lt;<a href="http://www.cplusplus.com/reference/ios/streamsize/">std::streamsize</a>&gt;(length));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ofile.flush();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> ((ofile.rdstate() &amp; OFSTREAM::failbit) != <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end = start;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_FW(<font class="syn_str">&quot;Error on write: failbit set&quot;</font>, <a href="../../../../classes/omni-exception.html">omni::exception</a>(<font class="syn_str">&quot;Error on write: failbit set&quot;</font>))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> <font class="syn_ins">if</font> ((ofile.rdstate() &amp; OFSTREAM::badbit) != <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end = start;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_FW(<font class="syn_str">&quot;Error on write: badbit set&quot;</font>, <a href="../../../../classes/omni-exception.html">omni::exception</a>(<font class="syn_str">&quot;Error on write: badbit set&quot;</font>))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end = <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(ofile.tellp());<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ofile.close();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (end - start);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> unsafe_write(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; file, <font class="syn_typ">const</font> <font class="syn_typ">char</font>* buffer, <font class="syn_typ">uint64_t</font> length, <font class="syn_typ">bool</font> append)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> unsafe_write_fw&lt;<a href="http://www.cplusplus.com/reference/string/">std::string</a>, <a href="http://www.cplusplus.com/reference/fstream/">std::ofstream</a>, <font class="syn_typ">char</font>&gt;(file, buffer, length, append);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> unsafe_write(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>&amp; file, <font class="syn_typ">const</font> <font class="syn_typ">char</font>* buffer, <font class="syn_typ">uint64_t</font> length, <font class="syn_typ">bool</font> append)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> unsafe_write_fw&lt;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a>, <a href="http://www.cplusplus.com/reference/fstream/">std::wofstream</a>, <font class="syn_typ">char</font>&gt;(omni::string::to_wstring(file), buffer, length, append);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> unsafe_write(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; file, <font class="syn_typ">const</font> <font class="syn_typ">wchar_t</font>* buffer, <font class="syn_typ">uint64_t</font> length, <font class="syn_typ">bool</font> append)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> unsafe_write_fw&lt;<a href="http://www.cplusplus.com/reference/string/">std::string</a>, <a href="http://www.cplusplus.com/reference/fstream/">std::ofstream</a>, <font class="syn_typ">wchar_t</font>&gt;(file, buffer, length, append);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> unsafe_write(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>&amp; file, <font class="syn_typ">const</font> <font class="syn_typ">wchar_t</font>* buffer, <font class="syn_typ">uint64_t</font> length, <font class="syn_typ">bool</font> append)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> unsafe_write_fw&lt;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a>, <a href="http://www.cplusplus.com/reference/fstream/">std::wofstream</a>, <font class="syn_typ">wchar_t</font>&gt;(file, buffer, length, append);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> unsafe_write(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; file, <font class="syn_typ">const</font> <font class="syn_typ">uint8_t</font>* buffer, <font class="syn_typ">uint64_t</font> length, <font class="syn_typ">bool</font> append)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> unsafe_write_fw&lt;<a href="http://www.cplusplus.com/reference/string/">std::string</a>, <a href="http://www.cplusplus.com/reference/fstream/">std::ofstream</a>, <font class="syn_typ">uint8_t</font>&gt;(file, buffer, length, append);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> unsafe_write(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>&amp; file, <font class="syn_typ">const</font> <font class="syn_typ">uint8_t</font>* buffer, <font class="syn_typ">uint64_t</font> length, <font class="syn_typ">bool</font> append)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> unsafe_write_fw&lt;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a>, <a href="http://www.cplusplus.com/reference/fstream/">std::wofstream</a>, <font class="syn_typ">uint8_t</font>&gt;(omni::string::to_wstring(file), buffer, length, append);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> unsafe_write(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; file, <font class="syn_typ">const</font> int8_t* buffer, <font class="syn_typ">uint64_t</font> length, <font class="syn_typ">bool</font> append)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> unsafe_write_fw&lt;<a href="http://www.cplusplus.com/reference/string/">std::string</a>, <a href="http://www.cplusplus.com/reference/fstream/">std::ofstream</a>, int8_t&gt;(file, buffer, length, append);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> unsafe_write(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>&amp; file, <font class="syn_typ">const</font> int8_t* buffer, <font class="syn_typ">uint64_t</font> length, <font class="syn_typ">bool</font> append)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> unsafe_write_fw&lt;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a>, <a href="http://www.cplusplus.com/reference/fstream/">std::wofstream</a>, int8_t&gt;(file, buffer, length, append);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> STR, <font class="syn_ins">typename</font> OFSTREAM &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> write_line_fw(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; file, <font class="syn_typ">const</font> STR&amp; buffer, <font class="syn_typ">bool</font> append)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OFSTREAM ofile(omni::string::to_string(file).c_str(), (append ? (<a href="http://www.cplusplus.com/reference/ios/ios_base/openmode/">std::ios::binary</a> | <a href="http://www.cplusplus.com/reference/ios/ios_base/openmode/">std::ios::app</a>) : <a href="http://www.cplusplus.com/reference/ios/ios_base/openmode/">std::ios::binary</a>));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> start = <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(ofile.tellp());<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> end = start;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ofile &lt;&lt; buffer.c_str() &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ofile.flush();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end = <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(ofile.tellp());<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ofile.close();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (end - start);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> write_line(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; file, <font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; buffer, <font class="syn_typ">bool</font> append)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> write_line_fw&lt;<a href="http://www.cplusplus.com/reference/string/">std::string</a>, <a href="http://www.cplusplus.com/reference/fstream/">std::ofstream</a>&gt;(file, buffer, append);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> write_line(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>&amp; file, <font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>&amp; buffer, <font class="syn_typ">bool</font> append)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> write_line_fw&lt;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a>, <a href="http://www.cplusplus.com/reference/fstream/">std::wofstream</a>&gt;(omni::string::to_string(file), buffer, append);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> STR, <font class="syn_ins">typename</font> OFSTREAM, <font class="syn_ins">typename</font> SEQ &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> unsafe_write_line_fw(<font class="syn_typ">const</font> STR&amp; file, <font class="syn_typ">const</font> SEQ* buffer, <font class="syn_typ">uint64_t</font> length, <font class="syn_typ">bool</font> append)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> ((length == <font class="syn_num">0</font>) || (buffer == <a href="../../../../options/omni_null_ptr.html">OMNI_NULL_PTR</a>)) { <font class="syn_ins">return</font> <font class="syn_num">0</font>; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OFSTREAM ofile(omni::string::to_string(file).c_str(), (append ? (<a href="http://www.cplusplus.com/reference/ios/ios_base/openmode/">std::ios::binary</a> | <a href="http://www.cplusplus.com/reference/ios/ios_base/openmode/">std::ios::app</a>) : <a href="http://www.cplusplus.com/reference/ios/ios_base/openmode/">std::ios::binary</a>));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> start = <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(ofile.tellp());<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> end = start;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">const</font> <font class="syn_ins">typename</font> OFSTREAM::char_type* bf = <font class="syn_ins">reinterpret_cast</font>&lt;<font class="syn_typ">const</font> <font class="syn_ins">typename</font> OFSTREAM::char_type*&gt;(buffer);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ofile.write(bf, <font class="syn_ins">static_cast</font>&lt;<a href="http://www.cplusplus.com/reference/ios/streamsize/">std::streamsize</a>&gt;(length));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ofile &lt;&lt; <a href="http://www.cplusplus.com/reference/ostream/endl/">std::endl</a>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ofile.flush();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> ((ofile.rdstate() &amp; OFSTREAM::failbit) != <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end = start;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_FW(<font class="syn_str">&quot;Error on write: failbit set&quot;</font>, <a href="../../../../classes/omni-exception.html">omni::exception</a>(<font class="syn_str">&quot;Error on write: failbit set&quot;</font>))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> <font class="syn_ins">if</font> ((ofile.rdstate() &amp; OFSTREAM::badbit) != <font class="syn_num">0</font>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end = start;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_FW(<font class="syn_str">&quot;Error on write: badbit set&quot;</font>, <a href="../../../../classes/omni-exception.html">omni::exception</a>(<font class="syn_str">&quot;Error on write: badbit set&quot;</font>))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end = <font class="syn_ins">static_cast</font>&lt;<font class="syn_typ">uint64_t</font>&gt;(ofile.tellp());<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ofile.close();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> (end - start);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> unsafe_write_line(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; file, <font class="syn_typ">const</font> <font class="syn_typ">char</font>* buffer, <font class="syn_typ">uint64_t</font> length, <font class="syn_typ">bool</font> append)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> unsafe_write_line_fw&lt;<a href="http://www.cplusplus.com/reference/string/">std::string</a>, <a href="http://www.cplusplus.com/reference/fstream/">std::ofstream</a>, <font class="syn_typ">char</font>&gt;(file, buffer, length, append);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> unsafe_write_line(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>&amp; file, <font class="syn_typ">const</font> <font class="syn_typ">char</font>* buffer, <font class="syn_typ">uint64_t</font> length, <font class="syn_typ">bool</font> append)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> unsafe_write_line_fw&lt;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a>, <a href="http://www.cplusplus.com/reference/fstream/">std::wofstream</a>, <font class="syn_typ">char</font>&gt;(file, buffer, length, append);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> unsafe_write_line(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; file, <font class="syn_typ">const</font> <font class="syn_typ">wchar_t</font>* buffer, <font class="syn_typ">uint64_t</font> length, <font class="syn_typ">bool</font> append)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> unsafe_write_line_fw&lt;<a href="http://www.cplusplus.com/reference/string/">std::string</a>, <a href="http://www.cplusplus.com/reference/fstream/">std::ofstream</a>, <font class="syn_typ">wchar_t</font>&gt;(file, buffer, length, append);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> unsafe_write_line(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>&amp; file, <font class="syn_typ">const</font> <font class="syn_typ">wchar_t</font>* buffer, <font class="syn_typ">uint64_t</font> length, <font class="syn_typ">bool</font> append)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> unsafe_write_line_fw&lt;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a>, <a href="http://www.cplusplus.com/reference/fstream/">std::wofstream</a>, <font class="syn_typ">wchar_t</font>&gt;(file, buffer, length, append);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> unsafe_write_line(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; file, <font class="syn_typ">const</font> <font class="syn_typ">uint8_t</font>* buffer, <font class="syn_typ">uint64_t</font> length, <font class="syn_typ">bool</font> append)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> unsafe_write_line_fw&lt;<a href="http://www.cplusplus.com/reference/string/">std::string</a>, <a href="http://www.cplusplus.com/reference/fstream/">std::ofstream</a>, <font class="syn_typ">uint8_t</font>&gt;(file, buffer, length, append);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> unsafe_write_line(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>&amp; file, <font class="syn_typ">const</font> <font class="syn_typ">uint8_t</font>* buffer, <font class="syn_typ">uint64_t</font> length, <font class="syn_typ">bool</font> append)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> unsafe_write_line_fw&lt;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a>, <a href="http://www.cplusplus.com/reference/fstream/">std::wofstream</a>, <font class="syn_typ">uint8_t</font>&gt;(file, buffer, length, append);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> unsafe_write_line(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; file, <font class="syn_typ">const</font> int8_t* buffer, <font class="syn_typ">uint64_t</font> length, <font class="syn_typ">bool</font> append)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> unsafe_write_line_fw&lt;<a href="http://www.cplusplus.com/reference/string/">std::string</a>, <a href="http://www.cplusplus.com/reference/fstream/">std::ofstream</a>, int8_t&gt;(file, buffer, length, append);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> unsafe_write_line(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::wstring</a>&amp; file, <font class="syn_typ">const</font> int8_t* buffer, <font class="syn_typ">uint64_t</font> length, <font class="syn_typ">bool</font> append)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> unsafe_write_line_fw&lt;<a href="http://www.cplusplus.com/reference/string/">std::wstring</a>, <a href="http://www.cplusplus.com/reference/fstream/">std::wofstream</a>, int8_t&gt;(file, buffer, length, append);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;} } }<br>
+<font class="syn_pre">#endif <font class="syn_cmt">// OMNI_IO_FILE_INTERNAL_FW</font></font><br>
+<br>
+<font class="syn_typ">bool</font> omni::io::OMNI_PATH_FW::copy(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; file, <font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; new_name, <font class="syn_typ">const</font> <a href="../../../../classes/omni-io-options.html">omni::io::options</a>&amp; io_ops)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (file.empty() || new_name.empty()) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERR_RETV_FW(<a href="../../../../options/omni_path_empty_str.html">OMNI_PATH_EMPTY_STR</a>, <a href="../../../../classes/omni-exceptions-path_exception.html">omni::exceptions::path_exception</a>(<a href="../../../../options/omni_path_empty_str.html">OMNI_PATH_EMPTY_STR</a>), <font class="syn_ins">false</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!omni::io::file_internal::exists(file)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERRV_RETV_FW(<a href="../../../../options/omni_file_not_found_str.html">OMNI_FILE_NOT_FOUND_STR</a>, omni::string::to_string_t(file), <a href="../../../../classes/omni-exceptions-file_not_found.html">omni::exceptions::file_not_found</a>(omni::string::to_string(file)), <font class="syn_ins">false</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> overwrite = ((io_ops &amp; <a href="../../../../classes/omni-io-options-overwrite.html">omni::io::options::OVERWRITE</a>) == <a href="../../../../classes/omni-io-options-overwrite.html">omni::io::options::OVERWRITE</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> create_path = ((io_ops &amp; <a href="../../../../classes/omni-io-options-create_path.html">omni::io::options::CREATE_PATH</a>) == <a href="../../../../classes/omni-io-options-create_path.html">omni::io::options::CREATE_PATH</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!overwrite &amp;&amp; omni::io::file_internal::exists(new_name)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../options/omni_dbgev.html">OMNI_DBGEV</a>(<font class="syn_str">&quot;New path already exists: &quot;</font>, omni::string::to_string_t(new_name));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_STRING_T_FW root = <a href="../../../../classes/omni-io-path-get_parent_name.html">omni::io::path::get_parent_name</a>(new_name);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!<a href="../../../../classes/omni-io-directory-exists.html">omni::io::directory::exists</a>(root)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (create_path) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!<a href="../../../../classes/omni-io-directory-create.html">omni::io::directory::create</a>(root, <font class="syn_ins">true</font>)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_D1_FW(<font class="syn_str">&quot;could not create parent directory&quot;</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_D1_FW(<font class="syn_str">&quot;error copying file: new path does not exist&quot;</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (omni::io::file_internal::copy(file, new_name)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> omni::io::file_internal::exists(new_name);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+}<br>
+<br>
+OMNI_STRING_T_FW omni::io::OMNI_PATH_FW::get_contents(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; file)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!omni::io::file_internal::exists(file)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERRV_RETV_FW(<font class="syn_str">&quot;file does not exist: &quot;</font>, omni::string::to_string_t(file), <a href="../../../../classes/omni-exceptions-path_exception.html">omni::exceptions::path_exception</a>(<font class="syn_str">&quot;File does not exist&quot;</font>, omni::string::to_string(file)), OMNI_STRING_T_FW())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> omni::io::file_internal::get_contents(file);<br>
+}<br>
+<br>
+<font class="syn_typ">uint64_t</font> omni::io::OMNI_PATH_FW::get_size(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; file)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!omni::io::file_internal::exists(file)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERRV_RETV_FW(<font class="syn_str">&quot;file does not exist: &quot;</font>, omni::string::to_string_t(file), <a href="../../../../classes/omni-exceptions-path_exception.html">omni::exceptions::path_exception</a>(<font class="syn_str">&quot;File does not exist&quot;</font>, omni::string::to_string(file)), <font class="syn_num">0</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> omni::io::file_internal::get_size(file);<br>
+}<br>
+<br>
+<font class="syn_typ">bool</font> omni::io::OMNI_PATH_FW::move(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; file, <font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; new_name, <font class="syn_typ">const</font> <a href="../../../../classes/omni-io-options.html">omni::io::options</a>&amp; io_ops)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> overwrite = ((io_ops &amp; <a href="../../../../classes/omni-io-options-overwrite.html">omni::io::options::OVERWRITE</a>) == <a href="../../../../classes/omni-io-options-overwrite.html">omni::io::options::OVERWRITE</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> create_path = ((io_ops &amp; <a href="../../../../classes/omni-io-options-create_path.html">omni::io::options::CREATE_PATH</a>) == <a href="../../../../classes/omni-io-options-create_path.html">omni::io::options::CREATE_PATH</a>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!omni::io::file_internal::exists(file)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERRV_RETV_FW(<font class="syn_str">&quot;file does not exist: &quot;</font>, omni::string::to_string_t(file), <a href="../../../../classes/omni-exceptions-path_exception.html">omni::exceptions::path_exception</a>(<font class="syn_str">&quot;File does not exist&quot;</font>, omni::string::to_string(file)), <font class="syn_ins">false</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!overwrite &amp;&amp; omni::io::file_internal::exists(new_name)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_ERRV_RETV_FW(<font class="syn_str">&quot;file already exists: &quot;</font>, omni::string::to_string_t(new_name), <a href="../../../../classes/omni-exceptions-path_exception.html">omni::exceptions::path_exception</a>(<font class="syn_str">&quot;File already exist&quot;</font>, omni::string::to_string(new_name)), <font class="syn_ins">false</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_STRING_T_FW root = <a href="../../../../classes/omni-io-path-get_parent_name.html">omni::io::path::get_parent_name</a>(new_name);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!<a href="../../../../classes/omni-io-directory-exists.html">omni::io::directory::exists</a>(root)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (create_path) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!<a href="../../../../classes/omni-io-directory-create.html">omni::io::directory::create</a>(root, <font class="syn_ins">true</font>)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_D1_FW(<font class="syn_str">&quot;could not create parent directory&quot;</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_D1_FW(<font class="syn_str">&quot;error copying file: new path does not exist&quot;</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> omni::io::file_internal::mv(file, new_name, io_ops);<br>
+}<br>
+<br>
+<font class="syn_typ">bool</font> omni::io::OMNI_PATH_FW::<a href="https://linux.die.net/man/3/remove">remove</a>(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; file)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!omni::io::file_internal::exists(file)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_DV1_FW(<font class="syn_str">&quot;file does not exists: &quot;</font>, omni::string::to_string_t(file));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">true</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> omni::io::file_internal::rem(file);<br>
+}<br>
+<br>
+<font class="syn_pre"><font class="syn_pre">#if defined(<a href="../../../../options/omni_non_portable.html">OMNI_NON_PORTABLE</a>)</font><br>
+<font class="syn_typ">bool</font> omni::io::OMNI_PATH_FW::set_size(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; file, <font class="syn_typ">uint64_t</font> size)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// The file must exist before this function can continue</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!omni::io::file_internal::exists(file)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!omni::io::file_internal::create(file, <font class="syn_ins">true</font>)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../options/omni_dbge.html">OMNI_DBGE</a>(<font class="syn_str">&quot;could not create file&quot;</font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <font class="syn_ins">false</font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (!omni::io::file_internal::set_size(file, size)) { <font class="syn_ins">return</font> <font class="syn_ins">false</font>; }<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">// DEV_NOTE: the following comments are here for instructional purpose</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_cmt">/*<div class="syn_ex" id="cmnt4" name="cmnt4">
+&nbsp;&nbsp;&nbsp;&nbsp;// This function CAN destroy data. This functions uses API to extend or shorten<br>
+&nbsp;&nbsp;&nbsp;&nbsp;// a file. If data is in the file and you extend the file, the data will stay<br>
+&nbsp;&nbsp;&nbsp;&nbsp;// in place and the file length will simple be extended. If you shorten the file<br>
+&nbsp;&nbsp;&nbsp;&nbsp;// the data at the end of the file will be freed (in other words, it will not be deleted<br>
+&nbsp;&nbsp;&nbsp;&nbsp;// simply not associated with a file).<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;// DEV_NOTE: It is possible, though uncommon, for an extended file to contain random<br>
+&nbsp;&nbsp;&nbsp;&nbsp;// data where the file has been extended. This is typical of a sparse file. It is common<br>
+&nbsp;&nbsp;&nbsp;&nbsp;// in Unix/Linux but no so much in Windows. Note that the reason we do not just write out<br>
+&nbsp;&nbsp;&nbsp;&nbsp;// length worth of null is because depending on length this could take a long time.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;// No pun intended. Using the API to create a sparse file, it simply tells the FAT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;// (file allocation table) that file X is length in size<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*/</div><div></div></font>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> omni::io::OMNI_PATH_FW::get_size(file) == size;<br>
+}<br>
+<font class="syn_pre">#endif</font><br>
+<br>
+<font class="syn_typ">bool</font> omni::io::OMNI_PATH_FW::copy(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; file, <font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; new_name) { <font class="syn_ins">return</font> omni::io::OMNI_PATH_FW::copy(file, new_name, <a href="../../../../classes/omni-io-options-none.html">omni::io::options::NONE</a>); }<br>
+<font class="syn_typ">bool</font> omni::io::OMNI_PATH_FW::create(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; file, <font class="syn_typ">const</font> <a href="../../../../classes/omni-io-options.html">omni::io::options</a>&amp; io_ops) { <font class="syn_ins">return</font> omni::io::file_internal::create(file, io_ops); }<br>
+<font class="syn_typ">bool</font> omni::io::OMNI_PATH_FW::create(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; file) { <font class="syn_ins">return</font> omni::io::OMNI_PATH_FW::create(file, <a href="../../../../classes/omni-io-options-none.html">omni::io::options::NONE</a>); }<br>
+<font class="syn_typ">bool</font> omni::io::OMNI_PATH_FW::exists(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; file) { <font class="syn_ins">return</font> omni::io::file_internal::exists(file); }<br>
+<font class="syn_typ">bool</font> omni::io::OMNI_PATH_FW::exist(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; file) { <font class="syn_ins">return</font> omni::io::OMNI_PATH_FW::exists(file); }<br>
+<font class="syn_typ">bool</font> omni::io::OMNI_PATH_FW::move(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; file, <font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; new_name) { <font class="syn_ins">return</font> omni::io::OMNI_PATH_FW::move(file, new_name, <a href="../../../../classes/omni-io-options-none.html">omni::io::options::NONE</a>); }<br>
+<font class="syn_typ">bool</font> omni::io::OMNI_PATH_FW::<a href="https://linux.die.net/man/3/rename">rename</a>(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; file, <font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; new_name, <font class="syn_typ">const</font> <a href="../../../../classes/omni-io-options.html">omni::io::options</a>&amp; io_ops) { <font class="syn_ins">return</font> omni::io::OMNI_PATH_FW::move(file, new_name, io_ops); }<br>
+<font class="syn_typ">bool</font> omni::io::OMNI_PATH_FW::<a href="https://linux.die.net/man/3/rename">rename</a>(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; file, <font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; new_name) { <font class="syn_ins">return</font> omni::io::OMNI_PATH_FW::<a href="https://linux.die.net/man/3/rename">rename</a>(file, new_name, <a href="../../../../classes/omni-io-options-none.html">omni::io::options::NONE</a>); }<br>
+<font class="syn_typ">uint64_t</font> omni::io::OMNI_PATH_FW::read(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; file, OMNI_STRING_T_FW&amp; buffer) { <font class="syn_ins">return</font> omni::io::file_internal::read(file, buffer); }<br>
+<font class="syn_typ">uint64_t</font> omni::io::OMNI_PATH_FW::unsafe_read(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; file, <font class="syn_typ">char</font>* buffer, <font class="syn_typ">uint64_t</font> length) { <font class="syn_ins">return</font> omni::io::file_internal::unsafe_read(file, buffer, length); }<br>
+<font class="syn_typ">uint64_t</font> omni::io::OMNI_PATH_FW::unsafe_read(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; file, <font class="syn_typ">wchar_t</font>* buffer, <font class="syn_typ">uint64_t</font> length) { <font class="syn_ins">return</font> omni::io::file_internal::unsafe_read(file, buffer, length); }<br>
+<font class="syn_typ">uint64_t</font> omni::io::OMNI_PATH_FW::unsafe_read(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; file, <font class="syn_typ">uint8_t</font>* buffer, <font class="syn_typ">uint64_t</font> length) { <font class="syn_ins">return</font> omni::io::file_internal::unsafe_read(file, buffer, length); }<br>
+<font class="syn_typ">uint64_t</font> omni::io::OMNI_PATH_FW::unsafe_read(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; file, int8_t* buffer, <font class="syn_typ">uint64_t</font> length) { <font class="syn_ins">return</font> omni::io::file_internal::unsafe_read(file, buffer, length); }<br>
+<font class="syn_typ">uint64_t</font> omni::io::OMNI_PATH_FW::write(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; file, <font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; buffer) { <font class="syn_ins">return</font> omni::io::file_internal::write(file, buffer, <font class="syn_ins">false</font>); }<br>
+<font class="syn_typ">uint64_t</font> omni::io::OMNI_PATH_FW::unsafe_write(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; file, <font class="syn_typ">const</font> <font class="syn_typ">char</font>* buffer, <font class="syn_typ">uint64_t</font> length) { <font class="syn_ins">return</font> omni::io::file_internal::unsafe_write(file, buffer, length, <font class="syn_ins">false</font>); }<br>
+<font class="syn_typ">uint64_t</font> omni::io::OMNI_PATH_FW::unsafe_write(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; file, <font class="syn_typ">const</font> <font class="syn_typ">wchar_t</font>* buffer, <font class="syn_typ">uint64_t</font> length) { <font class="syn_ins">return</font> omni::io::file_internal::unsafe_write(file, buffer, length, <font class="syn_ins">false</font>); }<br>
+<font class="syn_typ">uint64_t</font> omni::io::OMNI_PATH_FW::unsafe_write(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; file, <font class="syn_typ">const</font> <font class="syn_typ">uint8_t</font>* buffer, <font class="syn_typ">uint64_t</font> length) { <font class="syn_ins">return</font> omni::io::file_internal::unsafe_write(file, buffer, length, <font class="syn_ins">false</font>); }<br>
+<font class="syn_typ">uint64_t</font> omni::io::OMNI_PATH_FW::unsafe_write(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; file, <font class="syn_typ">const</font> int8_t* buffer, <font class="syn_typ">uint64_t</font> length) { <font class="syn_ins">return</font> omni::io::file_internal::unsafe_write(file, buffer, length, <font class="syn_ins">false</font>); }<br>
+<font class="syn_typ">uint64_t</font> omni::io::OMNI_PATH_FW::write_line(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; file, <font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; buffer) { <font class="syn_ins">return</font> omni::io::file_internal::write_line(file, buffer, <font class="syn_ins">false</font>); }<br>
+<font class="syn_typ">uint64_t</font> omni::io::OMNI_PATH_FW::unsafe_write_line(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; file, <font class="syn_typ">const</font> <font class="syn_typ">char</font>* buffer, <font class="syn_typ">uint64_t</font> length) { <font class="syn_ins">return</font> omni::io::file_internal::unsafe_write_line(file, buffer, length, <font class="syn_ins">false</font>); }<br>
+<font class="syn_typ">uint64_t</font> omni::io::OMNI_PATH_FW::unsafe_write_line(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; file, <font class="syn_typ">const</font> <font class="syn_typ">wchar_t</font>* buffer, <font class="syn_typ">uint64_t</font> length) { <font class="syn_ins">return</font> omni::io::file_internal::unsafe_write_line(file, buffer, length, <font class="syn_ins">false</font>); }<br>
+<font class="syn_typ">uint64_t</font> omni::io::OMNI_PATH_FW::unsafe_write_line(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; file, <font class="syn_typ">const</font> <font class="syn_typ">uint8_t</font>* buffer, <font class="syn_typ">uint64_t</font> length) { <font class="syn_ins">return</font> omni::io::file_internal::unsafe_write_line(file, buffer, length, <font class="syn_ins">false</font>); }<br>
+<font class="syn_typ">uint64_t</font> omni::io::OMNI_PATH_FW::unsafe_write_line(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; file, <font class="syn_typ">const</font> int8_t* buffer, <font class="syn_typ">uint64_t</font> length) { <font class="syn_ins">return</font> omni::io::file_internal::unsafe_write_line(file, buffer, length, <font class="syn_ins">false</font>); }<br>
+<font class="syn_typ">uint64_t</font> omni::io::OMNI_PATH_FW::write(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; file, <font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; buffer, <font class="syn_typ">bool</font> append) { <font class="syn_ins">return</font> omni::io::file_internal::write(file, buffer, append); }<br>
+<font class="syn_typ">uint64_t</font> omni::io::OMNI_PATH_FW::unsafe_write(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; file, <font class="syn_typ">const</font> <font class="syn_typ">char</font>* buffer, <font class="syn_typ">uint64_t</font> length, <font class="syn_typ">bool</font> append) { <font class="syn_ins">return</font> omni::io::file_internal::unsafe_write(file, buffer, length, append); }<br>
+<font class="syn_typ">uint64_t</font> omni::io::OMNI_PATH_FW::unsafe_write(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; file, <font class="syn_typ">const</font> <font class="syn_typ">wchar_t</font>* buffer, <font class="syn_typ">uint64_t</font> length, <font class="syn_typ">bool</font> append) { <font class="syn_ins">return</font> omni::io::file_internal::unsafe_write(file, buffer, length, append); }<br>
+<font class="syn_typ">uint64_t</font> omni::io::OMNI_PATH_FW::unsafe_write(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; file, <font class="syn_typ">const</font> <font class="syn_typ">uint8_t</font>* buffer, <font class="syn_typ">uint64_t</font> length, <font class="syn_typ">bool</font> append) { <font class="syn_ins">return</font> omni::io::file_internal::unsafe_write(file, buffer, length, append); }<br>
+<font class="syn_typ">uint64_t</font> omni::io::OMNI_PATH_FW::unsafe_write(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; file, <font class="syn_typ">const</font> int8_t* buffer, <font class="syn_typ">uint64_t</font> length, <font class="syn_typ">bool</font> append) { <font class="syn_ins">return</font> omni::io::file_internal::unsafe_write(file, buffer, length, append); }<br>
+<font class="syn_typ">uint64_t</font> omni::io::OMNI_PATH_FW::write_line(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; file, <font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; buffer, <font class="syn_typ">bool</font> append) { <font class="syn_ins">return</font> omni::io::file_internal::write_line(file, buffer, append); }<br>
+<font class="syn_typ">uint64_t</font> omni::io::OMNI_PATH_FW::unsafe_write_line(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; file, <font class="syn_typ">const</font> <font class="syn_typ">char</font>* buffer, <font class="syn_typ">uint64_t</font> length, <font class="syn_typ">bool</font> append) { <font class="syn_ins">return</font> omni::io::file_internal::unsafe_write_line(file, buffer, length, append); }<br>
+<font class="syn_typ">uint64_t</font> omni::io::OMNI_PATH_FW::unsafe_write_line(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; file, <font class="syn_typ">const</font> <font class="syn_typ">wchar_t</font>* buffer, <font class="syn_typ">uint64_t</font> length, <font class="syn_typ">bool</font> append) { <font class="syn_ins">return</font> omni::io::file_internal::unsafe_write_line(file, buffer, length, append); }<br>
+<font class="syn_typ">uint64_t</font> omni::io::OMNI_PATH_FW::unsafe_write_line(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; file, <font class="syn_typ">const</font> <font class="syn_typ">uint8_t</font>* buffer, <font class="syn_typ">uint64_t</font> length, <font class="syn_typ">bool</font> append) { <font class="syn_ins">return</font> omni::io::file_internal::unsafe_write_line(file, buffer, length, append); }<br>
+<font class="syn_typ">uint64_t</font> omni::io::OMNI_PATH_FW::unsafe_write_line(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; file, <font class="syn_typ">const</font> int8_t* buffer, <font class="syn_typ">uint64_t</font> length, <font class="syn_typ">bool</font> append) { <font class="syn_ins">return</font> omni::io::file_internal::unsafe_write_line(file, buffer, length, append); }<br>
+<!--end highlighted code-->
+</div></code><br>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS(); collapseAll('4', '../../../../../');</script></body></html>

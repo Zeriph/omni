@@ -266,13 +266,21 @@ std::string OmniDocuGen::DocuGen::_GetFolderViewTplate(const std::string& dir, c
 {
     std::string r = Util::Format((isPlainText ? Constants::ViewFolderPlainTemplate : Constants::ViewFolderTemplate),
                                     omni::io::path::get_name(dir));
-    std::string extol = omni::string::to_lower(Program::Settings.Excluded);
+    omni::seq::std_string_t ex_list = omni::string::split(omni::string::to_lower(Program::Settings.Excluded), ",");
+    bool is_ex = false;
     omni::seq::std_string_t dirs;
     omni::io::directory::get_directories(dir, dirs);
     std::sort(dirs.begin(), dirs.end());
     foreach_t (omni::seq::std_string_t, subd, dirs) {
         if (OmniDocuGen::Program::StopReq) { return ""; }
-        if (omni::string::contains(extol, omni::string::to_lower(*subd))) { continue; }
+        is_ex = false;
+        omni_foreach(std::string, ex, ex_list) {
+            if (omni::string::contains(omni::string::to_lower(*subd), *ex)) {
+                is_ex = true;
+                break;
+            }
+        }
+        if (is_ex) { continue; }
         r += DocuGen::_GetFolderViewTplate(*subd, srcdir, verbose, isPlainText);
     }
     omni::seq::std_string_t files;
@@ -280,7 +288,14 @@ std::string OmniDocuGen::DocuGen::_GetFolderViewTplate(const std::string& dir, c
     std::sort(files.begin(), files.end(), DocuGen::_CompareFileNames);
     foreach_t (omni::seq::std_string_t, fl, files) {
         if (OmniDocuGen::Program::StopReq) { return ""; }
-        if (omni::string::contains(extol, omni::string::to_lower(*fl))) { continue; }
+        is_ex = false;
+        omni_foreach(std::string, ex, ex_list) {
+            if (omni::string::contains(omni::string::to_lower(*fl), *ex)) {
+                is_ex = true;
+                break;
+            }
+        }
+        if (is_ex) { continue; }
         if (omni::io::path::get_extension(*fl).empty()) { continue; }
         r += DocuGen::_GetFileViewTplate(*fl, srcdir, verbose, false, isPlainText);
     }
@@ -840,17 +855,32 @@ std::string OmniDocuGen::DocuGen::GetFileTree(bool verbose, bool isPlainText)
     omni::io::directory::get_files(Program::Settings.SourceDirectory, files);
     std::sort(dirs.begin(), dirs.end());
     std::sort(files.begin(), files.end(), DocuGen::_CompareFileNames);
-    std::string extol = omni::string::to_lower(Program::Settings.Excluded);
+    omni::seq::std_string_t ex_list = omni::string::split(omni::string::to_lower(Program::Settings.Excluded), ",");
+    bool is_ex = false;
     foreach_t (omni::seq::std_string_t, subd, dirs) {
         if (OmniDocuGen::Program::StopReq) { return ""; }
-        if (omni::string::contains(extol, omni::string::to_lower(*subd))) { continue; }
+        is_ex = false;
+        omni_foreach(std::string, ex, ex_list) {
+            if (omni::string::contains(omni::string::to_lower(*subd), *ex)) {
+                is_ex = true;
+                break;
+            }
+        }
+        if (is_ex) { continue; }
         ftree += DocuGen::_GetFolderViewTplate(*subd, Program::Settings.SourceDirectory, verbose, isPlainText);
     }
     ftree += "\r\n";
     std::string ext;
     foreach_t (omni::seq::std_string_t, fl, files) {
         if (OmniDocuGen::Program::StopReq) { return ""; }
-        if (omni::string::contains(extol, omni::string::to_lower(*fl))) { continue; }
+        is_ex = false;
+        omni_foreach(std::string, ex, ex_list) {
+            if (omni::string::contains(omni::string::to_lower(*fl), *ex)) {
+                is_ex = true;
+                break;
+            }
+        }
+        if (is_ex) { continue; }
         if (omni::io::path::get_extension(*fl).empty() && (omni::io::path::get_name(*fl) != "omnilib")) { continue; }
         ftree += DocuGen::_GetFileViewTplate(*fl, Program::Settings.SourceDirectory, verbose, false, isPlainText);
     }
@@ -1271,8 +1301,21 @@ void OmniDocuGen::DocuGen::GenerateFilesViewHtml()
         */
         omni::seq::std_string_t src;
         omni::io::directory::get_all_files(OmniDocuGen::Program::Settings.SourceDirectory, src);
+        omni::seq::std_string_t ex_list = omni::string::split(omni::string::to_lower(Program::Settings.Excluded), ",");
+        bool is_ex = false;
         omni_foreach (std::string, src_file, src) {
             if (OmniDocuGen::Program::StopReq) { return; }
+            is_ex = false;
+            omni_foreach(std::string, ex, ex_list) {
+                if (omni::string::contains(omni::string::to_lower(*src_file), *ex)) {
+                    is_ex = true;
+                    break;
+                }
+            }
+            if (is_ex) {
+                up(2, "Skipping copy of excluded source {0}", *src_file);
+                continue;
+            }
             OmniDocuGen::CodeGen cg(*src_file);
             std::string rname = omni::string::replace_all(cg.SourceFile, Program::Settings.SourceDirectory, DocuGen::FilesSource);
             up(2, "Copying non-commented source {0} to {1}", cg.SourceFile, rname);

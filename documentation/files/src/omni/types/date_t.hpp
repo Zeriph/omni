@@ -63,11 +63,9 @@ namespace omni {
 
         #endif
 
-        /** The date_time_kind enum class */
         class date_time_kind
         {
             public:
-                /** The underlying enum type expected */
                 typedef enum enum_t {
                     UNSPECIFIED = 0,
                     UTC = 1,
@@ -75,67 +73,56 @@ namespace omni {
                     LOCAL_DST = 3
                 } enum_t;
 
-                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 4;
                 }
 
-                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return UNSPECIFIED;
                 }
                 
-                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
-                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
-                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
-                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, date_time_kind& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, date_time_kind& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -358,11 +345,9 @@ namespace omni {
                 }
         };
 
-        /** The date_time_parse_failure enum class */
         class date_time_parse_failure
         {
             public:
-                /** The underlying enum type expected */
                 typedef enum enum_t {
                     NONE = 0,
                     ARGUMENT_NULL = 1,
@@ -371,67 +356,56 @@ namespace omni {
                     FORMAT_BAD_DATE_TIME_CALENDAR = 4
                 } enum_t;
 
-                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 5;
                 }
 
-                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return NONE;
                 }
                 
-                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
-                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
-                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
-                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, date_time_parse_failure& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, date_time_parse_failure& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -657,100 +631,72 @@ namespace omni {
                 }
         };
 
-        /** The date_time_styles enum class */
         class date_time_styles
         {
             public:
-                /** The underlying enum type expected */
                 typedef enum enum_t {
-                    /**
-                     * Bit flag indicating that leading whitespace is allowed. Character values
-                     * 0x0009, 0x000A, 0x000B, 0x000C, 0x000D, and 0x0020 are considered to be whitespace.
-                     */
                     NONE                    = 0x00000000,
                     ALLOW_LEADING_WHITE     = 0x00000001, 
                     ALLOW_TRAILING_WHITE    = 0x00000002, // Bitflag indicating trailing whitespace is allowed.
                     ALLOW_INNER_WHITE       = 0x00000004,
                     ALLOW_WHITE_SPACES      = 0x00000001 | 0x00000004 | 0x00000002,    
-                    /**
-                     * When parsing a date/time string, if all year/month/day are missing, set the default date
-                     * to 0001/1/1, instead of the current year/month/day.
-                     */
                     NO_CURRENT_DATE_DEFAULT = 0x00000008,
-                    /**
-                     * When parsing a date/time string, if a timezone specifier ("GMT","Z","+xxxx", "-xxxx" exists), we will
-                     * adjust the parsed time based to GMT.
-                     */
                     ADJUST_TO_UNIVERSAL     = 0x00000010,
                     ASSUME_LOCAL            = 0x00000020,
                     ASSUME_UNIVERSAL        = 0x00000040,
-                    /**
-                     * Attempt to preserve whether the input is unspecified, local or UTC
-                     */
                     ROUNDTRIP_KIND          = 0x00000080
                 } enum_t;
 
-                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 10;
                 }
 
-                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return NONE;
                 }
                 
-                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
-                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
-                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
-                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, date_time_styles& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, date_time_styles& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -1189,11 +1135,9 @@ namespace omni {
                 }
         };
 
-        /** The day_of_week enum class - sunday is first day */
         class day_of_week
         {
             public:
-                /** The underlying enum type expected (as is in the .NET enum DayOfWeek) */
                 typedef enum enum_t {
                     SUNDAY = 0,
                     MONDAY = 1,
@@ -1204,13 +1148,11 @@ namespace omni {
                     SATURDAY = 6
                 } enum_t;
 
-                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 7;
                 }
 
-                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return SUNDAY;
@@ -1306,55 +1248,46 @@ namespace omni {
                     return L"UNK";
                 }
                 
-                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
-                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
-                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
-                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, day_of_week& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, day_of_week& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -1586,11 +1519,9 @@ namespace omni {
                 }
         };
 
-        /** The day_of_week_iso_8601 enum class - monday is first day */
         class day_of_week_iso_8601
         {
             public:
-                /** The underlying enum type expected (as is in the .NET enum DayOfWeek) */
                 typedef enum enum_t {
                     MONDAY = 0,
                     TUESDAY = 1,
@@ -1601,13 +1532,11 @@ namespace omni {
                     SUNDAY = 6
                 } enum_t;
 
-                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 7;
                 }
 
-                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return MONDAY;
@@ -1703,55 +1632,46 @@ namespace omni {
                     return L"UNK";
                 }
                 
-                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
-                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
-                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
-                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, day_of_week_iso_8601& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, day_of_week_iso_8601& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -1983,11 +1903,9 @@ namespace omni {
                 }
         };
 
-        /** The month_of_year enum class */
         class month_of_year
         {
             public:
-                /** The underlying enum type expected (as is in the .NET enum DayOfWeek) */
                 typedef enum enum_t {
                     UNKNOWN = 0,
                     JANUARY = 1,
@@ -2004,13 +1922,11 @@ namespace omni {
                     DECEMBER = 12
                 } enum_t;
 
-                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 13;
                 }
 
-                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return UNKNOWN;
@@ -2136,55 +2052,46 @@ namespace omni {
                     return L"UNK";
                 }
                 
-                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
-                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
-                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
-                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, month_of_year& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, month_of_year& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);

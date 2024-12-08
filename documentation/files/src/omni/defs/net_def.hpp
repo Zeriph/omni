@@ -253,7 +253,6 @@
 
 namespace omni {
     namespace net {
-        /** @internal library helper */
         inline int wsa_init()
         {
             WSADATA sdata;
@@ -265,13 +264,11 @@ namespace omni {
             return serr;
         }
 
-        /** @internal library helper */
         inline void wsa_close()
         {
             ::WSACleanup();
         }
 
-        /** @internal library helper */
         class wsa_info
         {
             public:

@@ -10,7 +10,7 @@
   <LicenseFile>/Code/omni/tools/docugen/templates/doc_license.txt</LicenseFile>
   <TemplateDirectory>/Code/omni/tools/docugen/templates/</TemplateDirectory>
   <TempZipDirectory>/Code/omni/tools/docugen/tmpout/</TempZipDirectory>
-  <Excluded>/Code/omni/source/.vscode</Excluded>
+  <Excluded>.vscode,.DS_Store</Excluded>
   <PathsFor7z>/usr/local/bin/7z,/usr/bin/7z,/usr/local/sbin/7z,/usr/sbin/7z,/opt/homebrew/bin/7z,/opt/homebrew/Cellar/p7zip/17.05/bin/7z</PathsFor7z>
   <NoParse>dir.hxx,file.hxx,file_ex.hxx,file_rw.hxx,path.hxx,path_combine.hxx,math_radmap.hxx,timer.hxx,date_data.hxx</NoParse>
   <KeywordInstructions>if,else,switch,case,default,break,goto,return,for,while,do,continue,typedef,sizeof,new,delete,throw,try,catch,namespace,operator,static_cast,const_cast,dynamic_cast,reinterpret_cast,true,false,using,typeid,and,and_eq,bitand,bitor,compl,not,not_eq,or,or_eq,xor,xor_eq,private,protected,public,friend,inline,template,virtual,asm,explicit,typename</KeywordInstructions>

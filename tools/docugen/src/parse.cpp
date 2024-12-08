@@ -69,15 +69,22 @@ void OmniDocuGen::DocuGen::_ScanSourcedir(const std::string& srcdir)
 {
     up(1, "Scanning directory {0}", srcdir);
     std::string ext;
-    std::string exlow = omni::string::to_lower(OmniDocuGen::Program::Settings.Excluded);
+    omni::seq::std_string_t ex_list = omni::string::split(omni::string::to_lower(Program::Settings.Excluded), ",");
+    bool is_ex = false;
     omni::seq::std_string_t vals;
     omni::io::directory::get_files(srcdir, vals);
     up(1, "Found {0} files", omni::string::to_string(vals.size()));
     omni::seq::std_string_t::iterator f;
     for (f = vals.begin(); f != vals.end(); ++f) {
         if (OmniDocuGen::Program::StopReq) { return; }
-        if (OmniDocuGen::CodeGen::IsNoParse(*f) || omni::string::contains(exlow, omni::string::to_lower(*f)))
-        {
+        is_ex = false;
+        omni_foreach(std::string, ex, ex_list) {
+            if (omni::string::contains(omni::string::to_lower(*f), *ex)) {
+                is_ex = true;
+                break;
+            }
+        }
+        if (is_ex) { 
             up(3, "Skipping excluded file '{0}'", *f);
             continue;
         }
@@ -97,7 +104,14 @@ void OmniDocuGen::DocuGen::_ScanSourcedir(const std::string& srcdir)
     omni::io::directory::get_directories(srcdir, vals);
     up(1, "Found {0} subdirectories", omni::string::to_string(vals.size()));
     for (f = vals.begin(); f != vals.end(); ++f) {
-        if (omni::string::contains(exlow, omni::string::to_lower(*f))) { continue; }
+        is_ex = false;
+        omni_foreach(std::string, ex, ex_list) {
+            if (omni::string::contains(omni::string::to_lower(*f), *ex)) {
+                is_ex = true;
+                break;
+            }
+        }
+        if (is_ex) { continue; }
         OmniDocuGen::DocuGen::_ScanSourcedir(*f);
         if (OmniDocuGen::Program::StopReq) { return; }
     }

@@ -52,8 +52,7 @@
 #define OMNI_SHA2_DIGEST_SIZE_FW 32 // (256 / 8)
 #define OMNI_SHA2_BLOCK_SIZE_FW 64 // (512 / 8)
 
-namespace omni { namespace crypto { /** @internal library helper */ namespace sha256_internal {
-    /** @internal library helper */
+namespace omni { namespace crypto { namespace sha256_internal {
     void transform(const unsigned char* message, uint32_t block_nb, uint32_t* hex_vals)
     {
         const uint32_t sha256_k[64] = {

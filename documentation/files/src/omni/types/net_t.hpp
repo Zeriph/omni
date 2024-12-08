@@ -33,9 +33,7 @@
 */
 
 namespace omni {
-    /** The net namespace is used to facilitate certain networking operations and handling */
     namespace net {
-        /** address_family defines enum values for the addressing scheme that an instance of the omni::net::socket classes can use. */
         class address_family
         {
             public:
@@ -46,67 +44,56 @@ namespace omni {
                     UNIX = AF_UNIX
                 } enum_t;
                 
-                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 4;
                 }
 
-                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return UNSPECIFIED;
                 }
 
-                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
-                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
-                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
-                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, address_family& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, address_family& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -527,7 +514,6 @@ namespace omni {
                 }
         };
 
-        /** connection_option defines enum values for the type of socket that an instance of the omni::net::socket::socket class represents. */
         class connection_option
         {
             public:
@@ -542,67 +528,56 @@ namespace omni {
                     ALLOW_IP4_FALLBACK = 32
                 } enum_t;
                 
-                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 7;
                 }
 
-                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return NONE;
                 }
 
-                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
-                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
-                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
-                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, connection_option& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, connection_option& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -834,7 +809,6 @@ namespace omni {
                 }
         };
         
-        /** protocol_type defines enum values for the protocols that the omni::net::socket class supports. */
         class protocol_type
         {
             public:
@@ -853,67 +827,56 @@ namespace omni {
                     RAW = IPPROTO_RAW
                 } enum_t;
                 
-                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 13;
                 }
 
-                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return IP;
                 }
 
-                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
-                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
-                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
-                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, protocol_type& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, protocol_type& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -1358,7 +1321,6 @@ namespace omni {
                 }
         };
 
-        /** server_error defines enum values for socket errors codes */
         class server_error
         {
             public:
@@ -1384,67 +1346,56 @@ namespace omni {
                     NOT_INITIALIZED = 10093
                 } enum_t;
                 
-                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 19;
                 }
 
-                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return UNSPECIFIED;
                 }
 
-                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
-                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
-                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
-                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, server_error& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, server_error& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -1910,7 +1861,6 @@ namespace omni {
                 }
         };
 
-        /** socket_error defines enum values for socket errors codes */
         class socket_error
         {
             public:
@@ -1970,67 +1920,56 @@ namespace omni {
                     NO_DAT = OMNI_SOCK_ERR_NO_DAT_FW          // DEV_NOTE: NO_DATA is a #define in netdb.h
                 } enum_t;
                 
-                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 53;
                 }
 
-                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return UNSPECIFIED;
                 }
 
-                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
-                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
-                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
-                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, socket_error& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, socket_error& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -2598,7 +2537,6 @@ namespace omni {
                 }
         };
         
-        /** socket_flags defines enum values for socket send and receive behaviors. */
         class socket_flags
         {
             public:
@@ -2610,67 +2548,56 @@ namespace omni {
                     END_OF_RECORD = OMNI_MSG_EOR_FW    // 8 (0 for Windows)
                 } enum_t;
 
-                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 5;
                 }
 
-                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return NONE;
                 }
 
-                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
-                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
-                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
-                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, socket_flags& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, socket_flags& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -3094,7 +3021,6 @@ namespace omni {
                 }
         };
 
-        /** select_mode defines enum values for the polling modes for the omni::net::socket::poll method. */
         class select_mode
         {
             public:
@@ -3105,67 +3031,56 @@ namespace omni {
                     SELECT_ERROR = 2
                 } enum_t;
                 
-                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 4;
                 }
                 
-                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return NONE;
                 }
 
-                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
-                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
-                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
-                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, select_mode& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, select_mode& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -3388,7 +3303,6 @@ namespace omni {
                 }
         };
 
-        /** blocking_mode defines enum values for the polling modes for the omni::net::socket::poll method. */
         class blocking_mode
         {
             public:
@@ -3397,67 +3311,56 @@ namespace omni {
                     DONT_BLOCK = 1
                 } enum_t;
                 
-                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 2;
                 }
                 
-                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return BLOCK;
                 }
 
-                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
-                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
-                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
-                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, blocking_mode& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, blocking_mode& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -3674,7 +3577,6 @@ namespace omni {
                 }
         };
 
-        /** socket_option_level defines enum values for socket option levels for the setsocketoption and getsocketoption methods. */
         class socket_option_level
         {
             public:
@@ -3687,67 +3589,56 @@ namespace omni {
                     SOCKET = SOL_SOCKET // 65535
                 } enum_t;
                 
-                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 6;
                 }
 
-                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return UNSPECIFIED;
                 }
 
-                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
-                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
-                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
-                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, socket_option_level& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, socket_option_level& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -4174,7 +4065,6 @@ namespace omni {
                 }
         };
         
-        /** socket_option defines enum values for socket configuration options. */
         class socket_option
         {
             public:
@@ -4199,67 +4089,56 @@ namespace omni {
                     SOCKET_TYPE = SO_TYPE // 4104,
                 } enum_t;
                 
-                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 19;
                 }
 
-                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return UNSPECIFIED;
                 }
 
-                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
-                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
-                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
-                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, socket_option& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, socket_option& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -4722,7 +4601,6 @@ namespace omni {
                 }
         };
 
-        /** tcp_option defines enum values for configuration option names. */
         class tcp_option
         {
             public:
@@ -4736,67 +4614,56 @@ namespace omni {
                     #endif
                 } enum_t;
                 
-                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 3;
                 }
 
-                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return UNSPECIFIED;
                 }
 
-                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
-                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
-                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
-                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, tcp_option& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, tcp_option& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -5214,7 +5081,6 @@ namespace omni {
                 }
         };
 
-        /** socket_shutdown defines enum values for constants that are used by the omni::net::socket::shutdown method. */
         class socket_shutdown
         {
             public:
@@ -5225,67 +5091,56 @@ namespace omni {
                     BOTH = OMNI_SOCK_BOTH_FW
                 } enum_t;
                 
-                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 4;
                 }
 
-                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return UNSPECIFIED;
                 }
 
-                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
-                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
-                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
-                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, socket_shutdown& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, socket_shutdown& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -5706,7 +5561,6 @@ namespace omni {
                 }
         };
         
-        /** socket_type defines enum values for the type of socket that an instance of the omni::net::socket class represents. */
         class socket_type
         {
             public:
@@ -5719,67 +5573,56 @@ namespace omni {
                     SEQPACKET = SOCK_SEQPACKET
                 } enum_t;
                 
-                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 6;
                 }
 
-                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return UNKNOWN;
                 }
 
-                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
-                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
-                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
-                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, socket_type& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, socket_type& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -6206,7 +6049,6 @@ namespace omni {
                 }
         };
 
-        /** socket_create_options defines enum values for how an omni::net::socket class should be created when instantiated. */
         class socket_create_options
         {
             public:
@@ -6215,67 +6057,56 @@ namespace omni {
                     USER_OPEN
                 } enum_t;
                 
-                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 2;
                 }
 
-                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return OPEN_ON_CREATE;
                 }
 
-                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
-                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
-                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
-                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, socket_create_options& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, socket_create_options& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);

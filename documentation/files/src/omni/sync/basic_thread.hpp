@@ -33,9 +33,6 @@
 
 namespace omni {
     namespace sync {
-        /** Represents an unmanaged system thread object. Automatically starts the thread when created
-         * unless otherwise specified.
-         */
         class basic_thread
         {
             public:
@@ -129,23 +126,15 @@ namespace omni {
                 #if defined(OMNI_SAFE_BASIC_THREAD)
                     mutable omni::sync::basic_lock m_mtx;
                 #endif
-                /** The arguments passed to the thread */
                 omni::sync::thread_arg_t m_args;
-                /** The delegate invoked on the thread when started */
                 void* m_mthd;
-                /** The underlying thread ID type */
                 omni::sync::thread_t m_tid;
-                /** The underlying thread handle type */
                 omni::sync::thread_handle_t m_thread;
-                /** The underlying thread options */
                 omni::sync::thread_flags m_ops;
-                /** The current state of the thread */
                 omni::sync::thread_state m_state;
                 #if defined(OMNI_NON_PORTABLE)
-                    /** The threads priority */
                     omni::sync::thread_priority m_priority;
                 #endif
-                /** The status of the thread, joined or is param thread start or is a threadpool thread */
                 volatile OMNI_BTHRD_INT_FW m_status;
                 
                 basic_thread(const omni::sync::thread_start& mthd, bool tpool);
@@ -161,11 +150,6 @@ namespace omni {
                 #endif
                 static OMNI_THREAD_FNPTR_T OMNI_THREAD_CALL_T _start(void* param);
                 
-                /**
-                 * This class is an internal thread manager not intended to be used anywhere but here.
-                 * it is used to avoid the static init order fiasco (via the static instance function).
-                 * it is private to avoid external use as well to allow it access to the private functions.
-                 */
                 class manager
                 {
                     public:

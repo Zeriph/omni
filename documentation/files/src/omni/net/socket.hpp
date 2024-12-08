@@ -28,7 +28,6 @@
 
 namespace omni {
     namespace net {
-        /** The socket class is used to facilitate IP4 (only) network communications. */
         class socket
         {
             public:
@@ -287,7 +286,6 @@ namespace omni {
                 omni::net::socket_error _send_to(const void* buffer, std::size_t buffer_size, omni::net::socket_flags flags, const std::string& ip, uint16_t port, uint32_t& sent);
         };
 
-        /** The socket6 class is used to facilitate IP6 or dual-stack (IP6/IP4) network communications */
         class socket6
         {
             public:

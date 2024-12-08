@@ -241,9 +241,6 @@ namespace omni {
                     return this->_dot_product(b);
                 }
 
-                /**
-                 * Returns the direction as degrees
-                 */
                 double direction() const
                 {
                     OMNI_SAFE_VEC2ALOCK_FW

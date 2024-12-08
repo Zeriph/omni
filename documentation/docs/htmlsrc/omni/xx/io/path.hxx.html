@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html><head><title>Omni C++ Library - omni/xx/io/path.hxx</title>
+<link rel="stylesheet" type="text/css" href="../../../../../content/main.css" /><link rel="icon" type="image/png" href="../../../../../content/favicon.png" />
+<script type="text/javascript" src="../../../../../content/common.js"></script></head><body><a name="topopage"></a>
+<div class="main"><div class="menu"><div><ul><li title="About Omni"><div>Omni C++ Library</div><ul>
+<li title="What is Omni?"><a href="../../../../../about.html">What is Omni?</a></li><li title="A quick start guide">
+<a href="../../../../../getstarted.html">Getting Started</a></li><li title="Cross platform support"><a href="../../../../../xplat.html">
+Cross Platform</a></li><li title="Download or view the latest source"><a href="../../../../../download.html">Downloads</a>
+</li></ul></li><li title="Omni documentation"><div>Documentation</div><ul><li title="View the highlighted source">
+<a href="../../../index.html" class="current">Source</a></li><li title="Library classes and namespaces">
+<a href="../../../../classes/index.html">Class Index</a></li><li title="Download and view examples">
+<a href="../../../../examples/index.html">Examples</a></li><li title="Download and view build examples">
+<a href="../../../../build/index.html">Building</a></li><li title="Omni compiler options">
+<a href="../../../../options/index.html">Macros/Options</a></li><li title="System API/Library calls">
+<a href="../../../../api.html">System API</a></li><li title="Other Considerations">
+<a href="../../../../consider.html">Considerations</a></li><li title="Coding style and best practices">
+<a href="../../../../codestyle.html">Style/Best Practices</a></li></ul></li><li title="Search Omni"><div>Search</div><ul>
+<li title="Search the source and documentation" id="srchli" name="srchli"><a href="../../../../../search.html">Search the Library</a>
+</li><li id="srchfrm" name="srchfrm" class="search"><form onsubmit="return false;">
+<input name="omnisrch" id="omnisrch" type="text" /><img src="../../../../../content/search.gif" /></form></li></ul></li>
+</ul><div class="ftr"><div>(C) <a href="https://zeriph.com">Zeriph Enterprises</a></div></div></div></div><div class="info">
+<!--start content-->
+<div class="ptitle"><a href="../../../../../files/src/omni/xx/io/path.hxx" onclick="return popup('../../../../../files/src/omni/xx/io/path.hxx')">omni/xx/io/path.hxx</a></div><div class="content"><div>
+<code><div class="cpphtmllines">
+<!--start line numbers-->
+001:<br><div id="cmntl1" name="cmntl1">002:<br>003:<br>004:<br>005:<br>006:<br>007:<br>008:<br>009:<br>010:<br>011:<br>012:<br>013:<br>014:<br>015:<br>016:<br>017:<br>018:<br></div>019:<br>
+020:<br><div id="cmntl2" name="cmntl2">021:<br>022:<br>023:<br>024:<br>025:<br>026:<br>027:<br>028:<br>029:<br>030:<br>031:<br>032:<br>033:<br>034:<br>035:<br></div>036:<br>037:<br>038:<br>039:<br>
+040:<br>041:<br>042:<br>043:<br>044:<br>045:<br>046:<br>047:<br>048:<br>049:<br>050:<br>051:<br>052:<br>053:<br>054:<br>055:<br>056:<br>057:<br>058:<br>059:<br>
+060:<br>061:<br>062:<br>063:<br>064:<br>065:<br>066:<br>067:<br>068:<br>069:<br>070:<br>071:<br>072:<br>073:<br>074:<br>075:<br>076:<br>077:<br>078:<br>079:<br>
+080:<br>081:<br>082:<br>083:<br>084:<br>085:<br>086:<br>087:<br>088:<br>089:<br>090:<br>091:<br>092:<br>093:<br>094:<br>095:<br>096:<br>097:<br>098:<br>099:<br>
+100:<br>101:<br>102:<br>103:<br>104:<br>105:<br>106:<br>107:<br>108:<br>109:<br>110:<br>111:<br>112:<br>113:<br>114:<br>115:<br>116:<br>117:<br>118:<br>119:<br>
+120:<br>121:<br>122:<br>123:<br>124:<br>125:<br>126:<br>127:<br>128:<br>129:<br>130:<br>131:<br>132:<br>133:<br>134:<br>135:<br>136:<br>137:<br>138:<br>139:<br>
+140:<br>141:<br>142:<br>143:<br>144:<br>145:<br>146:<br>147:<br>148:<br>149:<br>150:<br>151:<br>152:<br>153:<br>154:<br>155:<br>156:<br>157:<br>158:<br>159:<br>
+160:<br>161:<br>162:<br>163:<br>164:<br>165:<br>166:<br>167:<br>168:<br>169:<br>170:<br>171:<br>172:<br>173:<br>174:<br>175:<br>176:<br>177:<br>178:<br>179:<br>
+180:<br>181:<br>182:<br>183:<br>184:<br>185:<br>186:<br>187:<br>188:<br>189:<br>190:<br>191:<br>192:<br>193:<br>194:<br>195:<br>196:<br>197:<br>198:<br>199:<br>
+200:<br>201:<br>
+<!--end line numbers-->
+</div><div class="cpphtmlcmnt">
+<!--start collapse columns-->
+<img src="../../../../../content/tree/min.gif" alt="Min/Max" id="cmnti1" name="cmnti1" onclick="collapse('1', '../../../../../');" /><br><div id="cmnts1" name="cmnts1"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br>
+<img src="../../../../../content/tree/min.gif" alt="Min/Max" id="cmnti2" name="cmnti2" onclick="collapse('2', '../../../../../');" /><br><div id="cmnts2" name="cmnts2"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><div></div><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br>
+<!--end collapse columns-->
+</div><div class="cpphtml" style="margin-left:3.75em;">
+<!--start highlighted code-->
+<font class="syn_cmt">/*<div class="syn_ex" id="cmnt1" name="cmnt1">
+ * Copyright (c), Zeriph Enterprises<br>
+ * All rights reserved.<br>
+ * <br>
+ * Contributor(s):<br>
+ * Zechariah Perez, omni (at) zeriph (dot) com<br>
+ * <br>
+ * THIS SOFTWARE IS PROVIDED BY ZERIPH AND CONTRIBUTORS &quot;AS IS&quot; AND ANY<br>
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED<br>
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE<br>
+ * DISCLAIMED. IN NO EVENT SHALL ZERIPH AND CONTRIBUTORS BE LIABLE FOR ANY<br>
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES<br>
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;<br>
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND<br>
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT<br>
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS<br>
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.<br>
+ */</div><div></div></font>
+<br>
+<font class="syn_cmt">/* DEV_NOTE: this file is not intended to be used directly by any user code!<div class="syn_ex" id="cmnt2" name="cmnt2">
+<br>
+ i.e. do not #include &lt;<a href="../../../omni/xxx_impl.hxx.html">omni/xxx_impl.hxx</a>&gt; and do not compile this source directly.<br>
+ this file is included directly in other source. <br>
+ <br>
+ The logic is that <a href="../../../../classes/omni-cstring.html">omni::cstring</a> and <a href="../../../../classes/omni-wstring.html">omni::wstring</a> namespaces segregate the types<br>
+ for explicit calling; i.e. you can call omni::cstring::X to check on a std:string<br>
+ and similarly can call omni::wstring::X to check a std::wstring, while still having access<br>
+ to the OMNI_STRING_T_FW and omn::string::X functions (which are aliases for the other namespaces).<br>
+ <br>
+ Since <a href="../../../../classes/omni-wstring.html">omni::wstring</a> and <a href="../../../../classes/omni-cstring.html">omni::cstring</a> are merely wrappers for the <a href="../../../../classes/omni-string-util.html">omni::string::util</a> functions<br>
+ (which are templated) that then pass in the appropriate types (std::string/wstring char/wchar_t)<br>
+ putting the relevant code in a header with a few #defs for types makes keeping the files<br>
+ in sync (for functions) less messy. It does introduce slight confusion to anyone who might<br>
+ want to read this specific code or documentation though, hence this note.<br>
+*/</div><div></div></font>
+<br>
+<font class="syn_cmt">// so as not to accidentally build this file with the source this macro is defined in io.cpp</font><br>
+<font class="syn_pre">#if !defined(OMNI_IO_PATH_FW) || !defined(OMNI_PATH_FW) || !defined(OMNI_CHAR_T_FW) || !defined(OMNI_L_FW) || !defined(OMNI_STRING_T_FW)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;#error <font class="syn_str">&quot;invalid preprocessor directive detected&quot;</font><br>
+<font class="syn_pre">#endif</font><br>
+<br>
+<font class="syn_pre"><font class="syn_pre">#if defined(OMNI_IO_PATH_INTERNAL_FW)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">namespace</font> omni { <font class="syn_ins">namespace</font> io { <font class="syn_ins">namespace</font> path_internal {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> std_string_t &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;std_string_t generate(<font class="syn_typ">const</font> std_string_t&amp; path, <font class="syn_typ">const</font> std_string_t&amp; file, <font class="syn_typ">const</font> std_string_t&amp; ext)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;std_string_t ret = <a href="../../../../classes/omni-io-path-combine.html">omni::io::path::combine</a>(path, file + ext);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> fex = <a href="../../../../classes/omni-io-file-exists.html">omni::io::file::exists</a>(ret);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> dex = <a href="../../../../classes/omni-io-directory-exists.html">omni::io::directory::exists</a>(ret);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> is_file = fex &amp;&amp; !dex;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">bool</font> is_dir = dex &amp;&amp; !fex;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (is_file || is_dir) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_typ">uint64_t</font> max_val = <a href="http://www.cplusplus.com/reference/limits/numeric_limits/">std::numeric_limits</a>&lt;<font class="syn_typ">uint64_t</font>&gt;::max();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;std_string_t fpath = (file.empty() ?<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(path + <a href="../../../../classes/omni-string-util-lexical_cast.html">omni::string::util::lexical_cast</a>&lt;std_string_t&gt;(<font class="syn_str">&quot; - &quot;</font>)) :<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../classes/omni-io-path-combine.html">omni::io::path::combine</a>(path, (file + <a href="../../../../classes/omni-string-util-lexical_cast.html">omni::string::util::lexical_cast</a>&lt;std_string_t&gt;(<font class="syn_str">&quot; - &quot;</font>))));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">for</font> (<font class="syn_typ">uint64_t</font> i = <font class="syn_num">1</font>; i &lt; max_val; ++i) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ret = fpath + <a href="../../../../classes/omni-string-util-lexical_cast.html">omni::string::util::lexical_cast</a>&lt;std_string_t, <font class="syn_typ">uint64_t</font>&gt;(i) + ext;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(is_file &amp;&amp; !<a href="../../../../classes/omni-io-file-exists.html">omni::io::file::exists</a>(ret)) ||<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(is_dir &amp;&amp; !<a href="../../../../classes/omni-io-directory-exists.html">omni::io::directory::exists</a>(ret))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;) { <font class="syn_ins">break</font>; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> ret;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt; <font class="syn_ins">typename</font> T &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;T get_invalid_file_chars()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <font class="syn_ins">return</font> T(); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;} } }<br>
+<font class="syn_pre">#endif</font><br>
+<br>
+<font class="syn_ins">namespace</font> omni { <font class="syn_ins">namespace</font> io { <font class="syn_ins">namespace</font> path_internal {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">template</font> &lt;&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;omni::seq::OMNI_CHAR_T_FW get_invalid_file_chars&lt;omni::seq::OMNI_CHAR_T_FW&gt;()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static omni::seq::OMNI_CHAR_T_FW::value_type ret[] = {OMNI_L_FW(&#39;&lt;&#39;),OMNI_L_FW(&#39;&gt;&#39;),OMNI_L_FW(<font class="syn_chr">&#39;:&#39;</font>),OMNI_L_FW(&#39;<font class="syn_str">&quot;&#39;),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OMNI_L_FW(&#39;/&#39;),OMNI_L_FW(&#39;\\&#39;),OMNI_L_FW(&#39;|&#39;),OMNI_L_FW(&#39;?&#39;),OMNI_L_FW(&#39;*&#39;),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_num">0</font>,<font class="syn_num">1</font>,<font class="syn_num">2</font>,<font class="syn_num">3</font>,<font class="syn_num">4</font>,<font class="syn_num">5</font>,<font class="syn_num">6</font>,<font class="syn_num">7</font>,<font class="syn_num">8</font>,<font class="syn_num">9</font>,<font class="syn_num">10</font>,<font class="syn_num">11</font>,<font class="syn_num">12</font>,<font class="syn_num">13</font>,<font class="syn_num">14</font>,<font class="syn_num">15</font>,<font class="syn_num">16</font>,<font class="syn_num">17</font>,<font class="syn_num">18</font>,<font class="syn_num">19</font>,<font class="syn_num">20</font>,<font class="syn_num">21</font>,<font class="syn_num">22</font>,<font class="syn_num">23</font>,<font class="syn_num">24</font>,<font class="syn_num">25</font>,<font class="syn_num">26</font>,<font class="syn_num">27</font>,<font class="syn_num">28</font>,<font class="syn_num">29</font>,<font class="syn_num">30</font>,<font class="syn_num">31</font>};<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> omni::seq::OMNI_CHAR_T_FW(ret, ret + <font class="syn_ins">sizeof</font>(ret)/<font class="syn_ins">sizeof</font>(omni::seq::OMNI_CHAR_T_FW::value_type));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+} } }<br>
+<br>
+OMNI_STRING_T_FW omni::io::OMNI_PATH_FW::change_extension(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; path, <font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; extension)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a> psep = path.find_last_of(OMNI_L_FW(&quot;</font>.<font class="syn_str">&quot;));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (psep == OMNI_STRING_T_FW::npos) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> path + OMNI_L_FW(&quot;</font>.<font class="syn_str">&quot;) + extension;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> path.substr(<font class="syn_num">0</font>, psep) + OMNI_L_FW(&quot;</font>.<font class="syn_str">&quot;) + extension;<br>
+}<br>
+<br>
+OMNI_STRING_T_FW omni::io::OMNI_PATH_FW::combine(<font class="syn_typ">const</font> omni_sequence_t&lt;OMNI_STRING_T_FW&gt;&amp; paths, <font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; seperator)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a> psep;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OMNI_STRING_T_FW ret, sep;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;omni_sequence_t&lt;OMNI_STRING_T_FW&gt;::const_iterator itr = paths.begin();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">for</font> (; itr != paths.end(); ++itr) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;psep = itr-&gt;find_last_of(seperator);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> ((itr == paths.begin()) || (psep == itr-&gt;length()-<font class="syn_num">1</font>)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ret += *itr;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <font class="syn_ins">else</font> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ret += seperator + *itr;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> ret;<br>
+}<br>
+<br>
+OMNI_STRING_T_FW omni::io::OMNI_PATH_FW::combine(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; path1, <font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; path2)<br>
+{ <br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (path1.empty()) { <font class="syn_ins">return</font> path2; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a> psep = path1.find_last_of(OMNI_L_FW(&quot;</font>/\\<font class="syn_str">&quot;));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (psep == path1.length()-<font class="syn_num">1</font>) { <font class="syn_ins">return</font> path1 + path2; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (path1.find_first_of(OMNI_L_FW(&quot;</font>\\<font class="syn_str">&quot;)) != OMNI_STRING_T_FW::npos) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> path1 + OMNI_L_FW(&quot;</font>\\<font class="syn_str">&quot;) + path2;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> path1 + OMNI_L_FW(&quot;</font>/<font class="syn_str">&quot;) + path2;<br>
+}<br>
+<br>
+OMNI_STRING_T_FW omni::io::OMNI_PATH_FW::get_extension(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; path)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a> psep = path.find_last_of(OMNI_L_FW(&quot;</font>.<font class="syn_str">&quot;));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (psep == OMNI_STRING_T_FW::npos) { <font class="syn_ins">return</font> OMNI_STRING_T_FW(); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> path.substr(psep);<br>
+}<br>
+<br>
+OMNI_STRING_T_FW omni::io::OMNI_PATH_FW::get_name(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; path)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a> psep = path.find_last_of(OMNI_L_FW(&quot;</font>/\\<font class="syn_str">&quot;));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (psep == OMNI_STRING_T_FW::npos) { <font class="syn_ins">return</font> path; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> path.substr(psep+<font class="syn_num">1</font>);<br>
+}<br>
+<br>
+OMNI_STRING_T_FW omni::io::OMNI_PATH_FW::get_name_without_extension(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; path)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a> psep = path.find_last_of(OMNI_L_FW(&quot;</font>/\\<font class="syn_str">&quot;));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a> rng = path.find_last_of(OMNI_L_FW(&quot;</font>.<font class="syn_str">&quot;));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (psep == OMNI_STRING_T_FW::npos) { <font class="syn_ins">return</font> ((rng == OMNI_STRING_T_FW::npos) ? path : path.substr(rng)); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (rng == OMNI_STRING_T_FW::npos) { <font class="syn_ins">return</font> path.substr(psep+<font class="syn_num">1</font>); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> path.substr(psep+<font class="syn_num">1</font>, (rng - psep - <font class="syn_num">1</font>));<br>
+}<br>
+<br>
+OMNI_STRING_T_FW omni::io::OMNI_PATH_FW::get_parent_name(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; path)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a> psep = path.find_last_of(OMNI_L_FW(&quot;</font>/\\<font class="syn_str">&quot;));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (psep == OMNI_STRING_T_FW::npos) { <font class="syn_ins">return</font> OMNI_STRING_T_FW(); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> path.substr(<font class="syn_num">0</font>, psep);<br>
+}<br>
+<br>
+OMNI_STRING_T_FW omni::io::OMNI_PATH_FW::generate(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; path)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> omni::io::path_internal::generate&lt;OMNI_STRING_T_FW&gt;(path, OMNI_STRING_T_FW(), OMNI_STRING_T_FW());<br>
+}<br>
+<br>
+OMNI_STRING_T_FW omni::io::OMNI_PATH_FW::generate(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; path, <font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; file)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> omni::io::path_internal::generate&lt;OMNI_STRING_T_FW&gt;(path, file, OMNI_STRING_T_FW());<br>
+}<br>
+<br>
+OMNI_STRING_T_FW omni::io::OMNI_PATH_FW::generate(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; path, <font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; file, <font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; ext)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> omni::io::path_internal::generate&lt;OMNI_STRING_T_FW&gt;(path, file, ext);<br>
+}<br>
+<br>
+omni::seq::OMNI_CHAR_T_FW omni::io::OMNI_PATH_FW::get_invalid_file_chars()<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> omni::io::path_internal::get_invalid_file_chars&lt;omni::seq::OMNI_CHAR_T_FW&gt;();<br>
+}<br>
+<br>
+omni::seq::OMNI_CHAR_T_FW omni::io::OMNI_PATH_FW::get_invalid_path_chars()<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> omni::io::path_internal::get_invalid_file_chars&lt;omni::seq::OMNI_CHAR_T_FW&gt;();<br>
+}<br>
+<br>
+<font class="syn_typ">bool</font> omni::io::OMNI_PATH_FW::has_extension(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; path)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> path.find_last_of(OMNI_L_FW(&quot;</font>.<font class="syn_str">&quot;)) != OMNI_STRING_T_FW::npos;<br>
+}<br>
+<br>
+<font class="syn_typ">bool</font> omni::io::OMNI_PATH_FW::is_path_absolute(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; path)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(path.find(OMNI_L_FW(&quot;</font>..<font class="syn_str">&quot;)) == OMNI_STRING_T_FW::npos) &amp;&amp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((path.size() &gt; <font class="syn_num">0</font>) &amp;&amp; ((path.at(<font class="syn_num">0</font>) == OMNI_L_FW(&#39;/&#39;)) || (path.at(<font class="syn_num">0</font>) == OMNI_L_FW(&#39;\\&#39;)))) ||<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((path.size() &gt; <font class="syn_num">1</font>) &amp;&amp; (path.at(<font class="syn_num">1</font>) == OMNI_L_FW(&#39;:&#39;)))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;);<br>
+}<br>
+<br>
+OMNI_STRING_T_FW omni::io::OMNI_PATH_FW::trim_trailing_slash(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; path)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cplusplus.com/reference/cstring/size_t/">std::size_t</a> found = path.find_last_not_of(OMNI_L_FW(&quot;</font>\\/<font class="syn_str">));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">if</font> (found != OMNI_STRING_T_FW::npos) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> path.substr(<font class="syn_num">0</font>, found+<font class="syn_num">1</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> path;<br>
+}<br>
+<!--end highlighted code-->
+</div></code><br>
+<!--end content-->
+</div></div></div></div><script type="text/javascript">loadJS(); collapseAll('2', '../../../../../');</script></body></html>

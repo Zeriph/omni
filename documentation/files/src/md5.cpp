@@ -45,8 +45,7 @@
 #define OMNI_MD5_H_FW(x, y, z) ((x) ^ (y) ^ (z))
 #define OMNI_MD5_I_FW(x, y, z) ((y) ^ ((x) | (~z)))
 
-namespace omni { namespace crypto { /** @internal library helper */ namespace md5_internal {
-    /** @internal library helper */
+namespace omni { namespace crypto { namespace md5_internal {
     void transform (const unsigned char* block, uint32_t* state)
     {
         const uint32_t transform_magic[64] = {
@@ -111,7 +110,6 @@ namespace omni { namespace crypto { /** @internal library helper */ namespace md
         state[2] += c;
         state[3] += d;
     }
-    /** @internal library helper */
     std::string compute(const unsigned char* data, uint32_t data_len)
     {
         uint32_t state[4] = { 0x67452301, 0xefcdab89, 0x98badcfe, 0x10325476 };
@@ -150,7 +148,6 @@ namespace omni { namespace crypto { /** @internal library helper */ namespace md
         unsigned char* digest = reinterpret_cast<unsigned char *>(state);
         return omni::crypto::util::buffer_to_hex_string(digest, 16);
     }
-    /** @internal library helper */
     inline std::string compute(const std::string& text)
     {
         return omni::crypto::md5_internal::compute(reinterpret_cast<const unsigned char*>(text.c_str()), static_cast<uint32_t>(text.length()));

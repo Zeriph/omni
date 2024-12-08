@@ -29,22 +29,10 @@
 
 namespace omni {
     namespace chrono {
-        /**
-         * Represents a date/time object that counts 100-nanosecond intervals starting
-         * at 1/1/0001 12:00am and going until 12/31/9999 23:59:59.9999999 (for a total
-         * of 3155378975999999999 ticks).
-         */
         class date_time
         {
             public:
                 date_time(const omni::chrono::date_time& cp);
-                /**
-                 * @brief Constructs a date_time object from a tick value representing 100-nanosecond intervals.
-                 * 
-                 * @details Constructs a date_time from a tick count. The tick count specified is the date as a
-                 * number of 100-nanosecond intervals that have elapsed since 1/1/0001 12:00am (or 0 ticks), and
-                 * go up to a maximum value of 3155378975999999999 ticks (which is 12/31/9999 23:59:59.9999999).
-                 */
                 OMNI_EXPLICIT date_time(uint64_t ticks);
                 date_time(uint64_t ticks, const omni::chrono::date_time_kind& kind);
                 date_time(uint16_t year, uint16_t month_val, uint16_t day_val);
@@ -249,18 +237,6 @@ namespace omni {
                 static bool try_create(uint16_t year, uint16_t month_val, uint16_t day_val, uint16_t hour, uint16_t minute, uint16_t second, uint16_t millisecond, omni::chrono::date_time& result);
                 
             private:
-                /**
-                 * @brief The underlying date data stored as uin64_t
-                 * 
-                 * @details The data is stored as an unsigned 64-bit integer
-                 * Bits 01-62: The value of 100-nanosecond ticks where 0 represents 1/1/0001 12:00am, up until the value
-                 *             12/31/9999 23:59:59.9999999
-                 * Bits 63-64: A four-state value that describes the omni::chrono::date_time_kind value of the date time, with a 2nd
-                 *             value for the rare case where the date time is local, but is in an overlapped daylight
-                 *             savings time hour and it is in daylight savings time. This allows distinction of these
-                 *             otherwise ambiguous local times and prevents data loss when round tripping from Local to
-                 *             UTC time.
-                 */
                 uint64_t m_date;
                 #if defined(OMNI_SAFE_DATETIME)
                     mutable omni::sync::basic_lock m_mtx;

@@ -33,89 +33,69 @@
 
 namespace omni {
     namespace sync {
-        /** The priority structure defines enum values for the scheduling priority of a process or thread. */
         class thread_priority
         {
             public:
-                /** The underlying enum type exposed via the parent priority structure */
                 typedef enum enum_t {
-                    /** Defines an idle thread priority */
                     IDLE = -15,
-                    /** Defines a low thread priority */
                     LOWEST = -2,
-                    /** Defines a below normal thread priority */
                     BELOW_NORMAL = -1,
-                    /** Defines a normal thread priority */
                     NORMAL = 0,
-                    /** Defines an above normal thread priority */
                     ABOVE_NORMAL = 1,
-                    /** Defines a highest thread priority */
                     HIGHEST = 2,
-                    /** Defines a real time thread priority */
                     REAL_TIME = 15
                 } enum_t;
 
-                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 7;
                 }
 
-                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return NORMAL;
                 }
             
-                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
-                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
-                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
-                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, thread_priority& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, thread_priority& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -347,79 +327,64 @@ namespace omni {
                 }
         };
         
-        /** The thread start type (immediate or user) */
         class thread_start_type
         {
             public:
-                /** The underlying enum type expected */
                 typedef enum enum_t {
-                    /** Defines the thread will start when the user calls the start method */
                     USER = 0,
-                    /** Defines the thread will start after construction is complete */
                     NOW = 1
                 } enum_t;
 
-                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 2;
                 }
 
-                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return USER;
                 }
                 
-                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
-                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
-                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
-                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, thread_start_type& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, thread_start_type& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -636,93 +601,71 @@ namespace omni {
                 }
         };
         
-        /** The state structure defines enum values for the execution status of thread types */
         class thread_state
         {
             public:
-                /** The underlying enum type exposed via the parent state structure */
                 typedef enum enum_t {
-                    /** Defines a thread as unstarted (default when created) */
                     UNSTARTED = 0,
-                    /** Defines a thread is attempting to spawn */
                     START_REQUESTED = 1,
-                    /** Defines a thread is running (method has been called) */
                     RUNNING = 2,
-                    /** Defines a thread has completed its function (method complete) */
                     COMPLETED = 4,
-                    /** Defines a thread has a stop request (kill request) */
                     STOP_REQUESTED = 8,
-                    /** Defines a thread is stopped (killed) */
                     STOPPED = 16,
-                    /** Defines a thread has an abort request */
                     ABORT_REQUESTED = 32,
-                    /** Defines a thread has been aborted */
                     ABORTED = 64,
-                    /** Defines a thread has a state that can not be determined (when creating threads from handles for instance) */
                     UNKNOWN = 255
                 } enum_t;
 
-                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 9;
                 }
 
-                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return UNSTARTED;
                 }
                 
-                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
-                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
-                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
-                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, thread_state& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, thread_state& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -960,16 +903,12 @@ namespace omni {
                 }
         };
         
-        /** Defines the thread options structure allowing finer control of a thread object */
         class thread_option
         {
             public:
-                /** The underlying enum type exposed via the parent thread_option structure */
                 typedef enum enum_t {
                     NONE = 0,
-                    /** Defines the option to set if the thread shall allow reuse of the thread */
                     ALLOW_THREAD_REUSE = 1,
-                    /** Defines the option to auto join a thread on destruction */
                     AUTO_JOIN = 2,
                     DETACH_ON_DESTROY = 4, // default
                     ABORT_ON_DESTROY = 8,
@@ -977,73 +916,60 @@ namespace omni {
                     DETACH_ON_ASSIGN = 32, // default
                     ABORT_ON_ASSIGN = 64,
                     KILL_ON_ASSIGN = 128,
-                    /** Defines the option to set if the thread shall have a specified stack size */
                     STACK_SIZE = 256,
-                    /** Defines the option to set if the thread timeout for join operation on kill_on_eop */
                     AUTO_JOIN_TIMEOUT = 512
                 } enum_t;
 
-                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 11;
                 }
 
-                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return NONE;
                 }
                 
-                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
-                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
-                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
-                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, thread_option& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, thread_option& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -1485,67 +1411,35 @@ namespace omni {
                 }
         };
         
-        /** Defines the thread option flag structure allowing finer control of a thread object */
         class thread_flags
         {
             public:
-                /** The default constructor */
                 thread_flags() : m_stack(0), m_timeout(0), m_flags(0) { }
                 
-                /**
-                 * The copy constructor
-                 *
-                 * @param cp    The other structure to copy
-                 */
                 thread_flags(const omni::sync::thread_flags &cp) :
                     m_stack(cp.m_stack),
                     m_timeout(cp.m_timeout),
                     m_flags(cp.m_flags)
                 { }
                 
-                /**
-                 * Stack size constructor; initializes the structure with specified stack size
-                 *
-                 * @param stack    The stack size to set
-                 */
                 OMNI_EXPLICIT thread_flags(std::size_t stack) :
                     m_stack(stack),
                     m_timeout(0),
                     m_flags(0)
                 { }
                 
-                /**
-                 * Initializes the class with specified stack size and timeout
-                 * 
-                 * @param stack    The stack size to set
-                 * @param timeout  The timeout on auto-join
-                 */
                 thread_flags(std::size_t stack, std::size_t timeout) :
                     m_stack(stack),
                     m_timeout(timeout),
                     m_flags(0)
                 { }
                 
-                /**
-                 * Initializes the class with specified stack size and timeout
-                 * 
-                 * @param stack     The stack size to set
-                 * @param timeout   The timeout on auto-join
-                 * @param flags     The flag bit mask to set
-                 */
                 thread_flags(std::size_t stack, std::size_t timeout, unsigned char flags) :
                     m_stack(stack),
                     m_timeout(timeout),
                     m_flags(flags)
                 { }
                 
-                /**
-                 * Initializes the class with specified stack size and timeout
-                 * 
-                 * @param stack     The stack size to set
-                 * @param timeout   The timeout on auto-join
-                 * @param flag      The flag bit to set
-                 */
                 thread_flags(std::size_t stack, std::size_t timeout, omni::sync::thread_option::enum_t flag) :
                     m_stack(stack),
                     m_timeout(timeout),
@@ -1650,11 +1544,6 @@ namespace omni {
                     this->m_stack = stack;
                 }
                 
-                /**
-                 * Equality operator tests if objects are equal
-                 * 
-                 * @param o     The other structure to test
-                 */
                 bool operator==(const omni::sync::thread_flags& o) const
                 {
                     return
@@ -1663,11 +1552,6 @@ namespace omni {
                     this->m_flags == o.m_flags);
                 }
                 
-                /**
-                 * Assignment operator sets values from the other object
-                 * 
-                 * @param o     The other structure to assign from
-                 */
                 omni::sync::thread_flags& operator=(const omni::sync::thread_flags& o)
                 {
                     if (this != &o) {
@@ -1681,82 +1565,35 @@ namespace omni {
             private:
                 // DEV_NOTE: since the thread union has a std::size_t type, the flags are also size_t
 
-                /**
-                 * The threads stack size. If the thread is in running state,
-                 * the new stack size will not take effect until the next run.
-                 */
                 std::size_t m_stack;
-                /**
-                 * If timeout_on_eop is >0 and kill_on_eop has been set for a thread,
-                 * when an external operation is being applied, the thread will attempt
-                 * to abort and join for the specified timeout before killing the thread
-                 */
                 std::size_t m_timeout;
-                /**
-                 * The underlying bit mask for the flags of this structure. A bit
-                 * mask on an unsigned type is used to conserve space instead of
-                 * using 9 bool types, we use 1 size type, additionally, the checks
-                 * for the various flags should not be called in any sort of loop.
-                 */
                 std::size_t m_flags;
         };
 
-        /** Defines the union type used to set specific thread options. */
         typedef union thread_option_union {
-            /** Defines the std::size_t value of this union */
             std::size_t s_val;
-            /** Defines the boolean value of this union */
             bool b_val;
             
-            /**
-             * Create a new union based on the specified numeric value.
-             * 
-             * @param val   The value to set to this union
-             */
             thread_option_union(int32_t val) : s_val(static_cast<std::size_t>(val)) {}
             
-            /**
-             * Create a new union based on the specified numeric value.
-             * 
-             * @param val   The value to set to this union
-             */
             thread_option_union(long val) : s_val(static_cast<std::size_t>(val)) {}
             
-            /**
-             * Create a new union based on the specified numeric value.
-             * 
-             * @param val   The value to set to this union
-             */
             thread_option_union(std::size_t val) : s_val(val) {}
             
-            /**
-             * Create a new union based on the specified boolean value.
-             * 
-             * @param val   The value to set to this union
-             */
             thread_option_union(bool val) : b_val(val) {}
         } thread_option_union;
         
         // Types
         #if !defined(OMNI_NO_CONSTS)
-        /** Defines the platform infinite time out value */
         const uint32_t INFINITE_TIMEOUT = OMNI_INFINITE_TIMEOUT;
         #endif
-        /** Defines the thread argument parameter type (i.e. void* or omni::generic_ptr) */
         typedef OMNI_THREAD_ARGS_T thread_arg_t;
-        /** Defines the platform thread type */
         typedef OMNI_THREAD_T thread_t;
-        /** Defines the platform thread handle type */
         typedef OMNI_THREAD_HANDLE_T thread_handle_t;
-        /** Defines the platform thread function pointer type (void* / int, etc) */
         typedef OMNI_THREAD_FNPTR_T thread_fnptr_t;
-        /** Defines the platform thread function return type */
         typedef OMNI_THREAD_RET_T thread_ret_t;
-        /** An alias type to the omni::thread_option_union */
         typedef omni::sync::thread_option_union thread_union_t;
-        /** Defines the signature for a thread start delegate taking no arguments */
         typedef omni::delegate<void> thread_start;
-        /** Defines the signature for a thread start delegate taking the default void* argument */
         typedef omni::delegate1<void, omni::sync::thread_arg_t> parameterized_thread_start;
         
         #if defined(OMNI_THROW)
@@ -1764,11 +1601,6 @@ namespace omni {
             extern omni::event1<void, const omni::exception&> user_thread_exception;
         #endif
 
-        /**
-         * Gets the current system thread handle
-         *    
-         * @return A thread_handle_t of the system thread handle
-         */
         inline omni::sync::thread_handle_t thread_handle()
         {
             #if defined(OMNI_OS_WIN)
@@ -1782,11 +1614,6 @@ namespace omni {
             #endif
         }
         
-        /**
-         * Gets the system ID for the current thread
-         *
-         * @return A thread_t thread ID type of the current TID
-         */
         inline omni::sync::thread_t thread_id()
         {
             #if defined(OMNI_OS_WIN)
@@ -1796,16 +1623,6 @@ namespace omni {
             #endif
         }
         
-        /**
-         * Blocks the calling thread until the thread passed in has finished
-         * executing (by normal means or cancellation) or the specified timeout
-         * has been reached, which ever happens first.
-         * 
-         * @param timeout   The timeout (in milliseconds) to wait for a thread to finish
-         * 
-         * @return True if the thread has been joined successfully, false if the operation
-         *         times out or there was an error
-         */
         inline bool join_thread(omni::sync::thread_handle_t handle, unsigned long timeout)
         {
             if (handle == 0) { 
@@ -1850,12 +1667,6 @@ namespace omni {
             #endif
         }
         
-        /**
-         * Blocks the calling thread until the thread passed in has finished
-         * executing (by normal means or cancellation).
-         * 
-         * @return True on success, false otherwise
-         */
         inline bool join_thread(omni::sync::thread_handle_t handle)
         {
             return omni::sync::join_thread(handle, OMNI_INFINITE_TIMEOUT);

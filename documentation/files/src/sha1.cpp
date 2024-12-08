@@ -49,8 +49,7 @@
 #define OMNI_SHA1_BLOCK_SZ_FW 16
 #define OMNI_SHA1_BLOCK_BYTE_SZ_FW 64 // OMNI_SHA1_BLOCK_SZ_FW * 4
 
-namespace omni { namespace crypto { /** @internal library helper */ namespace sha1_internal {
-        /** @internal library helper */
+namespace omni { namespace crypto { namespace sha1_internal {
         void buffer_to_block(const std::string& buffer, uint32_t* block)
         {
             for (uint64_t i = 0; i < OMNI_SHA1_BLOCK_SZ_FW; ++i) {
@@ -61,7 +60,6 @@ namespace omni { namespace crypto { /** @internal library helper */ namespace sh
             }
         }
 
-        /** @internal library helper */
         void read(std::istream& stream, std::string& str, std::size_t size)
         {
             char* buf = new char[size];
@@ -70,7 +68,6 @@ namespace omni { namespace crypto { /** @internal library helper */ namespace sh
             OMNI_FREE_ARR(buf);
         }
 
-        /** @internal library helper */
         void transform(uint32_t* block, uint32_t* digest, uint64_t& transforms)
         {
             uint32_t a = digest[0]; uint32_t b = digest[1]; uint32_t c = digest[2]; uint32_t d = digest[3]; uint32_t e = digest[4];
@@ -101,7 +98,6 @@ namespace omni { namespace crypto { /** @internal library helper */ namespace sh
             ++transforms;
         }
         
-        /** @internal library helper */
         void compute_hash(std::istream& stream, std::string& buffer, uint32_t* digest, uint64_t& transforms, std::string& out_result)
         {
             std::string rbuf;

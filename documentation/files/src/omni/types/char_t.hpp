@@ -327,37 +327,28 @@ namespace omni {
             return c;
         }
         
-        /** @internal library helper */
         namespace helpers {
-            /** @internal library helper */
             inline bool is_1or0(char v)
             { return v == '0' || v == '1'; }
             
-            /** @internal library helper */
             inline bool is_1or0(wchar_t v)
             { return v == L'0' || v == L'1'; }
             
-            /** @internal library helper */
             inline bool is_nde(char v)
             { return (v == '-' || v == '.' || v == ','); }
             
-            /** @internal library helper */
             inline bool is_nde(wchar_t v)
             { return (v == L'-' || v == L'.' || v == L','); }
             
-            /** @internal library helper */
             inline bool is_de(char v)
             { return (v == '.' || v == ','); }
             
-            /** @internal library helper */
             inline bool is_de(wchar_t v)
             { return (v == L'.' || v == L','); }
             
-            /** @internal library helper */
             inline bool is_neg(char v)
             { return (v == '-'); }
             
-            /** @internal library helper */
             inline bool is_neg(wchar_t v)
             { return (v == L'-'); }
         }

@@ -252,14 +252,30 @@ namespace OmniDocuGen
             omni::seq::std_string_t files;
             omni::io::directory::get_directories(dir, dirs);
             omni::io::directory::get_files(dir, files);
+            omni::seq::std_string_t ex_list = omni::string::split(omni::string::to_lower(Program::Settings.Excluded), ",");
+            bool is_ex = false;
             omni_foreach (std::string, d, dirs) {
                 if (OmniDocuGen::Program::StopReq) { return r; }
-                if (omni::string::contains(omni::string::to_lower(Program::Settings.Excluded), omni::string::to_lower(*d))) { continue; }
+                is_ex = false;
+                omni_foreach(std::string, ex, ex_list) {
+                    if (omni::string::contains(omni::string::to_lower(*d), *ex)) {
+                        is_ex = true;
+                        break;
+                    }
+                }
+                if (is_ex) { continue; }
                 omni::sequence::add_range(r, OmniDocuGen::Util::GetFileList(*d, includeDir));
             }
             omni_foreach (std::string, f, files) {
                 if (OmniDocuGen::Program::StopReq) { return r; }
-                if (omni::string::contains(omni::string::to_lower(Program::Settings.Excluded), omni::string::to_lower(*f))) { continue; }
+                is_ex = false;
+                omni_foreach(std::string, ex, ex_list) {
+                    if (omni::string::contains(omni::string::to_lower(*f), *ex)) {
+                        is_ex = true;
+                        break;
+                    }
+                }
+                if (is_ex) { continue; }
                 r.push_back(*f);
             }
             return r;

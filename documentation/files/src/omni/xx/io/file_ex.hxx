@@ -31,8 +31,7 @@
     #error "invalid preprocessor directive detected"
 #endif
 
-namespace omni { namespace io { /** @internal library helper */ namespace file_internal {
-    /** @internal library helper */
+namespace omni { namespace io { namespace file_internal {
     inline bool exists(const std::string& file)
     {
         if (file.empty()) { return false; }
@@ -64,7 +63,6 @@ namespace omni { namespace io { /** @internal library helper */ namespace file_i
             return false;
         #endif
     }
-    /** @internal library helper */
     inline bool exists(const std::wstring& file)
     {
         if (file.empty()) { return false; }
@@ -98,8 +96,7 @@ namespace omni { namespace io { /** @internal library helper */ namespace file_i
     }
 }}}
 
-namespace omni { namespace io { /** @internal library helper */ namespace dir_internal {
-    /** @internal library helper */
+namespace omni { namespace io { namespace dir_internal {
     inline bool exists(const std::string& folder)
     {
         if (folder.empty()) { return false; }
@@ -119,7 +116,6 @@ namespace omni { namespace io { /** @internal library helper */ namespace dir_in
             return false;
         #endif
     }
-    /** @internal library helper */
     inline bool exists(const std::wstring& folder)
     {
         if (folder.empty()) { return false; }

@@ -780,32 +780,6 @@ namespace omni {
                 }
             }
 
-            /**
-             * @brief           Create a path on a circle.
-             *
-             * @details         Creates a path of 2d points along a circle given an {X, Y} center point
-             *                  and a radius size. This will create a point every 1 degree along the circle,
-             *                  alternatively you may pass along a stepping value to change the interval each
-             *                  node along the path is created.
-             *
-             * @return          A list of omni::geometry::point2d types containing each point along the path.
-             *
-             * @param x         The X value of the center of the circle.
-             * @param y         The Y value of the center of the circle.
-             * @param radius    The radius of the circle.
-             * @param step      The stepping value to create each point at (default is 1 degree).
-             * @param invert_x  True to invert the X direction the points are added to the list.
-             * @param invert_y  True to invert the Y direction the points are added to the list.
-             *
-             * @tparam std_seq_t        The templated sequence type (e.g. vector/deque/etc.).
-             * @tparam T                The underlying type the points will be (e.g. double/int32_t/etc.).
-             * @tparam std_allocator_t  The templated sequence type allocator.
-             *
-             * @warning        Be aware that if you use non floating point types (e.g. int32_t, etc.), that
-             *                 the values of the points will be clamped to that type, thus making it possible
-             *                 the circle's path will be more jagged than those with a double or float as
-             *                 the backing type.
-             */
             template < template < class, class > class std_seq_t, typename T, typename std_allocator_t >
             inline std_seq_t< typename omni::geometry::point2d< T >, std_allocator_t >
             circle(T x, T y, T radius, T step, bool invert_x, bool invert_y)

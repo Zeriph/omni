@@ -84,14 +84,14 @@ namespace binary {
     }
 }
 
-inline bool contains(const OMNI_STRING_T_FW& chk, const OMNI_STRING_T_FW& fnd, bool ignore_case)
+inline bool contains(const OMNI_STRING_T_FW& haystack, const OMNI_STRING_T_FW& needle, bool ignore_case)
 {
-    return omni::string::util::contains(chk, fnd, ignore_case);
+    return omni::string::util::contains(haystack, needle, ignore_case);
 }
 
-inline bool contains(const OMNI_STRING_T_FW& chk, const OMNI_STRING_T_FW& fnd)
+inline bool contains(const OMNI_STRING_T_FW& haystack, const OMNI_STRING_T_FW& needle)
 {
-    return omni::string::util::contains(chk, fnd, false);
+    return omni::string::util::contains(haystack, needle, false);
 }
 
 inline int32_t compare(const OMNI_STRING_T_FW& str1, size_t idx1, const OMNI_STRING_T_FW& str2, size_t idx2, size_t len, const omni::string::compare_options& options)
@@ -104,14 +104,14 @@ inline int32_t compare(const OMNI_STRING_T_FW& str1, size_t idx1, size_t len1, c
     return omni::string::util::compare(str1, idx1, len1, str2, idx2, len2, options);
 }
 
-inline bool ends_with(const OMNI_STRING_T_FW& chk, const OMNI_STRING_T_FW& fnd)
+inline bool ends_with(const OMNI_STRING_T_FW& haystack, const OMNI_STRING_T_FW& needle)
 {
-    return omni::string::util::ends_with(chk, fnd);
+    return omni::string::util::ends_with(haystack, needle);
 }
 
-inline bool ends_with(const OMNI_STRING_T_FW& chk, const OMNI_STRING_T_FW& fnd, bool ignore_case)
+inline bool ends_with(const OMNI_STRING_T_FW& haystack, const OMNI_STRING_T_FW& needle, bool ignore_case)
 {
-    return omni::string::util::ends_with(chk, fnd, ignore_case);
+    return omni::string::util::ends_with(haystack, needle, ignore_case);
 }
 
 inline bool is_numeric(const OMNI_STRING_T_FW& str, bool ignore_period)
@@ -263,14 +263,14 @@ inline omni_sequence_t<OMNI_STRING_T_FW> split(const OMNI_STRING_T_FW& str, cons
     return omni::string::util::split(str, delimeter, 0);
 }
 
-inline bool starts_with(const OMNI_STRING_T_FW& chk, const OMNI_STRING_T_FW& fnd)
+inline bool starts_with(const OMNI_STRING_T_FW& haystack, const OMNI_STRING_T_FW& needle)
 {
-    return omni::string::util::starts_with(chk, fnd);
+    return omni::string::util::starts_with(haystack, needle);
 }
 
-inline bool starts_with(const OMNI_STRING_T_FW& chk, const OMNI_STRING_T_FW& fnd, bool ignore_case)
+inline bool starts_with(const OMNI_STRING_T_FW& haystack, const OMNI_STRING_T_FW& needle, bool ignore_case)
 {
-    return omni::string::util::starts_with(chk, fnd, ignore_case);
+    return omni::string::util::starts_with(haystack, needle, ignore_case);
 }
 
 inline OMNI_STRING_T_FW to_lower(OMNI_STRING_T_FW str)

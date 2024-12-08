@@ -31,7 +31,6 @@
 
 namespace omni {
     namespace net {
-        /** The endpoint_descriptor class is used to facilitate network communications from a remote endpoint accepted by a server */
         class endpoint_descriptor
         {
             public:
@@ -186,7 +185,6 @@ namespace omni {
                 omni::net::socket_error _send(const void* buffer, std::size_t buffer_size, omni::net::socket_flags flags, uint32_t& sent);
         };
 
-        /** The endpoint_descriptor6 class is used to facilitate network communications from a remote endpoint accepted by a server */
         class endpoint_descriptor6
         {
             public:

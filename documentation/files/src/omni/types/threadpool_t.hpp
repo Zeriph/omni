@@ -22,11 +22,8 @@
 
 namespace omni {
     namespace sync {
-        /** The structure used to pass task/args to a threadpool thread */
         typedef struct threadpool_task {
-            /** The task */
             omni::sync::parameterized_thread_start task;
-            /** The parameters (if any) to pass to the thread task */
             omni::generic_ptr param;
             
             threadpool_task() : task(), param() {}

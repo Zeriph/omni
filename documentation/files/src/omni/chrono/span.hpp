@@ -41,28 +41,6 @@
 
 namespace omni {
     namespace chrono {
-        /**
-         * @brief            The span class is used to hold a time in ticks.
-         * 
-         * @details          The span class can maintain days, hours, minutes and seconds and
-         *                   are representative of an arbitrary time. That is, the span can
-         *                   be a 0 time, a negative or positive value and are not based on
-         *                   any calendar date. A "day" for this class is considered exactly
-         *                   24 hours with exactly 60 minutes per "hour", 60 seconds per
-         *                   "minute" and 1000 milliseconds per "second", regardless of
-         *                   the underlying type.
-         * 
-         * @tparam TickType  The template parameter to define the underlying type this span
-         *                   will represent.
-         * 
-         * @note             Since this class is representative of an arbitrary time, only
-         *                   days, hours, minutes, seconds and milliseconds are able to be
-         *                   represented. Years are not represented as they can vary, with
-         *                   leap years and different calendar types, the span is a more
-         *                   simplistic representation of time. If you wish to operate on
-         *                   years, or have a more robust date and time represented, you
-         *                   should use the omni::chrono::date_time class. 
-         */
         template < typename TickType >
         class span
         {

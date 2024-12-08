@@ -27,7 +27,6 @@ namespace omni {
     namespace net {
         //typedef omni::net::endpoint_descriptor client;
 
-        /** The endpoint_descriptor class is used to facilitate network communications from a remote endpoint accepted by a server */
         class client
         {
             public:

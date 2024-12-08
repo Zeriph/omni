@@ -24,11 +24,9 @@
 
 namespace omni {
     namespace system {
-        /** The enum class for architecture type */
         class architecture_type
         {
             public:
-                /** The underlying enum type expected */
                 typedef enum enum_t {
                     // Unknown architecture type
                     UNKNOWN = 0,
@@ -86,67 +84,56 @@ namespace omni {
                     TMS470
                 } enum_t;
 
-                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 27;
                 }
 
-                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return UNKNOWN;
                 }
                 
-                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
-                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
-                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
-                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, architecture_type& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, architecture_type& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -437,11 +424,9 @@ namespace omni {
                 }
         };
 
-        /** The enum class for endian_type */
         class endian_type
         {
             public:
-                /** The underlying enum type expected */
                 typedef enum enum_t {
                     UNKNOWN,
                     BIG,
@@ -450,67 +435,56 @@ namespace omni {
                     LITTLE_WORD
                 } enum_t;
 
-                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 5;
                 }
 
-                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return UNKNOWN;
                 }
                 
-                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
-                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
-                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
-                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, endian_type& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, endian_type& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);

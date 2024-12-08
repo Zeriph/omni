@@ -155,9 +155,9 @@ namespace OmniDocuGen
                 );
             }
 
-            /// Returns if the file name is a file that has parseable code, but shouldn't be parsed (like a .hxx file)
+            /// Returns if the file name is a file that has parsable code, but shouldn't be parsed (like a .hxx file)
             static inline bool IsNoParse(const std::string& file)
-            {   
+            {
                 std::deque<std::string> non = omni::string::split(Program::Settings.NoParse, ",");
                 return std::find(non.begin(), non.end(), omni::io::path::get_name(file)) != non.end();
                 // return omni::string::contains(Program::Settings.NoParse, omni::io::path::get_name(file));

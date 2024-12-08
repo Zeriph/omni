@@ -236,9 +236,7 @@ namespace omni {
 
         private:
             OMNI_SAFE_PROP_MTX_FW
-            /** The get functor. Used to attach to a user defined or default get function */
             get m_get;
-            /** The set functor. Used to attach to a user defined or default set function */
             set m_set;
 
             value_t _vget() const {

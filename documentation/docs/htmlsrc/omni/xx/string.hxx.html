@@ -169,14 +169,14 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;}<br>
 }<br>
 <br>
-<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> contains(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; chk, <font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; fnd, <font class="syn_typ">bool</font> ignore_case)<br>
+<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> contains(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; haystack, <font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; needle, <font class="syn_typ">bool</font> ignore_case)<br>
 {<br>
-<a name="omni::wstring::contains"></a><a name="omni::cstring::contains"></a>&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../../../classes/omni-string-util-contains.html">omni::string::util::contains</a>(chk, fnd, ignore_case);<br>
+<a name="omni::wstring::contains"></a><a name="omni::cstring::contains"></a>&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../../../classes/omni-string-util-contains.html">omni::string::util::contains</a>(haystack, needle, ignore_case);<br>
 }<br>
 <br>
-<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> contains(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; chk, <font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; fnd)<br>
+<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> contains(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; haystack, <font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; needle)<br>
 {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../../../classes/omni-string-util-contains.html">omni::string::util::contains</a>(chk, fnd, <font class="syn_ins">false</font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../../../classes/omni-string-util-contains.html">omni::string::util::contains</a>(haystack, needle, <font class="syn_ins">false</font>);<br>
 }<br>
 <br>
 <font class="syn_ins">inline</font> int32_t compare(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; str1, size_t idx1, <font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; str2, size_t idx2, size_t len, <font class="syn_typ">const</font> <a href="../../../classes/omni-string-compare_options.html">omni::string::compare_options</a>&amp; options)<br>
@@ -189,14 +189,14 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../../../classes/omni-string-util-compare.html">omni::string::util::compare</a>(str1, idx1, len1, str2, idx2, len2, options);<br>
 }<br>
 <br>
-<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> ends_with(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; chk, <font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; fnd)<br>
+<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> ends_with(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; haystack, <font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; needle)<br>
 {<br>
-<a name="omni::wstring::ends_with"></a><a name="omni::cstring::ends_with"></a>&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../../../classes/omni-string-util-ends_with.html">omni::string::util::ends_with</a>(chk, fnd);<br>
+<a name="omni::wstring::ends_with"></a><a name="omni::cstring::ends_with"></a>&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../../../classes/omni-string-util-ends_with.html">omni::string::util::ends_with</a>(haystack, needle);<br>
 }<br>
 <br>
-<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> ends_with(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; chk, <font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; fnd, <font class="syn_typ">bool</font> ignore_case)<br>
+<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> ends_with(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; haystack, <font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; needle, <font class="syn_typ">bool</font> ignore_case)<br>
 {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../../../classes/omni-string-util-ends_with.html">omni::string::util::ends_with</a>(chk, fnd, ignore_case);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../../../classes/omni-string-util-ends_with.html">omni::string::util::ends_with</a>(haystack, needle, ignore_case);<br>
 }<br>
 <br>
 <font class="syn_ins">inline</font> <font class="syn_typ">bool</font> is_numeric(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; str, <font class="syn_typ">bool</font> ignore_period)<br>
@@ -348,14 +348,14 @@ std_seq_t&lt;OMNI_STRING_T_FW, std_allocator_t&gt; split(<font class="syn_typ">c
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../../../classes/omni-string-util-split.html">omni::string::util::split</a>(str, delimeter, <font class="syn_num">0</font>);<br>
 }<br>
 <br>
-<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> starts_with(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; chk, <font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; fnd)<br>
+<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> starts_with(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; haystack, <font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; needle)<br>
 {<br>
-<a name="omni::wstring::starts_with"></a><a name="omni::cstring::starts_with"></a>&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../../../classes/omni-string-util-starts_with.html">omni::string::util::starts_with</a>(chk, fnd);<br>
+<a name="omni::wstring::starts_with"></a><a name="omni::cstring::starts_with"></a>&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../../../classes/omni-string-util-starts_with.html">omni::string::util::starts_with</a>(haystack, needle);<br>
 }<br>
 <br>
-<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> starts_with(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; chk, <font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; fnd, <font class="syn_typ">bool</font> ignore_case)<br>
+<font class="syn_ins">inline</font> <font class="syn_typ">bool</font> starts_with(<font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; haystack, <font class="syn_typ">const</font> OMNI_STRING_T_FW&amp; needle, <font class="syn_typ">bool</font> ignore_case)<br>
 {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../../../classes/omni-string-util-starts_with.html">omni::string::util::starts_with</a>(chk, fnd, ignore_case);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> <a href="../../../classes/omni-string-util-starts_with.html">omni::string::util::starts_with</a>(haystack, needle, ignore_case);<br>
 }<br>
 <br>
 <font class="syn_ins">inline</font> OMNI_STRING_T_FW to_lower(OMNI_STRING_T_FW str)<br>

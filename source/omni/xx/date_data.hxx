@@ -563,8 +563,7 @@ namespace omni { namespace internal {
                     return (this->fmt_flags & format_flags::USE_SPACE_IN_DAY_NAMES) != 0;
                 }
 
-                bool tokenize
-                (
+                bool tokenize (
                     const omni::internal::date_time_format::token_type::enum_t& token_mask,
                     omni::internal::date_time_format::token_type::enum_t& token_type,
                     int64_t& token_value,

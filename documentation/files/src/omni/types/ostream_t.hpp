@@ -68,15 +68,7 @@
 #define OMNI_STREAM_FN_OPERATORS(v, ...) OMNI_OSTREAM_FN_OPERATOR(v, __VA_ARGS__) OMNI_WOSTREAM_FN_OPERATOR(v, __VA_ARGS__)
 
 namespace omni {
-    /**
-     * Defines the underlying std::ostream type;
-     * if OMNI_UNICODE is defined the underlying stream will be a wide stream type
-     */
     typedef OMNI_OSTREAM_T ostream_t;
-    /**
-     * Defines the underlying std::istream type;
-     * if OMNI_UNICODE is defined the underlying stream will be a wide stream type
-     */
     typedef OMNI_ISTREAM_T istream_t;
 }
 

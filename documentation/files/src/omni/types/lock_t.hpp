@@ -64,13 +64,9 @@
 
 namespace omni {
     namespace sync {
-        /** Defines the basic mutex type */
         typedef OMNI_MUTEX_T mutex_t;
-        /** Defines the basic spin lock type */
         typedef OMNI_SPIN_LOCK_T spin_lock_t;
-        /** Defines the basic semaphore type */
         typedef OMNI_SEM_T semaphore_t;
-        /** Defines the basic conditional type */
         typedef OMNI_COND_T cond_t;
     }
 }

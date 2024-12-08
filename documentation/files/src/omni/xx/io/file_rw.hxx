@@ -32,8 +32,7 @@
 #define OMNI_IO_FILE_EX_FW 1
 #include <omni/xx/io/file_ex.hxx>
 
-namespace omni { namespace io { /** @internal library helper */ namespace file_internal {
-    /** @internal library helper */
+namespace omni { namespace io { namespace file_internal {
     template < typename STR, typename IFSTREAM, template < class, class > class std_seq_t, class T, class std_allocator_t >
     uint64_t rd(const STR& file, std_seq_t<T, std_allocator_t >& buffer, uint64_t length, std::streamoff file_offset, std::ios_base::seekdir offset_direction)
     {
@@ -109,7 +108,6 @@ namespace omni { namespace io { /** @internal library helper */ namespace file_i
         return length;
     }
 
-    /** @internal library helper */
     template < typename STR, typename IFSTREAM, typename T, std::size_t SZ >
     uint64_t rd(const STR& file, T (&buffer)[SZ], uint64_t length, std::size_t buffer_offset, std::streamoff file_offset, std::ios_base::seekdir offset_direction)
     {
@@ -130,7 +128,6 @@ namespace omni { namespace io { /** @internal library helper */ namespace file_i
         return length;
     }
 
-    /** @internal library helper */
     template < typename STR, typename IFSTREAM, typename T, uint16_t SZ >
     uint64_t rd(const STR& file, omni::stack_buffer<T, SZ>& buffer, uint64_t length, std::size_t buffer_offset, std::streamoff file_offset, std::ios_base::seekdir offset_direction)
     {
@@ -152,7 +149,6 @@ namespace omni { namespace io { /** @internal library helper */ namespace file_i
         return length;
     }
 
-    /** @internal library helper */
     template < typename STR, typename IFSTREAM, template < class, class > class std_seq_t, class T, class std_allocator_t >
     uint64_t rd_el(const STR& file, std_seq_t<T, std_allocator_t >& buffer, uint64_t elements, std::streamoff file_offset, std::ios_base::seekdir offset_direction)
     {
@@ -234,7 +230,6 @@ namespace omni { namespace io { /** @internal library helper */ namespace file_i
         return elements / sizeof(T);
     }
 
-    /** @internal library helper */
     template < typename STR, typename IFSTREAM, typename T, std::size_t SZ >
     uint64_t rd_el(const STR& file, T (&buffer)[SZ], uint64_t elements, std::size_t buffer_offset, std::streamoff file_offset, std::ios_base::seekdir offset_direction)
     {
@@ -260,7 +255,6 @@ namespace omni { namespace io { /** @internal library helper */ namespace file_i
         return elements / sizeof(T);
     }
 
-    /** @internal library helper */
     template < typename STR, typename IFSTREAM, typename T, uint16_t SZ >
     uint64_t rd_el(const STR& file, omni::stack_buffer<T, SZ>& buffer, uint64_t elements, std::size_t buffer_offset, std::streamoff file_offset, std::ios_base::seekdir offset_direction)
     {
@@ -286,7 +280,6 @@ namespace omni { namespace io { /** @internal library helper */ namespace file_i
         return elements / sizeof(T);
     }
 
-    /** @internal library helper */
     template < typename STR, typename IFSTREAM, typename SEQ >
     uint64_t unsafe_rd_el(const STR& file, SEQ* buffer, uint64_t elements)
     {
@@ -308,7 +301,6 @@ namespace omni { namespace io { /** @internal library helper */ namespace file_i
         return length / sizeof(SEQ);
     }
 
-    /** @internal library helper */
     template < typename STR, typename OFSTREAM, template < class, class > class std_seq_t, class T, class std_allocator_t >
     uint64_t write_buf_fw(const STR& file, const std_seq_t<T, std_allocator_t >& buffer, uint64_t length, std::size_t buffer_offset, bool append, bool new_line)
     {
@@ -340,7 +332,6 @@ namespace omni { namespace io { /** @internal library helper */ namespace file_i
         return (end - start);
     }
 
-    /** @internal library helper */
     template < typename STR, typename OFSTREAM, typename T, std::size_t SZ >
     uint64_t write_buf_fw(const STR& file, const T (&buffer)[SZ], uint64_t length, std::size_t buffer_offset, bool append, bool new_line)
     {
@@ -374,7 +365,6 @@ namespace omni { namespace io { /** @internal library helper */ namespace file_i
         return (end - start);
     }
 
-    /** @internal library helper */
     template < typename STR, typename OFSTREAM, typename T, uint16_t SZ >
     uint64_t write_buf_fw(const STR& file, const omni::stack_buffer<T, SZ>& buffer, uint64_t length, uint16_t buffer_offset, bool append, bool new_line)
     {
@@ -408,7 +398,6 @@ namespace omni { namespace io { /** @internal library helper */ namespace file_i
         return (end - start);
     }
 
-    /** @internal library helper */
     template < typename STR, typename OFSTREAM, template < class, class > class std_seq_t, class T, class std_allocator_t >
     uint64_t write_el_fw(const STR& file, const std_seq_t<T, std_allocator_t >& buffer, uint64_t elements, std::size_t buffer_offset, bool append, bool new_line)
     {
@@ -446,7 +435,6 @@ namespace omni { namespace io { /** @internal library helper */ namespace file_i
         return elements / sizeof(T);
     }
 
-    /** @internal library helper */
     template < typename STR, typename OFSTREAM, typename T, std::size_t SZ >
     uint64_t write_el_fw(const STR& file, const T (&buffer)[SZ], uint64_t elements, std::size_t buffer_offset, bool append, bool new_line)
     {
@@ -488,7 +476,6 @@ namespace omni { namespace io { /** @internal library helper */ namespace file_i
         return elements / sizeof(T);
     }
 
-    /** @internal library helper */
     template < typename STR, typename OFSTREAM, typename T, uint16_t SZ >
     uint64_t write_el_fw(const STR& file, const omni::stack_buffer<T, SZ>& buffer, uint64_t elements, uint16_t buffer_offset, bool append, bool new_line)
     {
@@ -530,7 +517,6 @@ namespace omni { namespace io { /** @internal library helper */ namespace file_i
         return elements / sizeof(T);
     }
 
-    /** @internal library helper */
     template < typename STR, typename OFSTREAM, typename SEQ >
     uint64_t unsafe_write_el_fw(const STR& file, const SEQ* buffer, uint64_t elements, bool append)
     {
@@ -562,15 +548,13 @@ namespace omni { namespace io { /** @internal library helper */ namespace file_i
     }
 }}}
 
-namespace omni { namespace io { /** @internal library helper */ namespace dir_internal {
-    /** @internal library helper */
+namespace omni { namespace io { namespace dir_internal {
     inline std::string str_combine_path(const std::string& path1, const std::string& path2)
     {
         std::size_t psep = path1.find_last_of(OMNI_PATH_SEPARATOR);
         if (psep == path1.length()-1) { return path1 + path2; }
         return path1 + OMNI_PATH_SEPARATOR + path2;
     }
-    /** @internal library helper */
     inline std::wstring wstr_combine_path(const std::wstring& path1, const std::wstring& path2)
     {
         std::size_t psep = path1.find_last_of(OMNI_WPATH_SEPARATOR);
@@ -585,7 +569,6 @@ namespace omni { namespace io { /** @internal library helper */ namespace dir_in
     #endif
 
     #if defined(OMNI_OS_WIN)
-        /** @internal library helper */
         inline bool can_access(const std::string& path)
         {
             OMNI_FILE_CHECKA_FW(path, false)
@@ -599,7 +582,6 @@ namespace omni { namespace io { /** @internal library helper */ namespace dir_in
             return true;
         }
 
-        /** @internal library helper */
         inline bool can_access(const std::wstring& path)
         {
             std::wstring tf = OMNI_FILE_CHECKW_FW(tf, path, false)
@@ -613,7 +595,6 @@ namespace omni { namespace io { /** @internal library helper */ namespace dir_in
             return true;
         }
 
-        /** @internal library helper */
         template < template < class, class > class std_seq_t, class T, class std_allocator_t >
         uint64_t get_dir_cont_win_fw(const std::string& name, std_seq_t< T, std_allocator_t >& dirs, int ftype)
         {
@@ -657,7 +638,6 @@ namespace omni { namespace io { /** @internal library helper */ namespace dir_in
             return dirs.size();
         }
 
-        /** @internal library helper */
         template < template < class, class > class std_seq_t, class T, class std_allocator_t >
         uint64_t get_dir_cont_win_fw(const std::wstring& name, std_seq_t< T, std_allocator_t >& dirs, int ftype)
         {
@@ -701,7 +681,6 @@ namespace omni { namespace io { /** @internal library helper */ namespace dir_in
             return dirs.size();
         }
     #else
-        /** @internal library helper */
         template < typename STR >
         inline bool can_access(const STR& path)
         {
@@ -713,7 +692,6 @@ namespace omni { namespace io { /** @internal library helper */ namespace dir_in
             return true;
         }
 
-        /** @internal library helper */
         template < template < class, class > class std_seq_t, class T, class std_allocator_t >
         uint64_t get_dir_cont_nix_fw(const std::string& name, std_seq_t< T, std_allocator_t >& dirs, int ftype)
         {
@@ -739,7 +717,6 @@ namespace omni { namespace io { /** @internal library helper */ namespace dir_in
             return dirs.size();
         }
         
-        /** @internal library helper */
         template < template < class, class > class std_seq_t, class T, class std_allocator_t >
         uint64_t get_dir_cont_nix_fw(const std::wstring& name, std_seq_t< T, std_allocator_t >& dirs, int ftype)
         {
@@ -777,7 +754,6 @@ namespace omni { namespace io { /** @internal library helper */ namespace dir_in
         return path;
     }
 
-    /** @internal library helper */
     template < typename STR, template < class, class > class std_seq_t, class T, class std_allocator_t >
     uint64_t get_elements(const STR& folder, std_seq_t< T, std_allocator_t >& out, int ftype)
     {

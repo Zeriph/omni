@@ -40,8 +40,7 @@
 #endif
 
 #if defined(OMNI_IO_DIR_INTERNAL_FW)
-    namespace omni { namespace io { /** @internal library helper */ namespace dir_internal {
-        /** @internal library helper */
+    namespace omni { namespace io { namespace dir_internal {
         bool create(const std::string& folder, const omni::io::options& io_ops)
         {
             if (omni::io::dir_internal::exists(folder)) { return true; }
@@ -72,7 +71,6 @@
                 (::mkdir(folder.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) == 0);
             #endif
         }
-        /** @internal library helper */
         bool create(const std::wstring& folder, const omni::io::options& io_ops)
         {
             if (omni::io::dir_internal::exists(folder)) { return true; }
@@ -104,7 +102,6 @@
             #endif
         }
 
-        /** @internal library helper */
         bool mv(const std::string& folder, const std::string& new_name, const omni::io::options& io_ops)
         {
             bool overwrite = ((io_ops & omni::io::options::OVERWRITE) == omni::io::options::OVERWRITE);
@@ -149,7 +146,6 @@
             #endif
             return omni::io::dir_internal::exists(new_name);
         }
-        /** @internal library helper */
         bool mv(const std::wstring& folder, const std::wstring& new_name, const omni::io::options& io_ops)
         {
             bool overwrite = ((io_ops & omni::io::options::OVERWRITE) == omni::io::options::OVERWRITE);
@@ -195,7 +191,6 @@
             return omni::io::dir_internal::exists(new_name);
         }
 
-        /** @internal library helper */
         template < typename STR >
         void recursive_rem(const STR& name) 
         {
@@ -210,7 +205,6 @@
                 omni::io::directory::remove(*dir, true);
             }
         }
-        /** @internal library helper */
         bool rem(const std::string& folder, bool recursive)
         {
             if (!omni::io::dir_internal::exists(folder)) { return true; }
@@ -237,7 +231,6 @@
             }
             return !omni::io::dir_internal::exists(folder);
         }
-        /** @internal library helper */
         bool rem(const std::wstring& folder, bool recursive)
         {
             if (!omni::io::dir_internal::exists(folder)) { return true; }

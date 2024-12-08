@@ -328,19 +328,19 @@ Cross Platform</a></li><li title="Download or view the latest source"><a href=".
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> !(*<font class="syn_typ">this</font> == o);<br>
 }<br>
 <br>
-<a href="http://www.cplusplus.com/reference/string/">std::string</a> <a href="../classes/omni-crypto-md5-compute_hash.html">omni::crypto::md5::compute_hash</a>(<font class="syn_typ">const</font> std::string&amp; text)<br>
+<a href="http://www.cplusplus.com/reference/string/">std::string</a> <a href="../classes/omni-crypto-md5-compute_hash.html">omni::crypto::md5::compute_hash</a>(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; text)<br>
 {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-crypto-md5.html">omni::crypto::md5</a> md5(text, <a href="../classes/omni-crypto-hash_type-string.html">omni::crypto::hash_type::STRING</a>);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> md5.m_hash;<br>
 }<br>
 <br>
-<a href="http://www.cplusplus.com/reference/string/">std::string</a> <a href="../classes/omni-crypto-md5-compute_file_hash.html">omni::crypto::md5::compute_file_hash</a>(<font class="syn_typ">const</font> std::string&amp; file)<br>
+<a href="http://www.cplusplus.com/reference/string/">std::string</a> <a href="../classes/omni-crypto-md5-compute_file_hash.html">omni::crypto::md5::compute_file_hash</a>(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; file)<br>
 {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-crypto-md5.html">omni::crypto::md5</a> md5(file, <a href="../classes/omni-crypto-hash_type-text_file.html">omni::crypto::hash_type::TEXT_FILE</a>);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> md5.m_hash;<br>
 }<br>
 <br>
-<a href="http://www.cplusplus.com/reference/string/">std::string</a> <a href="../classes/omni-crypto-md5-compute_binary_file_hash.html">omni::crypto::md5::compute_binary_file_hash</a>(<font class="syn_typ">const</font> std::string&amp; file)<br>
+<a href="http://www.cplusplus.com/reference/string/">std::string</a> <a href="../classes/omni-crypto-md5-compute_binary_file_hash.html">omni::crypto::md5::compute_binary_file_hash</a>(<font class="syn_typ">const</font> <a href="http://www.cplusplus.com/reference/string/">std::string</a>&amp; file)<br>
 {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="../classes/omni-crypto-md5.html">omni::crypto::md5</a> md5(file, <a href="../classes/omni-crypto-hash_type-binary_file.html">omni::crypto::hash_type::BINARY_FILE</a>);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<font class="syn_ins">return</font> md5.m_hash;<br>

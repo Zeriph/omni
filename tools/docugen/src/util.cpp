@@ -223,9 +223,18 @@ bool OmniDocuGen::Util::ZipDirectory(const std::string& dir, const std::string& 
             omni::seq::std_string_t dirs, files;
             omni::io::directory::get_directories(dir, dirs);
             omni::io::directory::get_files(dir, files);
+            omni::seq::std_string_t ex_list = omni::string::split(omni::string::to_lower(Program::Settings.Excluded), ",");
+            bool is_ex = false;
             omni_foreach (std::string, d, dirs) {
                 if (OmniDocuGen::Program::StopReq) { return false; }
-                if (omni::string::contains(omni::string::to_lower(Program::Settings.Excluded), omni::string::to_lower(*d))) { continue; }
+                is_ex = false;
+                omni_foreach(std::string, ex, ex_list) {
+                    if (omni::string::contains(omni::string::to_lower(*d), *ex)) {
+                        is_ex = true;
+                        break;
+                    }
+                }
+                if (is_ex) { continue; }
                 args = Util::Format("a -tzip \"{0}\" \"{1}\"", z, *d);
                 cmd = zip + " " + args;
                 if (Program::Verbosity < 2) { cmd += " > /dev/null"; }
@@ -236,7 +245,14 @@ bool OmniDocuGen::Util::ZipDirectory(const std::string& dir, const std::string& 
             }
             omni_foreach (std::string, f, files) {
                 if (OmniDocuGen::Program::StopReq) { return false; }
-                if (omni::string::contains(omni::string::to_lower(Program::Settings.Excluded), omni::string::to_lower(*f))) { continue; }
+                is_ex = false;
+                omni_foreach(std::string, ex, ex_list) {
+                    if (omni::string::contains(omni::string::to_lower(*f), *ex)) {
+                        is_ex = true;
+                        break;
+                    }
+                }
+                if (is_ex) { continue; }
                 args = Util::Format("a -tzip \"{0}\" \"{1}\"", z, *f);
                 cmd = zip + " " + args;
                 if (Program::Verbosity < 2) { cmd += " > /dev/null"; }

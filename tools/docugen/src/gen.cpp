@@ -168,10 +168,14 @@ struct DocuGenThreadParam
             OmniDocuGen::DocuGen::CodeGenList.push_back(this->cgen);
             if (Program::StopReq) { return; }
             sw.start();
-            if (this->isSrc) {
-                this->cgen->GenerateSourceTypeInfo();
+            if (OmniDocuGen::CodeGen::IsNoParse(this->cgen->SourceFile)) {
+                up(1, "Skipping NoParse file {0}", this->cgen->SourceFile);
             } else {
-                this->cgen->GenerateTypeInfo();
+                if (this->isSrc) {
+                    this->cgen->GenerateSourceTypeInfo();
+                } else {
+                    this->cgen->GenerateTypeInfo();
+                }
             }
             sw.stop();
             if (Program::StopReq) { return; }
@@ -1452,6 +1456,7 @@ void OmniDocuGen::DocuGen::GenerateMemberInfo(bool isBuildToo)
     sw.start();
     foreach (std::string, s, DocuGen::HeaderFiles) {
         if (OmniDocuGen::Program::StopReq) { return; }
+        // TODO: this "works", but then doesn't generate the HTML .. need to have it just skip the parsing info
         DocuGenThreadParam dp(*s, false);
         if (dp.cgen->HasParsableCode() || CodeGen::IsSpecialHeader(dp.cgen->SourceFile)) {
             parseables.push_back(dp);

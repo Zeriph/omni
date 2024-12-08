@@ -44,9 +44,7 @@ namespace omni {
     class smart_ptr
     {
         public:
-            /** Defines the underlying type of this instance */
             typedef T pointer_t;
-            /** Specifies the underlying size type defined */
             typedef OMNI_SMART_PTR_SIZE_T size_type;
 
             smart_ptr() :
@@ -194,9 +192,7 @@ namespace omni {
     class smart_ptr_safe
     {
         public:
-            /** Defines the underlying type of this instance */
             typedef T pointer_t;
-            /** Specifies the underlying size type defined */
             typedef OMNI_SMART_PTR_SIZE_T size_type;
 
             smart_ptr_safe() :

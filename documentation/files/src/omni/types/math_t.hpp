@@ -36,13 +36,6 @@ namespace omni {
                 OMNI_CONSTEXT_FW const double TAU OMNI_EXT_ASSN_FW(OMNI_MATH_COMPAT_TAU);
             }
 
-            /**
-             * @brief          The mathematical constant e (Euler's number) as a double.
-             *
-             * @details        This is the mathematical constant e, also known as Euler's number. If OMNI_USE_M_E or OMNI_USE_MATH_DEFS are
-             *                 defined, and if the system has M_E defined, then this constant is set to M_E. Otherwise this constant is
-             *                 defined as 2.71828182845904523536
-             */
             OMNI_CONSTEXT_FW const double E OMNI_EXT_ASSN_FW(OMNI_E);
             OMNI_CONSTEXT_FW const double PI OMNI_EXT_ASSN_FW(OMNI_PI);
             OMNI_CONSTEXT_FW const double PI_180 OMNI_EXT_ASSN_FW(OMNI_PI_180);
@@ -62,13 +55,6 @@ namespace omni {
             OMNI_CONSTEXT_FW const double SQRT2 OMNI_EXT_ASSN_FW(OMNI_SQRT2);
             OMNI_CONSTEXT_FW const double SQRT1_2 OMNI_EXT_ASSN_FW(OMNI_SQRT1_2);
             
-            /**
-             * @brief          The mathematical constant e (Euler's number) as a long double.
-             *
-             * @details        This is the mathematical constant e, also known as Euler's number. If OMNI_USE_M_E_L or OMNI_USE_MATH_DEFS are
-             *                 defined, and if the system has M_El defined, then this constant is set to M_El. Otherwise this constant is
-             *                 defined as 2.71828182845904523536028747135266250L
-             */
             OMNI_CONSTEXT_FW const long double E_L OMNI_EXT_ASSN_FW(OMNI_E_L);
             OMNI_CONSTEXT_FW const long double PI_L OMNI_EXT_ASSN_FW(OMNI_PI_L);
             OMNI_CONSTEXT_FW const long double PI_L_180 OMNI_EXT_ASSN_FW(OMNI_PI_L_180);
@@ -88,13 +74,6 @@ namespace omni {
             OMNI_CONSTEXT_FW const long double SQRT2_L OMNI_EXT_ASSN_FW(OMNI_SQRT2_L);
             OMNI_CONSTEXT_FW const long double SQRT1_2_L OMNI_EXT_ASSN_FW(OMNI_SQRT1_2_L);
             
-            /**
-             * @brief          The mathematical constant e (Euler's number) as a float.
-             *
-             * @details        This is the mathematical constant e, also known as Euler's number. If OMNI_USE_M_E or OMNI_USE_MATH_DEFS are
-             *                 defined, and if the system has M_E defined, then this constant is set to M_E casted to a float. Otherwise this
-             *                 constant is defined as 2.7182818F
-             */
             OMNI_CONSTEXT_FW const float E_F OMNI_EXT_ASSN_FW(OMNI_E_F);
             OMNI_CONSTEXT_FW const float PI_F OMNI_EXT_ASSN_FW(OMNI_PI_F);
             OMNI_CONSTEXT_FW const float PI_F_180 OMNI_EXT_ASSN_FW(OMNI_PI_F_180);
@@ -168,67 +147,56 @@ namespace omni {
                     RIGHT = 2
                 } enum_t;
                 
-                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 3;
                 }
                 
-                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return ACUTE;
                 }
 
-                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
-                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
-                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
-                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, angle_measure& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, angle_measure& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -460,67 +428,56 @@ namespace omni {
                     CIRCUMFERENCE = 2
                 } enum_t;
                 
-                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 3;
                 }
                 
-                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return RADIUS;
                 }
 
-                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
-                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
-                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
-                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, circle_area& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, circle_area& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -759,67 +716,56 @@ namespace omni {
                     TO_POSITIVE_INFINITY = 4
                 } enum_t;
                 
-                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 5;
                 }
                 
-                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return TO_EVEN;
                 }
 
-                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
-                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
-                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
-                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, midpoint_rounding& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, midpoint_rounding& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -1071,67 +1017,56 @@ namespace omni {
                     VII_VIII = (VII | VIII)
                 } enum_t;
                 
-                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 20;
                 }
                 
-                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return ORIGIN;
                 }
 
-                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
-                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
-                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
-                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, ordinal_name& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, ordinal_name& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -1610,67 +1545,56 @@ namespace omni {
                     ROTATE_AXIS = 1
                 } enum_t;
                 
-                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 2;
                 }
                 
-                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return ROTATE_ORIGIN;
                 }
 
-                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
-                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
-                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
-                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, rotation& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, rotation& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -1901,67 +1825,56 @@ namespace omni {
                     TWO_SEVENTY = 270
                 } enum_t;
                 
-                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 4;
                 }
                 
-                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return ZERO;
                 }
 
-                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
-                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
-                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
-                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, rotation_angle& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, rotation_angle& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -2194,67 +2107,56 @@ namespace omni {
                     CLOCKWISE = 1
                 } enum_t;
                 
-                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 2;
                 }
                 
-                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return COUNTER_CLOCKWISE;
                 }
 
-                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
-                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
-                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
-                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, rotation_direction& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, rotation_direction& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -2485,67 +2387,56 @@ namespace omni {
                     SIMILAR_CONGRUENT = 3 // bit mask of 1 & 2
                 } enum_t;
                 
-                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 4;
                 }
                 
-                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return NOT_EQUAL;
                 }
 
-                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
-                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
-                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
-                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, shape_comparator& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, shape_comparator& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -2976,67 +2867,56 @@ namespace omni {
                     TRANSLATE = 1
                 } enum_t;
                 
-                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 2;
                 }
                 
-                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return REFLECTION;
                 }
 
-                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
-                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
-                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
-                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, transformation& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, transformation& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -3265,67 +3145,56 @@ namespace omni {
                     SCALENE = 2
                 } enum_t;
                 
-                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 3;
                 }
                 
-                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return EQUILATERAL;
                 }
 
-                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
-                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
-                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
-                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, triangle_measure& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, triangle_measure& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -3567,19 +3436,6 @@ namespace omni {
                     }
                 }
 
-                /**
-                 * @brief Creates a dimensional with the values passed in.
-                 *
-                 * @details Create a dimensional type with the default values specified.
-                 *
-                 * @param val1... The value(s) to assign each of the dimensional's underlying buffer up to val+SZ.
-                 *
-                 * @warning Be aware, due to the variadic argument list being used, if the backing type is that of a
-                 * float or double, the values passed in must either be named types or explicitly defined; for example,
-                 * you must have variables defined as a @c double and passing in those variables or you must explicitly
-                 * pass in @c 10.0 (for example) for each value. Failure to do this could cause the underlying floating
-                 * types to be mis-read by the va_arg list due to certain casting behavior by some compilers/environments.
-                 */
                 dimensional(T val1, ...) : m_vals()
                 {
                     std::va_list args;

@@ -40,8 +40,7 @@
 #endif
 
 #if defined(OMNI_IO_PATH_INTERNAL_FW)
-    namespace omni { namespace io { /** @internal library helper */ namespace path_internal {
-        /** @internal library helper */
+    namespace omni { namespace io { namespace path_internal {
         template < typename std_string_t >
         std_string_t generate(const std_string_t& path, const std_string_t& file, const std_string_t& ext)
         {
@@ -66,15 +65,13 @@
             return ret;
         }
         
-        /** @internal library helper */
         template < typename T >
         T get_invalid_file_chars()
         { return T(); }
     } } }
 #endif
 
-namespace omni { namespace io { /** @internal library helper */ namespace path_internal {
-    /** @internal library helper */
+namespace omni { namespace io { namespace path_internal {
     template <>
     omni::seq::OMNI_CHAR_T_FW get_invalid_file_chars<omni::seq::OMNI_CHAR_T_FW>()
     {

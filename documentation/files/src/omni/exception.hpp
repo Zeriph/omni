@@ -40,7 +40,6 @@
     // DEV_NOTE: all exceptions in Omni will be explicit for single parameter ctor's to avoid any collision
     
     namespace omni {
-        /** exception is used to facilitate Omni Library specific exceptions */
         class exception : virtual public std::exception
         {
             public:

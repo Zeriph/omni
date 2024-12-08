@@ -51,19 +51,6 @@ namespace omni {
                 std::memcpy(this->m_data, data, SZ);
             }
             
-            /**
-             * @brief Creates a stack_buffer with the values passed in.
-             *
-             * @details Create a stack_buffer type with the default values specified.
-             *
-             * @param val1... The value(s) to assign each of the stack_buffer's underlying buffer up to val+SZ.
-             *
-             * @warning Be aware, due to the variadic argument list being used, if the backing type is that of a
-             * float or double, the values passed in must either be named types or explicitly defined; for example,
-             * you must have variables defined as a @c double and passing in those variables or you must explicitly
-             * pass in @c 10.0 (for example) for each value. Failure to do this could cause the underlying floating
-             * types to be mis-read by the va_arg list due to certain casting behavior by some compilers/environments.
-             */
             stack_buffer(T val1, ...) : 
                 OMNI_CTOR_FW(omni::stack_buffer)
                 m_data()

@@ -31,74 +31,62 @@ namespace omni {
         class compare_options
         {
             public:
-                /** The underlying enum type expected */
                 typedef enum enum_t {
                     NONE = 0,
                     IGNORE_CASE = 1,
                     IGNORE_SYMBOLS = 4
                 } enum_t;
 
-                /** Defines the number of elements in the enum */
                 static inline unsigned short COUNT()
                 {
                     return 3;
                 }
 
-                /** The default value for this enum instance */
                 static inline enum_t DEFAULT_VALUE()
                 {
                     return NONE;
                 }
                 
-                /** Converts the enum to its string representation */
                 static std::string to_string(enum_t v)
                 {
                     return _to_val<std::stringstream>(v);
                 }
             
-                /** Converts the enum to its wide string representation */
                 static std::wstring to_wstring(enum_t v)
                 {
                     return _to_val<std::wstringstream>(v);
                 }
 
-                /** Parsing a string value into its enum representation */
                 static enum_t parse(const std::string& val)
                 {
                     return _parse(val);
                 }
 
-                /** Parsing a wide string value into its enum representation */
                 static enum_t parse(const std::wstring& val)
                 {
                     return _parse(val);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, enum_t& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a string value into its enum representation */
                 static bool try_parse(const std::string& val, compare_options& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Tries parsing a wide string value into its enum representation */
                 static bool try_parse(const std::wstring& val, compare_options& out)
                 {
                     return _try_parse(val, out);
                 }
 
-                /** Returns true if the integer value specified is a valid enum value */
                 static bool is_valid(int32_t val)
                 {
                     return _valid(val);
@@ -323,12 +311,6 @@ namespace omni {
                 }
         };
 
-        /**
-         * @brief   The util namespace is utilized by omni::cstring and omni::wstring
-         *          directly. You can use the omni::string::util namespace directly in
-         *          user code, but it is recommended you utilize the omni::(c|w)string
-         *          namespace versions instead.
-         */
         namespace util {
             template < typename std_string_t >
             bool is_numeric(const std_string_t& str, bool ignore_period)
